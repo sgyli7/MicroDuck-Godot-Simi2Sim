@@ -35,6 +35,15 @@ class JsonLineClient:
         self.send(obj)
         return self.recv()
 
+    def call_expect(self, obj: dict[str, Any], cmd: str) -> dict[str, Any]:
+        """Like call(), but drops async messages (step_result etc.) whose
+        'cmd' differs, so probe commands work while the sim is running."""
+        self.send(obj)
+        while True:
+            msg = self.recv()
+            if msg.get("cmd") == cmd:
+                return msg
+
     def close(self) -> None:
         try:
             self.send({"cmd": "close"})

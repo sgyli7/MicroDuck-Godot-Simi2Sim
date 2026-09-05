@@ -35,6 +35,32 @@ const SPRUNG_FLOOR := false
 const SPRUNG_FLOOR_K := 2000.0
 const SPRUNG_FLOOR_MASS := 0.15
 
+# Cinemachine-style orbit-follow camera (docs/research_3c_camera.md §C).
+const CAM_PITCH_MIN := 0.06
+const CAM_PITCH_MAX := 1.25
+const CAM_DIST_MIN := 0.35
+const CAM_DIST_MAX := 2.5
+const CAM_DEFAULT_YAW := 0.7853981634  # 45°, matches legacy (0.65, ·, 0.65) quadrant
+const CAM_DEFAULT_PITCH := 0.5
+const CAM_DEFAULT_DIST := 1.0
+# Third-person follow: softer than locked tracking. Split H/V so biped
+# footstep bob (Y) is filtered harder than planar chase — same idea as
+# SpringArm + lagged look-target in TPS games (Godot spring_arm docs /
+# Cinemachine body damping).
+const CAM_POS_SMOOTH_H := 3.5  # planar look-target damping (was unified 10)
+const CAM_POS_SMOOTH_V := 1.6  # vertical damping — kills walk bob / terrain shake
+const CAM_RIG_SMOOTH := 5.0    # mild lag of camera rig toward desired orbit point
+const CAM_YAW_SMOOTH := 3.0    # damping applied outside the deadzone (was 4)
+const CAM_DIST_SMOOTH := 5.0
+const CAM_YAW_DEADZONE := 0.6108652942  # 35°: small duck turns leave the shot alone
+const CAM_LEAD_DIST := 0.35   # look-ahead (was 0.5; less whip on accel)
+const CAM_LEAD_MAX := 0.25    # cap on the lead offset (m)
+const CAM_YAW_DRAG := 0.005   # rad per px of right-drag
+const CAM_PITCH_DRAG := 0.004
+const CAM_DIST_DRAG := 0.0012 # wheel notch -> distance factor
+const CAM_RECOVER_DELAY := 1.5  # s after mouse release before auto-follow
+const CAM_SNAP_K := 25.0      # reset: fast exponential snap, not a teleport
+
 var _server: TCPServer
 var _peer: StreamPeerTCP
 var _buf: PackedByteArray = PackedByteArray()
@@ -73,9 +99,22 @@ var _jaw_spring: Generic6DOFJoint3D = null
 var _jaw_body: RigidBody3D = null
 var _jaw_pad_y: float = 0.0
 var _held_now: Array = []
+var _held_press_order: Array = []  # held bits ordered oldest-press first
+var _prev_held_set: Dictionary = {}  # bit -> true while physically held
 var _taps: Array = []
 var _hud: CanvasLayer = null
 var _cam_offset: Vector3 = Vector3(0.65, 0.42, 0.65)
+# Orbit-follow camera state (see CAM_* consts + _follow_camera()).
+var _cam_yaw: float = CAM_DEFAULT_YAW
+var _cam_pitch: float = CAM_DEFAULT_PITCH
+var _cam_dist: float = CAM_DEFAULT_DIST
+var _cam_look: Vector3 = Vector3.ZERO
+var _cam_manual_until: float = 0.0  # seconds on the _cam_wall_seconds() clock
+var _cam_dragging: bool = false
+var _cam_inited: bool = false
+var _cam_snap: bool = true  # fast exponential snap on (re)spawn/reset
+var _cam_snap_started: float = 0.0  # wall-clock seconds when the last snap began
+var _cam_last_sec: float = 0.0  # wall clock for camera damping (lockstep-aware)
 var _window_title: String = "Microduck Sim2Sim"
 
 func _ready() -> void:
@@ -117,8 +156,34 @@ func _ready() -> void:
 	_freeze(true)
 	_setup_floor_checker()
 	_setup_play_ui()
+	_cam_last_sec = _cam_wall_seconds()
 	if _hud != null and _hud.has_method("set_mode"):
 		_hud.set_mode("roller" if "roller" in _robot_scene else "walk")
+
+	call_deferred("_maybe_dump_sim2sim_shot")
+
+
+
+func _maybe_dump_sim2sim_shot() -> void:
+	## One-shot viewport PNG when SIM2SIM_SHOT=/abs/path.png is set.
+	var path := OS.get_environment("SIM2SIM_SHOT")
+	if path == "":
+		return
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().create_timer(0.8).timeout
+	var tex := get_viewport().get_texture()
+	if tex == null:
+		push_warning("SIM2SIM_SHOT: no viewport texture")
+		return
+	var img := tex.get_image()
+	if img == null:
+		push_warning("SIM2SIM_SHOT: get_image failed")
+		return
+	var err := img.save_png(path)
+	print("SIM2SIM_SHOT saved err=%s path=%s" % [err, path])
+	if OS.get_environment("SIM2SIM_SHOT_QUIT") == "1":
+		get_tree().quit(0)
 
 
 func _parse_args() -> void:
@@ -896,6 +961,12 @@ func _freeze(v: bool) -> void:
 func _physics_process(delta: float) -> void:
 	if DisplayServer.get_name() != "headless":
 		Engine.max_physics_steps_per_frame = 32
+	# Camera ticks on the wall clock, not the fixed step: --fixed-fps 200
+	# (lockstep pacing) would otherwise slow the damping ~12x, and a blocked
+	# lockstep recv stretches dt so a resumed snap catches up in one frame.
+	var cam_dt := minf(_cam_wall_seconds() - _cam_last_sec, 0.1)
+	_cam_last_sec = _cam_wall_seconds()
+	_follow_camera(cam_dt)
 	if _peer == null:
 		_try_accept()
 		return
@@ -916,8 +987,17 @@ func _physics_process(delta: float) -> void:
 				_freeze(true)
 				return
 			OS.delay_usec(200)
+			var cd := minf(_cam_wall_seconds() - _cam_last_sec, 0.1)
+			_cam_last_sec = _cam_wall_seconds()
+			_follow_camera(cd)
 			cmd = _recv_line()
 		_handle(cmd)
+		# _handle may have teleported bodies (reset). Advance the camera with
+		# wall-clock time before leaving the pump, or the snap stalls ~16 ms
+		# until the next _physics_process entry (zero movement while idle).
+		var cd2 := minf(_cam_wall_seconds() - _cam_last_sec, 0.1)
+		_cam_last_sec = _cam_wall_seconds()
+		_follow_camera(cd2)
 		if _remaining <= 0:
 			return
 	_apply_pd()
@@ -1046,6 +1126,13 @@ func _handle(cmd: Variant) -> void:
 			var img: Image = tex.get_image()
 			var err := img.save_png(path)
 			_send_dict({"ok": err == OK, "path": path, "cmd": "screenshot", "w": img.get_width(), "h": img.get_height()})
+	elif name == "camera_state":
+		# Headless camera integration test (tests/test_camera_follow.py).
+		_send_dict({"ok": true, "cmd": "camera_state", "camera": _camera_json_state(), "held_order": _held_press_order.duplicate()})
+	elif name == "camera_zoom":
+		# Headless test for wheel zoom (same path as _unhandled_input).
+		_cam_dist = clampf(_cam_dist * (1.0 + CAM_DIST_DRAG * 40.0 * float(cmd.get("d", 0.0))), CAM_DIST_MIN, CAM_DIST_MAX)
+		_send_dict({"ok": true, "cmd": "camera_zoom", "dist": _cam_dist})
 	elif name == "close":
 		_send_dict({"ok": true, "cmd": "close"})
 		get_tree().quit(0)
@@ -1058,6 +1145,11 @@ func _do_reset(cmd: Dictionary) -> void:
 	_pending_send = false
 	_t = 0.0
 	_pinned.clear()
+	# Normal user resets glide the camera to the new shot. Integration tests
+	# may disable the snap to exercise live-turn deadzone/trailing behavior.
+	_cam_snap = bool(cmd.get("camera_snap", true))
+	if _cam_snap:
+		_cam_snap_started = _cam_wall_seconds()
 	var ctrl: Array = cmd.get("ctrl", [])
 	for i in range(mini(ctrl.size(), _ctrl.size())):
 		_ctrl[i] = float(ctrl[i])
@@ -1298,6 +1390,7 @@ func _send_state(which: String) -> void:
 		"sole_cxmax": _sole_cxmax(),
 		"jaw_pad_y": _jaw_pad_y,
 		"held": _held_now.duplicate(),
+		"held_order": _held_press_order.duplicate(),
 		"taps": _taps.duplicate(),
 		"time_scale": _play_time_scale(),
 	})
@@ -1392,38 +1485,107 @@ func _quat_rotate_wxyz(q: Vector4, v: Vector3) -> Vector3:
 
 
 func _paint_robot_visuals() -> void:
-	## Runtime override of generated robot albedo (mjcf2godot emits gray).
-	## Visual-only: does not touch collision, masses, or joints.
-	if DisplayServer.get_name() == "headless":
-		return
+	## Official Graphite colourway from press kit + launch photo.
+	## Mesh nodes are vis_unnamed_N_N; roles keyed by N from mjcf2godot MAPPING_REPORT
+	## (top_head_shell / jaw / bottom_head_shell). Visual-only.
 	if _robot == null:
 		return
-	var body_mat := StandardMaterial3D.new()
-	body_mat.albedo_color = Color(0.95, 0.78, 0.18)
-	body_mat.roughness = 0.7
-	body_mat.metallic = 0.0
-	var dark_mat := StandardMaterial3D.new()
-	dark_mat.albedo_color = Color(0.72, 0.52, 0.12)
-	dark_mat.roughness = 0.75
-	dark_mat.metallic = 0.0
-	_paint_mesh_recursive(_robot, body_mat, dark_mat)
+	if DisplayServer.get_name() == "headless" and OS.get_environment("SIM2SIM_SHOT") == "":
+		return
+	# Graphite shell #6c6a68
+	var shell := StandardMaterial3D.new()
+	shell.albedo_color = Color(0.30, 0.29, 0.28)  # darkened Graphite so it reads under bright sky
+	shell.roughness = 0.58
+	shell.metallic = 0.08
+	# Yellow beak / trim
+	var trim := StandardMaterial3D.new()
+	trim.albedo_color = Color(0.98, 0.82, 0.1)
+	trim.roughness = 0.5
+	trim.metallic = 0.0
+	# Purple accent (eye rim / foot panels on Graphite photo)
+	var accent := StandardMaterial3D.new()
+	accent.albedo_color = Color(0.52, 0.32, 0.7)
+	accent.roughness = 0.55
+	accent.metallic = 0.0
+	# Black mechanical frame
+	var mech := StandardMaterial3D.new()
+	mech.albedo_color = Color(0.07, 0.07, 0.07)
+	mech.roughness = 0.72
+	mech.metallic = 0.3
+	_paint_mesh_recursive(_robot, shell, trim, accent, mech)
 
 
-func _paint_mesh_recursive(node: Node, body_mat: StandardMaterial3D, dark_mat: StandardMaterial3D) -> void:
+func _mesh_id(mi: MeshInstance3D) -> int:
+	var parts := str(mi.name).split("_")
+	if parts.size() > 0 and parts[-1].is_valid_int():
+		return int(parts[-1])
+	return -1
+
+
+func _paint_role_for_node(mi: MeshInstance3D) -> String:
+	var id := _mesh_id(mi)
+	# Explicit geom ids from MAPPING_REPORT collision mesh= names
+	# top_head_shell visual ~50, jaw visual ~57, bottom_head_shell visual ~59
+	if id == 57:
+		return "trim"  # jaw / beak
+	if id in [50, 59]:
+		return "shell"  # head shells
+	# eye / camera ring often near head internals under jaw_soft
+	if id in [51, 52, 53]:
+		return "accent"
+	# small black bits / screws under head
+	if id in [43, 44, 45, 46, 47, 48, 54, 55, 60, 61]:
+		return "mech"
+	# foot panels
+	if id in [28, 30, 31, 32, 77, 78, 80, 81]:
+		return "accent" if id % 2 == 1 else "trim"
+	var p := mi.get_parent()
+	var pname := ""
+	while p != null and p != _robot:
+		pname = str(p.name).to_lower()
+		if p is RigidBody3D:
+			break
+		p = p.get_parent()
+	if pname == "jaw_soft":
+		# Head shells live under jaw_soft; only mesh 57 is the yellow jaw.
+		return "shell"
+	if pname in ["neck", "neck_pitch"]:
+		return "mech"
+	if pname in ["yaw_roll_motion", "yaw2roll", "bearing_roll"]:
+		# head yaw/roll housings: graphite shell like photo
+		return "shell"
+	if pname in ["ankle_left", "ankle_right"]:
+		return "accent"
+	if pname in ["trunk_base", "hip_l", "hip_l_2", "upper_leg_left", "upper_leg_right", "leg", "leg_2"]:
+		return "shell"
+	return "shell"
+
+
+func _paint_mesh_recursive(
+	node: Node,
+	shell: StandardMaterial3D,
+	trim: StandardMaterial3D,
+	accent: StandardMaterial3D,
+	mech: StandardMaterial3D,
+) -> void:
 	if node is MeshInstance3D:
 		var mi := node as MeshInstance3D
-		var n := str(mi.name).to_lower()
-		var use_dark := false
-		for key in ["wheel", "roller", "sole", "heel", "eye", "beak", "jaw", "foot", "toe"]:
-			if key in n:
-				use_dark = true
-				break
-		var mat := dark_mat if use_dark else body_mat
+		var role := _paint_role_for_node(mi)
+		var mat := shell
+		match role:
+			"trim":
+				mat = trim
+			"accent":
+				mat = accent
+			"mech":
+				mat = mech
+			_:
+				mat = shell
 		var sc := mi.mesh.get_surface_count() if mi.mesh != null else 1
 		for s in range(maxi(sc, 1)):
 			mi.set_surface_override_material(s, mat)
 	for child in node.get_children():
-		_paint_mesh_recursive(child, body_mat, dark_mat)
+		_paint_mesh_recursive(child, shell, trim, accent, mech)
 
 
 func _setup_floor_checker() -> void:
@@ -1485,12 +1647,36 @@ func _add_tap(action: String) -> void:
 		_taps.append(action)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	_sample_held()
-	_follow_camera()
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mb := event as InputEventMouseButton
+		var now := _cam_wall_seconds()
+		if mb.button_index == MOUSE_BUTTON_RIGHT:
+			_cam_dragging = mb.pressed
+			if not mb.pressed:
+				_cam_manual_until = now + CAM_RECOVER_DELAY
+			get_viewport().set_input_as_handled()
+			return
+		if mb.button_index == MOUSE_BUTTON_WHEEL_UP and mb.pressed:
+			_cam_dist = clampf(_cam_dist / (1.0 + CAM_DIST_DRAG * 40.0), CAM_DIST_MIN, CAM_DIST_MAX)
+			_cam_manual_until = now + CAM_RECOVER_DELAY
+			get_viewport().set_input_as_handled()
+			return
+		if mb.button_index == MOUSE_BUTTON_WHEEL_DOWN and mb.pressed:
+			_cam_dist = clampf(_cam_dist * (1.0 + CAM_DIST_DRAG * 40.0), CAM_DIST_MIN, CAM_DIST_MAX)
+			_cam_manual_until = now + CAM_RECOVER_DELAY
+			get_viewport().set_input_as_handled()
+			return
+	elif event is InputEventMouseMotion and _cam_dragging:
+		var mm := event as InputEventMouseMotion
+		_cam_yaw = fmod(_cam_yaw + mm.relative.x * CAM_YAW_DRAG, TAU)
+		_cam_pitch = clampf(_cam_pitch - mm.relative.y * CAM_PITCH_DRAG, CAM_PITCH_MIN, CAM_PITCH_MAX)
+		_cam_manual_until = _cam_wall_seconds() + CAM_RECOVER_DELAY
+		return
 	if not (event is InputEventKey):
 		return
 	var k := event as InputEventKey
@@ -1541,15 +1727,147 @@ func _sample_held() -> void:
 				var s := str(bit)
 				if not held.has(s):
 					held.append(s)
+	# Newest-wins order for opposing pairs (docs §B): a bit keeps its slot
+	# while held; a re-press moves it to newest. Release removes it.
+	var now_set := {}
+	for bit in held:
+		now_set[bit] = true
+	for bit in now_set.keys():
+		if not _prev_held_set.has(bit):
+			_held_press_order.erase(bit)
+			_held_press_order.append(bit)
+	_prev_held_set = now_set
+	_held_press_order = _held_press_order.filter(func(b): return now_set.has(b))
 	_held_now = held
 
 
-func _follow_camera() -> void:
+func _cam_wall_seconds() -> float:
+	## Wall seconds. Time.get_ticks_usec() was verified real-time even under
+	## --fixed-fps (Godot 4.7), so this is the engine's monotonic clock.
+	return float(Time.get_ticks_usec()) / 1e6
+
+
+func _duck_forward_godot() -> Vector3:
+	## MuJoCo body-local axes apply as-is in Godot: for trunk_base the
+	## character forward is local +X (local -Z is the vertical), so the old
+	## (0,0,-1) probe was the duck's belly, not its gaze.
+	if _base == null:
+		return Vector3.ZERO
+	return _base.global_transform.basis * Vector3(1, 0, 0)
+
+
+func _follow_camera(frame_dt: float) -> void:
+	## Cinemachine-style orbit follow. Keeps the duck composed from a
+	## smoothly damped orbit around a look target that leads the duck's
+	## motion; the duck's own yaw only drags the camera past a deadzone, so
+	## in-place turns don't spin the view. Right-drag orbits freely (auto
+	## follow resumes after CAM_RECOVER_DELAY idle), wheel zooms, reset
+	## glides in with a fast snap instead of a hard cut.
 	if _base == null:
 		return
 	var cam := get_node_or_null("World/Camera3D") as Camera3D
 	if cam == null:
 		return
-	var look: Vector3 = _base.global_position + Vector3(0, 0.08, 0)
-	cam.look_at_from_position(look + _cam_offset, look, Vector3.UP)
+	var dt := clampf(frame_dt, 0.0, 0.1)
 
+	if not _cam_inited:
+		_cam_look = _base.global_position + Vector3(0, 0.08, 0)
+		_cam_inited = true
+	var base_pos: Vector3 = _base.global_position
+	var target: Vector3 = base_pos + Vector3(0, 0.08, 0)
+	# Camera-behind azimuth in the _orbit_offset convention (yaw from +Z
+	# toward +X). Local +X is the duck's MuJoCo forward. For a Godot-world
+	# forward (x, z), the point behind the duck is (-x, -z), hence atan2(-x,
+	# -z). This is the orbit yaw that should track the duck after deadzone.
+	var heading_now := CAM_DEFAULT_YAW
+	var fwd := _duck_forward_godot()
+	fwd.y = 0.0
+	if fwd.length_squared() > 1e-6:
+		heading_now = atan2(-fwd.x, -fwd.z)
+	# Horizontal look-ahead lead so the duck walks into the frame, not off it.
+	var lv := _base.linear_velocity
+	lv.y = 0.0
+	if not _cam_snap and lv.length() > 0.02:
+		var lead := lv.normalized() * minf(lv.length() * CAM_LEAD_DIST, CAM_LEAD_MAX)
+		lead.y = 0.0
+		target += lead
+	if _cam_snap:
+		var k := 1.0 - exp(-CAM_SNAP_K * dt)
+		_cam_look = _cam_look.lerp(target, k)
+	else:
+		# Split horizontal / vertical exponential follow (frame-rate independent).
+		var kh := 1.0 - exp(-CAM_POS_SMOOTH_H * dt)
+		var kv := 1.0 - exp(-CAM_POS_SMOOTH_V * dt)
+		_cam_look.x = lerpf(_cam_look.x, target.x, kh)
+		_cam_look.z = lerpf(_cam_look.z, target.z, kh)
+		_cam_look.y = lerpf(_cam_look.y, target.y, kv)
+	if _cam_snap:
+		# During a reset snap, chase the duck exactly: heading_now already is
+		# the orbit yaw directly *behind* the duck, with no deadzone trail.
+		# The trailing goal only applies to live turning, so after the snap
+		# the camera stays parked straight behind until the duck turns past
+		# the deadzone again. Release by wall clock so a low frame rate
+		# can't strand the snap on forever.
+		var ks := 1.0 - exp(-CAM_SNAP_K * dt)
+		_cam_yaw = wrapf(_cam_yaw + wrapf(heading_now - _cam_yaw, -PI, PI) * ks, -PI, PI)
+		_cam_pitch = clampf(_cam_pitch + (CAM_DEFAULT_PITCH - _cam_pitch) * ks, CAM_PITCH_MIN, CAM_PITCH_MAX)
+		var want0 := _cam_look + _orbit_offset(_cam_yaw, _cam_pitch, _cam_dist)
+		cam.look_at_from_position(want0, _cam_look, Vector3.UP)
+		var snap_now := _cam_wall_seconds()
+		if snap_now - _cam_snap_started > 0.35:
+			_cam_snap = false  # snap glide done: normal trailing follow resumes
+		return
+	var now := _cam_wall_seconds()
+	var manual := _cam_dragging or now < _cam_manual_until
+	if not manual:
+		# Trailing yaw (Cinemachine orbital follow): the duck's own yaw only
+		# drags the camera once the heading leaves the current camera
+		# azimuth by more than the deadzone; the goal sits one deadzone
+		# short of the heading so the camera trails the action.
+		var diff := wrapf(heading_now - _cam_yaw, -PI, PI)
+		if absf(diff) > CAM_YAW_DEADZONE:
+			var goal := wrapf(heading_now - signf(diff) * CAM_YAW_DEADZONE, -PI, PI)
+			var derr := wrapf(goal - _cam_yaw, -PI, PI)
+			if absf(derr) > 0.001:
+				_cam_yaw = wrapf(_cam_yaw + derr * (1.0 - exp(-CAM_YAW_SMOOTH * dt)), -PI, PI)
+		var kd := 1.0 - exp(-CAM_DIST_SMOOTH * dt)
+		_cam_pitch += (CAM_DEFAULT_PITCH - _cam_pitch) * kd
+	_cam_pitch = clampf(_cam_pitch, CAM_PITCH_MIN, CAM_PITCH_MAX)
+	var offset := _orbit_offset(_cam_yaw, _cam_pitch, _cam_dist)
+	var want := _cam_look + offset
+	if cam.global_position.distance_to(want) < 0.015 and not manual:
+		return  # settled: skip redundant look_at (avoids micro-jitter)
+	# Mild rig lag: orbit point eases in (TPS spring feel), then look at target.
+	var kr := 1.0 - exp(-CAM_RIG_SMOOTH * dt)
+	var pos := cam.global_position.lerp(want, kr)
+	cam.look_at_from_position(pos, _cam_look, Vector3.UP)
+
+
+func _orbit_offset(yaw: float, pitch: float, dist: float) -> Vector3:
+	## Yaw measured from world +Z toward +X; pitch up from horizontal.
+	## yaw=45°, pitch=0.5, dist=1.0 ≈ the legacy fixed (0.65, 0.42, 0.65) corner.
+	var cp := cos(pitch)
+	return Vector3(sin(yaw) * cp, sin(pitch), cos(yaw) * cp) * dist
+
+
+func _camera_json_state() -> Dictionary:
+	## Exposed for the headless camera integration test (sim2sim/camera_test.py).
+	if _base == null:
+		return {}
+	var cam := get_node_or_null("World/Camera3D") as Camera3D
+	if cam == null:
+		return {}
+	var look: Vector3 = _base.global_position + Vector3(0, 0.08, 0)
+	var fwd_g := _duck_forward_godot()
+	var fwd := _g2m(fwd_g)  # MuJoCo-world forward
+	var base_m := _g2m(_base.global_position)  # MuJoCo-world base pos (ground x/y)
+	return {
+		"cam_pos": [cam.global_position.x, cam.global_position.y, cam.global_position.z],
+		"look": [look.x, look.y, look.z],
+		"base": [float(base_m.x), float(base_m.y), float(base_m.z)],
+		"duck_fwd": [float(fwd.x), float(fwd.y)],
+		"yaw": _cam_yaw,
+		"pitch": _cam_pitch,
+		"dist": _cam_dist,
+		"cam_look": [_cam_look.x, _cam_look.y, _cam_look.z],
+	}

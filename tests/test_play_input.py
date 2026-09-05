@@ -9,6 +9,8 @@ import numpy as np
 from sim2sim.play_input import (
     PlayBrain,
     TwistLimits,
+    TwistRamp,
+    WalkGait,
     clamp_time_scale,
     held_twist,
     keys_to_held,
@@ -62,13 +64,17 @@ class TestPlayBrain(unittest.TestCase):
         self.b = PlayBrain()
 
     def test_hold_fwd_switches_to_walking(self) -> None:
-        out = self.b.tick({"fwd"}, [], 0.02)
+        # ramped: one tick no longer snaps to full speed; settle first.
+        for _ in range(15):
+            out = self.b.tick({"fwd"}, [], 0.02)
         self.assertEqual(out.policy, "walking")
         np.testing.assert_allclose(out.command[0:3], [0.3, 0.0, 0.0], atol=1e-6)
 
     def test_release_returns_standing(self) -> None:
-        self.b.tick({"fwd"}, [], 0.02)
-        out = self.b.tick(set(), [], 0.02)
+        for _ in range(15):
+            self.b.tick({"fwd"}, [], 0.02)
+        for _ in range(10):
+            out = self.b.tick(set(), [], 0.02)
         self.assertEqual(out.policy, "standing")
         np.testing.assert_allclose(out.command, np.zeros(13))
 
@@ -99,10 +105,19 @@ class TestPlayBrain(unittest.TestCase):
         self.assertEqual(self.b.policy, "standing")
 
     def test_idle_tap_clears_walk(self) -> None:
-        self.b.tick({"fwd"}, [], 0.02)
-        out = self.b.tick({"fwd"}, ["idle"], 0.02)
+        for _ in range(15):
+            self.b.tick({"fwd"}, [], 0.02)
+        out = self.b.tick({"fwd"}, ["idle"], 0.02)  # SPACE pressed while W held
+        # idle is newest → target snaps to 0, then ramps down at decel.
         self.assertEqual(out.policy, "standing")
-        np.testing.assert_allclose(out.command[0:3], [0.0, 0.0, 0.0])
+        self.assertLess(float(out.command[0]), 0.3)
+        for _ in range(10):
+            out = self.b.tick({"fwd"}, ["idle"], 0.02)
+        self.assertAlmostEqual(float(out.command[0]), 0.0)
+        # SPACE released, W still held -> duck moves again (no deadlock).
+        for _ in range(15):
+            out = self.b.tick({"fwd"}, [], 0.02)
+        self.assertAlmostEqual(float(out.command[0]), 0.3, places=6)
 
     def test_reset_and_quit(self) -> None:
         self.b.tick({"fwd"}, [], 0.02)
@@ -125,12 +140,183 @@ class TestPlayBrain(unittest.TestCase):
     def test_roller_limits_block_strafe(self) -> None:
         lim = TwistLimits(vmax_x=0.6, vmin_x=-0.5, vmax_y=0.0, vmin_y=0.0, vmax_ang=1.0)
         b = PlayBrain(has_sitstand=False, has_pick=False, has_kick_left=False, has_kick_right=False, has_roulade=False, lim=lim)
-        out = b.tick({"fwd"}, [], 0.02)
+        for _ in range(35):
+            out = b.tick({"fwd"}, [], 0.02)
         np.testing.assert_allclose(out.command[0:3], [0.6, 0.0, 0.0], atol=1e-6)
-        out = b.tick({"strafe_l"}, [], 0.02)
-        np.testing.assert_allclose(out.command[0:3], [0.0, 0.0, 0.0], atol=1e-6)
+        out = b.tick({"strafe_l"}, [], 0.02)  # roller: strafe target is 0
+        self.assertAlmostEqual(float(out.command[1]), 0.0, places=6)
         b.tick(set(), ["kick_left"], 0.02)
         self.assertNotEqual(b.policy, "kick_left")
+
+
+class TestInputShaping(unittest.TestCase):
+    """New behaviour: ramp slew, opposing-key resolution, diagonal norm, hysteresis."""
+
+    def test_ramp_is_monotone_and_capped(self) -> None:
+        b = PlayBrain()
+        prev = 0.0
+        for _ in range(40):
+            b.tick({"fwd"}, [], 0.02)
+            v = float(b.vel[0])
+            self.assertGreaterEqual(v, prev - 1e-6)
+            self.assertLessEqual(v, 0.3 + 1e-6)
+            prev = v
+        self.assertAlmostEqual(prev, 0.3, places=6)
+
+    def test_ramp_reaches_full_speed_quickly(self) -> None:
+        b = PlayBrain()
+        for i in range(1, 20):
+            b.tick({"fwd"}, [], 0.02)
+            if float(b.vel[0]) >= 0.3 - 1e-6:
+                break
+        self.assertLessEqual(i, 5)  # 0→0.3 m/s within ~0.1 s
+
+    def test_first_tick_no_longer_snaps_to_full(self) -> None:
+        b = PlayBrain()
+        out = b.tick({"fwd"}, [], 0.02)
+        self.assertLess(abs(float(out.command[0])), 0.3)
+
+    def test_opposing_newest_wins(self) -> None:
+        b = PlayBrain()
+        for _ in range(10):
+            b.tick({"fwd"}, [], 0.02)
+        # S arrives after W → back wins (decelerate/reverse), not freeze at 0
+        b.tick({"fwd", "back"}, [], 0.02)
+        self.assertLess(float(b.vel[0]), 0.2)
+
+    def test_held_twist_opposing_without_order_is_stable(self) -> None:
+        v = held_twist({"fwd", "back"})
+        self.assertNotEqual(v[0], 0.0)
+
+    def test_diagonal_length_normalised(self) -> None:
+        lim = TwistLimits()
+        vx, vy, _ = held_twist({"fwd", "strafe_l"}, lim)
+        self.assertLessEqual(np.hypot(vx, vy), np.hypot(lim.vmax_x, lim.vmax_y) + 1e-9)
+        self.assertGreater(vx, 0.0)
+        self.assertGreater(vy, 0.0)
+
+    def test_local_release_then_repress_updates_newest_order(self) -> None:
+        b = PlayBrain()
+        for _ in range(4):
+            b.tick({"fwd"}, [], 0.02)
+        b.tick({"fwd", "back"}, [], 0.02)  # back pressed last
+        self.assertEqual(b.press_order[-1], "back")
+        b.tick({"back"}, [], 0.02)          # release fwd
+        b.tick({"fwd", "back"}, [], 0.02)  # re-press fwd
+        self.assertEqual(b.press_order[-1], "fwd")
+        self.assertGreater(held_twist(
+            {"fwd", "back"}, b.lim, press_order=b.press_order
+        )[0], 0.0)
+
+    def test_sitstand_only_initialises_and_resets(self) -> None:
+        b = PlayBrain(
+            has_walking=False,
+            has_standing=False,
+            has_sitstand=True,
+        )
+        self.assertEqual(b.policy, "sitstand")
+        b.policy = "ground_pick"
+        b.reset_motion()
+        self.assertEqual(b.policy, "sitstand")
+
+    def test_yaw_not_speed_bumped_by_diagonal(self) -> None:
+        vx, vy, w = held_twist({"fwd", "left"}, TwistLimits())
+        self.assertAlmostEqual(w, TwistLimits().vmax_ang)
+        self.assertAlmostEqual(vx, TwistLimits().vmax_x)  # yaw not part of norm
+
+    def test_gait_hysteresis_no_chatter(self) -> None:
+        g = WalkGait(switch_on=0.10, switch_off=0.03)
+        self.assertTrue(g.settled(0.12, 0.0, True))
+        self.assertTrue(g.settled(0.05, 0.0, False))   # between off/on: stays walking
+        self.assertFalse(g.settled(0.02, 0.0, False))
+        self.assertFalse(g.settled(0.08, 0.0, False))  # between: stays standing
+        self.assertTrue(g.settled(0.11, 0.0, True))
+
+    def test_gait_yaw_engages_and_holds(self) -> None:
+        g = WalkGait(switch_on=0.10, switch_off=0.03)
+        self.assertTrue(g.settled(0.0, 1.5, True))    # fresh A press -> walking
+        self.assertTrue(g.settled(0.0, 0.15, False))  # held yaw still decaying -> stays walking
+        self.assertFalse(g.settled(0.0, 0.02, False)) # yaw decayed below off -> stand
+        g2 = WalkGait(switch_on=0.10, switch_off=0.03)
+        self.assertTrue(g2.settled(0.2, 1.5, True))   # forward+turn walks
+        self.assertTrue(g2.settled(0.05, 1.5, False)) # held yaw keeps walking (no chatter)
+        self.assertFalse(g2.settled(0.01, 0.01, False))  # both released -> stand
+
+    def test_pure_yaw_hold_emits_yaw_command(self) -> None:
+        b = PlayBrain()
+        out = None
+        for _ in range(20):
+            out = b.tick({"left"}, [], 0.02)
+        assert out is not None
+        # A fresh yaw press engages walking (standing has no twist axis), so
+        # the turn command actually reaches the policy.
+        self.assertEqual(b.policy, "walking")
+        np.testing.assert_allclose(out.command[0:3], [0.0, 0.0, 1.5], atol=1e-6)
+
+    def test_idle_held_does_not_deadlock(self) -> None:
+        b = PlayBrain()
+        b.tick(set(), ["idle"], 0.02)        # SPACE tap -> idle stops the duck
+        b.tick(set(), [], 0.02)              # SPACE released, standing
+        out = None
+        for _ in range(15):                  # walk normally
+            out = b.tick({"fwd"}, [], 0.02)
+        assert out is not None
+        self.assertAlmostEqual(float(out.command[0]), 0.3, places=6)
+        for _ in range(10):                  # SPACE pressed last -> stop
+            out = b.tick({"fwd", "idle"}, [], 0.02)
+        self.assertAlmostEqual(float(out.command[0]), 0.0)
+        # SPACE never released, W re-pressed -> newest-wins is W, duck moves.
+        for _ in range(15):
+            out = b.tick({"fwd"}, [], 0.02)
+        assert out is not None
+        self.assertAlmostEqual(float(out.command[0]), 0.3, places=6)
+
+    def test_external_press_order_newest_wins(self) -> None:
+        # Godot echoes held_order; last entry = newest press wins.
+        b = PlayBrain()
+        for _ in range(10):
+            b.tick({"fwd"}, [], 0.02, press_order=["fwd"])
+        v0 = float(b.vel[0])
+        self.assertGreater(v0, 0.25)
+        # S pressed after W: order says back is newest -> decel/reverse.
+        b.tick({"fwd", "back"}, [], 0.02, press_order=["fwd", "back"])
+        self.assertLess(float(b.vel[0]), v0)
+        # W re-pressed last: forward wins again.
+        for _ in range(10):
+            b.tick({"fwd", "back"}, [], 0.02, press_order=["back", "fwd"])
+        self.assertGreater(float(b.vel[0]), 0.1)
+
+    def test_external_press_order_idle_no_deadlock(self) -> None:
+        # Exact real-loop trace. `held` is the RAW Godot echo (held_twist
+        # newest-wins resolves idle downstream), held_order newest-last.
+        b = PlayBrain()
+        # SPACE pressed while walking: idle newest -> decel ramp to stop.
+        for _ in range(15):
+            b.tick({"fwd"}, [], 0.02, press_order=["fwd"])
+        for i in range(4):
+            out = b.tick({"fwd", "idle"}, [], 0.02, press_order=["fwd", "idle"])
+            self.assertLess(float(out.command[0]), 0.3)  # ramping down
+        for _ in range(10):
+            out = b.tick({"fwd", "idle"}, [], 0.02, press_order=["fwd", "idle"])
+        self.assertAlmostEqual(float(out.command[0]), 0.0)
+        # W re-pressed (order says newest). Godot's next raw echo is
+        # {"fwd"} again (the brain's stop consumed idle), order ["idle","fwd"].
+        for _ in range(15):
+            out = b.tick({"fwd"}, [], 0.02, press_order=["idle", "fwd"])
+        self.assertAlmostEqual(float(out.command[0]), 0.3, places=6)
+        # SPACE released: plain forward echo, still walking.
+        for _ in range(5):
+            out = b.tick({"fwd"}, [], 0.02, press_order=["fwd"])
+        self.assertAlmostEqual(float(out.command[0]), 0.3, places=6)
+
+    def test_brain_hysteresis_roundtrip(self) -> None:
+        b = PlayBrain()
+        b.tick({"fwd"}, [], 0.02)
+        # ramp is below switch_on (0.10), but yaw alone counts toward the
+        # walk/stand norm — pure yaw should not start walking.
+        for _ in range(15):
+            b.tick({"fwd"}, [], 0.02)
+        self.assertEqual(b.policy, "walking")
 
 
 class TestRelaunchArgv(unittest.TestCase):

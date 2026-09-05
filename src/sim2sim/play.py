@@ -100,7 +100,14 @@ def load_bank(paths: dict[str, Path | None]) -> dict[str, OnnxPolicy]:
         bank[name] = OnnxPolicy(path)
         print(f"  loaded {name}: {path}")
     if "walking" not in bank and "standing" not in bank and "sitstand" not in bank:
-        raise SystemExit("no walking/standing/sitstand ONNX found under policies/")
+        print(
+            "ERROR: no walking/standing/sitstand ONNX found under policies/.\n"
+            "错误：policies/ 下没有可用的 walking/standing/sitstand ONNX。\n"
+            f"Roller mode requires: {POL / "roller.onnx"}\n"
+            f"Walk mode requires:   {POL / "alpha_walking.onnx"}",
+            flush=True,
+        )
+        raise SystemExit(2)
     return bank
 
 
@@ -203,6 +210,7 @@ def main(argv: list[str] | None = None) -> int:
 
     last_action = np.zeros(14, dtype=np.float32)
     held: set[str] = set()
+    press_order: list[str] = []
     taps: list[str] = []
     fall_acc = 0.0
     st = backend.reset(ctrl=home, bodies=poses)
@@ -213,12 +221,24 @@ def main(argv: list[str] | None = None) -> int:
     step_ms = 0.0
     try:
         while True:
-            out = brain.tick(held, taps, dt_ctrl)
+            out = brain.tick(held, taps, dt_ctrl, press_order=press_order)
             if out.quit:
                 print("quit")
                 break
             if out.switch_robot:
                 want_roller = not args.roller
+                next_paths = policy_paths(local_ppo=args.local_ppo, roller=want_roller)
+                if want_roller and next_paths.get("walking") is None:
+                    miss = POL / "roller.onnx"
+                    print(
+                        "ERROR: cannot switch to roller — policies/roller.onnx is missing.\n"
+                        "错误：无法切换到轮滑模式 — 缺少 policies/roller.onnx。\n"
+                        f"Expected at: {miss}\n"
+                        "Download BEST_roller.onnx from pollen-robotics/microduck-simulator "
+                        "(app/public/policies/) and save as policies/roller.onnx.",
+                        flush=True,
+                    )
+                    raise SystemExit(2)
                 print(
                     "Switching to roller-skate robot (wheels XML + roller.onnx)..."
                     if want_roller
@@ -259,6 +279,7 @@ def main(argv: list[str] | None = None) -> int:
             step_ms += (time.perf_counter() - t_step) * 1000.0
             raw = st.extra.get("raw") or {}
             held = {str(x) for x in (raw.get("held") or [])}
+            press_order = [str(x) for x in (raw.get("held_order") or [])]
             taps = [str(x) for x in (raw.get("taps") or [])]
             ts = raw.get("time_scale", 1.0)
             next_t += wall_dt(dt_ctrl, ts)

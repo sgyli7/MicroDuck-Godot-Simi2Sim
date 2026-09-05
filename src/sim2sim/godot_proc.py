@@ -38,12 +38,23 @@ def spawn_godot(
     port = port or free_port()
     bin_ = godot_bin()
     cmd = [bin_]
+    # Optional fallback when Vulkan device creation fails (e.g. flaky GPU).
+    driver = os.environ.get("GODOT_RENDERING_DRIVER", "").strip()
+    if driver:
+        cmd += ["--rendering-driver", driver]
+    elif not headless and os.environ.get("SIM2SIM_FORCE_GL"):
+        # GB10/Spark: Vulkan device creation fails (-3); OpenGL works.
+        cmd += ["--rendering-driver", "opengl3"]
     if headless:
         cmd.append("--headless")
         cmd += ["--fixed-fps", "200"]
     else:
         # 200 Hz main loop so 4 lockstep ticks are not bound to 60 Hz vsync.
         cmd += ["--disable-vsync", "--fixed-fps", "200"]
+        # On a Wayland-capable desktop, Godot prefers Wayland even when an
+        # X11 DISPLAY is set; the screenshot/window tooling here is X11.
+        if os.environ.get("SIM2SIM_DISPLAY_DRIVER"):
+            cmd += ["--display-driver", os.environ["SIM2SIM_DISPLAY_DRIVER"]]
     cmd += [
         "--path",
         str(cwd or GODOT_PROJECT),
