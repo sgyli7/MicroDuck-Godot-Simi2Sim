@@ -1,0 +1,31 @@
+.venv/
+**/__pycache__/
+*.pyc
+MUJOCO_LOG.TXT
+.env
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Godot local
+godot/.godot/
+godot/generated/
+
+# Forest vendor (clone with godot/scripts/setup_forest_vendor.sh)
+godot/vendor/
+godot/scenery
+godot/textures
+godot/materials
+godot/grass
+godot/levels
+godot/objects
+godot/forest_generated
+godot/addons/
+
+# Gate artifacts
+results/
+
+# Drop-in policies (do not commit ONNX / weights)
+policies/**
+!policies/.gitkeep
+*.onnx

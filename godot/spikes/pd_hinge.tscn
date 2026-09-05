@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://spikes/pd_hinge.gd" id="1"]
+
+[sub_resource type="SphereShape3D" id="anchor_sph"]
+radius = 0.02
+
+[sub_resource type="CapsuleShape3D" id="cap"]
+radius = 0.015
+height = 0.23
+
+[sub_resource type="PhysicsMaterial" id="pm"]
+friction = 1.0
+bounce = 0.0
+
+[node name="PdHinge" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Anchor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_layer = 0
+collision_mask = 0
+
+[node name="ColA" type="CollisionShape3D" parent="Anchor"]
+shape = SubResource("anchor_sph")
+
+[node name="Link" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mass = 0.2
+inertia = Vector3(0.0004, 0.00005, 0.0004)
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, 0, 0)
+can_sleep = false
+linear_damp_mode = 1
+linear_damp = 0.0
+angular_damp_mode = 1
+angular_damp = 0.0
+collision_layer = 1
+collision_mask = 1
+physics_material_override = SubResource("pm")
+
+[node name="ColL" type="CollisionShape3D" parent="Link"]
+shape = SubResource("cap")
+
+[node name="Hinge" type="HingeJoint3D" parent="Anchor"]
+transform = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0)
+node_a = NodePath("..")
+node_b = NodePath("../../Link")
+angular_limit/enable = true
+angular_limit/lower = -3.1416
+angular_limit/upper = 3.1416

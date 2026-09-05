@@ -1,0 +1,59 @@
+"""mjcf2godot emit paths must follow --out, not a hardcoded walking robot folder."""
+
+from __future__ import annotations
+
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+from mjcf2godot.convert import convert, godot_res_path
+from sim2sim.paths import microduck_rl
+
+ROLLERS = microduck_rl() / "src/mjlab_microduck/robot/microduck/scene_rollers.xml"
+
+
+class TestGodotResPath(unittest.TestCase):
+    def test_keeps_generated_robot_folder(self) -> None:
+        self.assertEqual(
+            godot_res_path(Path("/x/godot/generated/microduck_roller"), "meshes/a.obj"),
+            "res://generated/microduck_roller/meshes/a.obj",
+        )
+        self.assertEqual(
+            godot_res_path(Path("/x/godot/generated/microduck"), "meshes/a.obj"),
+            "res://generated/microduck/meshes/a.obj",
+        )
+
+
+class TestRollerTscnMeshPaths(unittest.TestCase):
+    @unittest.skipUnless(ROLLERS.is_file(), f"missing {ROLLERS}")
+    def test_roller_convert_does_not_point_at_walking_meshes(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            out = Path(td) / "generated" / "microduck_roller"
+            convert(ROLLERS, out)
+            tscn = (out / "robot.tscn").read_text(encoding="utf-8")
+            ext = [ln for ln in tscn.splitlines() if ln.startswith("[ext_resource")]
+            sample = ext[0] if ext else "no ext_resource"
+            self.assertTrue(
+                any("res://generated/microduck_roller/meshes/" in ln for ln in ext),
+                sample,
+            )
+            self.assertFalse(
+                any('path="res://generated/microduck/meshes/' in ln for ln in ext),
+                sample,
+            )
+            self.assertTrue((out / "meshes" / "unnamed_31_31.obj").is_file())
+            self.assertIn('parent="tire"', tscn)
+            self.assertIn('parent="tire_4"', tscn)
+            self.assertIn("SphereShape3D", tscn)
+            self.assertGreaterEqual(tscn.count('[sub_resource type="SphereShape3D"'), 4)
+            spec = json.loads((out / "robot_spec.json").read_text())
+            wheels = [j for j in spec["joints"] if str(j["name"]).startswith("passive_")]
+            self.assertEqual(len(wheels), 4)
+            for j in wheels:
+                self.assertFalse(j["limited"], j["name"])
+                self.assertEqual(j["frictionloss"], 0.0, j["name"])
+
+
+if __name__ == "__main__":
+    unittest.main()

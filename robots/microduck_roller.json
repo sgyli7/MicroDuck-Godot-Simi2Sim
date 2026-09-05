@@ -1,0 +1,16 @@
+{
+  "name": "microduck_roller",
+  "mjcf": "${MICRODUCK_RL}/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+  "godot_spec": "${SIM2SIM_ROOT}/godot/generated/microduck_roller/robot_spec.json",
+  "base_body": "trunk_base",
+  "timestep": 0.005,
+  "decimation": 4,
+  "action_scale": 1.0,
+  "current_limit_a": 1.75,
+  "reset_z": 0.1385,
+  "home": [0.0, -0.0873, -0.4579, -0.0049, 0.4530, 0.3491, 0.3491, 0.0, 0.0, 0.0, 0.0873, 0.4579, 0.0049, -0.4530],
+  "policies": {
+    "roller": "${MICRODUCK_POLICIES}/roller.onnx",
+    "roller_crouch": "${MICRODUCK_POLICIES}/roller_crouch.onnx"
+  }
+}

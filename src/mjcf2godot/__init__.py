@@ -1,0 +1,1 @@
+"""MJCF → Godot converter package."""

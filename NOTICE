@@ -1,0 +1,28 @@
+MicroDuck-Godot-Simi2Sim
+Copyright 2026 the MicroDuck-Godot-Simi2Sim contributors
+
+This product includes original MuJoCo ↔ Godot/Jolt sim2sim tooling licensed
+under the Apache License, Version 2.0. See LICENSE.
+
+Third-party software and assets
+-------------------------------
+
+Godot Procedural Forest Demo (optional terrain vendor)
+  https://github.com/GamesNotDeveloped/godot-forest-demo
+  Copyright GamesNotDeveloped
+  License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+  Wired locally by godot/scripts/setup_forest_vendor.sh; not shipped in git.
+  If you distribute a build that includes this demo or its Sketchfab models,
+  retain attribution as required by CC BY 4.0 and the per-asset license.txt
+  files in that repository.
+
+Pollen Robotics Microduck (robot MJCF, official ONNX policies, runtime)
+  https://github.com/pollen-robotics/microduck
+  https://github.com/pollen-robotics/microduck_rl
+  Software: Apache License 2.0
+  3D model files in microduck_rl: Creative Commons BY-SA-NC
+  This repository does not redistribute those meshes or official weights.
+  Point MICRODUCK_RL and MICRODUCK_POLICIES at your local checkouts.
+
+MuJoCo, Godot Engine, Jolt Physics, onnxruntime, numpy, scipy, matplotlib
+  Used as dependencies under their respective licenses.

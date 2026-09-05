@@ -1,0 +1,1555 @@
+extends Node3D
+## Lockstep physics server v2. Protocol is MuJoCo-native (Z-up, quat wxyz).
+## Line-delimited JSON over TCP. Python is the only controller.
+
+const ROBOT_SCENE := "res://generated/microduck/robot.tscn"
+const DEFAULT_SPEC := "res://generated/microduck/robot_spec.json"
+var _robot_scene: String = ROBOT_SCENE
+var _spec_path: String = DEFAULT_SPEC
+# Off: unilateral world-Y 6DOF at 4 sole corners of the SAME rigid foot
+# (foot-floor collision excluded). Offset 6DOF is real (spike: 1 kg /
+# k=2000 / 5 cm offset sags 4.9 mm). C3: 8→6→4 springs, first-hit sag
+# 8 mm, t=0.92 tilt 28° (uniform sag, not MJ peel), jaw x only +0.10
+# (no Coulomb), t=1.20 jaw impulse 0.17 unloads the rest, hips, z_min
+# 0.0305. XZ damping with k=0 is a no-op. 4-corner springs are still a
+# support polygon.
+# Off: 2 outer-ridge points (MJ C3 first-hit sagittal pair), k=500×4.
+# t=0.12 sag 7.7 mm / 4 on; t=0.92 still 4 on / 32° / ankle z 0.000
+# (feet stay flat, torso folds, cx slides to −0.07); heel unloads at
+# t=1.00; t=1.20 jaw+2 toe springs then launch, z_min 0.0309, jaw x
+# +0.09. Sagittal Y springs resist pitch and have no Coulomb. Plant
+# stays hard 16-gon vs static box.
+const SOLE_SPRINGS := false
+const SOLE_SPRING_K := 250.0
+const SOLE_SPRING_C := 12.0
+# Off: migrating unilateral Y 6DOF at jaw_soft's lowest hull vert
+# (jaw-floor collision excluded) + heel camber. t=0.92 peel still
+# 74.7° / feet on / jpad +24 mm; t=1.00 feet already gone as the
+# spring first hits (8.8 mm, vn≈0.40); head punches to −47 mm, hips
+# t=1.14, z_min 0.0274. No 81°+feet+head window to catch. Plant stays
+# hard 16-gon vs static box.
+const JAW_SPRINGS := false
+const JAW_SPRING_K := 2000.0
+const JAW_SPRING_C := 89.0
+const SPRUNG_FLOOR := false
+const SPRUNG_FLOOR_K := 2000.0
+const SPRUNG_FLOOR_MASS := 0.15
+
+var _server: TCPServer
+var _peer: StreamPeerTCP
+var _buf: PackedByteArray = PackedByteArray()
+var _port: int = 9876
+var _spec: Dictionary = {}
+var _robot: Node = null
+var _bodies: Dictionary = {}  # name -> RigidBody3D
+var _base: RigidBody3D = null
+var _base_name: String = "trunk_base"
+var _joints: Array = []  # dicts
+var _ctrl: PackedFloat32Array = PackedFloat32Array()
+var _remaining: int = 0
+var _pending_send: bool = false
+var _t: float = 0.0
+var _frozen: bool = true
+var _pinned: Dictionary = {}
+# Jolt zeros velocity on freeze-as-static. Lockstep freeze/unfreeze between
+# Python commands was restarting every body from rest each control tick
+# (drop vz stuck at g*dt=0.196, walk xy collapsed to ~0.14 m).
+var _saved_lv: Dictionary = {}
+var _saved_av: Dictionary = {}
+var _reset_applied: Array = []
+var _reset_missing: Array = []
+var _reset_dump: Array = []
+var _iquat_base: Quaternion = Quaternion.IDENTITY  # inertial-from-body, unused if aligned
+var _dbg_ang_world: Array = [0.0, 0.0, 0.0]  # temp debug: world angular velocity
+var _body_iquat: Dictionary = {}  # name -> Vector4(w,x,y,z)
+var _body_ipos: Dictionary = {}  # name -> Vector3 in body frame
+var _heel_hosts: Dictionary = {}  # heel_name -> host_name
+var _heel_welds: Array = []  # HingeJoint3D
+var _sole: Dictionary = {}  # body name -> {verts: PackedVector3Array, shapes: Array, radius: float}
+var _floor_plate: RigidBody3D = null
+var _floor_spring: Generic6DOFJoint3D = null
+var _sole_springs: Array = []
+var _jaw_spring: Generic6DOFJoint3D = null
+var _jaw_body: RigidBody3D = null
+var _jaw_pad_y: float = 0.0
+var _held_now: Array = []
+var _taps: Array = []
+var _hud: CanvasLayer = null
+var _cam_offset: Vector3 = Vector3(0.65, 0.42, 0.65)
+var _window_title: String = "Microduck Sim2Sim"
+
+func _ready() -> void:
+	_parse_args()
+	# Headless lockstep uses --fixed-fps 200, so 1 physics step per "frame" is 200 Hz.
+	# A vsync window is ~60 fps; 1 step/frame would make 4 substeps take ~66 ms for
+	# 20 ms of sim (~0.3× realtime). Allow a burst of ticks per displayed frame.
+	if DisplayServer.get_name() == "headless":
+		Engine.max_physics_steps_per_frame = 1
+	else:
+		Engine.max_physics_steps_per_frame = 16
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	_load_spec()
+	_instance_robot()
+	_paint_robot_visuals()
+	_collect_bodies()
+	_setup_joints()
+	_setup_heels()
+	_setup_soles()
+	_setup_sprung_floor()
+	_setup_sole_springs()
+	_setup_jaw_spring()
+	_server = TCPServer.new()
+	var err := _server.listen(_port, "127.0.0.1")
+	if err != OK:
+		push_error("listen failed on port %s err=%s" % [_port, err])
+		get_tree().quit(1)
+		return
+	print("sim2sim_physics_server listening 127.0.0.1:%s" % _port)
+	print(
+		"play_pacing display=%s max_phys=%s max_fps=%s vsync=%s"
+		% [
+			DisplayServer.get_name(),
+			Engine.max_physics_steps_per_frame,
+			Engine.max_fps,
+			DisplayServer.window_get_vsync_mode(),
+		]
+	)
+	_freeze(true)
+	_setup_floor_checker()
+	_setup_play_ui()
+	if _hud != null and _hud.has_method("set_mode"):
+		_hud.set_mode("roller" if "roller" in _robot_scene else "walk")
+
+
+func _parse_args() -> void:
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--port="):
+			_port = int(a.substr(7))
+		elif a.begins_with("--spec="):
+			_spec_path = a.substr(7)
+		elif a.begins_with("--robot-scene="):
+			_robot_scene = a.substr(14)
+		elif a.begins_with("--base="):
+			_base_name = a.substr(7)
+
+
+func _load_spec() -> void:
+	if not FileAccess.file_exists(_spec_path):
+		push_warning("robot_spec.json missing — robot scene may still load")
+		return
+	var txt := FileAccess.get_file_as_string(_spec_path)
+	var parsed = JSON.parse_string(txt)
+	if typeof(parsed) != TYPE_DICTIONARY:
+		push_error("robot_spec.json parse failed")
+		return
+	_spec = parsed
+	for b in _spec.get("bodies", []):
+		var q: Array = b.get("iquat_wxyz", [1, 0, 0, 0])
+		_body_iquat[str(b["name"])] = Vector4(q[0], q[1], q[2], q[3])
+		var ip: Array = b.get("ipos", [0, 0, 0])
+		_body_ipos[str(b["name"])] = Vector3(float(ip[0]), float(ip[1]), float(ip[2]))
+
+
+func _instance_robot() -> void:
+	if not ResourceLoader.exists(_robot_scene):
+		push_error("missing %s — run mjcf2godot first" % _robot_scene)
+		return
+	_robot = load(_robot_scene).instantiate()
+	if "roller" in _robot_scene:
+		_window_title = "Microduck Sim2Sim · rollers"
+	else:
+		_window_title = "Microduck Sim2Sim"
+	DisplayServer.window_set_title(_window_title)
+	$RobotHost.add_child(_robot)
+
+
+func _collect_bodies() -> void:
+	_bodies.clear()
+	if _robot == null:
+		return
+	for child in _robot.get_children():
+		if child is RigidBody3D:
+			_bodies[str(child.name)] = child
+			child.can_sleep = false
+			child.freeze = true
+			child.contact_monitor = true
+			child.max_contacts_reported = 24
+			# Re-assert inertial-frame COM after shapes load. Jolt can otherwise
+			# keep a shape-derived COM even when the tscn says CUSTOM/zero.
+			child.center_of_mass_mode = RigidBody3D.CENTER_OF_MASS_MODE_CUSTOM
+			child.center_of_mass = Vector3.ZERO
+	if _bodies.has(_base_name):
+		_base = _bodies[_base_name]
+	elif _bodies.size() > 0:
+		_base = _bodies.values()[0]
+		_base_name = _base.name
+
+
+func _setup_joints() -> void:
+	_joints.clear()
+	if _robot == null or _spec.is_empty():
+		return
+	var act_by_joint: Dictionary = {}
+	for a in _spec.get("actuators", []):
+		act_by_joint[str(a["joint"])] = a
+	for j in _spec.get("joints", []):
+		if str(j.get("type", "")) != "hinge":
+			continue
+		var jname: String = str(j["name"])
+		var node := _find_joint_node("joint_" + jname)
+		if node == null:
+			push_warning("HingeJoint3D not found: joint_%s" % jname)
+			continue
+		var parent_name: String = str(j.get("parent", ""))
+		var child_name: String = str(j["body"])
+		var parent: PhysicsBody3D = null
+		if parent_name == "world" or int(j.get("parent_id", -1)) == 0:
+			parent = _robot.get_node_or_null("WorldAnchor") as PhysicsBody3D
+		elif _bodies.has(parent_name):
+			parent = _bodies[parent_name]
+		var child: RigidBody3D = _bodies.get(child_name)
+		if child == null:
+			push_warning("child body missing: %s" % child_name)
+			continue
+		var lo: float = -PI
+		var hi: float = PI
+		var limited := bool(j.get("limited", true))
+		if limited:
+			var rng: Array = j.get("range", [-PI, PI])
+			lo = float(rng[0])
+			hi = float(rng[1])
+		node.set("angular_limit/enable", limited)
+		node.set("angular_limit/lower", lo)
+		node.set("angular_limit/upper", hi)
+		node.set("motor/enable", false)
+		var kp := 0.0
+		var kv := 0.0
+		var fmin := -INF
+		var fmax := INF
+		var act_index := -1
+		if act_by_joint.has(jname):
+			var act: Dictionary = act_by_joint[jname]
+			kp = float(act.get("kp", 0.0))
+			kv = float(act.get("kv", 0.0))
+			var fr: Array = act.get("forcerange", [-0.96, 0.96])
+			fmin = float(fr[0])
+			fmax = float(fr[1])
+			act_index = int(act.get("id", -1))
+		var damping := float(j.get("damping", 0.0))
+		var armature := float(j.get("armature", 0.0))
+		var frictionloss := float(j.get("frictionloss", 0.0))
+		var ab: Array = j.get("axis_parent_body", [0, 0, 1])
+		var axis_pb := Vector3(float(ab[0]), float(ab[1]), float(ab[2]))
+		if axis_pb.length() < 1e-9:
+			axis_pb = Vector3(0, 0, 1)
+		axis_pb = axis_pb.normalized()
+		var ac: Array = j.get("axis_child_body", [0, 0, 1])
+		var axis_cb := Vector3(float(ac[0]), float(ac[1]), float(ac[2]))
+		if axis_cb.length() < 1e-9:
+			axis_cb = Vector3(0, 0, 1)
+		axis_cb = axis_cb.normalized()
+		# Jolt has no joint-space armature. True map is I += A n n^T but Godot
+		# only stores diagonal inertia. Add the diagonal of A nn^T and floor
+		# the other principals so cond(I) stays bounded (full anisotropic
+		# 1000:1 tensors made the first step |qd| explode).
+		var n_i := Vector3(0, 0, 1)
+		# Also apply to unactuated wheels: skipping A left I≈5e-7 on the two
+		# locked hinge axes and Jolt's hinge solver welded the wheel (nudge
+		# vx=0.5 died in 20 ms, ω stayed ~0). XML A=1e-4 is the bearing rotor.
+		if armature > 0.0:
+			var iq: Vector4 = _body_iquat.get(child_name, Vector4(1, 0, 0, 0))
+			var r_iq := Basis(Quaternion(iq.y, iq.z, iq.w, iq.x))
+			n_i = r_iq.transposed() * axis_cb
+			if n_i.length_squared() > 1e-12:
+				n_i = n_i.normalized()
+			var I := child.inertia
+			I.x += armature * n_i.x * n_i.x
+			I.y += armature * n_i.y * n_i.y
+			I.z += armature * n_i.z * n_i.z
+			var imax: float = maxf(I.x, maxf(I.y, I.z))
+			# cond=10: walk/cadence match. 15 and 30 both fell. Compensating
+			# A(1-Σn^4) onto hip_roll made local_ppo fall in run.
+			var ifloor: float = imax / 10.0
+			I.x = maxf(I.x, ifloor)
+			I.y = maxf(I.y, ifloor)
+			I.z = maxf(I.z, ifloor)
+			child.inertia = I
+		var rq: Array = j.get("rest_rel_q0_wxyz", [1, 0, 0, 0])
+		var rest_rel := Basis(Quaternion(float(rq[1]), float(rq[2]), float(rq[3]), float(rq[0])))
+		_joints.append({
+			"name": jname,
+			"node": node,
+			"parent": parent,
+			"parent_name": parent_name,
+			"child": child,
+			"child_name": child_name,
+			"kp": kp,
+			"kv": kv,
+			"fmin": fmin,
+			"fmax": fmax,
+			"damping": damping,
+			"armature": armature,
+			"frictionloss": frictionloss,
+			"act_index": act_index,
+			"axis_parent_body": axis_pb,
+			"axis_child_body": axis_cb,
+			"n_i": n_i,
+			"rest_rel": rest_rel,
+			"lo": lo,
+			"hi": hi,
+			"limited": limited,
+			"q_rebake": 0.0,
+		})
+	var nu := int(_spec.get("nu", 0))
+	_ctrl.resize(nu)
+	_ctrl.fill(0.0)
+	for j in _joints:
+		var parent = j["parent"]
+		if parent is RigidBody3D:
+			_exclude_ancestors(j["child"], parent)
+
+
+func _rebake_joints() -> void:
+	# Jolt captures hinge frames when node_a/node_b are assigned. After a
+	# kinematic teleport those frames still describe q=0, so the solver
+	# yanks every limb back in one tick. Re-assign paths at the current pose
+	# and shift limits so XML [lo,hi] stay relative to MuJoCo q=0.
+	for j in _joints:
+		var node: HingeJoint3D = j["node"]
+		var q := _joint_q(j)
+		j["q_rebake"] = q
+		if bool(j.get("limited", true)):
+			node.set("angular_limit/lower", float(j["lo"]) - q)
+			node.set("angular_limit/upper", float(j["hi"]) - q)
+		var a: NodePath = node.node_a
+		var b: NodePath = node.node_b
+		node.node_a = NodePath()
+		node.node_b = NodePath()
+		node.node_a = a
+		node.node_b = b
+
+
+func _setup_heels() -> void:
+	# Extra RigidBody3D siblings named "{foot}__heel", welded with a 0-limit hinge.
+	_heel_hosts.clear()
+	_heel_welds.clear()
+	for key in _bodies.keys():
+		var hname := str(key)
+		var host_name := ""
+		if hname.ends_with("__heel"):
+			host_name = hname.substr(0, hname.length() - 6)
+		elif hname.ends_with("__toe"):
+			host_name = hname.substr(0, hname.length() - 5)
+		else:
+			continue
+		_heel_hosts[hname] = host_name
+		var heel: RigidBody3D = _bodies[hname]
+		if _bodies.has(host_name):
+			var host: RigidBody3D = _bodies[host_name]
+			heel.add_collision_exception_with(host)
+			host.add_collision_exception_with(heel)
+			for j in _joints:
+				if j["child"] == host and j["parent"] is RigidBody3D:
+					var shin: RigidBody3D = j["parent"]
+					heel.add_collision_exception_with(shin)
+					shin.add_collision_exception_with(heel)
+		if _robot != null:
+			var weld := _robot.find_child("weld_" + hname, true, false)
+			if weld is HingeJoint3D:
+				_heel_welds.append(weld)
+	_rebake_welds()
+
+
+func _setup_soles() -> void:
+	# Snap the 3 foot spheres onto the currently lowest mesh verts (MJ
+	# contact reduction: 1–3 points, migrating as the foot pitches).
+	_sole.clear()
+	for binfo in _spec.get("bodies", []):
+		if typeof(binfo) != TYPE_DICTIONARY:
+			continue
+		var bname := str(binfo.get("name", ""))
+		if not binfo.has("sole_verts") or not _bodies.has(bname):
+			continue
+		var raw: Array = binfo.get("sole_verts", [])
+		var packed := PackedVector3Array()
+		for v in raw:
+			if typeof(v) != TYPE_ARRAY or v.size() < 3:
+				continue
+			packed.append(Vector3(float(v[0]), float(v[1]), float(v[2])))
+		if packed.is_empty():
+			continue
+		var body: RigidBody3D = _bodies[bname]
+		var shapes: Array = []
+		for child in body.get_children():
+			if child is CollisionShape3D and str(child.name).contains("foot_collision"):
+				shapes.append(child)
+		if shapes.is_empty():
+			continue
+		var radius := float(binfo.get("sole_radius", 0.001))
+		_sole[bname] = {
+			"verts": packed,
+			"shapes": shapes,
+			"radius": radius,
+			"last_idx": PackedInt32Array(),
+			"pinned": false,
+		}
+	_update_sole_spheres()
+
+
+func _fps_from_idx(world_y: PackedFloat32Array, verts: PackedVector3Array, pool: Array, k: int) -> PackedInt32Array:
+	var out := PackedInt32Array()
+	if pool.is_empty() or k <= 0:
+		return out
+	var seed_i := int(pool[0])
+	var seed_y := world_y[seed_i]
+	for pi in pool:
+		var i0 := int(pi)
+		if world_y[i0] < seed_y:
+			seed_y = world_y[i0]
+			seed_i = i0
+	out.append(seed_i)
+	while out.size() < mini(k, pool.size()):
+		var best_i := int(pool[0])
+		var best_d := -1.0
+		for pi in pool:
+			var i2 := int(pi)
+			if out.has(i2):
+				continue
+			var md := 1.0e9
+			for cj in out:
+				var d: float = verts[i2].distance_squared_to(verts[int(cj)])
+				if d < md:
+					md = d
+			if md > best_d:
+				best_d = md
+				best_i = i2
+		if out.has(best_i):
+			break
+		out.append(best_i)
+	return out
+
+
+func _update_sole_spheres() -> void:
+	# MJ contact reduction: 1–3 points on the current 0.4 mm lowest band.
+	# No posterior pin — that either froze the heel (dump) or unlatched as
+	# the same toe verts moved in world x.
+	const BAND := 0.0004
+	for bname in _sole.keys():
+		if not _bodies.has(bname):
+			continue
+		var info: Dictionary = _sole[bname]
+		var body: RigidBody3D = _bodies[bname]
+		var verts: PackedVector3Array = info["verts"]
+		var shapes: Array = info["shapes"]
+		var radius: float = float(info["radius"])
+		if verts.is_empty() or shapes.is_empty():
+			continue
+		var xf := body.global_transform
+		var n := verts.size()
+		var world_y := PackedFloat32Array()
+		world_y.resize(n)
+		var ymin := 1.0e9
+		for i in range(n):
+			world_y[i] = (xf * verts[i]).y
+			if world_y[i] < ymin:
+				ymin = world_y[i]
+		var k := shapes.size()
+		var band: Array = []
+		var band_y := ymin + BAND
+		for i in range(n):
+			if world_y[i] <= band_y:
+				band.append(i)
+		if band.size() < k:
+			var order: Array = []
+			for i in range(n):
+				order.append(i)
+			order.sort_custom(func(a, b): return world_y[a] < world_y[b])
+			band = order.slice(0, mini(k, order.size()))
+		var chosen := _fps_from_idx(world_y, verts, band, k)
+		info["last_idx"] = chosen
+		var local_up := xf.basis.inverse() * Vector3.UP
+		if local_up.length_squared() < 1e-12:
+			local_up = Vector3(0, 1, 0)
+		else:
+			local_up = local_up.normalized()
+		for si in range(k):
+			if chosen.is_empty():
+				break
+			var vi: int = int(chosen[si % chosen.size()])
+			(shapes[si] as CollisionShape3D).position = verts[vi] + local_up * radius
+
+
+func _sync_heels() -> void:
+	for heel_name in _heel_hosts.keys():
+		var host_name: String = _heel_hosts[heel_name]
+		if not _bodies.has(host_name):
+			continue
+		var host: RigidBody3D = _bodies[host_name]
+		var heel: RigidBody3D = _bodies[heel_name]
+		heel.global_transform = host.global_transform
+		heel.force_update_transform()
+		heel.linear_velocity = host.linear_velocity
+		heel.angular_velocity = host.angular_velocity
+
+
+func _rebake_welds() -> void:
+	for node in _heel_welds:
+		var a: NodePath = node.node_a
+		var b: NodePath = node.node_b
+		node.node_a = NodePath()
+		node.node_b = NodePath()
+		node.node_a = a
+		node.node_b = b
+
+
+func _exclude_ancestors(child: RigidBody3D, start: PhysicsBody3D) -> void:
+	# MuJoCo excludes parent–child only. 2-hop hulls (hip vs shin) still
+	# overlap after downsampling, so skip parent and grandparent. hops=16
+	# also dropped trunk↔foot and made the C3 pile ~15 mm too short.
+	var cur: Node = start
+	var hops := 0
+	while cur != null and cur is RigidBody3D and hops < 2:
+		var rb: RigidBody3D = cur as RigidBody3D
+		if rb == child:
+			break
+		child.add_collision_exception_with(rb)
+		rb.add_collision_exception_with(child)
+		var nxt: PhysicsBody3D = null
+		for j in _joints:
+			if j["child"] == rb:
+				nxt = j["parent"]
+				break
+		cur = nxt
+		hops += 1
+
+
+func _find_joint_node(jname: String) -> HingeJoint3D:
+	if _robot == null:
+		return null
+	var n := _robot.find_child(jname, true, false)
+	return n as HingeJoint3D
+
+
+func _mujoco_body_basis(body: PhysicsBody3D, body_name: String) -> Basis:
+	if body == null or not (body is RigidBody3D):
+		return Basis.IDENTITY
+	var qI := _basis_to_m_quat((body as RigidBody3D).global_transform.basis)
+	var rI := Basis(qI)
+	var iq: Vector4 = _body_iquat.get(body_name, Vector4(1, 0, 0, 0))
+	var rIQ := Basis(Quaternion(iq.y, iq.z, iq.w, iq.x))
+	return rI * rIQ.transposed()
+
+
+func _body_rel(parent: PhysicsBody3D, parent_name: String, child: RigidBody3D, child_name: String) -> Basis:
+	var rp := _mujoco_body_basis(parent, parent_name)
+	var rc := _mujoco_body_basis(child, child_name)
+	return rp.transposed() * rc
+
+
+func _twist_about(rrel: Basis, axis: Vector3) -> float:
+	axis = axis.normalized()
+	var q := rrel.get_rotation_quaternion()
+	var v := Vector3(q.x, q.y, q.z)
+	var proj := axis * v.dot(axis)
+	var tq := Quaternion(proj.x, proj.y, proj.z, q.w)
+	if tq.length_squared() < 1e-16:
+		return 0.0
+	tq = tq.normalized()
+	var imag := Vector3(tq.x, tq.y, tq.z)
+	var ang := 2.0 * atan2(imag.length(), tq.w)
+	if imag.dot(axis) < 0.0:
+		ang = -ang
+	while ang > PI:
+		ang -= TAU
+	while ang < -PI:
+		ang += TAU
+	return ang
+
+
+func _joint_q(j: Dictionary) -> float:
+	var rrel := _body_rel(j["parent"], str(j["parent_name"]), j["child"], str(j["child_name"]))
+	var rest: Basis = j["rest_rel"]
+	# MuJoCo hinge: R_rel(q) = Rot(axis_parent, q) @ R_rel(0)
+	var delta: Basis = rrel * rest.transposed()
+	return _twist_about(delta, j["axis_parent_body"])
+
+
+func _axis_godot(j: Dictionary) -> Vector3:
+	var node: Node3D = j["node"]
+	var hz := node.global_transform.basis.z.normalized()
+	# Keep the same sense as axis_parent_body (MuJoCo right-hand).
+	var expected := _m2g(_mujoco_body_basis(j["parent"], str(j["parent_name"])) * (j["axis_parent_body"] as Vector3))
+	if hz.dot(expected) < 0.0:
+		hz = -hz
+	return hz
+
+
+func _joint_qd(j: Dictionary) -> float:
+	var axis := _axis_godot(j)
+	var w: Vector3 = (j["child"] as RigidBody3D).angular_velocity
+	var parent = j["parent"]
+	if parent is RigidBody3D:
+		w -= (parent as RigidBody3D).angular_velocity
+	return w.dot(axis)
+
+
+func _setup_sole_springs() -> void:
+	_sole_springs.clear()
+	if not SOLE_SPRINGS:
+		return
+	var floor_body := get_node_or_null("World/Floor") as StaticBody3D
+	if floor_body == null:
+		push_warning("sole_springs: missing World/Floor")
+		return
+	var world := get_node("World") as Node3D
+	for binfo in _spec.get("bodies", []):
+		if typeof(binfo) != TYPE_DICTIONARY:
+			continue
+		var bname := str(binfo.get("name", ""))
+		if not binfo.has("sole_corners") or not _bodies.has(bname):
+			continue
+		var foot: RigidBody3D = _bodies[bname]
+		foot.add_collision_exception_with(floor_body)
+		floor_body.add_collision_exception_with(foot)
+		var raw: Array = binfo.get("sole_corners", [])
+		for i in range(raw.size()):
+			var v: Array = raw[i]
+			if typeof(v) != TYPE_ARRAY or v.size() < 3:
+				continue
+			var local := Vector3(float(v[0]), float(v[1]), float(v[2]))
+			var j := Generic6DOFJoint3D.new()
+			j.name = "sole_spring_%s_%d" % [bname, i]
+			world.add_child(j)
+			for axis in ["x", "y", "z"]:
+				j.set("linear_limit_%s/enabled" % axis, false)
+				j.set("angular_limit_%s/enabled" % axis, false)
+				j.set("linear_spring_%s/enabled" % axis, true)
+				j.set("angular_spring_%s/enabled" % axis, false)
+			j.set("linear_spring_x/stiffness", 0.0)
+			j.set("linear_spring_x/damping", 0.0)
+			j.set("linear_spring_z/stiffness", 0.0)
+			j.set("linear_spring_z/damping", 0.0)
+			j.set("linear_spring_y/stiffness", 0.0)
+			j.set("linear_spring_y/damping", 0.0)
+			j.set("linear_spring_y/equilibrium_point", 0.0)
+			j.node_a = j.get_path_to(floor_body)
+			j.node_b = j.get_path_to(foot)
+			_sole_springs.append({"joint": j, "foot": foot, "local": local, "name": bname})
+	print("sole_springs n=%d k=%.0f" % [_sole_springs.size(), SOLE_SPRING_K])
+
+
+func _rebake_sole_springs() -> void:
+	for s in _sole_springs:
+		var foot: RigidBody3D = s["foot"]
+		var j: Generic6DOFJoint3D = s["joint"]
+		var local: Vector3 = s["local"]
+		var corner: Vector3 = foot.global_transform * local
+		j.global_transform = Transform3D(Basis.IDENTITY, Vector3(corner.x, 0.0, corner.z))
+		var saved := foot.global_transform
+		foot.global_transform.origin = j.global_position - saved.basis * local
+		foot.force_update_transform()
+		var a: NodePath = j.node_a
+		var b: NodePath = j.node_b
+		j.node_a = NodePath()
+		j.node_b = NodePath()
+		j.node_a = a
+		j.node_b = b
+		foot.global_transform = saved
+		foot.force_update_transform()
+	_update_sole_springs()
+
+
+func _update_sole_springs() -> void:
+	for s in _sole_springs:
+		var foot: RigidBody3D = s["foot"]
+		var j: Generic6DOFJoint3D = s["joint"]
+		var local: Vector3 = s["local"]
+		var py: float = (foot.global_transform * local).y
+		var on := py < 0.0
+		j.set("linear_spring_y/stiffness", SOLE_SPRING_K if on else 0.0)
+		j.set("linear_spring_y/damping", SOLE_SPRING_C if on else 0.0)
+		# Viscous XZ only — stiffness would nail the 4 corners and lock pitch.
+		var cxz := 200.0 if on else 0.0
+		j.set("linear_spring_x/stiffness", 0.0)
+		j.set("linear_spring_x/damping", cxz)
+		j.set("linear_spring_z/stiffness", 0.0)
+		j.set("linear_spring_z/damping", cxz)
+
+
+func _setup_jaw_spring() -> void:
+	_jaw_spring = null
+	_jaw_body = null
+	_jaw_pad_y = 0.0
+	if not JAW_SPRINGS:
+		return
+	var floor_body := get_node_or_null("World/Floor") as StaticBody3D
+	if floor_body == null or not _bodies.has("jaw_soft"):
+		push_warning("jaw_spring: missing Floor or jaw_soft")
+		return
+	_jaw_body = _bodies["jaw_soft"]
+	_jaw_body.add_collision_exception_with(floor_body)
+	floor_body.add_collision_exception_with(_jaw_body)
+	var world := get_node("World") as Node3D
+	var j := Generic6DOFJoint3D.new()
+	j.name = "jaw_spring"
+	world.add_child(j)
+	for axis in ["x", "y", "z"]:
+		j.set("linear_limit_%s/enabled" % axis, false)
+		j.set("angular_limit_%s/enabled" % axis, false)
+		j.set("linear_spring_%s/enabled" % axis, true)
+		j.set("angular_spring_%s/enabled" % axis, false)
+	j.set("linear_spring_x/stiffness", 0.0)
+	j.set("linear_spring_x/damping", 0.0)
+	j.set("linear_spring_z/stiffness", 0.0)
+	j.set("linear_spring_z/damping", 0.0)
+	j.set("linear_spring_y/stiffness", 0.0)
+	j.set("linear_spring_y/damping", 0.0)
+	j.set("linear_spring_y/equilibrium_point", 0.0)
+	j.node_a = j.get_path_to(floor_body)
+	j.node_b = j.get_path_to(_jaw_body)
+	_jaw_spring = j
+	print("jaw_spring on k=%.0f c=%.0f" % [JAW_SPRING_K, JAW_SPRING_C])
+
+
+func _jaw_lowest_world() -> Vector3:
+	if _jaw_body == null:
+		return Vector3(0.0, 1.0e9, 0.0)
+	var best := Vector3(0.0, 1.0e9, 0.0)
+	for c in _jaw_body.get_children():
+		if not (c is CollisionShape3D):
+			continue
+		var cs := c as CollisionShape3D
+		if cs.disabled or cs.shape == null:
+			continue
+		var xf := cs.global_transform
+		var sh := cs.shape
+		if sh is ConvexPolygonShape3D:
+			for p in (sh as ConvexPolygonShape3D).points:
+				var w: Vector3 = xf * p
+				if w.y < best.y:
+					best = w
+		elif sh is SphereShape3D:
+			var w: Vector3 = xf.origin
+			w.y -= (sh as SphereShape3D).radius
+			if w.y < best.y:
+				best = w
+		elif sh is CapsuleShape3D:
+			var cap := sh as CapsuleShape3D
+			var half := 0.5 * cap.height
+			for s in [-1.0, 1.0]:
+				var local := Vector3(0.0, s * half, 0.0)
+				var w: Vector3 = xf * local
+				w.y -= cap.radius
+				if w.y < best.y:
+					best = w
+	return best
+
+
+func _recapture_jaw_spring() -> void:
+	if _jaw_spring == null:
+		return
+	var a: NodePath = _jaw_spring.node_a
+	var b: NodePath = _jaw_spring.node_b
+	_jaw_spring.node_a = NodePath()
+	_jaw_spring.node_b = NodePath()
+	_jaw_spring.node_a = a
+	_jaw_spring.node_b = b
+
+
+func _rebake_jaw_spring() -> void:
+	if _jaw_spring == null:
+		return
+	var p := _jaw_lowest_world()
+	_jaw_spring.global_transform = Transform3D(Basis.IDENTITY, Vector3(p.x, 0.0, p.z))
+	_recapture_jaw_spring()
+	_update_jaw_spring()
+
+
+func _update_jaw_spring() -> void:
+	if _jaw_spring == null:
+		return
+	var p := _jaw_lowest_world()
+	_jaw_pad_y = p.y
+	var on := p.y < 0.0
+	var cur := _jaw_spring.global_position
+	var dxz := Vector2(p.x - cur.x, p.z - cur.z).length()
+	var was_on: bool = float(_jaw_spring.get("linear_spring_y/stiffness")) > 0.0
+	if on and ((not was_on) or dxz > 0.002):
+		_jaw_spring.global_transform = Transform3D(Basis.IDENTITY, Vector3(p.x, 0.0, p.z))
+		_recapture_jaw_spring()
+	_jaw_spring.set("linear_spring_y/stiffness", JAW_SPRING_K if on else 0.0)
+	_jaw_spring.set("linear_spring_y/damping", JAW_SPRING_C if on else 0.0)
+
+
+func _setup_sprung_floor() -> void:
+	if not SPRUNG_FLOOR:
+		return
+	var static_floor := get_node_or_null("World/Floor") as StaticBody3D
+	if static_floor != null:
+		for c in static_floor.get_children():
+			if c is CollisionShape3D:
+				(c as CollisionShape3D).disabled = true
+		static_floor.collision_layer = 0
+		static_floor.collision_mask = 0
+	var world := get_node("World") as Node3D
+	var anchor := StaticBody3D.new()
+	anchor.name = "FloorAnchor"
+	anchor.position = Vector3.ZERO
+	anchor.collision_layer = 0
+	anchor.collision_mask = 0
+	world.add_child(anchor)
+	_floor_plate = RigidBody3D.new()
+	_floor_plate.name = "SprungFloor"
+	_floor_plate.mass = SPRUNG_FLOOR_MASS
+	_floor_plate.gravity_scale = 0.0
+	_floor_plate.can_sleep = false
+	_floor_plate.position = Vector3.ZERO
+	_floor_plate.center_of_mass_mode = RigidBody3D.CENTER_OF_MASS_MODE_CUSTOM
+	_floor_plate.center_of_mass = Vector3.ZERO
+	_floor_plate.collision_layer = 1
+	_floor_plate.collision_mask = 1
+	_floor_plate.contact_monitor = true
+	_floor_plate.max_contacts_reported = 24
+	var mat := PhysicsMaterial.new()
+	mat.friction = 1.0
+	mat.bounce = 0.0
+	_floor_plate.physics_material_override = mat
+	var csh := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(4.0, 0.02, 4.0)
+	csh.shape = box
+	csh.position = Vector3(0.0, -0.01, 0.0)
+	_floor_plate.add_child(csh)
+	world.add_child(_floor_plate)
+	_floor_spring = Generic6DOFJoint3D.new()
+	_floor_spring.name = "FloorSpring"
+	anchor.add_child(_floor_spring)
+	_floor_spring.node_a = _floor_spring.get_path_to(anchor)
+	_floor_spring.node_b = _floor_spring.get_path_to(_floor_plate)
+	for axis in ["x", "y", "z"]:
+		_floor_spring.set("linear_limit_%s/enabled" % axis, false)
+		_floor_spring.set("angular_limit_%s/enabled" % axis, false)
+		_floor_spring.set("linear_spring_%s/enabled" % axis, true)
+		_floor_spring.set("angular_spring_%s/enabled" % axis, true)
+		_floor_spring.set("angular_spring_%s/stiffness" % axis, 1.0e5)
+		_floor_spring.set("angular_spring_%s/damping" % axis, 100.0)
+	_floor_spring.set("linear_spring_x/stiffness", 1.0e5)
+	_floor_spring.set("linear_spring_x/damping", 200.0)
+	_floor_spring.set("linear_spring_z/stiffness", 1.0e5)
+	_floor_spring.set("linear_spring_z/damping", 200.0)
+	_floor_spring.set("linear_spring_y/stiffness", SPRUNG_FLOOR_K)
+	_floor_spring.set("linear_spring_y/damping", 89.0)
+	_floor_spring.set("linear_spring_y/equilibrium_point", 0.0)
+	print("sprung_floor on k=%.0f mass=%.2f" % [SPRUNG_FLOOR_K, SPRUNG_FLOOR_MASS])
+
+
+func _reset_sprung_floor() -> void:
+	if _floor_plate == null:
+		return
+	_floor_plate.global_transform = Transform3D.IDENTITY
+	_floor_plate.linear_velocity = Vector3.ZERO
+	_floor_plate.angular_velocity = Vector3.ZERO
+
+
+func _snapshot_velocities() -> void:
+	_saved_lv.clear()
+	_saved_av.clear()
+	for key in _bodies.keys():
+		var b: RigidBody3D = _bodies[key]
+		_saved_lv[key] = b.linear_velocity
+		_saved_av[key] = b.angular_velocity
+	if _floor_plate != null:
+		_saved_lv["__floor"] = _floor_plate.linear_velocity
+		_saved_av["__floor"] = _floor_plate.angular_velocity
+
+
+func _restore_velocities() -> void:
+	for key in _bodies.keys():
+		if _pinned.has(key):
+			continue
+		if not _saved_lv.has(key):
+			continue
+		var b: RigidBody3D = _bodies[key]
+		b.linear_velocity = _saved_lv[key]
+		b.angular_velocity = _saved_av[key]
+		b.sleeping = false
+	if _floor_plate != null and _saved_lv.has("__floor"):
+		_floor_plate.linear_velocity = _saved_lv["__floor"]
+		_floor_plate.angular_velocity = _saved_av["__floor"]
+		_floor_plate.sleeping = false
+
+
+func _freeze(v: bool) -> void:
+	if v:
+		_snapshot_velocities()
+	_frozen = v
+	for key in _bodies.keys():
+		if (not v) and _pinned.has(key):
+			continue
+		(_bodies[key] as RigidBody3D).freeze = v
+	if _floor_plate != null:
+		_floor_plate.freeze = v
+	if not v:
+		_restore_velocities()
+
+
+func _physics_process(delta: float) -> void:
+	if DisplayServer.get_name() != "headless":
+		Engine.max_physics_steps_per_frame = 32
+	if _peer == null:
+		_try_accept()
+		return
+	if _peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+		_peer = null
+		_buf = PackedByteArray()
+		return
+	if _remaining <= 0:
+		if _pending_send:
+			_send_state("step")
+			_pending_send = false
+		# Hold this physics tick until Python replies. Do not freeze-as-static:
+		# Jolt zeros velocity on freeze, and even save/restore loses contact
+		# warmstart — walk worked, run still dumped at t≈9 s.
+		var cmd = _recv_line()
+		while cmd == null:
+			if _peer == null or _peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+				_freeze(true)
+				return
+			OS.delay_usec(200)
+			cmd = _recv_line()
+		_handle(cmd)
+		if _remaining <= 0:
+			return
+	_apply_pd()
+	_update_sole_spheres()
+	_update_sole_springs()
+	_update_jaw_spring()
+	_t += delta
+	_remaining -= 1
+	if _remaining <= 0:
+		_pending_send = true
+
+
+func _try_accept() -> void:
+	if _server != null and _server.is_connection_available():
+		_peer = _server.take_connection()
+		_peer.set_no_delay(true)
+		print("sim2sim_physics_server client connected")
+
+
+func _recv_line() -> Variant:
+	if _peer == null or _peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+		return null
+	var n := _peer.get_available_bytes()
+	if n > 0:
+		var got: Array = _peer.get_data(n)
+		if int(got[0]) != OK:
+			return null
+		_buf.append_array(got[1])
+	var idx := _buf.find(10)  # \n
+	if idx < 0:
+		return null
+	var line := _buf.slice(0, idx).get_string_from_utf8()
+	_buf = _buf.slice(idx + 1)
+	if line.ends_with("\r"):
+		line = line.substr(0, line.length() - 1)
+	if line.is_empty():
+		return _recv_line()
+	return JSON.parse_string(line)
+
+
+func _send_dict(d: Dictionary) -> void:
+	if _peer == null:
+		return
+	var s := JSON.stringify(d) + "\n"
+	_peer.put_data(s.to_utf8_buffer())
+
+
+func _handle(cmd: Variant) -> void:
+	if typeof(cmd) != TYPE_DICTIONARY:
+		_send_dict({"ok": false, "error": "not an object"})
+		return
+	var name := str(cmd.get("cmd", ""))
+	if name == "hello":
+		var inertias: Array = []
+		for j in _joints:
+			var ch: RigidBody3D = j["child"]
+			var node: HingeJoint3D = j["node"]
+			inertias.append({
+				"joint": j["name"],
+				"body": j["child_name"],
+				"inertia": [ch.inertia.x, ch.inertia.y, ch.inertia.z],
+				"armature": j["armature"],
+				"n_i": [j["n_i"].x, j["n_i"].y, j["n_i"].z],
+				"limited": bool(j.get("limited", true)),
+				"hinge_enable": node.get("angular_limit/enable"),
+				"hinge_lo": node.get("angular_limit/lower"),
+				"hinge_hi": node.get("angular_limit/upper"),
+			})
+		_send_dict({
+			"ok": true,
+			"cmd": "hello",
+			"ticks_per_second": Engine.physics_ticks_per_second,
+			"nu": _ctrl.size(),
+			"n_joints": _joints.size(),
+			"n_bodies": _bodies.size(),
+			"robot_scene": _robot_scene,
+			"spec_path": _spec_path,
+			"window_title": _window_title,
+			"inertias": inertias,
+		})
+	elif name == "reset":
+		_do_reset(cmd)
+	elif name == "step":
+		if _frozen:
+			_freeze(false)
+		if cmd.has("hud") and _hud != null and _hud.has_method("set_status"):
+			_hud.call("set_status", str(cmd.get("hud", "")))
+		var ctrl: Array = cmd.get("ctrl", [])
+		for i in range(mini(ctrl.size(), _ctrl.size())):
+			_ctrl[i] = float(ctrl[i])
+		_remaining = int(cmd.get("n_substeps", 1))
+		if _remaining < 1:
+			_remaining = 1
+	elif name == "set_tau_limit":
+		var lim := float(cmd.get("limit", 0.0))
+		var n := 0
+		for j in _joints:
+			if int(j["act_index"]) < 0:
+				continue
+			j["fmin"] = -lim
+			j["fmax"] = lim
+			n += 1
+		_send_dict({"ok": true, "cmd": "set_tau_limit", "limit": lim, "n": n})
+	elif name == "pin":
+		var names: Array = cmd.get("names", [])
+		for n in names:
+			var key := str(n)
+			if _bodies.has(key):
+				_pinned[key] = true
+				(_bodies[key] as RigidBody3D).freeze = true
+		_send_dict({"ok": true, "cmd": "pin"})
+	elif name == "unpin":
+		_freeze(false)
+		_send_dict({"ok": true, "cmd": "unpin"})
+	elif name == "nudge":
+		if _base != null:
+			var lin: Array = cmd.get("linvel", [0.0, 0.0, 0.0])
+			_base.linear_velocity += _m2g(Vector3(float(lin[0]), float(lin[1]), float(lin[2])))
+		_send_dict({"ok": true, "cmd": "nudge"})
+	elif name == "screenshot":
+		var path := str(cmd.get("path", "/tmp/sim2sim-play.png"))
+		var tex: ViewportTexture = get_viewport().get_texture()
+		if tex == null:
+			_send_dict({"ok": false, "error": "no viewport texture", "cmd": "screenshot"})
+		else:
+			var img: Image = tex.get_image()
+			var err := img.save_png(path)
+			_send_dict({"ok": err == OK, "path": path, "cmd": "screenshot", "w": img.get_width(), "h": img.get_height()})
+	elif name == "close":
+		_send_dict({"ok": true, "cmd": "close"})
+		get_tree().quit(0)
+	else:
+		_send_dict({"ok": false, "error": "unknown cmd", "cmd": name})
+
+
+func _do_reset(cmd: Dictionary) -> void:
+	_remaining = 0
+	_pending_send = false
+	_t = 0.0
+	_pinned.clear()
+	var ctrl: Array = cmd.get("ctrl", [])
+	for i in range(mini(ctrl.size(), _ctrl.size())):
+		_ctrl[i] = float(ctrl[i])
+	_freeze(true)
+	var poses: Array = cmd.get("bodies", [])
+	var applied: Array = []
+	var missing: Array = []
+	for p in poses:
+		var bname := str(p.get("name", ""))
+		if not _bodies.has(bname):
+			missing.append(bname)
+			continue
+		var body: RigidBody3D = _bodies[bname]
+		var pos_m: Array = p.get("pos", [0, 0, 0])
+		var quat_wxyz: Array = p.get("quat", [1, 0, 0, 0])
+		var lin_m: Array = p.get("linvel", [0, 0, 0])
+		var ang_m: Array = p.get("angvel", [0, 0, 0])
+		var xf := Transform3D()
+		xf.origin = _m2g(Vector3(pos_m[0], pos_m[1], pos_m[2]))
+		xf.basis = _m_quat_to_basis(quat_wxyz)
+		body.global_transform = xf
+		body.force_update_transform()
+		body.linear_velocity = _m2g(Vector3(lin_m[0], lin_m[1], lin_m[2]))
+		body.angular_velocity = _m2g(Vector3(ang_m[0], ang_m[1], ang_m[2]))
+		applied.append(bname)
+	# Reset wrote velocities while frozen; refresh the lockstep snapshot
+	# so the first unfreeze does not restore a previous episode.
+	_snapshot_velocities()
+	_sync_heels()
+	_reset_sprung_floor()
+	_rebake_sole_springs()
+	_rebake_jaw_spring()
+	for bname in _sole.keys():
+		var d: Dictionary = _sole[bname]
+		d["last_idx"] = PackedInt32Array()
+		d["pinned"] = false
+	_update_sole_spheres()
+	_rebake_joints()
+	_rebake_welds()
+	var dump: Array = []
+	for key in _bodies.keys():
+		var b: RigidBody3D = _bodies[key]
+		var pm := _g2m(b.global_transform.origin)
+		var qm := _basis_to_m_quat(b.global_transform.basis)
+		dump.append({"name": key, "pos": [pm.x, pm.y, pm.z], "quat": [qm.w, qm.x, qm.y, qm.z]})
+	_reset_dump = dump
+	_reset_applied = applied
+	_reset_missing = missing
+	_send_state("reset")
+
+
+func _apply_pd() -> void:
+	for j in _joints:
+		# Unactuated wheels: XML frictionloss=0, hinge unlimited. Do not apply
+		# Coulomb as body torque — on I≈5e-7 it overpowers tire-floor contact
+		# and the robot stands on locked wheels.
+		if int(j["act_index"]) < 0:
+			j["tau"] = 0.0
+			j["axis_dot"] = 0.0
+			continue
+		var q := _joint_q(j)
+		var qd := _joint_qd(j)
+		var target := 0.0
+		var ai: int = int(j["act_index"])
+		if ai >= 0 and ai < _ctrl.size():
+			target = _ctrl[ai]
+		var tau: float = float(j["kp"]) * (target - q) - float(j["kv"]) * qd
+		tau = clampf(tau, float(j["fmin"]), float(j["fmax"]))
+		tau -= float(j["damping"]) * qd
+		var fl := float(j.get("frictionloss", 0.0))
+		if fl > 0.0:
+			tau -= fl * tanh(qd / 0.05)
+		var axis := _axis_godot(j)
+		var expected := _m2g(_mujoco_body_basis(j["parent"], str(j["parent_name"])) * (j["axis_parent_body"] as Vector3))
+		if expected.length_squared() > 1e-12:
+			expected = expected.normalized()
+		j["tau"] = tau
+		j["axis_dot"] = axis.dot(expected)
+		var child: RigidBody3D = j["child"]
+		child.apply_torque(axis * tau)
+		var parent = j["parent"]
+		if parent is RigidBody3D:
+			(parent as RigidBody3D).apply_torque(-axis * tau)
+
+
+func _wheel_dump() -> Array:
+	var out: Array = []
+	for j in _joints:
+		if not str(j["name"]).begins_with("passive_"):
+			continue
+		var node: HingeJoint3D = j["node"]
+		var ax := _g2m(_axis_godot(j))
+		var hz := _g2m(node.global_transform.basis.z.normalized())
+		var cyl := Vector3.ZERO
+		var child: RigidBody3D = j["child"]
+		for ch in child.get_children():
+			if ch is CollisionShape3D and (ch as CollisionShape3D).shape is CylinderShape3D:
+				cyl = _g2m((ch as CollisionShape3D).global_transform.basis.y.normalized())
+				break
+		out.append({
+			"name": j["name"],
+			"body": j["child_name"],
+			"q": _joint_q(j),
+			"qd": _joint_qd(j),
+			"tau": float(j.get("tau", 0.0)),
+			"kp": float(j["kp"]),
+			"kv": float(j["kv"]),
+			"damping": float(j["damping"]),
+			"frictionloss": float(j.get("frictionloss", 0.0)),
+			"fmin": float(j["fmin"]),
+			"fmax": float(j["fmax"]),
+			"limited": bool(j.get("limited", true)),
+			"hinge_enable": node.get("angular_limit/enable"),
+			"motor_enable": node.get("motor/enable"),
+			"axis_m": [ax.x, ax.y, ax.z],
+			"hinge_z_m": [hz.x, hz.y, hz.z],
+			"cyl_y_m": [cyl.x, cyl.y, cyl.z],
+			"cyl_dot_hinge": absf(cyl.dot(Vector3(hz.x, hz.y, hz.z))),
+		})
+	return out
+
+
+func _send_state(which: String) -> void:
+	var q: Array = []
+	var qd: Array = []
+	# actuator order
+	var nu := _ctrl.size()
+	q.resize(nu)
+	qd.resize(nu)
+	for i in range(nu):
+		q[i] = 0.0
+		qd[i] = 0.0
+	for j in _joints:
+		var ai: int = int(j["act_index"])
+		if ai >= 0 and ai < nu:
+			q[ai] = _joint_q(j)
+			qd[ai] = _joint_qd(j)
+	var base_pos := [0.0, 0.0, 0.0]
+	var base_quat := [1.0, 0.0, 0.0, 0.0]
+	var base_lin := [0.0, 0.0, 0.0]
+	var base_ang_local := [0.0, 0.0, 0.0]
+	if _base != null:
+		# Origin/basis are the inertial COM frame (matches converter). Python
+		# maps to body frame for obs using spec ipos/iquat.
+		var pm := _g2m(_base.global_transform.origin)
+		base_pos = [pm.x, pm.y, pm.z]
+		var qm := _basis_to_m_quat(_base.global_transform.basis)
+		base_quat = [qm.w, qm.x, qm.y, qm.z]
+		var lm := _g2m(_base.linear_velocity)
+		base_lin = [lm.x, lm.y, lm.z]
+		# angular_velocity is in Godot world (Y-up). basis.T puts it into the body's
+		# inertia-principal frame (ximat, per the scene). iquat then rotates it into the
+		# MuJoCo body frame (where the imu site lives, site quat=(1,0,0,0)).
+		var w_world_g: Vector3 = _base.angular_velocity
+		var w_i: Vector3 = _base.global_transform.basis.transposed() * w_world_g
+		var iq: Vector4 = _body_iquat.get(_base_name, Vector4(1, 0, 0, 0))
+		var w_body: Vector3 = _quat_rotate_wxyz(iq, w_i)
+		base_ang_local = [w_body.x, w_body.y, w_body.z]
+		_dbg_ang_world = [w_world_g.x, w_world_g.y, w_world_g.z]
+	var dump: Array = []
+	# Play viewer: skip per-body contact dump (large JSON every 20 ms). Calib is headless.
+	if DisplayServer.get_name() == "headless":
+		for key in _bodies.keys():
+			var b: RigidBody3D = _bodies[key]
+			var dpm := _g2m(b.global_transform.origin)
+			var dqm := _basis_to_m_quat(b.global_transform.basis)
+			var com_local := b.center_of_mass
+			var com_world_m := _g2m(b.global_transform * com_local)
+			var n_contacts := 0
+			var impulse_sum := 0.0
+			var cpos: Array = []
+			var cshape: Array = []
+			var cwho: Array = []
+			var dst := PhysicsServer3D.body_get_direct_state(b.get_rid())
+			if dst != null:
+				com_local = dst.center_of_mass_local
+				com_world_m = _g2m(b.global_transform.origin + dst.center_of_mass)
+				n_contacts = dst.get_contact_count()
+				for ci in range(n_contacts):
+					impulse_sum += dst.get_contact_impulse(ci).length()
+					var wp := _g2m(dst.get_contact_collider_position(ci))
+					cpos.append([wp.x, wp.y, wp.z])
+					cshape.append(dst.get_contact_local_shape(ci))
+					var obj = dst.get_contact_collider_object(ci)
+					cwho.append(str(obj.name) if obj != null else "?")
+			dump.append({
+				"name": key,
+				"pos": [dpm.x, dpm.y, dpm.z],
+				"quat": [dqm.w, dqm.x, dqm.y, dqm.z],
+				"com": [com_world_m.x, com_world_m.y, com_world_m.z],
+				"com_local": [com_local.x, com_local.y, com_local.z],
+				"com_prop": [b.center_of_mass.x, b.center_of_mass.y, b.center_of_mass.z],
+				"com_mode": int(b.center_of_mass_mode),
+				"mass": b.mass,
+				"inertia": [b.inertia.x, b.inertia.y, b.inertia.z],
+				"n_contacts": n_contacts,
+				"impulse": impulse_sum,
+				"linvel": [_g2m(b.linear_velocity).x, _g2m(b.linear_velocity).y, _g2m(b.linear_velocity).z],
+				"angvel": [_g2m(b.angular_velocity).x, _g2m(b.angular_velocity).y, _g2m(b.angular_velocity).z],
+				"cpos": cpos,
+				"cshape": cshape,
+			})
+	var tau: Array = []
+	var axis_dot: Array = []
+	tau.resize(nu)
+	axis_dot.resize(nu)
+	for i in range(nu):
+		tau[i] = 0.0
+		axis_dot[i] = 0.0
+	for j in _joints:
+		var ai: int = int(j["act_index"])
+		if ai >= 0 and ai < nu:
+			tau[ai] = float(j.get("tau", 0.0))
+			axis_dot[ai] = float(j.get("axis_dot", 0.0))
+	_send_dict({
+		"ok": true,
+		"cmd": which,
+		"t": _t,
+		"q": q,
+		"qd": qd,
+		"tau": tau,
+		"axis_dot": axis_dot,
+		"base_pos": base_pos,
+		"base_quat": base_quat,
+		"base_linvel": base_lin,
+		"base_angvel_local": base_ang_local,
+		"dbg_ang_world": _dbg_ang_world,
+		"applied": _reset_applied,
+		"missing": _reset_missing,
+		"body_names": _bodies.keys(),
+		"dump": dump,
+		"wheels": _wheel_dump(),
+		"tile_dy": 0.0 if _floor_plate == null else _floor_plate.global_position.y,
+		"tile_pitch": 0.0 if _floor_plate == null else rad_to_deg(_floor_plate.global_rotation.z),
+		"sole_n_on": _sole_n_on(),
+		"sole_ymin": _sole_ymin(),
+		"sole_cxmin": _sole_cxmin(),
+		"sole_cxmax": _sole_cxmax(),
+		"jaw_pad_y": _jaw_pad_y,
+		"held": _held_now.duplicate(),
+		"taps": _taps.duplicate(),
+		"time_scale": _play_time_scale(),
+	})
+	_taps.clear()
+
+
+func _sole_n_on() -> int:
+	var n := 0
+	for s in _sole_springs:
+		var foot: RigidBody3D = s["foot"]
+		var local: Vector3 = s["local"]
+		if (foot.global_transform * local).y < 0.0:
+			n += 1
+	return n
+
+
+func _sole_ymin() -> float:
+	var ymin := 0.0
+	var any := false
+	for s in _sole_springs:
+		var foot: RigidBody3D = s["foot"]
+		var local: Vector3 = s["local"]
+		var py: float = (foot.global_transform * local).y
+		if not any or py < ymin:
+			ymin = py
+			any = true
+	return ymin
+
+
+func _sole_cxmin() -> float:
+	var xmin := 0.0
+	var any := false
+	for s in _sole_springs:
+		var foot: RigidBody3D = s["foot"]
+		var local: Vector3 = s["local"]
+		var p: Vector3 = foot.global_transform * local
+		if p.y >= 0.0:
+			continue
+		if not any or p.x < xmin:
+			xmin = p.x
+			any = true
+	return xmin
+
+
+func _sole_cxmax() -> float:
+	var xmax := 0.0
+	var any := false
+	for s in _sole_springs:
+		var foot: RigidBody3D = s["foot"]
+		var local: Vector3 = s["local"]
+		var p: Vector3 = foot.global_transform * local
+		if p.y >= 0.0:
+			continue
+		if not any or p.x > xmax:
+			xmax = p.x
+			any = true
+	return xmax
+
+
+func _m2g(p: Vector3) -> Vector3:
+	return Vector3(p.x, p.z, -p.y)
+
+
+func _g2m(p: Vector3) -> Vector3:
+	return Vector3(p.x, -p.z, p.y)
+
+
+func _g_local_as_m(v: Vector3) -> Vector3:
+	# Godot body local == MuJoCo inertial local (same XYZ meaning).
+	return v
+
+
+func _m_quat_to_basis(q: Array) -> Basis:
+	var bm := Basis(Quaternion(float(q[1]), float(q[2]), float(q[3]), float(q[0])))
+	var cx := _m2g(bm.x)
+	var cy := _m2g(bm.y)
+	var cz := _m2g(bm.z)
+	return Basis(cx, cy, cz)
+
+
+func _basis_to_m_quat(b: Basis) -> Quaternion:
+	var bm := Basis(_g2m(b.x), _g2m(b.y), _g2m(b.z))
+	return bm.get_rotation_quaternion()
+
+
+func _quat_rotate_wxyz(q: Vector4, v: Vector3) -> Vector3:
+	# q = (w,x,y,z), rotate v by R(q)
+	var w := q.x
+	var u := Vector3(q.y, q.z, q.w)
+	var t := u.cross(v) * 2.0
+	return v + w * t + u.cross(t)
+
+
+func _paint_robot_visuals() -> void:
+	## Runtime override of generated robot albedo (mjcf2godot emits gray).
+	## Visual-only: does not touch collision, masses, or joints.
+	if DisplayServer.get_name() == "headless":
+		return
+	if _robot == null:
+		return
+	var body_mat := StandardMaterial3D.new()
+	body_mat.albedo_color = Color(0.95, 0.78, 0.18)
+	body_mat.roughness = 0.7
+	body_mat.metallic = 0.0
+	var dark_mat := StandardMaterial3D.new()
+	dark_mat.albedo_color = Color(0.72, 0.52, 0.12)
+	dark_mat.roughness = 0.75
+	dark_mat.metallic = 0.0
+	_paint_mesh_recursive(_robot, body_mat, dark_mat)
+
+
+func _paint_mesh_recursive(node: Node, body_mat: StandardMaterial3D, dark_mat: StandardMaterial3D) -> void:
+	if node is MeshInstance3D:
+		var mi := node as MeshInstance3D
+		var n := str(mi.name).to_lower()
+		var use_dark := false
+		for key in ["wheel", "roller", "sole", "heel", "eye", "beak", "jaw", "foot", "toe"]:
+			if key in n:
+				use_dark = true
+				break
+		var mat := dark_mat if use_dark else body_mat
+		var sc := mi.mesh.get_surface_count() if mi.mesh != null else 1
+		for s in range(maxi(sc, 1)):
+			mi.set_surface_override_material(s, mat)
+	for child in node.get_children():
+		_paint_mesh_recursive(child, body_mat, dark_mat)
+
+
+func _setup_floor_checker() -> void:
+	## Paint the floor MeshInstance3D with a procedural checkerboard so you can
+	## see motion. Works whether or not a texture file exists.
+	if DisplayServer.get_name() == "headless":
+		return
+	var mesh_inst: MeshInstance3D = get_node_or_null("World/Floor/FloorMesh")
+	if mesh_inst == null:
+		return
+
+	# Build a tiny 2×2 RGBA8 checker image then tile it via UV scale on the material.
+	var img := Image.create(2, 2, false, Image.FORMAT_RGBA8)
+	img.set_pixel(0, 0, Color(0.18, 0.32, 0.18))
+	img.set_pixel(1, 1, Color(0.18, 0.32, 0.18))
+	img.set_pixel(1, 0, Color(0.85, 0.82, 0.72))
+	img.set_pixel(0, 1, Color(0.85, 0.82, 0.72))
+	var tex := ImageTexture.create_from_image(img)
+
+	var mat := StandardMaterial3D.new()
+	mat.albedo_texture = tex
+	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+	mat.uv1_scale = Vector3(24, 24, 1)
+	mat.roughness = 0.9
+	mat.metallic = 0.0
+	mat.cull_mode = BaseMaterial3D.CULL_BACK
+	mesh_inst.set_surface_override_material(0, mat)
+
+
+func _play_time_scale() -> float:
+	if _hud == null:
+		return 1.0
+	var v = _hud.get("time_scale")
+	if typeof(v) != TYPE_FLOAT and typeof(v) != TYPE_INT:
+		return 1.0
+	return clampf(float(v), 0.25, 3.0)
+
+
+func _setup_play_ui() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	var hud_script: Script = load("res://play_hud.gd")
+	if hud_script == null:
+		push_warning("play_hud.gd missing")
+		return
+	_hud = CanvasLayer.new()
+	_hud.set_script(hud_script)
+	add_child(_hud)
+	if _hud.has_signal("tap"):
+		_hud.connect("tap", Callable(self, "_on_hud_tap"))
+
+
+func _on_hud_tap(action: String) -> void:
+	_add_tap(action)
+
+
+func _add_tap(action: String) -> void:
+	if not _taps.has(action):
+		_taps.append(action)
+
+
+func _process(_delta: float) -> void:
+	_sample_held()
+	_follow_camera()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not (event is InputEventKey):
+		return
+	var k := event as InputEventKey
+	if not k.pressed or k.echo:
+		return
+	match k.physical_keycode:
+		KEY_G, KEY_1:
+			_add_tap("pick")
+		KEY_Y, KEY_2:
+			_add_tap("sit")
+		KEY_K, KEY_3:
+			_add_tap("kick_left")
+		KEY_L, KEY_4:
+			_add_tap("kick_right")
+		KEY_R, KEY_5:
+			_add_tap("roulade")
+		KEY_6:
+			_add_tap("switch_robot")
+		KEY_0, KEY_BACKSPACE:
+			_add_tap("reset")
+		KEY_P:
+			_add_tap("push")
+		KEY_ESCAPE:
+			_add_tap("quit")
+			get_viewport().set_input_as_handled()
+
+
+func _sample_held() -> void:
+	var held: Array = []
+	if Input.is_physical_key_pressed(KEY_W) or Input.is_physical_key_pressed(KEY_UP):
+		held.append("fwd")
+	if Input.is_physical_key_pressed(KEY_S) or Input.is_physical_key_pressed(KEY_DOWN):
+		held.append("back")
+	if Input.is_physical_key_pressed(KEY_A) or Input.is_physical_key_pressed(KEY_LEFT):
+		held.append("left")
+	if Input.is_physical_key_pressed(KEY_D) or Input.is_physical_key_pressed(KEY_RIGHT):
+		held.append("right")
+	if Input.is_physical_key_pressed(KEY_Q):
+		held.append("strafe_l")
+	if Input.is_physical_key_pressed(KEY_E):
+		held.append("strafe_r")
+	if Input.is_physical_key_pressed(KEY_SPACE):
+		held.append("idle")
+	if _hud != null:
+		var extra = _hud.get("extra_held")
+		if extra is Array:
+			for bit in extra:
+				var s := str(bit)
+				if not held.has(s):
+					held.append(s)
+	_held_now = held
+
+
+func _follow_camera() -> void:
+	if _base == null:
+		return
+	var cam := get_node_or_null("World/Camera3D") as Camera3D
+	if cam == null:
+		return
+	var look: Vector3 = _base.global_position + Vector3(0, 0.08, 0)
+	cam.look_at_from_position(look + _cam_offset, look, Vector3.UP)
+

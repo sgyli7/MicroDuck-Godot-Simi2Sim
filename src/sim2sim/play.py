@@ -1,0 +1,290 @@
+"""Interactive Godot viewer: hold-to-move + skill buttons, ONNX stays in Python."""
+
+from __future__ import annotations
+
+import argparse
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+
+from sim2sim.backends.godot_backend import GodotBackend
+from sim2sim.backends.mujoco_backend import MujocoBackend
+from sim2sim.coords import quat_rotate_inverse_wxyz
+from sim2sim.godot_proc import GODOT_PROJECT, godot_bin, sim2sim_root
+from sim2sim.obs import DEFAULT_HOME, build_obs
+from sim2sim.paths import policies_dir
+from sim2sim.play_input import PlayBrain, TwistLimits, relaunch_argv, wall_dt
+from sim2sim.policy import OnnxPolicy
+from sim2sim.runner import apply_home_qpos, load_robot_cfg
+
+
+ROOT = sim2sim_root()
+POL = policies_dir()
+
+FALL_GRAV_Z = -0.35
+FALL_RESET_S = 0.8
+PUSH_MAX = 1.0
+
+
+def _opt(path: Path) -> Path | None:
+    return path if path.is_file() else None
+
+
+ROLLER_LIMITS = TwistLimits(vmax_x=0.6, vmin_x=-0.5, vmax_y=0.0, vmin_y=0.0, vmax_ang=1.0)
+LOCAL_PPO_LIMITS = TwistLimits(vmax_x=0.4, vmin_x=-0.3)
+
+
+def policy_paths(*, local_ppo: bool, roller: bool = False) -> dict[str, Path | None]:
+    if roller:
+        return {
+            "walking": _opt(POL / "roller.onnx"),
+            "standing": _opt(POL / "roller_crouch.onnx"),
+            "sitstand": None,
+            "ground_pick": None,
+            "kick_left": None,
+            "kick_right": None,
+            "roulade": None,
+        }
+    walking = POL / "local-ppo/local_velocity_walk_run_idle.onnx" if local_ppo else POL / "alpha_walking.onnx"
+    return {
+        "walking": _opt(walking),
+        "standing": _opt(POL / "alpha_stand.onnx"),
+        "sitstand": _opt(POL / "alpha_sitstand.onnx"),
+        "ground_pick": _opt(POL / "alpha_ground_pick.onnx"),
+        "kick_left": _opt(POL / "ball_kick_left.onnx"),
+        "kick_right": _opt(POL / "ball_kick_right.onnx"),
+        "roulade": _opt(POL / "roulade.onnx"),
+    }
+
+
+def ensure_godot_scene(cfg: dict) -> Path:
+    spec = Path(cfg["godot_spec"])
+    tscn = spec.with_name("robot.tscn")
+    if spec.is_file() and tscn.is_file():
+        return spec
+    mjcf = Path(cfg["mjcf"])
+    if not mjcf.is_file():
+        raise SystemExit(f"mjcf missing: {mjcf}")
+    from mjcf2godot.convert import convert
+
+    out = spec.parent
+    print(f"converting {mjcf} → {out}")
+    convert(mjcf, out)
+    cmd = [godot_bin(), "--headless", "--path", str(GODOT_PROJECT), "--import", "--quit-after", "1"]
+    print("godot import:", " ".join(cmd))
+    subprocess.run(cmd, check=False)
+    if not spec.is_file() or not tscn.is_file():
+        raise SystemExit(f"convert/import did not write {spec} / {tscn}")
+    return spec
+
+
+def capture_home_poses(cfg: dict) -> list[dict]:
+    home = np.asarray(cfg.get("home", DEFAULT_HOME), dtype=np.float32)
+    z0 = float(cfg.get("reset_z", 0.125))
+    mj = MujocoBackend(Path(cfg["mjcf"]), timestep=cfg.get("timestep", 0.005), current_limit_a=0.0)
+    apply_home_qpos(mj, home, z=z0)
+    poses = mj.body_poses_mujoco()
+    mj.close()
+    return poses
+
+
+def load_bank(paths: dict[str, Path | None]) -> dict[str, OnnxPolicy]:
+    bank: dict[str, OnnxPolicy] = {}
+    for name, path in paths.items():
+        if path is None:
+            continue
+        bank[name] = OnnxPolicy(path)
+        print(f"  loaded {name}: {path}")
+    if "walking" not in bank and "standing" not in bank and "sitstand" not in bank:
+        raise SystemExit("no walking/standing/sitstand ONNX found under policies/")
+    return bank
+
+
+def pick_session(bank: dict[str, OnnxPolicy], policy: str) -> OnnxPolicy:
+    if policy in bank:
+        return bank[policy]
+    if "walking" in bank:
+        return bank["walking"]
+    return next(iter(bank.values()))
+
+
+def fallen(st, timeout_acc: float, dt: float) -> tuple[bool, float]:
+    grav = quat_rotate_inverse_wxyz(st.base_quat_wxyz, np.array([0.0, 0.0, -1.0]))
+    trunk_z = float(st.base_pos[2])
+    if grav[2] > FALL_GRAV_Z or trunk_z < 0.055:
+        timeout_acc += dt
+        if timeout_acc >= FALL_RESET_S:
+            return True, 0.0
+        return False, timeout_acc
+    return False, 0.0
+
+
+def random_push() -> np.ndarray:
+    xy = np.random.normal(size=2)
+    n = float(np.linalg.norm(xy))
+    if n < 1e-9:
+        xy = np.array([1.0, 0.0])
+        n = 1.0
+    xy = xy / n * PUSH_MAX
+    return np.array([xy[0], xy[1], 0.0], dtype=np.float64)
+
+
+def main(argv: list[str] | None = None) -> int:
+    p = argparse.ArgumentParser(description="Keyboard/HUD play loop on Godot/Jolt")
+    p.add_argument("--robot", type=Path, default=ROOT / "robots/microduck.json")
+    p.add_argument("--local-ppo", action="store_true", help="use local_ppo as walking ONNX (vmax 0.4)")
+    p.add_argument(
+        "--roller",
+        action="store_true",
+        help="roller-skate XML + roller.onnx (same as infer_policy --roller)",
+    )
+    p.add_argument(
+        "--scene",
+        type=str,
+        default="res://main.tscn",
+        help="Godot scene to run (default: flat main.tscn; rough forest: res://scenes/rough_forest_play.tscn)",
+    )
+    args = p.parse_args(argv)
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(line_buffering=True)
+    if args.roller:
+        args.robot = ROOT / "robots/microduck_roller.json"
+
+    cfg = load_robot_cfg(args.robot)
+    home = np.asarray(cfg.get("home", DEFAULT_HOME), dtype=np.float32)
+    scale = float(cfg.get("action_scale", 1.0))
+    decimation = int(cfg.get("decimation", 4))
+    dt = float(cfg.get("timestep", 0.005))
+    dt_ctrl = decimation * dt
+    spec = ensure_godot_scene(cfg)
+
+    print("== sim2sim-play ==" + ("  [rollers]" if args.roller else "") + f"  scene={args.scene}")
+    paths = policy_paths(local_ppo=args.local_ppo, roller=args.roller)
+    bank = load_bank(paths)
+    if args.roller:
+        lim = ROLLER_LIMITS
+    elif args.local_ppo:
+        lim = LOCAL_PPO_LIMITS
+    else:
+        lim = TwistLimits()
+    brain = PlayBrain(
+        has_walking="walking" in bank,
+        has_standing="standing" in bank and not (args.local_ppo and not args.roller),
+        has_sitstand="sitstand" in bank,
+        has_pick="ground_pick" in bank,
+        has_kick_left="kick_left" in bank,
+        has_kick_right="kick_right" in bank,
+        has_roulade="roulade" in bank,
+        lim=lim,
+    )
+    poses = capture_home_poses(cfg)
+    backend = GodotBackend(
+        spec,
+        timestep=dt,
+        headless=False,
+        scene=args.scene,
+        base_body=cfg.get("base_body", "trunk_base"),
+        current_limit_a=cfg.get("current_limit_a", 1.75),
+    )
+    print("\n点 Godot 窗口后按住键（和 MuJoCo infer_policy 相同）：")
+    if args.roller:
+        print("  W/↑ 滑行   S/↓ 刹车   A/← 左转   D/→ 右转   空格 Idle")
+        print("  无侧移（Q/E 无效）  vmax_x=0.6")
+        print("  6 切回路走+技能   0 重置   P 推一把   Esc 退出")
+    else:
+        print("  W/↑ 前进   S/↓ 后退   A/← 左转   D/→ 右转   Q/E 平移   空格 Idle")
+        print("  1/G 捡地   2/Y 坐下   3/K 左踢   4/L 右踢   5/R 前滚")
+        print("  6 切到轮滑   0 重置   P 推一把   Esc 退出")
+    print("  窗口底部也有同样的按钮。\n")
+
+    last_action = np.zeros(14, dtype=np.float32)
+    held: set[str] = set()
+    taps: list[str] = []
+    fall_acc = 0.0
+    st = backend.reset(ctrl=home, bodies=poses)
+    next_t = time.perf_counter()
+    hz_n = 0
+    hz_t0 = time.perf_counter()
+    infer_ms = 0.0
+    step_ms = 0.0
+    try:
+        while True:
+            out = brain.tick(held, taps, dt_ctrl)
+            if out.quit:
+                print("quit")
+                break
+            if out.switch_robot:
+                want_roller = not args.roller
+                print(
+                    "Switching to roller-skate robot (wheels XML + roller.onnx)..."
+                    if want_roller
+                    else "Switching to walking robot (feet + skills)..."
+                )
+                backend.close()
+                argv = relaunch_argv(sys.argv, want_roller=want_roller, executable=sys.executable)
+                print(f"Relaunch {'roller' if want_roller else 'walk'}: {' '.join(argv)}")
+                os.execv(sys.executable, argv)
+                raise SystemExit(f"execv failed: {argv}")
+            do_reset = out.reset
+            if not do_reset and not brain.sit and not brain._busy():
+                did_fall, fall_acc = fallen(st, fall_acc, dt_ctrl)
+                if did_fall:
+                    print("auto-reset: fallen")
+                    do_reset = True
+            if do_reset:
+                brain.reset_motion()
+                last_action[:] = 0.0
+                fall_acc = 0.0
+                st = backend.reset(ctrl=home, bodies=poses)
+                held, taps = set(), []
+                next_t = time.perf_counter()
+                continue
+            if out.push:
+                backend.nudge(random_push())
+            sess = pick_session(bank, out.policy)
+            obs = build_obs(st, last_action, out.command, home=home)
+            t_inf = time.perf_counter()
+            action = sess.infer(obs)
+            infer_ms += (time.perf_counter() - t_inf) * 1000.0
+            last_action = action.astype(np.float32, copy=True)
+            if last_action.size != home.size:
+                last_action = np.resize(last_action, home.size)
+            ctrl = home + last_action * scale
+            t_step = time.perf_counter()
+            st = backend.step(ctrl, n_substeps=decimation, hud=out.status)
+            step_ms += (time.perf_counter() - t_step) * 1000.0
+            raw = st.extra.get("raw") or {}
+            held = {str(x) for x in (raw.get("held") or [])}
+            taps = [str(x) for x in (raw.get("taps") or [])]
+            ts = raw.get("time_scale", 1.0)
+            next_t += wall_dt(dt_ctrl, ts)
+            delay = next_t - time.perf_counter()
+            if delay > 0:
+                time.sleep(delay)
+            elif delay < -0.25:
+                next_t = time.perf_counter()
+            hz_n += 1
+            now = time.perf_counter()
+            if now - hz_t0 >= 2.0:
+                target = 1.0 / wall_dt(dt_ctrl, ts)
+                print(
+                    f"play {hz_n / (now - hz_t0):.1f} Hz  (1×=50, 滑条目标 {target:.1f})  "
+                    f"infer={infer_ms/hz_n:.1f}ms  godot_step={step_ms/hz_n:.1f}ms"
+                )
+                hz_n = 0
+                hz_t0 = now
+                infer_ms = 0.0
+                step_ms = 0.0
+    except (ConnectionError, RuntimeError) as e:
+        print(f"godot closed: {e}")
+    finally:
+        backend.close()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

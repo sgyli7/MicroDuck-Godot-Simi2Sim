@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://spikes/soft_floor_fine_test.gd" id="1"]
+
+[sub_resource type="PlaneMesh" id="plane"]
+size = Vector2(0.6, 0.6)
+subdivide_width = 120
+subdivide_depth = 120
+
+[node name="SoftFloorFineTest" type="Node3D"]
+script = ExtResource("1")
+
+[node name="SoftFloor" type="SoftBody3D" parent="."]
+mesh = SubResource("plane")
+collision_layer = 1
+collision_mask = 1
+linear_stiffness = 1.0
+damping_coefficient = 0.8
+simulation_precision = 10
+total_mass = 8.0
