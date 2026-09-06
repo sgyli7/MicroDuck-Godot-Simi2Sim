@@ -54,6 +54,8 @@ class GodotBackend:
         self.base_body = base_body
         bodies = {b["name"]: b for b in self.spec["bodies"]}
         self._base_meta = bodies[base_body]
+        self._ipos = np.asarray(self._base_meta["ipos"], dtype=np.float64).reshape(3)
+        self._iquat = np.asarray(self._base_meta["iquat_wxyz"], dtype=np.float64).reshape(4)
         extra = _robot_user_args(self.spec_path)
         self._proc, self._port, self._client = spawn_godot(
             scene, headless=headless, extra_args=extra, recv_timeout=recv_timeout
@@ -100,6 +102,7 @@ class GodotBackend:
         *,
         hud: str | None = None,
         report: str | None = None,
+        timing: bool = False,
     ) -> None:
         payload: dict = {
             "cmd": "step",
@@ -110,6 +113,8 @@ class GodotBackend:
             payload["hud"] = hud
         if report is not None:
             payload["report"] = report
+        if timing:
+            payload["timing"] = True
         self._client.send(payload)
 
     def recv_step(self) -> SimState:
@@ -122,8 +127,9 @@ class GodotBackend:
         *,
         hud: str | None = None,
         report: str | None = None,
+        timing: bool = False,
     ) -> SimState:
-        self.send_step(ctrl, n_substeps, hud=hud, report=report)
+        self.send_step(ctrl, n_substeps, hud=hud, report=report, timing=timing)
         return self.recv_step()
 
     def nudge(self, linvel_mujoco: np.ndarray) -> None:
@@ -143,8 +149,8 @@ class GodotBackend:
         pos_b, quat_b = inertial_to_body(
             pos_i,
             quat_i,
-            np.asarray(self._base_meta["ipos"]),
-            np.asarray(self._base_meta["iquat_wxyz"]),
+            self._ipos,
+            self._iquat,
         )
         extra: dict = {"inertial_pos": pos_i, "inertial_quat": quat_i, "raw": msg}
         if "feet" in msg:

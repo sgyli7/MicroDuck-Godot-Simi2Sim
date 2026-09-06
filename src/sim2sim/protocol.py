@@ -14,19 +14,35 @@ class JsonLineClient:
         self.sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         self.sock.settimeout(timeout)
         self._buf = b""
+        self.t_send = 0.0
+        self.t_recv_wait = 0.0
+        self.t_loads = 0.0
+        self.n_recv = 0
+        self.last_nbytes = 0
 
     def send(self, obj: dict[str, Any]) -> None:
-        self.sock.sendall((json.dumps(obj) + "\n").encode("utf-8"))
+        t0 = time.perf_counter()
+        self.sock.sendall((json.dumps(obj, separators=(",", ":")) + "\n").encode("utf-8"))
+        self.t_send += time.perf_counter() - t0
 
     def recv(self) -> dict[str, Any]:
+        t0 = time.perf_counter()
         while True:
             nl = self._buf.find(b"\n")
             if nl >= 0:
                 line, self._buf = self._buf[:nl], self._buf[nl + 1 :]
                 if not line.strip():
+                    t0 = time.perf_counter()
                     continue
-                return json.loads(line.decode("utf-8"))
-            chunk = self.sock.recv(4096)
+                t1 = time.perf_counter()
+                obj = json.loads(line)
+                t2 = time.perf_counter()
+                self.t_recv_wait += t1 - t0
+                self.t_loads += t2 - t1
+                self.n_recv += 1
+                self.last_nbytes = len(line)
+                return obj
+            chunk = self.sock.recv(65536)
             if not chunk:
                 raise ConnectionError("Godot closed the TCP connection")
             self._buf += chunk

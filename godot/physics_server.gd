@@ -117,13 +117,30 @@ var _cam_snap: bool = true  # fast exponential snap on (re)spawn/reset
 var _cam_snap_started: float = 0.0  # wall-clock seconds when the last snap began
 var _cam_last_sec: float = 0.0  # wall clock for camera damping (lockstep-aware)
 var _window_title: String = "Microduck Sim2Sim"
+var _headless: bool = false
+var _foot_names: Array = []
+var _mj_basis: Dictionary = {}  # name -> Basis, refreshed each PD tick
+var _timing_enabled: bool = false
+var _timing_phys_t0: int = 0
+var _timing_phys_usec: int = 0
+var _timing_pd_usec: int = 0
+var _timing_send_usec: int = 0
+var _timing_wait_usec: int = 0
+var _timing_wait_iters: int = 0
+var _timing_json_bytes: int = 0
+const SPIN_DELAY_USEC := 50
 
 func _ready() -> void:
 	_parse_args()
+	_headless = DisplayServer.get_name() == "headless"
 	# Headless lockstep uses --fixed-fps 200, so 1 physics step per "frame" is 200 Hz.
 	# A vsync window is ~60 fps; 1 step/frame would make 4 substeps take ~66 ms for
 	# 20 ms of sim (~0.3× realtime). Allow a burst of ticks per displayed frame.
-	if DisplayServer.get_name() == "headless":
+	# --fixed-fps disables real-time sync (Engine.max_fps is not a wall-clock cap);
+	# observed >>200 physics ticks/s confirms Jolt is not paced to 200 Hz wall.
+	Engine.max_fps = 0
+	OS.low_processor_usage_mode = false
+	if _headless:
 		Engine.max_physics_steps_per_frame = 1
 	else:
 		Engine.max_physics_steps_per_frame = 16
@@ -361,6 +378,7 @@ func _setup_joints() -> void:
 			"axis_child_body": axis_cb,
 			"n_i": n_i,
 			"rest_rel": rest_rel,
+			"rest_rel_t": rest_rel.transposed(),
 			"lo": lo,
 			"hi": hi,
 			"limited": limited,
@@ -373,6 +391,7 @@ func _setup_joints() -> void:
 		var parent = j["parent"]
 		if parent is RigidBody3D:
 			_exclude_ancestors(j["child"], parent)
+	_foot_names = _foot_body_names()
 
 
 func _rebake_joints() -> void:
@@ -606,9 +625,21 @@ func _mujoco_body_basis(body: PhysicsBody3D, body_name: String) -> Basis:
 	return rI * rIQ.transposed()
 
 
+func _refresh_mj_basis() -> void:
+	for key in _bodies.keys():
+		var name := str(key)
+		_mj_basis[name] = _mujoco_body_basis(_bodies[name], name)
+
+
+func _mj_basis_of(body: PhysicsBody3D, body_name: String) -> Basis:
+	if _mj_basis.has(body_name):
+		return _mj_basis[body_name]
+	return _mujoco_body_basis(body, body_name)
+
+
 func _body_rel(parent: PhysicsBody3D, parent_name: String, child: RigidBody3D, child_name: String) -> Basis:
-	var rp := _mujoco_body_basis(parent, parent_name)
-	var rc := _mujoco_body_basis(child, child_name)
+	var rp := _mj_basis_of(parent, parent_name)
+	var rc := _mj_basis_of(child, child_name)
 	return rp.transposed() * rc
 
 
@@ -634,9 +665,9 @@ func _twist_about(rrel: Basis, axis: Vector3) -> float:
 
 func _joint_q(j: Dictionary) -> float:
 	var rrel := _body_rel(j["parent"], str(j["parent_name"]), j["child"], str(j["child_name"]))
-	var rest: Basis = j["rest_rel"]
+	var rest_t: Basis = j["rest_rel_t"] if j.has("rest_rel_t") else (j["rest_rel"] as Basis).transposed()
 	# MuJoCo hinge: R_rel(q) = Rot(axis_parent, q) @ R_rel(0)
-	var delta: Basis = rrel * rest.transposed()
+	var delta: Basis = rrel * rest_t
 	return _twist_about(delta, j["axis_parent_body"])
 
 
@@ -644,7 +675,7 @@ func _axis_godot(j: Dictionary) -> Vector3:
 	var node: Node3D = j["node"]
 	var hz := node.global_transform.basis.z.normalized()
 	# Keep the same sense as axis_parent_body (MuJoCo right-hand).
-	var expected := _m2g(_mujoco_body_basis(j["parent"], str(j["parent_name"])) * (j["axis_parent_body"] as Vector3))
+	var expected := _m2g(_mj_basis_of(j["parent"], str(j["parent_name"])) * (j["axis_parent_body"] as Vector3))
 	if hz.dot(expected) < 0.0:
 		hz = -hz
 	return hz
@@ -960,14 +991,14 @@ func _freeze(v: bool) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if DisplayServer.get_name() != "headless":
+	if not _headless:
 		Engine.max_physics_steps_per_frame = 32
-	# Camera ticks on the wall clock, not the fixed step: --fixed-fps 200
-	# (lockstep pacing) would otherwise slow the damping ~12x, and a blocked
-	# lockstep recv stretches dt so a resumed snap catches up in one frame.
-	var cam_dt := minf(_cam_wall_seconds() - _cam_last_sec, 0.1)
-	_cam_last_sec = _cam_wall_seconds()
-	_follow_camera(cam_dt)
+		# Camera ticks on the wall clock, not the fixed step: --fixed-fps 200
+		# (lockstep pacing) would otherwise slow the damping ~12x, and a blocked
+		# lockstep recv stretches dt so a resumed snap catches up in one frame.
+		var cam_dt := minf(_cam_wall_seconds() - _cam_last_sec, 0.1)
+		_cam_last_sec = _cam_wall_seconds()
+		_follow_camera(cam_dt)
 	if _peer == null:
 		_try_accept()
 		return
@@ -977,21 +1008,43 @@ func _physics_process(delta: float) -> void:
 		return
 	if _remaining <= 0:
 		if _pending_send:
+			if _timing_enabled and _timing_phys_t0 > 0:
+				_timing_phys_usec = Time.get_ticks_usec() - _timing_phys_t0
 			_send_state("step")
 			_pending_send = false
 		# Hold this physics tick until Python replies. Do not freeze-as-static:
 		# Jolt zeros velocity on freeze, and even save/restore loses contact
 		# warmstart — walk worked, run still dumped at t≈9 s.
+		var wait_t0 := Time.get_ticks_usec()
+		var wait_iters := 0
 		var cmd = _recv_line()
 		while cmd == null:
-			if _peer == null or _peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+			if _peer == null:
 				_freeze(true)
 				return
-			OS.delay_usec(200)
-			var cd := minf(_cam_wall_seconds() - _cam_last_sec, 0.1)
-			_cam_last_sec = _cam_wall_seconds()
-			_follow_camera(cd)
+			_peer.poll()
+			if _peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+				_freeze(true)
+				return
+			if _headless:
+				# StreamPeer.get_data() blocks via poll(IN, -1) until 1 byte.
+				# No StreamPeerTCP timeout API; Python recv_timeout kills us.
+				var got: Array = _peer.get_data(1)
+				wait_iters += 1
+				if int(got[0]) != OK:
+					_freeze(true)
+					return
+				_buf.append_array(got[1])
+			else:
+				OS.delay_usec(SPIN_DELAY_USEC)
+				wait_iters += 1
+				var cd := minf(_cam_wall_seconds() - _cam_last_sec, 0.1)
+				_cam_last_sec = _cam_wall_seconds()
+				_follow_camera(cd)
 			cmd = _recv_line()
+		if _timing_enabled:
+			_timing_wait_usec = Time.get_ticks_usec() - wait_t0
+			_timing_wait_iters = wait_iters
 		_handle(cmd)
 		# _handle may have teleported bodies (reset). Advance the camera with
 		# wall-clock time before leaving the pump, or the snap stalls ~16 ms
@@ -1001,10 +1054,17 @@ func _physics_process(delta: float) -> void:
 		_follow_camera(cd2)
 		if _remaining <= 0:
 			return
+		_timing_phys_t0 = Time.get_ticks_usec()
+		_timing_pd_usec = 0
+	var pd_t0 := Time.get_ticks_usec()
 	_apply_pd()
-	_update_sole_spheres()
-	_update_sole_springs()
-	_update_jaw_spring()
+	if not _sole.is_empty():
+		_update_sole_spheres()
+	if SOLE_SPRINGS:
+		_update_sole_springs()
+	if JAW_SPRINGS:
+		_update_jaw_spring()
+	_timing_pd_usec += Time.get_ticks_usec() - pd_t0
 	_t += delta
 	_remaining -= 1
 	if _remaining <= 0:
@@ -1019,11 +1079,16 @@ func _try_accept() -> void:
 
 
 func _recv_line() -> Variant:
-	if _peer == null or _peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+	if _peer == null:
+		return null
+	# Godot 4.7 StreamPeerTCP: get_available_bytes() is the kernel socket
+	# buffer (no internal ring). poll() is still required to notice FIN.
+	_peer.poll()
+	if _peer.get_status() != StreamPeerTCP.STATUS_CONNECTED:
 		return null
 	var n := _peer.get_available_bytes()
 	if n > 0:
-		var got: Array = _peer.get_data(n)
+		var got: Array = _peer.get_partial_data(n)
 		if int(got[0]) != OK:
 			return null
 		_buf.append_array(got[1])
@@ -1042,8 +1107,12 @@ func _recv_line() -> Variant:
 func _send_dict(d: Dictionary) -> void:
 	if _peer == null:
 		return
+	var t0 := Time.get_ticks_usec()
 	var s := JSON.stringify(d) + "\n"
-	_peer.put_data(s.to_utf8_buffer())
+	var raw := s.to_utf8_buffer()
+	_timing_json_bytes = raw.size()
+	_peer.put_data(raw)
+	_timing_send_usec = Time.get_ticks_usec() - t0
 
 
 func _handle(cmd: Variant) -> void:
@@ -1099,6 +1168,7 @@ func _handle(cmd: Variant) -> void:
 		for i in range(ctrl.size()):
 			_ctrl[i] = float(ctrl[i])
 		_report_mode = str(cmd.get("report", ""))
+		_timing_enabled = bool(cmd.get("timing", false))
 		_remaining = int(cmd.get("n_substeps", 1))
 		if _remaining < 1:
 			_remaining = 1
@@ -1235,32 +1305,36 @@ func _do_reset(cmd: Dictionary) -> void:
 
 
 func _apply_pd() -> void:
+	_refresh_mj_basis()
+	var lite := _report_mode == "lite"
 	for j in _joints:
 		# Unactuated wheels: XML frictionloss=0, hinge unlimited. Do not apply
 		# Coulomb as body torque — on I≈5e-7 it overpowers tire-floor contact
 		# and the robot stands on locked wheels.
-		if int(j["act_index"]) < 0:
+		var ai: int = int(j["act_index"])
+		if ai < 0:
 			j["tau"] = 0.0
-			j["axis_dot"] = 0.0
+			if not lite:
+				j["axis_dot"] = 0.0
 			continue
 		var q := _joint_q(j)
 		var qd := _joint_qd(j)
 		var target := 0.0
-		var ai: int = int(j["act_index"])
-		if ai >= 0 and ai < _ctrl.size():
+		if ai < _ctrl.size():
 			target = _ctrl[ai]
 		var tau: float = float(j["kp"]) * (target - q) - float(j["kv"]) * qd
 		tau = clampf(tau, float(j["fmin"]), float(j["fmax"]))
 		tau -= float(j["damping"]) * qd
-		var fl := float(j.get("frictionloss", 0.0))
+		var fl := float(j["frictionloss"])
 		if fl > 0.0:
 			tau -= fl * tanh(qd / 0.05)
 		var axis := _axis_godot(j)
-		var expected := _m2g(_mujoco_body_basis(j["parent"], str(j["parent_name"])) * (j["axis_parent_body"] as Vector3))
-		if expected.length_squared() > 1e-12:
-			expected = expected.normalized()
 		j["tau"] = tau
-		j["axis_dot"] = axis.dot(expected)
+		if not lite:
+			var expected := _m2g(_mj_basis_of(j["parent"], str(j["parent_name"])) * (j["axis_parent_body"] as Vector3))
+			if expected.length_squared() > 1e-12:
+				expected = expected.normalized()
+			j["axis_dot"] = axis.dot(expected)
 		var child: RigidBody3D = j["child"]
 		child.apply_torque(axis * tau)
 		var parent = j["parent"]
@@ -1332,8 +1406,11 @@ func _foot_body_names() -> Array:
 
 
 func _feet_report() -> Array:
+	var names: Array = _foot_names if not _foot_names.is_empty() else _foot_body_names()
 	var out: Array = []
-	for key in _foot_body_names():
+	for key in names:
+		if not _bodies.has(key):
+			continue
 		var b: RigidBody3D = _bodies[key]
 		var n_contacts := 0
 		var impulse_sum := 0.0
@@ -1356,6 +1433,7 @@ func _feet_report() -> Array:
 
 
 func _send_state(which: String) -> void:
+	_refresh_mj_basis()
 	var q: Array = []
 	var qd: Array = []
 	# actuator order
@@ -1392,96 +1470,118 @@ func _send_state(which: String) -> void:
 		var w_body: Vector3 = _quat_rotate_wxyz(iq, w_i)
 		base_ang_local = [w_body.x, w_body.y, w_body.z]
 		_dbg_ang_world = [w_world_g.x, w_world_g.y, w_world_g.z]
-	var lite := which == "step" and _report_mode == "lite"
-	var dump: Array = []
-	# Play viewer: skip per-body contact dump (large JSON every 20 ms). Calib is headless.
-	# Training lite step skips dump/wheels and reports only foot contacts.
-	if (not lite) and DisplayServer.get_name() == "headless":
-		for key in _bodies.keys():
-			var b: RigidBody3D = _bodies[key]
-			var dpm := _g2m(b.global_transform.origin)
-			var dqm := _basis_to_m_quat(b.global_transform.basis)
-			var com_local := b.center_of_mass
-			var com_world_m := _g2m(b.global_transform * com_local)
-			var n_contacts := 0
-			var impulse_sum := 0.0
-			var cpos: Array = []
-			var cshape: Array = []
-			var cwho: Array = []
-			var dst := PhysicsServer3D.body_get_direct_state(b.get_rid())
-			if dst != null:
-				com_local = dst.center_of_mass_local
-				com_world_m = _g2m(b.global_transform.origin + dst.center_of_mass)
-				n_contacts = dst.get_contact_count()
-				for ci in range(n_contacts):
-					impulse_sum += dst.get_contact_impulse(ci).length()
-					var wp := _g2m(dst.get_contact_collider_position(ci))
-					cpos.append([wp.x, wp.y, wp.z])
-					cshape.append(dst.get_contact_local_shape(ci))
-					var obj = dst.get_contact_collider_object(ci)
-					cwho.append(str(obj.name) if obj != null else "?")
-			dump.append({
-				"name": key,
-				"pos": [dpm.x, dpm.y, dpm.z],
-				"quat": [dqm.w, dqm.x, dqm.y, dqm.z],
-				"com": [com_world_m.x, com_world_m.y, com_world_m.z],
-				"com_local": [com_local.x, com_local.y, com_local.z],
-				"com_prop": [b.center_of_mass.x, b.center_of_mass.y, b.center_of_mass.z],
-				"com_mode": int(b.center_of_mass_mode),
-				"mass": b.mass,
-				"inertia": [b.inertia.x, b.inertia.y, b.inertia.z],
-				"n_contacts": n_contacts,
-				"impulse": impulse_sum,
-				"linvel": [_g2m(b.linear_velocity).x, _g2m(b.linear_velocity).y, _g2m(b.linear_velocity).z],
-				"angvel": [_g2m(b.angular_velocity).x, _g2m(b.angular_velocity).y, _g2m(b.angular_velocity).z],
-				"cpos": cpos,
-				"cshape": cshape,
-			})
 	var tau: Array = []
-	var axis_dot: Array = []
 	tau.resize(nu)
-	axis_dot.resize(nu)
 	for i in range(nu):
 		tau[i] = 0.0
-		axis_dot[i] = 0.0
 	for j in _joints:
 		var ai: int = int(j["act_index"])
 		if ai >= 0 and ai < nu:
 			tau[ai] = float(j.get("tau", 0.0))
-			axis_dot[ai] = float(j.get("axis_dot", 0.0))
-	var payload := {
-		"ok": true,
-		"cmd": which,
-		"t": _t,
-		"q": q,
-		"qd": qd,
-		"tau": tau,
-		"axis_dot": axis_dot,
-		"base_pos": base_pos,
-		"base_quat": base_quat,
-		"base_linvel": base_lin,
-		"base_angvel_local": base_ang_local,
-		"dbg_ang_world": _dbg_ang_world,
-		"applied": _reset_applied,
-		"missing": _reset_missing,
-		"body_names": _bodies.keys(),
-		"tile_dy": 0.0 if _floor_plate == null else _floor_plate.global_position.y,
-		"tile_pitch": 0.0 if _floor_plate == null else rad_to_deg(_floor_plate.global_rotation.z),
-		"sole_n_on": _sole_n_on(),
-		"sole_ymin": _sole_ymin(),
-		"sole_cxmin": _sole_cxmin(),
-		"sole_cxmax": _sole_cxmax(),
-		"jaw_pad_y": _jaw_pad_y,
-		"held": _held_now.duplicate(),
-		"held_order": _held_press_order.duplicate(),
-		"taps": _taps.duplicate(),
-		"time_scale": _play_time_scale(),
-	}
+	var lite := which == "step" and _report_mode == "lite"
+	var payload: Dictionary
 	if lite:
-		payload["feet"] = _feet_report()
+		payload = {
+			"ok": true,
+			"cmd": which,
+			"t": _t,
+			"q": q,
+			"qd": qd,
+			"tau": tau,
+			"base_pos": base_pos,
+			"base_quat": base_quat,
+			"base_linvel": base_lin,
+			"base_angvel_local": base_ang_local,
+			"feet": _feet_report(),
+		}
 	else:
-		payload["dump"] = dump
-		payload["wheels"] = _wheel_dump()
+		var dump: Array = []
+		# Play viewer: skip per-body contact dump (large JSON every 20 ms). Calib is headless.
+		if DisplayServer.get_name() == "headless":
+			for key in _bodies.keys():
+				var b: RigidBody3D = _bodies[key]
+				var dpm := _g2m(b.global_transform.origin)
+				var dqm := _basis_to_m_quat(b.global_transform.basis)
+				var com_local := b.center_of_mass
+				var com_world_m := _g2m(b.global_transform * com_local)
+				var n_contacts := 0
+				var impulse_sum := 0.0
+				var cpos: Array = []
+				var cshape: Array = []
+				var dst := PhysicsServer3D.body_get_direct_state(b.get_rid())
+				if dst != null:
+					com_local = dst.center_of_mass_local
+					com_world_m = _g2m(b.global_transform.origin + dst.center_of_mass)
+					n_contacts = dst.get_contact_count()
+					for ci in range(n_contacts):
+						impulse_sum += dst.get_contact_impulse(ci).length()
+						var wp := _g2m(dst.get_contact_collider_position(ci))
+						cpos.append([wp.x, wp.y, wp.z])
+						cshape.append(dst.get_contact_local_shape(ci))
+				dump.append({
+					"name": key,
+					"pos": [dpm.x, dpm.y, dpm.z],
+					"quat": [dqm.w, dqm.x, dqm.y, dqm.z],
+					"com": [com_world_m.x, com_world_m.y, com_world_m.z],
+					"com_local": [com_local.x, com_local.y, com_local.z],
+					"com_prop": [b.center_of_mass.x, b.center_of_mass.y, b.center_of_mass.z],
+					"com_mode": int(b.center_of_mass_mode),
+					"mass": b.mass,
+					"inertia": [b.inertia.x, b.inertia.y, b.inertia.z],
+					"n_contacts": n_contacts,
+					"impulse": impulse_sum,
+					"linvel": [_g2m(b.linear_velocity).x, _g2m(b.linear_velocity).y, _g2m(b.linear_velocity).z],
+					"angvel": [_g2m(b.angular_velocity).x, _g2m(b.angular_velocity).y, _g2m(b.angular_velocity).z],
+					"cpos": cpos,
+					"cshape": cshape,
+				})
+		var axis_dot: Array = []
+		axis_dot.resize(nu)
+		for i in range(nu):
+			axis_dot[i] = 0.0
+		for j in _joints:
+			var ai: int = int(j["act_index"])
+			if ai >= 0 and ai < nu:
+				axis_dot[ai] = float(j.get("axis_dot", 0.0))
+		payload = {
+			"ok": true,
+			"cmd": which,
+			"t": _t,
+			"q": q,
+			"qd": qd,
+			"tau": tau,
+			"axis_dot": axis_dot,
+			"base_pos": base_pos,
+			"base_quat": base_quat,
+			"base_linvel": base_lin,
+			"base_angvel_local": base_ang_local,
+			"dbg_ang_world": _dbg_ang_world,
+			"applied": _reset_applied,
+			"missing": _reset_missing,
+			"body_names": _bodies.keys(),
+			"tile_dy": 0.0 if _floor_plate == null else _floor_plate.global_position.y,
+			"tile_pitch": 0.0 if _floor_plate == null else rad_to_deg(_floor_plate.global_rotation.z),
+			"sole_n_on": _sole_n_on(),
+			"sole_ymin": _sole_ymin(),
+			"sole_cxmin": _sole_cxmin(),
+			"sole_cxmax": _sole_cxmax(),
+			"jaw_pad_y": _jaw_pad_y,
+			"held": _held_now.duplicate(),
+			"held_order": _held_press_order.duplicate(),
+			"taps": _taps.duplicate(),
+			"time_scale": _play_time_scale(),
+			"dump": dump,
+			"wheels": _wheel_dump(),
+		}
+	if _timing_enabled:
+		payload["timing"] = {
+			"phys_usec": _timing_phys_usec,
+			"pd_usec": _timing_pd_usec,
+			"wait_usec": _timing_wait_usec,
+			"wait_iters": _timing_wait_iters,
+			"prev_send_usec": _timing_send_usec,
+			"json_bytes": _timing_json_bytes,
+		}
 	_send_dict(payload)
 	_taps.clear()
 
@@ -1737,6 +1837,8 @@ func _add_tap(action: String) -> void:
 
 
 func _process(delta: float) -> void:
+	if _headless:
+		return
 	_sample_held()
 
 

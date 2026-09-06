@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import itertools
 import os
+import shutil
 import socket
 import subprocess
 import tempfile
@@ -13,6 +15,7 @@ from sim2sim.protocol import JsonLineClient, wait_connect
 
 
 GODOT_PROJECT = sim2sim_root() / "godot"
+_CORE_SEQ = itertools.count()
 
 
 def godot_bin() -> str:
@@ -27,6 +30,57 @@ def free_port() -> int:
     return port
 
 
+def _headless_overlay(src: Path) -> Path:
+    """Temp --path with override.cfg capping WorkerThreadPool at 1 thread.
+
+    Each stock Godot process otherwise starts nproc WorkerThreads (20 on this
+    box). 16 workers × 20 threads saturates the scheduler; lockstep has one
+    Jolt island and does not benefit from that pool.
+    """
+    overlay = Path(tempfile.mkdtemp(prefix="godot-s2s-ov-"))
+    try:
+        for entry in src.iterdir():
+            if entry.name == "override.cfg":
+                continue
+            dest = overlay / entry.name
+            # Copy project.godot so Godot does not canonicalize --path through a
+            # symlink and miss overlay/override.cfg.
+            if entry.name == "project.godot" and entry.is_file():
+                shutil.copy2(entry, dest)
+            else:
+                os.symlink(entry, dest)
+        (overlay / "override.cfg").write_text(
+            "; sim2sim headless lockstep: 1 robot per process\n"
+            "[threading]\n"
+            "worker_pool/max_threads=1\n"
+        )
+    except Exception:
+        shutil.rmtree(overlay, ignore_errors=True)
+        raise
+    return overlay
+
+
+def _pin_preexec(core: int):
+    def _inner() -> None:
+        try:
+            os.sched_setaffinity(0, {int(core)})
+        except (AttributeError, OSError):
+            pass
+
+    return _inner
+
+
+def _cleanup_overlay(proc: subprocess.Popen) -> None:
+    overlay = getattr(proc, "_sim2sim_overlay", None)
+    if overlay is None:
+        return
+    try:
+        shutil.rmtree(overlay, ignore_errors=True)
+    except Exception:
+        pass
+    proc._sim2sim_overlay = None  # type: ignore[attr-defined]
+
+
 def spawn_godot(
     scene: str,
     *,
@@ -38,6 +92,14 @@ def spawn_godot(
 ) -> tuple[subprocess.Popen, int, JsonLineClient]:
     port = port or free_port()
     bin_ = godot_bin()
+    project = Path(cwd or GODOT_PROJECT)
+    overlay: Path | None = None
+    if headless:
+        try:
+            overlay = _headless_overlay(project)
+            project = overlay
+        except OSError:
+            overlay = None
     cmd = [bin_]
     # Optional fallback when Vulkan device creation fails (e.g. flaky GPU).
     driver = os.environ.get("GODOT_RENDERING_DRIVER", "").strip()
@@ -48,7 +110,9 @@ def spawn_godot(
         cmd += ["--rendering-driver", "opengl3"]
     if headless:
         cmd.append("--headless")
-        cmd += ["--fixed-fps", "200"]
+        # --fixed-fps disables wall-clock pacing (still 1 physics tick / frame
+        # at physics_ticks_per_second=200). Observed >>200 ticks/s wall.
+        cmd += ["--fixed-fps", "200", "--max-fps", "0", "--single-threaded-scene"]
     else:
         # 200 Hz main loop so 4 lockstep ticks are not bound to 60 Hz vsync.
         cmd += ["--fixed-fps", "200"]
@@ -63,7 +127,7 @@ def spawn_godot(
             cmd += ["--display-driver", os.environ["SIM2SIM_DISPLAY_DRIVER"]]
     cmd += [
         "--path",
-        str(cwd or GODOT_PROJECT),
+        str(project),
         scene,
         "--",
         f"--port={port}",
@@ -81,15 +145,22 @@ def spawn_godot(
                 break
     log_path = Path(tempfile.gettempdir()) / f"godot-sim2sim-{port}.log"
     log_file = open(log_path, "w", encoding="utf-8")
+    preexec = None
+    if headless:
+        nproc = os.cpu_count() or 1
+        n_godot = max(1, int(nproc) - 2)
+        preexec = _pin_preexec(next(_CORE_SEQ) % n_godot)
     proc = subprocess.Popen(
         cmd,
         stdout=log_file,
         stderr=subprocess.STDOUT,
         text=True,
         env=env,
+        preexec_fn=preexec,
     )
     proc._sim2sim_log_path = log_path  # type: ignore[attr-defined]
     proc._sim2sim_log_file = log_file  # type: ignore[attr-defined]
+    proc._sim2sim_overlay = overlay  # type: ignore[attr-defined]
     try:
         client = wait_connect("127.0.0.1", port, timeout=25.0, recv_timeout=recv_timeout)
     except Exception:
@@ -105,6 +176,7 @@ def spawn_godot(
             log_file.close()
         except Exception:
             pass
+        _cleanup_overlay(proc)
         out = ""
         try:
             out = log_path.read_text(encoding="utf-8", errors="replace")
@@ -135,6 +207,7 @@ def stop_godot(proc: subprocess.Popen, client: JsonLineClient | None) -> str:
             log_file.close()
         except Exception:
             pass
+    _cleanup_overlay(proc)
     log_path = getattr(proc, "_sim2sim_log_path", None)
     if log_path is not None:
         try:

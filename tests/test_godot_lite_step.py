@@ -69,6 +69,24 @@ class TestGodotLiteStep(unittest.TestCase):
         self.assertIn("tau", raw)
         self.assertIn("base_pos", raw)
         self.assertIn("base_quat", raw)
+        self.assertIn("base_linvel", raw)
+        self.assertIn("base_angvel_local", raw)
+        for fat in (
+            "dump",
+            "wheels",
+            "axis_dot",
+            "body_names",
+            "dbg_ang_world",
+            "applied",
+            "missing",
+            "tile_dy",
+            "held",
+            "held_order",
+            "taps",
+            "time_scale",
+            "sole_n_on",
+        ):
+            self.assertNotIn(fat, raw, fat)
 
     def test_03_default_step_still_has_dump(self) -> None:
         self.be.reset(ctrl=self.home)

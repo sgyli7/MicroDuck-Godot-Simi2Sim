@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+import math
 import os
+import select
 import time
 from pathlib import Path
 from typing import Any, Mapping
@@ -15,10 +17,8 @@ from rsl_rl.env import VecEnv
 from tensordict import TensorDict
 
 from sim2sim.backends.godot_backend import GodotBackend
-from sim2sim.coords import quat_rotate_inverse_wxyz
-from sim2sim.fall import fallen
 from sim2sim.godot_proc import stop_godot
-from sim2sim.obs import DEFAULT_HOME, build_obs
+from sim2sim.obs import DEFAULT_HOME
 from sim2sim.paths import apply_path_defaults, expand_cfg, load_robot_json, sim2sim_root
 from sim2sim.train.commands import CommandConfig, CommandSampler
 from sim2sim.train.reset_poses import HomePoseSampler
@@ -28,6 +28,17 @@ FOOT_NAMES = ("ankle_left", "ankle_right")
 ACTOR_DIM = 61
 CRITIC_DIM = 70
 NUM_ACTIONS = 14
+_DOWN = np.array([0.0, 0.0, -1.0], dtype=np.float64)
+
+
+def _quat_rotate_inv_n(quat: np.ndarray, vec: np.ndarray) -> np.ndarray:
+    """Batch inverse-rotate ``vec`` by wxyz quats. Matches ``quat_rotate_inverse_wxyz``."""
+    q = np.asarray(quat, dtype=np.float64).reshape(-1, 4)
+    v = np.asarray(vec, dtype=np.float64).reshape(3)
+    w = q[:, :1]
+    xyz = q[:, 1:4]
+    t = np.cross(xyz, v) * 2.0
+    return v - w * t + np.cross(xyz, t)
 
 
 def load_walk_cfg(path_or_dict: str | Path | Mapping[str, Any]) -> dict[str, Any]:
@@ -135,6 +146,7 @@ class GodotVecEnv(VecEnv):
         self.base_body = str(robot.get("base_body", "trunk_base"))
         self.tilt_deg = float((cfg.get("termination") or {}).get("tilt_deg", 70.0))
         self.min_z = float((cfg.get("termination") or {}).get("min_z", 0.055))
+        self._cos_tilt = math.cos(math.radians(self.tilt_deg))
         reset_cfg = cfg.get("reset") or {}
         self.yaw_range = tuple(float(x) for x in reset_cfg.get("yaw_range", (-np.pi, np.pi)))
         self.joint_noise = float(reset_cfg.get("joint_noise_rad", 0.05))
@@ -271,16 +283,8 @@ class GodotVecEnv(VecEnv):
             except Exception as e:
                 send_faults.append((i, f"send:{type(e).__name__}:{e}"))
 
-        recv_faults: list[tuple[int, str]] = []
         send_bad = {i for i, _ in send_faults}
-        for i, w in enumerate(self._workers):
-            assert w is not None
-            if i in send_bad:
-                continue
-            try:
-                self._states[i] = w.recv_step()
-            except Exception as e:
-                recv_faults.append((i, f"recv:{type(e).__name__}:{e}"))
+        recv_faults = self._recv_all(send_bad)
 
         faults = send_faults + recv_faults
         if len(faults) > self.max_faults_per_step:
@@ -290,26 +294,8 @@ class GodotVecEnv(VecEnv):
         for i, reason in faults:
             self._handle_fault(i, reason)
 
-        contact = np.zeros((n, 2), dtype=np.float32)
-        height = np.zeros((n, 2), dtype=np.float32)
-        xy_speed = np.zeros((n, 2), dtype=np.float32)
-        q = np.zeros((n, NUM_ACTIONS), dtype=np.float32)
-        gyro = np.zeros((n, 3), dtype=np.float32)
-        grav = np.zeros((n, 3), dtype=np.float32)
-        linvel = np.zeros((n, 3), dtype=np.float32)
-        quat = np.zeros((n, 4), dtype=np.float64)
-        pos = np.zeros((n, 3), dtype=np.float64)
-        finite = np.ones(n, dtype=bool)
-        for i in range(n):
-            st = self._states[i]
-            q[i] = np.asarray(st.q, dtype=np.float32).reshape(-1)[:NUM_ACTIONS]
-            gyro[i] = np.asarray(st.base_angvel_local, dtype=np.float32).reshape(3)
-            grav[i] = quat_rotate_inverse_wxyz(st.base_quat_wxyz, np.array([0.0, 0.0, -1.0])).astype(np.float32)
-            linvel[i] = np.asarray(st.base_linvel, dtype=np.float32).reshape(3)
-            quat[i] = np.asarray(st.base_quat_wxyz, dtype=np.float64).reshape(4)
-            pos[i] = np.asarray(st.base_pos, dtype=np.float64).reshape(3)
-            contact[i], height[i], xy_speed[i] = _foot_pack(st, self.ankle_z_nominal)
-            finite[i] = _state_finite(st) and np.isfinite(contact[i]).all() and np.isfinite(height[i]).all()
+        q, qd, gyro, quat, pos, linvel, contact, height, xy_speed, finite = self._pull_states()
+        grav = _quat_rotate_inv_n(quat, _DOWN).astype(np.float32)
 
         lin_yaw = world_to_yaw_frame(quat, linvel)
         cmd = self.commands.step(self.dt)
@@ -331,10 +317,7 @@ class GodotVecEnv(VecEnv):
             )
         )
 
-        fell = np.array(
-            [fallen(quat[i], pos[i], tilt_deg=self.tilt_deg, min_z=self.min_z) for i in range(n)],
-            dtype=bool,
-        )
+        fell = (grav[:, 2] > -self._cos_tilt) | (pos[:, 2] < self.min_z)
         nan_state = nan_act | ~finite | ~np.isfinite(total)
         time_out = (self.episode_length_buf.detach().cpu().numpy() >= self.max_episode_length)
         is_fault = np.array([i in fault_ids for i in range(n)], dtype=bool)
@@ -377,19 +360,111 @@ class GodotVecEnv(VecEnv):
         dones = torch.as_tensor(done, dtype=torch.bool, device=self.device)
         return self._obs, rewards, dones, extras
 
-    def _build_obs_arrays(self) -> tuple[np.ndarray, np.ndarray]:
+    def _recv_all(self, send_bad: set[int]) -> list[tuple[int, str]]:
+        pending = [i for i in range(self.num_envs) if i not in send_bad]
+        faults: list[tuple[int, str]] = []
+        if not pending:
+            return faults
+        if len(pending) == 1:
+            i = pending[0]
+            w = self._workers[i]
+            assert w is not None
+            try:
+                self._states[i] = w.recv_step()
+            except Exception as e:
+                faults.append((i, f"recv:{type(e).__name__}:{e}"))
+            return faults
+        deadline = time.monotonic() + self.recv_timeout
+        while pending:
+            remain = deadline - time.monotonic()
+            if remain <= 0:
+                for i in pending:
+                    faults.append((i, "recv:TimeoutError:select"))
+                break
+            socks: list[Any] = []
+            by_fd: dict[int, int] = {}
+            for i in pending:
+                w = self._workers[i]
+                assert w is not None
+                sock = w._client.sock
+                socks.append(sock)
+                by_fd[int(sock.fileno())] = i
+            try:
+                ready, _, _ = select.select(socks, [], [], remain)
+            except (OSError, ValueError) as e:
+                for i in pending:
+                    faults.append((i, f"recv:{type(e).__name__}:{e}"))
+                break
+            if not ready:
+                for i in pending:
+                    faults.append((i, "recv:TimeoutError:select"))
+                break
+            done_now: list[int] = []
+            for sock in ready:
+                i = by_fd[int(sock.fileno())]
+                w = self._workers[i]
+                assert w is not None
+                try:
+                    self._states[i] = w.recv_step()
+                except Exception as e:
+                    faults.append((i, f"recv:{type(e).__name__}:{e}"))
+                done_now.append(i)
+            pending = [i for i in pending if i not in done_now]
+        return faults
+
+    def _pull_states(
+        self,
+    ) -> tuple[
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+    ]:
         n = self.num_envs
-        actor = np.zeros((n, ACTOR_DIM), dtype=np.float32)
-        extra = np.zeros((n, 9), dtype=np.float32)
+        q = np.zeros((n, NUM_ACTIONS), dtype=np.float32)
+        qd = np.zeros((n, NUM_ACTIONS), dtype=np.float32)
+        gyro = np.zeros((n, 3), dtype=np.float32)
+        quat = np.zeros((n, 4), dtype=np.float64)
+        pos = np.zeros((n, 3), dtype=np.float64)
+        linvel = np.zeros((n, 3), dtype=np.float32)
+        contact = np.zeros((n, 2), dtype=np.float32)
+        height = np.zeros((n, 2), dtype=np.float32)
+        xy_speed = np.zeros((n, 2), dtype=np.float32)
+        finite = np.ones(n, dtype=bool)
         for i in range(n):
             st = self._states[i]
-            actor[i] = build_obs(st, self._last_action[i], self.commands.cmd[i], home=self.home)
-            lin = world_to_yaw_frame(st.base_quat_wxyz, st.base_linvel).reshape(3)
-            c, h, _ = _foot_pack(st, self.ankle_z_nominal)
-            extra[i, 0:3] = lin
-            extra[i, 3:5] = c
-            extra[i, 5:7] = h
-            extra[i, 7:9] = self.rew.air.air_time[i]
+            q[i] = np.asarray(st.q, dtype=np.float32).reshape(-1)[:NUM_ACTIONS]
+            qd[i] = np.asarray(st.qd, dtype=np.float32).reshape(-1)[:NUM_ACTIONS]
+            gyro[i] = np.asarray(st.base_angvel_local, dtype=np.float32).reshape(3)
+            quat[i] = np.asarray(st.base_quat_wxyz, dtype=np.float64).reshape(4)
+            pos[i] = np.asarray(st.base_pos, dtype=np.float64).reshape(3)
+            linvel[i] = np.asarray(st.base_linvel, dtype=np.float32).reshape(3)
+            contact[i], height[i], xy_speed[i] = _foot_pack(st, self.ankle_z_nominal)
+            finite[i] = _state_finite(st) and np.isfinite(contact[i]).all() and np.isfinite(height[i]).all()
+        return q, qd, gyro, quat, pos, linvel, contact, height, xy_speed, finite
+
+    def _build_obs_arrays(self) -> tuple[np.ndarray, np.ndarray]:
+        n = self.num_envs
+        q, qd, gyro, quat, _pos, linvel, contact, height, _xy, _finite = self._pull_states()
+        grav = _quat_rotate_inv_n(quat, _DOWN).astype(np.float32)
+        actor = np.empty((n, ACTOR_DIM), dtype=np.float32)
+        actor[:, 0:3] = gyro
+        actor[:, 3:6] = grav
+        actor[:, 6:20] = q - self.home.reshape(1, NUM_ACTIONS)
+        actor[:, 20:34] = qd
+        actor[:, 34:48] = self._last_action
+        actor[:, 48:61] = self.commands.cmd
+        extra = np.empty((n, 9), dtype=np.float32)
+        extra[:, 0:3] = world_to_yaw_frame(quat, linvel)
+        extra[:, 3:5] = contact
+        extra[:, 5:7] = height
+        extra[:, 7:9] = self.rew.air.air_time
         critic = np.concatenate([actor, extra], axis=1).astype(np.float32)
         return actor, critic
 
