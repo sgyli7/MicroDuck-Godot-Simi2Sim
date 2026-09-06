@@ -72,6 +72,22 @@ PPO_RC=0
 uv run sim2sim-compare --mujoco "$RESULTS/ppo_mujoco.npz" --godot "$RESULTS/ppo_godot.npz" \
   --out "$RESULTS/ppo_compare" --title "local_ppo Sim2Sim" || PPO_RC=$?
 
+WALK_GODOT="$MICRODUCK_POLICIES/Walk_Godot.onnx"
+WALK_GODOT_COMPARE_RC="skip"
+if [[ -f "$WALK_GODOT" ]]; then
+  echo "== rollout Walk_Godot mujoco (informational) =="
+  uv run sim2sim-runner --backend mujoco --onnx "$WALK_GODOT" --out "$RESULTS/walk_godot_mujoco.npz"
+  echo "== rollout Walk_Godot godot (informational) =="
+  uv run sim2sim-runner --backend godot --onnx "$WALK_GODOT" --out "$RESULTS/walk_godot_godot.npz"
+  echo "== compare Walk_Godot (informational, not HARD FAIL) =="
+  WALK_GODOT_COMPARE_RC=0
+  uv run sim2sim-compare --mujoco "$RESULTS/walk_godot_mujoco.npz" --godot "$RESULTS/walk_godot_godot.npz" \
+    --out "$RESULTS/walk_godot_compare" --title "Walk_Godot Sim2Sim" || WALK_GODOT_COMPARE_RC=$?
+else
+  echo "== Walk_Godot.onnx missing; skip informational compare =="
+fi
+echo "WALK_GODOT_COMPARE_RC=$WALK_GODOT_COMPARE_RC"
+
 echo "== gate summary =="
 python3 - <<'PY'
 from pathlib import Path

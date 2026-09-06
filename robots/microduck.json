@@ -11,7 +11,8 @@
   "home": [0.0, -0.0873, -0.4579, -0.0049, 0.4530, 0.3491, 0.3491, 0.0, 0.0, 0.0, 0.0873, 0.4579, 0.0049, -0.4530],
   "policies": {
     "alpha_walking": "${MICRODUCK_POLICIES}/alpha_walking.onnx",
-    "local_ppo": "${MICRODUCK_POLICIES}/local-ppo/local_velocity_walk_run_idle.onnx"
+    "local_ppo": "${MICRODUCK_POLICIES}/local-ppo/local_velocity_walk_run_idle.onnx",
+    "walk_godot": "${MICRODUCK_POLICIES}/Walk_Godot.onnx"
   },
   "schedule": [
     {"name": "idle", "seconds": 2.0, "vel": [0.0, 0.0, 0.0]},
