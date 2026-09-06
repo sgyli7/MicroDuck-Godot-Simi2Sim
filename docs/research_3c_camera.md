@@ -75,11 +75,22 @@ Vulkan device creation fails (-3) on this host; windowed Godot runs via the
   in run mode (`physics_server.gd:1632`), which static captures never enter.
 * Real play loop windowed 65 s: lockstep ≈49.9 Hz, godot_step 6.6 ms, no
   step warnings.
+* `--disable-vsync` in the windowed spawn args segfaults Godot at GL init
+  on this NVIDIA 580.xx driver; the flag now sits behind
+  `SIM2SIM_DISABLE_VSYNC=1` (off by default).
+* End-to-end key-driven play session (windowed, ONNX walking policy):
+  a new protocol `key` command feeds `Input.parse_input_event` — the real
+  input pipeline (physical-key tracking for held sampling, `_unhandled_input`
+  for taps) — bypassing the X server entirely, which sidesteps the host's
+  synthetic-event limitation. Sequence captured in 6× 1280×720 PNGs
+  (`shots/viz_*.png`): spawn → hold W 3 s (walks ~2 m, camera trails behind,
+  orbit yaw damps to -0.13 rad) → add A 2 s (turn ~130°, camera yaw follows
+  to 2.33 rad) → SPACE idle (held gains idle, stop within ~0.4 m, camera
+  settles) → re-press (resumes) → reset (camera snap-glides back). held and
+  press_order echoed correctly through the real step acks throughout.
 
-Known environment limitation (not fixed here): on this GNOME/mutter
-Wayland-session X server, synthetic key injection never reaches Godot —
-XTEST fake input and `XSendEvent` keys are both dropped (control experiment:
-a plain Tk window receives them neither). A human typing into the real
-window is unaffected; the input path is covered by the headless `set_held`
-integration test and the held-order unit tests. Automated physical-key
-capture remains manual on this box.
+Known environment limitation (host-level, not fixed here): on this
+GNOME/mutter Wayland-session X server, OS-level synthetic keys (XTEST /
+XSendEvent) never reach Godot — a human typing into the real window is
+unaffected, and automated key capture works via the in-process `key`
+protocol command above (validated in the end-to-end session).

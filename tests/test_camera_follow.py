@@ -176,22 +176,32 @@ class TestCameraFollow(unittest.TestCase):
     # ---- helpers -------------------------------------------------------
 
     def assertBehindDuck(self, cam: dict, tol_deg: float = 8.0):
-        """Orbit geometry check in Godot ground coords: the camera sits one
-        `dist` behind the duck (heading from the converted duck_fwd). Uses
-        the look target the protocol reports (cam_look), since the rendered
-        camera lerps toward it with rig lag."""
+        """Orbit geometry check in Godot ground coords: the rendered camera
+        (cam_pos, which lerps toward the orbit target) and the orbit target
+        itself (cam_look + yaw/pitch/dist) must both sit behind the duck and
+        at the orbit radius — the rig lag only trails along the follow path,
+        it never opens a gap off-axis."""
         look = np.array(cam["cam_look"])
-        cp = np.array(cam["cam_pos"])
-        d = cp[[0, 2]] - look[[0, 2]]
-        n = float(np.linalg.norm(d))
-        self.assertAlmostEqual(n, cam["dist"] * math.cos(cam["pitch"]), delta=0.08,
-                               msg="camera not at orbit distance (ground proj)")
-        self.assertAlmostEqual(abs(cp[1] - look[1]), cam["dist"] * math.sin(cam["pitch"]), delta=0.10,
-                               msg="camera not at orbit height")
+        base = np.array(cam["look"])  # duck look-at point (base + 0.08 up)
         fx, fy = cam["duck_fwd"]
         f = np.array([fx, -fy]); f /= max(np.linalg.norm(f), 1e-9)
-        ang = math.degrees(math.acos(float(np.clip(np.dot(d / n, -f), -1, 1))))
-        self.assertLess(ang, tol_deg, f"camera not behind duck: off by {ang:.1f}°")
+
+        yaw, pitch, dist = cam["yaw"], cam["pitch"], cam["dist"]
+        target = look + np.array([math.sin(yaw) * math.cos(pitch),
+                                  math.sin(pitch),
+                                  math.cos(yaw) * math.cos(pitch)]) * dist
+        for tag, cp in (("target", target), ("rendered", np.array(cam["cam_pos"]))):
+            d = cp[[0, 2]] - look[[0, 2]]
+            n = float(np.linalg.norm(d))
+            self.assertGreater(n, 0.3, f"{tag} camera collapsed onto the duck")
+            ang = math.degrees(math.acos(float(np.clip(np.dot(d / n, -f), -1, 1))))
+            self.assertLess(ang, tol_deg, f"{tag} camera not behind duck: off by {ang:.1f}°")
+        # rendered camera height tracks orbit height within rig-lag slack
+        cp = np.array(cam["cam_pos"])
+        self.assertGreater(cp[1] - base[1], 0.15, "rendered camera below duck eye level")
+        # orbit target sits exactly at the orbit radius (ground projection)
+        self.assertAlmostEqual(float(np.linalg.norm((target - look)[[0, 2]])),
+                               dist * math.cos(pitch), delta=0.02)
 
     def assertAtBehindAzimuth(self, cam: dict, tol_deg: float = 6.0):
         """Orbit yaw equals the camera-behind azimuth: with duck_fwd given

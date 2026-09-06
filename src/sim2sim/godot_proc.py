@@ -50,7 +50,12 @@ def spawn_godot(
         cmd += ["--fixed-fps", "200"]
     else:
         # 200 Hz main loop so 4 lockstep ticks are not bound to 60 Hz vsync.
-        cmd += ["--disable-vsync", "--fixed-fps", "200"]
+        cmd += ["--fixed-fps", "200"]
+        if os.environ.get("SIM2SIM_DISABLE_VSYNC", "0") == "1":
+            # Only add this where the GL driver tolerates it (validated on
+            # NVIDIA 580.xx/aarch64: the flag segfaults Godot at GL init, so
+            # it must be OFF by default).
+            cmd += ["--disable-vsync"]
         # On a Wayland-capable desktop, Godot prefers Wayland even when an
         # X11 DISPLAY is set; the screenshot/window tooling here is X11.
         if os.environ.get("SIM2SIM_DISPLAY_DRIVER"):

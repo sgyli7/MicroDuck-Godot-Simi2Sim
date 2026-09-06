@@ -1129,6 +1129,28 @@ func _handle(cmd: Variant) -> void:
 	elif name == "camera_state":
 		# Headless camera integration test (tests/test_camera_follow.py).
 		_send_dict({"ok": true, "cmd": "camera_state", "camera": _camera_json_state(), "held_order": _held_press_order.duplicate()})
+	elif name == "key":
+		# Inject a keyboard event (visual driver): parse_input_event feeds
+		# the real input pipeline — physical-key tracking for _sample_held
+		# and _unhandled_input for tap actions.
+		var ev := InputEventKey.new()
+		ev.physical_keycode = int(cmd.get("keycode", 0))
+		ev.pressed = bool(cmd.get("pressed", true))
+		Input.parse_input_event(ev)
+		if not ev.pressed:
+			# Release: poll until physical-key tracking clears (bounded) so
+			# _sample_held on the next tick does not report a stale press.
+			for _i in range(2000):
+				if not Input.is_physical_key_pressed(ev.physical_keycode):
+					break
+				OS.delay_usec(500)
+		else:
+			# Press: ensure the queue drained into tracking before acking.
+			for _i in range(2000):
+				if Input.is_physical_key_pressed(ev.physical_keycode):
+					break
+				OS.delay_usec(500)
+		_send_dict({"ok": true, "cmd": "key"})
 	elif name == "camera_zoom":
 		# Headless test for wheel zoom (same path as _unhandled_input).
 		_cam_dist = clampf(_cam_dist * (1.0 + CAM_DIST_DRAG * 40.0 * float(cmd.get("d", 0.0))), CAM_DIST_MIN, CAM_DIST_MAX)
