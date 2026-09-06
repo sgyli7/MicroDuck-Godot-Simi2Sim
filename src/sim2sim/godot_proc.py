@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import ctypes
 import itertools
 import os
 import shutil
+import signal
 import socket
 import subprocess
 import tempfile
@@ -60,8 +62,31 @@ def _headless_overlay(src: Path) -> Path:
     return overlay
 
 
-def _pin_preexec(core: int):
+PR_SET_PDEATHSIG = 1
+
+
+def _set_pdeathsig() -> None:
+    """Linux: Godot dies with SIGTERM when the Python parent exits (no orphans)."""
+    if os.name != "posix":
+        return
+    try:
+        libc = ctypes.CDLL("libc.so.6", use_errno=True)
+        libc.prctl(PR_SET_PDEATHSIG, int(signal.SIGTERM))
+    except (OSError, AttributeError):
+        return
+    # Race: parent already gone before prctl.
+    try:
+        if os.getppid() == 1:
+            os.kill(os.getpid(), signal.SIGTERM)
+    except OSError:
+        pass
+
+
+def _child_preexec(core: int | None):
     def _inner() -> None:
+        _set_pdeathsig()
+        if core is None:
+            return
         try:
             os.sched_setaffinity(0, {int(core)})
         except (AttributeError, OSError):
@@ -145,18 +170,18 @@ def spawn_godot(
                 break
     log_path = Path(tempfile.gettempdir()) / f"godot-sim2sim-{port}.log"
     log_file = open(log_path, "w", encoding="utf-8")
-    preexec = None
+    core: int | None = None
     if headless:
         nproc = os.cpu_count() or 1
         n_godot = max(1, int(nproc) - 2)
-        preexec = _pin_preexec(next(_CORE_SEQ) % n_godot)
+        core = next(_CORE_SEQ) % n_godot
     proc = subprocess.Popen(
         cmd,
         stdout=log_file,
         stderr=subprocess.STDOUT,
         text=True,
         env=env,
-        preexec_fn=preexec,
+        preexec_fn=_child_preexec(core),
     )
     proc._sim2sim_log_path = log_path  # type: ignore[attr-defined]
     proc._sim2sim_log_file = log_file  # type: ignore[attr-defined]

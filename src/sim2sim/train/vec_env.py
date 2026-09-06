@@ -179,6 +179,11 @@ class GodotVecEnv(VecEnv):
         self._states: list[Any] = [None] * self.num_envs
         self._last_action = np.zeros((self.num_envs, NUM_ACTIONS), dtype=np.float32)
         self._push_ttl = np.zeros(self.num_envs, dtype=np.float64)
+        self._last_fell = np.zeros(self.num_envs, dtype=bool)
+        self._last_term_quat = np.zeros((self.num_envs, 4), dtype=np.float64)
+        self._last_term_pos = np.zeros((self.num_envs, 3), dtype=np.float64)
+        self._last_term_gyro = np.zeros((self.num_envs, 3), dtype=np.float32)
+        self._last_term_grav = np.zeros((self.num_envs, 3), dtype=np.float32)
         self.faults = 0
         self.episode_length_buf = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
         self._obs = TensorDict(
@@ -263,6 +268,10 @@ class GodotVecEnv(VecEnv):
     def get_observations(self) -> TensorDict:
         return self._obs
 
+    def debug_states(self) -> list:
+        """Latest SimState per worker (post-reset if the last step terminated)."""
+        return list(self._states)
+
     def step(self, actions: torch.Tensor) -> tuple[TensorDict, torch.Tensor, torch.Tensor, dict]:
         if self._closed:
             raise RuntimeError("GodotVecEnv is closed")
@@ -318,6 +327,11 @@ class GodotVecEnv(VecEnv):
         )
 
         fell = (grav[:, 2] > -self._cos_tilt) | (pos[:, 2] < self.min_z)
+        self._last_fell = np.asarray(fell, dtype=bool).copy()
+        self._last_term_quat = np.asarray(quat, dtype=np.float64).copy()
+        self._last_term_pos = np.asarray(pos, dtype=np.float64).copy()
+        self._last_term_gyro = np.asarray(gyro, dtype=np.float32).copy()
+        self._last_term_grav = np.asarray(grav, dtype=np.float32).copy()
         nan_state = nan_act | ~finite | ~np.isfinite(total)
         time_out = (self.episode_length_buf.detach().cpu().numpy() >= self.max_episode_length)
         is_fault = np.array([i in fault_ids for i in range(n)], dtype=bool)
