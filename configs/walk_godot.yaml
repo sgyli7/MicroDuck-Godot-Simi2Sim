@@ -1,0 +1,88 @@
+# Godot/Jolt walk finetune env + PPO hyperparameters.
+# Phase 2 owns env/reward/command/faults. Phase 3 fills the runner around `ppo:`.
+
+robot: ${SIM2SIM_ROOT}/robots/microduck.json
+num_envs: 8
+episode_s: 20
+headless: true
+seed: 0
+device: cpu
+recv_timeout_s: 10.0
+spawn_stagger_s: 0.05
+max_faults_per_step: 8
+faults_jsonl: ${SIM2SIM_ROOT}/results/faults.jsonl
+init_onnx: ${MICRODUCK_POLICIES}/alpha_walking.onnx
+
+reset:
+  yaw_range: [-3.141592653589793, 3.141592653589793]
+  joint_noise_rad: 0.05
+
+obs_noise:
+  enabled: true
+  kind: uniform
+  gyro: 0.03
+  grav: 0.01
+  q: 0.001
+  qd: 0.25
+
+commands:
+  resample_s: [3.0, 8.0]
+  vx: [-0.4, 0.4]
+  vy: [-0.3, 0.3]
+  wz: [-1.0, 1.0]
+  standing_frac: 0.25
+  turn_in_place_frac: 0.15
+  turn_wz: [0.4, 1.0]
+
+pushes:
+  enabled: true
+  interval_s: [3.0, 6.0]
+  xy_speed: 0.3
+
+rewards:
+  track_lin_vel: 2.0
+  track_lin_vel_std2: 0.1
+  track_ang_vel: 2.0
+  track_ang_vel_std2: 0.5
+  upright: 2.0
+  upright_std2: 0.05
+  air_time: 3.0
+  air_time_min: 0.125
+  air_time_max: 0.3
+  air_time_cmd_threshold: 0.01
+  pose_legs: 1.0
+  pose_walking_threshold: 0.01
+  foot_clearance: -2.0
+  foot_clearance_target: 0.02
+  foot_swing_height: -0.25
+  foot_swing_target: 0.02
+  action_rate_l2: -1.0
+  foot_slip: -0.1
+  body_ang_vel: -0.05
+  head_pose_tracking: 2.0
+  head_pose_tracking_std: 0.5
+  head_pose_bias: -3.0
+  head_pose_bias_tau_s: 1.0
+  dof_pos_limits: -1.0
+  scale_by_dt: true
+  # angular_momentum skipped: Godot lite step has no whole-body angmom sensor.
+
+termination:
+  tilt_deg: 70.0
+  min_z: 0.055
+
+ppo:
+  learning_rate: 3.0e-4
+  schedule: adaptive
+  desired_kl: 0.01
+  entropy_coef: 0.001
+  clip_param: 0.2
+  gamma: 0.99
+  lam: 0.95
+  num_learning_epochs: 5
+  num_mini_batches: 4
+  init_std: 0.25
+  critic_warmup_iters: 100
+  hidden_dims: [512, 256, 128]
+  activation: elu
+  obs_normalization: true
