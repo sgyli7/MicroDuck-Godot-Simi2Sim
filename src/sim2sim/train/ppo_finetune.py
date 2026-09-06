@@ -57,6 +57,8 @@ class PPOFinetune(PPO):
         self._unfreeze_this_update = False
         self._saved_epochs: int | None = None
         self._lr_guard = False
+        self._skip_remaining = False
+        self.early_stop_minibatches = 0
         self._base_lr = float(self.learning_rate)
         self.min_learning_rate = 1e-5
         self.max_learning_rate = 1e-2
@@ -71,7 +73,9 @@ class PPOFinetune(PPO):
         self._prime_actor_once = True
         self._unfreeze_this_update = True
         self._lr_guard = True
-        self.min_learning_rate = lr
+        # Keep the 1e-5 floor. Pinning it to unfreeze_lr left 20 minibatches running
+        # at 3e-5 while KL-vs-rollout compounded to ~15 (std is not PPO-clipped).
+        self.min_learning_rate = 1e-5
         self.max_learning_rate = max(self._base_lr, lr)
         self._saved_epochs = int(self.num_learning_epochs)
         self.num_learning_epochs = 1
@@ -108,7 +112,10 @@ class PPOFinetune(PPO):
         n_step = [0]
         pin = float(self.learning_rate)
         unfreeze_now = bool(self._unfreeze_this_update)
+        self._skip_remaining = False
+        self.early_stop_minibatches = 0
         self._set_lr(pin)
+        kl_stop = None if self.desired_kl is None else float(self.desired_kl) * 2.0
 
         def _hook(old_params: tuple[torch.Tensor, ...], new_params: tuple[torch.Tensor, ...]) -> torch.Tensor:
             kl = orig_kl(old_params, new_params)
@@ -116,10 +123,17 @@ class PPOFinetune(PPO):
             self.minibatch_kl.append(k)
             self.minibatch_lr.append(float(pin))
             self.last_kl = k
+            # KL is vs the rollout distribution, before the step. Further minibatches
+            # in this iteration only push it up; skip them once we are past 2× desired.
+            if kl_stop is not None and k > kl_stop:
+                self._skip_remaining = True
             return kl
 
         def _step(*args: Any, **kwargs: Any) -> Any:
             n_step[0] += 1
+            if self._skip_remaining:
+                self.early_stop_minibatches += 1
+                return None
             self._set_lr(pin)
             if self._prime_actor_once and n_step[0] == 1:
                 saved_lrs = [g["lr"] for g in self.optimizer.param_groups]
@@ -156,6 +170,7 @@ class PPOFinetune(PPO):
         self.last_kl = self.kl_mean
         loss_dict["kl"] = self.kl_mean
         loss_dict["kl_max"] = self.kl_max
+        loss_dict["early_stop_mb"] = float(self.early_stop_minibatches)
         self._set_lr(pin)
         if self._lr_guard and not unfreeze_now:
             self._adapt_lr_once(self.kl_mean)

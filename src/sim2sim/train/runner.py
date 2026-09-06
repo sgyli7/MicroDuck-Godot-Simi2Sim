@@ -609,6 +609,11 @@ def _learn_loop(
     completed: int | None = None
     writer = logger.writer
     primed = not bool(prime_unfreeze)
+    if start_it >= int(warmup_iters) and hasattr(alg, "_lr_guard"):
+        # Resume past warmup never calls mark_unfreeze; keep per-iter KL adapt on.
+        alg._lr_guard = True
+        alg.min_learning_rate = 1e-5
+        alg.max_learning_rate = max(float(getattr(alg, "_base_lr", 3.0e-4)), float(unfreeze_lr))
     profile_collect = os.environ.get("SIM2SIM_PROFILE_COLLECT", "").strip() not in ("", "0", "false", "False")
 
     def _save(it: int) -> Path:
@@ -710,6 +715,7 @@ def _learn_loop(
             faults = int(getattr(env, "faults", 0))
             kl = float(loss_dict.get("kl", getattr(alg, "last_kl", 0.0)) or 0.0)
             kl_max = float(loss_dict.get("kl_max", kl) or kl)
+            early_mb = int(loss_dict.get("early_stop_mb", 0) or 0)
             terms = {
                 k: (term_sum[k] / max(n_term, 1))
                 for k in term_sum
@@ -723,7 +729,7 @@ def _learn_loop(
                 f"iter={it} fps={fps:.1f} step_rew={step_rew:.4f} ep_rew={ep_rew:.4f} "
                 f"ep_len={ep_len:.2f} falls={fall_events:.1f} faults={faults} "
                 f"lr={lr:.3e} std={std_mean:.4f} kl={kl:.4f} kl_max={kl_max:.4f} "
-                f"frozen={int(frozen)} "
+                f"early_stop={early_mb} frozen={int(frozen)} "
                 f"value={float(loss_dict.get('value', float('nan'))):.4f} "
                 f"surrogate={float(loss_dict.get('surrogate', float('nan'))):.4f} "
                 f"entropy={float(loss_dict.get('entropy', float('nan'))):.4f} {term_s}"
@@ -753,6 +759,7 @@ def _learn_loop(
                 "std": std_mean,
                 "kl": kl,
                 "kl_max": kl_max,
+                "early_stop_mb": early_mb,
                 "frozen": frozen,
                 "collect_s": collect_time,
                 "learn_s": learn_time,
