@@ -29,3 +29,6 @@ results/
 policies/**
 !policies/.gitkeep
 *.onnx
+
+# training runs
+logs/
