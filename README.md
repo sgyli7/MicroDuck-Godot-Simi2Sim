@@ -4,7 +4,7 @@ MuJoCo 训练出的 ONNX policy，在 **Godot 4.7 + 内置 Jolt** 上当第二�
 
 Python 是唯一控制器。编译后的 `MjModel` 是模型真源；ONNX 只在 Python 里跑。这不是「Godot 里嵌 MuJoCo」也不是 Hakoniwa 那种 viewer，而是 **sim2sim**：两端各自步进，能量化 walk / run 是否还站得住。
 
-详细映射、已知不映射项和门禁数字见 [SIM2SIM.md](SIM2SIM.md)。
+详细映射、已知不映射项、训练循环和门禁数字见 [SIM2SIM.md](SIM2SIM.md)。
 
 ## 需要
 
@@ -20,12 +20,22 @@ export PATH="$HOME/.local/bin:$PATH"
 export DISPLAY="${DISPLAY:-:1}"
 
 cd MicroDuck-Godot-Simi2Sim
-uv sync
-./run.sh                 # convert → spikes → calib → dual rollout → compare
-uv run sim2sim-play      # 窗口；按住 W/↑ 才走
-uv run sim2sim-play --local-ppo
-uv run sim2sim-play --scene res://scenes/rough_forest_play.tscn
+uv sync                      # 基础门禁；会卸掉未在 pyproject 声明的 extra
+uv sync --extra train        # 训练 / eval / export（装一次）
+./run.sh                     # convert → spikes → calib → dual rollout → compare
+uv run --no-sync sim2sim-play      # 窗口；按住 W/↑ 才走
+uv run --no-sync sim2sim-play --local-ppo
+uv run --no-sync sim2sim-play --scene res://scenes/rough_forest_play.tscn
+
+# Godot/Jolt PPO 微调（详见 SIM2SIM.md「训练循环」）
+./scripts/train_walk_godot.sh --config configs/walk_godot.yaml --init-onnx alpha
+./scripts/walk_godot_smoke.sh
+uv run --no-sync sim2sim-eval-walk --a "$MICRODUCK_POLICIES/alpha_walking.onnx" --b Walk_Godot.onnx
+uv run --no-sync sim2sim-export --checkpoint path/to/model_k.pt --out Walk_Godot.onnx
+uv run --no-sync sim2sim-bench-godot --workers 1 4 8 16
 ```
+
+之后训练相关命令用 `uv run --no-sync`（或 `./scripts/train_walk_godot.sh`，它 `exec` `.venv/bin/sim2sim-train`，SIGINT 能进 checkpoint）。裸 `uv sync` 会卸掉 `[train]` extra；`./run.sh` 用 `uv sync --inexact` 保住它。不要 `kill` `uv run` 包装进程，信号到不了 Python。
 
 崎岖森林地形要先跑 `godot/scripts/setup_forest_vendor.sh`（克隆 [godot-forest-demo](https://github.com/GamesNotDeveloped/godot-forest-demo)，CC BY 4.0，需署名）。默认平地 `main.tscn` 不依赖 vendor。
 
@@ -44,12 +54,14 @@ uv run sim2sim-play --scene res://scenes/rough_forest_play.tscn
 
 ```
 src/mjcf2godot/    MJCF → Godot 场景
-src/sim2sim/       双后端、obs、policy、校准、compare、play
+src/sim2sim/       双后端、obs、policy、校准、compare、play、train
 godot/             Godot 4.7.2 + Jolt 工程
 robots/            机器人 JSON
+configs/           walk_godot.yaml 等
+scripts/           train_walk_godot.sh、walk_godot_smoke.sh
 ```
 
-协议是 TCP 行分隔 JSON（MuJoCo 坐标系）。`hello` / `reset` / `step` / `pin` / `set_tau_limit` / `close`。
+协议是 TCP 行分隔 JSON（MuJoCo 坐标系）。`hello` / `reset` / `step`（可选 `report: "lite"`）/ `pin` / `nudge` / `set_tau_limit` / `close`。
 
 ## 许可
 

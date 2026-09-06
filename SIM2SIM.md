@@ -38,7 +38,8 @@ uv run sim2sim-play --roller   # scene_rollers.xml + roller.onnx
 | 碰撞层 | `contype` / `conaffinity`（OR） | `collision_layer` / `mask`。Microduck 上每组 contype==conaffinity，两者等价 |
 | 自碰 | 默认不生成 parent–child contact | `add_collision_exception_with` 只排除 parent 和 grandparent（2-hop hull 仍重叠）。排除整条 ancestor 会丢掉 trunk↔foot |
 | 关节 | hinge，`q` 是相对 q=0 的 twist | body 系 `R_rel(q)=Rot(axis_parent,q)@R_rel(0)` 抽角；reset 后 **rebake** `node_a/node_b` |
-| 执行器 | `<position kp kv forcerange>` | `τ=clamp(kp(e)−kv qd, forcerange) − damping·qd − μ·tanh(qd/0.05)`，`apply_torque` |
+| 执行器 | `<position kp kv forcerange>` | `τ=clamp(kp(e)−kv qd, forcerange) − damping·qd − μ·tanh(qd/0.05)`，`apply_torque`。`qd` 是运动学差分（见下节），不是 Jolt hinge 速度 |
+| `qd` / `base_angvel_local` | `qvel` / 体轴 `cvel` | 每物理 tick 姿态有限差分 + 1-tick EMA。**不用** Jolt `RigidBody3D.angular_velocity`（含 Baumgarte，idle 会报 gyro_z≈+0.22）。`base_linvel` 仍读 Jolt |
 | `armature` | 关节空间 `I += A nnᵀ` | `I += diag(A nnᵀ)`，主轴再 floor 到 `max/10`（满各向异性或 cond≳80 会让 Jolt `\|qd\|` 爆炸；各向同性 `I+=(A,A,A)` 会把摆腿惯量抬高一个数量级、run 变慢） |
 | `frictionloss` | 关节库仑摩擦 | PD 里平滑库仑（Jolt hinge friction 未绑定） |
 | 地面 | `plane` z=0，μ=1 | 40×0.02×40 `BoxShape3D`，顶面 y=0，μ=1（不用 `WorldBoundaryShape3D`） |
@@ -48,8 +49,23 @@ uv run sim2sim-play --roller   # scene_rollers.xml + roller.onnx
 | 力矩上限 | 可选 `current_limit_a=1.75` → `±kt I` | 同样，`set_tau_limit`（kt=0.3660，limit≈0.6405 Nm） |
 | 重力 | 9.81 | `default_gravity=9.81` |
 
+### 运动学速度（Godot）
+
+Jolt `RigidBody3D.angular_velocity` 带着约束修正（Baumgarte）速度：站立、姿态静止时曾报 `gyro_z ≈ +0.22 rad/s`，`hip_yaw` / `head_yaw` `qd` ±0.24。不能当 MuJoCo `cvel` / `qvel` 用。
+
+`physics_server.gd` 每个物理 tick（dt=0.005）用姿态有限差分：
+
+- `qd = wrap(q_new − q_old) / dt`（`wrapf(..., −π, π)`）
+- `ω = axis_angle(R_new · R_oldᵀ) / dt`
+- 1-tick EMA：`KIN_VEL_TAU=0.005`，`α = 1 − e^(−dt/τ)`（dt=τ 时 α≈0.632），压掉 200 Hz 模态。不用 decimation 窗（20 ms 延迟会拖死 PD）。
+
+用于 obs 的 `base_angvel_local` / `qd`，以及 PD 阻尼和 Coulomb。`base_linvel` 仍读 Jolt。full（非 lite）reply 另给 `base_angvel_jolt`（体轴、未滤波的 Jolt ω）。
+
+修后 idle：gyro ≈ (−0.0007, −0.0018, +0.0010），qd ≈ 0；驱动铰上 qd vs Δq/dt **corr>0.9**。S3 spike RMSE **0.00283 未变**。单测：[`tests/test_godot_kinematic_vel.py`](tests/test_godot_kinematic_vel.py)。
+
 ## 明确不映射（不做伪等效）
 
+- Jolt `RigidBody3D.angular_velocity`（Baumgarte 修正速度；观测与 PD 用运动学差分，见上节）
 - 软限位 `solref/solimp`（Jolt 限位是硬约束）
 - 接触软约束 vs Baumgarte / `penetration_slop`。MuJoCo 默认 `solref=(0.02,1)` / `solimp=(0.9,0.95,0.001,0.5,2)`；Jolt 全局 `penetration_slop=0.0002`，无 per-geom 柔度。
 
@@ -170,8 +186,8 @@ Godot stdout 必须写文件而不是 `PIPE`，否则 Jolt 警告填满管道会
 | C1 单关节阶跃（weld/freeze pin） | MuJoCo abs_err **0.0371**；Godot **0.0386**。旧 0.0013 是回写 freejoint 的自由落体假象。其它关节两端都垂 ~0.05 rad（`left_hip_roll` MJ 0.047 / GD 0.052，重力 + kp=0.55）；GD−MJ max Δq **0.009**，不是 Godot 独有 |
 | C2 STAND 纯 PD | **两端都倒**（XML kp=0.55 撑不住）。MJ z_final≈0.043；GD≈0.032 |
 | C3 跌落 | MJ z_min **0.046**；GD **0.031**（全垫 16 边形 2.5 s 探针 **0.0310**，t=1.26 jaw 掀脚后髋着地，jaw x≈+0.22）。t=0.80 关节 |Δq|=0.11，GD 仍是 4 点整垫 / tilt 22°（MJ 已 46° 只剩脚尖）。**32 mm 矢状裁剪**仍 4 点 / 29°，z_min 0.0312。**xmin=-0.006 的 0.0464 是后仰**（jaw x −0.25），不是 MJ C3。弹簧地砖打穿。整板 Y 弹簧地 t=0.92 仍 32°，z_min 0.027。俯仰铰地板穿地 z_min −8。共面踵/尖叶子 t=0.92 仍 31°，z_min 0.0311。6 弹簧球 t=0.92 仅 27°，z_min 0.0318。两根弹簧 capsule 轨解开俯仰后后仰穿地，z_min 0.0454 是后脑勺。COM 对齐重砖网格：k=2000 跟着砖掉下去；k=20000 弹到 2.5 m。场景 SoftBody 地板：全 pin 无接触；12 cm 板能坐；脚尺度打穿/弹飞。5 mm 密网格大平面同样打穿。HeightMap 蛋盒：谷脚穿面，t=0.80 已 86°，z_min 0.0354 是单脚活板门。同体 16 mm 踵+间隙+抬高小脚尖：t=0.92 48° 后脚离，z_min 0.031。sibling 小脚尖过冲到 83° 脚已离，z_min 0.030。6 条世界 XY 梳状板后仰，z_min 0.0386 是后脑勺。脚掌平面 4 条 t=0.92 仅 33°，z_min 0.0317。4.2 mm 抛物线摇杆：中掌顶点后仰 z_min 0.0470 是后脑勺；踵顶点前倾 t=0.80 49° vs MJ 46°、t=0.92 75° 脚还在，jaw 仍掀脚 z_min 0.0316。踵摇杆+同体前缘（前伸板/竖直墙/30°楔/四分之一圆）t=0.92 仍收成 0.5 mm 棱，jaw 冲量可到 0.116，z_min 0.031。踵摇杆+整板 Y 弹簧地：板沉 8 mm 让 jaw 在 t=0.92 以冲量 0.242 碰上，z_min 0.0264。同脚四角单边 Y 弹簧：t=0.92 仍 28°，jaw x +0.10，z_min 0.0305。同脚两点外侧脊 Y 弹簧：t=0.92 仍 32° 脚贴地，jaw x +0.09，z_min 0.0309。踵凸轮+jaw 迁移 Y 弹簧：t=0.92 仍 75° 脚在，t=1.00 脚已离、头穿 −47 mm，z_min 0.0274。踵切圆弧 R=90 mm：t=0.80 已 86° 脚离，z_min 0.0308。`penetration_slop=0.002` 的 1.5 s z_min 0.048 是假齐 |
-| `alpha_walking` | 两端都不倒。MJ xy=1.256 m；GD xy=1.147 m；q_rmse=0.123；xy_rmse=0.163；z_rmse=0.002；HARD FAIL: none |
-| `local_ppo` | 两端都不倒。MJ xy=1.814 m；GD xy=1.835 m；q_rmse=0.170；xy_rmse=**0.093**；cadence 2.67 vs 2.58；HARD FAIL: none |
+| `alpha_walking` | 两端都不倒。MJ xy=1.256 m；GD xy=0.972 m；q_rmse=0.125；xy_rmse=0.261；z_rmse=0.002；HARD FAIL: none |
+| `local_ppo` | 两端都不倒。MJ xy=1.814 m；GD xy=1.859 m；q_rmse=0.156；xy_rmse=0.160；cadence 2.67 vs 2.58；HARD FAIL: none |
 
 Lockstep 回归（已修）：曾把两条命令之间的机体 `freeze` 成静体。Jolt 清零速度后，每个 20 ms control step 从静止掉 `½g(Δt)²`。症状：C3 `z_min≈0.113`（其实没倒下）、`alpha_walking` GD xy **0.137 m**、HUD 里看起来「傻站着」。修复：`physics_server.gd` 自旋等待下一条命令，不再 freeze-as-static。`compare_pair` 增加 `godot_xy_stalled` HARD FAIL，避免「不倒 + xy_rmse<2.5」把瘫走判绿。
 
@@ -183,32 +199,135 @@ Lockstep 回归（已修）：曾把两条命令之间的机体 `freeze` 成静�
 | walk | 世界 vx | 0.121 | 0.144 |
 | walk | 4 s Δyaw | +31° | +30° |
 | run | 机体系 fwd | 0.324 | **0.281** |
-| run | 世界 vx | 0.202 | **0.207** |
-| run | 4 s Δyaw | +32° | **+26°** |
+| run | 世界 vx | 0.203 | **0.138** |
+| run | 4 s Δyaw | +32° | **+29°** |
 | cadence | 左膝 Hz | 2.67 | 2.58 |
 
-`alpha_walking` run：世界 vx 0.168 vs 0.149，GD Δyaw **−103° vs −14°**（走得动、航向更散）。
+`alpha_walking` run：世界 vx 0.168 vs 0.136，GD Δyaw **−106° vs −14°**（走得动、航向更散）。
 
-旧 box+角球：run 世界 vx 0.104 vs 0.203。仅共面 16 边形 + 内边消除：vx 0.146。关掉内边消除、`baumgarte=0.35`、全垫 16 边形后 run vx 不再腰斩；本次 **0.202 vs 0.207**。`armature` cond 从 10 调到 15/30 会倒。圆柱摇杆会让 C3 站住（z_min~0.11），不要用。降 μ / 减 velocity_steps / 减 baumgarte 都不能在 C3≈0.046 和步态之间两头齐。单凸包 16 mm 平底加切角/圆角：浅则接住跌落，陡则走时踩不到脚尖；C3 的 z_min 必须核对 jaw 的 x 符号。交付植物仍是全垫 16 边形 + `position_steps=2`。
+修前 GD 更接近 MJ 的部分数字（alpha xy 1.147 / q_rmse 0.123、local_ppo xy_rmse **0.093** / run vx 0.207）是假象：Jolt Baumgarte 角速度污染了 obs 的 `base_angvel_local`/`qd`，并给 PD 阻尼和 Coulomb 一项常偏摩擦。门禁仍是 `SIM2SIM_RUN: done`。
+
+旧 box+角球：run 世界 vx 0.104 vs 0.203。仅共面 16 边形 + 内边消除：vx 0.146。关掉内边消除、`baumgarte=0.35`、全垫 16 边形后 run vx 不再腰斩；运动学速度修复后 local_ppo run 世界 vx **0.203 vs 0.138**（修前 0.202 vs 0.207）。`armature` cond 从 10 调到 15/30 会倒。圆柱摇杆会让 C3 站住（z_min~0.11），不要用。降 μ / 减 velocity_steps / 减 baumgarte 都不能在 C3≈0.046 和步态之间两头齐。单凸包 16 mm 平底加切角/圆角：浅则接住跌落，陡则走时踩不到脚尖；C3 的 z_min 必须核对 jaw 的 x 符号。交付植物仍是全垫 16 边形 + `position_steps=2`。
 
 产物：`sim2sim/results/`（`calib_*.json`、`*.npz`、`*_compare/report.md`、`metrics.json`、`compare.png`）。
+
+## Alpha baseline（Godot，干净 eval）
+
+`sim2sim-eval-walk` 自比（A=B=`alpha_walking.onnx`），3 seeds × 8 s，运动学速度修复后。这是后续 A/B 的「before / alpha」一侧。修前 turn 上报的「±0.22」是 gyro 偏置，不是真在转。
+
+| 条件 | 结果 |
+|---|---|
+| idle | mean_wz −0.0000；yaw drift **0.45° / 8 s** |
+| walk_015 | mean_vx +0.0000 |
+| walk_025 | mean_vx +0.1295 |
+| run_040 | mean_vx +0.2175 / mean_wz −0.604 |
+| turn_l（cmd +0.8） | mean_wz +0.0003 |
+| turn_r（cmd −0.8） | mean_wz −0.0007 |
+| back_020 / strafe_l / strafe_r | mean_v ≈ 0 |
+
+CLI 默认是 5 seeds × 10 s；上表是这次 3×8 s 的数。
+
+## 训练循环（Godot/Jolt finetune）
+
+在 Godot/Jolt 上对 `alpha_walking` 做 PPO 微调。Python 仍是唯一控制器；ONNX / rsl_rl actor 只在 Python 里跑。
+
+### 架构（`src/sim2sim/train/`）
+
+| 模块 | 职责 |
+|---|---|
+| [`vec_env.py`](src/sim2sim/train/vec_env.py) | `GodotVecEnv`：rsl_rl `VecEnv`，N 个 headless lockstep worker，`report: "lite"`；先对全部 worker `send_step`，再用 `select` 按就绪序 `recv` |
+| [`rewards.py`](src/sim2sim/train/rewards.py) | 向量化走路奖励。lite step 没有 whole-body angmom，**跳过** `angular_momentum` |
+| [`commands.py`](src/sim2sim/train/commands.py) | 13-D twist（`command_13`）；head/body 固定 0 |
+| [`reset_poses.py`](src/sim2sim/train/reset_poses.py) | 一个 MuJoCo companion 做 FK：home + yaw 随机 + 关节噪声；Godot `reset` 的 `ctrl` 仍是 HOME |
+| [`onnx_import.py`](src/sim2sim/train/onnx_import.py) | 从 MLP ONNX 精确恢复 rsl_rl actor；parity gate **1e-5** |
+| [`runner.py`](src/sim2sim/train/runner.py) | `sim2sim-train`。三选一：`--init-onnx` / `--init-checkpoint` / `--resume`（都不给则用 yaml `init_onnx`）。critic warmup：冻 actor MLP+std；ONNX/checkpoint 初始化还会把 actor `EmpiricalNormalization` 冻死（`until=count`，整段 run 不再更新）。日志：`train.log` / `metrics.jsonl` / tfevents / `params/{env,agent}.yaml` / `params/git.txt` / `params/init_check.json` |
+| [`ppo_finetune.py`](src/sim2sim/train/ppo_finetune.py) | rsl_rl PPO 子类，把 mean KL 写入 `loss_dict` |
+| [`export.py`](src/sim2sim/train/export.py) | `sim2sim-export`：normalizer fold 进图，schema-2 manifest sidecar |
+| [`eval_walk.py`](src/sim2sim/train/eval_walk.py) | `sim2sim-eval-walk` A/B。12 条件：`idle`、`walk_015`、`walk_025`、`run_040`、`back_020`、`strafe_l`/`strafe_r`、`turn_l`/`turn_r`、`walk_turn`、`walk_push`、`game_seq`。主指标 `vel_err_1s_rmse` / `yaw_err_1s_rmse`，另有 `fell`；逐条件 win 计数；verdict `improved` / `regressed` / `mixed`（过半条件更好 **且** `walk_push` 摔倒率不升 → improved）。死区：vel 0.01 m/s 或 5%，yaw-rate 0.02 rad/s 或 5% |
+| [`bench.py`](src/sim2sim/train/bench.py) | `sim2sim-bench-godot`：零动作 lite lockstep 吞吐 |
+| [`manifest.py`](src/sim2sim/train/manifest.py) | schema-2 sidecar（`obs_len=61`，`action_len=14`） |
+
+### 配置 [`configs/walk_godot.yaml`](configs/walk_godot.yaml)
+
+| 块 | 要点 |
+|---|---|
+| env | `num_envs: 8`（`--num-envs` 覆盖）、`episode_s: 20`、`headless: true`、`device: cpu`、`recv_timeout_s: 10`、`max_faults_per_step: 8`。yaml `faults_jsonl` 默认 `results/faults.jsonl`；`sim2sim-train` 改写到 run 目录 |
+| reset | `yaw_range: ±π`，`joint_noise_rad: 0.05` |
+| obs_noise | uniform；gyro 0.03 / grav 0.01 / q 0.001 / qd 0.25 |
+| commands | resample 3–8 s；vx ±0.4、vy ±0.3、wz ±1；`standing_frac: 0.25`；`turn_in_place_frac: 0.15` |
+| pushes | 3–6 s 间隔，xy 速度 ≤0.3（`nudge`） |
+| rewards | track_lin/ang、upright、air_time、pose_legs、foot_clearance/swing、action_rate、foot_slip、body_ang_vel、head_pose_*、dof_pos_limits；`scale_by_dt: true` |
+| termination | `tilt_deg: 70`，`min_z: 0.055`（与 [`fall.py`](src/sim2sim/fall.py) 相同） |
+| ppo | lr 3e-4 adaptive，`desired_kl: 0.015`，`init_std: 0.18`，`critic_warmup_iters: 100`，MLP `[512,256,128]` ELU，obs_normalization |
+| train | `samples_per_iter: 2048`，`save_interval: 50`，`max_iterations: 3000`，`log_root: logs/walk_godot` |
+
+相对 microduck_rl 的偏差：`standing_frac` **从 iter 0 就是 0.25**（不是 curriculum 0.02→0.25）；reset 关节噪声 **±0.05**（那边是 0）；head/body command 固定 0；无 `angular_momentum`（lite 没有整机角动量）。
+
+### 入口
+
+| 命令 | 作用 |
+|---|---|
+| [`scripts/train_walk_godot.sh`](scripts/train_walk_godot.sh) | `exec .venv/bin/sim2sim-train`，SIGINT/SIGTERM 能进 runner 的 checkpoint-on-signal。**不要 kill `uv run` 包装进程**：信号到不了 Python |
+| [`scripts/walk_godot_smoke.sh`](scripts/walk_godot_smoke.sh) | 闭环：ONNX 训 3 iter → resume → export → godot runner → play bank load → eval；约 25 s |
+| `sim2sim-eval-walk` | A/B（`--a` / `--b`） |
+| `sim2sim-bench-godot` | 吞吐 |
+| `sim2sim-export` | checkpoint → ONNX + `.manifest.json` |
+| `sim2sim-onnx-import` | ONNX → actor `.pt`（可选） |
+
+安装一次：`uv sync --extra train`。之后用 `uv run --no-sync`。裸 `uv sync` 会卸掉 extra。[`run.sh`](run.sh) 用 `uv sync --inexact`，避免把门禁依赖装回去时拆掉 torch/rsl_rl。
+
+### 与 play 共用的语义
+
+同一套 `build_obs` 61-D、同一套 `fallen`（`fall.py`：tilt 70° 或 z<0.055）、同一套 `physics_server.gd` PD。reset = MuJoCo 采样的 home 位姿 + yaw 随机；reset 后 `last_action` 清零。parity：[`tests/test_vec_env_obs_parity.py`](tests/test_vec_env_obs_parity.py)（相对 `build_obs` max_abs 0 / `<1e-9`）。
+
+### 故障处理（相对 play）
+
+worker timeout / crash → 记 `faults.jsonl`、respawn；单步故障数 > `max_faults_per_step` 则 abort。Godot 子进程 `PR_SET_PDEATHSIG=SIGTERM`（父死子死）。**所有 headless** spawn（train / eval / bench / compare，不单是训练）用临时 overlay：`worker_pool/max_threads=1`，进程 pin 到 `nproc−2` 个核之一。play **窗口**（非 headless）不走 overlay、不 pin。
+
+### 吞吐
+
+16 worker、零动作 lite：bench **3200–3700** control steps/s（此前 1328；缩放约 10×/16）。训练含推理 / 奖励 / reset 时约 **1000–1400 samples/s**。冻住的 alpha + `init_std=0.18` 探索噪声，在训练分布里大约每 2–8 s 摔一次（消融：探索噪声为主，随机 command 其次；obs/reset 路径已 bit-identical）。
+
+### A/B（alpha vs Walk_Godot.onnx）
+
+<!-- TODO: fill from results/eval_walk_godot/report.md -->
+
+| 条件 | 主指标 | alpha | Walk_Godot | Δ | wins |
+|---|---|---|---|---|---|
 
 ## 目录
 
 ```
 sim2sim/
   src/mjcf2godot/      # 转换器
-  src/sim2sim/         # backends, obs, policy, runner, calib, compare
+  src/sim2sim/         # backends, obs, policy, runner, calib, compare, train/
   godot/               # Godot 4.7 工程
   robots/microduck.json
+  configs/walk_godot.yaml
+  scripts/train_walk_godot.sh, walk_godot_smoke.sh
   run.sh
 ```
 
 ## 协议（TCP，行分隔 JSON，MuJoCo 系）
 
-`hello` / `reset{bodies,ctrl}` / `step{ctrl,n_substeps}` / `pin` / `set_tau_limit` / `close`
+`hello` / `reset{bodies,ctrl}` / `step{ctrl,n_substeps,report,timing}` / `pin` / `nudge` / `set_tau_limit` / `close`
 
-`bodies[].pos` 是惯性系 COM（`xipos`），`quat` 是 `ximat`。Python 的 `GodotBackend` 用 spec 里的 `ipos/iquat` 转回 body 系，对齐 `infer_policy` 的 `xquat` + IMU。
+`bodies[].pos` 是惯性系 COM（`xipos`），`quat` 是 `ximat`。Python 的 `GodotBackend` 用 spec 里的 `ipos/iquat` 转回 body 系，对齐 `infer_policy` 的 `xquat` + IMU。线协议姿态四元数键是 `base_quat`（wxyz）；`SimState.base_quat_wxyz` 是转完 body 系之后的字段。
+
+`step` 的 `report: "lite"` 只在 `cmd=="step"` 时生效（`reset` 始终 full）。lite 回复（`physics_server.gd` `_send_state`）：
+
+| 键 | 含义 |
+|---|---|
+| `ok`, `cmd`, `t` | 应答头 |
+| `q`, `qd`, `tau` | 执行器序；`qd` 为运动学差分 |
+| `base_pos` | 惯性系 COM |
+| `base_quat` | 惯性系 wxyz |
+| `base_linvel` | Jolt 线速度，MuJoCo 系 |
+| `base_angvel_local` | 运动学 ω，体轴 |
+| `feet` | `[{name, contact, n_contacts, impulse, pos, linvel}, ...]` |
+| `timing` | 可选（请求 `timing: true`）：`phys_usec`, `pd_usec`, `wait_usec`, `wait_iters`, `prev_send_usec`, `json_bytes` |
+
+full 另含 `base_angvel_jolt`（体轴、未滤波的 Jolt ω）、`dbg_ang_world`、`dump`、`axis_dot`、`applied` / `missing` 等。lite **没有** `base_angvel_jolt` / `dump`。
 
 ## Kick headless gate（独立子门禁，默认 soft）
 

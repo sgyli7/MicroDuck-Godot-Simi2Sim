@@ -125,7 +125,7 @@ var _mj_basis: Dictionary = {}  # name -> Basis, refreshed each PD tick
 # angular_velocity includes Baumgarte/position-correction drift (~0.22 rad/s
 # gyro-z and hip/head yaw qd while standing still). A raw 1-tick FD of that
 # pose reconstructs the chatter; sampling it every 20 ms is phase-locked
-# and reintroduces the bias. EMA (τ=2 ticks) rejects the 200 Hz mode
+# and reintroduces the bias. EMA (τ=1 tick, α=1-e^-1≈0.63) rejects the 200 Hz mode
 # without the 20 ms delay of a decimation-length window (that delay
 # destabilizes PD).
 const KIN_VEL_TAU := 0.005
