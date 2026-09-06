@@ -72,7 +72,10 @@ PPO_RC=0
 uv run sim2sim-compare --mujoco "$RESULTS/ppo_mujoco.npz" --godot "$RESULTS/ppo_godot.npz" \
   --out "$RESULTS/ppo_compare" --title "local_ppo Sim2Sim" || PPO_RC=$?
 
-WALK_GODOT="$MICRODUCK_POLICIES/Walk_Godot.onnx"
+WALK_GODOT="$ROOT/policies/Walk_Godot.onnx"
+if [[ ! -f "$WALK_GODOT" ]]; then
+  WALK_GODOT="$MICRODUCK_POLICIES/Walk_Godot.onnx"
+fi
 WALK_GODOT_COMPARE_RC="skip"
 if [[ -f "$WALK_GODOT" ]]; then
   echo "== rollout Walk_Godot mujoco (informational) =="

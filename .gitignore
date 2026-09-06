@@ -32,3 +32,8 @@ policies/**
 
 # training runs
 logs/
+
+# local scratch / Godot editor
+*.uid
+/tmp_*.py
+/shots/

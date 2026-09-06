@@ -830,7 +830,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--samples-per-iter", type=int, default=None)
     p.add_argument("--critic-warmup-iters", type=int, default=None)
     p.add_argument("--save-interval", type=int, default=None)
-    p.add_argument("--export-onnx", type=Path, default=None, help="optional export of the final checkpoint")
+    p.add_argument(
+        "--export-onnx",
+        type=Path,
+        default=None,
+        help="optional export of the final checkpoint (typically policies/Walk_Godot.onnx)",
+    )
     return p.parse_args(argv)
 
 

@@ -30,8 +30,9 @@ uv run --no-sync sim2sim-play --scene res://scenes/rough_forest_play.tscn
 # Godot/Jolt PPO 微调（详见 SIM2SIM.md「训练循环」）
 ./scripts/train_walk_godot.sh --config configs/walk_godot.yaml --init-onnx alpha
 ./scripts/walk_godot_smoke.sh
-uv run --no-sync sim2sim-eval-walk --a "$MICRODUCK_POLICIES/alpha_walking.onnx" --b Walk_Godot.onnx
-uv run --no-sync sim2sim-export --checkpoint path/to/model_k.pt --out Walk_Godot.onnx
+uv run --no-sync sim2sim-play --walking policies/Walk_Godot.onnx
+uv run --no-sync sim2sim-eval-walk --a "$MICRODUCK_POLICIES/alpha_walking.onnx" --b policies/Walk_Godot.onnx
+uv run --no-sync sim2sim-export --checkpoint path/to/model_k.pt --out policies/Walk_Godot.onnx
 uv run --no-sync sim2sim-bench-godot --workers 1 4 8 16
 ```
 

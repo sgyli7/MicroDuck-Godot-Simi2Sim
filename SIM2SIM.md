@@ -291,7 +291,7 @@ worker timeout / crash → 记 `faults.jsonl`、respawn；单步故障数 > `max
 
 ### A/B（alpha vs Walk_Godot.onnx）
 
-来源：`sim2sim-eval-walk --seeds 3 --seconds 8 --workers 8`，报告 [`results/eval_walk_godot/report.md`](results/eval_walk_godot/report.md)（`results/` gitignore，数字抄在这里）。A = `alpha_walking.onnx`，B = `results/Walk_Godot.onnx`（walk2，iter 3000，从 `model_700.pt` 续训）。72/72 未摔倒。
+来源：`sim2sim-eval-walk --seeds 3 --seconds 8 --workers 8`，报告 [`results/walk_godot_eval/report.md`](results/walk_godot_eval/report.md)（`results/` gitignore，数字抄在这里）。A = `alpha_walking.onnx`，B = `policies/Walk_Godot.onnx`（walk2，iter 3000，从 `model_700.pt` 续训；`*.onnx` gitignore，游戏 bank 另有 `$MICRODUCK_POLICIES/Walk_Godot.onnx`）。72/72 未摔倒。
 
 主指标（1 s 滑动跟踪误差；越小越好）与结算后平均速度：
 
@@ -316,7 +316,7 @@ VERDICT: **mixed**（B 主指标 6 胜 / 5 负 / 1 平）。闭环和「确实�
 - Godot 上 **yaw 跟踪是实质改善**：alpha 在 ±0.8 转向指令下 wz≈0，B 跟到 ±0.75–0.85；run 不再以 −0.6 rad/s 自旋。walk_015 / 后退 / 侧移，alpha 几乎不动，B 会动。
 - 代价：idle 停不住（cadence ~1.9 Hz，8 s 漂 49°）；0.25–0.40 m/s 直线跟踪比 alpha 慢。这是 Godot 物理上的新步态，不是 MuJoCo 轨迹复现。
 
-加载：`sim2sim-play --walking results/Walk_Godot.onnx`（或 `policies/Walk_Godot.onnx`）。默认 walking 仍是 `alpha_walking.onnx`。
+加载：`sim2sim-play --walking policies/Walk_Godot.onnx`。默认 walking 仍是 `alpha_walking.onnx`。`sim2sim-export` 默认写 `policies/Walk_Godot.onnx` + sidecar。
 
 训练日志：`logs/walk_godot/2026-09-07_03-03-34_walk2/`（从 `…_walk/model_700.pt` resume；iter 1100 之后 falls≈0，air_time≈0.025，kl_max 全程 <0.1）。
 

@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from sim2sim.paths import policies_dir
+from sim2sim.paths import policies_dir, sim2sim_root
 from sim2sim.policy import PolicyBundle
 from sim2sim.train.manifest import DEFAULT_TWIST_LIMITS, build_manifest, git_snapshot, write_manifest
 from sim2sim.train.onnx_import import (
@@ -166,7 +166,12 @@ def main(argv: list[str] | None = None) -> int:
     src = p.add_mutually_exclusive_group(required=True)
     src.add_argument("--checkpoint", type=Path, help="rsl_rl 5.0.1 checkpoint (actor_state_dict)")
     src.add_argument("--actor-pt", type=Path, help="onnx_import output .pt with actor_state_dict")
-    p.add_argument("--out", type=Path, required=True, help="Walk_Godot.onnx path")
+    p.add_argument(
+        "--out",
+        type=Path,
+        default=None,
+        help="Walk_Godot.onnx path (default: <repo>/policies/Walk_Godot.onnx)",
+    )
     p.add_argument("--manifest-eval", type=Path, default=None, help="JSON object written to manifest.eval")
     p.add_argument("--twist-limits", default=None, help="JSON object or path; default vmax_x=0.4 ...")
     p.add_argument("--description", default=DEFAULT_DESCRIPTION)
@@ -176,6 +181,7 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
 
     src_path = args.checkpoint if args.checkpoint is not None else args.actor_pt
+    out = args.out if args.out is not None else sim2sim_root() / "policies" / "Walk_Godot.onnx"
     sd, meta = load_rsl_checkpoint_actor(src_path)
     eval_info = None
     if args.manifest_eval is not None:
@@ -192,7 +198,7 @@ def main(argv: list[str] | None = None) -> int:
         result = export_actor(
             state_dict=sd,
             source=source,
-            out=args.out,
+            out=out,
             checkpoint=meta.get("iter"),
             run=args.run,
             eval_info=eval_info,

@@ -36,6 +36,7 @@ class TestExpandCfg(unittest.TestCase):
         self.assertNotIn("/home/ethan", text)
         self.assertIn("${MICRODUCK_RL}", text)
         self.assertIn("${SIM2SIM_ROOT}", text)
+        self.assertIn('"walk_godot": "${MICRODUCK_POLICIES}/Walk_Godot.onnx"', text)
 
 
 if __name__ == "__main__":
