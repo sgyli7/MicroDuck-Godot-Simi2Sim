@@ -87,7 +87,8 @@ var _reset_applied: Array = []
 var _reset_missing: Array = []
 var _reset_dump: Array = []
 var _iquat_base: Quaternion = Quaternion.IDENTITY  # inertial-from-body, unused if aligned
-var _dbg_ang_world: Array = [0.0, 0.0, 0.0]  # temp debug: world angular velocity
+var _dbg_ang_world: Array = [0.0, 0.0, 0.0]  # temp debug: Jolt world angular velocity
+var _dbg_ang_jolt_local: Array = [0.0, 0.0, 0.0]  # Jolt ω in MuJoCo body frame
 var _body_iquat: Dictionary = {}  # name -> Vector4(w,x,y,z)
 var _body_ipos: Dictionary = {}  # name -> Vector3 in body frame
 var _heel_hosts: Dictionary = {}  # heel_name -> host_name
@@ -120,6 +121,17 @@ var _window_title: String = "Microduck Sim2Sim"
 var _headless: bool = false
 var _foot_names: Array = []
 var _mj_basis: Dictionary = {}  # name -> Basis, refreshed each PD tick
+# Kinematic velocities from pose finite difference. Jolt's reported
+# angular_velocity includes Baumgarte/position-correction drift (~0.22 rad/s
+# gyro-z and hip/head yaw qd while standing still). A raw 1-tick FD of that
+# pose reconstructs the chatter; sampling it every 20 ms is phase-locked
+# and reintroduces the bias. EMA (τ=2 ticks) rejects the 200 Hz mode
+# without the 20 ms delay of a decimation-length window (that delay
+# destabilizes PD).
+const KIN_VEL_TAU := 0.005
+var _kin_basis: Dictionary = {}  # body name -> Basis (Godot world, last tick)
+var _kin_omega: Dictionary = {}  # body name -> Vector3 Godot-world ω (EMA)
+var _kin_after_tick: bool = false
 var _timing_enabled: bool = false
 var _timing_phys_t0: int = 0
 var _timing_phys_usec: int = 0
@@ -177,6 +189,7 @@ func _ready() -> void:
 	_cam_last_sec = _cam_wall_seconds()
 	if _hud != null and _hud.has_method("set_mode"):
 		_hud.set_mode("roller" if "roller" in _robot_scene else "walk")
+	_snapshot_kinematic_pose()
 
 	call_deferred("_maybe_dump_sim2sim_shot")
 
@@ -682,12 +695,77 @@ func _axis_godot(j: Dictionary) -> Vector3:
 
 
 func _joint_qd(j: Dictionary) -> float:
-	var axis := _axis_godot(j)
-	var w: Vector3 = (j["child"] as RigidBody3D).angular_velocity
-	var parent = j["parent"]
-	if parent is RigidBody3D:
-		w -= (parent as RigidBody3D).angular_velocity
-	return w.dot(axis)
+	# Hinge rate from _joint_q finite difference (MuJoCo-consistent angle),
+	# not RigidBody3D.angular_velocity (Jolt solver vel ≠ pose rate).
+	return float(j.get("qd_kin", 0.0))
+
+
+func _basis_omega(r_new: Basis, r_old: Basis, dt: float) -> Vector3:
+	if dt <= 1e-12:
+		return Vector3.ZERO
+	var q := (r_new * r_old.transposed()).get_rotation_quaternion()
+	# Shortest-arc: q and -q are the same rotation.
+	if q.w < 0.0:
+		q = Quaternion(-q.x, -q.y, -q.z, -q.w)
+	var imag := Vector3(q.x, q.y, q.z)
+	var n := imag.length()
+	if n < 1e-10:
+		return Vector3.ZERO
+	var angle := 2.0 * atan2(n, q.w)
+	return imag * (angle / (n * dt))
+
+
+func _phys_tick_dt() -> float:
+	var hz := float(Engine.physics_ticks_per_second)
+	if hz <= 1.0:
+		return 0.005
+	return 1.0 / hz
+
+
+func _kin_ema_alpha(tick_dt: float) -> float:
+	if KIN_VEL_TAU <= 1e-12:
+		return 1.0
+	return 1.0 - exp(-tick_dt / KIN_VEL_TAU)
+
+
+func _snapshot_kinematic_pose() -> void:
+	_kin_basis.clear()
+	_kin_omega.clear()
+	_kin_after_tick = false
+	_refresh_mj_basis()
+	for key in _bodies.keys():
+		var name := str(key)
+		var b: RigidBody3D = _bodies[name]
+		_kin_basis[name] = b.global_transform.basis
+		_kin_omega[name] = Vector3.ZERO
+	for j in _joints:
+		var q := _joint_q(j)
+		j["q_kin_old"] = q
+		j["qd_kin"] = 0.0
+
+
+func _update_kinematic_vel(_delta: float) -> void:
+	var tick_dt := _phys_tick_dt()
+	if tick_dt <= 1e-12:
+		return
+	var a := _kin_ema_alpha(tick_dt)
+	_refresh_mj_basis()
+	for key in _bodies.keys():
+		var name := str(key)
+		var b: RigidBody3D = _bodies[name]
+		var r_new: Basis = b.global_transform.basis
+		var r_old: Basis = _kin_basis[name] if _kin_basis.has(name) else r_new
+		var w_tick := _basis_omega(r_new, r_old, tick_dt)
+		var w_prev: Vector3 = _kin_omega[name] if _kin_omega.has(name) else Vector3.ZERO
+		_kin_omega[name] = w_prev.lerp(w_tick, a)
+		_kin_basis[name] = r_new
+	for j in _joints:
+		var q_new := _joint_q(j)
+		var q_old := float(j.get("q_kin_old", q_new))
+		var qd_tick := wrapf(q_new - q_old, -PI, PI) / tick_dt
+		var qd_prev := float(j.get("qd_kin", 0.0))
+		j["qd_kin"] = lerpf(qd_prev, qd_tick, a)
+		j["q_kin_old"] = q_new
 
 
 func _setup_sole_springs() -> void:
@@ -991,6 +1069,11 @@ func _freeze(v: bool) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# Jolt integrated after the previous _physics_process. Refresh kinematic
+	# ω/qd from the new pose before PD or the step reply reads them.
+	if _kin_after_tick:
+		_update_kinematic_vel(delta)
+		_kin_after_tick = false
 	if not _headless:
 		Engine.max_physics_steps_per_frame = 32
 		# Camera ticks on the wall clock, not the fixed step: --fixed-fps 200
@@ -1067,6 +1150,7 @@ func _physics_process(delta: float) -> void:
 	_timing_pd_usec += Time.get_ticks_usec() - pd_t0
 	_t += delta
 	_remaining -= 1
+	_kin_after_tick = true
 	if _remaining <= 0:
 		_pending_send = true
 
@@ -1301,6 +1385,7 @@ func _do_reset(cmd: Dictionary) -> void:
 	_reset_dump = dump
 	_reset_applied = applied
 	_reset_missing = missing
+	_snapshot_kinematic_pose()
 	_send_state("reset")
 
 
@@ -1461,15 +1546,18 @@ func _send_state(which: String) -> void:
 		base_quat = [qm.w, qm.x, qm.y, qm.z]
 		var lm := _g2m(_base.linear_velocity)
 		base_lin = [lm.x, lm.y, lm.z]
-		# angular_velocity is in Godot world (Y-up). basis.T puts it into the body's
-		# inertia-principal frame (ximat, per the scene). iquat then rotates it into the
-		# MuJoCo body frame (where the imu site lives, site quat=(1,0,0,0)).
-		var w_world_g: Vector3 = _base.angular_velocity
+		# Kinematic ω (pose FD). Jolt angular_velocity includes constraint
+		# correction and is kept as base_angvel_jolt on the full reply.
+		var w_world_g: Vector3 = _kin_omega.get(_base_name, Vector3.ZERO)
 		var w_i: Vector3 = _base.global_transform.basis.transposed() * w_world_g
 		var iq: Vector4 = _body_iquat.get(_base_name, Vector4(1, 0, 0, 0))
 		var w_body: Vector3 = _quat_rotate_wxyz(iq, w_i)
 		base_ang_local = [w_body.x, w_body.y, w_body.z]
-		_dbg_ang_world = [w_world_g.x, w_world_g.y, w_world_g.z]
+		var w_jolt_g: Vector3 = _base.angular_velocity
+		var w_jolt_i: Vector3 = _base.global_transform.basis.transposed() * w_jolt_g
+		var w_jolt_body: Vector3 = _quat_rotate_wxyz(iq, w_jolt_i)
+		_dbg_ang_world = [w_jolt_g.x, w_jolt_g.y, w_jolt_g.z]
+		_dbg_ang_jolt_local = [w_jolt_body.x, w_jolt_body.y, w_jolt_body.z]
 	var tau: Array = []
 	tau.resize(nu)
 	for i in range(nu):
@@ -1555,6 +1643,7 @@ func _send_state(which: String) -> void:
 			"base_quat": base_quat,
 			"base_linvel": base_lin,
 			"base_angvel_local": base_ang_local,
+			"base_angvel_jolt": _dbg_ang_jolt_local,
 			"dbg_ang_world": _dbg_ang_world,
 			"applied": _reset_applied,
 			"missing": _reset_missing,

@@ -77,6 +77,7 @@ class TestGodotLiteStep(unittest.TestCase):
             "axis_dot",
             "body_names",
             "dbg_ang_world",
+            "base_angvel_jolt",
             "applied",
             "missing",
             "tile_dy",
