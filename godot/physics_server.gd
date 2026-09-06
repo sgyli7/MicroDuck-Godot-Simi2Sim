@@ -74,6 +74,7 @@ var _joints: Array = []  # dicts
 var _ctrl: PackedFloat32Array = PackedFloat32Array()
 var _remaining: int = 0
 var _pending_send: bool = false
+var _report_mode: String = ""
 var _t: float = 0.0
 var _frozen: bool = true
 var _pinned: Dictionary = {}
@@ -1081,13 +1082,23 @@ func _handle(cmd: Variant) -> void:
 	elif name == "reset":
 		_do_reset(cmd)
 	elif name == "step":
+		var ctrl: Array = cmd.get("ctrl", [])
+		if ctrl.size() != _ctrl.size():
+			_send_dict({
+				"ok": false,
+				"cmd": "step",
+				"err": "ctrl_len",
+				"got": ctrl.size(),
+				"want": _ctrl.size(),
+			})
+			return
 		if _frozen:
 			_freeze(false)
 		if cmd.has("hud") and _hud != null and _hud.has_method("set_status"):
 			_hud.call("set_status", str(cmd.get("hud", "")))
-		var ctrl: Array = cmd.get("ctrl", [])
-		for i in range(mini(ctrl.size(), _ctrl.size())):
+		for i in range(ctrl.size()):
 			_ctrl[i] = float(ctrl[i])
+		_report_mode = str(cmd.get("report", ""))
 		_remaining = int(cmd.get("n_substeps", 1))
 		if _remaining < 1:
 			_remaining = 1
@@ -1294,6 +1305,56 @@ func _wheel_dump() -> Array:
 	return out
 
 
+func _is_foot_body(key: String) -> bool:
+	if key.contains("foot"):
+		return true
+	if not _bodies.has(key):
+		return false
+	var b: RigidBody3D = _bodies[key]
+	for child in b.get_children():
+		if child is CollisionShape3D and str(child.name).contains("foot"):
+			return true
+	for g in _spec.get("geoms", []):
+		if typeof(g) != TYPE_DICTIONARY:
+			continue
+		if str(g.get("body", "")) == key and str(g.get("name", "")).contains("foot"):
+			return true
+	return false
+
+
+func _foot_body_names() -> Array:
+	var names: Array = []
+	for key in _bodies.keys():
+		if _is_foot_body(str(key)):
+			names.append(str(key))
+	names.sort()
+	return names
+
+
+func _feet_report() -> Array:
+	var out: Array = []
+	for key in _foot_body_names():
+		var b: RigidBody3D = _bodies[key]
+		var n_contacts := 0
+		var impulse_sum := 0.0
+		var dst := PhysicsServer3D.body_get_direct_state(b.get_rid())
+		if dst != null:
+			n_contacts = dst.get_contact_count()
+			for ci in range(n_contacts):
+				impulse_sum += dst.get_contact_impulse(ci).length()
+		var pm := _g2m(b.global_transform.origin)
+		var lm := _g2m(b.linear_velocity)
+		out.append({
+			"name": key,
+			"contact": n_contacts > 0,
+			"n_contacts": n_contacts,
+			"impulse": impulse_sum,
+			"pos": [pm.x, pm.y, pm.z],
+			"linvel": [lm.x, lm.y, lm.z],
+		})
+	return out
+
+
 func _send_state(which: String) -> void:
 	var q: Array = []
 	var qd: Array = []
@@ -1331,9 +1392,11 @@ func _send_state(which: String) -> void:
 		var w_body: Vector3 = _quat_rotate_wxyz(iq, w_i)
 		base_ang_local = [w_body.x, w_body.y, w_body.z]
 		_dbg_ang_world = [w_world_g.x, w_world_g.y, w_world_g.z]
+	var lite := which == "step" and _report_mode == "lite"
 	var dump: Array = []
 	# Play viewer: skip per-body contact dump (large JSON every 20 ms). Calib is headless.
-	if DisplayServer.get_name() == "headless":
+	# Training lite step skips dump/wheels and reports only foot contacts.
+	if (not lite) and DisplayServer.get_name() == "headless":
 		for key in _bodies.keys():
 			var b: RigidBody3D = _bodies[key]
 			var dpm := _g2m(b.global_transform.origin)
@@ -1386,7 +1449,7 @@ func _send_state(which: String) -> void:
 		if ai >= 0 and ai < nu:
 			tau[ai] = float(j.get("tau", 0.0))
 			axis_dot[ai] = float(j.get("axis_dot", 0.0))
-	_send_dict({
+	var payload := {
 		"ok": true,
 		"cmd": which,
 		"t": _t,
@@ -1402,8 +1465,6 @@ func _send_state(which: String) -> void:
 		"applied": _reset_applied,
 		"missing": _reset_missing,
 		"body_names": _bodies.keys(),
-		"dump": dump,
-		"wheels": _wheel_dump(),
 		"tile_dy": 0.0 if _floor_plate == null else _floor_plate.global_position.y,
 		"tile_pitch": 0.0 if _floor_plate == null else rad_to_deg(_floor_plate.global_rotation.z),
 		"sole_n_on": _sole_n_on(),
@@ -1415,7 +1476,13 @@ func _send_state(which: String) -> void:
 		"held_order": _held_press_order.duplicate(),
 		"taps": _taps.duplicate(),
 		"time_scale": _play_time_scale(),
-	})
+	}
+	if lite:
+		payload["feet"] = _feet_report()
+	else:
+		payload["dump"] = dump
+		payload["wheels"] = _wheel_dump()
+	_send_dict(payload)
 	_taps.clear()
 
 

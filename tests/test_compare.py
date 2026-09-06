@@ -34,6 +34,13 @@ class TestXyStall(unittest.TestCase):
         cmp = compare_pair(_traj(1.256), _traj(1.147), {})
         self.assertEqual(cmp["hard_fail"], [])
 
+    def test_length_mismatch_is_hard_fail(self) -> None:
+        cmp = compare_pair(_traj(1.2, steps=20), _traj(1.2, steps=19), {})
+        self.assertTrue(any("length_mismatch" in x for x in cmp["hard_fail"]))
+        joined = " ".join(cmp["hard_fail"])
+        self.assertIn("20", joined)
+        self.assertIn("19", joined)
+
 
 if __name__ == "__main__":
     unittest.main()

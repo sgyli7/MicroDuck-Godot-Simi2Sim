@@ -34,6 +34,7 @@ def spawn_godot(
     headless: bool = True,
     extra_args: list[str] | None = None,
     cwd: Path | None = None,
+    recv_timeout: float = 120.0,
 ) -> tuple[subprocess.Popen, int, JsonLineClient]:
     port = port or free_port()
     bin_ = godot_bin()
@@ -90,7 +91,7 @@ def spawn_godot(
     proc._sim2sim_log_path = log_path  # type: ignore[attr-defined]
     proc._sim2sim_log_file = log_file  # type: ignore[attr-defined]
     try:
-        client = wait_connect("127.0.0.1", port, timeout=25.0)
+        client = wait_connect("127.0.0.1", port, timeout=25.0, recv_timeout=recv_timeout)
     except Exception:
         try:
             proc.kill()

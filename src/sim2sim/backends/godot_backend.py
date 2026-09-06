@@ -10,7 +10,6 @@ import numpy as np
 from sim2sim.backends import SimState
 from sim2sim.coords import mat_to_quat_wxyz, quat_wxyz_to_mat
 from sim2sim.godot_proc import GODOT_PROJECT, spawn_godot, stop_godot
-from sim2sim.protocol import JsonLineClient
 
 
 def inertial_to_body(
@@ -46,6 +45,7 @@ class GodotBackend:
         scene: str = "res://main.tscn",
         base_body: str = "trunk_base",
         current_limit_a: float = 0.0,
+        recv_timeout: float = 120.0,
     ) -> None:
         self.spec_path = Path(spec_path)
         self.spec = json.loads(self.spec_path.read_text())
@@ -55,7 +55,9 @@ class GodotBackend:
         bodies = {b["name"]: b for b in self.spec["bodies"]}
         self._base_meta = bodies[base_body]
         extra = _robot_user_args(self.spec_path)
-        self._proc, self._port, self._client = spawn_godot(scene, headless=headless, extra_args=extra)
+        self._proc, self._port, self._client = spawn_godot(
+            scene, headless=headless, extra_args=extra, recv_timeout=recv_timeout
+        )
         hello = self._client.call({"cmd": "hello"})
         if not hello.get("ok"):
             raise RuntimeError(f"Godot hello failed: {hello}")
@@ -67,6 +69,9 @@ class GodotBackend:
             ack = self._client.call({"cmd": "set_tau_limit", "limit": lim})
             if not ack.get("ok"):
                 raise RuntimeError(f"set_tau_limit failed: {ack}")
+
+    def is_alive(self) -> bool:
+        return self._proc.poll() is None
 
     def reset(
         self,
@@ -88,16 +93,38 @@ class GodotBackend:
             self._client.call({"cmd": "pin", "names": [self.base_body]})
         return self._parse(msg)
 
-    def step(self, ctrl: np.ndarray, n_substeps: int = 1, *, hud: str | None = None) -> SimState:
+    def send_step(
+        self,
+        ctrl: np.ndarray,
+        n_substeps: int = 1,
+        *,
+        hud: str | None = None,
+        report: str | None = None,
+    ) -> None:
         payload: dict = {
             "cmd": "step",
-            "ctrl": np.asarray(ctrl, dtype=float).reshape(self.nu).tolist(),
+            "ctrl": np.asarray(ctrl, dtype=float).reshape(-1).tolist(),
             "n_substeps": int(n_substeps),
         }
         if hud is not None:
             payload["hud"] = hud
-        msg = self._client.call(payload)
-        return self._parse(msg)
+        if report is not None:
+            payload["report"] = report
+        self._client.send(payload)
+
+    def recv_step(self) -> SimState:
+        return self._parse(self._client.recv())
+
+    def step(
+        self,
+        ctrl: np.ndarray,
+        n_substeps: int = 1,
+        *,
+        hud: str | None = None,
+        report: str | None = None,
+    ) -> SimState:
+        self.send_step(ctrl, n_substeps, hud=hud, report=report)
+        return self.recv_step()
 
     def nudge(self, linvel_mujoco: np.ndarray) -> None:
         ack = self._client.call(
@@ -119,6 +146,9 @@ class GodotBackend:
             np.asarray(self._base_meta["ipos"]),
             np.asarray(self._base_meta["iquat_wxyz"]),
         )
+        extra: dict = {"inertial_pos": pos_i, "inertial_quat": quat_i, "raw": msg}
+        if "feet" in msg:
+            extra["feet"] = msg["feet"]
         return SimState(
             t=float(msg.get("t", 0.0)),
             q=q,
@@ -127,7 +157,7 @@ class GodotBackend:
             base_quat_wxyz=quat_b,
             base_linvel=np.asarray(msg["base_linvel"], dtype=np.float64),
             base_angvel_local=np.asarray(msg["base_angvel_local"], dtype=np.float64),
-            extra={"inertial_pos": pos_i, "inertial_quat": quat_i, "raw": msg},
+            extra=extra,
         )
 
     def close(self) -> None:

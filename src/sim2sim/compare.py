@@ -8,6 +8,7 @@ from pathlib import Path
 
 import numpy as np
 
+from sim2sim.fall import fallen, tilt_deg
 from sim2sim.godot_proc import sim2sim_root
 
 ROOT = sim2sim_root()
@@ -31,13 +32,8 @@ def metrics_one(traj: dict) -> dict:
     t = np.asarray(traj["t"])
     dt = float(np.mean(np.diff(t))) if len(t) > 1 else 0.02
     z = pos[:, 2]
-    # projected gravity z-component ≈ quat rotates [0,0,-1]
-    # tilt from wxyz: gz = 1 - 2(x^2+y^2) for world-z of body-z... use
-    w, x, y, zq = quat[:, 0], quat[:, 1], quat[:, 2], quat[:, 3]
-    # body z-axis world z component
-    gz = 1 - 2 * (x * x + y * y)
-    tilt = np.degrees(np.arccos(np.clip(gz, -1, 1)))
-    fell = bool((z < 0.08).any() or (tilt > 55).any())
+    tilt = np.array([tilt_deg(q) for q in quat], dtype=np.float64)
+    fell = bool(any(fallen(q, p) for q, p in zip(quat, pos)))
     xy = np.linalg.norm(pos[-1, :2] - pos[0, :2])
     return {
         "steps": int(len(t)),
@@ -54,34 +50,39 @@ def metrics_one(traj: dict) -> dict:
 
 def compare_pair(a: dict, b: dict, thresholds: dict) -> dict:
     ma, mb = metrics_one(a), metrics_one(b)
-    n = min(len(a["t"]), len(b["t"]))
-    qa, qb = np.asarray(a["q"])[:n], np.asarray(b["q"])[:n]
-    pa, pb = np.asarray(a["base_pos"])[:n], np.asarray(b["base_pos"])[:n]
-    q_rmse = float(np.sqrt(np.mean((qa - qb) ** 2)))
-    xy_rmse = float(np.sqrt(np.mean(np.sum((pa[:, :2] - pb[:, :2]) ** 2, axis=1))))
-    z_rmse = float(np.sqrt(np.mean((pa[:, 2] - pb[:, 2]) ** 2)))
+    na, nb = int(len(np.asarray(a["t"]))), int(len(np.asarray(b["t"])))
     hard = []
     soft = []
+    if na != nb:
+        hard.append(f"length_mismatch mujoco={na} godot={nb}")
+        q_rmse = xy_rmse = z_rmse = float("nan")
+    else:
+        qa, qb = np.asarray(a["q"]), np.asarray(b["q"])
+        pa, pb = np.asarray(a["base_pos"]), np.asarray(b["base_pos"])
+        q_rmse = float(np.sqrt(np.mean((qa - qb) ** 2)))
+        xy_rmse = float(np.sqrt(np.mean(np.sum((pa[:, :2] - pb[:, :2]) ** 2, axis=1))))
+        z_rmse = float(np.sqrt(np.mean((pa[:, 2] - pb[:, 2]) ** 2)))
     if ma["fell"] and not mb["fell"]:
         hard.append("mujoco_fell_godot_stood")
     if mb["fell"] and not ma["fell"]:
         hard.append("godot_fell_mujoco_stood")
     if mb["fell"] and ma["fell"]:
         soft.append("both_fell")
-    if q_rmse > float(thresholds.get("q_rmse_hard", 1.5)):
-        hard.append(f"q_rmse={q_rmse:.3f}")
-    elif q_rmse > float(thresholds.get("q_rmse_warn", 0.3)):
-        soft.append(f"q_rmse={q_rmse:.3f}")
-    if xy_rmse > float(thresholds.get("xy_rmse_hard", 2.0)):
-        hard.append(f"xy_rmse={xy_rmse:.3f}")
-    elif xy_rmse > float(thresholds.get("xy_rmse_warn", 0.25)):
-        soft.append(f"xy_rmse={xy_rmse:.3f}")
-    # Catch lockstep freeze (Godot restarts from rest every 20 ms): MJ walks,
-    # GD shuffles ~0.14 m, xy_rmse stays under the 2.5 m hard cap.
-    xy_stall = float(thresholds.get("xy_stall_ratio", 0.5))
-    xy_ref = float(thresholds.get("xy_stall_ref_m", 0.8))
-    if (not ma["fell"]) and ma["xy_m"] >= xy_ref and mb["xy_m"] < xy_stall * ma["xy_m"]:
-        hard.append(f"godot_xy_stalled={mb['xy_m']:.3f}_vs_{ma['xy_m']:.3f}")
+    if na == nb:
+        if q_rmse > float(thresholds.get("q_rmse_hard", 1.5)):
+            hard.append(f"q_rmse={q_rmse:.3f}")
+        elif q_rmse > float(thresholds.get("q_rmse_warn", 0.3)):
+            soft.append(f"q_rmse={q_rmse:.3f}")
+        if xy_rmse > float(thresholds.get("xy_rmse_hard", 2.0)):
+            hard.append(f"xy_rmse={xy_rmse:.3f}")
+        elif xy_rmse > float(thresholds.get("xy_rmse_warn", 0.25)):
+            soft.append(f"xy_rmse={xy_rmse:.3f}")
+        # Catch lockstep freeze (Godot restarts from rest every 20 ms): MJ walks,
+        # GD shuffles ~0.14 m, xy_rmse stays under the 2.5 m hard cap.
+        xy_stall = float(thresholds.get("xy_stall_ratio", 0.5))
+        xy_ref = float(thresholds.get("xy_stall_ref_m", 0.8))
+        if (not ma["fell"]) and ma["xy_m"] >= xy_ref and mb["xy_m"] < xy_stall * ma["xy_m"]:
+            hard.append(f"godot_xy_stalled={mb['xy_m']:.3f}_vs_{ma['xy_m']:.3f}")
     return {
         "mujoco": ma,
         "godot": mb,
@@ -99,10 +100,9 @@ def _plots(a: dict, b: dict, out_dir: Path) -> None:
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
-    n = min(len(a["t"]), len(b["t"]))
-    ta, tb = np.asarray(a["t"])[:n], np.asarray(b["t"])[:n]
-    pa, pb = np.asarray(a["base_pos"])[:n], np.asarray(b["base_pos"])[:n]
-    qa, qb = np.asarray(a["q"])[:n], np.asarray(b["q"])[:n]
+    ta, tb = np.asarray(a["t"]), np.asarray(b["t"])
+    pa, pb = np.asarray(a["base_pos"]), np.asarray(b["base_pos"])
+    qa, qb = np.asarray(a["q"]), np.asarray(b["q"])
     fig, ax = plt.subplots(2, 2, figsize=(10, 7))
     ax[0, 0].plot(ta, pa[:, 2], label="mujoco")
     ax[0, 0].plot(tb, pb[:, 2], label="godot")

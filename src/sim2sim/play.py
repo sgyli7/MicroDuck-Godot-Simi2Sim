@@ -13,19 +13,18 @@ import numpy as np
 
 from sim2sim.backends.godot_backend import GodotBackend
 from sim2sim.backends.mujoco_backend import MujocoBackend
-from sim2sim.coords import quat_rotate_inverse_wxyz
+from sim2sim.fall import fallen as pose_fallen
 from sim2sim.godot_proc import GODOT_PROJECT, godot_bin, sim2sim_root
 from sim2sim.obs import DEFAULT_HOME, build_obs
 from sim2sim.paths import policies_dir
 from sim2sim.play_input import PlayBrain, TwistLimits, relaunch_argv, wall_dt
-from sim2sim.policy import OnnxPolicy
+from sim2sim.policy import OnnxPolicy, PolicyNumericError, PolicyShapeError
 from sim2sim.runner import apply_home_qpos, load_robot_cfg
 
 
 ROOT = sim2sim_root()
 POL = policies_dir()
 
-FALL_GRAV_Z = -0.35
 FALL_RESET_S = 0.8
 PUSH_MAX = 1.0
 
@@ -35,10 +34,11 @@ def _opt(path: Path) -> Path | None:
 
 
 ROLLER_LIMITS = TwistLimits(vmax_x=0.6, vmin_x=-0.5, vmax_y=0.0, vmin_y=0.0, vmax_ang=1.0)
-LOCAL_PPO_LIMITS = TwistLimits(vmax_x=0.4, vmin_x=-0.3)
 
 
-def policy_paths(*, local_ppo: bool, roller: bool = False) -> dict[str, Path | None]:
+def policy_paths(
+    *, local_ppo: bool, roller: bool = False, walking: Path | None = None
+) -> dict[str, Path | None]:
     if roller:
         return {
             "walking": _opt(POL / "roller.onnx"),
@@ -49,9 +49,14 @@ def policy_paths(*, local_ppo: bool, roller: bool = False) -> dict[str, Path | N
             "kick_right": None,
             "roulade": None,
         }
-    walking = POL / "local-ppo/local_velocity_walk_run_idle.onnx" if local_ppo else POL / "alpha_walking.onnx"
+    if walking is not None:
+        walk_path = Path(walking)
+    elif local_ppo:
+        walk_path = POL / "local-ppo/local_velocity_walk_run_idle.onnx"
+    else:
+        walk_path = POL / "alpha_walking.onnx"
     return {
-        "walking": _opt(walking),
+        "walking": _opt(walk_path),
         "standing": _opt(POL / "alpha_stand.onnx"),
         "sitstand": _opt(POL / "alpha_sitstand.onnx"),
         "ground_pick": _opt(POL / "alpha_ground_pick.onnx"),
@@ -92,12 +97,17 @@ def capture_home_poses(cfg: dict) -> list[dict]:
     return poses
 
 
-def load_bank(paths: dict[str, Path | None]) -> dict[str, OnnxPolicy]:
+def load_bank(paths: dict[str, Path | None], home_len: int) -> dict[str, OnnxPolicy]:
     bank: dict[str, OnnxPolicy] = {}
     for name, path in paths.items():
         if path is None:
             continue
-        bank[name] = OnnxPolicy(path)
+        bundle = OnnxPolicy(path)
+        try:
+            bundle.check_dims(home_len)
+        except PolicyShapeError as e:
+            raise SystemExit(f"policy {name} shape: {e}") from e
+        bank[name] = bundle
         print(f"  loaded {name}: {path}")
     if "walking" not in bank and "standing" not in bank and "sitstand" not in bank:
         print(
@@ -120,9 +130,7 @@ def pick_session(bank: dict[str, OnnxPolicy], policy: str) -> OnnxPolicy:
 
 
 def fallen(st, timeout_acc: float, dt: float) -> tuple[bool, float]:
-    grav = quat_rotate_inverse_wxyz(st.base_quat_wxyz, np.array([0.0, 0.0, -1.0]))
-    trunk_z = float(st.base_pos[2])
-    if grav[2] > FALL_GRAV_Z or trunk_z < 0.055:
+    if pose_fallen(st.base_quat_wxyz, st.base_pos):
         timeout_acc += dt
         if timeout_acc >= FALL_RESET_S:
             return True, 0.0
@@ -143,7 +151,8 @@ def random_push() -> np.ndarray:
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description="Keyboard/HUD play loop on Godot/Jolt")
     p.add_argument("--robot", type=Path, default=ROOT / "robots/microduck.json")
-    p.add_argument("--local-ppo", action="store_true", help="use local_ppo as walking ONNX (vmax 0.4)")
+    p.add_argument("--local-ppo", action="store_true", help="shortcut: local_ppo walking ONNX")
+    p.add_argument("--walking", type=Path, default=None, help="override walking ONNX path")
     p.add_argument(
         "--roller",
         action="store_true",
@@ -170,17 +179,20 @@ def main(argv: list[str] | None = None) -> int:
     spec = ensure_godot_scene(cfg)
 
     print("== sim2sim-play ==" + ("  [rollers]" if args.roller else "") + f"  scene={args.scene}")
-    paths = policy_paths(local_ppo=args.local_ppo, roller=args.roller)
-    bank = load_bank(paths)
+    if args.walking is not None and not args.walking.is_file():
+        raise SystemExit(f"walking ONNX missing: {args.walking}")
+    paths = policy_paths(local_ppo=args.local_ppo, roller=args.roller, walking=args.walking)
+    bank = load_bank(paths, home_len=int(home.size))
     if args.roller:
         lim = ROLLER_LIMITS
-    elif args.local_ppo:
-        lim = LOCAL_PPO_LIMITS
+        use_stand = True
     else:
-        lim = TwistLimits()
+        walk = bank.get("walking")
+        lim = walk.twist_limits if walk is not None else TwistLimits()
+        use_stand = True if walk is None else walk.has_standing_partner
     brain = PlayBrain(
         has_walking="walking" in bank,
-        has_standing="standing" in bank and not (args.local_ppo and not args.roller),
+        has_standing="standing" in bank and use_stand,
         has_sitstand="sitstand" in bank,
         has_pick="ground_pick" in bank,
         has_kick_left="kick_left" in bank,
@@ -208,7 +220,7 @@ def main(argv: list[str] | None = None) -> int:
         print("  6 切到轮滑   0 重置   P 推一把   Esc 退出")
     print("  窗口底部也有同样的按钮。\n")
 
-    last_action = np.zeros(14, dtype=np.float32)
+    last_action = np.zeros(int(home.size), dtype=np.float32)
     held: set[str] = set()
     press_order: list[str] = []
     taps: list[str] = []
@@ -227,7 +239,9 @@ def main(argv: list[str] | None = None) -> int:
                 break
             if out.switch_robot:
                 want_roller = not args.roller
-                next_paths = policy_paths(local_ppo=args.local_ppo, roller=want_roller)
+                next_paths = policy_paths(
+                    local_ppo=args.local_ppo, roller=want_roller, walking=args.walking
+                )
                 if want_roller and next_paths.get("walking") is None:
                     miss = POL / "roller.onnx"
                     print(
@@ -268,11 +282,19 @@ def main(argv: list[str] | None = None) -> int:
             sess = pick_session(bank, out.policy)
             obs = build_obs(st, last_action, out.command, home=home)
             t_inf = time.perf_counter()
-            action = sess.infer(obs)
+            try:
+                action = sess.infer(obs)
+            except PolicyNumericError as e:
+                print(f"policy numeric error: {e}")
+                brain.reset_motion()
+                last_action[:] = 0.0
+                fall_acc = 0.0
+                st = backend.reset(ctrl=home, bodies=poses)
+                held, taps = set(), []
+                next_t = time.perf_counter()
+                continue
             infer_ms += (time.perf_counter() - t_inf) * 1000.0
             last_action = action.astype(np.float32, copy=True)
-            if last_action.size != home.size:
-                last_action = np.resize(last_action, home.size)
             ctrl = home + last_action * scale
             t_step = time.perf_counter()
             st = backend.step(ctrl, n_substeps=decimation, hud=out.status)
