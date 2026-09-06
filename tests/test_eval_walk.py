@@ -90,6 +90,13 @@ class TestEpisodeMetricsSynthetic(unittest.TestCase):
         )
         self.assertLess(m["lin_vel_rmse"], 1e-6)
         self.assertLess(m["yaw_rate_rmse"], 1e-6)
+        self.assertLess(m["mean_vel_err"], 1e-6)
+        self.assertLess(m["mean_yaw_rate_err"], 1e-6)
+        self.assertLess(m["vel_err_1s_rmse"], 1e-6)
+        self.assertLess(m["yaw_err_1s_rmse"], 1e-6)
+        self.assertAlmostEqual(m["mean_vx"], 0.25, places=6)
+        self.assertAlmostEqual(m["mean_vy"], 0.0, places=6)
+        self.assertAlmostEqual(m["mean_wz"], 0.0, places=6)
         self.assertLess(abs(m["yaw_drift_deg"]), 1e-6)
         self.assertAlmostEqual(m["distance"], 0.25 * (n - 1) * dt, places=6)
         self.assertFalse(m["fell"])
@@ -98,6 +105,96 @@ class TestEpisodeMetricsSynthetic(unittest.TestCase):
         self.assertAlmostEqual(m["mean_trunk_z"], 0.12)
         self.assertGreater(m["cadence_hz_left_knee"], 2.0)
         self.assertLess(m["cadence_hz_left_knee"], 3.0)
+
+    def test_gait_oscillation_hurts_instant_rmse_not_smoothed(self) -> None:
+        from sim2sim.train.eval_walk import episode_metrics
+
+        n, dt = 150, 0.02
+        t = np.arange(n) * dt
+        pos = np.zeros((n, 3))
+        pos[:, 2] = 0.12
+        quat = np.zeros((n, 4))
+        quat[:, 0] = 1.0
+        linvel = np.zeros((n, 3))
+        linvel[:, 0] = 0.15 + 0.20 * np.sin(2 * np.pi * 2.5 * t)
+        cmd = np.tile(np.array([0.15, 0.0, 0.0]), (n, 1))
+        m = episode_metrics(
+            t=t,
+            pos=pos,
+            quat=quat,
+            linvel=linvel,
+            angvel=np.zeros((n, 3)),
+            q=np.zeros((n, 14)),
+            action=np.zeros((n, 14)),
+            cmd_xyw=cmd,
+            dt=dt,
+            fell=False,
+            survival_s=t[-1],
+        )
+        self.assertGreater(m["lin_vel_rmse"], 0.10)
+        self.assertLess(m["mean_vel_err"], 0.02)
+        self.assertLess(m["vel_err_1s_rmse"], 0.02)
+        self.assertAlmostEqual(m["mean_vx"], 0.15, places=2)
+
+    def test_settle_window_drops_first_second(self) -> None:
+        from sim2sim.train.eval_walk import episode_metrics
+
+        n, dt = 100, 0.02
+        linvel = np.zeros((n, 3))
+        linvel[:50, 0] = 0.0
+        linvel[50:, 0] = 0.25
+        pos = np.zeros((n, 3))
+        pos[:, 2] = 0.12
+        quat = np.zeros((n, 4))
+        quat[:, 0] = 1.0
+        cmd = np.tile(np.array([0.25, 0.0, 0.0]), (n, 1))
+        m = episode_metrics(
+            t=np.arange(n) * dt,
+            pos=pos,
+            quat=quat,
+            linvel=linvel,
+            angvel=np.zeros((n, 3)),
+            q=np.zeros((n, 14)),
+            action=np.zeros((n, 14)),
+            cmd_xyw=cmd,
+            dt=dt,
+            fell=False,
+            survival_s=(n - 1) * dt,
+        )
+        self.assertLess(m["mean_vel_err"], 1e-6)
+        self.assertAlmostEqual(m["mean_vx"], 0.25, places=6)
+        self.assertGreater(m["lin_vel_rmse"], 0.10)
+
+    def test_vel_err_1s_uses_per_step_command(self) -> None:
+        from sim2sim.train.eval_walk import episode_metrics
+
+        n, dt = 150, 0.02
+        cmd = np.zeros((n, 3))
+        cmd[:50, 0] = 0.10
+        cmd[50:100, 0] = 0.20
+        cmd[100:, 0] = 0.30
+        linvel = np.zeros((n, 3))
+        linvel[:, 0] = cmd[:, 0]
+        pos = np.zeros((n, 3))
+        pos[:, 2] = 0.12
+        quat = np.zeros((n, 4))
+        quat[:, 0] = 1.0
+        m = episode_metrics(
+            t=np.arange(n) * dt,
+            pos=pos,
+            quat=quat,
+            linvel=linvel,
+            angvel=np.zeros((n, 3)),
+            q=np.zeros((n, 14)),
+            action=np.zeros((n, 14)),
+            cmd_xyw=cmd,
+            dt=dt,
+            fell=False,
+            survival_s=(n - 1) * dt,
+        )
+        self.assertLess(m["lin_vel_rmse"], 1e-9)
+        # Causal 1 s MA lags the step command, so smoothed RMSE is not zero.
+        self.assertGreater(m["vel_err_1s_rmse"], 0.02)
 
     def test_yaw_drift_and_body_frame_strafe(self) -> None:
         from sim2sim.train.eval_walk import episode_metrics, yaw_quat_wxyz
@@ -134,9 +231,15 @@ class TestEpisodeMetricsSynthetic(unittest.TestCase):
 
     def test_eval_uses_default_twist_limits_not_sidecar(self) -> None:
         """A/B must share TwistLimits() so a sidecar cannot bias game_seq."""
-        from sim2sim.train.eval_walk import EVAL_TWIST_LIMITS
+        from sim2sim.train.eval_walk import CONDITIONS, EVAL_TWIST_LIMITS
 
         self.assertEqual(EVAL_TWIST_LIMITS, TwistLimits())
+        prim = {c.name: c.primary for c in CONDITIONS}
+        self.assertEqual(prim["walk_015"], "vel_err_1s_rmse")
+        self.assertEqual(prim["turn_r"], "yaw_err_1s_rmse")
+        self.assertEqual(prim["game_seq"], "vel_err_1s_rmse")
+        self.assertEqual(prim["idle"], "yaw_drift_deg")
+        self.assertEqual(prim["walk_push"], "fell")
 
 
 class TestEvalWalkGodot(unittest.TestCase):
@@ -182,8 +285,8 @@ class TestEvalWalkGodot(unittest.TestCase):
 
             primary = {c.name: c.primary for c in CONDITIONS}
             primary_tol = {
-                "lin_vel_rmse": 0.02,
-                "yaw_rate_rmse": 0.05,
+                "vel_err_1s_rmse": 0.02,
+                "yaw_err_1s_rmse": 0.05,
                 "yaw_drift_deg": 2.0,
                 "fell": 0.0,
             }

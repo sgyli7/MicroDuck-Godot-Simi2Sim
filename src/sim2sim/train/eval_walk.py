@@ -35,6 +35,8 @@ LEFT_KNEE = 3
 MAX_WORKERS = 8
 NUDGE_SPEED = 1.0
 NUDGE_PERIOD_S = 2.0
+SETTLE_S = 1.0
+MA_WINDOW_S = 1.0
 
 
 @dataclass(frozen=True)
@@ -47,20 +49,24 @@ class Condition:
 
 CONDITIONS: tuple[Condition, ...] = (
     Condition("idle", (0.0, 0.0, 0.0), "yaw_drift_deg", "idle"),
-    Condition("walk_015", (0.15, 0.0, 0.0), "lin_vel_rmse", "move"),
-    Condition("walk_025", (0.25, 0.0, 0.0), "lin_vel_rmse", "move"),
-    Condition("run_040", (0.40, 0.0, 0.0), "lin_vel_rmse", "move"),
-    Condition("back_020", (-0.2, 0.0, 0.0), "lin_vel_rmse", "move"),
-    Condition("strafe_l", (0.0, 0.2, 0.0), "lin_vel_rmse", "move"),
-    Condition("strafe_r", (0.0, -0.2, 0.0), "lin_vel_rmse", "move"),
-    Condition("turn_l", (0.0, 0.0, 0.8), "yaw_rate_rmse", "turn"),
-    Condition("turn_r", (0.0, 0.0, -0.8), "yaw_rate_rmse", "turn"),
-    Condition("walk_turn", (0.2, 0.0, 0.5), "lin_vel_rmse", "move"),
+    Condition("walk_015", (0.15, 0.0, 0.0), "vel_err_1s_rmse", "move"),
+    Condition("walk_025", (0.25, 0.0, 0.0), "vel_err_1s_rmse", "move"),
+    Condition("run_040", (0.40, 0.0, 0.0), "vel_err_1s_rmse", "move"),
+    Condition("back_020", (-0.2, 0.0, 0.0), "vel_err_1s_rmse", "move"),
+    Condition("strafe_l", (0.0, 0.2, 0.0), "vel_err_1s_rmse", "move"),
+    Condition("strafe_r", (0.0, -0.2, 0.0), "vel_err_1s_rmse", "move"),
+    Condition("turn_l", (0.0, 0.0, 0.8), "yaw_err_1s_rmse", "turn"),
+    Condition("turn_r", (0.0, 0.0, -0.8), "yaw_err_1s_rmse", "turn"),
+    Condition("walk_turn", (0.2, 0.0, 0.5), "vel_err_1s_rmse", "move"),
     Condition("walk_push", (0.25, 0.0, 0.0), "fell", "push"),
-    Condition("game_seq", None, "lin_vel_rmse", "game"),
+    Condition("game_seq", None, "vel_err_1s_rmse", "game"),
 )
 
 _TABLE_METRICS = (
+    "vel_err_1s_rmse",
+    "yaw_err_1s_rmse",
+    "mean_vel_err",
+    "mean_yaw_rate_err",
     "lin_vel_rmse",
     "yaw_rate_rmse",
     "yaw_drift_deg",
@@ -72,7 +78,14 @@ _TABLE_METRICS = (
     "mean_trunk_z",
 )
 
+_VEL_ERR_METRICS = frozenset({"vel_err_1s_rmse", "mean_vel_err", "lin_vel_rmse"})
+_YAW_ERR_METRICS = frozenset({"yaw_err_1s_rmse", "mean_yaw_rate_err", "yaw_rate_rmse"})
+
 _LOWER_BETTER = {
+    "vel_err_1s_rmse",
+    "yaw_err_1s_rmse",
+    "mean_vel_err",
+    "mean_yaw_rate_err",
     "lin_vel_rmse",
     "yaw_rate_rmse",
     "yaw_drift_deg",
@@ -144,6 +157,53 @@ def _fft_cadence(q: np.ndarray, dt: float) -> float:
     return float(freqs[i])
 
 
+def _settle_slice(n: int, dt: float) -> slice:
+    skip = int(round(SETTLE_S / float(dt))) if dt > 0 else 0
+    if skip >= n:
+        return slice(0, n)
+    return slice(skip, n)
+
+
+def _full_window_ma(x: np.ndarray, win: int) -> np.ndarray:
+    """Causal moving average; returns only samples with a full window, or the mean if shorter."""
+    x = np.asarray(x, dtype=np.float64)
+    n = int(x.shape[0])
+    win = max(1, int(win))
+    if n == 0:
+        return x
+    if n < win:
+        return np.mean(x, axis=0, keepdims=True)
+    if x.ndim == 1:
+        c = np.cumsum(x)
+        prev = np.concatenate([[0.0], c[: n - win]])
+        return (c[win - 1 :] - prev) / win
+    c = np.cumsum(x, axis=0)
+    prev = np.concatenate([np.zeros((1, x.shape[1]), dtype=np.float64), c[: n - win]], axis=0)
+    return (c[win - 1 :] - prev) / win
+
+
+def _empty_metrics(*, fell: bool, survival_s: float) -> dict[str, Any]:
+    return {
+        "lin_vel_rmse": float("nan"),
+        "yaw_rate_rmse": float("nan"),
+        "mean_vel_err": float("nan"),
+        "mean_yaw_rate_err": float("nan"),
+        "vel_err_1s_rmse": float("nan"),
+        "yaw_err_1s_rmse": float("nan"),
+        "mean_vx": float("nan"),
+        "mean_vy": float("nan"),
+        "mean_wz": float("nan"),
+        "yaw_drift_deg": 0.0,
+        "distance": 0.0,
+        "fell": bool(fell),
+        "survival_s": float(survival_s),
+        "mean_abs_daction": 0.0,
+        "cadence_hz_left_knee": 0.0,
+        "mean_trunk_z": float("nan"),
+        "steps": 0,
+    }
+
+
 def episode_metrics(
     *,
     t: np.ndarray,
@@ -167,24 +227,36 @@ def episode_metrics(
     cmd_xyw = np.asarray(cmd_xyw, dtype=np.float64)
     n = int(len(pos))
     if n == 0:
-        return {
-            "lin_vel_rmse": float("nan"),
-            "yaw_rate_rmse": float("nan"),
-            "yaw_drift_deg": 0.0,
-            "distance": 0.0,
-            "fell": bool(fell),
-            "survival_s": float(survival_s),
-            "mean_abs_daction": 0.0,
-            "cadence_hz_left_knee": 0.0,
-            "mean_trunk_z": float("nan"),
-            "steps": 0,
-        }
+        return _empty_metrics(fell=fell, survival_s=survival_s)
     yaws = np.array([yaw_from_quat_wxyz(qq) for qq in quat], dtype=np.float64)
     c, s = np.cos(yaws), np.sin(yaws)
     vx_b = c * linvel[:, 0] + s * linvel[:, 1]
     vy_b = -s * linvel[:, 0] + c * linvel[:, 1]
+    wz = angvel[:, 2]
     lin_vel_rmse = float(np.sqrt(np.mean((vx_b - cmd_xyw[:, 0]) ** 2 + (vy_b - cmd_xyw[:, 1]) ** 2)))
-    yaw_rate_rmse = float(np.sqrt(np.mean((angvel[:, 2] - cmd_xyw[:, 2]) ** 2)))
+    yaw_rate_rmse = float(np.sqrt(np.mean((wz - cmd_xyw[:, 2]) ** 2)))
+    sl = _settle_slice(n, dt)
+    mean_dvx = float(np.mean(vx_b[sl] - cmd_xyw[sl, 0]))
+    mean_dvy = float(np.mean(vy_b[sl] - cmd_xyw[sl, 1]))
+    mean_vel_err = float(np.hypot(mean_dvx, mean_dvy))
+    mean_yaw_rate_err = float(abs(np.mean(wz[sl] - cmd_xyw[sl, 2])))
+    mean_vx = float(np.mean(vx_b[sl]))
+    mean_vy = float(np.mean(vy_b[sl]))
+    mean_wz = float(np.mean(wz[sl]))
+    win = max(1, int(round(MA_WINDOW_S / float(dt)))) if dt > 0 else 1
+    vx_ma = _full_window_ma(vx_b, win)
+    vy_ma = _full_window_ma(vy_b, win)
+    wz_ma = _full_window_ma(wz, win)
+    if n < win:
+        cmd_ma = cmd_xyw.mean(axis=0)
+        vel_err_1s_rmse = float(np.hypot(vx_ma.reshape(-1)[0] - cmd_ma[0], vy_ma.reshape(-1)[0] - cmd_ma[1]))
+        yaw_err_1s_rmse = float(abs(wz_ma.reshape(-1)[0] - cmd_ma[2]))
+    else:
+        cmd_t = cmd_xyw[win - 1 :]
+        vel_err_1s_rmse = float(
+            np.sqrt(np.mean((vx_ma - cmd_t[:, 0]) ** 2 + (vy_ma - cmd_t[:, 1]) ** 2))
+        )
+        yaw_err_1s_rmse = float(np.sqrt(np.mean((wz_ma - cmd_t[:, 2]) ** 2)))
     yaw_unwrapped = np.unwrap(yaws)
     yaw_drift_deg = float(np.degrees(yaw_unwrapped[-1] - yaw_unwrapped[0]))
     distance = float(np.linalg.norm(pos[-1, :2] - pos[0, :2]))
@@ -196,6 +268,13 @@ def episode_metrics(
     return {
         "lin_vel_rmse": lin_vel_rmse,
         "yaw_rate_rmse": yaw_rate_rmse,
+        "mean_vel_err": mean_vel_err,
+        "mean_yaw_rate_err": mean_yaw_rate_err,
+        "vel_err_1s_rmse": vel_err_1s_rmse,
+        "yaw_err_1s_rmse": yaw_err_1s_rmse,
+        "mean_vx": mean_vx,
+        "mean_vy": mean_vy,
+        "mean_wz": mean_wz,
         "yaw_drift_deg": yaw_drift_deg,
         "distance": distance,
         "fell": bool(fell),
@@ -407,8 +486,10 @@ def _b_better(metric: str, a: float, b: float) -> bool | None:
     scale = max(abs(a), abs(b), 1e-6)
     if metric == "yaw_drift_deg":
         eps = max(0.25, 0.02 * scale)
-    elif metric in ("lin_vel_rmse", "yaw_rate_rmse"):
-        eps = max(0.005, 0.02 * scale)
+    elif metric in _VEL_ERR_METRICS:
+        eps = max(0.01, 0.05 * scale)
+    elif metric in _YAW_ERR_METRICS:
+        eps = max(0.02, 0.05 * scale)
     elif metric == "mean_abs_daction":
         eps = max(1e-4, 0.02 * scale)
     else:
@@ -437,7 +518,7 @@ def _summarize(episodes: list[dict], label_a: str, label_b: str, seeds: list[int
         a_eps = [a_map[s] for s in seed_keys]
         b_eps = [b_map[s] for s in seed_keys]
         metrics_block: dict[str, Any] = {}
-        for metric in _TABLE_METRICS:
+        for metric in (*_TABLE_METRICS, "mean_vx", "mean_vy", "mean_wz"):
             av = [_primary_value(e, metric) if metric in ("fell", "yaw_drift_deg") else float(e[metric]) for e in a_eps]
             bv = [_primary_value(e, metric) if metric in ("fell", "yaw_drift_deg") else float(e[metric]) for e in b_eps]
             # yaw_drift in the table is signed mean; winner uses abs via _primary_value only for primary.
@@ -535,8 +616,11 @@ def write_report(
         "(not each ONNX sidecar). Otherwise a different command ramp would confound the comparison.",
         "- Idle / constant-twist episodes query the walking ONNX with a fixed command "
         "(no stand-policy switch except inside `PlayBrain` for `game_seq`).",
-        "- Winner / VERDICT ignore tiny gaps (RMSE 0.005 or 2%, yaw drift 0.25°, exact fall rate) "
-        "so Jolt episode noise is not counted as an improvement.",
+        "- Tracking primary is `vel_err_1s_rmse` (1 s moving-average body vx,vy vs per-step cmd); "
+        "yaw conditions use `yaw_err_1s_rmse`. Instantaneous `lin_vel_rmse` stays secondary "
+        "(gait oscillation dominates it).",
+        "- Winner / VERDICT ignore tiny gaps (vel 0.01 m/s or 5%, yaw-rate 0.02 rad/s or 5%, "
+        "yaw drift 0.25°, exact fall rate) so Jolt episode noise is not counted as an improvement.",
         "",
         "## Per condition",
         "",
@@ -577,16 +661,33 @@ def write_report(
 
 
 def _print_compact(summary: dict[str, Any], label_a: str, label_b: str) -> None:
-    print(f"{'condition':<12} {'metric':<16} {label_a:>14} {label_b:>14} {'Δ(B−A)':>10} {'wins':>8}")
+    print(f"{'condition':<12} {'metric':<18} {label_a:>14} {label_b:>14} {'Δ(B−A)':>10} {'wins':>8}")
     for cond in CONDITIONS:
         block = summary["per_condition"][cond.name]
         m = block["metrics"][cond.primary]
         print(
-            f"{cond.name:<12} {cond.primary:<16} "
+            f"{cond.name:<12} {cond.primary:<18} "
             f"{_fmt_ms(m['a_mean'], m['a_std']):>14} {_fmt_ms(m['b_mean'], m['b_std']):>14} "
             f"{m['delta']:+10.4f} {m['wins_b']}/{m['n']}"
         )
     print(f"VERDICT: {summary['verdict']}")
+    print(f"{label_a} baseline (post-{SETTLE_S:.0f}s settle mean body vel / smoother errors):")
+    print(
+        f"  {'condition':<12} {'mean_vx':>8} {'mean_vy':>8} {'mean_wz':>8} "
+        f"{'mean_vel_err':>13} {'mean_yaw_err':>13} {'vel_1s':>8} {'yaw_1s':>8}"
+    )
+    for cond in CONDITIONS:
+        mets = summary["per_condition"][cond.name]["metrics"]
+        print(
+            f"  {cond.name:<12} "
+            f"{mets.get('mean_vx', {}).get('a_mean', float('nan')):+8.4f} "
+            f"{mets.get('mean_vy', {}).get('a_mean', float('nan')):+8.4f} "
+            f"{mets.get('mean_wz', {}).get('a_mean', float('nan')):+8.4f} "
+            f"{mets.get('mean_vel_err', {}).get('a_mean', float('nan')):13.4f} "
+            f"{mets.get('mean_yaw_rate_err', {}).get('a_mean', float('nan')):13.4f} "
+            f"{mets.get('vel_err_1s_rmse', {}).get('a_mean', float('nan')):8.4f} "
+            f"{mets.get('yaw_err_1s_rmse', {}).get('a_mean', float('nan')):8.4f}"
+        )
 
 
 def main(argv: list[str] | None = None) -> int:
