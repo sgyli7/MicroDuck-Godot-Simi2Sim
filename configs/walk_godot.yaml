@@ -74,14 +74,16 @@ termination:
 ppo:
   learning_rate: 3.0e-4
   schedule: adaptive
-  desired_kl: 0.01
+  # 0.01 drove the adaptive schedule to the 1e-5 floor right after unfreezing (probe60).
+  desired_kl: 0.015
   entropy_coef: 0.001
   clip_param: 0.2
   gamma: 0.99
   lam: 0.95
   num_learning_epochs: 5
   num_mini_batches: 4
-  init_std: 0.25
+  # local_ppo model_2999.pt ended with per-joint std 0.15-0.23; start inside that band.
+  init_std: 0.18
   critic_warmup_iters: 100
   hidden_dims: [512, 256, 128]
   activation: elu
