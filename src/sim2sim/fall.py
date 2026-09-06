@@ -29,6 +29,24 @@ def tilt_deg(base_quat_wxyz: np.ndarray) -> float:
     return float(np.degrees(np.arccos(c)))
 
 
+def tilt_threshold(tilt_deg: float = 70.0) -> float:
+    """Projected-gravity z above this value is past ``tilt_deg`` from vertical."""
+    return -math.cos(math.radians(float(tilt_deg)))
+
+
+def fallen_mask(
+    grav: np.ndarray,
+    pos: np.ndarray,
+    *,
+    tilt_deg: float = 70.0,
+    min_z: float = 0.055,
+) -> np.ndarray:
+    """Batched ``fallen`` from already-computed projected gravity and trunk position."""
+    g = np.asarray(grav, dtype=np.float64).reshape(-1, 3)
+    p = np.asarray(pos, dtype=np.float64).reshape(-1, 3)
+    return (g[:, 2] > tilt_threshold(tilt_deg)) | (p[:, 2] < float(min_z))
+
+
 def fallen(
     base_quat_wxyz: np.ndarray,
     base_pos: np.ndarray,
@@ -38,5 +56,4 @@ def fallen(
 ) -> bool:
     """True if projected-gravity z > -cos(tilt) (lean past tilt_deg) or trunk z < min_z."""
     grav = _projected_gravity(base_quat_wxyz)
-    z = float(np.asarray(base_pos, dtype=np.float64).reshape(-1)[2])
-    return float(grav[2]) > -math.cos(math.radians(float(tilt_deg))) or z < float(min_z)
+    return bool(fallen_mask(grav.reshape(1, 3), np.asarray(base_pos).reshape(1, 3), tilt_deg=tilt_deg, min_z=min_z)[0])

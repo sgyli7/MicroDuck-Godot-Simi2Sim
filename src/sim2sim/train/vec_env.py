@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import math
 import os
 import select
 import time
@@ -17,10 +16,12 @@ from rsl_rl.env import VecEnv
 from tensordict import TensorDict
 
 from sim2sim.backends.godot_backend import GodotBackend
+from sim2sim.fall import fallen_mask
 from sim2sim.godot_proc import stop_godot
 from sim2sim.obs import DEFAULT_HOME
 from sim2sim.paths import apply_path_defaults, expand_cfg, load_robot_json, sim2sim_root
 from sim2sim.train.commands import CommandConfig, CommandSampler
+from sim2sim.train.curriculum import Curriculum, apply_curriculum
 from sim2sim.train.reset_poses import HomePoseSampler
 from sim2sim.train.rewards import RewardComputer, RewardConfig, RewardInputs, world_to_yaw_frame
 
@@ -146,7 +147,6 @@ class GodotVecEnv(VecEnv):
         self.base_body = str(robot.get("base_body", "trunk_base"))
         self.tilt_deg = float((cfg.get("termination") or {}).get("tilt_deg", 70.0))
         self.min_z = float((cfg.get("termination") or {}).get("min_z", 0.055))
-        self._cos_tilt = math.cos(math.radians(self.tilt_deg))
         reset_cfg = cfg.get("reset") or {}
         self.yaw_range = tuple(float(x) for x in reset_cfg.get("yaw_range", (-np.pi, np.pi)))
         self.joint_noise = float(reset_cfg.get("joint_noise_rad", 0.05))
@@ -174,6 +174,8 @@ class GodotVecEnv(VecEnv):
             self.sampler.joint_lo.astype(np.float32),
             self.sampler.joint_hi.astype(np.float32),
         )
+        self.curriculum = Curriculum.from_dict(cfg.get("curriculum"))
+        self._curriculum_values: dict[str, float] = {}
 
         self._workers: list[GodotBackend | None] = [None] * self.num_envs
         self._states: list[Any] = [None] * self.num_envs
@@ -185,14 +187,23 @@ class GodotVecEnv(VecEnv):
         self._last_term_gyro = np.zeros((self.num_envs, 3), dtype=np.float32)
         self._last_term_grav = np.zeros((self.num_envs, 3), dtype=np.float32)
         self.faults = 0
-        self.episode_length_buf = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
-        self._obs = TensorDict(
-            {
-                "actor": torch.zeros(self.num_envs, ACTOR_DIM, device=self.device),
-                "critic": torch.zeros(self.num_envs, CRITIC_DIM, device=self.device),
-            },
-            batch_size=[self.num_envs],
-        )
+        self._ep_len = np.zeros(self.num_envs, dtype=np.int64)
+        self.episode_length_buf = torch.from_numpy(self._ep_len)
+        # Double-buffer obs so rsl_rl's act() can hold the previous TensorDict while we fill the next.
+        self._actor_np = [np.zeros((self.num_envs, ACTOR_DIM), dtype=np.float32) for _ in range(2)]
+        self._critic_np = [np.zeros((self.num_envs, CRITIC_DIM), dtype=np.float32) for _ in range(2)]
+        self._obs_td = [
+            TensorDict(
+                {
+                    "actor": torch.from_numpy(self._actor_np[i]),
+                    "critic": torch.from_numpy(self._critic_np[i]),
+                },
+                batch_size=[self.num_envs],
+            )
+            for i in range(2)
+        ]
+        self._obs_i = 0
+        self._obs = self._obs_td[0]
         self.ankle_z_nominal = np.array(self.sampler.ankle_z_nominal, dtype=np.float32, copy=True)
         self._closed = False
         try:
@@ -257,7 +268,7 @@ class GodotVecEnv(VecEnv):
         self._last_action[i] = 0.0
         self.rew.zero_sums([i])
         self._push_ttl[i] = float(self._rng.uniform(*self.push_interval)) if self.push_enabled else 1e9
-        self.episode_length_buf[i] = 0
+        self._ep_len[i] = 0
 
     def reset_idx(self, env_ids: list[int] | np.ndarray | torch.Tensor) -> None:
         ids = [int(i) for i in np.asarray(env_ids, dtype=np.int64).reshape(-1)]
@@ -268,6 +279,13 @@ class GodotVecEnv(VecEnv):
     def get_observations(self) -> TensorDict:
         return self._obs
 
+    def set_curriculum(self, it: int) -> dict[str, float]:
+        """Apply iteration-indexed reward weights and command mix. Returns live values."""
+        values = self.curriculum.values_at(int(it))
+        apply_curriculum(self.rew.cfg, self.commands.cfg, values)
+        self._curriculum_values = values
+        return values
+
     def debug_states(self) -> list:
         """Latest SimState per worker (post-reset if the last step terminated)."""
         return list(self._states)
@@ -276,12 +294,15 @@ class GodotVecEnv(VecEnv):
         if self._closed:
             raise RuntimeError("GodotVecEnv is closed")
         n = self.num_envs
-        act = np.asarray(actions.detach().to("cpu").numpy(), dtype=np.float32).reshape(n, NUM_ACTIONS)
+        if actions.device.type == "cpu":
+            act = np.array(actions.detach().numpy(), dtype=np.float32, copy=True).reshape(n, NUM_ACTIONS)
+        else:
+            act = np.asarray(actions.detach().to("cpu").numpy(), dtype=np.float32).reshape(n, NUM_ACTIONS)
         nan_act = ~np.isfinite(act).all(axis=1)
         act = np.where(nan_act[:, None], 0.0, act).astype(np.float32)
         ctrl = self.home[None, :] + act * self.scale
 
-        self.episode_length_buf += 1
+        self._ep_len += 1
         self._maybe_push()
 
         send_faults: list[tuple[int, str]] = []
@@ -326,14 +347,14 @@ class GodotVecEnv(VecEnv):
             )
         )
 
-        fell = (grav[:, 2] > -self._cos_tilt) | (pos[:, 2] < self.min_z)
+        fell = fallen_mask(grav, pos, tilt_deg=self.tilt_deg, min_z=self.min_z)
         self._last_fell = np.asarray(fell, dtype=bool).copy()
         self._last_term_quat = np.asarray(quat, dtype=np.float64).copy()
         self._last_term_pos = np.asarray(pos, dtype=np.float64).copy()
         self._last_term_gyro = np.asarray(gyro, dtype=np.float32).copy()
         self._last_term_grav = np.asarray(grav, dtype=np.float32).copy()
         nan_state = nan_act | ~finite | ~np.isfinite(total)
-        time_out = (self.episode_length_buf.detach().cpu().numpy() >= self.max_episode_length)
+        time_out = self._ep_len >= self.max_episode_length
         is_fault = np.array([i in fault_ids for i in range(n)], dtype=bool)
 
         # Faults already reset: zero their physics reward (no bogus terminal).
@@ -356,15 +377,16 @@ class GodotVecEnv(VecEnv):
         self._last_action = act.copy()
         self._last_action[done] = 0.0
 
-        actor, critic = self._build_obs_arrays()
-        actor = self._noise_actor(actor)
-        self._obs = self._td(actor, critic)
+        self._obs_i ^= 1
+        self._fill_obs_arrays(self._obs_i)
+        self._obs = self._obs_td[self._obs_i]
 
         log: dict[str, float] = {f"Episode_Reward/{k}": float(np.mean(v)) for k, v in terms.items()}
         log["Episode_Termination/fell"] = float(np.mean(fell.astype(np.float32)))
         log["Episode_Termination/nan_state"] = float(np.mean(nan_state.astype(np.float32)))
         log["Episode_Termination/time_out"] = float(np.mean(time_out.astype(np.float32)))
         log["faults"] = float(self.faults)
+        log["step_reward"] = float(np.mean(total))
 
         extras = {
             "time_outs": torch.as_tensor(to, dtype=torch.bool, device=self.device),
@@ -463,29 +485,35 @@ class GodotVecEnv(VecEnv):
             finite[i] = _state_finite(st) and np.isfinite(contact[i]).all() and np.isfinite(height[i]).all()
         return q, qd, gyro, quat, pos, linvel, contact, height, xy_speed, finite
 
-    def _build_obs_arrays(self) -> tuple[np.ndarray, np.ndarray]:
-        n = self.num_envs
+    def _fill_obs_arrays(self, buf: int) -> None:
+        """Write actor/critic obs into double-buffer slot ``buf`` (in-place numpy)."""
         q, qd, gyro, quat, _pos, linvel, contact, height, _xy, _finite = self._pull_states()
+        n = self.num_envs
         grav = _quat_rotate_inv_n(quat, _DOWN).astype(np.float32)
-        actor = np.empty((n, ACTOR_DIM), dtype=np.float32)
+        actor = self._actor_np[buf]
         actor[:, 0:3] = gyro
         actor[:, 3:6] = grav
         actor[:, 6:20] = q - self.home.reshape(1, NUM_ACTIONS)
         actor[:, 20:34] = qd
         actor[:, 34:48] = self._last_action
         actor[:, 48:61] = self.commands.cmd
-        extra = np.empty((n, 9), dtype=np.float32)
+        critic = self._critic_np[buf]
+        critic[:, :ACTOR_DIM] = actor  # privileged critic keeps the clean 61-D prefix
+        extra = critic[:, ACTOR_DIM:]
         extra[:, 0:3] = world_to_yaw_frame(quat, linvel)
         extra[:, 3:5] = contact
         extra[:, 5:7] = height
         extra[:, 7:9] = self.rew.air.air_time
-        critic = np.concatenate([actor, extra], axis=1).astype(np.float32)
-        return actor, critic
+        self._noise_actor_inplace(actor)
 
-    def _noise_actor(self, obs: np.ndarray) -> np.ndarray:
+    def _build_obs_arrays(self) -> tuple[np.ndarray, np.ndarray]:
+        """Copy of the live buffer (tests / debug)."""
+        self._fill_obs_arrays(self._obs_i)
+        return self._actor_np[self._obs_i].copy(), self._critic_np[self._obs_i].copy()
+
+    def _noise_actor_inplace(self, o: np.ndarray) -> None:
         if not self.noise_enabled:
-            return obs
-        o = np.array(obs, dtype=np.float32, copy=True)
+            return
         n = o.shape[0]
 
         def draw(amp: float, dim: int) -> np.ndarray:
@@ -499,20 +527,16 @@ class GodotVecEnv(VecEnv):
         o[:, 3:6] += draw(self.noise_amp["grav"], 3)
         o[:, 6:20] += draw(self.noise_amp["q"], 14)
         o[:, 20:34] += draw(self.noise_amp["qd"], 14)
+
+    def _noise_actor(self, obs: np.ndarray) -> np.ndarray:
+        o = np.array(obs, dtype=np.float32, copy=True)
+        self._noise_actor_inplace(o)
         return o
 
     def _pack_obs(self, env_ids: list[int] | None = None) -> None:
-        actor, critic = self._build_obs_arrays()
-        actor = self._noise_actor(actor)
-        if env_ids is None:
-            self._obs = self._td(actor, critic)
-            return
-        a = self._obs["actor"].detach().cpu().numpy()
-        c = self._obs["critic"].detach().cpu().numpy()
-        for i in env_ids:
-            a[i] = actor[i]
-            c[i] = critic[i]
-        self._obs = self._td(a, c)
+        del env_ids
+        self._fill_obs_arrays(self._obs_i)
+        self._obs = self._obs_td[self._obs_i]
 
     def _td(self, actor: np.ndarray, critic: np.ndarray) -> TensorDict:
         return TensorDict(

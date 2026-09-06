@@ -31,6 +31,28 @@ STEPS_HI = 512
 DEFAULT_SAMPLES_PER_ITER = 2048
 PPO_CLASS = "sim2sim.train.ppo_finetune:PPOFinetune"
 ONNX_ALIASES = {"alpha": "alpha_walking.onnx", "alpha_walking": "alpha_walking.onnx"}
+DEFAULT_TORCH_THREADS = 2
+
+
+def configure_cpu_threads(n: int = DEFAULT_TORCH_THREADS) -> int:
+    """Cap torch/OpenMP threads so they do not contend with core-pinned Godot workers."""
+    import os
+
+    raw = os.environ.get("SIM2SIM_TORCH_THREADS")
+    n = int(raw) if raw else int(n)
+    n = max(1, n)
+    os.environ["OMP_NUM_THREADS"] = str(n)
+    os.environ["MKL_NUM_THREADS"] = str(n)
+    os.environ["OPENBLAS_NUM_THREADS"] = str(n)
+    os.environ["NUMEXPR_NUM_THREADS"] = str(n)
+    import torch
+
+    torch.set_num_threads(n)
+    try:
+        torch.set_num_interop_threads(1)
+    except RuntimeError:
+        pass
+    return int(torch.get_num_threads())
 
 
 class InitParityError(RuntimeError):
@@ -333,6 +355,7 @@ def train(
     log=print,
 ) -> Path:
     """Build GodotVecEnv + OnPolicyRunner, train, return the run directory."""
+    n_threads = configure_cpu_threads()
     import torch
     from rsl_rl.runners import OnPolicyRunner
     from rsl_rl.utils import check_nan
@@ -372,6 +395,7 @@ def train(
         else ppo.get("critic_warmup_iters") or train_block.get("critic_warmup_iters") or 0
     )
     init_std = float(ppo.get("init_std", 0.25))
+    unfreeze_lr = float(ppo.get("unfreeze_learning_rate", 3.0e-5))
 
     if n_modes == 0:
         init_onnx = cfg.get("init_onnx")
@@ -412,7 +436,8 @@ def train(
     start_line = (
         f"start mode={mode} num_envs={nenv} steps/env={train_cfg['num_steps_per_env']} "
         f"samples/iter~{nenv * train_cfg['num_steps_per_env']} max_it={max_it} "
-        f"warmup={warmup} device={device_s} log_dir={log_dir}"
+        f"warmup={warmup} unfreeze_lr={unfreeze_lr:.3e} torch_threads={n_threads} "
+        f"device={device_s} log_dir={log_dir}"
     )
     _append_line(train_log, start_line)
     log(start_line)
@@ -503,6 +528,8 @@ def train(
             start_it=start_it,
             num_iterations=max_it,
             warmup_iters=warmup,
+            unfreeze_lr=unfreeze_lr,
+            prime_unfreeze=(resume is None),
             train_log=train_log,
             metrics_jsonl=metrics_jsonl,
             stop=stop,
@@ -547,12 +574,15 @@ def _learn_loop(
     start_it: int,
     num_iterations: int,
     warmup_iters: int,
+    unfreeze_lr: float,
+    prime_unfreeze: bool,
     train_log: Path,
     metrics_jsonl: Path,
     stop: list[bool],
     verify_mean: Any | None,
     log=print,
 ) -> Path | None:
+    import os
     import torch
     from rsl_rl.utils import check_nan
 
@@ -564,8 +594,13 @@ def _learn_loop(
     nsteps = int(cfg["num_steps_per_env"])
     save_every = int(cfg["save_interval"])
     log_dir = Path(logger.log_dir)
+    same_device = str(device) == str(env.device) or (
+        getattr(device, "type", None) == "cpu" and getattr(env.device, "type", None) == "cpu"
+    )
 
-    obs = env.get_observations().to(device)
+    obs = env.get_observations()
+    if not same_device:
+        obs = obs.to(device)
     alg.train_mode()
     logger.init_logging_writer()
 
@@ -573,6 +608,8 @@ def _learn_loop(
     last_path: Path | None = None
     completed: int | None = None
     writer = logger.writer
+    primed = not bool(prime_unfreeze)
+    profile_collect = os.environ.get("SIM2SIM_PROFILE_COLLECT", "").strip() not in ("", "0", "false", "False")
 
     def _save(it: int) -> Path:
         nonlocal last_path
@@ -588,25 +625,55 @@ def _learn_loop(
                 break
             frozen = bool(it < int(warmup_iters))
             set_actor_trainable(alg.actor, trainable=not frozen)
+            if (not frozen) and (not primed) and hasattr(alg, "mark_unfreeze"):
+                alg.mark_unfreeze(unfreeze_lr)
+                primed = True
+                std0 = getattr(alg, "_unfreeze_std_before", None)
+                msg = f"unfreeze iter={it} lr={float(alg.learning_rate):.3e} actor_std={std0}"
+                _append_line(train_log, msg)
+                log(msg)
+            cur_vals = env.set_curriculum(it)
 
             t0 = time.time()
-            step_rews: list[float] = []
+            step_rew_sum = 0.0
             fall_events = 0.0
-            term_acc: dict[str, list[float]] = {}
-            with torch.inference_mode():
+            term_sum: dict[str, float] = {}
+            n_term = 0
+
+            def _collect() -> None:
+                nonlocal obs, step_rew_sum, fall_events, n_term
                 for _ in range(nsteps):
                     actions = alg.act(obs)
-                    obs, rewards, dones, extras = env.step(actions.to(env.device))
+                    step_in = actions if same_device else actions.to(env.device)
+                    obs, rewards, dones, extras = env.step(step_in)
+                    if not same_device:
+                        obs, rewards, dones = obs.to(device), rewards.to(device), dones.to(device)
                     if cfg.get("check_for_nan", True):
                         check_nan(obs, rewards, dones)
-                    obs, rewards, dones = obs.to(device), rewards.to(device), dones.to(device)
                     alg.process_env_step(obs, rewards, dones, extras)
                     logger.process_env_step(rewards, dones, extras, None)
-                    step_rews.append(float(rewards.mean().item()))
                     elog = extras.get("log") or {}
+                    step_rew_sum += float(elog.get("step_reward", 0.0))
                     fall_events += float(elog.get("Episode_Termination/fell", 0.0)) * nenv
+                    n_term += 1
                     for k, v in elog.items():
-                        term_acc.setdefault(k, []).append(float(v))
+                        term_sum[k] = term_sum.get(k, 0.0) + float(v)
+
+            with torch.inference_mode():
+                if profile_collect and it == start_it:
+                    import cProfile
+                    import pstats
+
+                    prof = cProfile.Profile()
+                    prof.enable()
+                    _collect()
+                    prof.disable()
+                    stats_path = log_dir / "collect.prof"
+                    prof.dump_stats(str(stats_path))
+                    pstats.Stats(prof).sort_stats("cumtime").print_stats(25)
+                    _append_line(train_log, f"cProfile collect dumped {stats_path}")
+                else:
+                    _collect()
                 collect_time = time.time() - t0
                 t1 = time.time()
                 alg.compute_returns(obs)
@@ -624,27 +691,56 @@ def _learn_loop(
                     )
                 _append_line(train_log, "actor_normalizer _mean bit-identical after first iter")
 
-            std = alg.get_policy().output_std
-            std_mean = float(std.mean().item()) if std is not None else float("nan")
+            std = None
+            try:
+                std = alg.get_policy().output_std
+            except (AttributeError, TypeError):
+                std = None
+            if std is not None:
+                std_mean = float(std.mean().item())
+            else:
+                from sim2sim.train.ppo_finetune import _actor_std_mean
+
+                std_mean = float(_actor_std_mean(alg.get_policy()) or float("nan"))
             lr = float(alg.learning_rate)
             fps = (nsteps * nenv) / max(collect_time + learn_time, 1e-9)
             ep_rew = _mean_or_nan(list(logger.rewbuffer))
             ep_len = _mean_or_nan(list(logger.lenbuffer))
-            step_rew = _mean_or_nan(step_rews)
+            step_rew = step_rew_sum / max(n_term, 1)
             faults = int(getattr(env, "faults", 0))
             kl = float(loss_dict.get("kl", getattr(alg, "last_kl", 0.0)) or 0.0)
-            terms = {k: _mean_or_nan(vs) for k, vs in term_acc.items() if k.startswith("Episode_Reward/")}
+            kl_max = float(loss_dict.get("kl_max", kl) or kl)
+            terms = {
+                k: (term_sum[k] / max(n_term, 1))
+                for k in term_sum
+                if k.startswith("Episode_Reward/")
+            }
             term_s = " ".join(f"{k.split('/', 1)[-1]}={v:.4f}" for k, v in terms.items())
+            cur_s = " ".join(f"{k}={v:.4g}" for k, v in cur_vals.items())
+            mb_kl = list(getattr(alg, "minibatch_kl", []) or [])
+            mb_lr = list(getattr(alg, "minibatch_lr", []) or [])
             line = (
                 f"iter={it} fps={fps:.1f} step_rew={step_rew:.4f} ep_rew={ep_rew:.4f} "
                 f"ep_len={ep_len:.2f} falls={fall_events:.1f} faults={faults} "
-                f"lr={lr:.3e} std={std_mean:.4f} kl={kl:.4f} frozen={int(frozen)} "
+                f"lr={lr:.3e} std={std_mean:.4f} kl={kl:.4f} kl_max={kl_max:.4f} "
+                f"frozen={int(frozen)} "
                 f"value={float(loss_dict.get('value', float('nan'))):.4f} "
                 f"surrogate={float(loss_dict.get('surrogate', float('nan'))):.4f} "
                 f"entropy={float(loss_dict.get('entropy', float('nan'))):.4f} {term_s}"
             ).rstrip()
+            if cur_s:
+                line = f"{line} cur[{cur_s}]"
             _append_line(train_log, line)
             log(line)
+            if (not frozen) and mb_kl and it == int(warmup_iters):
+                mb_line = (
+                    f"unfreeze_mb n={len(mb_kl)} kl={['%.4f' % x for x in mb_kl]} "
+                    f"lr={['%.3e' % x for x in mb_lr]} "
+                    f"std_before={getattr(alg, '_unfreeze_std_before', None)} "
+                    f"std_after={getattr(alg, '_unfreeze_std_after', None)}"
+                )
+                _append_line(train_log, mb_line)
+                log(mb_line)
             rec = {
                 "iter": it,
                 "fps": fps,
@@ -656,12 +752,17 @@ def _learn_loop(
                 "lr": lr,
                 "std": std_mean,
                 "kl": kl,
+                "kl_max": kl_max,
                 "frozen": frozen,
                 "collect_s": collect_time,
                 "learn_s": learn_time,
                 "losses": {k: float(v) for k, v in loss_dict.items()},
                 "terms": terms,
+                "curriculum": cur_vals,
             }
+            if mb_kl:
+                rec["minibatch_kl"] = mb_kl
+                rec["minibatch_lr"] = mb_lr
             _append_line(metrics_jsonl, json.dumps(rec))
 
             logger.log(
@@ -681,6 +782,9 @@ def _learn_loop(
                 writer.add_scalar("Train/falls", fall_events, it)
                 writer.add_scalar("Train/faults", float(faults), it)
                 writer.add_scalar("Loss/kl", kl, it)
+                writer.add_scalar("Loss/kl_max", kl_max, it)
+                for ck, cv in cur_vals.items():
+                    writer.add_scalar(f"Curriculum/{ck}", float(cv), it)
 
             if it % save_every == 0:
                 _save(it)
@@ -724,6 +828,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> int:
+    configure_cpu_threads()
     args = parse_args(argv)
     cfg_path = args.config
     if cfg_path is None:

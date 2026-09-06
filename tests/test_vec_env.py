@@ -130,6 +130,22 @@ class TestGodotVecEnv(unittest.TestCase):
         self.assertTrue(env._workers[0].is_alive())
         self.assertFalse(torch.isnan(obs["actor"]).any())
 
+    def test_04_critic_prefix_stays_clean_when_actor_noisy(self) -> None:
+        import torch
+
+        env = self.env
+        prev = env.noise_enabled
+        env.noise_enabled = True
+        try:
+            zeros = torch.zeros(2, 14, dtype=torch.float32)
+            obs, *_ = env.step(zeros)
+            actor = obs["actor"]
+            critic_prefix = obs["critic"][:, :61]
+            delta = (actor - critic_prefix).abs().max().item()
+            self.assertGreater(delta, 1e-4, msg="actor noise leaked into critic 61-D prefix")
+        finally:
+            env.noise_enabled = prev
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

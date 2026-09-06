@@ -7,7 +7,7 @@ import unittest
 
 import numpy as np
 
-from sim2sim.fall import FallCriteria, fallen, tilt_deg
+from sim2sim.fall import FallCriteria, fallen, fallen_mask, tilt_deg
 
 
 def _quat_rx(deg: float) -> np.ndarray:
@@ -40,6 +40,17 @@ class TestFall(unittest.TestCase):
         self.assertFalse(fallen(q69, pos))
         self.assertTrue(fallen(q71, pos))
         self.assertTrue(fallen(_quat_rx(90.0), pos))
+
+    def test_fallen_mask_matches_scalar(self) -> None:
+        from sim2sim.coords import quat_rotate_inverse_wxyz
+
+        down = np.array([0.0, 0.0, -1.0])
+        quats = np.stack([_quat_rx(0.0), _quat_rx(71.0), _quat_rx(0.0)])
+        pos = np.array([[0.0, 0.0, 0.12], [0.0, 0.0, 0.12], [0.0, 0.0, 0.04]])
+        grav = np.stack([quat_rotate_inverse_wxyz(q, down) for q in quats])
+        mask = fallen_mask(grav, pos)
+        expected = np.array([fallen(q, p) for q, p in zip(quats, pos)])
+        np.testing.assert_array_equal(mask, expected)
 
 
 if __name__ == "__main__":

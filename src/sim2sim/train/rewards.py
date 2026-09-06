@@ -59,12 +59,12 @@ class RewardConfig:
     foot_clearance_target: float = 0.02
     foot_swing_height: float = -0.25
     foot_swing_target: float = 0.02
-    action_rate_l2: float = -1.0
+    action_rate_l2: float = -0.1
     foot_slip: float = -0.1
     body_ang_vel: float = -0.05
     head_pose_tracking: float = 2.0
     head_pose_tracking_std: float = 0.5
-    head_pose_bias: float = -3.0
+    head_pose_bias: float = 0.0
     head_pose_bias_tau_s: float = 1.0
     dof_pos_limits: float = -1.0
     scale_by_dt: bool = True
@@ -210,18 +210,20 @@ def foot_clearance(
 
 
 def air_time_reward(
-    first_contact: np.ndarray,
-    last_air_time: np.ndarray,
+    current_air_time: np.ndarray,
     cmd_speed_n: np.ndarray,
     tmin: float = 0.125,
     tmax: float = 0.3,
     cmd_threshold: float = 0.01,
 ) -> np.ndarray:
-    """On touchdown, +1 per foot whose completed air time is in (tmin, tmax), if |cmd|>thr."""
-    fc = np.asarray(first_contact, dtype=bool)
-    air = np.asarray(last_air_time, dtype=np.float32)
+    """mjlab ``feet_air_time``: +1 per foot per step while current air time ∈ (tmin, tmax).
+
+    Source: mjlab 1.3.0 ``mjlab/tasks/velocity/mdp/rewards.py::feet_air_time``.
+    Not a touchdown pulse — that form capped at ~0.005/step and lost to action_rate.
+    """
+    air = np.asarray(current_air_time, dtype=np.float32)
     in_win = (air > float(tmin)) & (air < float(tmax))
-    r = np.sum(fc & in_win, axis=-1).astype(np.float32)
+    r = np.sum(in_win, axis=-1).astype(np.float32)
     spd = np.asarray(cmd_speed_n, dtype=np.float32).reshape(-1)
     r *= (spd > float(cmd_threshold)).astype(np.float32)
     return r
@@ -383,8 +385,7 @@ class RewardComputer:
             "track_ang_vel": track_ang_vel(cmd[:, 2], inp.gyro[:, 2], cfg.track_ang_vel_std2),
             "upright": upright(inp.grav, cfg.upright_std2),
             "air_time": air_time_reward(
-                first,
-                last_air,
+                self.air.air_time,
                 speed,
                 tmin=cfg.air_time_min,
                 tmax=cfg.air_time_max,

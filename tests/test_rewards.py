@@ -42,37 +42,33 @@ class TestTrackingKernels(unittest.TestCase):
 
 
 class TestAirTimeWindow(unittest.TestCase):
-    def test_touchdown_in_window_rewards_when_commanded(self) -> None:
+    def test_in_window_air_time_rewards_each_step(self) -> None:
+        """mjlab feet_air_time: +1/foot/step while current air time is in (tmin, tmax)."""
         tr = AirTimeTracker(num_envs=1, n_feet=2)
         dt = 0.02
-        # Left foot airborne ~0.20 s (in [0.125, 0.3]); right stays in contact.
+        cmd = np.array([0.2], dtype=np.float32)
         contact = np.array([[False, True]])
+        last = 0.0
         for _ in range(10):
             tr.step(contact, dt)
-        first, last_air = tr.step(np.array([[True, True]]), dt)
-        cmd = np.array([0.2], dtype=np.float32)
-        r = air_time_reward(first, last_air, cmd, tmin=0.125, tmax=0.3, cmd_threshold=0.01)
-        self.assertAlmostEqual(float(r[0]), 1.0, places=5)
+            last = float(air_time_reward(tr.air_time, cmd, tmin=0.125, tmax=0.3, cmd_threshold=0.01)[0])
+        # 10 * 0.02 = 0.20 s airborne on the left foot → in (0.125, 0.3).
+        self.assertAlmostEqual(last, 1.0, places=5)
 
-    def test_touchdown_outside_window_is_zero(self) -> None:
+    def test_outside_window_is_zero(self) -> None:
         tr = AirTimeTracker(num_envs=1, n_feet=2)
         dt = 0.02
+        cmd = np.array([0.2], dtype=np.float32)
         contact = np.array([[False, True]])
         for _ in range(2):  # 0.04 s, below 0.125
             tr.step(contact, dt)
-        first, last_air = tr.step(np.array([[True, True]]), dt)
-        r = air_time_reward(
-            first, last_air, np.array([0.2], dtype=np.float32), tmin=0.125, tmax=0.3
-        )
+        r = air_time_reward(tr.air_time, cmd, tmin=0.125, tmax=0.3)
         self.assertAlmostEqual(float(r[0]), 0.0, places=5)
 
         tr.reset([0])
         for _ in range(20):  # 0.40 s, above 0.3
             tr.step(contact, dt)
-        first, last_air = tr.step(np.array([[True, True]]), dt)
-        r = air_time_reward(
-            first, last_air, np.array([0.2], dtype=np.float32), tmin=0.125, tmax=0.3
-        )
+        r = air_time_reward(tr.air_time, cmd, tmin=0.125, tmax=0.3)
         self.assertAlmostEqual(float(r[0]), 0.0, places=5)
 
     def test_standing_command_gates_air_time(self) -> None:
@@ -81,10 +77,7 @@ class TestAirTimeWindow(unittest.TestCase):
         contact = np.array([[False, True]])
         for _ in range(10):
             tr.step(contact, dt)
-        first, last_air = tr.step(np.array([[True, True]]), dt)
-        r = air_time_reward(
-            first, last_air, np.array([0.0], dtype=np.float32), tmin=0.125, tmax=0.3
-        )
+        r = air_time_reward(tr.air_time, np.array([0.0], dtype=np.float32), tmin=0.125, tmax=0.3)
         self.assertAlmostEqual(float(r[0]), 0.0, places=5)
 
 

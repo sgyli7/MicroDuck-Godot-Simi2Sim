@@ -254,14 +254,15 @@ CLI 默认是 5 seeds × 10 s；上表是这次 3×8 s 的数。
 | env | `num_envs: 8`（`--num-envs` 覆盖）、`episode_s: 20`、`headless: true`、`device: cpu`、`recv_timeout_s: 10`、`max_faults_per_step: 8`。yaml `faults_jsonl` 默认 `results/faults.jsonl`；`sim2sim-train` 改写到 run 目录 |
 | reset | `yaw_range: ±π`，`joint_noise_rad: 0.05` |
 | obs_noise | uniform；gyro 0.03 / grav 0.01 / q 0.001 / qd 0.25 |
-| commands | resample 3–8 s；vx ±0.4、vy ±0.3、wz ±1；`standing_frac: 0.25`；`turn_in_place_frac: 0.15` |
+| commands | resample 3–8 s；vx ±0.4、vy ±0.3、wz ±1；`standing_frac` 初值 0.02；`turn_in_place_frac: 0.15` |
+| curriculum | 线性 `[start, end, start_iter, end_iter]`：`standing_frac` 0.02→0.25 @0–1000；`action_rate_l2` −0.1→−1.0 @0–1000；`head_pose_bias` 0→−3 @300–1000（microduck_rl 阶梯表压到 1000 iter） |
 | pushes | 3–6 s 间隔，xy 速度 ≤0.3（`nudge`） |
-| rewards | track_lin/ang、upright、air_time、pose_legs、foot_clearance/swing、action_rate、foot_slip、body_ang_vel、head_pose_*、dof_pos_limits；`scale_by_dt: true` |
+| rewards | track_lin/ang、upright、air_time（mjlab：当前 air_time ∈ (0.125, 0.3) 时每步每脚 +1）、pose_legs、foot_clearance/swing、action_rate、foot_slip、body_ang_vel、head_pose_*、dof_pos_limits；`scale_by_dt: true` |
 | termination | `tilt_deg: 70`，`min_z: 0.055`（与 [`fall.py`](src/sim2sim/fall.py) 相同） |
-| ppo | lr 3e-4 adaptive，`desired_kl: 0.015`，`init_std: 0.18`，`critic_warmup_iters: 100`，MLP `[512,256,128]` ELU，obs_normalization |
+| ppo | lr 3e-4 adaptive，`desired_kl: 0.015`，`init_std: 0.18`，`critic_warmup_iters: 100`，`unfreeze_learning_rate: 3e-5`（清 actor Adam + 第一个 minibatch lr=0），MLP `[512,256,128]` ELU，obs_normalization |
 | train | `samples_per_iter: 2048`，`save_interval: 50`，`max_iterations: 3000`，`log_root: logs/walk_godot` |
 
-相对 microduck_rl 的偏差：`standing_frac` **从 iter 0 就是 0.25**（不是 curriculum 0.02→0.25）；reset 关节噪声 **±0.05**（那边是 0）；head/body command 固定 0；无 `angular_momentum`（lite 没有整机角动量）。
+相对 microduck_rl 的偏差：reset 关节噪声 **±0.05**（那边是 0）；head/body command 固定 0；无 `angular_momentum`（lite 没有整机角动量）。`standing_frac` / `action_rate_l2` / `head_pose_bias` 已对齐源课程表的起止值，只是把阶梯压成线性并在 iter 1000 到终值（那边是 1500–2000）。
 
 ### 入口
 
@@ -286,7 +287,7 @@ worker timeout / crash → 记 `faults.jsonl`、respawn；单步故障数 > `max
 
 ### 吞吐
 
-16 worker、零动作 lite：bench **3200–3700** control steps/s（此前 1328；缩放约 10×/16）。训练含推理 / 奖励 / reset 时约 **1000–1400 samples/s**。冻住的 alpha + `init_std=0.18` 探索噪声，在训练分布里大约每 2–8 s 摔一次（消融：探索噪声为主，随机 command 其次；obs/reset 路径已 bit-identical）。
+16 worker、零动作 lite：bench **3200–3700** control steps/s（此前 1328；缩放约 10×/16）。训练 collect 约 **2700 samples/s**（`torch`/`OMP` 线程钉在 2，避免和钉核 Godot 抢；此前 torch 默认 20 线程时 ~1400）。冻住的 alpha + `init_std=0.18` 探索噪声，在训练分布里大约每 2–8 s 摔一次（消融：探索噪声为主，随机 command 其次；obs/reset 路径已 bit-identical）。
 
 ### A/B（alpha vs Walk_Godot.onnx）
 

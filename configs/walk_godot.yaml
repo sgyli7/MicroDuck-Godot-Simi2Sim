@@ -30,9 +30,24 @@ commands:
   vx: [-0.4, 0.4]
   vy: [-0.3, 0.3]
   wz: [-1.0, 1.0]
-  standing_frac: 0.25
+  standing_frac: 0.02
   turn_in_place_frac: 0.15
   turn_wz: [0.4, 1.0]
+
+# Iteration-linear curriculum. Each term: [start, end, start_iter, end_iter].
+# Source: microduck_rl microduck_velocity_env_cfg.py
+#   standing_envs: 0.02 → 0.25 by iter 2000 (step-staged * 24)
+#   action_rate_l2: -0.1 → -1.0 by iter 1500 (stage-0 weight -0.1)
+#   head_pose_bias: 0 until iter 600, then +1 → +3 by iter 1500
+#     (mjlab weight is positive; the penalty func returns negative. Ours stores
+#     the signed reward weight, so 0 → -3.)
+#   air_time / foot_slip / body_ang_vel / dof_pos_limits are NOT curriculum-driven.
+# Tracking kernel is exp(-err² / std²) with std=sqrt(0.1) → std²=0.1 (already).
+# Scaled so finals land at iter 1000 of a 3000-iter Godot fine-tune (alpha already walks).
+curriculum:
+  standing_frac: [0.02, 0.25, 0, 1000]
+  action_rate_l2: [-0.1, -1.0, 0, 1000]
+  head_pose_bias: [0.0, -3.0, 300, 1000]
 
 pushes:
   enabled: true
@@ -50,18 +65,21 @@ rewards:
   air_time_min: 0.125
   air_time_max: 0.3
   air_time_cmd_threshold: 0.01
+  # mjlab feet_air_time: +1/foot/step while current air time ∈ (tmin, tmax), not on touchdown.
   pose_legs: 1.0
   pose_walking_threshold: 0.01
   foot_clearance: -2.0
   foot_clearance_target: 0.02
   foot_swing_height: -0.25
   foot_swing_target: 0.02
-  action_rate_l2: -1.0
+  # Stage-0 microduck_rl value; curriculum ramps to -1.0 by iter 1000.
+  action_rate_l2: -0.1
   foot_slip: -0.1
   body_ang_vel: -0.05
   head_pose_tracking: 2.0
   head_pose_tracking_std: 0.5
-  head_pose_bias: -3.0
+  # microduck_rl starts at 0 (penalty func is negative); curriculum ramps to -3.
+  head_pose_bias: 0.0
   head_pose_bias_tau_s: 1.0
   dof_pos_limits: -1.0
   scale_by_dt: true
@@ -85,6 +103,9 @@ ppo:
   # local_ppo model_2999.pt ended with per-joint std 0.15-0.23; start inside that band.
   init_std: 0.18
   critic_warmup_iters: 100
+  # First unfrozen PPO step: Adam actor moments are empty after critic warmup, so
+  # a 3e-4 update is ≈lr·sign(g) and KL spikes (~1.6) → adaptive floors at 1e-5.
+  unfreeze_learning_rate: 3.0e-5
   hidden_dims: [512, 256, 128]
   activation: elu
   obs_normalization: true
