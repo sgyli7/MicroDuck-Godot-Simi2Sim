@@ -291,10 +291,34 @@ worker timeout / crash → 记 `faults.jsonl`、respawn；单步故障数 > `max
 
 ### A/B（alpha vs Walk_Godot.onnx）
 
-<!-- TODO: fill from results/eval_walk_godot/report.md -->
+来源：`sim2sim-eval-walk --seeds 3 --seconds 8 --workers 8`，报告 [`results/eval_walk_godot/report.md`](results/eval_walk_godot/report.md)（`results/` gitignore，数字抄在这里）。A = `alpha_walking.onnx`，B = `results/Walk_Godot.onnx`（walk2，iter 3000，从 `model_700.pt` 续训）。72/72 未摔倒。
 
-| 条件 | 主指标 | alpha | Walk_Godot | Δ | wins |
-|---|---|---|---|---|---|
+主指标（1 s 滑动跟踪误差；越小越好）与结算后平均速度：
+
+| 条件 | 主指标 | alpha | Walk_Godot | Δ | wins | B mean_v |
+|---|---|---:|---:|---:|---|---|
+| idle | yaw_drift_deg | 0.45° | 48.8° | +48.4 | 0/3 | vx −0.034，wz +0.094（仍在迈步） |
+| walk_015 | vel_err_1s | 0.150 | **0.107** | −0.043 | 3/3 | vx **+0.044**（alpha 0） |
+| walk_025 | vel_err_1s | **0.125** | 0.164 | +0.038 | 0/3 | vx 0.087 vs alpha 0.130 |
+| run_040 | vel_err_1s | **0.186** | 0.266 | +0.080 | 0/3 | vx 0.134 vs 0.218；但 B yaw 稳（wz −0.08 vs alpha **−0.60**，Δyaw −38° vs −258°） |
+| back_020 | vel_err_1s | 0.200 | **0.097** | −0.103 | 3/3 | vx **−0.104**（alpha 0） |
+| strafe_l | vel_err_1s | 0.184 | **0.159** | −0.025 | 3/3 | |
+| strafe_r | vel_err_1s | 0.200 | **0.165** | −0.035 | 3/3 | |
+| turn_l | yaw_err_1s | 0.796 | **0.053** | −0.743 | 3/3 | wz **+0.847**（cmd +0.8；alpha 0） |
+| turn_r | yaw_err_1s | 0.796 | **0.057** | −0.739 | 3/3 | wz **−0.746**（cmd −0.8；alpha 0） |
+| walk_turn | vel_err_1s | **0.102** | 0.142 | +0.041 | 0/3 | B yaw 更好（0.023 vs 0.253） |
+| walk_push | fell | 0 | 0 | 0 | tie | 两边都不倒 |
+| game_seq | vel_err_1s | **0.158** | 0.191 | +0.033 | 0/3 | B yaw 更好 |
+
+VERDICT: **mixed**（B 主指标 6 胜 / 5 负 / 1 平）。闭环和「确实改善」要分开说：
+
+- 训练闭环已跑通（采样 → 更新 → 存盘 → 续训 → ONNX → play 加载）。
+- Godot 上 **yaw 跟踪是实质改善**：alpha 在 ±0.8 转向指令下 wz≈0，B 跟到 ±0.75–0.85；run 不再以 −0.6 rad/s 自旋。walk_015 / 后退 / 侧移，alpha 几乎不动，B 会动。
+- 代价：idle 停不住（cadence ~1.9 Hz，8 s 漂 49°）；0.25–0.40 m/s 直线跟踪比 alpha 慢。这是 Godot 物理上的新步态，不是 MuJoCo 轨迹复现。
+
+加载：`sim2sim-play --walking results/Walk_Godot.onnx`（或 `policies/Walk_Godot.onnx`）。默认 walking 仍是 `alpha_walking.onnx`。
+
+训练日志：`logs/walk_godot/2026-09-07_03-03-34_walk2/`（从 `…_walk/model_700.pt` resume；iter 1100 之后 falls≈0，air_time≈0.025，kl_max 全程 <0.1）。
 
 ## 目录
 
