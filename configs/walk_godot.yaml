@@ -86,3 +86,17 @@ ppo:
   hidden_dims: [512, 256, 128]
   activation: elu
   obs_normalization: true
+  max_grad_norm: 1.0
+  value_loss_coef: 1.0
+  use_clipped_value_loss: true
+  normalize_advantage_per_mini_batch: false
+  optimizer: adam
+  samples_per_iter: 2048
+  save_interval: 50
+
+train:
+  samples_per_iter: 2048
+  save_interval: 50
+  max_iterations: 3000
+  log_root: logs/walk_godot
+  run_name: walk
