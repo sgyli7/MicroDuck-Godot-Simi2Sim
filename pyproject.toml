@@ -11,6 +11,17 @@ dependencies = [
     "matplotlib>=3.9",
 ]
 
+[project.optional-dependencies]
+# Direct torch pin so [tool.uv.sources] can bind the CUDA index on aarch64
+# (uv applies sources to DIRECT dependencies only).
+train = [
+    "torch==2.9.1",
+    "rsl-rl-lib==5.0.1",
+    "tensorboard",
+    "pyyaml",
+    "onnx>=1.20",
+]
+
 [project.scripts]
 mjcf2godot = "mjcf2godot.convert:main"
 sim2sim-runner = "sim2sim.runner:main"
@@ -19,21 +30,31 @@ sim2sim-compare = "sim2sim.compare:main"
 sim2sim-spikes = "sim2sim.spikes:main"
 sim2sim-play = "sim2sim.play:main"
 sim2sim-kick-gate = "sim2sim.kick_gate:main"
+sim2sim-onnx-import = "sim2sim.train.onnx_import:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+# src layout. The editable install must be a .pth pointing at src/, NOT a copy
+# under site-packages: the previous `force-include` blocks copied the sources,
+# so `uv run` executed a stale snapshot instead of the working tree.
 [tool.hatch.build.targets.wheel]
-packages = ["sim2sim", "mjcf2godot"]
-
-[tool.hatch.build.targets.wheel.force-include]
-"src/sim2sim" = "sim2sim"
-"src/mjcf2godot" = "mjcf2godot"
-
-[tool.hatch.build.targets.editable.force-include]
-"src/sim2sim" = "sim2sim"
-"src/mjcf2godot" = "mjcf2godot"
+packages = ["src/sim2sim", "src/mjcf2godot"]
 
 [tool.uv]
 package = true
+
+[tool.uv.sources]
+# On linux-aarch64 (DGX Spark / GB10) PyPI's torch wheel is CPU-ONLY.
+# Route torch to PyTorch's CUDA index there. Copy of the mjlab-microduck pin:
+# uv applies sources to DIRECT dependencies only, so torch is listed in the
+# `train` extra (not merely pulled in by rsl-rl-lib).
+torch = [
+  { index = "pytorch-cu129", marker = "sys_platform == 'linux' and platform_machine == 'aarch64'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu129"
+url = "https://download.pytorch.org/whl/cu129"
+explicit = true

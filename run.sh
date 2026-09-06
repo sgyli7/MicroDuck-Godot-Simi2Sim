@@ -21,7 +21,9 @@ echo "== godot =="
 "$GODOT" --headless --version
 
 echo "== uv sync =="
-uv sync
+# --inexact: keep an installed `train` extra (torch/rsl_rl) instead of
+# uninstalling it; the gate itself only needs the base deps.
+uv sync --inexact
 
 echo "== convert =="
 uv run mjcf2godot \
