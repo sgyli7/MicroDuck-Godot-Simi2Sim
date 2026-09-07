@@ -358,6 +358,10 @@ Kick 去掉与摆腿对打的 `pose_legs` 和 push。`KickLeft_Godot.onnx` iter 
 
 `KickRight_Godot.onnx` iter 1199，init_check 1.53e-5，export parity 2.05e-5。A/B 5×3 s：alpha 全倒（存活 0.96 s，max_foot_z 0.053）；B 全不倒（存活 3.0 s，max_foot_z 0.079）。同样 **闭环 + Godot 上改善**。报告 `results/skill_godot_eval/kick_right.md`。
 
+Roulade 已导出 `Roulade_Godot.onnx`（iter 1199，init_check 8.1e-6，export parity 1.05e-5）。A/B 5×5 s 跑满（不按 70° 截断）：两边 `fallen` 记录为 1.00（前滚必然过阈值）；|ωy| 积分 17.1→25.1，终态 pose_err_home 0.379→0.526。**闭环跑通**；旋转更多、站回更差，不称改善。报告 `results/skill_godot_eval/roulade.md`。
+
+Roller 首次启动因 walking 脚踝名 `ankle_left` 在轮滑 XML（`ankle_l_v1` / `tire`）上 KeyError。已让 `HomePoseSampler` 识别轮滑支撑体。
+
 ## 目录
 
 ```
