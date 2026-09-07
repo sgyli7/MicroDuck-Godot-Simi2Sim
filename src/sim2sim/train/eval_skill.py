@@ -141,6 +141,9 @@ def _run_episode(
     gyro_y = 0.0
     max_foot_h = 0.0
     fell = False
+    xy0: np.ndarray | None = None
+    xy_last = np.zeros(2, dtype=np.float64)
+    speed_xy_sum = 0.0
     # Sitting / rolling through 70° is the task; do not cut the episode on `fallen`.
     abort_on_fall = kind not in ("sitstand", "roulade")
     try:
@@ -157,6 +160,12 @@ def _run_episode(
             z_hist.append(float(st.base_pos[2]))
             q_hist.append(np.asarray(st.q, dtype=np.float32).copy())
             gyro_y += abs(float(st.base_angvel_local[1])) * dt
+            xy = np.asarray(st.base_pos[:2], dtype=np.float64)
+            if xy0 is None:
+                xy0 = xy.copy()
+            xy_last = xy
+            lv = np.asarray(st.base_linvel[:2], dtype=np.float64)
+            speed_xy_sum += float(np.hypot(lv[0], lv[1]))
             feet = (st.extra or {}).get("feet") or []
             if kick_foot < len(feet):
                 pos = feet[kick_foot].get("pos") or [0, 0, 0]
@@ -170,6 +179,8 @@ def _run_episode(
     z = np.asarray(z_hist, dtype=np.float64) if z_hist else np.array([float("nan")])
     q = np.stack(q_hist) if q_hist else np.zeros((1, 14), dtype=np.float32)
     sit_q = sit_target_q(home)
+    n_obs = max(len(z_hist), 1)
+    xy_disp = float(np.hypot(*(xy_last - xy0))) if xy0 is not None else float("nan")
     out = {
         "fell": bool(fell),
         "sit": bool(sit),
@@ -179,6 +190,8 @@ def _run_episode(
         "final_trunk_z": float(z[-1]),
         "yaw_progress_rad": float(gyro_y),
         "max_foot_z": float(max_foot_h),
+        "xy_disp": xy_disp,
+        "mean_xy_speed": float(speed_xy_sum / n_obs),
         "pose_err_home": float(np.mean(np.abs(q[-1] - home))) if len(q) else float("nan"),
         "pose_err_sit": float(np.mean(np.abs(q[-1] - sit_q))) if len(q) else float("nan"),
         "onnx": str(onnx),
@@ -237,6 +250,8 @@ def eval_skill(spec: dict[str, Any], *, seeds: int, workers: int) -> dict[str, A
             "pose_err_sit": _mean_bool(got, "pose_err_sit"),
             "yaw_progress_rad": _mean_bool(got, "yaw_progress_rad"),
             "max_foot_z": _mean_bool(got, "max_foot_z"),
+            "xy_disp": _mean_bool(got, "xy_disp"),
+            "mean_xy_speed": _mean_bool(got, "mean_xy_speed"),
             "n": len(got),
         }
         if spec["kind"] == "pick":
@@ -292,6 +307,11 @@ def write_report(results: list[dict[str, Any]], path: Path) -> None:
             )
         elif r["kind"] == "kick":
             extra += f"; max_foot_z A={r['A']['max_foot_z']:.3f} B={r['B']['max_foot_z']:.3f}"
+        elif r["kind"] == "roller":
+            extra += (
+                f"; xy_disp A={r['A']['xy_disp']:.3f} B={r['B']['xy_disp']:.3f}"
+                f"; xy_speed A={r['A']['mean_xy_speed']:.3f} B={r['B']['mean_xy_speed']:.3f}"
+            )
         elif r["kind"] == "roulade":
             extra += (
                 f"; yaw_progress A={r['A']['yaw_progress_rad']:.3f} B={r['B']['yaw_progress_rad']:.3f}"
