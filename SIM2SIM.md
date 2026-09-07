@@ -348,6 +348,10 @@ Kick 在 Godot 仍可能倒（plant-foot 已知差异）；策略对球是盲的
 
 Standing 已导出 `Stand_Godot.onnx`（iter 999，全程 falls=0）。Godot A/B 5×10 s idle：两边都不倒；B 更贴 HOME（pose_err 0.031→0.0015），|ωy| 积分 0.065→0.026。闭环跑通，idle 姿态相对 alpha_stand 有改善。报告 `results/skill_godot_eval/standing.md`。
 
+Sitstand 已导出 `Sitstand_Godot.onnx`（iter 1199，init_check 1.00e-5，export parity 1.10e-5，全程 falls=0，终局 step_rew≈0.10）。Godot A/B 6×8 s（3 sit / 3 stand；坐下/前滚不按 70° 截断）：两边都不倒、满时长。坐下终态 z 0.057→0.062（目标 0.060），pose_err_sit 0.071→0.057；站立终态 z 两边 ~0.117，pose_err_home 0.029→0.045（略差）。**闭环跑通**；坐下更贴目标，站立贴 HOME 未优于 alpha。报告 `results/skill_godot_eval/sitstand.md`。
+
+`sim2sim-eval-skill` 对 sitstand / roulade 跑满时长（训练同样关 fallen 终止），并拆 sit/stand 的 z 与 pose 误差。
+
 ## 目录
 
 ```

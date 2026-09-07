@@ -156,6 +156,40 @@ class TestSkillYamlsLoad(unittest.TestCase):
             self.assertIn(mode, VALID_MODES)
 
 
+class TestEvalReport(unittest.TestCase):
+    def test_sitstand_notes_split_pose(self) -> None:
+        from sim2sim.train.eval_skill import write_report
+
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "sit.md"
+            write_report(
+                [
+                    {
+                        "name": "sitstand",
+                        "kind": "sitstand",
+                        "A": {
+                            "fell_rate": 0.0,
+                            "mean_trunk_z": 0.09,
+                            "sit": {"final_trunk_z": 0.057, "pose_err_sit": 0.071},
+                            "stand": {"final_trunk_z": 0.116, "pose_err_home": 0.029},
+                        },
+                        "B": {
+                            "fell_rate": 0.0,
+                            "mean_trunk_z": 0.09,
+                            "sit": {"final_trunk_z": 0.062, "pose_err_sit": 0.057},
+                            "stand": {"final_trunk_z": 0.117, "pose_err_home": 0.045},
+                        },
+                        "b_fewer_falls": True,
+                    }
+                ],
+                path,
+            )
+            text = path.read_text()
+            self.assertIn("pose_sit", text)
+            self.assertIn("stand_z", text)
+            self.assertIn("0.062", text)
+
+
 class TestPlayPrefersGodot(unittest.TestCase):
     def test_prefer_helper_falls_back(self) -> None:
         from sim2sim.play import _prefer

@@ -141,6 +141,8 @@ def _run_episode(
     gyro_y = 0.0
     max_foot_h = 0.0
     fell = False
+    # Sitting / rolling through 70° is the task; do not cut the episode on `fallen`.
+    abort_on_fall = kind not in ("sitstand", "roulade")
     try:
         st = backend.reset(ctrl=home, bodies=poses)
         n = int(round(seconds / dt))
@@ -161,7 +163,8 @@ def _run_episode(
                 max_foot_h = max(max_foot_h, float(pos[2]))
             if fallen(st.base_quat_wxyz, st.base_pos):
                 fell = True
-                break
+                if abort_on_fall:
+                    break
     finally:
         backend.close()
     z = np.asarray(z_hist, dtype=np.float64) if z_hist else np.array([float("nan")])
@@ -169,9 +172,11 @@ def _run_episode(
     sit_q = sit_target_q(home)
     out = {
         "fell": bool(fell),
+        "sit": bool(sit),
         "survival_s": float(len(z_hist) * dt),
         "mean_trunk_z": float(np.nanmean(z)),
         "min_trunk_z": float(np.nanmin(z)),
+        "final_trunk_z": float(z[-1]),
         "yaw_progress_rad": float(gyro_y),
         "max_foot_z": float(max_foot_h),
         "pose_err_home": float(np.mean(np.abs(q[-1] - home))) if len(q) else float("nan"),
@@ -236,6 +241,22 @@ def eval_skill(spec: dict[str, Any], *, seeds: int, workers: int) -> dict[str, A
         }
         if spec["kind"] == "pick":
             report[lab]["approach_min_z"] = _mean_bool(got, "approach_min_z")
+        if spec["kind"] == "sitstand":
+            sit_rows = [r for r in got if r.get("sit")]
+            stand_rows = [r for r in got if not r.get("sit")]
+            report[lab]["sit"] = {
+                "n": len(sit_rows),
+                "mean_trunk_z": _mean_bool(sit_rows, "mean_trunk_z"),
+                "final_trunk_z": _mean_bool(sit_rows, "final_trunk_z"),
+                "pose_err_sit": _mean_bool(sit_rows, "pose_err_sit"),
+            }
+            report[lab]["stand"] = {
+                "n": len(stand_rows),
+                "mean_trunk_z": _mean_bool(stand_rows, "mean_trunk_z"),
+                "final_trunk_z": _mean_bool(stand_rows, "final_trunk_z"),
+                "pose_err_home": _mean_bool(stand_rows, "pose_err_home"),
+                "fell_rate": _mean_bool(stand_rows, "fell"),
+            }
     a_fell, b_fell = report["A"]["fell_rate"], report["B"]["fell_rate"]
     report["b_fewer_falls"] = bool(b_fell <= a_fell)
     return report
@@ -255,6 +276,25 @@ def write_report(results: list[dict[str, Any]], path: Path) -> None:
             extra += (
                 f"; pose_home A={r['A']['pose_err_home']:.3f} B={r['B']['pose_err_home']:.3f}"
                 f"; |ωy|dt A={r['A']['yaw_progress_rad']:.3f} B={r['B']['yaw_progress_rad']:.3f}"
+            )
+        elif r["kind"] == "sitstand" and "sit" in r["A"] and "sit" in r["B"]:
+            extra += (
+                f"; sit_z A={r['A']['sit']['final_trunk_z']:.3f} B={r['B']['sit']['final_trunk_z']:.3f}"
+                f"; pose_sit A={r['A']['sit']['pose_err_sit']:.3f} B={r['B']['sit']['pose_err_sit']:.3f}"
+                f"; stand_z A={r['A']['stand']['final_trunk_z']:.3f} B={r['B']['stand']['final_trunk_z']:.3f}"
+                f"; pose_home A={r['A']['stand']['pose_err_home']:.3f} B={r['B']['stand']['pose_err_home']:.3f}"
+            )
+        elif r["kind"] == "pick":
+            extra += (
+                f"; approach_min_z A={r['A'].get('approach_min_z', float('nan')):.3f}"
+                f" B={r['B'].get('approach_min_z', float('nan')):.3f}"
+            )
+        elif r["kind"] == "kick":
+            extra += f"; max_foot_z A={r['A']['max_foot_z']:.3f} B={r['B']['max_foot_z']:.3f}"
+        elif r["kind"] == "roulade":
+            extra += (
+                f"; yaw_progress A={r['A']['yaw_progress_rad']:.3f} B={r['B']['yaw_progress_rad']:.3f}"
+                f"; pose_home A={r['A']['pose_err_home']:.3f} B={r['B']['pose_err_home']:.3f}"
             )
         lines.append(
             f"| {r['name']} | {r['A']['fell_rate']:.2f} | {r['B']['fell_rate']:.2f} | "
