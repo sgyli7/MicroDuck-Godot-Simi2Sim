@@ -37,7 +37,7 @@ pushes:
 rewards:
   track_lin_vel: 0.5
   track_ang_vel: 0.5
-  upright: 1.5
+  upright: 0.8
   air_time: 0.0
   pose_legs: 0.0
   foot_clearance: 0.0
@@ -49,8 +49,11 @@ rewards:
   head_pose_bias: 0.0
   dof_pos_limits: -1.0
   mouth_proximity: 4.0
-  mouth_std: 0.03
+  mouth_std: 0.08
   pick_return: 2.0
+  approach_height: 3.0
+  approach_z: 0.075
+  approach_z_std: 0.04
   posture_pose_std: 0.15
   scale_by_dt: true
 

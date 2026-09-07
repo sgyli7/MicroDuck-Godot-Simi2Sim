@@ -128,8 +128,24 @@ class TestSkillRewards(unittest.TestCase):
         )
         total, terms = rew.compute(inp)
         self.assertEqual(total.shape, (n,))
-        for name in ("posture_pose", "mouth_proximity", "kick_swing", "roulade_progress"):
+        for name in (
+            "posture_pose",
+            "mouth_proximity",
+            "approach_height",
+            "kick_swing",
+            "roulade_progress",
+        ):
             self.assertTrue(np.allclose(terms[name], 0.0))
+
+    def test_approach_height_pays_on_crouch_phase(self) -> None:
+        from sim2sim.train.rewards import approach_height
+
+        z = np.array([0.075, 0.075, 0.115], dtype=np.float32)
+        phase = np.array([0.25, 0.75, 0.25], dtype=np.float32)
+        got = approach_height(z, phase)
+        self.assertGreater(float(got[0]), 0.95)
+        self.assertEqual(float(got[1]), 0.0)
+        self.assertLess(float(got[2]), 0.5)
 
 
 class TestSkillYamlsLoad(unittest.TestCase):

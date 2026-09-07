@@ -352,6 +352,10 @@ Sitstand 已导出 `Sitstand_Godot.onnx`（iter 1199，init_check 1.00e-5，expo
 
 `sim2sim-eval-skill` 对 sitstand / roulade 跑满时长（训练同样关 fallen 终止），并拆 sit/stand 的 z 与 pose 误差。
 
+Ground-pick 第一遍（iter 999，export parity 8.6e-6，终局 falls=0）闭环跑通，但任务退化：A/B 5×4 s 两边不倒，`approach_min_z` 0.084→0.112（B 几乎不再低头）。`mouth_proximity` 在站立高度下是尖高斯（std=0.03），PPO 只优化了站稳 + `pick_return`。已加 dense `approach_height`（躯干 z→0.075）并放宽 `mouth_std=0.08`，删除第一遍 ONNX 后重训。Kick 去掉与摆腿对打的 `pose_legs` 和 push。
+
+报告：`results/skill_godot_eval/ground_pick.md`（第一遍）。
+
 ## 目录
 
 ```

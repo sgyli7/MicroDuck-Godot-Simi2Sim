@@ -40,6 +40,7 @@ TERM_NAMES: tuple[str, ...] = (
     "posture_height",
     "mouth_proximity",
     "pick_return",
+    "approach_height",
     "kick_swing",
     "roulade_progress",
     "roulade_land",
@@ -97,6 +98,9 @@ class RewardConfig:
     mouth_proximity: float = 0.0
     mouth_std: float = 0.03
     pick_return: float = 0.0
+    approach_height: float = 0.0
+    approach_z: float = 0.075
+    approach_z_std: float = 0.04
     kick_swing: float = 0.0
     kick_window_s: float = 1.2
     kick_foot: str = "right"
@@ -205,6 +209,20 @@ def mouth_proximity(mouth_z: np.ndarray, phase: np.ndarray, std: float = 0.03) -
     approach = (ph < 0.5).astype(np.float32)
     prox = np.exp(-((z / float(std)) ** 2)).astype(np.float32)
     prox = np.where(np.isfinite(z), prox, 0.0)
+    return (prox * approach).astype(np.float32)
+
+
+def approach_height(
+    base_z: np.ndarray,
+    phase: np.ndarray,
+    target: float = 0.075,
+    std: float = 0.04,
+) -> np.ndarray:
+    """Dense crouch during pick approach (phase < 0.5). Mouth gaussian is too sharp at stand z."""
+    z = np.asarray(base_z, dtype=np.float32).reshape(-1)
+    ph = np.asarray(phase, dtype=np.float32).reshape(-1)
+    approach = (ph < 0.5).astype(np.float32)
+    prox = np.exp(-(((z - float(target)) / float(std)) ** 2)).astype(np.float32)
     return (prox * approach).astype(np.float32)
 
 
@@ -595,6 +613,11 @@ class RewardComputer:
                 else z_n,
                 "pick_return": pick_return_pose(q, home, phase, std=cfg.posture_pose_std)
                 if cfg.pick_return
+                else z_n,
+                "approach_height": approach_height(
+                    base_z, phase, target=cfg.approach_z, std=cfg.approach_z_std
+                )
+                if cfg.approach_height
                 else z_n,
                 "kick_swing": kick_swing_reward(
                     inp.foot_height,
