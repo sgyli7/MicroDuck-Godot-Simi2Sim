@@ -352,7 +352,9 @@ Sitstand 已导出 `Sitstand_Godot.onnx`（iter 1199，init_check 1.00e-5，expo
 
 `sim2sim-eval-skill` 对 sitstand / roulade 跑满时长（训练同样关 fallen 终止），并拆 sit/stand 的 z 与 pose 误差。
 
-Ground-pick 第一遍（iter 999）闭环但任务退化：`approach_min_z` 0.084→0.112。已加 dense `approach_height` 并放宽 `mouth_std=0.08` 后重训。第二遍 iter 999，export parity 8.6e-6，终局 `approach_height≈0.03`、`mouth_proximity≈0.029`、falls=0。A/B 5×4 s：两边不倒；低头更深（approach_min_z 0.084→0.069，目标 0.075）；终态 pose_err_home 0.043→0.632（回站差）。**闭环跑通**；接近地面有改善，收回 HOME 未改善。报告 `results/skill_godot_eval/ground_pick.md`。Kick 去掉与摆腿对打的 `pose_legs` 和 push。
+Ground-pick 第一遍（iter 999）闭环但任务退化：`approach_min_z` 0.084→0.112。已加 dense `approach_height` 并放宽 `mouth_std=0.08` 后重训。第二遍 iter 999，export parity 8.6e-6，终局 `approach_height≈0.03`、`mouth_proximity≈0.029`、falls=0。A/B 5×4 s：两边不倒；低头更深（approach_min_z 0.084→0.069，目标 0.075）；终态 pose_err_home 0.043→0.632（回站差）。**闭环跑通**；接近地面有改善，收回 HOME 未改善。报告 `results/skill_godot_eval/ground_pick.md`。
+
+Kick 去掉与摆腿对打的 `pose_legs` 和 push。`KickLeft_Godot.onnx` iter 1199，init_check 1.91e-5，export parity 2.67e-5，终局 falls=0、kick_swing 仍在出分。A/B 5×3 s：alpha 全倒（fell 1.00，存活 0.76 s，max_foot_z 0.037）；B 全不倒（存活 3.0 s，max_foot_z 0.054）。**闭环跑通，且相对 factory 在 Godot 上明显改善**（站稳 + 更高摆腿）。报告 `results/skill_godot_eval/kick_left.md`。
 
 ## 目录
 
