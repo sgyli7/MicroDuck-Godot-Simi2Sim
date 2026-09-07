@@ -288,6 +288,7 @@ def write_report(results: list[dict[str, Any]], path: Path) -> None:
             extra += (
                 f"; approach_min_z A={r['A'].get('approach_min_z', float('nan')):.3f}"
                 f" B={r['B'].get('approach_min_z', float('nan')):.3f}"
+                f"; pose_home A={r['A']['pose_err_home']:.3f} B={r['B']['pose_err_home']:.3f}"
             )
         elif r["kind"] == "kick":
             extra += f"; max_foot_z A={r['A']['max_foot_z']:.3f} B={r['B']['max_foot_z']:.3f}"
