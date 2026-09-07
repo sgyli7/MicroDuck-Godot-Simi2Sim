@@ -148,7 +148,7 @@ def _run_episode(
             t = i * dt
             cmd = _cmd_for(kind, t, seconds, sit=sit)
             obs = build_obs(st, last, cmd, home)
-            act = policy.act(obs)
+            act = policy.infer(obs)
             ctrl = home + act * scale
             st = backend.step(ctrl, n_substeps=decimation, report="lite")
             last = act
@@ -250,10 +250,16 @@ def write_report(results: list[dict[str, Any]], path: Path) -> None:
         if r.get("skip"):
             lines.append(f"| {r['name']} | — | — | — | — | — | {r['skip']} |")
             continue
+        extra = f"kind={r['kind']}"
+        if r["kind"] == "idle":
+            extra += (
+                f"; pose_home A={r['A']['pose_err_home']:.3f} B={r['B']['pose_err_home']:.3f}"
+                f"; |ωy|dt A={r['A']['yaw_progress_rad']:.3f} B={r['B']['yaw_progress_rad']:.3f}"
+            )
         lines.append(
             f"| {r['name']} | {r['A']['fell_rate']:.2f} | {r['B']['fell_rate']:.2f} | "
             f"{r['A']['mean_trunk_z']:.3f} | {r['B']['mean_trunk_z']:.3f} | "
-            f"{'yes' if r['b_fewer_falls'] else 'no'} | kind={r['kind']} |"
+            f"{'yes' if r['b_fewer_falls'] else 'no'} | {extra} |"
         )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     path.with_suffix(".json").write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")

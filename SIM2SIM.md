@@ -346,6 +346,8 @@ uv run --no-sync sim2sim-play --roller
 
 Kick 在 Godot 仍可能倒（plant-foot 已知差异）；策略对球是盲的，微调用摆腿+站稳，不生成球。sitstand / roulade 关掉 fallen 终止（坐下和前滚本来就会过 70° / 低 z）。
 
+Standing 已导出 `Stand_Godot.onnx`（iter 999，全程 falls=0）。Godot A/B 5×10 s idle：两边都不倒；B 更贴 HOME（pose_err 0.031→0.0015），|ωy| 积分 0.065→0.026。闭环跑通，idle 姿态相对 alpha_stand 有改善。报告 `results/skill_godot_eval/standing.md`。
+
 ## 目录
 
 ```
