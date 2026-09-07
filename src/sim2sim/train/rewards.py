@@ -36,7 +36,28 @@ TERM_NAMES: tuple[str, ...] = (
     "head_pose_tracking",
     "head_pose_bias",
     "dof_pos_limits",
+    "posture_pose",
+    "posture_height",
+    "mouth_proximity",
+    "pick_return",
+    "kick_swing",
+    "roulade_progress",
+    "roulade_land",
 )
+
+# sitstand SITTING_TARGET_OVERRIDES on HOME (microduck_sitstand_env_cfg.py).
+SIT_JOINT_OVERRIDES: dict[int, float] = {
+    1: 0.0,
+    2: -0.4079,
+    3: 1.35,
+    4: 0.0,
+    10: 0.0,
+    11: 0.4079,
+    12: -1.35,
+    13: 0.0,
+}
+SIT_Z = 0.060
+STAND_Z = 0.115
 
 
 @dataclass
@@ -67,6 +88,22 @@ class RewardConfig:
     head_pose_bias: float = 0.0
     head_pose_bias_tau_s: float = 1.0
     dof_pos_limits: float = -1.0
+    posture_pose: float = 0.0
+    posture_pose_std: float = 0.15
+    posture_height: float = 0.0
+    posture_height_std: float = 0.03
+    sit_z: float = SIT_Z
+    stand_z: float = STAND_Z
+    mouth_proximity: float = 0.0
+    mouth_std: float = 0.03
+    pick_return: float = 0.0
+    kick_swing: float = 0.0
+    kick_window_s: float = 1.2
+    kick_foot: str = "right"
+    roulade_progress: float = 0.0
+    roulade_land: float = 0.0
+    roulade_complete_rad: float = 4.5
+    roulade_rate_cap: float = 3.0
     scale_by_dt: bool = True
 
     @classmethod
@@ -117,6 +154,88 @@ def world_to_yaw_frame(quat: np.ndarray, v_world: np.ndarray) -> np.ndarray:
     bx = c * v[:, 0] + s * v[:, 1]
     by = -s * v[:, 0] + c * v[:, 1]
     return np.stack([bx, by, v[:, 2]], axis=-1).astype(np.float32)
+
+
+def sit_target_q(home: np.ndarray) -> np.ndarray:
+    q = np.asarray(home, dtype=np.float32).reshape(14).copy()
+    for idx, val in SIT_JOINT_OVERRIDES.items():
+        q[idx] = float(val)
+    return q
+
+
+def pick_phase_from_cmd(cmd13: np.ndarray) -> np.ndarray:
+    c = np.asarray(cmd13, dtype=np.float32).reshape(-1, 13)
+    ph = np.arctan2(c[:, 1], c[:, 0]) / (2.0 * np.pi)
+    return np.mod(ph, 1.0).astype(np.float32)
+
+
+def posture_pose(
+    q: np.ndarray,
+    home: np.ndarray,
+    sit_q: np.ndarray,
+    sit_flag: np.ndarray,
+    std: float = 0.15,
+) -> np.ndarray:
+    q = np.asarray(q, dtype=np.float32).reshape(-1, 14)
+    home = np.asarray(home, dtype=np.float32).reshape(14)
+    sit_q = np.asarray(sit_q, dtype=np.float32).reshape(14)
+    w = np.clip(np.asarray(sit_flag, dtype=np.float32).reshape(-1), 0.0, 1.0)[:, None]
+    target = w * sit_q[None, :] + (1.0 - w) * home[None, :]
+    err = q[:, LEG_JOINT_IDX] - target[:, LEG_JOINT_IDX]
+    z = np.mean((err * err) / (float(std) ** 2), axis=1)
+    return np.exp(-z).astype(np.float32)
+
+
+def posture_height(
+    z: np.ndarray,
+    sit_flag: np.ndarray,
+    sit_z: float = SIT_Z,
+    stand_z: float = STAND_Z,
+    std: float = 0.03,
+) -> np.ndarray:
+    w = np.clip(np.asarray(sit_flag, dtype=np.float32).reshape(-1), 0.0, 1.0)
+    tgt = w * float(sit_z) + (1.0 - w) * float(stand_z)
+    d = np.asarray(z, dtype=np.float32).reshape(-1) - tgt
+    return np.exp(-((d / float(std)) ** 2)).astype(np.float32)
+
+
+def mouth_proximity(mouth_z: np.ndarray, phase: np.ndarray, std: float = 0.03) -> np.ndarray:
+    z = np.asarray(mouth_z, dtype=np.float32).reshape(-1)
+    ph = np.asarray(phase, dtype=np.float32).reshape(-1)
+    approach = (ph < 0.5).astype(np.float32)
+    prox = np.exp(-((z / float(std)) ** 2)).astype(np.float32)
+    prox = np.where(np.isfinite(z), prox, 0.0)
+    return (prox * approach).astype(np.float32)
+
+
+def pick_return_pose(
+    q: np.ndarray,
+    home: np.ndarray,
+    phase: np.ndarray,
+    std: float = 0.15,
+) -> np.ndarray:
+    q = np.asarray(q, dtype=np.float32).reshape(-1, 14)
+    home = np.asarray(home, dtype=np.float32).reshape(14)
+    ret = (np.asarray(phase, dtype=np.float32).reshape(-1) >= 0.5).astype(np.float32)
+    err = q[:, LEG_JOINT_IDX] - home[LEG_JOINT_IDX]
+    z = np.mean((err * err) / (float(std) ** 2), axis=1)
+    return (np.exp(-z) * ret).astype(np.float32)
+
+
+def kick_swing_reward(
+    foot_height: np.ndarray,
+    foot_xy_speed: np.ndarray,
+    ep_t: np.ndarray,
+    *,
+    foot: str = "right",
+    window_s: float = 1.2,
+) -> np.ndarray:
+    h = np.asarray(foot_height, dtype=np.float32).reshape(-1, 2)
+    v = np.asarray(foot_xy_speed, dtype=np.float32).reshape(-1, 2)
+    t = np.asarray(ep_t, dtype=np.float32).reshape(-1)
+    idx = 0 if str(foot) == "left" else 1
+    gate = (t < float(window_s)).astype(np.float32)
+    return ((np.maximum(h[:, idx], 0.0) + v[:, idx]) * gate).astype(np.float32)
 
 
 def cmd_speed(cmd13: np.ndarray) -> np.ndarray:
@@ -319,6 +438,9 @@ class RewardInputs:
     joint_lo: np.ndarray
     joint_hi: np.ndarray
     home: np.ndarray
+    base_z: np.ndarray | None = None
+    mouth_z: np.ndarray | None = None
+    ep_t: np.ndarray | None = None
 
 
 class RewardComputer:
@@ -344,6 +466,9 @@ class RewardComputer:
             self.num_envs, tau_s=cfg.head_pose_bias_tau_s, dt=self.dt
         )
         self.swing = SwingPeakTracker(self.num_envs)
+        self.sit_q = sit_target_q(self.home)
+        self.pitch_acc = np.zeros(self.num_envs, dtype=np.float32)
+        self.pitch_max = np.zeros(self.num_envs, dtype=np.float32)
         self.episode_sums = {n: np.zeros(self.num_envs, dtype=np.float32) for n in TERM_NAMES}
 
     def reset(self, env_ids: np.ndarray | list[int]) -> dict[str, float]:
@@ -356,6 +481,8 @@ class RewardComputer:
             self.air.reset(ids)
             self.bias.reset(ids)
             self.swing.reset(ids)
+            self.pitch_acc[ids] = 0.0
+            self.pitch_max[ids] = 0.0
         return extras
 
     def zero_sums(self, env_ids: np.ndarray | list[int]) -> None:
@@ -366,6 +493,8 @@ class RewardComputer:
             self.air.reset(ids)
             self.bias.reset(ids)
             self.swing.reset(ids)
+            self.pitch_acc[ids] = 0.0
+            self.pitch_max[ids] = 0.0
 
     def compute(self, inp: RewardInputs) -> tuple[np.ndarray, dict[str, np.ndarray]]:
         cfg = self.cfg
@@ -418,6 +547,68 @@ class RewardComputer:
             "head_pose_bias": self.bias.step(head_err),
             "dof_pos_limits": dof_pos_limits(q, self.joint_lo, self.joint_hi),
         }
+        z_n = np.zeros(n, dtype=np.float32)
+        phase = pick_phase_from_cmd(cmd) if (cfg.mouth_proximity or cfg.pick_return) else z_n
+        mouth = (
+            np.asarray(inp.mouth_z, dtype=np.float32).reshape(-1)
+            if inp.mouth_z is not None
+            else np.full(n, np.nan, dtype=np.float32)
+        )
+        base_z = (
+            np.asarray(inp.base_z, dtype=np.float32).reshape(-1)
+            if inp.base_z is not None
+            else z_n
+        )
+        ep_t = (
+            np.asarray(inp.ep_t, dtype=np.float32).reshape(-1)
+            if inp.ep_t is not None
+            else z_n
+        )
+        gyro = np.asarray(inp.gyro, dtype=np.float32).reshape(n, 3)
+        self.pitch_acc = self.pitch_acc + gyro[:, 1] * self.dt
+        cur = np.abs(self.pitch_acc)
+        progress = np.maximum(cur - self.pitch_max, 0.0)
+        cap = float(cfg.roulade_rate_cap) * self.dt
+        progress = np.minimum(progress, cap)
+        self.pitch_max = np.maximum(self.pitch_max, cur)
+        land = (self.pitch_max >= float(cfg.roulade_complete_rad)).astype(np.float32) * raw[
+            "upright"
+        ]
+        raw.update(
+            {
+                "posture_pose": posture_pose(
+                    q, home, self.sit_q, cmd[:, 0], std=cfg.posture_pose_std
+                )
+                if cfg.posture_pose
+                else z_n,
+                "posture_height": posture_height(
+                    base_z,
+                    cmd[:, 0],
+                    sit_z=cfg.sit_z,
+                    stand_z=cfg.stand_z,
+                    std=cfg.posture_height_std,
+                )
+                if cfg.posture_height
+                else z_n,
+                "mouth_proximity": mouth_proximity(mouth, phase, std=cfg.mouth_std)
+                if cfg.mouth_proximity
+                else z_n,
+                "pick_return": pick_return_pose(q, home, phase, std=cfg.posture_pose_std)
+                if cfg.pick_return
+                else z_n,
+                "kick_swing": kick_swing_reward(
+                    inp.foot_height,
+                    inp.foot_xy_speed,
+                    ep_t,
+                    foot=cfg.kick_foot,
+                    window_s=cfg.kick_window_s,
+                )
+                if cfg.kick_swing
+                else z_n,
+                "roulade_progress": progress if cfg.roulade_progress else z_n,
+                "roulade_land": land if cfg.roulade_land else z_n,
+            }
+        )
 
         scale = self.dt if cfg.scale_by_dt else 1.0
         total = np.zeros(n, dtype=np.float32)

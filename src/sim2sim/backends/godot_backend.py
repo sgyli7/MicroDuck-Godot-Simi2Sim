@@ -155,6 +155,8 @@ class GodotBackend:
         extra: dict = {"inertial_pos": pos_i, "inertial_quat": quat_i, "raw": msg}
         if "feet" in msg:
             extra["feet"] = msg["feet"]
+        if "bodies" in msg:
+            extra["bodies"] = msg["bodies"]
         return SimState(
             t=float(msg.get("t", 0.0)),
             q=q,

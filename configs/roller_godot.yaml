@@ -1,0 +1,107 @@
+# Godot/Jolt roller skating. Play twist: vx coast/push/brake, no strafe.
+robot: ${SIM2SIM_ROOT}/robots/microduck_roller.json
+num_envs: 16
+episode_s: 16
+headless: true
+seed: 0
+device: cpu
+recv_timeout_s: 10.0
+spawn_stagger_s: 0.05
+max_faults_per_step: 8
+init_onnx: ${MICRODUCK_POLICIES}/roller.onnx
+
+reset:
+  yaw_range: [-3.141592653589793, 3.141592653589793]
+  joint_noise_rad: 0.04
+
+obs_noise:
+  enabled: true
+  kind: uniform
+  gyro: 0.03
+  grav: 0.01
+  q: 0.001
+  qd: 0.25
+
+commands:
+  mode: twist
+  resample_s: [3.0, 8.0]
+  vx: [-0.5, 0.6]
+  vy: [0.0, 0.0]
+  wz: [-1.0, 1.0]
+  standing_frac: 0.1
+  turn_in_place_frac: 0.15
+  turn_wz: [0.4, 1.0]
+
+curriculum:
+  standing_frac: [0.1, 0.2, 0, 800]
+  action_rate_l2: [-0.1, -0.8, 0, 800]
+
+pushes:
+  enabled: true
+  interval_s: [3.0, 6.0]
+  xy_speed: 0.2
+
+rewards:
+  track_lin_vel: 2.5
+  track_lin_vel_std2: 0.1
+  track_ang_vel: 2.0
+  track_ang_vel_std2: 0.5
+  upright: 2.0
+  upright_std2: 0.05
+  air_time: 0.0
+  pose_legs: 1.0
+  pose_walking_threshold: 0.01
+  foot_clearance: 0.0
+  foot_swing_height: 0.0
+  action_rate_l2: -0.1
+  foot_slip: 0.0
+  body_ang_vel: -0.05
+  head_pose_tracking: 1.0
+  head_pose_tracking_std: 0.5
+  head_pose_bias: 0.0
+  dof_pos_limits: -1.0
+  scale_by_dt: true
+
+termination:
+  fallen: true
+  tilt_deg: 70.0
+  min_z: 0.055
+
+ppo:
+  learning_rate: 3.0e-4
+  schedule: adaptive
+  desired_kl: 0.015
+  entropy_coef: 0.001
+  clip_param: 0.2
+  gamma: 0.99
+  lam: 0.95
+  num_learning_epochs: 5
+  num_mini_batches: 4
+  init_std: 0.18
+  critic_warmup_iters: 80
+  unfreeze_learning_rate: 3.0e-5
+  hidden_dims: [512, 256, 128]
+  activation: elu
+  obs_normalization: true
+  max_grad_norm: 1.0
+  value_loss_coef: 1.0
+  use_clipped_value_loss: true
+  normalize_advantage_per_mini_batch: false
+  optimizer: adam
+  samples_per_iter: 2048
+  save_interval: 50
+
+train:
+  samples_per_iter: 2048
+  save_interval: 50
+  max_iterations: 1500
+  log_root: logs/roller_godot
+  run_name: roller
+
+export:
+  onnx: ${MICRODUCK_POLICIES}/Roller_Godot.onnx
+  name: roller_godot
+  kind: perpetual
+  slot: roller
+  use_stand_policy: true
+  description: Godot/Jolt fine-tuned roller skating (sim2sim).

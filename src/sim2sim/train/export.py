@@ -106,6 +106,10 @@ def export_actor(
     use_stand_policy: bool = True,
     description: str = DEFAULT_DESCRIPTION,
     n_parity: int = 10000,
+    name: str = "walk_godot",
+    kind: str = "perpetual",
+    slot: str = "walk",
+    command: dict | None = None,
 ) -> dict[str, Any]:
     """Build rsl_rl `_OnnxMLPModel` (normalizer folded in, deterministic mean), export, sidecar, parity."""
     import torch
@@ -151,6 +155,10 @@ def export_actor(
         twist_limits=limits,
         use_stand_policy=use_stand_policy,
         description=description,
+        name=name,
+        kind=kind,
+        slot=slot,
+        command=command,
     )
     write_manifest(sidecar_path(out), man)
     err = verify_parity(actor, out, n=n_parity, seed=0)
@@ -158,7 +166,32 @@ def export_actor(
     print(f"sidecar {sidecar_path(out)}")
     print(f"parity_max_abs_err={err:.6e}")
     PolicyBundle(out).check_dims(14)
+    published = publish_to_repo_policies(out)
+    if published:
+        print("published " + ", ".join(str(p) for p in published))
     return {"parity_max_abs_err": err, "out": str(out), "manifest": man}
+
+
+def publish_to_repo_policies(onnx_path: Path | str) -> list[Path]:
+    """Copy ONNX + sidecar into ``<sim2sim>/policies`` so default play finds them."""
+    import shutil
+
+    src = Path(onnx_path)
+    dest_dir = sim2sim_root() / "policies"
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    copied: list[Path] = []
+    for p in (src, sidecar_path(src)):
+        if not p.is_file():
+            continue
+        dest = dest_dir / p.name
+        try:
+            if dest.resolve() == p.resolve():
+                continue
+        except OSError:
+            pass
+        shutil.copy2(p, dest)
+        copied.append(dest)
+    return copied
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -86,6 +86,19 @@ class TestOnnxImportAlpha(unittest.TestCase):
         err = verify_parity(rec, ALPHA_ONNX, n=10000, seed=0)
         self.assertLess(err, 1e-5, f"alpha_walking parity max_abs_err={err}")
 
+    @unittest.skipIf(_SKIP_ALPHA, "alpha_walking.onnx or train extra missing")
+    def test_zero_variance_std_is_clamped(self) -> None:
+        from sim2sim.train.onnx_import import PARITY_FAIL_ABS, build_actor_state_dict, parse_mlp_onnx, verify_parity
+
+        sit = Path("/home/ethan/Projects/MicroDuck/policies/alpha_sitstand.onnx")
+        if not sit.is_file():
+            self.skipTest("alpha_sitstand.onnx missing")
+        rec = parse_mlp_onnx(sit)
+        sd = build_actor_state_dict(rec, init_std=0.18, count=1_000_000_000)
+        self.assertTrue((sd["obs_normalizer._std"] >= 0).all())
+        err = verify_parity(rec, sit, n=10000, seed=0)
+        self.assertLess(err, PARITY_FAIL_ABS, f"sitstand parity max_abs_err={err}")
+
 
 class TestNativeCheckpoint(unittest.TestCase):
     @unittest.skipIf(_SKIP_CKPT, "model_2999.pt / local-ppo ONNX or train extra missing")

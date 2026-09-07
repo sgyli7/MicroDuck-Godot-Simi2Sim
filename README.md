@@ -34,6 +34,8 @@ uv run --no-sync sim2sim-play --walking policies/Walk_Godot.onnx
 uv run --no-sync sim2sim-eval-walk --a "$MICRODUCK_POLICIES/alpha_walking.onnx" --b policies/Walk_Godot.onnx
 uv run --no-sync sim2sim-export --checkpoint path/to/model_k.pt --out policies/Walk_Godot.onnx
 uv run --no-sync sim2sim-bench-godot --workers 1 4 8 16
+./scripts/train_skills_godot.sh          # standing/sit/pick/kick/roulade/roller
+uv run --no-sync sim2sim-eval-skill
 ```
 
 之后训练相关命令用 `uv run --no-sync`（或 `./scripts/train_walk_godot.sh`，它 `exec` `.venv/bin/sim2sim-train`，SIGINT 能进 checkpoint）。裸 `uv sync` 会卸掉 `[train]` extra；`./run.sh` 用 `uv sync --inexact` 保住它。不要 `kill` `uv run` 包装进程，信号到不了 Python。

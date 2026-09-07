@@ -26,6 +26,7 @@ obs_noise:
   qd: 0.25
 
 commands:
+  mode: twist
   resample_s: [3.0, 8.0]
   vx: [-0.4, 0.4]
   vy: [-0.3, 0.3]

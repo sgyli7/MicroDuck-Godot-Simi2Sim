@@ -536,9 +536,12 @@ def train(
             verify_mean=verify_mean,
             log=log,
         )
+        if export_onnx is None:
+            export_onnx = (cfg.get("export") or {}).get("onnx")
         if export_onnx is not None and last_path is not None:
-            from sim2sim.train.export import export_actor, load_rsl_checkpoint_actor
+            from sim2sim.train.export import DEFAULT_DESCRIPTION, export_actor, load_rsl_checkpoint_actor
 
+            exp = dict(cfg.get("export") or {})
             sd, meta = load_rsl_checkpoint_actor(last_path)
             export_actor(
                 state_dict=sd,
@@ -546,6 +549,11 @@ def train(
                 out=Path(export_onnx),
                 checkpoint=meta.get("iter"),
                 run=run,
+                description=str(exp.get("description") or DEFAULT_DESCRIPTION),
+                name=str(exp.get("name") or "walk_godot"),
+                kind=str(exp.get("kind") or "perpetual"),
+                slot=str(exp.get("slot") or "walk"),
+                use_stand_policy=bool(exp.get("use_stand_policy", True)),
             )
         return log_dir
     finally:

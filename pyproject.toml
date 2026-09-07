@@ -33,6 +33,7 @@ sim2sim-kick-gate = "sim2sim.kick_gate:main"
 sim2sim-onnx-import = "sim2sim.train.onnx_import:main"
 sim2sim-export = "sim2sim.train.export:main"
 sim2sim-eval-walk = "sim2sim.train.eval_walk:main"
+sim2sim-eval-skill = "sim2sim.train.eval_skill:main"
 sim2sim-bench-godot = "sim2sim.train.bench:main"
 sim2sim-train = "sim2sim.train.runner:main"
 

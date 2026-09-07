@@ -33,7 +33,48 @@ def _opt(path: Path) -> Path | None:
     return path if path.is_file() else None
 
 
+def policy_search_dirs() -> list[Path]:
+    """Repo policies/ plus MICRODUCK_POLICIES / sibling checkout. First hit wins."""
+    cands = [
+        POL,
+        policies_dir(),
+        ROOT / "policies",
+        ROOT.parent / "policies",
+        Path.home() / "Projects/MicroDuck/policies",
+    ]
+    env = os.environ.get("MICRODUCK_POLICIES")
+    if env:
+        cands.insert(0, Path(env))
+    out: list[Path] = []
+    seen: set[str] = set()
+    for d in cands:
+        try:
+            r = Path(d).resolve()
+        except OSError:
+            continue
+        key = str(r)
+        if r.is_dir() and key not in seen:
+            seen.add(key)
+            out.append(r)
+    return out
+
+
+def _find_named(name: str) -> Path | None:
+    for d in policy_search_dirs():
+        p = d / name
+        if p.is_file():
+            return p
+    return None
+
+
 ROLLER_LIMITS = TwistLimits(vmax_x=0.6, vmin_x=-0.5, vmax_y=0.0, vmin_y=0.0, vmax_ang=1.0)
+
+
+def _prefer(godot_name: str, fallback: Path) -> Path | None:
+    found = _find_named(godot_name)
+    if found is not None:
+        return found
+    return _find_named(Path(fallback).name) or _opt(fallback)
 
 
 def policy_paths(
@@ -41,8 +82,8 @@ def policy_paths(
 ) -> dict[str, Path | None]:
     if roller:
         return {
-            "walking": _opt(POL / "roller.onnx"),
-            "standing": _opt(POL / "roller_crouch.onnx"),
+            "walking": _prefer("Roller_Godot.onnx", POL / "roller.onnx"),
+            "standing": _prefer("RollerCrouch_Godot.onnx", POL / "roller_crouch.onnx"),
             "sitstand": None,
             "ground_pick": None,
             "kick_left": None,
@@ -52,17 +93,19 @@ def policy_paths(
     if walking is not None:
         walk_path = Path(walking)
     elif local_ppo:
-        walk_path = POL / "local-ppo/local_velocity_walk_run_idle.onnx"
+        walk_path = _find_named("local_velocity_walk_run_idle.onnx") or (
+            POL / "local-ppo/local_velocity_walk_run_idle.onnx"
+        )
     else:
-        walk_path = POL / "alpha_walking.onnx"
+        walk_path = _prefer("Walk_Godot.onnx", POL / "alpha_walking.onnx") or (POL / "alpha_walking.onnx")
     return {
         "walking": _opt(walk_path),
-        "standing": _opt(POL / "alpha_stand.onnx"),
-        "sitstand": _opt(POL / "alpha_sitstand.onnx"),
-        "ground_pick": _opt(POL / "alpha_ground_pick.onnx"),
-        "kick_left": _opt(POL / "ball_kick_left.onnx"),
-        "kick_right": _opt(POL / "ball_kick_right.onnx"),
-        "roulade": _opt(POL / "roulade.onnx"),
+        "standing": _prefer("Stand_Godot.onnx", POL / "alpha_stand.onnx"),
+        "sitstand": _prefer("Sitstand_Godot.onnx", POL / "alpha_sitstand.onnx"),
+        "ground_pick": _prefer("GroundPick_Godot.onnx", POL / "alpha_ground_pick.onnx"),
+        "kick_left": _prefer("KickLeft_Godot.onnx", POL / "ball_kick_left.onnx"),
+        "kick_right": _prefer("KickRight_Godot.onnx", POL / "ball_kick_right.onnx"),
+        "roulade": _prefer("Roulade_Godot.onnx", POL / "roulade.onnx"),
     }
 
 

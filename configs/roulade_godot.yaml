@@ -1,0 +1,99 @@
+# Godot/Jolt roulade. Play command is zeros. Fall termination off (the roll is the task).
+robot: ${SIM2SIM_ROOT}/robots/microduck.json
+num_envs: 16
+episode_s: 5
+headless: true
+seed: 0
+device: cpu
+recv_timeout_s: 10.0
+spawn_stagger_s: 0.05
+max_faults_per_step: 8
+init_onnx: ${MICRODUCK_POLICIES}/roulade.onnx
+
+reset:
+  yaw_range: [-0.4, 0.4]
+  joint_noise_rad: 0.04
+
+obs_noise:
+  enabled: true
+  kind: uniform
+  gyro: 0.03
+  grav: 0.01
+  q: 0.001
+  qd: 0.25
+
+commands:
+  mode: zeros
+
+curriculum:
+  action_rate_l2: [-0.05, -0.4, 400, 1000]
+  roulade_land: [0.0, 2.0, 200, 800]
+
+pushes:
+  enabled: false
+  interval_s: [3.0, 6.0]
+  xy_speed: 0.0
+
+rewards:
+  track_lin_vel: 0.0
+  track_ang_vel: 0.0
+  upright: 0.0
+  air_time: 0.0
+  pose_legs: 0.0
+  foot_clearance: 0.0
+  foot_swing_height: 0.0
+  action_rate_l2: -0.05
+  foot_slip: 0.0
+  body_ang_vel: 0.0
+  head_pose_tracking: 0.0
+  head_pose_bias: 0.0
+  dof_pos_limits: -0.5
+  roulade_progress: 6.0
+  roulade_land: 0.0
+  roulade_complete_rad: 4.5
+  roulade_rate_cap: 3.0
+  scale_by_dt: true
+
+termination:
+  fallen: false
+  tilt_deg: 70.0
+  min_z: 0.02
+
+ppo:
+  learning_rate: 3.0e-4
+  schedule: adaptive
+  desired_kl: 0.015
+  entropy_coef: 0.001
+  clip_param: 0.2
+  gamma: 0.99
+  lam: 0.95
+  num_learning_epochs: 5
+  num_mini_batches: 4
+  init_std: 0.18
+  critic_warmup_iters: 80
+  unfreeze_learning_rate: 3.0e-5
+  hidden_dims: [512, 256, 128]
+  activation: elu
+  obs_normalization: true
+  max_grad_norm: 1.0
+  value_loss_coef: 1.0
+  use_clipped_value_loss: true
+  normalize_advantage_per_mini_batch: false
+  optimizer: adam
+  samples_per_iter: 2048
+  save_interval: 50
+
+train:
+  samples_per_iter: 2048
+  save_interval: 50
+  max_iterations: 1200
+  log_root: logs/roulade_godot
+  run_name: roulade
+
+export:
+  onnx: ${MICRODUCK_POLICIES}/Roulade_Godot.onnx
+  name: roulade_godot
+  kind: one_shot
+  slot: roulade
+  use_stand_policy: false
+  description: Godot/Jolt fine-tuned forward roll (sim2sim).

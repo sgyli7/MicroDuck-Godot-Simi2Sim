@@ -1490,30 +1490,41 @@ func _foot_body_names() -> Array:
 	return names
 
 
+func _body_kinematic_report(key: String) -> Dictionary:
+	var b: RigidBody3D = _bodies[key]
+	var n_contacts := 0
+	var impulse_sum := 0.0
+	var dst := PhysicsServer3D.body_get_direct_state(b.get_rid())
+	if dst != null:
+		n_contacts = dst.get_contact_count()
+		for ci in range(n_contacts):
+			impulse_sum += dst.get_contact_impulse(ci).length()
+	var pm := _g2m(b.global_transform.origin)
+	var lm := _g2m(b.linear_velocity)
+	return {
+		"name": key,
+		"contact": n_contacts > 0,
+		"n_contacts": n_contacts,
+		"impulse": impulse_sum,
+		"pos": [pm.x, pm.y, pm.z],
+		"linvel": [lm.x, lm.y, lm.z],
+	}
+
+
 func _feet_report() -> Array:
 	var names: Array = _foot_names if not _foot_names.is_empty() else _foot_body_names()
 	var out: Array = []
 	for key in names:
-		if not _bodies.has(key):
-			continue
-		var b: RigidBody3D = _bodies[key]
-		var n_contacts := 0
-		var impulse_sum := 0.0
-		var dst := PhysicsServer3D.body_get_direct_state(b.get_rid())
-		if dst != null:
-			n_contacts = dst.get_contact_count()
-			for ci in range(n_contacts):
-				impulse_sum += dst.get_contact_impulse(ci).length()
-		var pm := _g2m(b.global_transform.origin)
-		var lm := _g2m(b.linear_velocity)
-		out.append({
-			"name": key,
-			"contact": n_contacts > 0,
-			"n_contacts": n_contacts,
-			"impulse": impulse_sum,
-			"pos": [pm.x, pm.y, pm.z],
-			"linvel": [lm.x, lm.y, lm.z],
-		})
+		if _bodies.has(key):
+			out.append(_body_kinematic_report(str(key)))
+	return out
+
+
+func _extra_bodies_report() -> Array:
+	var out: Array = []
+	for key in ["jaw_soft", "top_head_shell"]:
+		if _bodies.has(key):
+			out.append(_body_kinematic_report(key))
 	return out
 
 
@@ -1581,6 +1592,7 @@ func _send_state(which: String) -> void:
 			"base_linvel": base_lin,
 			"base_angvel_local": base_ang_local,
 			"feet": _feet_report(),
+			"bodies": _extra_bodies_report(),
 		}
 	else:
 		var dump: Array = []

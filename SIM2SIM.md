@@ -239,7 +239,7 @@ CLI 默认是 5 seeds × 10 s；上表是这次 3×8 s 的数。
 | [`rewards.py`](src/sim2sim/train/rewards.py) | 向量化走路奖励。lite step 没有 whole-body angmom，**跳过** `angular_momentum` |
 | [`commands.py`](src/sim2sim/train/commands.py) | 13-D twist（`command_13`）；head/body 固定 0 |
 | [`reset_poses.py`](src/sim2sim/train/reset_poses.py) | 一个 MuJoCo companion 做 FK：home + yaw 随机 + 关节噪声；Godot `reset` 的 `ctrl` 仍是 HOME |
-| [`onnx_import.py`](src/sim2sim/train/onnx_import.py) | 从 MLP ONNX 精确恢复 rsl_rl actor；parity gate **1e-5** |
+| [`onnx_import.py`](src/sim2sim/train/onnx_import.py) | 从 MLP ONNX 精确恢复 rsl_rl actor；init parity gate **2e-4**（walking ~6e-6，roller ~1.5e-4；近零方差 command 维 clamp `_std>=0`） |
 | [`runner.py`](src/sim2sim/train/runner.py) | `sim2sim-train`。三选一：`--init-onnx` / `--init-checkpoint` / `--resume`（都不给则用 yaml `init_onnx`）。critic warmup：冻 actor MLP+std；ONNX/checkpoint 初始化还会把 actor `EmpiricalNormalization` 冻死（`until=count`，整段 run 不再更新）。日志：`train.log` / `metrics.jsonl` / tfevents / `params/{env,agent}.yaml` / `params/git.txt` / `params/init_check.json` |
 | [`ppo_finetune.py`](src/sim2sim/train/ppo_finetune.py) | rsl_rl PPO 子类，把 mean KL 写入 `loss_dict` |
 | [`export.py`](src/sim2sim/train/export.py) | `sim2sim-export`：normalizer fold 进图，schema-2 manifest sidecar |
@@ -317,9 +317,34 @@ VERDICT: **mixed**（B 主指标 6 胜 / 5 负 / 1 平）。闭环和「确实�
 - 代价：idle 停不住（cadence ~1.8 Hz，10 s 漂 58°）；0.25–0.40 m/s 直线跟踪比 alpha 慢。这是 Godot 物理上的新步态，不是 MuJoCo 轨迹复现。
 - 计划「多数条件 B 显著优于 A 且摔倒不升 → 称改善」：**未达到**（6/12 主指标，摔倒持平）。
 
-加载：`sim2sim-play --walking policies/Walk_Godot.onnx`。默认 walking 仍是 `alpha_walking.onnx`。`sim2sim-export` 默认写 `policies/Walk_Godot.onnx` + sidecar。
+加载：`sim2sim-play` 默认优先 `Walk_Godot.onnx`（没有则回退 `alpha_walking.onnx`）。`--walking` 仍可强制路径。`sim2sim-export` 默认写 `policies/Walk_Godot.onnx` + sidecar。
 
 训练日志：`logs/walk_godot/2026-09-07_03-03-34_walk2/`（从 `…_walk/model_700.pt` resume；iter 1100 之后 falls≈0，air_time≈0.025，kl_max 全程 <0.1）。
+
+### 其余 8 个技能（Godot continue-train）
+
+与 walking 同一套 VecEnv / PPO / ONNX 恢复。8 个 factory ONNX 都是 61-D / 14-D、512-256-128 ELU。命令语义对齐 `PlayBrain.command_13`：
+
+| 技能 | 配置 | init ONNX | 导出 | play 命令 |
+|---|---|---|---|---|
+| standing | `configs/stand_godot.yaml` | `alpha_stand.onnx` | `Stand_Godot.onnx` | 全 0 |
+| sitstand | `configs/sitstand_godot.yaml` | `alpha_sitstand.onnx` | `Sitstand_Godot.onnx` | cmd[0]=sit flag |
+| ground_pick | `configs/pick_godot.yaml` | `alpha_ground_pick.onnx` | `GroundPick_Godot.onnx` | `(cos 2πφ, sin 2πφ)` |
+| kick_left / right | `configs/kick_*_godot.yaml` | `ball_kick_*.onnx` | `KickLeft/Right_Godot.onnx` | 全 0 |
+| roulade | `configs/roulade_godot.yaml` | `roulade.onnx` | `Roulade_Godot.onnx` | 全 0；无摔倒终止 |
+| roller | `configs/roller_godot.yaml` | `roller.onnx` | `Roller_Godot.onnx` | twist；`microduck_roller.json` |
+| roller_crouch | `configs/roller_crouch_godot.yaml` | `roller_crouch.onnx` | `RollerCrouch_Godot.onnx` | 全 0（roller 模式 standing 槽） |
+
+```bash
+./scripts/train_skills_godot.sh          # 顺序训 8 个；已有导出则跳过
+SKILL=stand ./scripts/train_skills_godot.sh
+FORCE=1 SKILL=stand ./scripts/train_skills_godot.sh
+uv run --no-sync sim2sim-eval-skill --seeds 5 --workers 8
+uv run --no-sync sim2sim-play            # 优先 *_Godot.onnx
+uv run --no-sync sim2sim-play --roller
+```
+
+Kick 在 Godot 仍可能倒（plant-foot 已知差异）；策略对球是盲的，微调用摆腿+站稳，不生成球。sitstand / roulade 关掉 fallen 终止（坐下和前滚本来就会过 70° / 低 z）。
 
 ## 目录
 
@@ -329,8 +354,10 @@ sim2sim/
   src/sim2sim/         # backends, obs, policy, runner, calib, compare, train/
   godot/               # Godot 4.7 工程
   robots/microduck.json
-  configs/walk_godot.yaml
-  scripts/train_walk_godot.sh, walk_godot_smoke.sh
+  configs/walk_godot.yaml, stand_godot.yaml, sitstand_godot.yaml, pick_godot.yaml,
+  configs/kick_left_godot.yaml, kick_right_godot.yaml, roulade_godot.yaml,
+  configs/roller_godot.yaml, roller_crouch_godot.yaml
+  scripts/train_walk_godot.sh, train_skills_godot.sh, walk_godot_smoke.sh
   run.sh
 ```
 

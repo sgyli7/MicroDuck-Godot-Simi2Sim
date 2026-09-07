@@ -23,7 +23,7 @@ from sim2sim.paths import apply_path_defaults, expand_cfg, load_robot_json, sim2
 from sim2sim.train.commands import CommandConfig, CommandSampler
 from sim2sim.train.curriculum import Curriculum, apply_curriculum
 from sim2sim.train.reset_poses import HomePoseSampler
-from sim2sim.train.rewards import RewardComputer, RewardConfig, RewardInputs, world_to_yaw_frame
+from sim2sim.train.rewards import RewardComputer, RewardConfig, RewardInputs, sit_target_q, world_to_yaw_frame
 
 FOOT_NAMES = ("ankle_left", "ankle_right")
 ACTOR_DIM = 61
@@ -99,6 +99,20 @@ def _foot_pack(state, ankle_z_nominal: np.ndarray) -> tuple[np.ndarray, np.ndarr
     return contact, height, xy_speed
 
 
+def _mouth_z(state) -> float:
+    bodies = (state.extra or {}).get("bodies")
+    if not bodies:
+        raw = (state.extra or {}).get("raw") or {}
+        bodies = raw.get("bodies") or []
+    for b in bodies:
+        if not isinstance(b, dict):
+            continue
+        if str(b.get("name")) == "jaw_soft":
+            pos = b.get("pos") or [0.0, 0.0, 0.0]
+            return float(pos[2])
+    return float("nan")
+
+
 def _state_finite(state) -> bool:
     chunks = (state.q, state.qd, state.base_pos, state.base_quat_wxyz, state.base_linvel, state.base_angvel_local)
     return all(np.isfinite(np.asarray(x)).all() for x in chunks)
@@ -119,6 +133,12 @@ class GodotVecEnv(VecEnv):
     ) -> None:
         cfg = load_walk_cfg(cfg_path_or_dict)
         robot = cfg["robot_cfg"]
+        spec = Path(robot["godot_spec"])
+        tscn = spec.with_name("robot.tscn")
+        if not spec.is_file() or not tscn.is_file():
+            from sim2sim.play import ensure_godot_scene
+
+            ensure_godot_scene(robot)
         self.cfg = cfg
         self.num_envs = int(num_envs if num_envs is not None else cfg.get("num_envs", 8))
         if self.num_envs < 1:
@@ -147,9 +167,13 @@ class GodotVecEnv(VecEnv):
         self.base_body = str(robot.get("base_body", "trunk_base"))
         self.tilt_deg = float((cfg.get("termination") or {}).get("tilt_deg", 70.0))
         self.min_z = float((cfg.get("termination") or {}).get("min_z", 0.055))
+        self.fall_enabled = bool((cfg.get("termination") or {}).get("fallen", True))
         reset_cfg = cfg.get("reset") or {}
         self.yaw_range = tuple(float(x) for x in reset_cfg.get("yaw_range", (-np.pi, np.pi)))
         self.joint_noise = float(reset_cfg.get("joint_noise_rad", 0.05))
+        self.sit_frac = float(reset_cfg.get("sit_frac", 0.0))
+        self.sit_z = float((cfg.get("rewards") or {}).get("sit_z", 0.060))
+        self.sit_q = sit_target_q(self.home)
         noise_cfg = cfg.get("obs_noise") or {}
         self.noise_enabled = bool(noise_cfg.get("enabled", True))
         self.noise_kind = str(noise_cfg.get("kind", "uniform"))
@@ -260,8 +284,13 @@ class GodotVecEnv(VecEnv):
     def _reset_one(self, i: int) -> None:
         w = self._workers[i]
         assert w is not None
+        sit = self.sit_frac > 0.0 and float(self._rng.random()) < self.sit_frac
         poses, _q0, _ctrl = self.sampler.sample(
-            self._rng, yaw_range=self.yaw_range, joint_noise_rad=self.joint_noise
+            self._rng,
+            yaw_range=self.yaw_range,
+            joint_noise_rad=self.joint_noise,
+            z=self.sit_z if sit else None,
+            q_base=self.sit_q if sit else None,
         )
         self._states[i] = self._reset_backend(w, poses)
         self.commands.reset([i])
@@ -329,6 +358,8 @@ class GodotVecEnv(VecEnv):
 
         lin_yaw = world_to_yaw_frame(quat, linvel)
         cmd = self.commands.step(self.dt)
+        mouth = np.array([_mouth_z(self._states[i]) for i in range(n)], dtype=np.float32)
+        ep_t = self._ep_len.astype(np.float32) * self.dt
         total, terms = self.rew.compute(
             RewardInputs(
                 q=q,
@@ -344,10 +375,15 @@ class GodotVecEnv(VecEnv):
                 joint_lo=self.sampler.joint_lo,
                 joint_hi=self.sampler.joint_hi,
                 home=self.home,
+                base_z=pos[:, 2].astype(np.float32),
+                mouth_z=mouth,
+                ep_t=ep_t,
             )
         )
 
         fell = fallen_mask(grav, pos, tilt_deg=self.tilt_deg, min_z=self.min_z)
+        if not self.fall_enabled:
+            fell = np.zeros(n, dtype=bool)
         self._last_fell = np.asarray(fell, dtype=bool).copy()
         self._last_term_quat = np.asarray(quat, dtype=np.float64).copy()
         self._last_term_pos = np.asarray(pos, dtype=np.float64).copy()

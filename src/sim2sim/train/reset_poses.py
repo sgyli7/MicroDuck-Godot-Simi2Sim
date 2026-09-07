@@ -61,11 +61,13 @@ class HomePoseSampler:
         yaw_range: tuple[float, float] = (-math.pi, math.pi),
         joint_noise_rad: float = 0.05,
         z: float | None = None,
+        q_base: np.ndarray | None = None,
     ) -> tuple[list[dict], np.ndarray, np.ndarray]:
         z0 = self.reset_z if z is None else float(z)
         yaw = float(rng.uniform(yaw_range[0], yaw_range[1]))
-        noise = rng.uniform(-float(joint_noise_rad), float(joint_noise_rad), size=self.home.shape)
-        q0 = np.clip(self.home.astype(np.float64) + noise, self.joint_lo, self.joint_hi).astype(
+        base = self.home if q_base is None else np.asarray(q_base, dtype=np.float32).reshape(-1)
+        noise = rng.uniform(-float(joint_noise_rad), float(joint_noise_rad), size=base.shape)
+        q0 = np.clip(base.astype(np.float64) + noise, self.joint_lo, self.joint_hi).astype(
             np.float32
         )
         ctrl0 = self.home.astype(np.float32, copy=True)

@@ -63,6 +63,10 @@ def build_manifest(
     twist_limits: dict,
     use_stand_policy: bool,
     description: str,
+    name: str = "walk_godot",
+    kind: str = "perpetual",
+    slot: str = "walk",
+    command: dict | None = None,
 ) -> dict:
     del onnx_path  # name/slot are fixed for this gait; path is caller's out file
     snap = git_snapshot()
@@ -86,13 +90,13 @@ def build_manifest(
         "obs_len": 61,
         "action_len": 14,
         "robot": {"model": "microduck", "hw_rev": 1, "servos": "xl330", "control_hz": 50},
-        "name": "walk_godot",
-        "kind": "perpetual",
-        "slot": "walk",
+        "name": str(name),
+        "kind": str(kind),
+        "slot": str(slot),
         "entry_pose": "standing",
         "action_scale": 1.0,
         "description": description,
-        "command": dict(COMMAND_PROSE),
+        "command": dict(command or COMMAND_PROSE),
         "training": tr,
         "eval": eval,
         "sim2sim": {
