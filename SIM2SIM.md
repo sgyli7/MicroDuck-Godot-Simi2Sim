@@ -362,6 +362,23 @@ Roulade 已导出 `Roulade_Godot.onnx`（iter 1199，init_check 8.1e-6，export 
 
 Roller 首次启动因 walking 脚踝名 `ankle_left` 在轮滑 XML（`ankle_l_v1` / `tire`）上 KeyError。已让 `HomePoseSampler` 识别轮滑支撑体。`Roller_Godot.onnx` iter 1499，init_check / export parity 1.53e-4（factory roller 本身就在 2e-4 阈值内），`scene_rollers.xml`，终局 falls=0、track_lin_vel≈0.040。A/B 5×8 s、cmd vx=0.3：两边不倒；xy 位移 3.63→1.40 m，均速 0.538→0.176（A 过冲，B 偏慢、更接近 0.3）。`sim2sim-play --roller` 的 walking 槽已指向 `Roller_Godot.onnx`。**闭环跑通**；速度跟踪混合，不称全面改善。报告 `results/skill_godot_eval/roller.md`。
 
+`RollerCrouch_Godot.onnx` iter 999，init_check 1.14e-5，export parity 9.5e-6，轮滑 XML，终局 falls=0。A/B 5×8 s idle：两边不倒；pose_err_home 0.424→0.262，|ωy| 0.130→0.066，z 0.098→0.119。`--roller` 的 standing 槽加载它。**闭环跑通，idle 相对 factory 有改善**。报告 `results/skill_godot_eval/roller_crouch.md`。
+
+八技能 A/B 总表（A=factory，B=`*_Godot.onnx`；「改善」= 任务指标更好且摔倒不升）：
+
+| 技能 | 闭环 | 改善？ | 摘要 |
+|---|---|---|---|
+| standing | 是 | 是 | 更贴 HOME，更少晃 |
+| sitstand | 是 | 混合 | 坐下更好，站立贴 HOME 略差 |
+| ground_pick | 是 | 混合 | 低头更深，回站差 |
+| kick_left | 是 | 是 | factory 全倒，B 不倒 + 更高脚 |
+| kick_right | 是 | 是 | 同上 |
+| roulade | 是 | 否 | 旋转更多，站回更差 |
+| roller | 是 | 混合 | 不倒；B 更近 0.3 m/s 但更慢 |
+| roller_crouch | 是 | 是 | idle 更贴 HOME、更稳 |
+
+入口：`./scripts/train_skills_godot.sh`，评测：`uv run --no-sync sim2sim-eval-skill`，日志：`logs/train_skills_godot.out`。ONNX 不入库（gitignore），sidecar schema 2。
+
 ## 目录
 
 ```
