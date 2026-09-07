@@ -172,6 +172,24 @@ class TestSkillYamlsLoad(unittest.TestCase):
             self.assertIn(mode, VALID_MODES)
 
 
+class TestSupportBodies(unittest.TestCase):
+    def test_walk_and_roller_pairs(self) -> None:
+        from sim2sim.train.reset_poses import support_body_pair
+
+        walk = [{"name": "trunk_base"}, {"name": "ankle_left"}, {"name": "ankle_right"}]
+        self.assertEqual(support_body_pair(walk), ("ankle_left", "ankle_right"))
+        roller = [
+            {"name": "trunk_base"},
+            {"name": "ankle_l_v1"},
+            {"name": "ankle_r_v1"},
+            {"name": "tire"},
+            {"name": "tire_3"},
+        ]
+        self.assertEqual(support_body_pair(roller), ("ankle_l_v1", "ankle_r_v1"))
+        with self.assertRaises(KeyError):
+            support_body_pair([{"name": "trunk_base"}])
+
+
 class TestEvalReport(unittest.TestCase):
     def test_sitstand_notes_split_pose(self) -> None:
         from sim2sim.train.eval_skill import write_report

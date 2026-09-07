@@ -81,13 +81,15 @@ def _as_device(device: str | torch.device) -> torch.device:
     return torch.device(d)
 
 
-def _foot_pack(state, ankle_z_nominal: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def _foot_pack(
+    state, ankle_z_nominal: np.ndarray, foot_names: tuple[str, str] = FOOT_NAMES
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     feet = (state.extra or {}).get("feet") or []
     by = {str(f.get("name")): f for f in feet if isinstance(f, dict)}
     contact = np.zeros(2, dtype=np.float32)
     height = np.zeros(2, dtype=np.float32)
     xy_speed = np.zeros(2, dtype=np.float32)
-    for i, name in enumerate(FOOT_NAMES):
+    for i, name in enumerate(foot_names):
         f = by.get(name)
         if f is None:
             continue
@@ -189,6 +191,7 @@ class GodotVecEnv(VecEnv):
         self.push_xy_speed = float(push_cfg.get("xy_speed", 0.3))
 
         self.sampler = HomePoseSampler(robot)
+        self.foot_names = tuple(self.sampler.support_names)
         self.commands = CommandSampler(CommandConfig.from_dict(cfg.get("commands")), self.num_envs, self._rng)
         self.rew = RewardComputer(
             RewardConfig.from_dict(cfg.get("rewards")),
@@ -261,7 +264,7 @@ class GodotVecEnv(VecEnv):
         feet = (st.extra or {}).get("feet") or []
         by = {str(f.get("name")): f for f in feet if isinstance(f, dict)}
         zs = []
-        for name in FOOT_NAMES:
+        for name in self.foot_names:
             f = by.get(name)
             if f is None:
                 zs.append(float(self.sampler.ankle_z_nominal[len(zs)]))
@@ -517,7 +520,9 @@ class GodotVecEnv(VecEnv):
             quat[i] = np.asarray(st.base_quat_wxyz, dtype=np.float64).reshape(4)
             pos[i] = np.asarray(st.base_pos, dtype=np.float64).reshape(3)
             linvel[i] = np.asarray(st.base_linvel, dtype=np.float32).reshape(3)
-            contact[i], height[i], xy_speed[i] = _foot_pack(st, self.ankle_z_nominal)
+            contact[i], height[i], xy_speed[i] = _foot_pack(
+                st, self.ankle_z_nominal, self.foot_names
+            )
             finite[i] = _state_finite(st) and np.isfinite(contact[i]).all() and np.isfinite(height[i]).all()
         return q, qd, gyro, quat, pos, linvel, contact, height, xy_speed, finite
 

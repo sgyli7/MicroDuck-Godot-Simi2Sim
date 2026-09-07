@@ -47,7 +47,8 @@ class HomePoseSampler:
         )
         self.joint_lo, self.joint_hi = joint_limits(self.mj)
         self._nominal_poses = self.nominal()
-        self.ankle_z_nominal = _ankle_z_from_poses(self._nominal_poses)
+        self.support_names = support_body_pair(self._nominal_poses)
+        self.ankle_z_nominal = _support_z_from_poses(self._nominal_poses, self.support_names)
 
     def nominal(self) -> list[dict]:
         """Deterministic home FK; same as ``play.capture_home_poses``."""
@@ -88,11 +89,28 @@ class HomePoseSampler:
         self.mj.close()
 
 
-def _ankle_z_from_poses(poses: list[dict]) -> np.ndarray:
+def support_body_pair(poses: list[dict]) -> tuple[str, str]:
+    """Walk ankles, or roller ankle_l_v1 / tires if the walking names are absent."""
+    names = {str(p.get("name")) for p in poses}
+    for pair in (
+        ("ankle_left", "ankle_right"),
+        ("ankle_l_v1", "ankle_r_v1"),
+        ("tire", "tire_3"),
+    ):
+        if pair[0] in names and pair[1] in names:
+            return pair
+    raise KeyError(f"no support bodies in poses: {sorted(names)}")
+
+
+def _support_z_from_poses(poses: list[dict], names: tuple[str, str]) -> np.ndarray:
     by_name = {p["name"]: p for p in poses}
     zs = []
-    for name in ("ankle_left", "ankle_right"):
+    for name in names:
         if name not in by_name:
             raise KeyError(f"nominal poses missing {name}")
         zs.append(float(by_name[name]["pos"][2]))
     return np.asarray(zs, dtype=np.float32)
+
+
+def _ankle_z_from_poses(poses: list[dict]) -> np.ndarray:
+    return _support_z_from_poses(poses, support_body_pair(poses))
