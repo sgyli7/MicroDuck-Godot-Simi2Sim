@@ -344,7 +344,7 @@ uv run --no-sync sim2sim-play            # 优先 *_Godot.onnx
 uv run --no-sync sim2sim-play --roller
 ```
 
-Kick 在 Godot 仍可能倒（plant-foot 已知差异）；策略对球是盲的，微调用摆腿+站稳，不生成球。sitstand / roulade 关掉 fallen 终止（坐下和前滚本来就会过 70° / 低 z）。
+Kick 策略对球是盲的，微调用摆腿+站稳，不生成球。factory 左踢在 Godot 上仍会倒（plant-foot）；`KickLeft_Godot` 已能站完 3 s。sitstand / roulade 关掉 fallen 终止（坐下和前滚本来就会过 70° / 低 z）。
 
 Standing 已导出 `Stand_Godot.onnx`（iter 999，全程 falls=0）。Godot A/B 5×10 s idle：两边都不倒；B 更贴 HOME（pose_err 0.031→0.0015），|ωy| 积分 0.065→0.026。闭环跑通，idle 姿态相对 alpha_stand 有改善。报告 `results/skill_godot_eval/standing.md`。
 
@@ -355,6 +355,8 @@ Sitstand 已导出 `Sitstand_Godot.onnx`（iter 1199，init_check 1.00e-5，expo
 Ground-pick 第一遍（iter 999）闭环但任务退化：`approach_min_z` 0.084→0.112。已加 dense `approach_height` 并放宽 `mouth_std=0.08` 后重训。第二遍 iter 999，export parity 8.6e-6，终局 `approach_height≈0.03`、`mouth_proximity≈0.029`、falls=0。A/B 5×4 s：两边不倒；低头更深（approach_min_z 0.084→0.069，目标 0.075）；终态 pose_err_home 0.043→0.632（回站差）。**闭环跑通**；接近地面有改善，收回 HOME 未改善。报告 `results/skill_godot_eval/ground_pick.md`。
 
 Kick 去掉与摆腿对打的 `pose_legs` 和 push。`KickLeft_Godot.onnx` iter 1199，init_check 1.91e-5，export parity 2.67e-5，终局 falls=0、kick_swing 仍在出分。A/B 5×3 s：alpha 全倒（fell 1.00，存活 0.76 s，max_foot_z 0.037）；B 全不倒（存活 3.0 s，max_foot_z 0.054）。**闭环跑通，且相对 factory 在 Godot 上明显改善**（站稳 + 更高摆腿）。报告 `results/skill_godot_eval/kick_left.md`。
+
+`KickRight_Godot.onnx` iter 1199，init_check 1.53e-5，export parity 2.05e-5。A/B 5×3 s：alpha 全倒（存活 0.96 s，max_foot_z 0.053）；B 全不倒（存活 3.0 s，max_foot_z 0.079）。同样 **闭环 + Godot 上改善**。报告 `results/skill_godot_eval/kick_right.md`。
 
 ## 目录
 
