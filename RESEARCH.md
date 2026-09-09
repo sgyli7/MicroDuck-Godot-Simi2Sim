@@ -461,3 +461,41 @@ heading-aware candidate: 5/6 basic and 10/16 extra cases versus 4/6 and 8/16.
 Its wrapper masks the new heading slots for the parent while preserving time.
 The new heading-aware residual uses the same small bound 0.1 and std 0.02 as
 r11, making the heading-observability comparison more focused.
+
+## Bilateral roll ensemble and real skill exits (21:31 UTC)
+
+A renewed symmetry probe on the much stronger r11 iteration 50 actor succeeds
+where the early factory/recovery probes failed. The single ONNX averages the
+actor with its exact reflected counterpart; its architecture is explicitly
+a bilateral ensemble containing four frozen neural expert branches plus the
+learned corrections. Ten thousand input checks show zero export discrepancy
+and zero bilateral discrepancy. Time remains an explicitly required input.
+
+After 6/6 exploratory training-seed rolls, it passes 20/22 development rolls
+(100–102 and 110–117, both entries), continuous score 0.9776. All 22 complete
+one revolution and stand; two miss the 30-degree heading gate at 31.65 and
+33.05 degrees. It is a stronger candidate, not yet proof of source reliability.
+All 22 additional three-second handoffs to the factory standing actor remain
+stable without resetting physics or action history. Maximum post-exit motion
+is 3.8 mm and 2.08 degrees. Primary metrics match the earlier standalone
+evaluations exactly; post-exit assistance cannot turn a primary failure into
+a success. This separate check is implemented in research/handoff_check.py.
+
+Native frame inspection and trace analysis reveal remaining quality gaps:
+the ensemble settles around 2.83 s versus original MuJoCo 1.64 s, and its
+rotation frontier is 7.18–7.90 rad versus 6.31–6.46 rad. It briefly leans
+forward again before recovering. These continuous gaps remain visible even
+when the binary task gate passes. Earlier internal balance blending was
+therefore tested at 1.75, 1.9, 2.0, 2.1, 2.2 and 2.3 s on separate training
+seeds. The first four degrade recovery; 2.2 passes 5/6 and 2.3 passes 6/6.
+No timing change is selected. A separate factory-roll-plus-balance bilateral
+ensemble at six earlier timings also passes 0/6 throughout; standing after
+an incomplete maneuver does not count.
+
+The mirror exporter now preserves phase sine for phase-conditioned maneuvers
+and heading cosine for heading-aware rolls, matching the actor-training
+reflection. Unit checks cover those input semantics and nested blend retiming
+against independently rebuilt graphs. Existing right-kick transforms are
+unchanged. The fast-walk yaw correction passes an additional 16 native tests
+without falls (yaw RMSE 0.059 rad/s); speed remains 0.172 m/s and still fails
+the strict 0.4 m/s target.

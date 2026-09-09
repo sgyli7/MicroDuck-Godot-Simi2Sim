@@ -22,6 +22,14 @@ def fake_world(name):
     return w
 
 class TaskSemantics(unittest.TestCase):
+    def test_reflection_preserves_phase_and_heading_cosine(self):
+        from sim2sim.research.mirror import reflect_obs
+        x=np.zeros(61,np.float32);x[48:51]=[.2,.3,.4]
+        np.testing.assert_array_equal(reflect_obs(x,heading_input=True)[48:51],[np.float32(.2),np.float32(-.3),np.float32(.4)])
+        for task in ('ground_pick','roller_crouch'):
+            np.testing.assert_array_equal(reflect_obs(x,task=task)[48:50],x[48:50])
+        np.testing.assert_array_equal(reflect_obs(x)[48:51],x[48:51]*[1,-1,-1])
+
     def test_relative_heading_survives_forward_inversion_and_reflects_correctly(self):
         from sim2sim.policy_time import time_command
         a=.7;heading=np.array([np.cos(a),np.sin(a)])
@@ -323,6 +331,18 @@ class RealTelemetry(unittest.TestCase):
         finally:w.close()
 
 class Deployment(unittest.TestCase):
+    def test_nested_expert_retime_matches_rebuilding_the_same_blend(self):
+        from sim2sim.research.roll_experts import build,retime
+        from sim2sim.research.mirror import symmetrize
+        from sim2sim.research.models import NativeAnchor
+        with tempfile.TemporaryDirectory() as d:
+            d=Path(d);a=build(TASKS['roulade'].source,d/'early.onnx',1.8,2.)
+            b=build(TASKS['roulade'].source,d/'late.onnx',2.2,2.4)
+            expected=symmetrize(a,d/'expected.onnx');nested=symmetrize(b,d/'nested.onnx')
+            actual=retime(nested,d/'actual.onnx',1.8,2.)
+            x=np.random.default_rng(773).normal(0,.2,(250,61)).astype(np.float32);x[:,48]=np.linspace(0,1,len(x))
+            np.testing.assert_array_equal(NativeAnchor(actual)(x),NativeAnchor(expected)(x))
+
     def test_fast_forward_heading_adapter_preserves_slower_commands(self):
         from sim2sim.research.conditioning import adapt,parity as adapter_parity
         from sim2sim.research.models import NativeAnchor

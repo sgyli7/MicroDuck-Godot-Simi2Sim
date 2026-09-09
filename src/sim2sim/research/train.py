@@ -8,7 +8,7 @@ from .world import World
 from .models import Policy,Critic,export_policy,parity
 from .rewards import Objective,EXTRA_DIM
 from .evaluate import run_suite,PROTOCOL_VERSION
-from .mirror import OBS_PERM,OBS_SIGN,JOINT_PERM,JOINT_SIGN
+from .mirror import OBS_PERM,JOINT_PERM,JOINT_SIGN,observation_sign
 from sim2sim.obs import build_obs
 
 def seed_all(seed):
@@ -145,8 +145,7 @@ def run(args):
     policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate)
     policy.task_name=task.name
     critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s,heading_input=policy.anchor.heading_input)
-    obs_sign=OBS_SIGN.copy()
-    if policy.anchor.heading_input:obs_sign[50]=1. # Relative-heading cosine is even under reflection.
+    obs_sign=observation_sign(task.name,policy.anchor.heading_input)
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
     ao=torch.optim.Adam(actor_parameters,lr=args.actor_lr);co=torch.optim.Adam(critic.parameters(),lr=args.critic_lr)
     initial_iteration=0

@@ -58,6 +58,26 @@ def parity(roll_source,exported,start,end,n=10000):
     return dict(samples=n,max_abs=error,threshold=1e-5,passed=error<1e-5)
 
 
+def retime(source,dest,start,end):
+    """Change only declared expert-blend constants, retaining learned branches."""
+    if not 0<=start<end<=5:raise ValueError('Invalid blend')
+    model=onnx.load(source);meta={p.key:p.value for p in model.metadata_props}
+    old_start,old_end=json.loads(meta['sim2sim_blend_seconds'])
+    counts={}
+    for key,value,prior in [('start',start,old_start),('width',end-start,old_end-old_start)]:
+        candidates=[v for v in model.graph.initializer if v.name==key or v.name.endswith('/'+key)]
+        if not candidates or any(not np.allclose(numpy_helper.to_array(v),prior,atol=1e-7) for v in candidates):
+            raise ValueError('Ambiguous expert-blend constants')
+        for v in candidates:v.CopyFrom(numpy_helper.from_array(np.array(value,np.float32),v.name))
+        counts[key]=len(candidates)
+    if counts['start']!=counts['width']:raise ValueError('Unpaired blend constants')
+    meta.update(sim2sim_blend_seconds=json.dumps([start,end]),
+        sim2sim_retimed_parent_sha256=hashlib.sha256(Path(source).read_bytes()).hexdigest())
+    del model.metadata_props[:]
+    for k,v in meta.items():model.metadata_props.add(key=k,value=v)
+    onnx.checker.check_model(model);dest=Path(dest);dest.parent.mkdir(parents=True,exist_ok=True);onnx.save(model,str(dest));return dest
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('source',type=Path);p.add_argument('dest',type=Path)
     p.add_argument('--start',type=float,default=1.9);p.add_argument('--end',type=float,default=2.1)
