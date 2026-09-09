@@ -15,7 +15,7 @@ class SimState:
     qd: np.ndarray
     base_pos: np.ndarray
     base_quat_wxyz: np.ndarray
-    base_linvel: np.ndarray
+    base_linvel: np.ndarray  # Trunk inertial COM velocity in world coordinates.
     base_angvel_local: np.ndarray
     extra: dict = field(default_factory=dict)
 

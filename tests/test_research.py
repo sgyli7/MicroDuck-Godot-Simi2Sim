@@ -133,6 +133,25 @@ class TaskSemantics(unittest.TestCase):
         self.assertFalse(result["success"])
 
 class RealTelemetry(unittest.TestCase):
+    def test_body_transfer_velocity_matches_com_jacobian(self):
+        import mujoco
+        w=World(TASKS["roulade"],"mujoco")
+        try:
+            w.reset(72000,randomize=False);m,d=w.mj.model,w.mj.data
+            d.qvel[:]=np.random.default_rng(72000).normal(0,2,m.nv)
+            mujoco.mj_forward(m,d)
+            reports=w.mj.body_poses_mujoco()
+            for b in reports:
+                bid=w.meta[b["name"]];jp=np.zeros((3,m.nv));jr=np.zeros_like(jp)
+                mujoco.mj_jacBodyCom(m,d,jp,jr,bid)
+                np.testing.assert_allclose(b["linvel"],jp@d.qvel,atol=1e-10)
+                np.testing.assert_allclose(b["angvel"],jr@d.qvel,atol=1e-10)
+            w.state=w.mj._state();f=w.measure(reset=True)
+            jp=np.zeros((3,m.nv));jr=np.zeros_like(jp)
+            mujoco.mj_jacBodyCom(m,d,jp,jr,w.mj.base_body_id)
+            np.testing.assert_allclose(f["vel"],jp@d.qvel,atol=1e-10)
+        finally:w.close()
+
     def test_interactive_tapes_match_across_backends_and_survive_handoff(self):
         worlds=[World(TASKS["walking"],b) for b in ("mujoco","godot")]
         try:
@@ -173,6 +192,8 @@ class RealTelemetry(unittest.TestCase):
             np.testing.assert_allclose(target.state.q,source.state.q,atol=2e-5)
             np.testing.assert_allclose(target.state.base_pos,source.state.base_pos,atol=2e-6)
             np.testing.assert_array_equal(target.obs()[34:48],source.last)
+            for name,body in source.features["bodies"].items():
+                np.testing.assert_allclose(target.features["bodies"][name]["linvel"],body["linvel"],atol=2e-6)
             self.assertEqual(Objective(target).net,obj.net)
             target.step(policy(target.obs()[None])[0])
             self.assertTrue(np.isfinite(target.state.q).all())

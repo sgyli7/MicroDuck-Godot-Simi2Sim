@@ -13,7 +13,7 @@ from .tasks import TASKS,SESSION,BASELINE,DT,conditions,command
 from .world import World
 from .models import NativeAnchor
 
-PROTOCOL_VERSION="physical_tasks_v6"
+PROTOCOL_VERSION="physical_tasks_v7"
 
 def window_mean(x,n=50):
     x=np.asarray(x)

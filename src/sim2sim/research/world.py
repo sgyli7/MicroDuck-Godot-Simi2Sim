@@ -20,6 +20,7 @@ class World:
         files={"robot":task.robot_path,"mjcf":Path(self.cfg["mjcf"])}
         if backend=="godot":files.update(server=sim2sim_root()/"godot/physics_server.gd",spec=Path(self.cfg["godot_spec"]))
         self.physics={"backend":backend,"joint_limits":"signed_fresh_reset_v1","dt":DT,"current_limit_a":1.75,
+                      "state_transfer":"inertial_com_velocity_v2","velocity_metric":"trunk_inertial_com_v2",
                       "files":{k:{"path":str(p),"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for k,p in files.items()}}
         self.sampler = HomePoseSampler(self.cfg)
         self.mj = self.sampler.mj
@@ -189,7 +190,7 @@ class World:
         if self.backend_name=="mujoco":
             bv=np.zeros(6);bid=self.mj.base_body_id
             mujoco.mj_objectVelocity(self.mj.model,self.mj.data,mujoco.mjtObj.mjOBJ_BODY,bid,bv,0)
-            linear=bv[3:]+np.cross(bv[:3],self.mj.data.xipos[bid]-self.mj.data.xpos[bid])
+            linear=bv[3:]
         vel=np.array([[cy,sy,0],[-sy,cy,0],[0,0,1]])@linear
         supports = [["ankle_left"],["ankle_right"]]
         if self.task.robot == "microduck_roller":

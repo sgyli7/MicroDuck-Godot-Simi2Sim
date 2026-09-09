@@ -231,7 +231,7 @@ penalty normalized by pi and capped at one before its recorded multiplier.
 Physical rewards and critic fitting returned to a useful range. A regression
 check prevents this penalty from growing without bound.
 
-## Interactive walking and bounded-roll result (20:09 UTC)
+## Interactive walking and bounded-roll result (20:04 UTC)
 
 A small recorded command coupling (internal yaw command += 0.9 * forward
 command) on `wd02` iteration 80 improves strict development completion to
@@ -256,3 +256,28 @@ rolls in three checks: trajectories repeat several revolutions. It is stopped
 for the next architectural trial. `r06` uses full-network adaptation from
 `r03`'s actual recovery parent, rather than inheriting `r05`'s degraded policy.
 The 30-degree final heading guard is retained.
+
+## COM velocity correction (20:07 UTC)
+
+A fresh independent kinematic check found that `mj_objectVelocity(mjOBJ_BODY)`
+already reports the body inertial COM velocity. The legacy state transfer
+incorrectly treated it as the regular body-origin velocity and added omega ×
+(xipos - xpos) a second time. At a 4 rad/s forward angular velocity this created
+0.091 m/s trunk and 0.131 m/s jaw transfer errors. The MuJoCo COM Jacobian times
+qvel matches the unmodified API velocity to numerical precision on every body.
+The engine source explicitly distinguishes BODY (xipos) and XBODY (xpos):
+https://github.com/google-deepmind/mujoco/blob/main/src/engine/engine_core_util.c
+
+The backend transfer and reference COM metric now use the unmodified BODY
+velocity; the ordinary backend state also stops using subtree-COM `cvel` as
+trunk velocity. A random articulated-velocity regression checks every body's
+linear/angular transfer against its COM Jacobian. Normal cold/handoff Godot
+rollouts start from zero angular/joint velocities, so their physics and
+outcomes are unchanged. Source mid-roll starts are materially affected.
+`r06` is stopped and repeated as `r07_com_transfer`; previous curriculum runs
+remain documented negatives under their original reset convention.
+
+Protocol v7 keeps v6 outcome thresholds and records the corrected COM velocity
+contract. Godot archives can be rescored unchanged; old MuJoCo traces require
+fresh reference rollouts rather than silently relabeling the wrong velocities.
+Both the source XML and source-play wheel-friction references are re-run.

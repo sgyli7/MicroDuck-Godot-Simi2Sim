@@ -92,10 +92,10 @@ class MujocoBackend:
         for b in range(1, self.model.nbody):
             vel = np.zeros(6, dtype=np.float64)
             mujoco.mj_objectVelocity(self.model, self.data, mujoco.mjtObj.mjOBJ_BODY, b, vel, 0)
+            # mjOBJ_BODY is the inertial frame, already centered at xipos.
+            # mjOBJ_XBODY would instead report the regular body origin.
             omega = vel[0:3]
-            v_origin = vel[3:6]
-            r = self.data.xipos[b] - self.data.xpos[b]
-            v_com = v_origin + np.cross(omega, r)
+            v_com = vel[3:6]
             poses.append(
                 {
                     "name": self.body_names[b],
@@ -172,7 +172,10 @@ class MujocoBackend:
         qd = self.data.qvel[self.joint_qvel_indices].copy()
         pos = self.data.xpos[self.base_body_id].copy()
         quat = self.data.xquat[self.base_body_id].copy()
-        lin = self.data.cvel[self.base_body_id][3:6].copy()
+        velocity = np.zeros(6)
+        mujoco.mj_objectVelocity(self.model, self.data, mujoco.mjtObj.mjOBJ_BODY,
+                                self.base_body_id, velocity, 0)
+        lin = velocity[3:6].copy()
         if self.imu_id >= 0:
             adr = int(self.model.sensor_adr[self.imu_id])
             ang_local = self.data.sensordata[adr : adr + 3].copy()
