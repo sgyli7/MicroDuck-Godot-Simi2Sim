@@ -115,6 +115,11 @@ def save_checkpoint(path,policy,critic,ao,co,iteration,config):
 
 def run(args):
     torch.set_num_threads(args.threads);seed_all(args.seed)
+    resume_checkpoint=torch.load(args.resume,weights_only=False) if args.resume else None
+    if resume_checkpoint is not None:
+        recorded_gate=resume_checkpoint['config'].get('time_gate','')
+        if not args.time_gate:args.time_gate=recorded_gate
+        if args.time_gate!=recorded_gate:raise ValueError('Resume cannot change the actor time gate')
     task=TASKS[args.skill];session=json.loads((SESSION/"session.json").read_text())
     hard_deadline=float(session["deadline_unix"])-60
     start=time.time();deadline=min(hard_deadline,start+args.minutes*60)
@@ -126,14 +131,15 @@ def run(args):
     (out/"config.json").write_text(json.dumps(config,indent=2))
     template=Path(args.template) if args.template else source
     config["increment_template_sha256"]=hashlib.sha256(template.read_bytes()).hexdigest()
-    policy=Policy(source,args.variant,args.std,args.bound,template=template)
+    time_gate=None if not args.time_gate else tuple(float(x) for x in args.time_gate.split(','))
+    policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate)
     policy.task_name=task.name
     critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s)
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
     ao=torch.optim.Adam(actor_parameters,lr=args.actor_lr);co=torch.optim.Adam(critic.parameters(),lr=args.critic_lr)
     initial_iteration=0
     if args.resume:
-        ck=torch.load(args.resume,weights_only=False)
+        ck=resume_checkpoint
         if ck["factory_sha256"]!=policy.anchor.sha256:raise RuntimeError("Resume source mismatch")
         policy.load_state_dict(ck["policy"]);critic.load_state_dict(ck["critic"])
         ao.load_state_dict(ck["actor_optimizer"]);co.load_state_dict(ck["critic_optimizer"])
@@ -301,6 +307,7 @@ def main():
     p.add_argument("--symmetry-weight",type=float,default=0.,help="Bilateral actor consistency loss using the upstream observation/action transform")
     p.add_argument("--reward-params",default="{}",help="Explicit tracking-kernel variances")
     p.add_argument("--random-commands",type=float,default=0.,help="Fraction of training episodes with varied interactive command tapes")
+    p.add_argument("--time-gate",default="",help="Optional start,end seconds for a learned increment on a declared time-input actor")
     args=p.parse_args()
     if not 0<=args.roll_starts<=1:p.error("--roll-starts must be in [0,1]")
     if not 0<=args.random_commands<=1:p.error("--random-commands must be in [0,1]")

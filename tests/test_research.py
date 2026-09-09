@@ -277,6 +277,18 @@ class RealTelemetry(unittest.TestCase):
         finally:w.close()
 
 class Deployment(unittest.TestCase):
+    def test_time_gate_preserves_launch_exactly_and_is_inside_export(self):
+        from sim2sim.research.time_input import prepare
+        with tempfile.TemporaryDirectory() as d:
+            path=prepare(TASKS['roulade'].source,Path(d)/'teacher.onnx')
+            p=Policy(path,'plain',template=TASKS['roulade'].source,time_gate=(1.8,2.1));p.task_name='roulade'
+            with torch.no_grad():p.delta.net[-1].bias.add_(.1)
+            x=np.zeros((1,61),np.float32);x[:,5]=-1.;x[:,48]=.2
+            np.testing.assert_array_equal(p.predict(x),p.anchor(x))
+            x[:,48]=.8;np.testing.assert_allclose(p.predict(x)-p.anchor(x),.1,atol=1e-6)
+            exported=export_policy(p,Path(d)/'gated.onnx')
+            self.assertTrue(parity(p,exported,n=500)['passed'])
+
     def test_time_ready_actor_keeps_teacher_and_exports_nonzero_adaptation(self):
         from sim2sim.research.time_input import prepare
         from sim2sim.research.models import NativeAnchor,Critic

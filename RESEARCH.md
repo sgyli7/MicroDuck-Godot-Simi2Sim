@@ -336,3 +336,42 @@ The machine has 20 CPU threads. A third bounded lane runs `r08` with eight
 worlds and 1,024 steps per update, preserving the same 8,192-sample update size
 while the two existing lanes continue. CPU throughput is monitored; this is
 independent simulator processing, not additional decision-making agents.
+
+## Native landing demonstrations and explicit neural experts (20:43 UTC)
+
+The on-policy walking distillation finishes at 54/72 basic development cases
+and 142/192 additional cases, without falls. It solves all 16 extra idle cases
+(max travel about 1 mm, max yaw 0.5 degrees), and 14/16 command-sequence cases.
+Fast forward and lateral tracking remain weak; fast-forward yaw also needs
+polish. This is a substantial improvement over the previous walker, not a
+claim that every requested twist is achieved.
+
+Native roll diagnostics show a first revolution followed by repeated launches.
+For training demonstrations only, the partially adapted roll expert handed
+control to the original balance expert after actual inversion and a supported
+upright return. Nine of 24 training-seed demonstrations complete the strict
+physical task. A time-aware monolithic student trained on these demonstrations
+does not yet reproduce reliable recovery. A gated-increment ablation preserves
+the parent's launch exactly for the first 1.8 seconds and also remains
+unqualified. These teacher demonstrations are not counted as candidate results.
+
+A further architecture probe (`roll_experts.py`) explicitly packages both
+frozen neural experts and their time-input blend into one ONNX. It is a
+**two-expert actor**, not a claim of monolithic distillation. The simulator
+executes that single graph throughout every five-second evaluation, with no
+external policy handoff or physical assistance. The ONNX records both expert
+hashes and its blend interval; parity over 10,000 inputs is exact.
+
+A 2.30–2.45 s blend achieves six stable single-revolution landings on the basic
+development set, but only one also finishes within 30 degrees of the initial
+heading (the others are about 31–78 degrees away). Thus it improves recovery
+but is not reliable enough to promote. An alternative 2.10–2.25 s blend fails
+the normal development set. `r10_expert_residual` trains a recorded, time-gated
+residual on the stronger two-expert actor. `r08` and `r07` are stopped after
+several consecutive unqualified checks; `r09` retains the separate source-motion
+feedback hypothesis. All architectures retain the same physical outcome gates.
+
+Time gating is part of the exported neural graph. Resume restores its recorded
+configuration and rejects an incompatible change, while old checkpoints with
+no gate remain compatible. Tests verify exact unchanged launch actions and
+nonzero late adaptation in the actual exported model.

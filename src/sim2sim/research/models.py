@@ -31,11 +31,12 @@ class NativeAnchor:
         return np.concatenate([self.session.run(None,{self.input:o[None]})[0] for o in obs],axis=0)
 
 class Increment(nn.Module):
-    def __init__(self, source, variant="anchor", bound=.2):
+    def __init__(self, source, variant="anchor", bound=.2,time_gate=None):
         super().__init__()
         rec=parse_mlp_onnx(source)
         self.variant=variant
         self.bound=float(bound)
+        self.time_gate=time_gate
         self.register_buffer("mean",torch.from_numpy(rec.mean.copy()))
         self.register_buffer("denominator",torch.from_numpy(rec.std.copy()))
         if variant=="residual":
@@ -57,14 +58,23 @@ class Increment(nn.Module):
 
     def forward(self, obs):
         x=(obs-self.mean)/self.denominator
-        if self.variant=="residual":return self.bound*torch.tanh(self.net(x.clamp(-20,20)))
-        return (self.net(x)-self.initial(x)).to(obs.dtype)
+        if self.variant=="residual":delta=self.bound*torch.tanh(self.net(x.clamp(-20,20)))
+        else:delta=(self.net(x)-self.initial(x)).to(obs.dtype)
+        if self.time_gate is not None:
+            start,end,seconds=self.time_gate
+            gate=((obs[:,48:49]*seconds-start)/(end-start)).clamp(0.,1.)
+            delta=delta*gate
+        return delta
 
 class Policy(nn.Module):
-    def __init__(self, source, variant="anchor", std=.03, bound=.2, template=None):
+    def __init__(self, source, variant="anchor", std=.03, bound=.2, template=None,time_gate=None):
         super().__init__()
         self.anchor=NativeAnchor(source)
-        self.delta=Increment(template or source,variant,bound)
+        if time_gate is not None:
+            start,end=map(float,time_gate)
+            if not 0<=start<end<=self.anchor.time_input_s:raise ValueError("Time gate requires a declared time-input actor")
+            time_gate=(start,end,self.anchor.time_input_s)
+        self.delta=Increment(template or source,variant,bound,time_gate)
         if self.anchor.time_input_s:
             self.delta.mean[48]=0.;self.delta.denominator[48]=1.
         self.log_std=nn.Parameter(torch.full((14,),float(np.log(std))))
@@ -122,6 +132,9 @@ def export_policy(policy,path):
     # Replace current-stage fields, preserving unique inherited metadata.
     metadata={prop.key:prop.value for prop in original.metadata_props}
     metadata.update(sim2sim_factory_sha256=policy.anchor.sha256,sim2sim_adaptation=policy.variant)
+    if policy.delta.time_gate is not None:
+        import json
+        metadata["sim2sim_increment_time_gate_s"]=json.dumps(policy.delta.time_gate)
     if getattr(policy,"task_name",None):
         from .tasks import TASKS
         task=TASKS[policy.task_name]
