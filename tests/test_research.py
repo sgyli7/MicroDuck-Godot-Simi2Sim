@@ -172,6 +172,20 @@ class TaskSemantics(unittest.TestCase):
         self.assertFalse(result["success"])
 
 class RealTelemetry(unittest.TestCase):
+    def test_episode_generator_resume_matches_next_fresh_reset(self):
+        from sim2sim.research.train import Vector
+        a=Vector(TASKS['walking'],1,919,random_commands=.5);b=None
+        try:
+            state=a.checkpoint_state();a.reset_worlds([0])
+            b=Vector(TASKS['walking'],1,919,random_commands=.5,environment_state=state)
+            self.assertEqual(a.count,b.count);self.assertGreater(b.count,state['count'])
+            self.assertEqual(a.worlds[0].condition,b.worlds[0].condition)
+            self.assertEqual(a.checkpoint_state(),b.checkpoint_state())
+            np.testing.assert_allclose(a.worlds[0].obs(),b.worlds[0].obs(),atol=2e-5)
+        finally:
+            a.close()
+            if b is not None:b.close()
+
     def test_generic_runner_uses_declared_time_and_heading_inputs(self):
         from sim2sim.research.time_input import prepare,add_heading
         from sim2sim.policy import OnnxPolicy

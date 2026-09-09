@@ -35,9 +35,12 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
+        if environment_state is not None:
+            self.seed=int(environment_state['seed']);self.count=int(environment_state['count'])
+            if environment_state.get('rng') is not None:self.rng.bit_generator.state=copy.deepcopy(environment_state['rng'])
         self.conditions=training_conditions or conditions(task)
         self.entry=entry;self.entry_counts={"reset":0,"standing":0}
         self.random_commands=random_commands
@@ -57,6 +60,9 @@ class Vector:
 
     def next_seed(self):
         self.count+=1;return self.seed*100000+self.count
+
+    def checkpoint_state(self):
+        return dict(seed=self.seed,count=self.count,rng=copy.deepcopy(self.rng.bit_generator.state))
 
     def reset_worlds(self,indices):
         warm=[]
@@ -110,8 +116,9 @@ class Vector:
 def rng_state():
     return {"python":random.getstate(),"numpy":np.random.get_state(),"torch":torch.get_rng_state()}
 
-def save_checkpoint(path,policy,critic,ao,co,iteration,config):
-    torch.save({"policy":policy.state_dict(),"critic":critic.state_dict(),"actor_optimizer":ao.state_dict(),"critic_optimizer":co.state_dict(),"iteration":iteration,"config":config,"rng":rng_state(),"factory_sha256":policy.anchor.sha256,"protocol":PROTOCOL_VERSION},path)
+def save_checkpoint(path,policy,critic,ao,co,iteration,config,environment=None):
+    torch.save({"policy":policy.state_dict(),"critic":critic.state_dict(),"actor_optimizer":ao.state_dict(),"critic_optimizer":co.state_dict(),"iteration":iteration,"config":config,"rng":rng_state(),"factory_sha256":policy.anchor.sha256,"protocol":PROTOCOL_VERSION,
+        "environment":None if environment is None else environment.checkpoint_state()},path)
 
 def run(args):
     torch.set_num_threads(args.threads);seed_all(args.seed)
@@ -128,6 +135,9 @@ def run(args):
     source=Path(args.source) if args.source else task.source
     config=vars(args).copy();config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=PROTOCOL_VERSION)
     config["code_sha256"]={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
+    package=Path(__file__).parents[1]
+    for name in ['obs.py','coords.py','policy_time.py','backends/mujoco_backend.py','backends/godot_backend.py']:
+        config['code_sha256']['sim2sim/'+name]=hashlib.sha256((package/name).read_bytes()).hexdigest()
     (out/"config.json").write_text(json.dumps(config,indent=2))
     template=Path(args.template) if args.template else source
     config["increment_template_sha256"]=hashlib.sha256(template.read_bytes()).hexdigest()
@@ -154,9 +164,18 @@ def run(args):
     if not initial_parity["passed"]:raise RuntimeError("Initial actor export parity failed")
     weights=json.loads(args.weights)
     training_conditions=None if not args.conditions else args.conditions.split(",")
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input)
+    environment_state=None
+    if resume_checkpoint is not None:
+        environment_state=resume_checkpoint.get('environment')
+        if environment_state is None:
+            prior=resume_checkpoint['config']
+            environment_state=dict(seed=prior.get('seed',args.seed),count=initial_iteration*prior.get('envs',16)*prior.get('steps',512)+prior.get('envs',16),rng=None)
+            config['environment_resume']='legacy_disjoint_episode_seed_range'
+        else:config['environment_resume']='restored_generator_and_episode_counter'
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state)
     config["time_input_s"]=policy.anchor.time_input_s
     config["heading_input"]=policy.anchor.heading_input
+    config['environment_seed']=env.seed
     eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
     config["physics"]=env.worlds[0].physics
     if env.roll_library is not None:config["roll_starts_sha256"]=env.roll_library.sha256
@@ -251,11 +270,11 @@ def run(args):
             entry={"iteration":iteration,"elapsed":time.time()-start,"samples":total_samples,"reward":float(b["physical_reward"].mean()),"bootstrapped_reward":float(b["reward"].mean()),"reward_logging":"physical_v2","value_loss":value_loss,"explained_variance":explained_variance,"delta_rms":delta_rms,"kl":actual_kl,"actor_lr":ao.param_groups[0]["lr"],"std":float(policy.log_std.detach().exp().mean()),"rejected":rejected,"actor_updates":update_count,"fps":T*N/(time.time()-iteration_start),"done_fraction":float(b["done"].float().mean()),"terms":{k:v/term_count for k,v in all_terms.items()}}
             log.write(json.dumps(entry)+"\n")
             print(json.dumps({k:v for k,v in entry.items() if k!="terms"}),flush=True)
-            if iteration%5==0:save_checkpoint(out/"latest.pt",policy,critic,ao,co,iteration,config)
+            if iteration%5==0:save_checkpoint(out/"latest.pt",policy,critic,ao,co,iteration,config,env)
             evaluate_now=time.time()-last_eval>args.eval_seconds or (args.iterations and iteration>=initial_iteration+args.iterations)
             if evaluate_now and time.time()<hard_deadline-30:
                 export=export_policy(policy,out/f"iteration_{iteration:05d}.onnx")
-                save_checkpoint(out/f"iteration_{iteration:05d}.pt",policy,critic,ao,co,iteration,config)
+                save_checkpoint(out/f"iteration_{iteration:05d}.pt",policy,critic,ao,co,iteration,config,env)
                 # Report export roundoff independently of physical outcomes.
                 report=parity(policy,export,n=200)
                 selected=None if not args.eval_conditions else args.eval_conditions.split(",")
@@ -267,11 +286,11 @@ def run(args):
                 if report["passed"] and not result["errors"] and (result["success_rate"],result["score"])>(best_success,best_score):
                     best_score=result["score"]
                     best_success=result["success_rate"]
-                    save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config)
+                    save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config,env)
                     (out/"best.onnx").write_bytes(export.read_bytes())
                 last_eval=time.time()
             if rejected and ao.param_groups[0]["lr"]<1e-6:status="repeated_kl_rejection";break
-        save_checkpoint(out/"latest.pt",policy,critic,ao,co,iteration,config)
+        save_checkpoint(out/"latest.pt",policy,critic,ao,co,iteration,config,env)
         export=export_policy(policy,out/"final.onnx")
         report=parity(policy,export,n=1000)
         (out/"final_parity.json").write_text(json.dumps(report,indent=2))
@@ -279,11 +298,11 @@ def run(args):
             selected=None if not args.eval_conditions else args.eval_conditions.split(",")
             result=run_suite(task.name,export,seeds=(100,101,102),workers=4,out=out/"eval_final",selected_conditions=selected,entry=eval_entry)
             if report["passed"] and not result["errors"] and (result["success_rate"],result["score"])>(best_success,best_score):
-                (out/"best.onnx").write_bytes(export.read_bytes());save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config);best_score=result["score"];best_success=result["success_rate"]
+                (out/"best.onnx").write_bytes(export.read_bytes());save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config,env);best_score=result["score"];best_success=result["success_rate"]
         (out/"completed.json").write_text(json.dumps({"status":status,"iterations":iteration,"samples":total_samples,"elapsed":time.time()-start,"best_dev_score":best_score if math.isfinite(best_score) else None,"best_dev_success":best_success,"final_parity":report},indent=2))
     except BaseException as e:
         (out/"error.txt").write_text(traceback.format_exc())
-        save_checkpoint(out/"failed.pt",policy,critic,ao,co,iteration,config)
+        save_checkpoint(out/"failed.pt",policy,critic,ao,co,iteration,config,env)
         raise
     finally:env.close();log.close()
     return out

@@ -433,3 +433,31 @@ the distilled walking graph is about 7.25 MB and 0.17 ms p99, and the two-expert
 roll graph about 4.87 MB and 0.106 ms p99 in a 2,000-call one-thread sample.
 These are inference-only timings under concurrent training, not full simulator
 round-trip latency.
+
+## Checkpoint continuity and worker recovery (21:22 UTC)
+
+The actor/critic optimizers and global Python/NumPy/Torch RNGs were already
+restored, but the vector environment's independent generator and episode
+counter restarted. Checkpoints now also preserve that generator and counter.
+Resumes intentionally begin fresh physical episodes; they do not pretend to
+restore Godot's hidden solver/contact state. Legacy checkpoints use a disjoint
+episode-seed range above their maximum possible prior episode count. Configs
+record this distinction and hashes of observation and backend transfer code.
+
+A native reset test verifies that a restored generator produces the same next
+condition, RNG state and fresh observation. End-to-end save/resume smoke runs
+advance iteration 2 to 5 and episode counter 2 to 4. A legacy timed-model resume
+retains its 0.2–0.5 s gate and advances into a new seed range (counter 1030).
+
+At 21:21, lanes A/B and their coordinators were absent without Python errors
+or completion records. The original logs and checkpoints remain unchanged;
+wh01 resumes at iteration 30 for 15 minutes, and r11 at iteration 70 for
+25 minutes in new run directories. Lane C continued normally. The precise
+external process-exit cause is unknown. All runs retain the original 8-hour
+wall-clock cap; recovery does not extend it.
+
+For r12, the stronger r11 iteration 50 parent replaces the earlier 4-step
+heading-aware candidate: 5/6 basic and 10/16 extra cases versus 4/6 and 8/16.
+Its wrapper masks the new heading slots for the parent while preserving time.
+The new heading-aware residual uses the same small bound 0.1 and std 0.02 as
+r11, making the heading-observability comparison more focused.
