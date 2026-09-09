@@ -47,7 +47,16 @@ class Objective:
         stand=float(np.exp(-((f["z"]-.115)/.03)**2))*up
         pose=float(np.exp(-np.mean((w.state.q-w.home)**2)/.12))
         terms={"action_rate":-.08*rate,"joint_speed":-.00002*float(np.sum(w.state.qd**2))}
-        if name in ("standing","walking","roller"):
+        if name=='roller' and getattr(w,'roller_contract',False):
+            delta=w.roller_target_yaw-f['yaw'];error=math.atan2(math.sin(delta),math.cos(delta))
+            throttle=float(cmd[0]);speed=float(np.linalg.norm(self.smooth[:2]))
+            terms.update(push=10*max(0.,throttle)*np.tanh(max(0.,self.smooth[0])/.3),
+                brake=8*max(0.,-throttle)*np.exp(-speed**2/.09),
+                heading=3*np.exp(-error**2/.25),upright=2*up,height=stand,
+                coast_calm=float(abs(throttle)<.01)*np.exp(-np.sum(w.state.qd[np.r_[0:5,9:14]]**2)/25),
+                reverse=-6*max(0.,-self.smooth[0]),excess_speed=-3*max(0.,self.smooth[0]-.7)**2,
+                yaw_rate_cost=-.02*float(f['gyro'][2]**2),pose=.2*pose)
+        elif name in ("standing","walking","roller"):
             target=cmd[:3] if name!="standing" else np.zeros(3)
             v_err=float(np.sum((self.smooth[:2]-target[:2])**2))
             yaw_err=float((self.smooth[2]-target[2])**2)

@@ -564,8 +564,55 @@ walking-manifest hashes are recorded. Standard physical_tasks_v7 evaluation
 keeps its original scene, cold starts and standing teacher; deployment entries
 and continuous sequences are separate, explicitly identified checks.
 
-The new parent is r11 iteration 145 with a parent-preserving heading wrapper.
+The initially proposed parent was r11 iteration 145 with a parent-preserving
+heading wrapper. Before R13 launched, the actual parent was changed to the
+frozen r12 iteration 121 actor (`integration/r12_best_2159.onnx`): it passed
+7/9 continuous development sequences versus r11 iteration 145's 5/9. R13's
+config and source hash record this final choice.
 The sequence check also records whole-transition drift and, separately, the
 existing locomotion gate's 0.5-second braking allowance. Early transient yaw
 (roughly 18–20 degrees after keyboard forward release) remains visible and is
 not erased by the steady-state check.
+
+## Roller command-contract correction (22:29 UTC)
+
+Pinned upstream `microduck_velocity_rollers_env_cfg.py` describes command x
+as push/coast/brake, not desired forward velocity, and the third command as
+relative heading error. The implementation in
+`RelativeHeadingVelocityCommand._update_command` computes target minus actual
+yaw (positive counterclockwise), despite an inconsistent clockwise docstring.
+The old generic velocity/yaw-rate roller protocol therefore cannot select
+roller replacements. Its results, including wh01/wh02, remain available as
+negative experiments under their original protocol. Other eight skills keep
+physical_tasks_v7 without changes.
+
+New `roller_throttle_heading_v1` evaluates push, coast from 0.3 m/s, brake
+from 0.3 m/s, two heading changes and push/coast/brake sequences. It preserves
+full-duration no-fall and final-standing checks. Coast permits passive drift;
+braking must end below 0.05 m/s without sustained reverse motion. Heading
+cases feed the actual wrapped target-minus-current error and require final
+error below 0.15 radians. The reward explicitly penalizes reverse speed,
+unlike the upstream brake reward's forward-velocity clamp. The original
+checkpoint nevertheless runs backward under negative input in BOTH engines.
+The pinned current training config and the checkpoint's exact historical
+training revision are not proven identical; a reward loophole is a hypothesis,
+not an established explanation of this artifact.
+
+Fresh 18-episode results: original MuJoCo XML 9/18, original MuJoCo inference
+profile 12/18, original Godot XML 12/18, previous Godot adaptation 6/18.
+Original Godot and MuJoCo inference-profile scores are 0.5986 and 0.6021.
+Their shared failures are braking and the combined sequence. The new native
+PPO smoke reproduces the original 12/18 with exact initial export parity;
+38 research tests pass. WH03 starts a distinct 35-minute, eight-environment
+residual trial under the corrected contract, using unchanged Godot XML physics.
+
+Upstream `infer_policy.py` separately applies 0.003 N m passive-wheel bearing
+friction, absent from its training XML. An isolated Godot `source_play` scene
+models the same dissipative constraint using a zero-speed bounded hinge
+motor. Its torque-to-impulse conversion follows Godot's Jolt hinge source.
+The standalone bearing check has inertia 0.0001 kg m²: angular speed falls
+from 40 to 9.999975 rad/s in one second, matching the expected 30 rad/s²
+deceleration. No support force, position target or default physics change is
+introduced. This explicit profile also gives 12/18, score 0.5725; it corrects
+coasting decay but does not solve active reverse motion. Both physics profiles
+and their hashes remain separate. It is not selected as a default change.

@@ -36,7 +36,7 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None,roller_contract=False):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         if environment_state is not None:
@@ -59,7 +59,7 @@ class Vector:
             self.roll_library=RollStarts();self.entry_counts["midroll"]=0
         try:
             for i in range(num_envs):
-                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source))
+                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source,roller_contract=roller_contract))
             self.reset_worlds(range(num_envs))
             self.objectives=[Objective(w,weights,reward_params) for w in self.worlds]
         except BaseException:
@@ -134,7 +134,7 @@ def rng_state():
     return {"python":random.getstate(),"numpy":np.random.get_state(),"torch":torch.get_rng_state()}
 
 def save_checkpoint(path,policy,critic,ao,co,iteration,config,environment=None):
-    torch.save({"policy":policy.state_dict(),"critic":critic.state_dict(),"actor_optimizer":ao.state_dict(),"critic_optimizer":co.state_dict(),"iteration":iteration,"config":config,"rng":rng_state(),"factory_sha256":policy.anchor.sha256,"protocol":PROTOCOL_VERSION,
+    torch.save({"policy":policy.state_dict(),"critic":critic.state_dict(),"actor_optimizer":ao.state_dict(),"critic_optimizer":co.state_dict(),"iteration":iteration,"config":config,"rng":rng_state(),"factory_sha256":policy.anchor.sha256,"protocol":config['protocol'],
         "environment":None if environment is None else environment.checkpoint_state()},path)
 
 def run(args):
@@ -145,6 +145,13 @@ def run(args):
         if not args.time_gate:args.time_gate=recorded_gate
         if args.time_gate!=recorded_gate:raise ValueError('Resume cannot change the actor time gate')
     task=TASKS[args.skill];session=json.loads((SESSION/"session.json").read_text())
+    evaluate_skill=run_suite;protocol=PROTOCOL_VERSION
+    if args.roller_contract:
+        if task.name!='roller' or args.entry!='reset' or args.random_commands:raise ValueError('Native roller contract uses its own task starts and command cases')
+        from .roller_evaluate import run_suite as evaluate_skill
+        from .roller_tasks import PROTOCOL,CONDITIONS
+        protocol=PROTOCOL
+        if args.conditions is None:args.conditions=','.join(CONDITIONS)
     if args.scene_robot:
         if args.roll_starts:raise ValueError('Source-state curriculum requires its original articulated scene')
         task=replace(task,robot=args.scene_robot)
@@ -153,7 +160,7 @@ def run(args):
     if start>=deadline:raise RuntimeError("Eight-hour experiment window has ended")
     out=SESSION/"runs"/args.name;out.mkdir(parents=True,exist_ok=False)
     source=Path(args.source) if args.source else task.source
-    config=vars(args).copy();config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=PROTOCOL_VERSION)
+    config=vars(args).copy();config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=protocol)
     config["code_sha256"]={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
     package=Path(__file__).parents[1]
     for name in ['obs.py','coords.py','policy_time.py','play_input.py','backends/mujoco_backend.py','backends/godot_backend.py']:
@@ -164,6 +171,7 @@ def run(args):
     time_gate=None if not args.time_gate else tuple(float(x) for x in args.time_gate.split(','))
     policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate)
     policy.task_name=task.name
+    policy.roller_contract=args.roller_contract
     critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s,heading_input=policy.anchor.heading_input)
     obs_sign=observation_sign(task.name,policy.anchor.heading_input)
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
@@ -191,7 +199,7 @@ def run(args):
             environment_state=dict(seed=prior.get('seed',args.seed),count=initial_iteration*prior.get('envs',16)*prior.get('steps',512)+prior.get('envs',16),rng=None)
             config['environment_resume']='legacy_disjoint_episode_seed_range'
         else:config['environment_resume']='restored_generator_and_episode_counter'
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank)
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank,args.roller_contract)
     if env.entry_bank is not None:config['entry_bank_sha256']=env.entry_bank.hashes
     if args.entry_source:config['entry_source_sha256']=hashlib.sha256(Path(args.entry_source).read_bytes()).hexdigest()
     config["time_input_s"]=policy.anchor.time_input_s
@@ -299,7 +307,7 @@ def run(args):
                 # Report export roundoff independently of physical outcomes.
                 report=parity(policy,export,n=200)
                 selected=None if not args.eval_conditions else args.eval_conditions.split(",")
-                result=run_suite(task.name,export,seeds=(100,101,102),workers=4,out=out/f"eval_{iteration:05d}",selected_conditions=selected,entry=eval_entry)
+                result=evaluate_skill(task.name,export,seeds=(100,101,102),workers=4,out=out/f"eval_{iteration:05d}",selected_conditions=selected,entry=eval_entry)
                 result_short={k:v for k,v in result.items() if k!="episodes"};result_short.update(iteration=iteration,parity=report)
                 evaluation_records.append(result_short)
                 (out/"evaluations.json").write_text(json.dumps(evaluation_records,indent=2))
@@ -317,7 +325,7 @@ def run(args):
         (out/"final_parity.json").write_text(json.dumps(report,indent=2))
         if time.time()<hard_deadline-30:
             selected=None if not args.eval_conditions else args.eval_conditions.split(",")
-            result=run_suite(task.name,export,seeds=(100,101,102),workers=4,out=out/"eval_final",selected_conditions=selected,entry=eval_entry)
+            result=evaluate_skill(task.name,export,seeds=(100,101,102),workers=4,out=out/"eval_final",selected_conditions=selected,entry=eval_entry)
             if report["passed"] and not result["errors"] and (result["success_rate"],result["score"])>(best_success,best_score):
                 (out/"best.onnx").write_bytes(export.read_bytes());save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config,env);best_score=result["score"];best_success=result["success_rate"]
         (out/"completed.json").write_text(json.dumps({"status":status,"iterations":iteration,"samples":total_samples,"elapsed":time.time()-start,"best_dev_score":best_score if math.isfinite(best_score) else None,"best_dev_success":best_success,"final_parity":report,"entry_counts":env.entry_counts},indent=2))
@@ -349,6 +357,7 @@ def main():
     p.add_argument("--entry-source",help="Optional deployed idle actor used for training handoffs; standard evaluation keeps its original entry actor")
     p.add_argument("--entry-bank",help="Training-only native controller prefixes from a declared deployment bank")
     p.add_argument("--scene-robot",choices=['microduck','microduck_ball','microduck_roller'])
+    p.add_argument("--roller-contract",choices=['native'],help='Use native push/coast/brake and relative-heading tasks for roller')
     p.add_argument("--roll-starts",type=float,default=0.,help="Training-only fraction of source mid-roll resets")
     p.add_argument("--symmetry-weight",type=float,default=0.,help="Bilateral actor consistency loss using the upstream observation/action transform")
     p.add_argument("--reward-params",default="{}",help="Explicit tracking-kernel variances")

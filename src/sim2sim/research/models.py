@@ -144,6 +144,7 @@ def export_policy(policy,path):
         metadata.update(sim2sim_task=task.name,sim2sim_command_mode=task.mode,
                         sim2sim_period_s=str(task.period if task.mode=="phase" else 0))
         if policy.anchor.time_input_s:metadata["sim2sim_command_mode"]="one_shot_time"
+        if getattr(policy,'roller_contract',False):metadata['sim2sim_command_mode']='roller_throttle_heading_error'
     for key,value in metadata.items():result.metadata_props.add(key=key,value=value)
     onnx.checker.check_model(result)
     onnx.save(result,str(path));delta_path.unlink()

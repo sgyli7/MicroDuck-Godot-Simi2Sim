@@ -22,6 +22,22 @@ def fake_world(name):
     return w
 
 class TaskSemantics(unittest.TestCase):
+    def test_native_roller_command_uses_throttle_and_actual_heading_error(self):
+        from sim2sim.research.roller_tasks import command as roller_command
+        w=fake_world('roller');w.condition='brake';w.roller_target_yaw=.5;w.features['yaw']=.2
+        cmd=roller_command(w);self.assertEqual(cmd[0],-.5);self.assertAlmostEqual(float(cmd[2]),.3,places=6)
+        w.features['yaw']=.6
+        self.assertAlmostEqual(float(roller_command(w)[2]),-.1,places=6)
+        w.condition='coast';self.assertEqual(roller_command(w)[0],0.)
+
+    def test_native_roller_brake_rewards_stopping_and_penalizes_reverse(self):
+        w=fake_world('roller');w.roller_contract=True;w.roller_target_yaw=0.;w.executed_command[0]=-.5
+        stopped=Objective(w).compute()[2]
+        w.features['vel']=np.array([-.3,0.,0.]);r=Objective(w);r.smooth=np.array([-.3,0.,0.])
+        reverse=r.compute()[2]
+        self.assertGreater(stopped['brake'],reverse['brake']);self.assertLess(reverse['reverse'],0.)
+        self.assertEqual(stopped['push'],0.)
+
     def test_reflection_preserves_phase_and_heading_cosine(self):
         from sim2sim.research.mirror import reflect_obs
         x=np.zeros(61,np.float32);x[48:51]=[.2,.3,.4]

@@ -14,11 +14,13 @@ from sim2sim.train.rewards import sit_target_q
 from .tasks import DT, command
 
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False):
         self.task, self.backend_name = task, backend
         self.time_input_s=float(time_input_s);self.time_offset=0.
         self.heading_input=bool(heading_input)
         self.entry_source=None if entry_source is None else Path(entry_source)
+        self.roller_contract=bool(roller_contract)
+        if self.roller_contract and task.name!='roller':raise ValueError('Native roller contract requires the roller task')
         if self.heading_input and not self.time_input_s:raise ValueError("Relative heading requires a timed maneuver")
         if self.time_input_s and (task.name!="roulade" or self.time_input_s!=task.seconds):
             raise ValueError("Time input currently requires the full roulade duration")
@@ -30,14 +32,21 @@ class World:
                       "files":{k:{"path":str(p),"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for k,p in files.items()}}
         self.sampler = HomePoseSampler(self.cfg)
         self.mj = self.sampler.mj
+        godot_scene='res://main.tscn'
         if reference_profile!="xml":
-            if backend!="mujoco" or reference_profile!="source_play":raise ValueError("Unknown reference profile")
+            if reference_profile!="source_play" or (backend!='mujoco' and task.robot!='microduck_roller'):raise ValueError("Unknown reference profile")
             if task.robot=="microduck_roller":
                 for j in range(self.mj.model.njnt):
                     name=mujoco.mj_id2name(self.mj.model,mujoco.mjtObj.mjOBJ_JOINT,j) or ""
                     if name.startswith("passive_"):
                         self.mj.model.dof_frictionloss[self.mj.model.jnt_dofadr[j]]=.003
                 self.physics["source_play_overrides"]={"passive_wheel_frictionloss":.003}
+                if backend=='godot':
+                    godot_scene='res://research/roller_source_play.tscn'
+                    for name in ['roller_source_play.gd','roller_source_play.tscn']:
+                        path=sim2sim_root()/'godot/research'/name
+                        self.physics['files'][name]=dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+                    self.physics['source_play_overrides']['method']='zero_speed_bounded_hinge_constraint'
             self.physics["reference_profile"]=reference_profile
         self.home = self.sampler.home
         self.meta = {mujoco.mj_id2name(self.mj.model,mujoco.mjtObj.mjOBJ_BODY,i): i for i in range(1,self.mj.model.nbody)}
@@ -48,7 +57,7 @@ class World:
         self.site_id = mujoco.mj_name2id(self.mj.model,mujoco.mjtObj.mjOBJ_SITE,"mouth_tip")
         if task.name == "ground_pick" and self.site_id < 0:
             raise RuntimeError("ground_pick requires the real mouth_tip site")
-        self.backend = self.mj if backend == "mujoco" else GodotBackend(Path(self.cfg["godot_spec"]),headless=headless,current_limit_a=1.75,recv_timeout=15)
+        self.backend = self.mj if backend == "mujoco" else GodotBackend(Path(self.cfg["godot_spec"]),headless=headless,scene=godot_scene,current_limit_a=1.75,recv_timeout=15)
         if backend == "mujoco":
             limit = 1.75*XL330_M6_KT
             self.mj.model.actuator_forcerange[:] = [-limit,limit]
@@ -74,6 +83,10 @@ class World:
         q0 = sit_target_q(self.home) if sitting else q_override
         z = .06 if sitting else None
         yaw = float(self.rng.uniform(-math.pi,math.pi)) if randomize else 0.
+        if self.roller_contract:
+            from .roller_tasks import initial_speed,target_offset
+            self.roller_target_yaw=yaw+target_offset(condition)
+            if entry_speed is None:entry_speed=initial_speed(condition)
         poses,_,_ = self.sampler.sample(self.rng,yaw_range=(yaw,yaw),joint_noise_rad=.015 if randomize else 0.,q_base=q0,z=z)
         d,m = self.mj.data,self.mj.model
         if entry_speed is None: entry_speed = .3 if self.task.name == "roller_crouch" else 0.
@@ -121,6 +134,9 @@ class World:
         return build_obs(self.state,self.last,self.command(),self.home)
 
     def command(self):
+        if self.roller_contract:
+            from .roller_tasks import command as roller_command
+            return roller_command(self)
         if self.time_input_s:
             from sim2sim.policy_time import time_command
             return time_command(self.t+self.time_offset,self.time_input_s,
@@ -265,6 +281,9 @@ class World:
         self.t=0.;self.time_offset=0.
         self.initial_xy=self.features["xy"].copy()
         yaw=self.features["yaw"];self.heading=np.array([math.cos(yaw),math.sin(yaw)])
+        if self.roller_contract:
+            from .roller_tasks import target_offset
+            self.roller_target_yaw=yaw+target_offset(self.condition)
         if "ball" in self.meta and self.task.name.startswith('kick'):
             off=np.array([.09,.042 if self.task.foot==0 else -.042])+self.rng.uniform(-.015,.015,2)
             rotation=np.array([[math.cos(yaw),-math.sin(yaw)],[math.sin(yaw),math.cos(yaw)]])
