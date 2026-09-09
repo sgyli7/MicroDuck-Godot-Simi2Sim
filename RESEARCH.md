@@ -375,3 +375,19 @@ Time gating is part of the exported neural graph. Resume restores its recorded
 configuration and rejects an incompatible change, while old checkpoints with
 no gate remain compatible. Tests verify exact unchanged launch actions and
 nonzero late adaptation in the actual exported model.
+
+## Heading error is introduced before landing (20:47 UTC)
+
+A diagnostic based on the trunk lateral axis, which remains meaningful through
+a sagittal inversion, locates most yaw drift around 1.0–1.5 s. For cold seed
+100 the error grows from -9 to -41 degrees before the late correction gate can
+act. This motivates `r11_early_yaw_control`: a small 0.1-radian residual is
+enabled from 0.2–0.5 s and a bounded world-vertical angular-velocity cost is
+added. A regression confirms that this cost leaves pure forward rotation
+unpenalized. The late-only `r10` remains a separate comparison.
+
+`r09` is stopped after three normal-entry zero-completion checks; its dense
+reference experiment is an unsuccessful bounded-budget trial, not a claim
+that motion-reference learning cannot work. The current strongest roll
+architecture has stable single-revolution recovery in all six basic cases;
+only initial-heading recovery prevents most from qualifying.

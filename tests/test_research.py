@@ -22,6 +22,14 @@ def fake_world(name):
     return w
 
 class TaskSemantics(unittest.TestCase):
+    def test_roll_yaw_spin_cost_preserves_forward_rotation(self):
+        w=fake_world('roulade');r=Objective(w,{'yaw_spin':2.})
+        w.features['rot']=np.array([[0.,0.,1.],[0.,1.,0.],[-1.,0.,0.]])
+        w.features['gyro']=np.array([0.,8.,0.])
+        self.assertEqual(r.compute()[2]['yaw_spin'],0.)
+        w.features['rot']=np.eye(3);w.features['gyro']=np.array([0.,0.,100.])
+        self.assertEqual(r.compute()[2]['yaw_spin'],-8.)
+
     def test_motion_feedback_uses_actual_pose_and_retained_source_time(self):
         w=fake_world("roulade")
         with self.assertRaises(ValueError):Objective(w,{"motion_pose":1.})

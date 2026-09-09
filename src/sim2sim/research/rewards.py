@@ -121,6 +121,9 @@ class Objective:
             terms["reverse"]=-2*max(0.,-f["gyro"][1])*float(self.net<5.8)
             if "over_rotation" in self.weights:
                 terms["over_rotation"]=-min(1.,(max(0.,self.net-2*np.pi)/np.pi)**2)
+            if "yaw_spin" in self.weights:
+                world_yaw_rate=float(f["rot"][2,:]@f["gyro"])
+                terms["yaw_spin"]=-min(4.,world_yaw_rate**2)
             if "land_leg_pose" in self.weights:
                 legs=np.r_[0:5,9:14]
                 terms["land_leg_pose"]=3*landgate*np.exp(-np.mean((w.state.q[legs]-w.home[legs])**2)/.12)
