@@ -73,3 +73,37 @@ increment back to float32 before adding the unmodified native ONNX output.
 Nonzero trained exports now pass the unchanged 1e-5 deployment tolerance; initial
 exports match exactly. This is distinct from re-running the original ONNX in
 float64, which would alter its finite-precision behavior.
+
+Protocol v4 adds two adversarial outcome guards: a kick that falls and later
+stands up is not a clean kick, and several revolutions are not a single roulade.
+All v3 baseline traces were re-scored under v4, preserving their original files
+and simulator fingerprints. Ongoing v3 pilot exports will also be re-scored
+before selection. Candidate ranking prioritizes complete success rate, then
+the continuous diagnostic score; partial progress never constitutes promotion.
+
+## Entry-distribution correction (18:45 UTC)
+
+Upstream `infer_policy.trigger_behavior` preserves `last_action` when switching
+from standing to a kick/roulade. A cold reset with a zero action history is not
+equivalent. Native tests verified the difference: source MuJoCo left-kick
+completion rose from 1/3 cold starts to 3/3 actual standing-policy handoffs;
+the first adapted kick finished 3/3 cold starts but 0/3 handoffs. It is therefore
+not deployable despite its cold-start result.
+
+The evaluator now explicitly labels `entry=reset` and `entry=standing`, and
+supports a combined `both` suite. The latter performs one second of real source
+standing control, preserves the action history, places the ball at the skill
+trigger, then evaluates the candidate alone for the full task window. The
+standing controller never assists within that evaluated window. All original
+cold-start results remain archived as a separate stress test.
+
+New training trials use a 50/50 mixture of those entry distributions. Independent
+standing warmups are stepped together for efficiency. Finite one-shot maneuvers
+end naturally at their task deadline; only continuous-control tasks bootstrap
+artificial time-limit truncations. These changes and source checkpoint ancestry
+are recorded per run; earlier and later trial scores must not be conflated.
+
+The exact upstream bilateral transform is also being evaluated as a right-kick
+initialization. It preserves the 61/14 interface and has a zero-error 10,000-input
+ONNX check. It is a candidate policy transform, not evidence of physical symmetry
+or a substitute for separate right-foot contact/direction tests.

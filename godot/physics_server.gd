@@ -1275,6 +1275,15 @@ func _handle(cmd: Variant) -> void:
 			_hud.call("set_status", str(cmd.get("hud", "")))
 		for i in range(ctrl.size()):
 			_ctrl[i] = float(ctrl[i])
+		# Optional free-ball placement shares the next counted physics step,
+		# matching an episodic skill trigger without resetting the robot.
+		if cmd.has("place_ball") and _bodies.has("ball"):
+			var ball: RigidBody3D = _bodies["ball"]
+			var bp: Array = cmd["place_ball"]
+			ball.global_position = _m2g(Vector3(float(bp[0]),float(bp[1]),float(bp[2])))
+			ball.force_update_transform()
+			ball.linear_velocity = Vector3.ZERO
+			ball.angular_velocity = Vector3.ZERO
 		_report_mode = str(cmd.get("report", ""))
 		_research_contact_events.clear()
 		_research_capture_path = str(cmd.get("capture_path", ""))

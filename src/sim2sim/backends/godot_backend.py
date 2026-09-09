@@ -107,6 +107,7 @@ class GodotBackend:
         report: str | None = None,
         timing: bool = False,
         capture_path: str | None = None,
+        place_ball: list[float] | None = None,
     ) -> None:
         payload: dict = {
             "cmd": "step",
@@ -121,6 +122,8 @@ class GodotBackend:
             payload["timing"] = True
         if capture_path is not None:
             payload["capture_path"] = str(capture_path)
+        if place_ball is not None:
+            payload["place_ball"] = place_ball
         self._client.send(payload)
 
     def recv_step(self) -> SimState:

@@ -8,6 +8,7 @@ from .world import World
 from .models import Policy,Critic,export_policy,parity
 from .rewards import Objective,EXTRA_DIM
 from .evaluate import run_suite,PROTOCOL_VERSION
+from sim2sim.obs import build_obs
 
 def seed_all(seed):
     random.seed(seed);np.random.seed(seed);torch.manual_seed(seed)
@@ -18,8 +19,11 @@ def reference_observations(task):
     Locomotion references retain stable moving trajectories and idle explicitly;
     no claim that their command tracking satisfies the stricter new protocol.
     """
-    root=SESSION/"evaluation_v3"/task.name/"factory_mujoco"
+    root=SESSION/"evaluation_v4"/task.name/"factory_mujoco"
     summary=json.loads((root/"summary.json").read_text())
+    handoff=SESSION/"evaluation_v4_standing"/task.name/"factory_mujoco/summary.json"
+    if not handoff.exists():handoff=SESSION/"handoff_probe"/task.name/"factory_mujoco/summary.json"
+    if handoff.exists():summary["episodes"].extend(json.loads(handoff.read_text())["episodes"])
     selected=[]
     for e in summary["episodes"]:
         ok=e["success"]
@@ -30,19 +34,37 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset"):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         self.conditions=training_conditions or conditions(task)
+        self.entry=entry;self.entry_counts={"reset":0,"standing":0}
         try:
             for i in range(num_envs):
-                w=World(task);self.worlds.append(w);w.reset(self.next_seed(),self.next_condition(i))
-                self.objectives.append(Objective(w,weights))
+                self.worlds.append(World(task))
+            self.reset_worlds(range(num_envs))
+            self.objectives=[Objective(w,weights) for w in self.worlds]
         except BaseException:
             self.close();raise
 
     def next_seed(self):
         self.count+=1;return self.seed*100000+self.count
+
+    def reset_worlds(self,indices):
+        warm=[]
+        for i in indices:
+            w=self.worlds[i];w.reset(self.next_seed(),self.next_condition(i))
+            standing=self.entry=="standing" or (self.entry=="mixed" and self.rng.random()<.5)
+            if standing:
+                teacher,cmd=w.prepare_standing_entry();warm.append((w,teacher,cmd))
+            self.entry_counts["standing" if standing else "reset"]+=1
+        # Warmups still use real dynamics and source actions, but independent
+        # workers advance together instead of serializing fifty round trips.
+        for _ in range(50 if warm else 0):
+            for w,teacher,cmd in warm:
+                obs=build_obs(w.state,w.last,cmd,w.home);w.send(teacher(obs[None])[0])
+            for w,_,_ in warm:w.recv()
+        for w,_,_ in warm:w.finish_standing_entry()
 
     def next_condition(self,i=0):
         return self.conditions[int(self.rng.integers(len(self.conditions)))]
@@ -58,11 +80,14 @@ class Vector:
         for w,obj in zip(self.worlds,self.objectives):
             w.recv();r,terminal,detail=obj.compute()
             timeout=w.t>=self.task.seconds-1e-6 and not terminal
-            reward.append(r);done.append(terminal or timeout);timeouts.append(timeout);terms.append(detail)
+            reward.append(r);done.append(terminal or timeout)
+            # One-shot maneuvers end naturally at their task deadline. Only
+            # continuous control uses artificial time-limit bootstrapping.
+            timeouts.append(timeout and self.task.name in ("standing","walking","roller","sitstand"));terms.append(detail)
         terminal_obs=self.observations()[1]
-        for i,finished in enumerate(done):
-            if finished:
-                self.worlds[i].reset(self.next_seed(),self.next_condition(i));self.objectives[i].reset()
+        finished=[i for i,d in enumerate(done) if d]
+        self.reset_worlds(finished)
+        for i in finished:self.objectives[i].reset()
         return torch.tensor(reward),torch.tensor(done),torch.tensor(timeouts),terminal_obs,terms
 
     def close(self):
@@ -87,9 +112,11 @@ def run(args):
     config=vars(args).copy();config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=PROTOCOL_VERSION)
     config["code_sha256"]={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
     (out/"config.json").write_text(json.dumps(config,indent=2))
-    policy=Policy(source,args.variant,args.std,args.bound)
+    template=Path(args.template) if args.template else source
+    config["increment_template_sha256"]=hashlib.sha256(template.read_bytes()).hexdigest()
+    policy=Policy(source,args.variant,args.std,args.bound,template=template)
     policy.task_name=task.name
-    critic=Critic(source,EXTRA_DIM)
+    critic=Critic(template,EXTRA_DIM)
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
     ao=torch.optim.Adam(actor_parameters,lr=args.actor_lr);co=torch.optim.Adam(critic.parameters(),lr=args.critic_lr)
     initial_iteration=0
@@ -107,16 +134,18 @@ def run(args):
     if not initial_parity["passed"]:raise RuntimeError("Initial actor export parity failed")
     weights=json.loads(args.weights)
     training_conditions=None if not args.conditions else args.conditions.split(",")
-    env=Vector(task,args.envs,args.seed,weights,training_conditions)
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry)
+    eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
     config["physics"]=env.worlds[0].physics
     if any(w.physics!=config["physics"] for w in env.worlds):raise RuntimeError("Worker physics fingerprints differ")
     config["resume_starts_new_physical_episodes"]=bool(args.resume)
     (out/"config.json").write_text(json.dumps(config,indent=2))
     log=(out/"metrics.jsonl").open("a",buffering=1)
-    best_score=-math.inf;iteration=initial_iteration;last_eval=time.time();total_samples=0;status="time_limit"
+    best_score=-math.inf;best_success=-1.;iteration=initial_iteration;last_eval=time.time();total_samples=0;status="time_limit"
     evaluation_records=[]
     try:
         while time.time()<deadline and (not args.iterations or iteration<initial_iteration+args.iterations):
+            if (out/"STOP").exists():status="stopped_for_review";break
             iteration+=1;iteration_start=time.time()
             buffers={k:[] for k in ["obs","critic_obs","anchor","action","logprob","mean","std","value","reward","done"]}
             faults=0;all_terms={};term_count=0
@@ -190,16 +219,18 @@ def run(args):
             evaluate_now=time.time()-last_eval>args.eval_seconds or (args.iterations and iteration>=initial_iteration+args.iterations)
             if evaluate_now and time.time()<hard_deadline-30:
                 export=export_policy(policy,out/f"iteration_{iteration:05d}.onnx")
+                save_checkpoint(out/f"iteration_{iteration:05d}.pt",policy,critic,ao,co,iteration,config)
                 # Report export roundoff independently of physical outcomes.
                 report=parity(policy,export,n=200)
                 selected=None if not args.eval_conditions else args.eval_conditions.split(",")
-                result=run_suite(task.name,export,seeds=(100,101,102),workers=4,out=out/f"eval_{iteration:05d}",selected_conditions=selected)
+                result=run_suite(task.name,export,seeds=(100,101,102),workers=4,out=out/f"eval_{iteration:05d}",selected_conditions=selected,entry=eval_entry)
                 result_short={k:v for k,v in result.items() if k!="episodes"};result_short.update(iteration=iteration,parity=report)
                 evaluation_records.append(result_short)
                 (out/"evaluations.json").write_text(json.dumps(evaluation_records,indent=2))
                 print("EVALUATION "+json.dumps(result_short),flush=True)
-                if report["passed"] and not result["errors"] and result["score"]>best_score:
+                if report["passed"] and not result["errors"] and (result["success_rate"],result["score"])>(best_success,best_score):
                     best_score=result["score"]
+                    best_success=result["success_rate"]
                     save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config)
                     (out/"best.onnx").write_bytes(export.read_bytes())
                 last_eval=time.time()
@@ -210,10 +241,10 @@ def run(args):
         (out/"final_parity.json").write_text(json.dumps(report,indent=2))
         if time.time()<hard_deadline-30:
             selected=None if not args.eval_conditions else args.eval_conditions.split(",")
-            result=run_suite(task.name,export,seeds=(100,101,102),workers=4,out=out/"eval_final",selected_conditions=selected)
-            if report["passed"] and not result["errors"] and result["score"]>best_score:
-                (out/"best.onnx").write_bytes(export.read_bytes());save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config);best_score=result["score"]
-        (out/"completed.json").write_text(json.dumps({"status":status,"iterations":iteration,"samples":total_samples,"elapsed":time.time()-start,"best_dev_score":best_score if math.isfinite(best_score) else None,"final_parity":report},indent=2))
+            result=run_suite(task.name,export,seeds=(100,101,102),workers=4,out=out/"eval_final",selected_conditions=selected,entry=eval_entry)
+            if report["passed"] and not result["errors"] and (result["success_rate"],result["score"])>(best_success,best_score):
+                (out/"best.onnx").write_bytes(export.read_bytes());save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config);best_score=result["score"];best_success=result["success_rate"]
+        (out/"completed.json").write_text(json.dumps({"status":status,"iterations":iteration,"samples":total_samples,"elapsed":time.time()-start,"best_dev_score":best_score if math.isfinite(best_score) else None,"best_dev_success":best_success,"final_parity":report},indent=2))
     except BaseException as e:
         (out/"error.txt").write_text(traceback.format_exc())
         save_checkpoint(out/"failed.pt",policy,critic,ao,co,iteration,config)
@@ -236,7 +267,9 @@ def main():
     p.add_argument("--target-kl",type=float,default=.015);p.add_argument("--anchor-weight",type=float,default=10)
     p.add_argument("--residual-weight",type=float,default=1);p.add_argument("--weights",default="{}")
     p.add_argument("--conditions");p.add_argument("--eval-conditions");p.add_argument("--eval-seconds",type=float,default=300)
-    p.add_argument("--source");p.add_argument("--resume")
+    p.add_argument("--source");p.add_argument("--resume");p.add_argument("--template")
+    p.add_argument("--entry",choices=["reset","standing","mixed"],default="reset")
+    p.add_argument("--eval-entry",choices=["reset","standing","both"])
     args=p.parse_args();print(run(args),flush=True)
 
 if __name__=="__main__":main()

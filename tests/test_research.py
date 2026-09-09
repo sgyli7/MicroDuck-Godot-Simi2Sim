@@ -63,7 +63,36 @@ class TaskSemantics(unittest.TestCase):
         w.features["gyro"][1]=4.
         self.assertEqual(r.compute()[2]["forward_progress"],0)
 
+    def test_fall_then_recovery_is_not_a_clean_kick(self):
+        rows=[]
+        for k in range(250):
+            fallen=80<k<130
+            rows.append(dict(time=.02*(k+1),z=.03 if fallen else .115,xy=np.zeros(2),up=-1. if fallen else 1.,
+                 tilt=180. if fallen else 0.,yaw=0.,vel=np.zeros(3),gyro=np.zeros(3),
+                 contact=np.zeros(2) if fallen else np.ones(2),cmd=np.zeros(13),actions=np.zeros(14),q=np.zeros(14),mouth_z=.1,mouth_down=0.,
+                 head_contact=False,head_up=1.,supported=True,lateral_z=0.,ball_pos=np.array([k*.004,0,.035]),ball_vel=np.array([.2,0,0]),correct_kick=k==1,wrong_kick=False))
+        result=summarize(TASKS["kick_left"],rows,np.array([1,0]))
+        self.assertTrue(result["final_standing"])
+        self.assertTrue(result["correct_foot_contact"])
+        self.assertFalse(result["success"])
+
 class RealTelemetry(unittest.TestCase):
+    def test_real_handoff_preserves_history_and_counted_time(self):
+        w=World(TASKS["kick_left"])
+        try:
+            w.reset(23);obs=w.enter_from_standing()
+            self.assertEqual(w.t,0.)
+            self.assertGreater(np.linalg.norm(w.last),.01)
+            np.testing.assert_array_equal(obs[34:48],w.last)
+            self.assertGreater(w.features["z"],.09)
+            self.assertIsNotNone(w.pending_ball)
+            from sim2sim.research.models import NativeAnchor
+            w.step(NativeAnchor(TASKS["kick_left"].source)(obs[None])[0])
+            self.assertAlmostEqual(w.t,.02)
+            self.assertIsNone(w.pending_ball)
+            self.assertLess(np.linalg.norm(w.features["ball_pos"][:2]-w.features["xy"]),.2)
+        finally:w.close()
+
     def test_mouth_is_actual_site_and_ball_is_free(self):
         import mujoco
         w=World(TASKS["kick_left"],"mujoco")

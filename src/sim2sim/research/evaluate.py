@@ -13,7 +13,7 @@ from .tasks import TASKS,SESSION,BASELINE,DT,conditions,command
 from .world import World
 from .models import NativeAnchor
 
-PROTOCOL_VERSION="physical_tasks_v3"
+PROTOCOL_VERSION="physical_tasks_v4"
 
 def window_mean(x,n=50):
     x=np.asarray(x)
@@ -74,8 +74,8 @@ def summarize(task,rows,heading):
         directional=forward>abs(side)
         out.update(ball_forward=forward,ball_side=side,ball_peak_forward_speed=peak,
                    correct_foot_contact=touch,wrong_foot_contact=wrong,
-                   success=bool(touch and not wrong and forward>.05 and peak>.15 and directional and stand_final),
-                   score=float(touch and not wrong)*float(np.clip(forward/.25,0,1))*(.2+.8*float(stand_final))*float(directional))
+                   success=bool(touch and not wrong and forward>.05 and peak>.15 and directional and stand_final and not failed.any()),
+                   score=float(touch and not wrong)*float(np.clip(forward/.25,0,1))*(.2+.8*float(stand_final))*float(directional)*float((~failed).mean()))
     elif task.name=="roulade":
         # Ordered orientation and ground-contact events, independent of the
         # reward accumulator: head-top pivot -> inverted trunk -> feet again.
@@ -88,12 +88,14 @@ def summarize(task,rows,heading):
         frontier=np.maximum.accumulate(np.maximum(net,0))
         new_forward=np.diff(np.r_[0.,frontier])
         fwd=float(np.sum(new_forward*a["supported"]*sagittal))
+        single=bool(4.5<net[-1]<7.5 and frontier[-1]<2.6*np.pi)
         continuous=float(np.mean(a["supported"]))
         out.update(head_top_pivot=bool(len(pivot)),inverted_trunk=bool(len(inverted)),
                    ordered_roll_events=ordered,supported_fraction=continuous,
                    supported_forward_rotation=fwd,
-                   success=bool(ordered and fwd>4.5 and stand_final),
-                   score=(.2*bool(len(pivot))+.2*ordered+.6*(ordered and stand_final))*min(1.,continuous/.8))
+                   net_rotation=float(net[-1]),rotation_frontier=float(frontier[-1]),single_revolution=single,
+                   success=bool(ordered and fwd>4.5 and single and stand_final),
+                   score=(.2*bool(len(pivot))+.2*ordered+.6*(ordered and single and stand_final))*min(1.,continuous/.8))
     elif task.name=="roller_crouch":
         down=(t>1)&(t<2.5); low=float(np.mean(z[down]))
         upright_down=float(np.mean(tilt[down]<45))
@@ -114,13 +116,14 @@ def record(w,action):
             "lateral_z":f["rot"][2,1],"ball_pos":f["ball_pos"].copy(),"ball_vel":f["ball_vel"].copy(),
             "correct_kick":foot in f["kick_contacts"],"wrong_kick":other in f["kick_contacts"]}
 
-def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=None,noise_std=0.,headless=True):
+def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=None,noise_std=0.,headless=True,entry="reset"):
     task=TASKS[skill];policy=NativeAnchor(onnx)
     w=World(task,backend,headless=headless)
     rows=[];observations=[];actions=[];rng=np.random.default_rng(seed+123456)
     start=time.monotonic()
     try:
         obs=w.reset(seed,condition)
+        if entry=="standing":obs=w.enter_from_standing()
         for k in range(round(task.seconds/DT)):
             action=policy(obs[None])[0]
             if noise_std:action=action+rng.normal(0,noise_std,14).astype(np.float32)
@@ -132,27 +135,31 @@ def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=N
     result.update(skill=skill,backend=backend,seed=int(seed),condition=condition,
                   policy=str(Path(onnx).resolve()),sha256=policy.sha256,protocol=PROTOCOL_VERSION,
                   physics=w.physics,
+                  entry=entry,
                   noise_std=noise_std,elapsed_s=time.monotonic()-start)
+    result["heading"]=w.heading.tolist()
     if save_trace:
         p=Path(save_trace);p.parent.mkdir(parents=True,exist_ok=True)
         np.savez_compressed(p,obs=np.stack(observations),actions=np.stack(actions),**{k:np.asarray([r[k] for r in rows]) for k in rows[0] if k!="actions"})
         result["trace"]=str(p)
     return result
 
-def run_suite(skill,onnx,backend="godot",seeds=(100,101,102),workers=4,out=None,selected_conditions=None,noise_std=0.):
+def run_suite(skill,onnx,backend="godot",seeds=(100,101,102),workers=4,out=None,selected_conditions=None,noise_std=0.,entry="reset"):
     task=TASKS[skill];conds=selected_conditions or conditions(task)
-    jobs=[(c,s) for c in conds for s in seeds]
+    entries=("reset","standing") if entry=="both" else (entry,)
+    jobs=[(c,s,e) for c in conds for s in seeds for e in entries]
     results=[]
     if out:Path(out).mkdir(parents=True,exist_ok=True)
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures={pool.submit(episode,skill,onnx,backend,s,c,
-                            None if out is None else Path(out)/f"{c}_{s}.npz",noise_std):(c,s) for c,s in jobs}
+                            None if out is None else Path(out)/(f"{e}_{c}_{s}.npz" if entry=="both" else f"{c}_{s}.npz"),noise_std,True,e):(c,s,e) for c,s,e in jobs}
         for f in as_completed(futures):
-            c,s=futures[f]
+            c,s,e=futures[f]
             try:results.append(f.result())
-            except Exception as e:results.append({"skill":skill,"condition":c,"seed":s,"backend":backend,"error":repr(e),"success":False,"score":0.})
-    results.sort(key=lambda x:(x["condition"],x["seed"]))
+            except Exception as error:results.append({"skill":skill,"condition":c,"seed":s,"backend":backend,"entry":e,"error":repr(error),"success":False,"score":0.})
+    results.sort(key=lambda x:(x["condition"],x["seed"],x.get("entry","reset")))
     summary={"protocol":PROTOCOL_VERSION,"skill":skill,"onnx":str(onnx),"backend":backend,
+             "entry":entry,
              "success_rate":float(np.mean([x["success"] for x in results])),
              "score":float(np.mean([x["score"] for x in results])),"episodes":results,
              "errors":sum("error" in x for x in results)}
@@ -164,17 +171,18 @@ def main():
     p.add_argument("--backend",default="godot");p.add_argument("--baseline",action="store_true")
     p.add_argument("--seeds",type=int,default=3);p.add_argument("--seed-start",type=int,default=100)
     p.add_argument("--workers",type=int,default=4);p.add_argument("--out",type=Path);p.add_argument("--noise",type=float,default=0)
+    p.add_argument("--entry",choices=["reset","standing","both"],default="reset")
     args=p.parse_args()
     if args.baseline:
         for name in ([args.skill] if args.skill else TASKS):
             task=TASKS[name]
             for label,source,backend in [("factory_mujoco",task.source,"mujoco"),("factory_godot",task.source,"godot"),("previous_godot",BASELINE/task.previous,"godot")]:
-                out=SESSION/"evaluation_v3"/name/label
+                out=SESSION/("evaluation_v4" if args.entry=="reset" else "evaluation_v4_"+args.entry)/name/label
                 if (out/"summary.json").exists():continue
-                r=run_suite(name,source,backend,range(args.seed_start,args.seed_start+args.seeds),args.workers,out)
+                r=run_suite(name,source,backend,range(args.seed_start,args.seed_start+args.seeds),args.workers,out,entry=args.entry)
                 print(name,label,'success',r["success_rate"],'score',round(r["score"],4),'errors',r["errors"],flush=True)
     else:
-        r=run_suite(args.skill,args.onnx,args.backend,range(args.seed_start,args.seed_start+args.seeds),args.workers,args.out,noise_std=args.noise)
+        r=run_suite(args.skill,args.onnx,args.backend,range(args.seed_start,args.seed_start+args.seeds),args.workers,args.out,noise_std=args.noise,entry=args.entry)
         print(json.dumps({k:v for k,v in r.items() if k!="episodes"},indent=2))
 
 if __name__=="__main__":main()

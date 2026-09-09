@@ -40,8 +40,10 @@ class World:
         self.state = None
         self.features = None
         self.last = np.zeros(14,np.float32)
+        self.pending_ball=None
 
     def reset(self, seed, condition="default", randomize=True, entry_speed=None, phase_start=0., q_override=None):
+        self.pending_ball=None
         self.rng = np.random.default_rng(seed)
         self.condition = condition
         self.t = float(phase_start)
@@ -84,12 +86,16 @@ class World:
         self.old_last=self.last.copy()
         self.last=np.asarray(action,np.float32).copy()
         ctrl=self.home+self.last
-        if self.backend_name == "godot": self.backend.send_step(ctrl,n_substeps=4,report="research",capture_path=capture_path)
+        if self.backend_name == "godot": self.backend.send_step(ctrl,n_substeps=4,report="research",capture_path=capture_path,place_ball=self.pending_ball)
         else:
+            if self.pending_ball is not None:
+                m,d=self.mj.model,self.mj.data;bid=self.meta["ball"];jid=int(m.body_jntadr[bid]);adr=int(m.jnt_qposadr[jid]);vadr=int(m.jnt_dofadr[jid])
+                d.qpos[adr:adr+7]=[*self.pending_ball,1,0,0,0];d.qvel[vadr:vadr+6]=0.;mujoco.mj_forward(m,d)
             self.contact_events={n:[] for n in self.report_names}
             for _ in range(4):
                 self.state=self.mj.step(ctrl,n_substeps=1)
                 for n,b in self._mj_bodies().items():self.contact_events[n].extend(b["contacts"])
+        self.pending_ball=None
 
     def recv(self):
         if self.backend_name == "godot": self.state=self.backend.recv_step()
@@ -186,6 +192,41 @@ class World:
         else:
             self.mj.data.qvel[self.mj.free_dofadr:self.mj.free_dofadr+3]+=velocity
             mujoco.mj_forward(self.mj.model,self.mj.data)
+
+    def prepare_standing_entry(self):
+        from .models import NativeAnchor
+        from .tasks import TASKS
+        teacher_name="roller" if self.task.robot=="microduck_roller" else "standing"
+        seated=self.task.name=="sitstand" and self.condition in ("rise","sit_hold")
+        if seated:teacher_name="sitstand"
+        if not hasattr(self,"_entry_teachers"):self._entry_teachers={}
+        if teacher_name not in self._entry_teachers:self._entry_teachers[teacher_name]=NativeAnchor(TASKS[teacher_name].source)
+        teacher=self._entry_teachers[teacher_name]
+        cmd=np.zeros(13,np.float32)
+        if seated:cmd[0]=1.
+        if self.task.robot=="microduck_roller" and self.task.name=="roller_crouch":cmd[0]=.3
+        if "ball" in self.meta:self.pending_ball=[5.,5.,.035]
+        return teacher,cmd
+
+    def finish_standing_entry(self):
+        self.t=0.
+        self.initial_xy=self.features["xy"].copy()
+        yaw=self.features["yaw"];self.heading=np.array([math.cos(yaw),math.sin(yaw)])
+        if "ball" in self.meta:
+            off=np.array([.09,.042 if self.task.foot==0 else -.042])+self.rng.uniform(-.015,.015,2)
+            rotation=np.array([[math.cos(yaw),-math.sin(yaw)],[math.sin(yaw),math.cos(yaw)]])
+            self.pending_ball=[*(self.initial_xy+rotation@off),.035]
+            self.initial_ball=np.asarray(self.pending_ball)
+            self.features["ball_pos"]=self.initial_ball.copy();self.features["ball_vel"]=np.zeros(3)
+        return self.obs()
+
+    def enter_from_standing(self,seconds=1.):
+        """A real policy handoff, retaining last_action as upstream play does."""
+        teacher,cmd=self.prepare_standing_entry()
+        for _ in range(round(seconds/DT)):
+            obs=build_obs(self.state,self.last,cmd,self.home)
+            self.step(teacher(obs[None])[0])
+        return self.finish_standing_entry()
 
     def close(self):
         if self.backend_name=="godot":self.backend.close()

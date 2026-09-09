@@ -59,10 +59,10 @@ class Increment(nn.Module):
         return (self.net(x)-self.initial(x)).to(obs.dtype)
 
 class Policy(nn.Module):
-    def __init__(self, source, variant="anchor", std=.03, bound=.2):
+    def __init__(self, source, variant="anchor", std=.03, bound=.2, template=None):
         super().__init__()
         self.anchor=NativeAnchor(source)
-        self.delta=Increment(source,variant,bound)
+        self.delta=Increment(template or source,variant,bound)
         self.log_std=nn.Parameter(torch.full((14,),float(np.log(std))))
         self.variant=variant
 
