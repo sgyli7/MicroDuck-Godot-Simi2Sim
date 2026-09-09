@@ -106,6 +106,7 @@ class GodotBackend:
         hud: str | None = None,
         report: str | None = None,
         timing: bool = False,
+        capture_path: str | None = None,
     ) -> None:
         payload: dict = {
             "cmd": "step",
@@ -118,6 +119,8 @@ class GodotBackend:
             payload["report"] = report
         if timing:
             payload["timing"] = True
+        if capture_path is not None:
+            payload["capture_path"] = str(capture_path)
         self._client.send(payload)
 
     def recv_step(self) -> SimState:

@@ -2202,6 +2202,10 @@ def emit_robot_tscn(
             joint_parent = parent_name
 
         lo, hi = j["range"] if j["limited"] else (-3.14159265, 3.14159265)
+        # The generated body transforms are at data.qpos, not necessarily q=0.
+        # Godot's clockwise hinge angle is the negative of MuJoCo's joint q.
+        q_reference = float(data.qpos[int(j["qposadr"])])
+        lo, hi = q_reference - hi, q_reference - lo
         limit_on = "true" if j["limited"] else "false"
         jname = f"joint_{j['name']}"
         if joint_parent == ".":

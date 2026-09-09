@@ -117,6 +117,12 @@ def export_policy(policy,path):
         result.metadata_props.add(key=prop.key,value=prop.value)
     result.metadata_props.add(key="sim2sim_factory_sha256",value=policy.anchor.sha256)
     result.metadata_props.add(key="sim2sim_adaptation",value=policy.variant)
+    if getattr(policy,"task_name",None):
+        from .tasks import TASKS
+        task=TASKS[policy.task_name]
+        result.metadata_props.add(key="sim2sim_task",value=task.name)
+        result.metadata_props.add(key="sim2sim_command_mode",value=task.mode)
+        result.metadata_props.add(key="sim2sim_period_s",value=str(task.period if task.mode=="phase" else 0))
     onnx.checker.check_model(result)
     onnx.save(result,str(path));delta_path.unlink()
     return path

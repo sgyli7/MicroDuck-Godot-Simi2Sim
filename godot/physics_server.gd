@@ -122,6 +122,7 @@ var _headless: bool = false
 var _foot_names: Array = []
 var _research_bodies: Array = []
 var _research_contact_events: Dictionary = {}
+var _research_capture_path: String = ""
 var _mj_basis: Dictionary = {}  # name -> Basis, refreshed each PD tick
 # Kinematic velocities from pose finite difference. Jolt's reported
 # angular_velocity includes Baumgarte/position-correction drift (~0.22 rad/s
@@ -317,8 +318,9 @@ func _setup_joints() -> void:
 			lo = float(rng[0])
 			hi = float(rng[1])
 		node.set("angular_limit/enable", limited)
-		node.set("angular_limit/lower", lo)
-		node.set("angular_limit/upper", hi)
+		# Godot hinge angles are clockwise; MuJoCo joint q is counterclockwise.
+		node.set("angular_limit/lower", -hi)
+		node.set("angular_limit/upper", -lo)
 		node.set("motor/enable", false)
 		var kp := 0.0
 		var kv := 0.0
@@ -413,14 +415,18 @@ func _rebake_joints() -> void:
 	# Jolt captures hinge frames when node_a/node_b are assigned. After a
 	# kinematic teleport those frames still describe q=0, so the solver
 	# yanks every limb back in one tick. Re-assign paths at the current pose
-	# and shift limits so XML [lo,hi] stay relative to MuJoCo q=0.
+	# The q cache must describe the NEW teleported pose before rebaking.
+	# Otherwise every reset inherits the previous episode's end-stop offset.
+	# Hinge angle h = -(q - q_reset), so XML [lo, hi] maps to
+	# Godot [q_reset-hi, q_reset-lo]. This is not a soft-limit tuning choice.
+	_refresh_mj_basis()
 	for j in _joints:
 		var node: HingeJoint3D = j["node"]
 		var q := _joint_q(j)
 		j["q_rebake"] = q
 		if bool(j.get("limited", true)):
-			node.set("angular_limit/lower", float(j["lo"]) - q)
-			node.set("angular_limit/upper", float(j["hi"]) - q)
+			node.set("angular_limit/lower", q-float(j["hi"]))
+			node.set("angular_limit/upper", q-float(j["lo"]))
 		var a: NodePath = node.node_a
 		var b: NodePath = node.node_b
 		node.node_a = NodePath()
@@ -1271,6 +1277,7 @@ func _handle(cmd: Variant) -> void:
 			_ctrl[i] = float(ctrl[i])
 		_report_mode = str(cmd.get("report", ""))
 		_research_contact_events.clear()
+		_research_capture_path = str(cmd.get("capture_path", ""))
 		_timing_enabled = bool(cmd.get("timing", false))
 		_remaining = int(cmd.get("n_substeps", 1))
 		if _remaining < 1:
@@ -1349,6 +1356,7 @@ func _handle(cmd: Variant) -> void:
 func _do_reset(cmd: Dictionary) -> void:
 	_research_bodies = cmd.get("report_bodies", [])
 	_research_contact_events.clear()
+	_research_capture_path = ""
 	_remaining = 0
 	_pending_send = false
 	_t = 0.0
@@ -1732,6 +1740,15 @@ func _send_state(which: String) -> void:
 			"prev_send_usec": _timing_send_usec,
 			"json_bytes": _timing_json_bytes,
 		}
+	# Capture on the existing step reply: a separate screenshot command adds
+	# an uncounted physics tick and must not be used inside measured rollouts.
+	if which == "step" and _research_capture_path != "":
+		var texture := get_viewport().get_texture()
+		if texture != null:
+			var captured := texture.get_image()
+			if captured != null:
+				captured.save_png(_research_capture_path)
+		_research_capture_path = ""
 	_send_dict(payload)
 	_taps.clear()
 

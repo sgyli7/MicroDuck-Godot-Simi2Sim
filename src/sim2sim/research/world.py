@@ -1,10 +1,10 @@
 """Physical backends and task telemetry, independent of training rewards."""
-import math
+import math,hashlib
 from pathlib import Path
 import mujoco
 import numpy as np
 
-from sim2sim.paths import load_robot_json
+from sim2sim.paths import load_robot_json,sim2sim_root
 from sim2sim.obs import build_obs
 from sim2sim.coords import quat_wxyz_to_mat, mat_to_quat_wxyz
 from sim2sim.backends.godot_backend import GodotBackend, inertial_to_body
@@ -17,6 +17,10 @@ class World:
     def __init__(self, task, backend="godot", headless=True):
         self.task, self.backend_name = task, backend
         self.cfg = load_robot_json(task.robot_path)
+        files={"robot":task.robot_path,"mjcf":Path(self.cfg["mjcf"])}
+        if backend=="godot":files.update(server=sim2sim_root()/"godot/physics_server.gd",spec=Path(self.cfg["godot_spec"]))
+        self.physics={"backend":backend,"joint_limits":"signed_fresh_reset_v1","dt":DT,"current_limit_a":1.75,
+                      "files":{k:{"path":str(p),"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for k,p in files.items()}}
         self.sampler = HomePoseSampler(self.cfg)
         self.mj = self.sampler.mj
         self.home = self.sampler.home
@@ -74,13 +78,13 @@ class World:
     def obs(self):
         return build_obs(self.state,self.last,command(self.task,self.t,self.condition),self.home)
 
-    def send(self, action):
+    def send(self, action, capture_path=None):
         if not np.isfinite(action).all(): raise FloatingPointError("nonfinite policy action")
         self.executed_command=command(self.task,self.t,self.condition)
         self.old_last=self.last.copy()
         self.last=np.asarray(action,np.float32).copy()
         ctrl=self.home+self.last
-        if self.backend_name == "godot": self.backend.send_step(ctrl,n_substeps=4,report="research")
+        if self.backend_name == "godot": self.backend.send_step(ctrl,n_substeps=4,report="research",capture_path=capture_path)
         else:
             self.contact_events={n:[] for n in self.report_names}
             for _ in range(4):

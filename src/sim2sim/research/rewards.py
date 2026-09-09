@@ -60,11 +60,11 @@ class Objective:
             elif phase<.425:blend=1.
             elif phase<.8:blend=(.8-phase)/.375
             else:blend=0.
-            # The tip descends while its forward axis points into the ground.
-            ztarget=.17*(1-blend)+.018*blend
+            # Source uses phase weights, not a prescribed tip trajectory.
+            # Driving a linear target height would oppose its earlier reach.
+            return_gate=float(np.clip((phase-.425)/.375,0,1))
             down=max(0.,f["mouth_down"])
-            terms.update(tip_height=6*np.exp(-((f["mouth_pos"][2]-ztarget)/.035)**2),mouth_down=2*blend*down,return_stand=5*(1-blend)*stand)
-            if .25<phase<.5:terms["reach"]=3*down*np.exp(-max(0.,f["mouth_pos"][2])/.04)
+            terms.update(tip_proximity=6*blend*np.exp(-(max(0.,f["mouth_pos"][2])/.06)**2),mouth_down=2*blend*down,return_stand=5*return_gate*stand,return_pose=3*return_gate*pose,feet_grounded=2*float(np.mean(f["contact"])))
             self.impact|=f["head_contact"]
             terms["head_impact"]=-15*float(f["head_contact"])
             terms["side_tilt"]=-float(f["rot"][2,1]**2)*3
@@ -96,10 +96,13 @@ class Objective:
             newangle=max(0.,frontier-self.frontier);self.frontier=frontier
             supported=float(f["supported"])
             headgate=float(self.net<np.pi or self.pivot)
-            terms.update(forward_progress=15*newangle/DT*sagittal*supported*headgate,pivot=10*float(newpivot),sagittal=1.5*sagittal,support=supported)
+            terms.update(forward_progress=8*min(newangle/DT,5.)/5*sagittal*supported*headgate,pivot=10*float(newpivot),sagittal=1.5*sagittal,support=supported)
             landgate=float(self.inverted and self.net>4.5)
             terms["landing"]=15*landgate*stand*calm
             terms["land_pose"]=3*landgate*pose
+            terms["land_bootstrap"]=4*landgate*(max(0.,f["up"])+np.exp(-((f["z"]-.115)/.05)**2))
+            terms["stand_tax"]=-30*landgate*max(0.,.115-f["z"])
+            terms["overspeed"]=-.1*max(0.,abs(f["gyro"][1])-7.)**2
             terms["stall"]=-2*float(t>2. and not (landgate and stand>.5))
             terms["reverse"]=-2*max(0.,-f["gyro"][1])*float(self.net<5.8)
         else:raise ValueError(name)

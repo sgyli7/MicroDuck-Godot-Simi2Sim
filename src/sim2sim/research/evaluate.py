@@ -13,7 +13,7 @@ from .tasks import TASKS,SESSION,BASELINE,DT,conditions,command
 from .world import World
 from .models import NativeAnchor
 
-PROTOCOL_VERSION="physical_tasks_v2"
+PROTOCOL_VERSION="physical_tasks_v3"
 
 def window_mean(x,n=50):
     x=np.asarray(x)
@@ -131,6 +131,7 @@ def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=N
     finally:w.close()
     result.update(skill=skill,backend=backend,seed=int(seed),condition=condition,
                   policy=str(Path(onnx).resolve()),sha256=policy.sha256,protocol=PROTOCOL_VERSION,
+                  physics=w.physics,
                   noise_std=noise_std,elapsed_s=time.monotonic()-start)
     if save_trace:
         p=Path(save_trace);p.parent.mkdir(parents=True,exist_ok=True)
@@ -168,7 +169,7 @@ def main():
         for name in ([args.skill] if args.skill else TASKS):
             task=TASKS[name]
             for label,source,backend in [("factory_mujoco",task.source,"mujoco"),("factory_godot",task.source,"godot"),("previous_godot",BASELINE/task.previous,"godot")]:
-                out=SESSION/"evaluation_v2"/name/label
+                out=SESSION/"evaluation_v3"/name/label
                 if (out/"summary.json").exists():continue
                 r=run_suite(name,source,backend,range(args.seed_start,args.seed_start+args.seeds),args.workers,out)
                 print(name,label,'success',r["success_rate"],'score',round(r["score"],4),'errors',r["errors"],flush=True)

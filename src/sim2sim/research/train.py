@@ -18,7 +18,7 @@ def reference_observations(task):
     Locomotion references retain stable moving trajectories and idle explicitly;
     no claim that their command tracking satisfies the stricter new protocol.
     """
-    root=SESSION/"evaluation_v2"/task.name/"factory_mujoco"
+    root=SESSION/"evaluation_v3"/task.name/"factory_mujoco"
     summary=json.loads((root/"summary.json").read_text())
     selected=[]
     for e in summary["episodes"]:
@@ -88,6 +88,7 @@ def run(args):
     config["code_sha256"]={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
     (out/"config.json").write_text(json.dumps(config,indent=2))
     policy=Policy(source,args.variant,args.std,args.bound)
+    policy.task_name=task.name
     critic=Critic(source,EXTRA_DIM)
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
     ao=torch.optim.Adam(actor_parameters,lr=args.actor_lr);co=torch.optim.Adam(critic.parameters(),lr=args.critic_lr)
@@ -107,6 +108,10 @@ def run(args):
     weights=json.loads(args.weights)
     training_conditions=None if not args.conditions else args.conditions.split(",")
     env=Vector(task,args.envs,args.seed,weights,training_conditions)
+    config["physics"]=env.worlds[0].physics
+    if any(w.physics!=config["physics"] for w in env.worlds):raise RuntimeError("Worker physics fingerprints differ")
+    config["resume_starts_new_physical_episodes"]=bool(args.resume)
+    (out/"config.json").write_text(json.dumps(config,indent=2))
     log=(out/"metrics.jsonl").open("a",buffering=1)
     best_score=-math.inf;iteration=initial_iteration;last_eval=time.time();total_samples=0;status="time_limit"
     evaluation_records=[]
