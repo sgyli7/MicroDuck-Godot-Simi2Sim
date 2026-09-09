@@ -35,7 +35,7 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         self.conditions=training_conditions or conditions(task)
@@ -49,7 +49,7 @@ class Vector:
             self.roll_library=RollStarts();self.entry_counts["midroll"]=0
         try:
             for i in range(num_envs):
-                self.worlds.append(World(task,time_input_s=time_input_s))
+                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input))
             self.reset_worlds(range(num_envs))
             self.objectives=[Objective(w,weights,reward_params) for w in self.worlds]
         except BaseException:
@@ -134,7 +134,9 @@ def run(args):
     time_gate=None if not args.time_gate else tuple(float(x) for x in args.time_gate.split(','))
     policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate)
     policy.task_name=task.name
-    critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s)
+    critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s,heading_input=policy.anchor.heading_input)
+    obs_sign=OBS_SIGN.copy()
+    if policy.anchor.heading_input:obs_sign[50]=1. # Relative-heading cosine is even under reflection.
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
     ao=torch.optim.Adam(actor_parameters,lr=args.actor_lr);co=torch.optim.Adam(critic.parameters(),lr=args.critic_lr)
     initial_iteration=0
@@ -152,8 +154,9 @@ def run(args):
     if not initial_parity["passed"]:raise RuntimeError("Initial actor export parity failed")
     weights=json.loads(args.weights)
     training_conditions=None if not args.conditions else args.conditions.split(",")
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s)
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input)
     config["time_input_s"]=policy.anchor.time_input_s
+    config["heading_input"]=policy.anchor.heading_input
     eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
     config["physics"]=env.worlds[0].physics
     if env.roll_library is not None:config["roll_starts_sha256"]=env.roll_library.sha256
@@ -197,7 +200,7 @@ def run(args):
                 advantage=(advantage-advantage.mean())/(advantage.std()+1e-8)
                 flat={k:v.flatten(0,1) for k,v in b.items()};advantage=advantage.flatten();returns=returns.flatten()
                 if args.symmetry_weight:
-                    flat["mirrored_obs"]=flat["obs"][:,OBS_PERM]*torch.from_numpy(OBS_SIGN)
+                    flat["mirrored_obs"]=flat["obs"][:,OBS_PERM]*torch.from_numpy(obs_sign)
                     flat["mirrored_anchor"]=policy.anchor_values(flat["mirrored_obs"])
             before=copy.deepcopy(policy.state_dict());optbefore=copy.deepcopy(ao.state_dict())
             losses=[];kls=[];stop_actor=False;update_count=0

@@ -391,3 +391,45 @@ reference experiment is an unsuccessful bounded-budget trial, not a claim
 that motion-reference learning cannot work. The current strongest roll
 architecture has stable single-revolution recovery in all six basic cases;
 only initial-heading recovery prevents most from qualifying.
+
+## Direct heading observability and portability (21:06 UTC)
+
+The heading objective previously depended on a trigger-relative angle that
+neither actor nor critic received directly. Gyro/action history can help
+implicitly, but identical balanced poses can still have different heading
+returns. A separately declared variant supplies sin/cos of the trunk lateral
+axis's angle relative to the trigger frame in cmd[1:3]. This axis stays
+meaningful through a sagittal inversion; tests cover an entire forward turn
+and reflected headings. The actor still has 61 inputs and 14 outputs, but
+this variant explicitly changes two previously unused command slots.
+
+`sim2sim_heading_input=lateral_axis_sin_cos` records that contract. A wrapper
+masks the new slots for its frozen parent, and the trainable actor/critic use
+unit scaling. Bilateral consistency negates heading sine and preserves cosine.
+Play, generic rollout, native capture and independent evaluation derive the
+same input from actual simulator orientation and the trigger frame. Consumer
+code must honor the model metadata; the models do not infer elapsed time or
+initial heading from a bare zero-filled observation. No physical control is
+performed by the input adapter.
+
+The original time-mixture parent repeats identically in two fresh full
+development suites. Its heading-ready wrapper also gives identical trajectories
+and outcomes (1/6): enabling the input itself does not improve the model.
+A tiny trained heading-aware increment changes the contact trajectory enough
+to achieve 4/6 basic and 8/16 extra cases. This sensitivity is why broader
+unseen tests remain essential. `r12` is queued from that verified short-run
+candidate. Meanwhile, early yaw-spin adaptation without direct heading input
+(`r11` iteration 50) reaches 5/6 basic and 10/16 extra cases. Neither is yet
+qualified at original reliability.
+
+The walking candidate's fast-forward yaw bias is corrected by a recorded
+input hinge: internal yaw += -3 * max(public_vx - 0.3, 0). Slower commands are
+bitwise unchanged; 10,000-input parity is exact. The full suite remains 54/72
+with improved continuous score 0.6146 and no falls. Absolute fast/lateral
+velocity tracking remains below the requested target.
+
+Measured CPU inference is comfortably within the 20 ms control interval:
+the distilled walking graph is about 7.25 MB and 0.17 ms p99, and the two-expert
+roll graph about 4.87 MB and 0.106 ms p99 in a 2,000-call one-thread sample.
+These are inference-only timings under concurrent training, not full simulator
+round-trip latency.

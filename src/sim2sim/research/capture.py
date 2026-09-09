@@ -12,7 +12,7 @@ def capture(skill,source,backend,out,seed=100,condition="default",label=None,ent
     task=TASKS[skill];out=Path(out);out.mkdir(parents=True,exist_ok=True)
     os.environ.setdefault("SIM2SIM_FORCE_GL","1")
     os.environ.setdefault("SIM2SIM_DISPLAY_DRIVER","x11")
-    policy=NativeAnchor(source);w=World(task,backend,headless=backend!="godot",time_input_s=policy.time_input_s)
+    policy=NativeAnchor(source);w=World(task,backend,headless=backend!="godot",time_input_s=policy.time_input_s,heading_input=policy.heading_input)
     renderer=None;frames=[];rows=[]
     try:
         obs=w.reset(seed,condition)

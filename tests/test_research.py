@@ -22,6 +22,16 @@ def fake_world(name):
     return w
 
 class TaskSemantics(unittest.TestCase):
+    def test_relative_heading_survives_forward_inversion_and_reflects_correctly(self):
+        from sim2sim.policy_time import time_command
+        a=.7;heading=np.array([np.cos(a),np.sin(a)])
+        for error in [-.4,0.,.4]:
+            yaw=a+error;c,s=np.cos(yaw),np.sin(yaw);rz=np.array([[c,-s,0],[s,c,0],[0,0,1]])
+            for pitch in [0,np.pi/2,np.pi,1.5*np.pi,2*np.pi]:
+                c,s=np.cos(pitch),np.sin(pitch);ry=np.array([[c,0,s],[0,1,0],[-s,0,c]])
+                cmd=time_command(1.,5.,rz@ry,heading)
+                np.testing.assert_allclose(cmd[1:3],[np.sin(error),np.cos(error)],atol=1e-7)
+
     def test_roll_yaw_spin_cost_preserves_forward_rotation(self):
         w=fake_world('roulade');r=Objective(w,{'yaw_spin':2.})
         w.features['rot']=np.array([[0.,0.,1.],[0.,1.,0.],[-1.,0.,0.]])
@@ -162,6 +172,20 @@ class TaskSemantics(unittest.TestCase):
         self.assertFalse(result["success"])
 
 class RealTelemetry(unittest.TestCase):
+    def test_generic_runner_uses_declared_time_and_heading_inputs(self):
+        from sim2sim.research.time_input import prepare,add_heading
+        from sim2sim.policy import OnnxPolicy
+        from sim2sim.runner import run_rollout
+        from sim2sim.backends.mujoco_backend import MujocoBackend
+        from sim2sim.paths import load_robot_json
+        with tempfile.TemporaryDirectory() as d:
+            path=add_heading(prepare(TASKS['roulade'].source,Path(d)/'time.onnx'),Path(d)/'heading.onnx')
+            cfg=load_robot_json(TASKS['roulade'].robot_path);backend=MujocoBackend(Path(cfg['mjcf']))
+            try:trace=run_rollout(backend,OnnxPolicy(path),cfg,schedule=[dict(name='roll',seconds=.06,vel=[0,0,0])])
+            finally:backend.close()
+            np.testing.assert_allclose(np.asarray(trace['obs'])[:,48],[0,.004,.008],atol=1e-7)
+            np.testing.assert_allclose(np.asarray(trace['obs'])[0,49:51],[0,1],atol=1e-7)
+
     def test_time_input_restarts_at_trigger_and_retains_curriculum_time(self):
         w=World(TASKS["roulade"],"mujoco",time_input_s=5.)
         try:
@@ -285,6 +309,30 @@ class RealTelemetry(unittest.TestCase):
         finally:w.close()
 
 class Deployment(unittest.TestCase):
+    def test_fast_forward_heading_adapter_preserves_slower_commands(self):
+        from sim2sim.research.conditioning import adapt,parity as adapter_parity
+        from sim2sim.research.models import NativeAnchor
+        with tempfile.TemporaryDirectory() as d:
+            source=TASKS['walking'].source;dest=adapt(source,Path(d)/'hinge.onnx',forward_yaw_hinge=(.3,-3.))
+            x=np.random.default_rng(90).normal(0,.2,(100,61)).astype(np.float32);x[:,48]=np.linspace(-.3,.3,100)
+            np.testing.assert_array_equal(NativeAnchor(source)(x),NativeAnchor(dest)(x))
+            self.assertTrue(adapter_parity(source,dest,np.eye(3),n=500,forward_yaw_hinge=(.3,-3.))['passed'])
+
+    def test_heading_ready_actor_preserves_parent_and_scales_new_inputs(self):
+        from sim2sim.research.time_input import prepare,add_heading
+        from sim2sim.research.models import NativeAnchor,Critic
+        with tempfile.TemporaryDirectory() as d:
+            time_path=prepare(TASKS['roulade'].source,Path(d)/'time.onnx')
+            path=add_heading(time_path,Path(d)/'heading.onnx')
+            x=np.random.default_rng(551).normal(0,.2,(100,61)).astype(np.float32);expected=x.copy();expected[:,49:51]=0
+            np.testing.assert_array_equal(NativeAnchor(path)(x),NativeAnchor(time_path)(expected))
+            p=Policy(path,'residual',template=TASKS['roulade'].source,time_gate=(.2,.5));p.task_name='roulade'
+            self.assertTrue(p.anchor.heading_input)
+            np.testing.assert_array_equal(p.delta.denominator[48:51],1.)
+            np.testing.assert_array_equal(Critic(TASKS['roulade'].source,EXTRA_DIM,5.,True).denominator[48:51],1.)
+            with torch.no_grad():p.delta.net[-1].weight.add_(.001)
+            self.assertTrue(parity(p,export_policy(p,Path(d)/'trained.onnx'),n=500)['passed'])
+
     def test_time_gate_preserves_launch_exactly_and_is_inside_export(self):
         from sim2sim.research.time_input import prepare
         with tempfile.TemporaryDirectory() as d:

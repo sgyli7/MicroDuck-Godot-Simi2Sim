@@ -14,9 +14,11 @@ from sim2sim.train.rewards import sit_target_q
 from .tasks import DT, command
 
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False):
         self.task, self.backend_name = task, backend
         self.time_input_s=float(time_input_s);self.time_offset=0.
+        self.heading_input=bool(heading_input)
+        if self.heading_input and not self.time_input_s:raise ValueError("Relative heading requires a timed maneuver")
         if self.time_input_s and (task.name!="roulade" or self.time_input_s!=task.seconds):
             raise ValueError("Time input currently requires the full roulade duration")
         self.cfg = load_robot_json(task.robot_path)
@@ -119,7 +121,8 @@ class World:
     def command(self):
         if self.time_input_s:
             from sim2sim.policy_time import time_command
-            return time_command(self.t+self.time_offset,self.time_input_s)
+            return time_command(self.t+self.time_offset,self.time_input_s,
+                self.features['rot'] if self.heading_input else None,self.heading)
         if self.command_schedule is not None:
             from .schedules import scheduled_command
             return scheduled_command(self.command_schedule,self.t)

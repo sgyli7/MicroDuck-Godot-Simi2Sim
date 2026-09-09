@@ -20,6 +20,7 @@ from sim2sim.paths import policies_dir
 from sim2sim.play_input import PlayBrain, TwistLimits, relaunch_argv, wall_dt
 from sim2sim.policy import OnnxPolicy, PolicyNumericError, PolicyShapeError
 from sim2sim.policy_time import time_command
+from sim2sim.coords import quat_wxyz_to_mat
 from sim2sim.runner import apply_home_qpos, load_robot_cfg
 
 
@@ -286,6 +287,7 @@ def main(argv: list[str] | None = None) -> int:
     print("  窗口底部也有同样的按钮。\n")
 
     last_action = np.zeros(int(home.size), dtype=np.float32)
+    maneuver_heading = np.array([1.,0.])
     held: set[str] = set()
     press_order: list[str] = []
     taps: list[str] = []
@@ -349,7 +351,12 @@ def main(argv: list[str] | None = None) -> int:
             if sess.time_input_s:
                 if out.policy != "roulade" or sess.time_input_s != brain.roulade_duration:
                     raise PolicyShapeError("Time-input policy does not match this maneuver")
-                cmd = time_command(brain.roulade_duration - brain.behavior_t, sess.time_input_s)
+                rotation = quat_wxyz_to_mat(st.base_quat_wxyz)
+                if out.started_skill == "roulade":
+                    yaw = np.arctan2(rotation[1,0],rotation[0,0])
+                    maneuver_heading = np.array([np.cos(yaw),np.sin(yaw)])
+                cmd = time_command(brain.roulade_duration - brain.behavior_t, sess.time_input_s,
+                                   rotation if sess.heading_input else None,maneuver_heading)
             obs = build_obs(st, last_action, cmd, home=home)
             t_inf = time.perf_counter()
             try:

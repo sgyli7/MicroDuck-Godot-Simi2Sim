@@ -11,6 +11,8 @@ import numpy as np
 from sim2sim.obs import DEFAULT_HOME, build_obs, command_13
 from sim2sim.paths import expand_cfg, sim2sim_root
 from sim2sim.policy import OnnxPolicy
+from sim2sim.policy_time import time_command
+from sim2sim.coords import quat_wxyz_to_mat
 
 ROOT = sim2sim_root()
 
@@ -89,6 +91,10 @@ def run_rollout(
         st = backend.reset(ctrl=home, bodies=poses)
 
     last_action = np.zeros(policy.act_dim, dtype=np.float32)
+    initial_rotation = quat_wxyz_to_mat(st.base_quat_wxyz)
+    initial_yaw = np.arctan2(initial_rotation[1,0],initial_rotation[0,0])
+    initial_heading = np.array([np.cos(initial_yaw),np.sin(initial_yaw)])
+    elapsed = 0.
     logs = {
         "t": [],
         "q": [],
@@ -110,11 +116,16 @@ def run_rollout(
         n = int(round(seconds / (decimation * backend.dt)))
         command = command_13(cmd_vel)
         for _ in range(n):
+            if getattr(policy,'time_input_s',0.):
+                rotation = quat_wxyz_to_mat(st.base_quat_wxyz)
+                command = time_command(elapsed,policy.time_input_s,
+                    rotation if policy.heading_input else None,initial_heading)
             obs = build_obs(st, last_action, command, home=home)
             action = policy.infer(obs)
             last_action = action.copy()
             ctrl = home + action * scale
             st = backend.step(ctrl, n_substeps=decimation)
+            elapsed += decimation * backend.dt
             logs["t"].append(st.t)
             logs["q"].append(st.q.copy())
             logs["qd"].append(st.qd.copy())
