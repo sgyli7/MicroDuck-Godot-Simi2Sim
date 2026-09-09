@@ -172,3 +172,23 @@ collection. Physical evaluation executes the single exported student for the
 whole trajectory, including idle and transitions. A held demonstration seed
 checks supervised error; the existing physical development suite checks actual
 behavior. Final evaluation seeds 1000+ remain unused.
+
+Protocol v5 closes an idle loophole in locomotion evaluation: a small nonzero
+velocity/yaw error can accumulate large drift over ten seconds. After allowing
+0.5 seconds of braking in each idle interval, completion now also requires less
+than 5 cm travel and 5 degrees yaw drift. Original v4 results remain intact;
+`rescore.py` writes adjacent `summary.v5.json` files from their saved traces.
+Kicks, roulade, standing and posture outcomes are unchanged. In-progress v4
+experiments retain their recorded version and are rescored before comparison.
+
+The 2,000-step distilled walking student achieves six clean idle episodes under
+that stricter gate, with negligible travel and mean yaw drift about 0.3 degrees.
+Its source gait still under-tracks translational commands. Unbounded 2x command
+conditioning improved slow walking but caused falls at the fastest test; those
+candidates are not suitable for promotion. Bounded conditioning on the distilled
+student is evaluated separately across the complete development schedule.
+
+New PPO logs separate physical reward from time-limit value bootstrapping and
+include critic error, explained variance and increment size. Earlier continuous
+task logs reported the bootstrapped training target as `reward`; physical
+outcomes, rather than those reward curves, have always determined selection.

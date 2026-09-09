@@ -156,7 +156,7 @@ def run(args):
         while time.time()<deadline and (not args.iterations or iteration<initial_iteration+args.iterations):
             if (out/"STOP").exists():status="stopped_for_review";break
             iteration+=1;iteration_start=time.time()
-            buffers={k:[] for k in ["obs","critic_obs","anchor","action","logprob","mean","std","value","reward","done"]}
+            buffers={k:[] for k in ["obs","critic_obs","anchor","action","logprob","mean","std","value","reward","physical_reward","done"]}
             faults=0;all_terms={};term_count=0
             policy.train()
             with torch.no_grad():
@@ -165,9 +165,10 @@ def run(args):
                     obs,cobs=env.observations();anchor=policy.anchor_values(obs)
                     dist=policy.distribution(obs,anchor);action=dist.sample();value=critic(cobs)
                     reward,done,timeouts,terminal_cobs,terms=env.step(action.numpy())
+                    physical_reward=reward.clone()
                     # Truncated time limits bootstrap terminal state, never the reset state.
                     reward=reward+args.gamma*critic(terminal_cobs)*timeouts
-                    for k,v in [("obs",obs),("critic_obs",cobs),("anchor",anchor),("action",action),("logprob",dist.log_prob(action).sum(-1)),("mean",dist.mean),("std",dist.stddev),("value",value),("reward",reward),("done",done)]:buffers[k].append(v)
+                    for k,v in [("obs",obs),("critic_obs",cobs),("anchor",anchor),("action",action),("logprob",dist.log_prob(action).sum(-1)),("mean",dist.mean),("std",dist.stddev),("value",value),("reward",reward),("physical_reward",physical_reward),("done",done)]:buffers[k].append(v)
                     for entry in terms:
                         for k,v in entry.items():all_terms[k]=all_terms.get(k,0.)+v
                         term_count+=1
@@ -215,13 +216,17 @@ def run(args):
                 dist=policy.distribution(flat["obs"][ix],flat["anchor"][ix])
                 old=torch.distributions.Normal(flat["mean"][ix],flat["std"][ix])
                 actual_kl=float(torch.distributions.kl_divergence(old,dist).sum(-1).mean())
+                prediction=critic(flat["critic_obs"][ix]);truth=returns[ix]
+                value_loss=float((prediction-truth).square().mean())
+                explained_variance=float(1-(truth-prediction).var()/(truth.var()+1e-8))
+                delta_rms=float(policy.delta(flat["obs"][ix]).square().mean().sqrt())
             rejected=not math.isfinite(actual_kl) or actual_kl>.15
             if rejected:
                 policy.load_state_dict(before);ao.load_state_dict(optbefore)
                 for g in ao.param_groups:g["lr"]*=.5
             elif actual_kl>args.target_kl*1.5:
                 for g in ao.param_groups:g["lr"]=max(1e-6,g["lr"]*.8)
-            entry={"iteration":iteration,"elapsed":time.time()-start,"samples":total_samples,"reward":float(b["reward"].mean()),"kl":actual_kl,"actor_lr":ao.param_groups[0]["lr"],"std":float(policy.log_std.detach().exp().mean()),"rejected":rejected,"actor_updates":update_count,"fps":T*N/(time.time()-iteration_start),"done_fraction":float(b["done"].float().mean()),"terms":{k:v/term_count for k,v in all_terms.items()}}
+            entry={"iteration":iteration,"elapsed":time.time()-start,"samples":total_samples,"reward":float(b["physical_reward"].mean()),"bootstrapped_reward":float(b["reward"].mean()),"reward_logging":"physical_v2","value_loss":value_loss,"explained_variance":explained_variance,"delta_rms":delta_rms,"kl":actual_kl,"actor_lr":ao.param_groups[0]["lr"],"std":float(policy.log_std.detach().exp().mean()),"rejected":rejected,"actor_updates":update_count,"fps":T*N/(time.time()-iteration_start),"done_fraction":float(b["done"].float().mean()),"terms":{k:v/term_count for k,v in all_terms.items()}}
             log.write(json.dumps(entry)+"\n")
             print(json.dumps({k:v for k,v in entry.items() if k!="terms"}),flush=True)
             if iteration%5==0:save_checkpoint(out/"latest.pt",policy,critic,ao,co,iteration,config)

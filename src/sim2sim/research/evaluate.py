@@ -13,7 +13,7 @@ from .tasks import TASKS,SESSION,BASELINE,DT,conditions,command
 from .world import World
 from .models import NativeAnchor
 
-PROTOCOL_VERSION="physical_tasks_v4"
+PROTOCOL_VERSION="physical_tasks_v5"
 
 def window_mean(x,n=50):
     x=np.asarray(x)
@@ -45,8 +45,20 @@ def summarize(task,rows,heading):
          "head_contact_fraction":float(a["head_contact"].mean())}
     locomotion=float(np.exp(-velocity_error/.2-yaw_error/.5))*float((~failed).mean())
     if task.name in ("walking","roller"):
-        out["success"]=bool(not failed.any() and velocity_error<.10 and yaw_error<.15)
-        out["score"]=locomotion
+        # Small velocity errors can still accumulate unacceptable idle drift.
+        # Allow 0.5 s to brake at the start of each commanded idle interval.
+        idle=np.linalg.norm(a["cmd"][:,:3],axis=1)<.01
+        bounds=np.flatnonzero(np.diff(np.r_[False,idle,False]))
+        idle_displacement=[];idle_yaw=[]
+        for start,end in zip(bounds[::2],bounds[1::2]):
+            first=start+round(.5/DT)
+            if end-first<round(.5/DT):continue
+            idle_displacement.append(float(np.linalg.norm(a["xy"][end-1]-a["xy"][first])))
+            idle_yaw.append(float(np.degrees(abs(yaw[end-1]-yaw[first]))))
+        drift=max(idle_displacement,default=0.);turn=max(idle_yaw,default=0.)
+        out.update(idle_displacement=drift,idle_yaw_drift_deg=turn)
+        out["success"]=bool(not failed.any() and velocity_error<.10 and yaw_error<.15 and drift<.05 and turn<5.)
+        out["score"]=locomotion*float(np.exp(-drift/.05-turn/10))
     elif task.name=="standing":
         out["success"]=bool(not failed.any() and stand_final and out["displacement"]<.05 and out["yaw_drift_deg"]<5)
         out["score"]=float((~failed).mean())*float(np.exp(-out["displacement"]/.05-out["yaw_drift_deg"]/10))
@@ -180,7 +192,8 @@ def main():
         for name in ([args.skill] if args.skill else TASKS):
             task=TASKS[name]
             for label,source,backend in [("factory_mujoco",task.source,"mujoco"),("factory_godot",task.source,"godot"),("previous_godot",BASELINE/task.previous,"godot")]:
-                out=SESSION/("evaluation_v4" if args.entry=="reset" else "evaluation_v4_"+args.entry)/name/label
+                version=PROTOCOL_VERSION.rsplit("_",1)[-1]
+                out=SESSION/("evaluation_"+version+("" if args.entry=="reset" else "_"+args.entry))/name/label
                 if (out/"summary.json").exists():continue
                 r=run_suite(name,source,backend,range(args.seed_start,args.seed_start+args.seeds),args.workers,out,entry=args.entry)
                 print(name,label,'success',r["success_rate"],'score',round(r["score"],4),'errors',r["errors"],flush=True)

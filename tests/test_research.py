@@ -76,6 +76,19 @@ class TaskSemantics(unittest.TestCase):
         self.assertTrue(result["correct_foot_contact"])
         self.assertFalse(result["success"])
 
+    def test_slow_cumulative_idle_drift_is_not_a_stop(self):
+        rows=[]
+        for k in range(500):
+            rows.append(dict(time=.02*(k+1),z=.115,xy=np.array([k*.0006,0]),up=1.,tilt=0.,
+                yaw=k*.001,vel=np.array([.03,0,0]),gyro=np.array([0,0,.05]),contact=np.ones(2),
+                cmd=np.zeros(13),actions=np.zeros(14),head_contact=False))
+        result=summarize(TASKS["walking"],rows,np.array([1,0]))
+        self.assertLess(result["vel_err_1s"],.1)
+        self.assertLess(result["yaw_err_1s"],.15)
+        self.assertGreater(result["idle_displacement"],.25)
+        self.assertGreater(result["idle_yaw_drift_deg"],20)
+        self.assertFalse(result["success"])
+
 class RealTelemetry(unittest.TestCase):
     def test_source_play_wheel_friction_is_explicit_and_reference_only(self):
         import mujoco
