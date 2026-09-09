@@ -44,6 +44,7 @@ class World:
 
     def reset(self, seed, condition="default", randomize=True, entry_speed=None, phase_start=0., q_override=None):
         self.pending_ball=None
+        self.roll_start=None
         self.rng = np.random.default_rng(seed)
         self.condition = condition
         self.t = float(phase_start)
@@ -75,6 +76,21 @@ class World:
         self.features=self.measure(reset=True)
         self.initial_xy=np.array(self.state.base_pos[:2],copy=True)
         self.initial_ball=self.features["ball_pos"].copy()
+        return self.obs()
+
+    def reset_from_roll_state(self,qpos,qvel,last,heading,progress):
+        """Training-only mid-roll state; subsequent dynamics remain native."""
+        if self.task.name!="roulade":raise ValueError("Roll starts only apply to roulade")
+        self.pending_ball=None;self.t=0.;self.condition="default"
+        self.heading=np.array(heading,copy=True);self.last=np.array(last,np.float32,copy=True)
+        ctrl=self.home+self.last
+        state=self.mj.reset(qpos=np.array(qpos),qvel=np.array(qvel),ctrl=ctrl)
+        if self.backend_name=="mujoco":self.state=state
+        else:self.state=self.backend.reset(ctrl=ctrl,bodies=self.mj.body_poses_mujoco(),report_bodies=self.report_names)
+        self.features=self.measure(reset=True)
+        self.initial_xy=np.array(self.state.base_pos[:2],copy=True)
+        self.initial_ball=self.features["ball_pos"].copy()
+        self.roll_start=np.array(progress,copy=True)
         return self.obs()
 
     def obs(self):

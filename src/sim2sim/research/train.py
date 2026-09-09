@@ -34,11 +34,16 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset"):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         self.conditions=training_conditions or conditions(task)
         self.entry=entry;self.entry_counts={"reset":0,"standing":0}
+        self.roll_starts_fraction=roll_starts;self.roll_library=None
+        if roll_starts:
+            if task.name!="roulade":raise ValueError("--roll-starts requires roulade")
+            from .curriculum import RollStarts
+            self.roll_library=RollStarts();self.entry_counts["midroll"]=0
         try:
             for i in range(num_envs):
                 self.worlds.append(World(task))
@@ -54,6 +59,9 @@ class Vector:
         warm=[]
         for i in indices:
             w=self.worlds[i];w.reset(self.next_seed(),self.next_condition(i))
+            if self.roll_library is not None and self.rng.random()<self.roll_starts_fraction:
+                self.roll_library.reset(w,self.rng);self.entry_counts["midroll"]+=1
+                continue
             standing=self.entry=="standing" or (self.entry=="mixed" and self.rng.random()<.5)
             if standing:
                 teacher,cmd=w.prepare_standing_entry();warm.append((w,teacher,cmd))
@@ -134,9 +142,10 @@ def run(args):
     if not initial_parity["passed"]:raise RuntimeError("Initial actor export parity failed")
     weights=json.loads(args.weights)
     training_conditions=None if not args.conditions else args.conditions.split(",")
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry)
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts)
     eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
     config["physics"]=env.worlds[0].physics
+    if env.roll_library is not None:config["roll_starts_sha256"]=env.roll_library.sha256
     if any(w.physics!=config["physics"] for w in env.worlds):raise RuntimeError("Worker physics fingerprints differ")
     config["resume_starts_new_physical_episodes"]=bool(args.resume)
     (out/"config.json").write_text(json.dumps(config,indent=2))
@@ -270,6 +279,7 @@ def main():
     p.add_argument("--source");p.add_argument("--resume");p.add_argument("--template")
     p.add_argument("--entry",choices=["reset","standing","mixed"],default="reset")
     p.add_argument("--eval-entry",choices=["reset","standing","both"])
+    p.add_argument("--roll-starts",type=float,default=0.,help="Training-only fraction of source mid-roll resets")
     args=p.parse_args();print(run(args),flush=True)
 
 if __name__=="__main__":main()

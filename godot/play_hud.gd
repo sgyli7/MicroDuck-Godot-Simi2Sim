@@ -120,12 +120,14 @@ func set_mode(mode: String) -> void:
 	var roller := mode == "roller"
 	if _help != null:
 		if roller:
-			_help.text = "W/↑ 滑行  S/↓ 刹车  A/← 左转  D/→ 右转  空格 Idle  ·  无侧移/踢球  6走路  0重置 Esc退出"
+			_help.text = "W/↑ 滑行  S/↓ 刹车  A/← 左转  D/→ 右转  空格 Idle  ·  2下蹲滑行  6走路  0重置 Esc退出"
 		else:
 			_help.text = "W/↑ 前进  S/↓ 后退  A/← 左转  D/→ 右转  Q/E 平移  空格 Idle  ·  1捡地 2坐下 3/4踢球 5前滚 6轮滑 0重置 Esc退出"
-	for action in ["pick", "sit", "kick_left", "kick_right", "roulade"]:
+	for action in ["pick", "kick_left", "kick_right", "roulade"]:
 		if _tap_btns.has(action):
 			(_tap_btns[action] as CanvasItem).visible = not roller
+	if _tap_btns.has("sit"):
+		(_tap_btns["sit"] as Button).text = "下蹲 2" if roller else "坐下 2"
 	for b in _strafe_btns:
 		(b as CanvasItem).visible = not roller
 	if _tap_btns.has("switch_robot"):

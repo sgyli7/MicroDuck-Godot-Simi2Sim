@@ -263,6 +263,7 @@ class BrainOut:
     push: bool = False
     switch_robot: bool = False
     status: str = ""
+    started_skill: str | None = None
 
 
 @dataclass
@@ -276,10 +277,12 @@ class PlayBrain:
     has_kick_left: bool = True
     has_kick_right: bool = True
     has_roulade: bool = True
+    has_roller_crouch: bool = False
     lim: TwistLimits = field(default_factory=TwistLimits)
     pick_period: float = 4.0
-    kick_duration: float = 3.0
-    roulade_duration: float = 2.0
+    kick_duration: float = 5.0
+    roulade_duration: float = 5.0
+    crouch_period: float = 5.0
 
     policy: str = "standing"
     vel: np.ndarray = field(default_factory=lambda: np.zeros(3, dtype=np.float32))
@@ -308,7 +311,7 @@ class PlayBrain:
             self.policy = "walking"
 
     def _busy(self) -> bool:
-        return self.policy in ("ground_pick", "kick_left", "kick_right", "roulade")
+        return self.policy in ("ground_pick", "roller_crouch", "kick_left", "kick_right", "roulade")
 
     def reset_motion(self) -> None:
         self.vel[:] = 0.0
@@ -378,6 +381,12 @@ class PlayBrain:
 
     def _tap(self, action: str) -> None:
         if action == "sit":
+            if self.has_roller_crouch and not self._busy():
+                self.policy = "roller_crouch"
+                self.pick_phase = 0.0
+                self.vel[:] = 0.0
+                self.ramp.reset()
+                return
             if not self.has_sitstand:
                 return
             if self._busy():
@@ -410,22 +419,23 @@ class PlayBrain:
             self.ramp.reset()
 
     def _advance(self, dt: float) -> None:
-        if self.policy == "ground_pick":
-            self.pick_phase += dt / self.pick_period
-            if self.pick_phase >= 1.0:
+        if self.policy in ("ground_pick", "roller_crouch"):
+            period = self.crouch_period if self.policy == "roller_crouch" else self.pick_period
+            self.pick_phase += dt / period
+            if self.pick_phase >= 1.0 - 1e-9:
                 self.pick_phase = 0.0
                 self.reset_motion()
             return
         if self.policy in ("kick_left", "kick_right", "roulade"):
             self.behavior_t -= dt
-            if self.behavior_t <= 0.0:
+            if self.behavior_t <= 1e-9:
                 self.reset_motion()
 
     def command_13(self) -> np.ndarray:
         cmd = np.zeros(13, dtype=np.float32)
         if self.policy in ("kick_left", "kick_right", "roulade"):
             return cmd
-        if self.policy == "ground_pick":
+        if self.policy in ("ground_pick", "roller_crouch"):
             cmd[0] = np.cos(2 * np.pi * self.pick_phase)
             cmd[1] = np.sin(2 * np.pi * self.pick_phase)
             return cmd
@@ -471,12 +481,19 @@ class PlayBrain:
             if last is not None and last in self.press_order:
                 self.press_order.remove(last)
                 self.press_order.append(last)
+        started_skill = None
         if reset:
             self.reset_motion()
         else:
+            # Advance the command that ran in the previous control interval.
+            # A newly triggered phase policy must receive phase zero first.
+            self._advance(dt)
+            previous_policy = self.policy
             for action in taps:
                 if action in SKILL_TAPS:
                     self._tap(action)
+            if self._busy() and self.policy != previous_policy:
+                started_skill = self.policy
             prev_busy, prev_sit = self._busy(), self.sit
             self._set_loco(held_now, dt)
             if not (prev_busy or prev_sit) and self._busy():
@@ -485,7 +502,6 @@ class PlayBrain:
                 # may have re-resolved a stale held target. Freeze the ramp
                 # so the stop is honoured next tick, newest-wins.
                 self.ramp.vel[:] = self.vel
-            self._advance(dt)
         status = self.policy
         if self.policy == "sitstand":
             status = "sit" if self.sit else "sitstand-stand"
@@ -499,4 +515,5 @@ class PlayBrain:
             push=push,
             switch_robot=switch_robot,
             status=status,
+            started_skill=started_skill,
         )

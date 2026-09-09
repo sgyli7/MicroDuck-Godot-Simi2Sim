@@ -83,7 +83,8 @@ def policy_paths(
     if roller:
         return {
             "walking": _prefer("Roller_Godot.onnx", POL / "roller.onnx"),
-            "standing": _prefer("RollerCrouch_Godot.onnx", POL / "roller_crouch.onnx"),
+            "standing": None,
+            "roller_crouch": _prefer("RollerCrouch_Godot.onnx", POL / "roller_crouch.onnx"),
             "sitstand": None,
             "ground_pick": None,
             "kick_left": None,
@@ -112,7 +113,9 @@ def policy_paths(
 def ensure_godot_scene(cfg: dict) -> Path:
     spec = Path(cfg["godot_spec"])
     tscn = spec.with_name("robot.tscn")
-    if spec.is_file() and tscn.is_file():
+    scene_ready = spec.is_file() and tscn.is_file()
+    meshes = list((spec.parent / "meshes").glob("*.obj"))
+    if scene_ready and all(p.with_suffix(p.suffix + ".import").is_file() for p in meshes):
         return spec
     mjcf = Path(cfg["mjcf"])
     if not mjcf.is_file():
@@ -120,11 +123,12 @@ def ensure_godot_scene(cfg: dict) -> Path:
     from mjcf2godot.convert import convert
 
     out = spec.parent
-    print(f"converting {mjcf} → {out}")
-    convert(mjcf, out)
-    cmd = [godot_bin(), "--headless", "--path", str(GODOT_PROJECT), "--import", "--quit-after", "1"]
+    if not scene_ready:
+        print(f"converting {mjcf} → {out}")
+        convert(mjcf, out)
+    cmd = [godot_bin(), "--headless", "--path", str(GODOT_PROJECT), "--editor", "--import", "--quit"]
     print("godot import:", " ".join(cmd))
-    subprocess.run(cmd, check=False)
+    subprocess.run(cmd, check=True)
     if not spec.is_file() or not tscn.is_file():
         raise SystemExit(f"convert/import did not write {spec} / {tscn}")
     return spec
@@ -137,7 +141,20 @@ def capture_home_poses(cfg: dict) -> list[dict]:
     apply_home_qpos(mj, home, z=z0)
     poses = mj.body_poses_mujoco()
     mj.close()
+    for pose in poses:
+        if pose["name"] == "ball":
+            pose["pos"] = [5.0, 5.0, 0.035]
     return poses
+
+
+def kick_ball_position(st, skill: str) -> list[float]:
+    """Official ball offset in the robot's current heading frame at trigger."""
+    w, x, y, z = st.base_quat_wxyz
+    yaw = np.arctan2(2 * (w * z + x * y), 1 - 2 * (y * y + z * z))
+    c, s = np.cos(yaw), np.sin(yaw)
+    side = 0.042 if skill == "kick_left" else -0.042
+    return [float(st.base_pos[0] + c * 0.09 - s * side),
+            float(st.base_pos[1] + s * 0.09 + c * side), 0.035]
 
 
 def load_bank(paths: dict[str, Path | None], home_len: int) -> dict[str, OnnxPolicy]:
@@ -212,6 +229,8 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.reconfigure(line_buffering=True)
     if args.roller:
         args.robot = ROOT / "robots/microduck_roller.json"
+    elif args.robot.resolve() == (ROOT / "robots/microduck.json").resolve():
+        args.robot = ROOT / "robots/microduck_ball.json"
 
     cfg = load_robot_cfg(args.robot)
     home = np.asarray(cfg.get("home", DEFAULT_HOME), dtype=np.float32)
@@ -241,6 +260,7 @@ def main(argv: list[str] | None = None) -> int:
         has_kick_left="kick_left" in bank,
         has_kick_right="kick_right" in bank,
         has_roulade="roulade" in bank,
+        has_roller_crouch="roller_crouch" in bank,
         lim=lim,
     )
     poses = capture_home_poses(cfg)
@@ -256,6 +276,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.roller:
         print("  W/↑ 滑行   S/↓ 刹车   A/← 左转   D/→ 右转   空格 Idle")
         print("  无侧移（Q/E 无效）  vmax_x=0.6")
+        print("  2/Y 下蹲滑行后起身（5 秒）")
         print("  6 切回路走+技能   0 重置   P 推一把   Esc 退出")
     else:
         print("  W/↑ 前进   S/↓ 后退   A/← 左转   D/→ 右转   Q/E 平移   空格 Idle")
@@ -340,7 +361,8 @@ def main(argv: list[str] | None = None) -> int:
             last_action = action.astype(np.float32, copy=True)
             ctrl = home + last_action * scale
             t_step = time.perf_counter()
-            st = backend.step(ctrl, n_substeps=decimation, hud=out.status)
+            ball = kick_ball_position(st, out.started_skill) if out.started_skill in ("kick_left", "kick_right") else None
+            st = backend.step(ctrl, n_substeps=decimation, hud=out.status, place_ball=ball)
             step_ms += (time.perf_counter() - t_step) * 1000.0
             raw = st.extra.get("raw") or {}
             held = {str(x) for x in (raw.get("held") or [])}

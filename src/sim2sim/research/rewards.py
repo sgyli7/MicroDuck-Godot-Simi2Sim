@@ -17,6 +17,9 @@ class Objective:
         self.ball_best=0.;self.yaw0=w.features["yaw"];self.start_xy=w.features["xy"].copy()
         self.previous_score=0.
         self.was_idle=False
+        if getattr(w,"roll_start",None) is not None:
+            self.net,self.frontier,pivot,inverted=w.roll_start
+            self.pivot=bool(pivot);self.inverted=bool(inverted)
 
     def extra(self):
         w=self.w;f=w.features;rot=f["rot"]
@@ -81,6 +84,9 @@ class Objective:
             terms["overspeed"]=-4*max(0.,ball_forward-1.)
             terms["wrong_foot"]=-8*float(other in f["kick_contacts"])
             terms["support"]=float(f["contact"][1-task.foot])*up
+            if "heading" in self.weights:
+                dy=math.atan2(math.sin(f["yaw"]-self.yaw0),math.cos(f["yaw"]-self.yaw0))
+                terms["heading"]=-dy*dy
         elif name=="roller_crouch":
             blend=crouch_blend((t%task.period)/task.period)
             target=CROUCH_STAND*(1-blend)+CROUCH_DOWN*blend

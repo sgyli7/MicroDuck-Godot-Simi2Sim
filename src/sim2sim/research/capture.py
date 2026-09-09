@@ -8,7 +8,7 @@ from .models import NativeAnchor
 from .world import World
 from .evaluate import record,summarize
 
-def capture(skill,source,backend,out,seed=100,condition="default",label=None):
+def capture(skill,source,backend,out,seed=100,condition="default",label=None,entry="reset"):
     task=TASKS[skill];out=Path(out);out.mkdir(parents=True,exist_ok=True)
     os.environ.setdefault("SIM2SIM_FORCE_GL","1")
     os.environ.setdefault("SIM2SIM_DISPLAY_DRIVER","x11")
@@ -19,8 +19,10 @@ def capture(skill,source,backend,out,seed=100,condition="default",label=None):
         if backend=="godot":
             # Reset is still frozen; zooming here does not advance dynamics.
             w.backend._client.call({"cmd":"camera_zoom","d":-10.})
+        if entry=="standing":obs=w.enter_from_standing()
         if backend=="mujoco":
             import mujoco
+            w.mj.model.vis.global_.offwidth=900;w.mj.model.vis.global_.offheight=540
             renderer=mujoco.Renderer(w.mj.model,height=540,width=900)
             camera=mujoco.MjvCamera();camera.distance=.65;camera.elevation=-15;camera.azimuth=np.degrees(np.arctan2(w.heading[1],w.heading[0]))+70
         for k in range(round(task.seconds/DT)):
@@ -39,7 +41,7 @@ def capture(skill,source,backend,out,seed=100,condition="default",label=None):
                     font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",19)
                     draw.text((16,12),f"{label or skill} | {backend} | t={(k+1)*DT:.2f}s",font=font,fill="white")
                     frames.append(framed)
-        result=summarize(task,rows,w.heading);result.update(backend=backend,seed=seed,condition=condition,policy=str(source),physics=w.physics)
+        result=summarize(task,rows,w.heading);result.update(backend=backend,seed=seed,condition=condition,entry=entry,policy=str(source),physics=w.physics)
         (out/"metrics.json").write_text(json.dumps(result,indent=2))
         frames[0].save(out/"clip.gif",save_all=True,append_images=frames[1:],duration=80,loop=0,optimize=False)
         frames[min(len(frames)-1,12)].save(out/"preview.png")
@@ -52,6 +54,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument("--skill",required=True);p.add_argument("--source",type=Path)
     p.add_argument("--backend",default="godot");p.add_argument("--out",type=Path,required=True)
     p.add_argument("--seed",type=int,default=100);p.add_argument("--condition",default="default");p.add_argument("--label")
-    a=p.parse_args();print(capture(a.skill,a.source or TASKS[a.skill].source,a.backend,a.out,a.seed,a.condition,a.label))
+    p.add_argument("--entry",choices=("reset","standing"),default="reset")
+    a=p.parse_args();print(capture(a.skill,a.source or TASKS[a.skill].source,a.backend,a.out,a.seed,a.condition,a.label,a.entry))
 
 if __name__=="__main__":main()

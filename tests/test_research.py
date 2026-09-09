@@ -77,6 +77,28 @@ class TaskSemantics(unittest.TestCase):
         self.assertFalse(result["success"])
 
 class RealTelemetry(unittest.TestCase):
+    def test_roll_start_preserves_physical_pose_and_action_history(self):
+        from sim2sim.research.models import NativeAnchor
+        source=World(TASKS["roulade"],"mujoco");target=World(TASKS["roulade"])
+        try:
+            obs=source.reset(40000);policy=NativeAnchor(TASKS["roulade"].source)
+            obj=Objective(source)
+            for _ in range(45):
+                obs=source.step(policy(obs[None])[0]);obj.compute()
+            target.reset(7)
+            target.reset_from_roll_state(source.mj.data.qpos,source.mj.data.qvel,
+                source.last,source.heading,[obj.net,obj.frontier,obj.pivot,obj.inverted])
+            np.testing.assert_allclose(target.state.q,source.state.q,atol=2e-5)
+            np.testing.assert_allclose(target.state.base_pos,source.state.base_pos,atol=2e-6)
+            np.testing.assert_array_equal(target.obs()[34:48],source.last)
+            self.assertEqual(Objective(target).net,obj.net)
+            target.step(policy(target.obs()[None])[0])
+            self.assertTrue(np.isfinite(target.state.q).all())
+            target.reset(8)
+            self.assertEqual(Objective(target).net,0.)
+            self.assertIsNone(target.roll_start)
+        finally:source.close();target.close()
+
     def test_real_handoff_preserves_history_and_counted_time(self):
         w=World(TASKS["kick_left"])
         try:

@@ -137,8 +137,9 @@ class GodotBackend:
         hud: str | None = None,
         report: str | None = None,
         timing: bool = False,
+        place_ball: list[float] | None = None,
     ) -> SimState:
-        self.send_step(ctrl, n_substeps, hud=hud, report=report, timing=timing)
+        self.send_step(ctrl, n_substeps, hud=hud, report=report, timing=timing, place_ball=place_ball)
         return self.recv_step()
 
     def nudge(self, linvel_mujoco: np.ndarray) -> None:

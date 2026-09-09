@@ -102,7 +102,46 @@ class TestPlayBrain(unittest.TestCase):
         np.testing.assert_allclose(self.b.command_13(), np.zeros(13))
         for _ in range(101):
             self.b.tick(set(), [], 0.02)
+        self.assertEqual(self.b.policy, "roulade")
+        for _ in range(149):
+            self.b.tick(set(), [], 0.02)
         self.assertEqual(self.b.policy, "standing")
+
+    def test_phase_skills_start_at_zero_and_run_full_period(self) -> None:
+        for b, tap, policy, steps in [
+            (PlayBrain(), "pick", "ground_pick", 200),
+            (PlayBrain(has_standing=False, has_sitstand=False, has_roller_crouch=True),
+             "sit", "roller_crouch", 250),
+        ]:
+            out = b.tick(set(), [tap], 0.02)
+            self.assertEqual(out.started_skill, policy)
+            np.testing.assert_allclose(out.command[:2], [1.0, 0.0], atol=1e-7)
+            for _ in range(steps - 1):
+                out = b.tick(set(), [], 0.02)
+                self.assertEqual(out.policy, policy)
+                self.assertIsNone(out.started_skill)
+                self.assertAlmostEqual(float(np.linalg.norm(out.command[:2])), 1.0, places=6)
+            out = b.tick(set(), [], 0.02)
+            self.assertEqual(out.policy, "walking" if policy == "roller_crouch" else "standing")
+            np.testing.assert_allclose(out.command, np.zeros(13))
+
+    def test_kick_trigger_is_once_and_full_five_seconds(self) -> None:
+        for skill in ("kick_left", "kick_right"):
+            b = PlayBrain()
+            self.assertEqual(b.tick(set(), [skill], 0.02).started_skill, skill)
+            for _ in range(249):
+                out = b.tick(set(), [skill], 0.02)
+                self.assertEqual(out.policy, skill)
+                self.assertIsNone(out.started_skill)
+            self.assertEqual(b.tick(set(), [], 0.02).policy, "standing")
+
+    def test_ball_trigger_rotates_with_heading(self) -> None:
+        from types import SimpleNamespace
+        from sim2sim.play import kick_ball_position
+        st = SimpleNamespace(base_pos=np.array([2.0, 3.0, 0.12]),
+                             base_quat_wxyz=np.array([2**-0.5, 0, 0, 2**-0.5]))
+        np.testing.assert_allclose(kick_ball_position(st, "kick_left"), [1.958, 3.09, 0.035])
+        np.testing.assert_allclose(kick_ball_position(st, "kick_right"), [2.042, 3.09, 0.035])
 
     def test_idle_tap_clears_walk(self) -> None:
         for _ in range(15):

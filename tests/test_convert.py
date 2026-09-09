@@ -26,6 +26,21 @@ class TestGodotResPath(unittest.TestCase):
 
 
 class TestRollerTscnMeshPaths(unittest.TestCase):
+    def test_colliding_ball_has_a_visible_surface(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            xml = Path(td) / "ball.xml"
+            xml.write_text('<mujoco><worldbody><body name="ball" pos="0 0 .035"><freejoint/>'
+                           '<geom name="ball_geom" type="sphere" size=".035" mass=".015" rgba="1 .55 0 1"/>'
+                           '</body></worldbody></mujoco>')
+            out = Path(td) / "godot/generated/ball"
+            spec = convert(xml, out)
+            scene = (out / "robot.tscn").read_text()
+            self.assertIn('type="SphereShape3D"', scene)
+            self.assertIn('type="SphereMesh"', scene)
+            self.assertIn('type="MeshInstance3D" parent="ball"', scene)
+            self.assertAlmostEqual(spec["bodies"][1]["mass"], .015)
+            self.assertFalse(any(k.startswith("_visual") for g in spec["geoms"] for k in g))
+
     @unittest.skipUnless(ROLLERS.is_file(), f"missing {ROLLERS}")
     def test_roller_convert_does_not_point_at_walking_meshes(self) -> None:
         with tempfile.TemporaryDirectory() as td:

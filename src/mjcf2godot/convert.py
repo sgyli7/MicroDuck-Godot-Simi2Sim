@@ -2027,8 +2027,15 @@ def emit_robot_tscn(
             mapping.append({"geom": g["name"], "action": f"visual OBJ {rel}"})
             # stash for node emit
             g["_visual_ext"] = eid
-        elif visual and not no_visual:
-            g["_visual_ext"] = None
+        elif not no_visual and (visual or g["group"] == 0) and gtype == int(mujoco.mjtGeom.mjGEOM_SPHERE):
+            # A primitive can be both visible and colliding (the kick ball).
+            # CollisionShape3D alone has no rendered surface in play mode.
+            radius = g["size"][0]
+            g["_visual_sub"] = add_sub(
+                f'[sub_resource type="SphereMesh" id="__ID__"]\nradius = {fmt_f(radius)}\nheight = {fmt_f(2 * radius)}'
+            )
+            g["_visual_tf"] = _fmt_transform((rel_r[:, 0], rel_r[:, 1], rel_r[:, 2]), rel_p)
+            mapping.append({"geom": g["name"], "action": f"visual SphereMesh r={radius}"})
 
     nodes.append('[node name="Robot" type="Node3D"]')
 
@@ -2142,7 +2149,8 @@ def emit_robot_tscn(
     if not no_visual:
         for gidx, g in enumerate(spec["geoms"]):
             eid = g.get("_visual_ext")
-            if not eid:
+            sid = g.get("_visual_sub")
+            if not eid and not sid:
                 continue
             bname = g["body"]
             rgba = g["rgba"]
@@ -2159,7 +2167,8 @@ def emit_robot_tscn(
                 "\n".join(
                     [
                         f'[node name="vis_{g["name"]}_{gidx}" type="MeshInstance3D" parent="{bname}"]',
-                        f'mesh = ExtResource("{eid}")',
+                        f'transform = {g.get("_visual_tf", _identity_transform())}',
+                        f'mesh = ExtResource("{eid}")' if eid else f'mesh = SubResource("{sid}")',
                         f'surface_material_override/0 = SubResource("{mat}")',
                     ]
                 )
@@ -2346,6 +2355,8 @@ def convert(mjcf: Path, out_dir: Path, *, no_visual: bool = False) -> dict:
     emit_robot_tscn(model, data, spec, out_dir, no_visual=no_visual)
     for g in spec["geoms"]:
         g.pop("_visual_ext", None)
+        g.pop("_visual_sub", None)
+        g.pop("_visual_tf", None)
     spec_path = out_dir / "robot_spec.json"
     spec_path.write_text(json.dumps(spec, indent=2), encoding="utf-8")
     write_report(spec, out_dir / "MAPPING_REPORT.md")
