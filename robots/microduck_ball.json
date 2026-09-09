@@ -1,0 +1,76 @@
+{
+  "name": "microduck_ball",
+  "mjcf": "${MICRODUCK_RL}/src/mjlab_microduck/robot/microduck/scene_ball.xml",
+  "godot_spec": "${SIM2SIM_ROOT}/godot/generated/microduck_ball/robot_spec.json",
+  "base_body": "trunk_base",
+  "timestep": 0.005,
+  "decimation": 4,
+  "action_scale": 1.0,
+  "current_limit_a": 1.75,
+  "reset_z": 0.125,
+  "home": [
+    0.0,
+    -0.0873,
+    -0.4579,
+    -0.0049,
+    0.453,
+    0.3491,
+    0.3491,
+    0.0,
+    0.0,
+    0.0,
+    0.0873,
+    0.4579,
+    0.0049,
+    -0.453
+  ],
+  "policies": {
+    "alpha_walking": "${MICRODUCK_POLICIES}/alpha_walking.onnx",
+    "local_ppo": "${MICRODUCK_POLICIES}/local-ppo/local_velocity_walk_run_idle.onnx",
+    "walk_godot": "${MICRODUCK_POLICIES}/Walk_Godot.onnx"
+  },
+  "schedule": [
+    {
+      "name": "idle",
+      "seconds": 2.0,
+      "vel": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "walk",
+      "seconds": 4.0,
+      "vel": [
+        0.25,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "run",
+      "seconds": 4.0,
+      "vel": [
+        0.4,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "turn",
+      "seconds": 2.0,
+      "vel": [
+        0.2,
+        0.0,
+        0.5
+      ]
+    }
+  ],
+  "thresholds": {
+    "q_rmse_warn": 0.35,
+    "q_rmse_hard": 1.8,
+    "xy_rmse_warn": 0.3,
+    "xy_rmse_hard": 2.5
+  }
+}

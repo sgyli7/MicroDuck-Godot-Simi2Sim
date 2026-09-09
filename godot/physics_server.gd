@@ -120,6 +120,8 @@ var _cam_last_sec: float = 0.0  # wall clock for camera damping (lockstep-aware)
 var _window_title: String = "Microduck Sim2Sim"
 var _headless: bool = false
 var _foot_names: Array = []
+var _research_bodies: Array = []
+var _research_contact_events: Dictionary = {}
 var _mj_basis: Dictionary = {}  # name -> Basis, refreshed each PD tick
 # Kinematic velocities from pose finite difference. Jolt's reported
 # angular_velocity includes Baumgarte/position-correction drift (~0.22 rad/s
@@ -1074,6 +1076,22 @@ func _physics_process(delta: float) -> void:
 	if _kin_after_tick:
 		_update_kinematic_vel(delta)
 		_kin_after_tick = false
+		if _report_mode == "research":
+			for bname in _research_bodies:
+				var key := str(bname)
+				if _bodies.has(key):
+					var report := _body_kinematic_report(key)
+					var events: Array = _research_contact_events.get(key, [])
+					for contact in report["contacts"]:
+						# Keep each body/shape pair once within the 20 ms action.
+						var found := false
+						for old in events:
+							if old["body"] == contact["body"] and old["shape"] == contact["shape"]:
+								found = true
+								break
+						if not found:
+							events.append(contact)
+					_research_contact_events[key] = events
 	if not _headless:
 		Engine.max_physics_steps_per_frame = 32
 		# Camera ticks on the wall clock, not the fixed step: --fixed-fps 200
@@ -1252,6 +1270,7 @@ func _handle(cmd: Variant) -> void:
 		for i in range(ctrl.size()):
 			_ctrl[i] = float(ctrl[i])
 		_report_mode = str(cmd.get("report", ""))
+		_research_contact_events.clear()
 		_timing_enabled = bool(cmd.get("timing", false))
 		_remaining = int(cmd.get("n_substeps", 1))
 		if _remaining < 1:
@@ -1328,6 +1347,8 @@ func _handle(cmd: Variant) -> void:
 
 
 func _do_reset(cmd: Dictionary) -> void:
+	_research_bodies = cmd.get("report_bodies", [])
+	_research_contact_events.clear()
 	_remaining = 0
 	_pending_send = false
 	_t = 0.0
@@ -1494,13 +1515,29 @@ func _body_kinematic_report(key: String) -> Dictionary:
 	var b: RigidBody3D = _bodies[key]
 	var n_contacts := 0
 	var impulse_sum := 0.0
+	var ground_contacts := 0
+	var contacts: Array = []
 	var dst := PhysicsServer3D.body_get_direct_state(b.get_rid())
 	if dst != null:
 		n_contacts = dst.get_contact_count()
 		for ci in range(n_contacts):
 			impulse_sum += dst.get_contact_impulse(ci).length()
+			var collider := dst.get_contact_collider_object(ci)
+			var collider_name := str(collider.name) if collider is Node else "unknown"
+			var is_ground := collider is StaticBody3D
+			if is_ground:
+				ground_contacts += 1
+			var shape_idx := dst.get_contact_local_shape(ci)
+			var shape_name := ""
+			if shape_idx >= 0:
+				var owner_id := b.shape_find_owner(shape_idx)
+				var owner = b.shape_owner_get_owner(owner_id)
+				if owner is Node:
+					shape_name = str(owner.name)
+			contacts.append({"body": collider_name, "ground": is_ground, "shape": shape_name, "impulse": dst.get_contact_impulse(ci).length()})
 	var pm := _g2m(b.global_transform.origin)
 	var lm := _g2m(b.linear_velocity)
+	var qm := _basis_to_m_quat(b.global_transform.basis)
 	return {
 		"name": key,
 		"contact": n_contacts > 0,
@@ -1508,6 +1545,9 @@ func _body_kinematic_report(key: String) -> Dictionary:
 		"impulse": impulse_sum,
 		"pos": [pm.x, pm.y, pm.z],
 		"linvel": [lm.x, lm.y, lm.z],
+		"quat": [qm.w, qm.x, qm.y, qm.z],
+		"ground_contact": ground_contacts > 0,
+		"contacts": contacts,
 	}
 
 
@@ -1577,7 +1617,7 @@ func _send_state(which: String) -> void:
 		var ai: int = int(j["act_index"])
 		if ai >= 0 and ai < nu:
 			tau[ai] = float(j.get("tau", 0.0))
-	var lite := which == "step" and _report_mode == "lite"
+	var lite := which == "step" and _report_mode in ["lite", "research"]
 	var payload: Dictionary
 	if lite:
 		payload = {
@@ -1674,6 +1714,15 @@ func _send_state(which: String) -> void:
 			"dump": dump,
 			"wheels": _wheel_dump(),
 		}
+	if not _research_bodies.is_empty():
+		var research_states: Array = []
+		for bname in _research_bodies:
+			var key := str(bname)
+			if _bodies.has(key):
+				var report := _body_kinematic_report(key)
+				report["contact_events"] = _research_contact_events.get(key, [])
+				research_states.append(report)
+		payload["body_states"] = research_states
 	if _timing_enabled:
 		payload["timing"] = {
 			"phys_usec": _timing_phys_usec,

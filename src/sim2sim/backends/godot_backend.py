@@ -84,12 +84,15 @@ class GodotBackend:
         ctrl: np.ndarray | None = None,
         bodies: list[dict] | None = None,
         pin_base: bool = False,
+        report_bodies: list[str] | None = None,
     ) -> SimState:
         payload: dict = {"cmd": "reset"}
         if ctrl is not None:
             payload["ctrl"] = np.asarray(ctrl, dtype=float).tolist()
         if bodies is not None:
             payload["bodies"] = bodies
+        if report_bodies is not None:
+            payload["report_bodies"] = report_bodies
         msg = self._client.call(payload)
         if pin_base:
             self._client.call({"cmd": "pin", "names": [self.base_body]})
@@ -157,6 +160,8 @@ class GodotBackend:
             extra["feet"] = msg["feet"]
         if "bodies" in msg:
             extra["bodies"] = msg["bodies"]
+        if "body_states" in msg:
+            extra["body_states"] = msg["body_states"]
         return SimState(
             t=float(msg.get("t", 0.0)),
             q=q,
