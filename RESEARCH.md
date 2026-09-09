@@ -282,7 +282,7 @@ contract. Godot archives can be rescored unchanged; old MuJoCo traces require
 fresh reference rollouts rather than silently relabeling the wrong velocities.
 Both the source XML and source-play wheel-friction references are re-run.
 
-## Explicit time input for a finite roll (20:16 UTC)
+## Explicit time input for a finite roll (20:15 UTC)
 
 A separate architecture experiment (`r08_time_input`) gives the learned actor
 a monotonic elapsed-time input in the otherwise zero first command slot:
@@ -307,3 +307,32 @@ Walking's coupled candidate also completed 119/192 additional development
 episodes (seeds 110–117, both entries), with zero falls. Idle completed 15/16;
 transition stopping still fails. These additional development samples do not
 replace the final unseen-seed evaluation.
+
+## State aggregation and motion feedback (20:23 UTC)
+
+`distill_transitions.py` collects walking states under the student itself,
+then labels zero-command states with factory standing and moving states with
+the verified parent walker. It aggregates two successive student distributions
+from training seeds 80000+, including random command tapes and real handoffs.
+The exported single student is evaluated for every full trajectory. Balanced
+idle/moving supervision is a training objective, never a runtime policy switch.
+The first 1,000-step student completes 48/72 development cases with no falls.
+
+A bounded roller yaw-gain search on separate development seed 300 tested
+1, 1.5, 2, 2.5, 3, 4 and 5 times the old policy's command. Larger gains caused
+falls; gain one remains best, so no conditioned roller is promoted. The full
+old-roller comparison is retained under `roller_conditioning/best_full`.
+
+For the next timed-roll trial, `roll_motion.py` records eight successful original
+MuJoCo training-seed rolls, builds a median joint-pose / gravity-direction /
+height / net-rotation reference, and supplies only reward errors to PPO.
+The reference never sets native states or outputs actions. Its hash and source
+physics are recorded. A regression and short PPO/export run check retained
+curriculum time and nonzero updates. `r09_timed_motion` will compare this dense
+feedback with the time-input-only `r08`. Evaluation still imports neither
+training rewards nor motion-reference code.
+
+The machine has 20 CPU threads. A third bounded lane runs `r08` with eight
+worlds and 1,024 steps per update, preserving the same 8,192-sample update size
+while the two existing lanes continue. CPU throughput is monitored; this is
+independent simulator processing, not additional decision-making agents.

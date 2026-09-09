@@ -151,6 +151,7 @@ def run(args):
     eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
     config["physics"]=env.worlds[0].physics
     if env.roll_library is not None:config["roll_starts_sha256"]=env.roll_library.sha256
+    if env.objectives[0].motion is not None:config["roll_motion_sha256"]=env.objectives[0].motion.sha256
     if any(w.physics!=config["physics"] for w in env.worlds):raise RuntimeError("Worker physics fingerprints differ")
     config["resume_starts_new_physical_episodes"]=bool(args.resume)
     (out/"config.json").write_text(json.dumps(config,indent=2))

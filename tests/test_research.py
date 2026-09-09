@@ -22,6 +22,15 @@ def fake_world(name):
     return w
 
 class TaskSemantics(unittest.TestCase):
+    def test_motion_feedback_uses_actual_pose_and_retained_source_time(self):
+        w=fake_world("roulade")
+        with self.assertRaises(ValueError):Objective(w,{"motion_pose":1.})
+        w.time_input_s=5.;w.time_offset=1.25;r=Objective(w,{"motion_pose":1.})
+        target=r.motion.sample(w.t+w.time_offset);w.state.q=target["q"].copy()
+        exact=r.compute()[2]["motion_pose"]
+        w.state.q+=1.;wrong=r.compute()[2]["motion_pose"]
+        self.assertAlmostEqual(exact,10.);self.assertLess(wrong,.1)
+
     def test_play_and_training_agree_on_one_shot_time(self):
         from sim2sim.play_input import PlayBrain
         from sim2sim.policy_time import time_command

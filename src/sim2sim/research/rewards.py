@@ -11,6 +11,11 @@ class Objective:
         self.w=w;self.weights=weights or {};self.params=params or {};self.reset()
         if set(self.params)-{"velocity_variance","yaw_variance"}:raise ValueError("Unknown reward parameter")
         if any(float(v)<=0 for v in self.params.values()):raise ValueError("Reward variances must be positive")
+        self.motion=None
+        if any(k.startswith("motion_") for k in self.weights):
+            if w.task.name!="roulade" or not getattr(w,"time_input_s",0.):raise ValueError("Motion-reference rewards require an explicit timed roll")
+            from .roll_motion import reference
+            self.motion=reference()
 
     def reset(self):
         w=self.w
@@ -122,6 +127,12 @@ class Objective:
             if "land_heading" in self.weights:
                 targetyaw=math.atan2(w.heading[1],w.heading[0])
                 terms["land_heading"]=3*landgate*max(0.,f["up"])*math.cos(f["yaw"]-targetyaw)
+            if self.motion is not None:
+                ref=self.motion.sample(t+w.time_offset)
+                terms["motion_pose"]=10*np.exp(-np.mean((w.state.q-ref["q"])**2)/.15)
+                terms["motion_orientation"]=8*np.exp(-np.sum((f["rot"][2,:]-ref["gravity"])**2)/.25)
+                terms["motion_height"]=3*np.exp(-((f["z"]-ref["z"])/.04)**2)
+                terms["motion_rotation"]=4*np.exp(-((self.net-ref["net"])/.75)**2)
         else:raise ValueError(name)
         # Every trial records any adjusted term weights; the evaluator stays fixed.
         terms={k:float(v)*self.weights.get(k,1.) for k,v in terms.items()}
