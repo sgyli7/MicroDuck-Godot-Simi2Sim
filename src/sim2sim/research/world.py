@@ -14,8 +14,11 @@ from sim2sim.train.rewards import sit_target_q
 from .tasks import DT, command
 
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml"):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.):
         self.task, self.backend_name = task, backend
+        self.time_input_s=float(time_input_s);self.time_offset=0.
+        if self.time_input_s and (task.name!="roulade" or self.time_input_s!=task.seconds):
+            raise ValueError("Time input currently requires the full roulade duration")
         self.cfg = load_robot_json(task.robot_path)
         files={"robot":task.robot_path,"mjcf":Path(self.cfg["mjcf"])}
         if backend=="godot":files.update(server=sim2sim_root()/"godot/physics_server.gd",spec=Path(self.cfg["godot_spec"]))
@@ -55,6 +58,7 @@ class World:
     def reset(self, seed, condition="default", randomize=True, entry_speed=None, phase_start=0., q_override=None):
         self.pending_ball=None
         self.roll_start=None
+        self.time_offset=0.
         self.rng = np.random.default_rng(seed)
         self.condition = condition
         self.command_schedule=None
@@ -93,10 +97,11 @@ class World:
         self.initial_ball=self.features["ball_pos"].copy()
         return self.obs()
 
-    def reset_from_roll_state(self,qpos,qvel,last,heading,progress):
+    def reset_from_roll_state(self,qpos,qvel,last,heading,progress,source_time=0.):
         """Training-only mid-roll state; subsequent dynamics remain native."""
         if self.task.name!="roulade":raise ValueError("Roll starts only apply to roulade")
         self.pending_ball=None;self.t=0.;self.condition="default";self.command_schedule=None
+        self.time_offset=float(source_time) if self.time_input_s else 0.
         self.heading=np.array(heading,copy=True);self.last=np.array(last,np.float32,copy=True)
         ctrl=self.home+self.last
         state=self.mj.reset(qpos=np.array(qpos),qvel=np.array(qvel),ctrl=ctrl)
@@ -112,6 +117,9 @@ class World:
         return build_obs(self.state,self.last,self.command(),self.home)
 
     def command(self):
+        if self.time_input_s:
+            from sim2sim.policy_time import time_command
+            return time_command(self.t+self.time_offset,self.time_input_s)
         if self.command_schedule is not None:
             from .schedules import scheduled_command
             return scheduled_command(self.command_schedule,self.t)
@@ -246,7 +254,7 @@ class World:
         return teacher,cmd
 
     def finish_standing_entry(self):
-        self.t=0.
+        self.t=0.;self.time_offset=0.
         self.initial_xy=self.features["xy"].copy()
         yaw=self.features["yaw"];self.heading=np.array([math.cos(yaw),math.sin(yaw)])
         if "ball" in self.meta:

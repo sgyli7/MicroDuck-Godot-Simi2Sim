@@ -133,7 +133,7 @@ def record(w,action):
 
 def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=None,noise_std=0.,headless=True,entry="reset",reference_profile="xml"):
     task=TASKS[skill];policy=NativeAnchor(onnx)
-    w=World(task,backend,headless=headless,reference_profile=reference_profile)
+    w=World(task,backend,headless=headless,reference_profile=reference_profile,time_input_s=policy.time_input_s)
     rows=[];observations=[];actions=[];rng=np.random.default_rng(seed+123456)
     start=time.monotonic()
     try:
@@ -151,6 +151,7 @@ def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=N
                   policy=str(Path(onnx).resolve()),sha256=policy.sha256,protocol=PROTOCOL_VERSION,
                   physics=w.physics,
                   entry=entry,
+                  time_input_s=policy.time_input_s,
                   noise_std=noise_std,elapsed_s=time.monotonic()-start)
     result["heading"]=w.heading.tolist()
     if save_trace:

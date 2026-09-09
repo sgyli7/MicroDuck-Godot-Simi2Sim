@@ -52,7 +52,7 @@ class RollStarts:
     def reset(self,w,rng):
         i=int(rng.integers(len(self.data["qpos"])))
         w.reset_from_roll_state(self.data["qpos"][i],self.data["qvel"][i],
-            self.data["last"][i],self.data["heading"][i],self.data["progress"][i])
+            self.data["last"][i],self.data["heading"][i],self.data["progress"][i],source_time=self.data["source_time"][i])
 
 
 if __name__=="__main__":print(build_roll_starts())

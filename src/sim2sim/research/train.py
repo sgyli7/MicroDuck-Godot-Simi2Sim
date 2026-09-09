@@ -35,7 +35,7 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         self.conditions=training_conditions or conditions(task)
@@ -49,7 +49,7 @@ class Vector:
             self.roll_library=RollStarts();self.entry_counts["midroll"]=0
         try:
             for i in range(num_envs):
-                self.worlds.append(World(task))
+                self.worlds.append(World(task,time_input_s=time_input_s))
             self.reset_worlds(range(num_envs))
             self.objectives=[Objective(w,weights,reward_params) for w in self.worlds]
         except BaseException:
@@ -128,7 +128,7 @@ def run(args):
     config["increment_template_sha256"]=hashlib.sha256(template.read_bytes()).hexdigest()
     policy=Policy(source,args.variant,args.std,args.bound,template=template)
     policy.task_name=task.name
-    critic=Critic(template,EXTRA_DIM)
+    critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s)
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
     ao=torch.optim.Adam(actor_parameters,lr=args.actor_lr);co=torch.optim.Adam(critic.parameters(),lr=args.critic_lr)
     initial_iteration=0
@@ -146,7 +146,8 @@ def run(args):
     if not initial_parity["passed"]:raise RuntimeError("Initial actor export parity failed")
     weights=json.loads(args.weights)
     training_conditions=None if not args.conditions else args.conditions.split(",")
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands)
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s)
+    config["time_input_s"]=policy.anchor.time_input_s
     eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
     config["physics"]=env.worlds[0].physics
     if env.roll_library is not None:config["roll_starts_sha256"]=env.roll_library.sha256

@@ -94,6 +94,8 @@ class PolicyBundle:
         self.obs_dim = _static_last_dim(ishape, "obs")
         self.act_dim = _static_last_dim(oshape, "action")
         meta = dict(self.sess.get_modelmeta().custom_metadata_map or {})
+        from sim2sim.policy_time import time_input_seconds
+        self.time_input_s = time_input_seconds(meta)
         self.manifest = _load_sidecar(self.path)
         src: dict[str, Any] = dict(meta)
         if self.manifest is not None:

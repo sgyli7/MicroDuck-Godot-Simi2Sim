@@ -19,6 +19,7 @@ from sim2sim.obs import DEFAULT_HOME, build_obs
 from sim2sim.paths import policies_dir
 from sim2sim.play_input import PlayBrain, TwistLimits, relaunch_argv, wall_dt
 from sim2sim.policy import OnnxPolicy, PolicyNumericError, PolicyShapeError
+from sim2sim.policy_time import time_command
 from sim2sim.runner import apply_home_qpos, load_robot_cfg
 
 
@@ -344,7 +345,12 @@ def main(argv: list[str] | None = None) -> int:
             if out.push:
                 backend.nudge(random_push())
             sess = pick_session(bank, out.policy)
-            obs = build_obs(st, last_action, out.command, home=home)
+            cmd = out.command
+            if sess.time_input_s:
+                if out.policy != "roulade" or sess.time_input_s != brain.roulade_duration:
+                    raise PolicyShapeError("Time-input policy does not match this maneuver")
+                cmd = time_command(brain.roulade_duration - brain.behavior_t, sess.time_input_s)
+            obs = build_obs(st, last_action, cmd, home=home)
             t_inf = time.perf_counter()
             try:
                 action = sess.infer(obs)

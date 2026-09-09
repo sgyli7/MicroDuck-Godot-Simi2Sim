@@ -22,6 +22,18 @@ def fake_world(name):
     return w
 
 class TaskSemantics(unittest.TestCase):
+    def test_play_and_training_agree_on_one_shot_time(self):
+        from sim2sim.play_input import PlayBrain
+        from sim2sim.policy_time import time_command
+        brain=PlayBrain()
+        for k in range(20):
+            out=brain.tick(set(),["roulade"] if k==0 else [],.02)
+            self.assertEqual(out.policy,"roulade")
+            elapsed=brain.roulade_duration-brain.behavior_t
+            np.testing.assert_allclose(time_command(elapsed,5)[0],k*.02/5,atol=1e-7)
+            np.testing.assert_array_equal(out.command,0.) # Existing zero-command policies stay unchanged.
+        self.assertEqual(time_command(7.,5.)[0],1.)
+
     def test_interactive_command_tapes_are_reproducible_bounded_and_ramped(self):
         from sim2sim.research.schedules import random_schedule,scheduled_command
         for skill in ("walking","roller"):
@@ -133,6 +145,17 @@ class TaskSemantics(unittest.TestCase):
         self.assertFalse(result["success"])
 
 class RealTelemetry(unittest.TestCase):
+    def test_time_input_restarts_at_trigger_and_retains_curriculum_time(self):
+        w=World(TASKS["roulade"],"mujoco",time_input_s=5.)
+        try:
+            w.reset(73000);self.assertEqual(w.obs()[48],0.)
+            w.enter_from_standing();self.assertEqual(w.obs()[48],0.)
+            w.step(np.zeros(14));self.assertAlmostEqual(w.obs()[48],.02/5)
+            w.reset_from_roll_state(w.mj.data.qpos,w.mj.data.qvel,w.last,w.heading,[0,0,0,0],source_time=1.25)
+            self.assertEqual(w.t,0.);self.assertAlmostEqual(w.obs()[48],.25)
+            w.reset(73001);self.assertEqual(w.obs()[48],0.)
+        finally:w.close()
+
     def test_body_transfer_velocity_matches_com_jacobian(self):
         import mujoco
         w=World(TASKS["roulade"],"mujoco")
@@ -245,6 +268,24 @@ class RealTelemetry(unittest.TestCase):
         finally:w.close()
 
 class Deployment(unittest.TestCase):
+    def test_time_ready_actor_keeps_teacher_and_exports_nonzero_adaptation(self):
+        from sim2sim.research.time_input import prepare
+        from sim2sim.research.models import NativeAnchor,Critic
+        from sim2sim.policy import OnnxPolicy
+        with tempfile.TemporaryDirectory() as d:
+            path=prepare(TASKS["roulade"].source,Path(d)/"teacher.onnx")
+            x=np.random.default_rng(42).normal(0,.2,(200,61)).astype(np.float32)
+            original=x.copy();original[:,48:]=0
+            np.testing.assert_array_equal(NativeAnchor(path)(x),NativeAnchor(TASKS["roulade"].source)(original))
+            p=Policy(path,"plain",template=TASKS["roulade"].source);p.task_name="roulade"
+            self.assertEqual(p.delta.denominator[48],1.)
+            self.assertEqual(Critic(TASKS["roulade"].source,EXTRA_DIM,5.).denominator[48],1.)
+            with torch.no_grad():
+                p.delta.net[-1].weight.add_(torch.randn_like(p.delta.net[-1].weight)*1e-5)
+            exported=export_policy(p,Path(d)/"candidate.onnx")
+            self.assertTrue(parity(p,exported,n=500)["passed"])
+            loaded=OnnxPolicy(exported);loaded.check_dims(14);self.assertEqual(loaded.time_input_s,5.)
+
     def test_adapted_native_anchor_can_be_adapted_again(self):
         import onnx
         torch.set_num_threads(2)

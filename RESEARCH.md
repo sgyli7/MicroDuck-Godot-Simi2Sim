@@ -281,3 +281,29 @@ Protocol v7 keeps v6 outcome thresholds and records the corrected COM velocity
 contract. Godot archives can be rescored unchanged; old MuJoCo traces require
 fresh reference rollouts rather than silently relabeling the wrong velocities.
 Both the source XML and source-play wheel-friction references are re-run.
+
+## Explicit time input for a finite roll (20:16 UTC)
+
+A separate architecture experiment (`r08_time_input`) gives the learned actor
+a monotonic elapsed-time input in the otherwise zero first command slot:
+cmd[0] = clip(seconds_since_trigger / 5, 0, 1). Input/output sizes stay 61/14.
+This lets the policy distinguish standing before its roll from standing after
+it. The ONNX declares `sim2sim_time_input_s=5`; training, independent evaluation,
+native capture and interactive play read the same model contract. Factory and
+previous policies without this metadata continue receiving their original
+commands. The five-second physical task and completion thresholds do not change.
+
+The frozen parent sees zero command slots inside the ONNX; only its trainable
+increment receives elapsed time, with a unit normalization denominator for that
+new feature. The critic uses the same scaling. Initial output equals the
+zero-command parent, and a nonzero full-network update passes the unchanged
+export tolerance. Training-only mid-roll states retain source elapsed time;
+normal resets and real standing handoffs restart it at zero. Regression tests
+verify that play and training count the first action at exactly time zero.
+No pose sequence is played back: all 14 action offsets come from the exported
+network under native Jolt dynamics. `r07` remains the no-time-input comparison.
+
+Walking's coupled candidate also completed 119/192 additional development
+episodes (seeds 110–117, both entries), with zero falls. Idle completed 15/16;
+transition stopping still fails. These additional development samples do not
+replace the final unseen-seed evaluation.
