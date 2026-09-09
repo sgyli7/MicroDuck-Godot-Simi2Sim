@@ -48,6 +48,14 @@ class TaskSemantics(unittest.TestCase):
         w.features['rot']=np.eye(3);w.features['gyro']=np.array([0.,0.,100.])
         self.assertEqual(r.compute()[2]['yaw_spin'],-8.)
 
+    def test_kick_quality_target_caps_speed_incentive_and_charges_spin(self):
+        w=fake_world('kick_left');w.features['ball_vel']=np.array([.9,0.,0.]);w.features['gyro']=np.array([0.,0.,2.])
+        standard=Objective(w).compute()[2]
+        quality=Objective(w,{'yaw_spin':2.},params={'ball_speed_target':.7}).compute()[2]
+        self.assertLess(quality['ball_progress'],standard['ball_progress'])
+        self.assertAlmostEqual(quality['overspeed'],-.8)
+        self.assertEqual(quality['yaw_spin'],-8.)
+
     def test_motion_feedback_uses_actual_pose_and_retained_source_time(self):
         w=fake_world("roulade")
         with self.assertRaises(ValueError):Objective(w,{"motion_pose":1.})

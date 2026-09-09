@@ -499,3 +499,28 @@ against independently rebuilt graphs. Existing right-kick transforms are
 unchanged. The fast-walk yaw correction passes an additional 16 native tests
 without falls (yaw RMSE 0.059 rad/s); speed remains 0.172 m/s and still fails
 the strict 0.4 m/s target.
+
+## Wider roll validation and source-quality kick objective (21:36 UTC)
+
+On 60 additional development episodes (seeds 200–229, both entries), the
+bilateral r11 iteration 95 actor achieves 57/60, with all 60 single and
+standing. The early heading-aware r12 iteration 24 actor passes only 36/60
+despite 6/6 basic success; its bilateral ensemble improves to 59/60, again
+all 60 single and standing. Heading mean/p95/max are 14.40/25.45/34.12 degrees.
+These seeds remain development data, not the reserved final holdout. The
+large basic-to-wide gap reinforces why six-episode success is insufficient.
+R13's pending parent is updated to that strongest heading-aware ensemble.
+
+K07's kicks are reliable but not yet equivalent in motion quality: body yaw
+is about 49 degrees versus 19.4 degrees for the four successful source left
+kicks, and action variation is also larger. Source successful left ball-speed
+mean is 0.689 m/s (right 0.531 m/s); K07 is about 0.85 m/s. K09 therefore tests
+a small new residual with a recorded 0.7 m/s reward target, world-vertical spin
+cost and stronger heading/action-smoothness penalties. The evaluator and its
+full-duration no-fall gate do not change. K08 retains its earlier objective
+as a separate comparison. Unit checks confirm the optional target caps the
+speed incentive and the spin term preserves pure forward-roll rotation.
+
+The actual interactive policy consumer was also measured, not only the
+research runtime: walking p99 0.269 ms and bilateral rolling p99 0.297 ms
+over 300 calls under training load. No inference-thread change is necessary.

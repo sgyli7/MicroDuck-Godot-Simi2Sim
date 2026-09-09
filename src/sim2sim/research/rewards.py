@@ -9,7 +9,7 @@ EXTRA_DIM=26
 class Objective:
     def __init__(self,w,weights=None,params=None):
         self.w=w;self.weights=weights or {};self.params=params or {};self.reset()
-        if set(self.params)-{"velocity_variance","yaw_variance"}:raise ValueError("Unknown reward parameter")
+        if set(self.params)-{"velocity_variance","yaw_variance","ball_speed_target"}:raise ValueError("Unknown reward parameter")
         if any(float(v)<=0 for v in self.params.values()):raise ValueError("Reward variances must be positive")
         self.motion=None
         if any(k.startswith("motion_") for k in self.weights):
@@ -86,10 +86,11 @@ class Objective:
             self.touch|=foot in f["kick_contacts"];self.wrong|=other in f["kick_contacts"]
             ball_forward=float(f["ball_vel"][:2]@w.heading)
             ball_side=float(f["ball_vel"][:2]@np.array([-w.heading[1],w.heading[0]]))
-            maxv=max(0.,min(ball_forward,1.));progress=max(0.,maxv-self.ball_best)
+            speed_target=self.params.get('ball_speed_target',1.)
+            maxv=max(0.,min(ball_forward,speed_target));progress=max(0.,maxv-self.ball_best)
             self.ball_best=max(self.ball_best,maxv)
             terms.update(ball_progress=80*progress,ball_forward=8*maxv*float(self.touch),ball_side=-2*abs(ball_side),touch=15*float(newtouch),upright=2*up,stand=(4 if self.touch else 1)*stand,pose=.3*pose)
-            terms["overspeed"]=-4*max(0.,ball_forward-1.)
+            terms["overspeed"]=-4*max(0.,ball_forward-speed_target)
             terms["wrong_foot"]=-8*float(other in f["kick_contacts"])
             terms["support"]=float(f["contact"][1-task.foot])*up
             if "heading" in self.weights:
@@ -121,9 +122,6 @@ class Objective:
             terms["reverse"]=-2*max(0.,-f["gyro"][1])*float(self.net<5.8)
             if "over_rotation" in self.weights:
                 terms["over_rotation"]=-min(1.,(max(0.,self.net-2*np.pi)/np.pi)**2)
-            if "yaw_spin" in self.weights:
-                world_yaw_rate=float(f["rot"][2,:]@f["gyro"])
-                terms["yaw_spin"]=-min(4.,world_yaw_rate**2)
             if "land_leg_pose" in self.weights:
                 legs=np.r_[0:5,9:14]
                 terms["land_leg_pose"]=3*landgate*np.exp(-np.mean((w.state.q[legs]-w.home[legs])**2)/.12)
@@ -137,6 +135,9 @@ class Objective:
                 terms["motion_height"]=3*np.exp(-((f["z"]-ref["z"])/.04)**2)
                 terms["motion_rotation"]=4*np.exp(-((self.net-ref["net"])/.75)**2)
         else:raise ValueError(name)
+        if 'yaw_spin' in self.weights and (name=='roulade' or name.startswith('kick')):
+            world_yaw_rate=float(f['rot'][2,:]@f['gyro'])
+            terms['yaw_spin']=-min(4.,world_yaw_rate**2)
         # Every trial records any adjusted term weights; the evaluator stays fixed.
         terms={k:float(v)*self.weights.get(k,1.) for k,v in terms.items()}
         reward=DT*sum(terms.values())
