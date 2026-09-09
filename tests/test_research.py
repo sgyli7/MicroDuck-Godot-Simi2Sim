@@ -63,6 +63,11 @@ class TaskSemantics(unittest.TestCase):
         w.features["gyro"][1]=4.
         self.assertEqual(r.compute()[2]["forward_progress"],0)
 
+    def test_excess_rotation_penalty_is_bounded(self):
+        w=fake_world("roulade");r=Objective(w,{"over_rotation":5})
+        r.net=100.;r.frontier=2*np.pi
+        self.assertEqual(r.compute()[2]["over_rotation"],-5.)
+
     def test_fall_then_recovery_is_not_a_clean_kick(self):
         rows=[]
         for k in range(250):

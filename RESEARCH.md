@@ -222,3 +222,11 @@ under-tracks fast travel and lateral motion. The first PPO continuation failed
 before collecting data because nested ONNX metadata keys were duplicated;
 the exporter now replaces current-stage metadata uniquely, with a nonzero
 second-adaptation parity test. The continuation is retried as `wd02`.
+
+The first alignment trial (`r04`) exposed another scale issue: an unbounded
+squared excess-rotation penalty dominated the return after repeated rolls
+(mean term around -157 versus ordinary positive terms around 1–3). It was
+stopped after four minutes. `r05` restarts from the same `r03` parent using a
+penalty normalized by pi and capped at one before its recorded multiplier.
+Physical rewards and critic fitting returned to a useful range. A regression
+check prevents this penalty from growing without bound.
