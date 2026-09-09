@@ -89,6 +89,20 @@ class TaskSemantics(unittest.TestCase):
         self.assertGreater(result["idle_yaw_drift_deg"],20)
         self.assertFalse(result["success"])
 
+    def test_roll_must_finish_facing_its_original_direction(self):
+        rows=[]
+        for k in range(250):
+            rows.append(dict(time=.02*(k+1),z=.115,xy=np.zeros(2),up=-1. if k==30 else 1.,
+                tilt=180. if k==30 else 0.,yaw=0.,vel=np.zeros(3),gyro=np.array([0,2*np.pi/5,0]),
+                contact=np.ones(2),cmd=np.zeros(13),actions=np.zeros(14),head_contact=k==20,
+                head_up=-1.,supported=True,lateral_z=0.))
+        self.assertTrue(summarize(TASKS["roulade"],rows,np.array([1,0]))["success"])
+        rows[-1]["yaw"]=np.pi
+        result=summarize(TASKS["roulade"],rows,np.array([1,0]))
+        self.assertTrue(result["final_standing"])
+        self.assertTrue(result["single_revolution"])
+        self.assertFalse(result["success"])
+
 class RealTelemetry(unittest.TestCase):
     def test_source_play_wheel_friction_is_explicit_and_reference_only(self):
         import mujoco
@@ -168,6 +182,20 @@ class RealTelemetry(unittest.TestCase):
         finally:w.close()
 
 class Deployment(unittest.TestCase):
+    def test_adapted_native_anchor_can_be_adapted_again(self):
+        import onnx
+        torch.set_num_threads(2)
+        with tempfile.TemporaryDirectory() as td:
+            source=TASKS["walking"].source
+            first=Policy(source,"plain");first.task_name="walking"
+            intermediate=export_policy(first,Path(td)/"first.onnx")
+            second=Policy(intermediate,"residual",template=source);second.task_name="walking"
+            with torch.no_grad():second.delta.net[-1].bias.add_(.01)
+            final=export_policy(second,Path(td)/"second.onnx")
+            props=onnx.load(final).metadata_props
+            self.assertEqual(len({p.key for p in props}),len(props))
+            self.assertTrue(parity(second,final,n=1000)["passed"])
+
     def test_command_adapter_is_a_single_onnx_with_exact_parity(self):
         from sim2sim.research.conditioning import adapt,parity as conditioning_parity
         with tempfile.TemporaryDirectory() as td:

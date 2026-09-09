@@ -111,6 +111,14 @@ class Objective:
             terms["overspeed"]=-.1*max(0.,abs(f["gyro"][1])-7.)**2
             terms["stall"]=-2*float(t>2. and not (landgate and stand>.5))
             terms["reverse"]=-2*max(0.,-f["gyro"][1])*float(self.net<5.8)
+            if "over_rotation" in self.weights:
+                terms["over_rotation"]=-max(0.,self.net-2*np.pi)**2
+            if "land_leg_pose" in self.weights:
+                legs=np.r_[0:5,9:14]
+                terms["land_leg_pose"]=3*landgate*np.exp(-np.mean((w.state.q[legs]-w.home[legs])**2)/.12)
+            if "land_heading" in self.weights:
+                targetyaw=math.atan2(w.heading[1],w.heading[0])
+                terms["land_heading"]=3*landgate*max(0.,f["up"])*math.cos(f["yaw"]-targetyaw)
         else:raise ValueError(name)
         # Every trial records any adjusted term weights; the evaluator stays fixed.
         terms={k:float(v)*self.weights.get(k,1.) for k,v in terms.items()}

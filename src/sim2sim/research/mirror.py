@@ -29,6 +29,30 @@ def mirror(source,dest,task="kick_right"):
     result.metadata_props.add(key="sim2sim_source_sha256",value=hashlib.sha256(Path(source).read_bytes()).hexdigest())
     onnx.checker.check_model(result);dest=Path(dest);dest.parent.mkdir(parents=True,exist_ok=True);onnx.save(result,str(dest));return dest
 
+def symmetrize(source,dest,task="roulade"):
+    """An exactly bilateral neural ensemble for sagittal/locomotion tasks."""
+    dest=Path(dest);reflected_path=dest.with_suffix(".reflected.onnx")
+    mirror(source,reflected_path,task)
+    original=onnx.load(source);a=compose.add_prefix(original,"direct/")
+    b=compose.add_prefix(onnx.load(reflected_path),"reflected/")
+    for model in (a,b):
+        old=model.graph.input[0].name
+        for node in model.graph.node:
+            for i,name in enumerate(node.input):
+                if name==old:node.input[i]="obs"
+    nodes=list(a.graph.node)+list(b.graph.node)
+    nodes += [helper.make_node("Add",[a.graph.output[0].name,b.graph.output[0].name],["sum"]),
+              helper.make_node("Mul",["sum","half"],["actions"])]
+    graph=helper.make_graph(nodes,"bilateral_mean_actor",[helper.make_tensor_value_info("obs",onnx.TensorProto.FLOAT,[1,61])],
+        [helper.make_tensor_value_info("actions",onnx.TensorProto.FLOAT,[1,14])],
+        initializer=list(a.graph.initializer)+list(b.graph.initializer)+[numpy_helper.from_array(np.array(.5,np.float32),"half")])
+    result=helper.make_model(graph,opset_imports=list(original.opset_import));result.ir_version=original.ir_version
+    metadata={p.key:p.value for p in original.metadata_props}
+    metadata.update(sim2sim_transform="bilateral_mean_actor",sim2sim_task=task,
+                    sim2sim_source_sha256=hashlib.sha256(Path(source).read_bytes()).hexdigest())
+    for key,value in metadata.items():result.metadata_props.add(key=key,value=value)
+    onnx.checker.check_model(result);onnx.save(result,str(dest));reflected_path.unlink();return dest
+
 def main():
     p=argparse.ArgumentParser();p.add_argument("source",type=Path);p.add_argument("dest",type=Path);p.add_argument("--task",default="kick_right")
     a=p.parse_args();print(mirror(a.source,a.dest,a.task))

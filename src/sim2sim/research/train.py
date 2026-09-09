@@ -8,6 +8,7 @@ from .world import World
 from .models import Policy,Critic,export_policy,parity
 from .rewards import Objective,EXTRA_DIM
 from .evaluate import run_suite,PROTOCOL_VERSION
+from .mirror import OBS_PERM,OBS_SIGN,JOINT_PERM,JOINT_SIGN
 from sim2sim.obs import build_obs
 
 def seed_all(seed):
@@ -184,6 +185,9 @@ def run(args):
                 returns=advantage+b["value"]
                 advantage=(advantage-advantage.mean())/(advantage.std()+1e-8)
                 flat={k:v.flatten(0,1) for k,v in b.items()};advantage=advantage.flatten();returns=returns.flatten()
+                if args.symmetry_weight:
+                    flat["mirrored_obs"]=flat["obs"][:,OBS_PERM]*torch.from_numpy(OBS_SIGN)
+                    flat["mirrored_anchor"]=policy.anchor_values(flat["mirrored_obs"])
             before=copy.deepcopy(policy.state_dict());optbefore=copy.deepcopy(ao.state_dict())
             losses=[];kls=[];stop_actor=False;update_count=0
             for epoch in range(args.epochs):
@@ -205,6 +209,10 @@ def run(args):
                         ref=references[torch.randint(len(references),(min(args.minibatch,len(references)),))]
                         loss=loss+args.anchor_weight*policy.delta(ref).square().mean()
                     if args.variant=="residual":loss=loss+args.residual_weight*policy.delta(flat["obs"][ix]).square().mean()
+                    if args.symmetry_weight:
+                        mirrored=policy(flat["mirrored_obs"][ix],flat["mirrored_anchor"][ix])
+                        reflected=dist.mean[:,JOINT_PERM]*torch.from_numpy(JOINT_SIGN)
+                        loss=loss+args.symmetry_weight*(mirrored-reflected).square().mean()
                     if not torch.isfinite(loss):raise FloatingPointError("nonfinite actor loss")
                     ao.zero_grad();loss.backward()
                     if iteration<=args.freeze_std:policy.log_std.grad=None
@@ -285,8 +293,14 @@ def main():
     p.add_argument("--entry",choices=["reset","standing","mixed"],default="reset")
     p.add_argument("--eval-entry",choices=["reset","standing","both"])
     p.add_argument("--roll-starts",type=float,default=0.,help="Training-only fraction of source mid-roll resets")
+    p.add_argument("--symmetry-weight",type=float,default=0.,help="Bilateral actor consistency loss using the upstream observation/action transform")
     args=p.parse_args()
     if not 0<=args.roll_starts<=1:p.error("--roll-starts must be in [0,1]")
-    print(run(args),flush=True)
+    out=SESSION/"runs"/args.name;existed_before=out.exists()
+    try:print(run(args),flush=True)
+    except BaseException:
+        if not existed_before and out.is_dir() and not (out/"error.txt").exists():
+            (out/"error.txt").write_text(traceback.format_exc())
+        raise
 
 if __name__=="__main__":main()

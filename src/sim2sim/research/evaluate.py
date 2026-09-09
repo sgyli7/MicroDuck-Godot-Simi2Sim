@@ -13,7 +13,7 @@ from .tasks import TASKS,SESSION,BASELINE,DT,conditions,command
 from .world import World
 from .models import NativeAnchor
 
-PROTOCOL_VERSION="physical_tasks_v5"
+PROTOCOL_VERSION="physical_tasks_v6"
 
 def window_mean(x,n=50):
     x=np.asarray(x)
@@ -102,12 +102,15 @@ def summarize(task,rows,heading):
         fwd=float(np.sum(new_forward*a["supported"]*sagittal))
         single=bool(4.5<net[-1]<7.5 and frontier[-1]<2.6*np.pi)
         continuous=float(np.mean(a["supported"]))
+        heading_error=float(np.degrees(abs(math.atan2(math.sin(yaw[-1]-math.atan2(heading[1],heading[0])),math.cos(yaw[-1]-math.atan2(heading[1],heading[0]))))))
+        aligned=heading_error<30.
         out.update(head_top_pivot=bool(len(pivot)),inverted_trunk=bool(len(inverted)),
                    ordered_roll_events=ordered,supported_fraction=continuous,
                    supported_forward_rotation=fwd,
                    net_rotation=float(net[-1]),rotation_frontier=float(frontier[-1]),single_revolution=single,
-                   success=bool(ordered and fwd>4.5 and single and stand_final),
-                   score=(.2*bool(len(pivot))+.2*ordered+.6*(ordered and single and stand_final))*min(1.,continuous/.8))
+                   final_heading_error_deg=heading_error,
+                   success=bool(ordered and fwd>4.5 and single and stand_final and aligned),
+                   score=(.2*bool(len(pivot))+.2*ordered+.6*(ordered and single and stand_final)*max(0.,math.cos(math.radians(heading_error))))*min(1.,continuous/.8))
     elif task.name=="roller_crouch":
         down=(t>1)&(t<2.5); low=float(np.mean(z[down]))
         upright_down=float(np.mean(tilt[down]<45))

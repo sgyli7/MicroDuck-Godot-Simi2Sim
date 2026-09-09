@@ -192,3 +192,33 @@ New PPO logs separate physical reward from time-limit value bootstrapping and
 include critic error, explained variance and increment size. Earlier continuous
 task logs reported the bootstrapped training target as `reward`; physical
 outcomes, rather than those reward curves, have always determined selection.
+
+## Native roll review and alignment guard (19:39 UTC)
+
+The reverse curriculum produced a cold-start roll that recovered to a stable
+stance, but native video exposed a 155-degree change in final heading. The
+corresponding source MuJoCo roll ends about 14 degrees from its initial heading.
+It is recovery progress, not a satisfactory straight forward roll. Also, raw
+unwrapped Euler yaw during inversion is misleading (the source trace reports
+374 degrees while its actual final heading error is only 14 degrees).
+
+Protocol v6 therefore adds an explicit wrapped final heading error and requires
+it below 30 degrees for roulade completion. All six source development rolls
+remain within 3–15 degrees. Other task criteria are unchanged from v5. Archived
+traces are rescored into `summary.v6.json`; earlier outcome versions are retained.
+The next roll trial adds a recorded aligned-landing reward, excess-rotation
+penalty, leg-only final-pose term and the upstream bilateral consistency loss.
+The final tucked head remains available as a physical cue distinguishing the
+end of the maneuver from its initial standing pose.
+
+A direct bilateral-mean ONNX ensemble of the factory and first recovery actor
+was also tested; neither completed the roll. These are negative architectural
+probes, not replacements for training. A three-iteration smoke run verified
+the new regularized PPO path and unchanged export tolerance.
+
+The distilled walker with bounded internal conditioning completes 42/72 strict
+development episodes, has no falls, and retains six clean idle cases. It still
+under-tracks fast travel and lateral motion. The first PPO continuation failed
+before collecting data because nested ONNX metadata keys were duplicated;
+the exporter now replaces current-stage metadata uniquely, with a nonzero
+second-adaptation parity test. The continuation is retried as `wd02`.

@@ -37,7 +37,7 @@ def main():
     for path in paths:
         if "conditioning_probe" in path.parts:continue
         d=json.loads(path.read_text())
-        if d.get("protocol") not in ("physical_tasks_v3","physical_tasks_v4"):continue
+        if d.get("protocol") not in ("physical_tasks_v3","physical_tasks_v4","physical_tasks_v5"):continue
         try:
             r=rescore(path);print(path,r["success_rate"],round(r["score"],4),flush=True)
         except (KeyError,ValueError,FileNotFoundError) as e:print("SKIP",path,str(e),flush=True)
