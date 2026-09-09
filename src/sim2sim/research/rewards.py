@@ -7,8 +7,10 @@ from .tasks import DT,CROUCH_STAND,CROUCH_DOWN,crouch_blend
 EXTRA_DIM=26
 
 class Objective:
-    def __init__(self,w,weights=None):
-        self.w=w;self.weights=weights or {};self.reset()
+    def __init__(self,w,weights=None,params=None):
+        self.w=w;self.weights=weights or {};self.params=params or {};self.reset()
+        if set(self.params)-{"velocity_variance","yaw_variance"}:raise ValueError("Unknown reward parameter")
+        if any(float(v)<=0 for v in self.params.values()):raise ValueError("Reward variances must be positive")
 
     def reset(self):
         w=self.w
@@ -44,7 +46,8 @@ class Objective:
             target=cmd[:3] if name!="standing" else np.zeros(3)
             v_err=float(np.sum((self.smooth[:2]-target[:2])**2))
             yaw_err=float((self.smooth[2]-target[2])**2)
-            terms.update(velocity=4*np.exp(-v_err/.025),yaw=3*np.exp(-yaw_err/.18),upright=2*up,height=.5*stand)
+            terms.update(velocity=4*np.exp(-v_err/self.params.get("velocity_variance",.025)),
+                         yaw=3*np.exp(-yaw_err/self.params.get("yaw_variance",.18)),upright=2*up,height=.5*stand)
             idle=np.linalg.norm(target)<.01
             if idle:
                 if not self.was_idle:self.yaw0=f["yaw"];self.start_xy=f["xy"].copy()

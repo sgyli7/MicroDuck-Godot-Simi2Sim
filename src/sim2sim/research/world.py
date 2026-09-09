@@ -56,6 +56,11 @@ class World:
         self.roll_start=None
         self.rng = np.random.default_rng(seed)
         self.condition = condition
+        self.command_schedule=None
+        if condition=="random_seq":
+            if self.task.name not in ("walking","roller"):raise ValueError("Random twist schedule requires locomotion")
+            from .schedules import random_schedule
+            self.command_schedule=random_schedule(self.task,seed)
         self.t = float(phase_start)
         sitting = self.task.name == "sitstand" and condition in ("rise","sit_hold")
         q0 = sit_target_q(self.home) if sitting else q_override
@@ -90,7 +95,7 @@ class World:
     def reset_from_roll_state(self,qpos,qvel,last,heading,progress):
         """Training-only mid-roll state; subsequent dynamics remain native."""
         if self.task.name!="roulade":raise ValueError("Roll starts only apply to roulade")
-        self.pending_ball=None;self.t=0.;self.condition="default"
+        self.pending_ball=None;self.t=0.;self.condition="default";self.command_schedule=None
         self.heading=np.array(heading,copy=True);self.last=np.array(last,np.float32,copy=True)
         ctrl=self.home+self.last
         state=self.mj.reset(qpos=np.array(qpos),qvel=np.array(qvel),ctrl=ctrl)
@@ -103,11 +108,17 @@ class World:
         return self.obs()
 
     def obs(self):
-        return build_obs(self.state,self.last,command(self.task,self.t,self.condition),self.home)
+        return build_obs(self.state,self.last,self.command(),self.home)
+
+    def command(self):
+        if self.command_schedule is not None:
+            from .schedules import scheduled_command
+            return scheduled_command(self.command_schedule,self.t)
+        return command(self.task,self.t,self.condition)
 
     def send(self, action, capture_path=None):
         if not np.isfinite(action).all(): raise FloatingPointError("nonfinite policy action")
-        self.executed_command=command(self.task,self.t,self.condition)
+        self.executed_command=self.command()
         self.old_last=self.last.copy()
         self.last=np.asarray(action,np.float32).copy()
         ctrl=self.home+self.last

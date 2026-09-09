@@ -22,6 +22,30 @@ def fake_world(name):
     return w
 
 class TaskSemantics(unittest.TestCase):
+    def test_interactive_command_tapes_are_reproducible_bounded_and_ramped(self):
+        from sim2sim.research.schedules import random_schedule,scheduled_command
+        for skill in ("walking","roller"):
+            task=TASKS[skill];a=random_schedule(task,62000);b=random_schedule(task,62000)
+            np.testing.assert_array_equal([x[0] for x in a],[x[0] for x in b])
+            np.testing.assert_array_equal([x[1] for x in a],[x[1] for x in b])
+            values=np.array([scheduled_command(a,t) for t in np.arange(0,task.seconds,.02)])
+            self.assertEqual(values.shape[1],13)
+            self.assertLessEqual(values[:,0].max(),.6 if skill=="roller" else .4)
+            self.assertGreaterEqual(values[:,0].min(),-.3)
+            self.assertLessEqual(np.abs(values[:,2]).max(),1.)
+            np.testing.assert_array_equal(values[:,3:],0.)
+            if skill=="roller":np.testing.assert_array_equal(values[:,1],0.)
+            for i,(t,target) in enumerate(a[1:],1):
+                np.testing.assert_allclose(scheduled_command(a,t)[:3],a[i-1][1],atol=1e-6)
+                np.testing.assert_allclose(scheduled_command(a,t+.1)[:3],target,atol=1e-6)
+
+    def test_tracking_variance_changes_tolerance_without_changing_task_command(self):
+        w=fake_world("walking");w.executed_command[2]=.4
+        broad=Objective(w).compute()[2]["yaw"]
+        narrow=Objective(w,params={"yaw_variance":.04}).compute()[2]["yaw"]
+        self.assertLess(narrow,broad)
+        with self.assertRaises(ValueError):Objective(w,params={"yaw_variance":0})
+
     def test_phase_commands_and_posture_are_not_velocity(self):
         c=command(TASKS["roller_crouch"],1.25)
         np.testing.assert_allclose(c[:2],[0,1],atol=1e-6)
@@ -109,6 +133,19 @@ class TaskSemantics(unittest.TestCase):
         self.assertFalse(result["success"])
 
 class RealTelemetry(unittest.TestCase):
+    def test_interactive_tapes_match_across_backends_and_survive_handoff(self):
+        worlds=[World(TASKS["walking"],b) for b in ("mujoco","godot")]
+        try:
+            for w in worlds:w.reset(62001,"random_seq");w.enter_from_standing()
+            for _ in range(35):
+                np.testing.assert_array_equal(worlds[0].obs()[48:],worlds[1].obs()[48:])
+                for w in worlds:w.step(np.zeros(14))
+            for w in worlds:
+                w.reset(62002,"walk_025")
+                np.testing.assert_array_equal(w.obs()[48:],command(w.task,0,"walk_025"))
+        finally:
+            for w in worlds:w.close()
+
     def test_source_play_wheel_friction_is_explicit_and_reference_only(self):
         import mujoco
         a=World(TASKS["roller"],"mujoco");b=World(TASKS["roller"],"mujoco",reference_profile="source_play")

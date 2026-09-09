@@ -230,3 +230,29 @@ stopped after four minutes. `r05` restarts from the same `r03` parent using a
 penalty normalized by pi and capped at one before its recorded multiplier.
 Physical rewards and critic fitting returned to a useful range. A regression
 check prevents this penalty from growing without bound.
+
+## Interactive walking and bounded-roll result (20:09 UTC)
+
+A small recorded command coupling (internal yaw command += 0.9 * forward
+command) on `wd02` iteration 80 improves strict development completion to
+45/72, score 0.5931, with zero falls. It corrects backwards heading and preserves
+clean idle/turns. Fast travel, lateral travel and stop transitions remain weak.
+`wd02` continued PPO eventually regressed to 17 falls in its iteration-154
+development evaluation despite growing training reward. Later weights are not
+promoted. This illustrates why checkpoints are selected by physical outcomes.
+
+`wd03` starts from the verified coupled candidate. Training-only interactive
+command tapes replace 25% of constant/standard-sequence episodes: seeded
+0.5–2.5 s segments, bounded continuous twist commands, 0.1 s ramps and idle
+segments. Both engines receive identical tapes; standing entry and action
+history remain real. The existing fixed development/final tests are unchanged.
+An explicitly recorded yaw reward variance is tightened from 0.18 to 0.04.
+Contract checks cover reproducibility, bounds, ramps, both backends and reset
+back to ordinary commands. A short PPO/export/evaluation smoke run validates
+the complete path before the longer trial.
+
+`r05` fixes numerical reward domination but still completes no normal-entry
+rolls in three checks: trajectories repeat several revolutions. It is stopped
+for the next architectural trial. `r06` uses full-network adaptation from
+`r03`'s actual recovery parent, rather than inheriting `r05`'s degraded policy.
+The 30-degree final heading guard is retained.

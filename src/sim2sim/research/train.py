@@ -35,11 +35,13 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         self.conditions=training_conditions or conditions(task)
         self.entry=entry;self.entry_counts={"reset":0,"standing":0}
+        self.random_commands=random_commands
+        if random_commands and task.name not in ("walking","roller"):raise ValueError("Random commands require locomotion")
         self.roll_starts_fraction=roll_starts;self.roll_library=None
         if roll_starts:
             if task.name!="roulade":raise ValueError("--roll-starts requires roulade")
@@ -49,7 +51,7 @@ class Vector:
             for i in range(num_envs):
                 self.worlds.append(World(task))
             self.reset_worlds(range(num_envs))
-            self.objectives=[Objective(w,weights) for w in self.worlds]
+            self.objectives=[Objective(w,weights,reward_params) for w in self.worlds]
         except BaseException:
             self.close();raise
 
@@ -76,6 +78,7 @@ class Vector:
         for w,_,_ in warm:w.finish_standing_entry()
 
     def next_condition(self,i=0):
+        if self.random_commands and self.rng.random()<self.random_commands:return "random_seq"
         return self.conditions[int(self.rng.integers(len(self.conditions)))]
 
     def observations(self):
@@ -143,7 +146,7 @@ def run(args):
     if not initial_parity["passed"]:raise RuntimeError("Initial actor export parity failed")
     weights=json.loads(args.weights)
     training_conditions=None if not args.conditions else args.conditions.split(",")
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts)
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands)
     eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
     config["physics"]=env.worlds[0].physics
     if env.roll_library is not None:config["roll_starts_sha256"]=env.roll_library.sha256
@@ -294,8 +297,11 @@ def main():
     p.add_argument("--eval-entry",choices=["reset","standing","both"])
     p.add_argument("--roll-starts",type=float,default=0.,help="Training-only fraction of source mid-roll resets")
     p.add_argument("--symmetry-weight",type=float,default=0.,help="Bilateral actor consistency loss using the upstream observation/action transform")
+    p.add_argument("--reward-params",default="{}",help="Explicit tracking-kernel variances")
+    p.add_argument("--random-commands",type=float,default=0.,help="Fraction of training episodes with varied interactive command tapes")
     args=p.parse_args()
     if not 0<=args.roll_starts<=1:p.error("--roll-starts must be in [0,1]")
+    if not 0<=args.random_commands<=1:p.error("--random-commands must be in [0,1]")
     out=SESSION/"runs"/args.name;existed_before=out.exists()
     try:print(run(args),flush=True)
     except BaseException:
