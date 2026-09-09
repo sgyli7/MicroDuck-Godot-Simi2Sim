@@ -14,7 +14,7 @@ from sim2sim.train.rewards import sit_target_q
 from .tasks import DT, command
 
 class World:
-    def __init__(self, task, backend="godot", headless=True):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml"):
         self.task, self.backend_name = task, backend
         self.cfg = load_robot_json(task.robot_path)
         files={"robot":task.robot_path,"mjcf":Path(self.cfg["mjcf"])}
@@ -23,6 +23,15 @@ class World:
                       "files":{k:{"path":str(p),"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for k,p in files.items()}}
         self.sampler = HomePoseSampler(self.cfg)
         self.mj = self.sampler.mj
+        if reference_profile!="xml":
+            if backend!="mujoco" or reference_profile!="source_play":raise ValueError("Unknown reference profile")
+            if task.robot=="microduck_roller":
+                for j in range(self.mj.model.njnt):
+                    name=mujoco.mj_id2name(self.mj.model,mujoco.mjtObj.mjOBJ_JOINT,j) or ""
+                    if name.startswith("passive_"):
+                        self.mj.model.dof_frictionloss[self.mj.model.jnt_dofadr[j]]=.003
+                self.physics["source_play_overrides"]={"passive_wheel_frictionloss":.003}
+            self.physics["reference_profile"]=reference_profile
         self.home = self.sampler.home
         self.meta = {mujoco.mj_id2name(self.mj.model,mujoco.mjtObj.mjOBJ_BODY,i): i for i in range(1,self.mj.model.nbody)}
         names = ["trunk_base", "jaw_soft", "ball", "ankle_left", "ankle_right", "ankle_l_v1", "ankle_r_v1"]

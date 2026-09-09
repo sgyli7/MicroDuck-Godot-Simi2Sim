@@ -77,6 +77,19 @@ class TaskSemantics(unittest.TestCase):
         self.assertFalse(result["success"])
 
 class RealTelemetry(unittest.TestCase):
+    def test_source_play_wheel_friction_is_explicit_and_reference_only(self):
+        import mujoco
+        a=World(TASKS["roller"],"mujoco");b=World(TASKS["roller"],"mujoco",reference_profile="source_play")
+        try:
+            for j in range(a.mj.model.njnt):
+                name=mujoco.mj_id2name(a.mj.model,mujoco.mjtObj.mjOBJ_JOINT,j) or ""
+                if name.startswith("passive_"):
+                    adr=a.mj.model.jnt_dofadr[j]
+                    self.assertEqual(a.mj.model.dof_frictionloss[adr],0.)
+                    self.assertEqual(b.mj.model.dof_frictionloss[adr],.003)
+            self.assertNotEqual(a.physics,b.physics)
+        finally:a.close();b.close()
+
     def test_roll_start_preserves_physical_pose_and_action_history(self):
         from sim2sim.research.models import NativeAnchor
         source=World(TASKS["roulade"],"mujoco");target=World(TASKS["roulade"])
@@ -142,6 +155,13 @@ class RealTelemetry(unittest.TestCase):
         finally:w.close()
 
 class Deployment(unittest.TestCase):
+    def test_command_adapter_is_a_single_onnx_with_exact_parity(self):
+        from sim2sim.research.conditioning import adapt,parity as conditioning_parity
+        with tempfile.TemporaryDirectory() as td:
+            matrix=np.array([[2,0,.5],[0,1,0],[0,0,1.5]],np.float32)
+            source=TASKS["walking"].source;dest=adapt(source,Path(td)/"policy.onnx",matrix)
+            self.assertTrue(conditioning_parity(source,dest,matrix,n=1000)["passed"])
+
     def test_nonzero_adaptation_exports_without_relaxed_tolerance(self):
         torch.set_num_threads(2)
         with tempfile.TemporaryDirectory() as tmp:

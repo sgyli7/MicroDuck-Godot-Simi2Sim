@@ -280,6 +280,8 @@ def main():
     p.add_argument("--entry",choices=["reset","standing","mixed"],default="reset")
     p.add_argument("--eval-entry",choices=["reset","standing","both"])
     p.add_argument("--roll-starts",type=float,default=0.,help="Training-only fraction of source mid-roll resets")
-    args=p.parse_args();print(run(args),flush=True)
+    args=p.parse_args()
+    if not 0<=args.roll_starts<=1:p.error("--roll-starts must be in [0,1]")
+    print(run(args),flush=True)
 
 if __name__=="__main__":main()

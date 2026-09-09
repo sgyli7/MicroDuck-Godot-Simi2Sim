@@ -144,3 +144,31 @@ The first controlled comparison uses 50% such training starts and 50% ordinary
 mixed entries. Evaluation always remains a full roll from normal cold and
 standing entries. Tests verify pose/history transfer and clean accumulator
 reset; a short end-to-end smoke run also completed with exact initial export.
+
+## Reference clarification and walking hypotheses (19:18 UTC)
+
+Upstream roller play sets passive-wheel frictionloss to 0.003 at runtime,
+whereas its training XML leaves it zero. Both source MuJoCo references are now
+retained explicitly: `source_play_reference/` applies the script override and
+records it in the fingerprint; the original XML reference is unchanged.
+Godot physics is unchanged. The override improves source glide/idle and still
+leaves large source turn-rate errors. It also reduces crouch travel, so the
+phase/crouch quality and actual glide distance must be reported separately.
+
+The low-parameter command-conditioning search changes only an internal affine
+layer on the three velocity-command features. Public observations and requested
+velocities used for evaluation do not change. The exported ONNX includes the
+adapter, source hash and coefficients, and its 10,000-input parity is exact.
+The first probe's decimal filenames collided; it is explicitly invalidated and
+re-run with unique filenames under `conditioning_probe_v2`. These scans are
+development diagnostics, not evidence of general task completion.
+
+An additional architecture hypothesis addresses the residual bound: on the old
+walking policy's idle trajectories, 57.7% of per-joint standing-teacher action
+differences exceed the 0.2-radian bound. `distill_walk.py` therefore teaches a
+full-network increment from real standing/old-walking demonstrations generated
+on separate training seeds 60000–60002. Expert switching is confined to data
+collection. Physical evaluation executes the single exported student for the
+whole trajectory, including idle and transitions. A held demonstration seed
+checks supervised error; the existing physical development suite checks actual
+behavior. Final evaluation seeds 1000+ remain unused.
