@@ -283,12 +283,14 @@ class PlayBrain:
     kick_duration: float = 5.0
     roulade_duration: float = 5.0
     crouch_period: float = 5.0
+    rise_duration: float = 3.0
 
     policy: str = "standing"
     vel: np.ndarray = field(default_factory=lambda: np.zeros(3, dtype=np.float32))
     sit: bool = False
     pick_phase: float = 0.0
     behavior_t: float = 0.0
+    rise_t: float = 0.0
     ramp: TwistRamp = field(init=False)
     gait: WalkGait = field(init=False)
     press_order: list[str] = field(default_factory=list)
@@ -311,13 +313,14 @@ class PlayBrain:
             self.policy = "walking"
 
     def _busy(self) -> bool:
-        return self.policy in ("ground_pick", "roller_crouch", "kick_left", "kick_right", "roulade")
+        return self.rise_t > 0 or self.policy in ("ground_pick", "roller_crouch", "kick_left", "kick_right", "roulade")
 
     def reset_motion(self) -> None:
         self.vel[:] = 0.0
         self.sit = False
         self.pick_phase = 0.0
         self.behavior_t = 0.0
+        self.rise_t = 0.0
         self.ramp.reset()
         self.gait.reset()
         self.press_order.clear()
@@ -392,6 +395,7 @@ class PlayBrain:
             if self._busy():
                 return
             self.sit = not self.sit
+            self.rise_t = 0.0 if self.sit else self.rise_duration
             self.vel[:] = 0.0
             self.ramp.reset()
             self.gait.reset()
@@ -419,6 +423,11 @@ class PlayBrain:
             self.ramp.reset()
 
     def _advance(self, dt: float) -> None:
+        if self.rise_t > 0:
+            self.rise_t = max(0.0, self.rise_t - dt)
+            if self.rise_t < 1e-9:
+                self.rise_t = 0.0
+            return
         if self.policy in ("ground_pick", "roller_crouch"):
             period = self.crouch_period if self.policy == "roller_crouch" else self.pick_period
             self.pick_phase += dt / period
@@ -504,7 +513,7 @@ class PlayBrain:
                 self.ramp.vel[:] = self.vel
         status = self.policy
         if self.policy == "sitstand":
-            status = "sit" if self.sit else "sitstand-stand"
+            status = "sit" if self.sit else ("rising" if self.rise_t > 0 else "sitstand-stand")
         elif self.policy == "walking":
             status = f"walk vx={self.vel[0]:+.2f} vy={self.vel[1]:+.2f} w={self.vel[2]:+.2f}"
         return BrainOut(

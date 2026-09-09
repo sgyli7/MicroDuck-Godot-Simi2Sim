@@ -14,10 +14,11 @@ from sim2sim.train.rewards import sit_target_q
 from .tasks import DT, command
 
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None):
         self.task, self.backend_name = task, backend
         self.time_input_s=float(time_input_s);self.time_offset=0.
         self.heading_input=bool(heading_input)
+        self.entry_source=None if entry_source is None else Path(entry_source)
         if self.heading_input and not self.time_input_s:raise ValueError("Relative heading requires a timed maneuver")
         if self.time_input_s and (task.name!="roulade" or self.time_input_s!=task.seconds):
             raise ValueError("Time input currently requires the full roulade duration")
@@ -86,6 +87,7 @@ class World:
             rot=np.array([[math.cos(yaw),-math.sin(yaw)],[math.sin(yaw),math.cos(yaw)]])
             d.qpos[adr:adr+3]=[*((rot@off)+d.qpos[self.mj.free_qposadr:self.mj.free_qposadr+2]),.036]
             d.qpos[adr+3:adr+7]=[1,0,0,0]
+            if not self.task.name.startswith('kick'):d.qpos[adr:adr+3]=[5.,5.,.035]
         mujoco.mj_forward(m,d)
         poses=self.mj.body_poses_mujoco()
         if self.backend_name == "mujoco":
@@ -247,9 +249,12 @@ class World:
         teacher_name="roller" if self.task.robot=="microduck_roller" else "standing"
         seated=self.task.name=="sitstand" and self.condition in ("rise","sit_hold")
         if seated:teacher_name="sitstand"
+        source=self.entry_source if self.entry_source is not None and not seated else TASKS[teacher_name].source
+        key=str(source.resolve())
         if not hasattr(self,"_entry_teachers"):self._entry_teachers={}
-        if teacher_name not in self._entry_teachers:self._entry_teachers[teacher_name]=NativeAnchor(TASKS[teacher_name].source)
-        teacher=self._entry_teachers[teacher_name]
+        if key not in self._entry_teachers:self._entry_teachers[key]=NativeAnchor(source)
+        teacher=self._entry_teachers[key]
+        if teacher.time_input_s:raise ValueError('Entry actor must accept a zero idle command')
         cmd=np.zeros(13,np.float32)
         if seated:cmd[0]=1.
         if self.task.robot=="microduck_roller" and self.task.name=="roller_crouch":cmd[0]=.3
@@ -260,7 +265,7 @@ class World:
         self.t=0.;self.time_offset=0.
         self.initial_xy=self.features["xy"].copy()
         yaw=self.features["yaw"];self.heading=np.array([math.cos(yaw),math.sin(yaw)])
-        if "ball" in self.meta:
+        if "ball" in self.meta and self.task.name.startswith('kick'):
             off=np.array([.09,.042 if self.task.foot==0 else -.042])+self.rng.uniform(-.015,.015,2)
             rotation=np.array([[math.cos(yaw),-math.sin(yaw)],[math.sin(yaw),math.cos(yaw)]])
             self.pending_ball=[*(self.initial_xy+rotation@off),.035]

@@ -524,3 +524,48 @@ speed incentive and the spin term preserves pure forward-roll rotation.
 The actual interactive policy consumer was also measured, not only the
 research runtime: walking p99 0.269 ms and bilateral rolling p99 0.297 ms
 over 300 calls under training load. No inference-thread change is necessary.
+
+## Continuous gameplay exposes deployment gaps (21:58 UTC)
+
+A real PlayBrain sequence runs walking, braking, turning, ground pick, left
+kick, roll, sit/rise and right kick in one native ball scene. Physics and
+action history stay continuous, with zero resets after the initial start.
+Two deployment bugs were exposed independently of the policy task gates:
+
+- The unified walking student owns idle/braking, but its missing sidecar let
+  play switch immediately to the factory standing actor on release. The first
+  braking transition fell. The candidate now declares
+  `sim2sim.use_stand_policy=false` in its manifest, and the sequence harness
+  honors the same policy metadata as actual play. With only this change,
+  walking, pick and left kick recover, but rising still falls.
+- The sit toggle selected sitstand with a stand command, then locomotion
+  selection immediately replaced it in the same tick. PlayBrain now retains
+  the sitstand actor for a three-second rise before accepting locomotion or
+  another maneuver. This is the policy's actual rise command, not a body-pose
+  reset or external force. Controller tests cover the full duration and reset.
+
+With both fixes, all three initial continuous sequences have no unintended
+ordinary-action falls; all three ground picks and all six kicks succeed.
+Rolling remains only 1/3 under these real histories, despite stronger isolated
+results. A newer non-averaged r11 iteration 145 actor passes 60/60 standard
+development cases (heading mean 10.23 degrees, original 9.70), but also only
+1/3 continuous sequences. A simple deployed-walker idle warmup is insufficient
+to reproduce the gap: r12's ensemble passes 30/30 such entry cases. The ball
+scene itself changes contact trajectories slightly but all six isolated
+cold/idle-entry probes succeed; it is not established as the failure cause.
+
+R13 therefore uses real native prefixes from the declared deployment bank:
+idle, walking, turning, pick, either kick, and the entire pre-roll game
+sequence. The prefix actors control only the starting-state preparation; the
+roll candidate exclusively controls its full five-second maneuver. Half of
+training episodes remain cold starts. Training uses the actual ball scene,
+and non-kick resets keep its ball away until a kick trigger. All actor and
+walking-manifest hashes are recorded. Standard physical_tasks_v7 evaluation
+keeps its original scene, cold starts and standing teacher; deployment entries
+and continuous sequences are separate, explicitly identified checks.
+
+The new parent is r11 iteration 145 with a parent-preserving heading wrapper.
+The sequence check also records whole-transition drift and, separately, the
+existing locomotion gate's 0.5-second braking allowance. Early transient yaw
+(roughly 18–20 degrees after keyboard forward release) remains visible and is
+not erased by the steady-state check.

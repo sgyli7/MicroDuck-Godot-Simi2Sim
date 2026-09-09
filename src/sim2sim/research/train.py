@@ -1,5 +1,6 @@
 """Deadline-aware PPO experiments with exact native anchors and honest exports."""
 import argparse,copy,hashlib,json,math,random,time,traceback
+from dataclasses import replace
 from pathlib import Path
 import numpy as np
 import torch
@@ -35,7 +36,7 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         if environment_state is not None:
@@ -43,6 +44,12 @@ class Vector:
             if environment_state.get('rng') is not None:self.rng.bit_generator.state=copy.deepcopy(environment_state['rng'])
         self.conditions=training_conditions or conditions(task)
         self.entry=entry;self.entry_counts={"reset":0,"standing":0}
+        self.entry_bank=None
+        if entry_bank:
+            if task.name!='roulade' or task.robot!='microduck_ball' or entry_source:
+                raise ValueError('Native entry-bank prefixes require roulade in the ball scene, without --entry-source')
+            from .entry_bank import EntryBank
+            self.entry_bank=EntryBank(entry_bank)
         self.random_commands=random_commands
         if random_commands and task.name not in ("walking","roller"):raise ValueError("Random commands require locomotion")
         self.roll_starts_fraction=roll_starts;self.roll_library=None
@@ -52,7 +59,7 @@ class Vector:
             self.roll_library=RollStarts();self.entry_counts["midroll"]=0
         try:
             for i in range(num_envs):
-                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input))
+                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source))
             self.reset_worlds(range(num_envs))
             self.objectives=[Objective(w,weights,reward_params) for w in self.worlds]
         except BaseException:
@@ -65,7 +72,7 @@ class Vector:
         return dict(seed=self.seed,count=self.count,rng=copy.deepcopy(self.rng.bit_generator.state))
 
     def reset_worlds(self,indices):
-        warm=[]
+        warm=[];prefixes=[]
         for i in indices:
             w=self.worlds[i];w.reset(self.next_seed(),self.next_condition(i))
             if self.roll_library is not None and self.rng.random()<self.roll_starts_fraction:
@@ -73,7 +80,11 @@ class Vector:
                 continue
             standing=self.entry=="standing" or (self.entry=="mixed" and self.rng.random()<.5)
             if standing:
-                teacher,cmd=w.prepare_standing_entry();warm.append((w,teacher,cmd))
+                if self.entry_bank is not None:
+                    name=self.entry_bank.names[int(self.rng.integers(len(self.entry_bank.names)))]
+                    prefixes.append((w,name));self.entry_counts[name+'_prefix']=self.entry_counts.get(name+'_prefix',0)+1
+                else:
+                    teacher,cmd=w.prepare_standing_entry();warm.append((w,teacher,cmd))
             self.entry_counts["standing" if standing else "reset"]+=1
         # Warmups still use real dynamics and source actions, but independent
         # workers advance together instead of serializing fifty round trips.
@@ -82,6 +93,12 @@ class Vector:
                 obs=build_obs(w.state,w.last,cmd,w.home);w.send(teacher(obs[None])[0])
             for w,_,_ in warm:w.recv()
         for w,_,_ in warm:w.finish_standing_entry()
+        if prefixes:
+            for step in range(max(len(self.entry_bank.tapes[n]) for _,n in prefixes)):
+                active=[(w,n) for w,n in prefixes if step<len(self.entry_bank.tapes[n])]
+                for w,n in active:self.entry_bank.send(w,n,step)
+                for w,_ in active:w.recv()
+            for w,_ in prefixes:w.finish_standing_entry()
 
     def next_condition(self,i=0):
         if self.random_commands and self.rng.random()<self.random_commands:return "random_seq"
@@ -128,6 +145,9 @@ def run(args):
         if not args.time_gate:args.time_gate=recorded_gate
         if args.time_gate!=recorded_gate:raise ValueError('Resume cannot change the actor time gate')
     task=TASKS[args.skill];session=json.loads((SESSION/"session.json").read_text())
+    if args.scene_robot:
+        if args.roll_starts:raise ValueError('Source-state curriculum requires its original articulated scene')
+        task=replace(task,robot=args.scene_robot)
     hard_deadline=float(session["deadline_unix"])-60
     start=time.time();deadline=min(hard_deadline,start+args.minutes*60)
     if start>=deadline:raise RuntimeError("Eight-hour experiment window has ended")
@@ -136,7 +156,7 @@ def run(args):
     config=vars(args).copy();config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=PROTOCOL_VERSION)
     config["code_sha256"]={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
     package=Path(__file__).parents[1]
-    for name in ['obs.py','coords.py','policy_time.py','backends/mujoco_backend.py','backends/godot_backend.py']:
+    for name in ['obs.py','coords.py','policy_time.py','play_input.py','backends/mujoco_backend.py','backends/godot_backend.py']:
         config['code_sha256']['sim2sim/'+name]=hashlib.sha256((package/name).read_bytes()).hexdigest()
     (out/"config.json").write_text(json.dumps(config,indent=2))
     template=Path(args.template) if args.template else source
@@ -171,7 +191,9 @@ def run(args):
             environment_state=dict(seed=prior.get('seed',args.seed),count=initial_iteration*prior.get('envs',16)*prior.get('steps',512)+prior.get('envs',16),rng=None)
             config['environment_resume']='legacy_disjoint_episode_seed_range'
         else:config['environment_resume']='restored_generator_and_episode_counter'
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state)
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank)
+    if env.entry_bank is not None:config['entry_bank_sha256']=env.entry_bank.hashes
+    if args.entry_source:config['entry_source_sha256']=hashlib.sha256(Path(args.entry_source).read_bytes()).hexdigest()
     config["time_input_s"]=policy.anchor.time_input_s
     config["heading_input"]=policy.anchor.heading_input
     config['environment_seed']=env.seed
@@ -298,7 +320,7 @@ def run(args):
             result=run_suite(task.name,export,seeds=(100,101,102),workers=4,out=out/"eval_final",selected_conditions=selected,entry=eval_entry)
             if report["passed"] and not result["errors"] and (result["success_rate"],result["score"])>(best_success,best_score):
                 (out/"best.onnx").write_bytes(export.read_bytes());save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config,env);best_score=result["score"];best_success=result["success_rate"]
-        (out/"completed.json").write_text(json.dumps({"status":status,"iterations":iteration,"samples":total_samples,"elapsed":time.time()-start,"best_dev_score":best_score if math.isfinite(best_score) else None,"best_dev_success":best_success,"final_parity":report},indent=2))
+        (out/"completed.json").write_text(json.dumps({"status":status,"iterations":iteration,"samples":total_samples,"elapsed":time.time()-start,"best_dev_score":best_score if math.isfinite(best_score) else None,"best_dev_success":best_success,"final_parity":report,"entry_counts":env.entry_counts},indent=2))
     except BaseException as e:
         (out/"error.txt").write_text(traceback.format_exc())
         save_checkpoint(out/"failed.pt",policy,critic,ao,co,iteration,config,env)
@@ -324,6 +346,9 @@ def main():
     p.add_argument("--source");p.add_argument("--resume");p.add_argument("--template")
     p.add_argument("--entry",choices=["reset","standing","mixed"],default="reset")
     p.add_argument("--eval-entry",choices=["reset","standing","both"])
+    p.add_argument("--entry-source",help="Optional deployed idle actor used for training handoffs; standard evaluation keeps its original entry actor")
+    p.add_argument("--entry-bank",help="Training-only native controller prefixes from a declared deployment bank")
+    p.add_argument("--scene-robot",choices=['microduck','microduck_ball','microduck_roller'])
     p.add_argument("--roll-starts",type=float,default=0.,help="Training-only fraction of source mid-roll resets")
     p.add_argument("--symmetry-weight",type=float,default=0.,help="Bilateral actor consistency loss using the upstream observation/action transform")
     p.add_argument("--reward-params",default="{}",help="Explicit tracking-kernel variances")

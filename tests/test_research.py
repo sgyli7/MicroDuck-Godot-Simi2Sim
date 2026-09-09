@@ -188,6 +188,19 @@ class TaskSemantics(unittest.TestCase):
         self.assertFalse(result["success"])
 
 class RealTelemetry(unittest.TestCase):
+    def test_deployment_entry_uses_declared_idle_actor_and_keeps_history(self):
+        from sim2sim.research.models import NativeAnchor
+        source=TASKS['walking'].source;w=World(TASKS['roulade'],entry_source=source)
+        try:
+            w.reset(841);teacher,cmd=w.prepare_standing_entry()
+            self.assertEqual(teacher.sha256,NativeAnchor(source).sha256)
+            np.testing.assert_array_equal(cmd,0.)
+            w.enter_from_standing(.1)
+            np.testing.assert_array_equal(w.obs()[34:48],w.last)
+            self.assertGreater(float(np.linalg.norm(w.last)),.01)
+            self.assertEqual(w.t,0.)
+        finally:w.close()
+
     def test_episode_generator_resume_matches_next_fresh_reset(self):
         from sim2sim.research.train import Vector
         a=Vector(TASKS['walking'],1,919,random_commands=.5);b=None

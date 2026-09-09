@@ -31,6 +31,7 @@ def summarize(task,rows,heading):
     failed=(z<.045)|(tilt>70)
     yaw=np.unwrap(a["yaw"])
     active=t>=1.
+    if not active.any():active=np.ones_like(t,dtype=bool) # Short integration segments have no warmup window.
     err=window_mean(a["vel"][active,:2]-a["cmd"][active,:2])
     yawerr=window_mean((a["gyro"][active,2]-a["cmd"][active,2])[:,None])
     velocity_error=float(np.sqrt(np.mean(np.sum(err**2,axis=1))))
@@ -131,9 +132,9 @@ def record(w,action):
             "lateral_z":f["rot"][2,1],"ball_pos":f["ball_pos"].copy(),"ball_vel":f["ball_vel"].copy(),
             "correct_kick":foot in f["kick_contacts"],"wrong_kick":other in f["kick_contacts"]}
 
-def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=None,noise_std=0.,headless=True,entry="reset",reference_profile="xml"):
+def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=None,noise_std=0.,headless=True,entry="reset",reference_profile="xml",entry_source=None):
     task=TASKS[skill];policy=NativeAnchor(onnx)
-    w=World(task,backend,headless=headless,reference_profile=reference_profile,time_input_s=policy.time_input_s,heading_input=policy.heading_input)
+    w=World(task,backend,headless=headless,reference_profile=reference_profile,time_input_s=policy.time_input_s,heading_input=policy.heading_input,entry_source=entry_source)
     rows=[];observations=[];actions=[];rng=np.random.default_rng(seed+123456)
     start=time.monotonic()
     try:
@@ -155,13 +156,15 @@ def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=N
                   heading_input=policy.heading_input,
                   noise_std=noise_std,elapsed_s=time.monotonic()-start)
     result["heading"]=w.heading.tolist()
+    if entry_source is not None:
+        result['entry_source']=str(entry_source);result['entry_source_sha256']=hashlib.sha256(Path(entry_source).read_bytes()).hexdigest()
     if save_trace:
         p=Path(save_trace);p.parent.mkdir(parents=True,exist_ok=True)
         np.savez_compressed(p,obs=np.stack(observations),actions=np.stack(actions),**{k:np.asarray([r[k] for r in rows]) for k in rows[0] if k!="actions"})
         result["trace"]=str(p)
     return result
 
-def run_suite(skill,onnx,backend="godot",seeds=(100,101,102),workers=4,out=None,selected_conditions=None,noise_std=0.,entry="reset",reference_profile="xml"):
+def run_suite(skill,onnx,backend="godot",seeds=(100,101,102),workers=4,out=None,selected_conditions=None,noise_std=0.,entry="reset",reference_profile="xml",entry_source=None):
     task=TASKS[skill];conds=selected_conditions or conditions(task)
     entries=("reset","standing") if entry=="both" else (entry,)
     jobs=[(c,s,e) for c in conds for s in seeds for e in entries]
@@ -169,7 +172,7 @@ def run_suite(skill,onnx,backend="godot",seeds=(100,101,102),workers=4,out=None,
     if out:Path(out).mkdir(parents=True,exist_ok=True)
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures={pool.submit(episode,skill,onnx,backend,s,c,
-                            None if out is None else Path(out)/(f"{e}_{c}_{s}.npz" if entry=="both" else f"{c}_{s}.npz"),noise_std,True,e,reference_profile):(c,s,e) for c,s,e in jobs}
+                            None if out is None else Path(out)/(f"{e}_{c}_{s}.npz" if entry=="both" else f"{c}_{s}.npz"),noise_std,True,e,reference_profile,entry_source):(c,s,e) for c,s,e in jobs}
         for f in as_completed(futures):
             c,s,e=futures[f]
             try:results.append(f.result())
@@ -180,6 +183,7 @@ def run_suite(skill,onnx,backend="godot",seeds=(100,101,102),workers=4,out=None,
              "success_rate":float(np.mean([x["success"] for x in results])),
              "score":float(np.mean([x["score"] for x in results])),"episodes":results,
              "errors":sum("error" in x for x in results)}
+    if entry_source is not None:summary['entry_source']=str(entry_source)
     if out:(Path(out)/"summary.json").write_text(json.dumps(summary,indent=2,allow_nan=False))
     return summary
 
@@ -190,7 +194,9 @@ def main():
     p.add_argument("--workers",type=int,default=4);p.add_argument("--out",type=Path);p.add_argument("--noise",type=float,default=0)
     p.add_argument("--entry",choices=["reset","standing","both"],default="reset")
     p.add_argument("--reference-profile",choices=["xml","source_play"],default="xml")
+    p.add_argument("--entry-source",type=Path)
     args=p.parse_args()
+    if args.entry_source and args.baseline:p.error('Custom entries must use a separate explicit evaluation output')
     if args.reference_profile!="xml" and (args.baseline or args.backend!="mujoco"):
         p.error("source_play is an explicit MuJoCo reference; use --backend mujoco and --onnx")
     if args.baseline:
@@ -203,7 +209,7 @@ def main():
                 r=run_suite(name,source,backend,range(args.seed_start,args.seed_start+args.seeds),args.workers,out,entry=args.entry)
                 print(name,label,'success',r["success_rate"],'score',round(r["score"],4),'errors',r["errors"],flush=True)
     else:
-        r=run_suite(args.skill,args.onnx,args.backend,range(args.seed_start,args.seed_start+args.seeds),args.workers,args.out,noise_std=args.noise,entry=args.entry,reference_profile=args.reference_profile)
+        r=run_suite(args.skill,args.onnx,args.backend,range(args.seed_start,args.seed_start+args.seeds),args.workers,args.out,noise_std=args.noise,entry=args.entry,reference_profile=args.reference_profile,entry_source=args.entry_source)
         print(json.dumps({k:v for k,v in r.items() if k!="episodes"},indent=2))
 
 if __name__=="__main__":main()

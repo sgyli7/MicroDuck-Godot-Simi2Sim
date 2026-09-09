@@ -88,6 +88,23 @@ class TestPlayBrain(unittest.TestCase):
         self.assertFalse(self.b.sit)
         self.assertAlmostEqual(float(out.command[0]), 0.0)
 
+    def test_rise_keeps_sitstand_policy_until_transition_finishes(self) -> None:
+        self.b.tick(set(), ["sit"], .02)
+        out = self.b.tick({"fwd"}, ["sit"], .02)
+        self.assertEqual(out.policy, "sitstand")
+        self.assertEqual(out.status, "rising")
+        for _ in range(149):
+            out = self.b.tick({"fwd"}, ["kick_left"], .02)
+            self.assertEqual(out.policy, "sitstand")
+            self.assertEqual(float(out.command[0]), 0.)
+        out = self.b.tick({"fwd"}, [], .02)
+        self.assertEqual(self.b.rise_t, 0.)
+        self.assertNotEqual(out.policy, "sitstand")
+        self.b.tick(set(), ["sit"], .02)
+        self.b.tick(set(), ["sit"], .02)
+        self.b.reset_motion()
+        self.assertEqual(self.b.rise_t, 0.)
+
     def test_pick_cycle_returns(self) -> None:
         self.b.tick(set(), ["pick"], 0.02)
         self.assertEqual(self.b.policy, "ground_pick")
