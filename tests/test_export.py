@@ -115,7 +115,10 @@ class TestExportRoundtrip(unittest.TestCase):
 
         rec = parse_mlp_onnx(ALPHA_ONNX)
         sd = build_actor_state_dict(rec, init_std=0.25, count=1_000_000_000)
-        with tempfile.TemporaryDirectory() as td:
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as td, patch(
+            "sim2sim.train.export.publish_to_repo_policies"
+        ) as publish:
             out = Path(td) / "Walk_Godot.onnx"
             result = export_actor(
                 state_dict=sd,
@@ -126,6 +129,7 @@ class TestExportRoundtrip(unittest.TestCase):
                 eval_info=None,
             )
             self.assertTrue(out.is_file())
+            publish.assert_not_called()
             side = out.with_name(out.stem + ".manifest.json")
             self.assertTrue(side.is_file(), f"missing sidecar {side}")
             self.assertLess(result["parity_max_abs_err"], 1e-5, result)

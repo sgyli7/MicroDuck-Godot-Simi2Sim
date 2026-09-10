@@ -712,3 +712,35 @@ continuous play sequence and real keyboard tapes. No checkpoint is changed
 after this holdout is opened. Results also include original MuJoCo and old
 Godot actors in the same declared corrected scene, with both original XML
 and inference-friction references retained for the roller robot.
+
+
+## Export isolation audit (00:40 UTC)
+
+The final original-model hash check detected a real test side effect: the
+pre-existing `export_actor` implementation automatically copied EVERY export
+into repository policies, including temporary `Walk_Godot.onnx` roundtrip tests.
+The original walking actor was overwritten during the 181-test run. The
+immutable research baseline and all selected candidates were unaffected.
+The test export and sidecar are preserved in `test_export_incident/`; the actor
+was restored from the exact baseline snapshot, and its sidecar from the paired
+pre-existing `results/Walk_Godot.manifest.json` export (whose ONNX is byte-identical
+to the baseline). The session did not record an initial sidecar hash, so we do
+not claim byte-level proof for the pre-session sidecar. All 18 original ONNX
+hashes now match the initial session record.
+
+Exports now write only to the requested path. Explicit default destinations
+still work; the separate publishing helper remains available for deliberate
+promotion. The roundtrip test asserts no implicit publishing, and the runner
+test explicitly exports into its temporary directory. Both affected suites
+pass (four export tests and five runner tests). The audit is recorded in the
+bundle without erasing its initial failed hash flag.
+
+The nine frozen actors pass native play path resolution with no fallback,
+61-to-14 shape checks, finite inference, walking idle ownership, and the roll's
+explicit five-second time-input contract. All three learned checkpoint exports
+pass 10,000 random plus 10,000 realistic inputs below 1e-5; maximum selected
+export discrepancy is 1.91e-6. Right reflection is exact on 10,000 inputs.
+Holdout seeds 1000–1029 opened only after the completed freeze; selection is
+unchanged thereafter. Native Godot roll/kick and matching MuJoCo roll clips
+are recorded in the delivery directory, using development seed 100 solely
+for illustration.

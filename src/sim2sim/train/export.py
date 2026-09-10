@@ -166,14 +166,13 @@ def export_actor(
     print(f"sidecar {sidecar_path(out)}")
     print(f"parity_max_abs_err={err:.6e}")
     PolicyBundle(out).check_dims(14)
-    published = publish_to_repo_policies(out)
-    if published:
-        print("published " + ", ".join(str(p) for p in published))
+    # Export only to the requested destination. Publishing a temporary export
+    # here silently replaced live policies during parity tests and experiments.
     return {"parity_max_abs_err": err, "out": str(out), "manifest": man}
 
 
 def publish_to_repo_policies(onnx_path: Path | str) -> list[Path]:
-    """Copy ONNX + sidecar into ``<sim2sim>/policies`` so default play finds them."""
+    """Explicitly copy ONNX + sidecar into the default policy directory."""
     import shutil
 
     src = Path(onnx_path)

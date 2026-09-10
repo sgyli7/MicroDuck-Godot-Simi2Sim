@@ -221,6 +221,7 @@ class TestGodotTrainRunner(unittest.TestCase):
         cfg["ppo"]["critic_warmup_iters"] = 0
         with tempfile.TemporaryDirectory(prefix="walk_godot_runner_") as tmp:
             tmp_p = Path(tmp)
+            cfg.setdefault("export", {})["onnx"] = str(tmp_p / "test_walk.onnx")
             run1 = train(
                 cfg,
                 init_onnx=str(ALPHA_ONNX),
