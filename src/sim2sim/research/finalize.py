@@ -1,0 +1,130 @@
+"""Freeze a reviewable candidate bundle without replacing default policies."""
+import argparse, hashlib, json, os, time
+import shlex
+from pathlib import Path
+import numpy as np
+import onnx
+import torch
+from sim2sim.paths import sim2sim_root
+from sim2sim.policy import OnnxPolicy
+from .models import NativeAnchor, Policy, parity
+from .tasks import TASKS, SESSION
+
+
+def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def verify_checkpoint(checkpoint, exported, n=10000):
+    state = torch.load(checkpoint, weights_only=False, map_location='cpu')
+    cfg = state['config']
+    gate = tuple(map(float, cfg['time_gate'].split(','))) if cfg.get('time_gate') else None
+    actor = Policy(cfg['source'], cfg['variant'], cfg['std'], cfg['bound'],
+                   template=cfg.get('template') or cfg['source'], time_gate=gate)
+    actor.load_state_dict(state['policy'])
+    if actor.anchor.sha256 != state['factory_sha256']:
+        raise ValueError('Checkpoint source has changed')
+    report = parity(actor, exported, n=n)
+    report.update(samples_per_distribution=n, checkpoint=str(Path(checkpoint).resolve()),
+                  checkpoint_sha256=digest(checkpoint), iteration=state['iteration'])
+    return report
+
+
+def verify_mirror(source, reflected, n=10000):
+    from .mirror import reflect_obs, reflect_action
+    rng = np.random.default_rng(7319)
+    obs = rng.standard_normal((n, 61), dtype=np.float32)
+    expected = reflect_action(NativeAnchor(source)(reflect_obs(obs, task='kick_right')))
+    actual = NativeAnchor(reflected)(obs)
+    error = float(np.max(np.abs(actual - expected)))
+    return dict(samples=n, max_abs=error, threshold=1e-5, passed=error < 1e-5,
+                source=str(Path(source).resolve()), source_sha256=digest(source))
+
+
+def verify_gain(source, exported, gain, n=10000):
+    obs = np.random.default_rng(7420).standard_normal((n, 61), dtype=np.float32)
+    expected = NativeAnchor(source)(obs) * np.float32(gain)
+    error = float(np.max(np.abs(expected - NativeAnchor(exported)(obs))))
+    return dict(samples=n, gain=gain, max_abs=error, threshold=1e-5, passed=error < 1e-5)
+
+
+def verify_distilled_walker(choice, exported, n=10000):
+    from .conditioning import parity as adapter_parity
+    state = torch.load(choice['distill_checkpoint'], weights_only=False, map_location='cpu')
+    actor = Policy(state['config']['parent'], 'plain', template=choice['distill_template'])
+    actor.load_state_dict(state['policy'])
+    parent = parity(actor, choice['distill_export'], n=n)
+    adapter = adapter_parity(choice['distill_export'], exported, np.eye(3), n=n,
+                             forward_yaw_hinge=(.3, -3.))
+    return dict(parent=parent, adapter=adapter, samples_per_distribution=n,
+                checkpoint_sha256=digest(choice['distill_checkpoint']),
+                passed=parent['passed'] and adapter['passed'])
+
+
+def freeze(selection, out):
+    """Selection is fixed before any final holdout is opened."""
+    torch.set_num_threads(2)
+    if set(selection) != set(TASKS): raise ValueError('Exactly nine skills are required')
+    out = Path(out); out.mkdir(parents=True, exist_ok=False)
+    models = out / 'models'; models.mkdir()
+    record = dict(frozen_unix=time.time(), status='experimental_candidates',
+                  replaces_default_policies=False, skills={},
+                  normal_robot='microduck_ball_stand_fix', roller_robot='microduck_roller')
+    baseline = json.loads((SESSION / 'session.json').read_text())['baseline_weights']
+    record['original_files_unchanged'] = all(digest(v['source']) == v['sha256'] for v in baseline.values())
+    root = sim2sim_root()
+    physical_files = ['godot/physics_server.gd', 'godot/generated/microduck_ball_stand_fix/robot.tscn',
+                      'godot/generated/microduck_ball_stand_fix/robot_spec.json',
+                      'godot/generated/microduck_roller/robot.tscn', 'src/mjcf2godot/convert.py']
+    record['physical_files'] = {name: digest(root / name) for name in physical_files}
+    (out / 'selection.json').write_text(json.dumps(selection, indent=2))
+    paths = {}
+    for name, task in TASKS.items():
+        choice = selection[name]; source = Path(choice['source']).resolve()
+        target = models / task.previous; target.write_bytes(source.read_bytes())
+        model = onnx.load(target); onnx.checker.check_model(model)
+        meta = {p.key: p.value for p in model.metadata_props}
+        sidecar = dict(action_scale=1., sim2sim=dict(use_stand_policy=name not in ('walking', 'roller')),
+                       research=dict(skill=name, source=str(source), sha256=digest(target),
+                                     status='experimental_candidate', role=choice['role']))
+        target.with_suffix('.manifest.json').write_text(json.dumps(sidecar, indent=2))
+        runtime = OnnxPolicy(target); runtime.check_dims(14)
+        if choice.get('distill_checkpoint'):
+            check = verify_distilled_walker(choice, target)
+        elif choice.get('output_gain_parent'):
+            parent_check = verify_checkpoint(choice['checkpoint'], choice['output_gain_parent'])
+            gain_check = verify_gain(choice['output_gain_parent'], target, choice['output_gain'])
+            check = dict(parent=parent_check, output_gain=gain_check,
+                         passed=parent_check['passed'] and gain_check['passed'])
+        elif choice.get('checkpoint'):
+            check = verify_checkpoint(choice['checkpoint'], target)
+        elif choice.get('mirror_source'):
+            check = verify_mirror(choice['mirror_source'], target)
+        else:
+            check = dict(method='byte_identical_retained_actor', passed=digest(source) == digest(target))
+        if not check['passed']: raise ValueError('Export verification failed: ' + name)
+        item = dict(choice, source=str(source), exported=str(target.resolve()), sha256=digest(target),
+                    bytes=target.stat().st_size, metadata=meta, verification=check)
+        record['skills'][name] = item
+        paths[name] = str(target.resolve())
+        (out / 'bundle.json').write_text(json.dumps(record, indent=2))
+    (out / 'bank.json').write_text(json.dumps(paths, indent=2))
+    # All names are fixed above. The launcher only selects this isolated bank.
+    script = ('#!/usr/bin/env bash\nset -euo pipefail\n'
+              'bundle_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"\n'
+              f'cd -- {shlex.quote(str(root))}\n'
+              'export MICRODUCK_POLICIES="$bundle_dir/models"\n'
+              'exec .venv/bin/python -m sim2sim.play --robot robots/microduck_ball_stand_fix.json "$@"\n')
+    (out / 'play.sh').write_text(script); os.chmod(out / 'play.sh', 0o755)
+    record['verification_completed_unix'] = time.time()
+    (out / 'bundle.json').write_text(json.dumps(record, indent=2))
+    return record
+
+
+def main():
+    p = argparse.ArgumentParser(); p.add_argument('selection', type=Path)
+    p.add_argument('--out', type=Path, required=True)
+    a = p.parse_args(); r = freeze(json.loads(a.selection.read_text()), a.out)
+    print(json.dumps(dict(out=str(a.out), skills=len(r['skills']), status=r['status'])))
+
+
+if __name__ == '__main__': main()

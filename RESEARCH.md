@@ -676,3 +676,39 @@ heading/smoothness objective), and WD05 (actual keyboard tapes added to broad
 walking commands, canonical scene). WD05's smoke passes with exact export
 parity. All final candidate selection must precede reserved holdout evaluation;
 no holdout seed is used for optimization or repeated checkpoint selection.
+
+## Candidate freeze (00:34 UTC)
+
+Final development selection is the WHOLE controller bank: WD05 iteration 90,
+R11 iteration 145, K10 iteration 81 left and its unscaled right reflection,
+with original standing/pick/roller/crouch and the retained previous sitstand.
+WD05's forward-key braking yaw after the existing 0.5-second allowance drops
+from 9.59 to 4.90 degrees on six development seeds. Its broad task score is
+slightly lower than the earlier student, but the selected bank passes all
+four maneuvers in 12/12 complete continuous sequences, with zero ordinary
+falls. The roll heading mean in those sequences is 10.34 degrees. R14
+iteration 166 also passes those 12 sequences, but has lower wide standalone
+reliability (59/60 versus R11's 60/60), so R11 remains selected.
+
+Small kick action-offset contractions were tested INSIDE the ONNX graph with
+unchanged PD/torque physics and exact 10,000-input functional parity. Gain
+0.85 passes 59/60 left and 60/60 right and reduces speed/action variation;
+gain 0.80 drops right success to 43/60. However, gain 0.85 right passes only
+8/12 continuous sequences after sit/rise. Gain 0.90 with the original right
+also introduces whole-bank failures. These attractive standalone results
+are rejected in favor of the unscaled bank's verified transitions. K10 raw
+left/right each pass 59/60 wide standalone development cases and both pass
+all 12 selected-bank continuous sequences. The remaining isolated failure
+risk is retained honestly for final holdout.
+
+All 181 repository tests pass. WD05 stops at iteration 105 for final review;
+R14 and K11 complete their 22-minute budgets. Candidate ONNX files and
+sidecars are frozen into `results/research_20260910/delivery`, independently
+of default policies. Trainable exports receive 10,000 random plus 10,000
+realistic input parity checks, and the mirrored actor gets a separate
+10,000-input reflection check. Final holdout is seeds 1000–1029, with both
+cold and native standing entries, all original conditions, an entire
+continuous play sequence and real keyboard tapes. No checkpoint is changed
+after this holdout is opened. Results also include original MuJoCo and old
+Godot actors in the same declared corrected scene, with both original XML
+and inference-friction references retained for the roller robot.

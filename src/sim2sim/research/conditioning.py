@@ -68,6 +68,24 @@ def parity(source,adapted,matrix,bias=None,n=10000,limits=None,forward_yaw_hinge
     return dict(samples=n,max_abs=error,threshold=1e-5,passed=error<1e-5)
 
 
+def output_gain(source,dest,gain):
+    """Scale the neural actor's joint offsets inside ONNX, keeping PD physics fixed."""
+    gain=float(gain)
+    if not 0 < gain <= 1.:raise ValueError('This probe only contracts actor offsets')
+    model=onnx.load(source);old=model.graph.output[0].name;renamed='gain_probe_unscaled_actions'
+    for node in model.graph.node:
+        for names in (node.input,node.output):
+            for i,name in enumerate(names):
+                if name==old:names[i]=renamed
+    model.graph.initializer.append(numpy_helper.from_array(np.array(gain,np.float32),'gain_probe_factor'))
+    model.graph.node.append(helper.make_node('Mul',[renamed,'gain_probe_factor'],[old]))
+    metadata={p.key:p.value for p in model.metadata_props}
+    metadata.update(sim2sim_output_gain=str(gain),sim2sim_output_gain_parent_sha256=hashlib.sha256(Path(source).read_bytes()).hexdigest())
+    del model.metadata_props[:]
+    for k,v in metadata.items():model.metadata_props.add(key=k,value=v)
+    onnx.checker.check_model(model);dest=Path(dest);dest.parent.mkdir(parents=True,exist_ok=True);onnx.save(model,str(dest));return dest
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument("source",type=Path);p.add_argument("dest",type=Path)
     p.add_argument("--gains",default="1,1,1");p.add_argument("--yaw-from-vx",type=float,default=0.)

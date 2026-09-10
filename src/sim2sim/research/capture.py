@@ -1,5 +1,6 @@
 """Native simulator frames, sampled inside normal control steps."""
 import argparse,json,os
+from dataclasses import replace
 from pathlib import Path
 import numpy as np
 from PIL import Image,ImageDraw,ImageFont
@@ -8,8 +9,9 @@ from .models import NativeAnchor
 from .world import World
 from .evaluate import record,summarize
 
-def capture(skill,source,backend,out,seed=100,condition="default",label=None,entry="reset"):
+def capture(skill,source,backend,out,seed=100,condition="default",label=None,entry="reset",scene_robot=None):
     task=TASKS[skill];out=Path(out);out.mkdir(parents=True,exist_ok=True)
+    if scene_robot is not None:task=replace(task,robot=scene_robot)
     os.environ.setdefault("SIM2SIM_FORCE_GL","1")
     os.environ.setdefault("SIM2SIM_DISPLAY_DRIVER","x11")
     policy=NativeAnchor(source);w=World(task,backend,headless=backend!="godot",time_input_s=policy.time_input_s,heading_input=policy.heading_input)
@@ -55,6 +57,7 @@ def main():
     p.add_argument("--backend",default="godot");p.add_argument("--out",type=Path,required=True)
     p.add_argument("--seed",type=int,default=100);p.add_argument("--condition",default="default");p.add_argument("--label")
     p.add_argument("--entry",choices=("reset","standing"),default="reset")
-    a=p.parse_args();print(capture(a.skill,a.source or TASKS[a.skill].source,a.backend,a.out,a.seed,a.condition,a.label,a.entry))
+    p.add_argument("--scene-robot")
+    a=p.parse_args();print(capture(a.skill,a.source or TASKS[a.skill].source,a.backend,a.out,a.seed,a.condition,a.label,a.entry,a.scene_robot))
 
 if __name__=="__main__":main()
