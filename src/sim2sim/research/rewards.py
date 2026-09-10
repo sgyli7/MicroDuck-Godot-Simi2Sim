@@ -68,6 +68,9 @@ class Objective:
                 dy=math.atan2(math.sin(f["yaw"]-self.yaw0),math.cos(f["yaw"]-self.yaw0))
                 terms.update(idle_position=2*np.exp(-float(np.sum((f["xy"]-self.start_xy)**2))/.0025),idle_heading=2*np.exp(-dy*dy/.03))
             self.was_idle=idle
+            if 'straight_heading' in self.weights:
+                if getattr(w,'yaw_memory',None) is None:raise ValueError('Straight-heading objective requires declared IMU memory')
+                terms['straight_heading']=2*np.exp(-w.yaw_memory.error**2/.01)*float(abs(target[2])<=.05)
             terms["pose"]=(.3 if not idle else 1.)*pose
             if name=="standing":terms["calm"]=calm
         elif name=="sitstand":

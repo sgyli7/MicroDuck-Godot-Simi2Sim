@@ -288,6 +288,7 @@ def main(argv: list[str] | None = None) -> int:
 
     last_action = np.zeros(int(home.size), dtype=np.float32)
     maneuver_heading = np.array([1.,0.])
+    active_policy = None
     held: set[str] = set()
     press_order: list[str] = []
     taps: list[str] = []
@@ -338,6 +339,7 @@ def main(argv: list[str] | None = None) -> int:
                     do_reset = True
             if do_reset:
                 brain.reset_motion()
+                active_policy = None
                 last_action[:] = 0.0
                 fall_acc = 0.0
                 st = backend.reset(ctrl=home, bodies=poses)
@@ -347,6 +349,8 @@ def main(argv: list[str] | None = None) -> int:
             if out.push:
                 backend.nudge(random_push())
             sess = pick_session(bank, out.policy)
+            if active_policy != out.policy:
+                sess.reset_context(); active_policy = out.policy
             cmd = out.command
             if sess.time_input_s:
                 if out.policy != "roulade" or sess.time_input_s != brain.roulade_duration:
@@ -364,6 +368,7 @@ def main(argv: list[str] | None = None) -> int:
             except PolicyNumericError as e:
                 print(f"policy numeric error: {e}")
                 brain.reset_motion()
+                active_policy = None
                 last_action[:] = 0.0
                 fall_acc = 0.0
                 st = backend.reset(ctrl=home, bodies=poses)

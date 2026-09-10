@@ -26,6 +26,8 @@ class NativeAnchor:
         from sim2sim.policy_time import time_input_seconds,has_heading_input
         meta=self.session.get_modelmeta().custom_metadata_map
         self.time_input_s=time_input_seconds(meta);self.heading_input=has_heading_input(meta)
+        from sim2sim.policy_memory import has_yaw_memory
+        self.yaw_memory_input=has_yaw_memory(meta)
 
     def __call__(self, obs):
         obs=np.asarray(obs,np.float32).reshape(-1,61)
@@ -79,6 +81,7 @@ class Policy(nn.Module):
         if self.anchor.time_input_s:
             self.delta.mean[48]=0.;self.delta.denominator[48]=1.
         if self.anchor.heading_input:self.delta.mean[49:51]=0.;self.delta.denominator[49:51]=1.
+        if self.anchor.yaw_memory_input:self.delta.mean[55]=0.;self.delta.denominator[55]=1.
         self.log_std=nn.Parameter(torch.full((14,),float(np.log(std))))
         self.variant=variant
 
@@ -100,13 +103,14 @@ class Policy(nn.Module):
         return self(x).numpy()
 
 class Critic(nn.Module):
-    def __init__(self,source,extra_dim,time_input_s=0.,heading_input=False):
+    def __init__(self,source,extra_dim,time_input_s=0.,heading_input=False,yaw_memory_input=False):
         super().__init__()
         rec=parse_mlp_onnx(source)
         self.register_buffer("mean",torch.from_numpy(rec.mean.copy()))
         self.register_buffer("denominator",torch.from_numpy(rec.std.copy()))
         if time_input_s:self.mean[48]=0.;self.denominator[48]=1.
         if heading_input:self.mean[49:51]=0.;self.denominator[49:51]=1.
+        if yaw_memory_input:self.mean[55]=0.;self.denominator[55]=1.
         self.net=nn.Sequential(nn.Linear(61+extra_dim,256),nn.ELU(),nn.Linear(256,128),nn.ELU(),nn.Linear(128,1))
 
     def forward(self,obs):

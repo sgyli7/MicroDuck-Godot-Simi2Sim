@@ -787,3 +787,28 @@ function, conditions and gates; a two-process native/MuJoCo smoke passes.
 This reduces evaluation overhead and avoids a one-hour serial suite queue.
 Descriptive schema-2 packaging also records effective runtime contracts and
 checks them unchanged before/after, with all ONNX hashes and inference intact.
+
+
+## Walking-memory architecture comparison (02:18 UTC)
+
+WD06's larger residual and higher velocity reward regress from the parent's
+54/72 development cases to 50/72, 47/72 and 49/72. Sampling is stopped for
+review; its checkpoints and finalization remain preserved. A separate internal
+high-speed command-hinge scan also fails: gains 1/2/4 do not improve velocity,
+and gain 8 falls in all six cases. Each exported adapter has exact functional
+parity and preserves ordinary keyboard forward commands at or below 0.3 m/s.
+It is a negative capacity/conditioning result, not a selected controller.
+
+WD07 tests explicit memory of straight-motion yaw drift. The feature at obs[55]
+is a bounded integral computed from existing gyro and projected gravity only;
+commanded turns clear the reference. No true linear velocity, world position,
+extra force, or external corrective action is used. The parent graph masks that
+slot and remains exact; a new residual learns whether to react. ONNX metadata
+explicitly declares the stateful contract. Training samples and deployment use
+the same memory implementation, reset it per episode/policy switch, and avoid
+advancing it on duplicate reads at one simulation time. The time step is the
+existing 50 Hz control rate. All 185 repository tests pass, including three
+memory contract/export/native-equivalence checks. The training smoke passes
+all 12 idle/sequence cases with exact initial export parity. WD07 receives a
+40-minute budget and will be judged on full physical and keyboard behavior,
+not on whether the added memory is technically connected.

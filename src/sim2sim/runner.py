@@ -70,6 +70,7 @@ def run_rollout(
     *,
     schedule: list[dict] | None = None,
 ) -> dict:
+    policy.reset_context()
     home = np.asarray(cfg.get("home", DEFAULT_HOME), dtype=np.float32)
     scale = float(cfg.get("action_scale", 1.0))
     decimation = int(cfg.get("decimation", 4))

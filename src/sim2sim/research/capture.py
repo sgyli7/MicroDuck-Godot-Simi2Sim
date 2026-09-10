@@ -14,7 +14,7 @@ def capture(skill,source,backend,out,seed=100,condition="default",label=None,ent
     if scene_robot is not None:task=replace(task,robot=scene_robot)
     os.environ.setdefault("SIM2SIM_FORCE_GL","1")
     os.environ.setdefault("SIM2SIM_DISPLAY_DRIVER","x11")
-    policy=NativeAnchor(source);w=World(task,backend,headless=backend!="godot",time_input_s=policy.time_input_s,heading_input=policy.heading_input)
+    policy=NativeAnchor(source);w=World(task,backend,headless=backend!="godot",time_input_s=policy.time_input_s,heading_input=policy.heading_input,yaw_memory_input=policy.yaw_memory_input)
     renderer=None;frames=[];rows=[]
     try:
         obs=w.reset(seed,condition)

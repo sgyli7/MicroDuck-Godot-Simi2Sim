@@ -368,6 +368,17 @@ class RealTelemetry(unittest.TestCase):
         finally:w.close()
 
 class Deployment(unittest.TestCase):
+    def test_fast_command_hinge_is_exact_and_preserves_keyboard_range(self):
+        from sim2sim.research.conditioning import adapt,parity as adapter_parity
+        from sim2sim.research.models import NativeAnchor
+        with tempfile.TemporaryDirectory() as d:
+            source=TASKS['walking'].source;hinge=(.3,[2.,0.,6.])
+            dest=adapt(source,Path(d)/'speed.onnx',forward_command_hinge=hinge)
+            x=np.random.default_rng(991).normal(0,.2,(100,61)).astype(np.float32)
+            x[:,48]=np.linspace(-.3,.3,100)
+            np.testing.assert_array_equal(NativeAnchor(source)(x),NativeAnchor(dest)(x))
+            self.assertTrue(adapter_parity(source,dest,np.eye(3),n=500,forward_command_hinge=hinge)['passed'])
+
     def test_nested_expert_retime_matches_rebuilding_the_same_blend(self):
         from sim2sim.research.roll_experts import build,retime
         from sim2sim.research.mirror import symmetrize

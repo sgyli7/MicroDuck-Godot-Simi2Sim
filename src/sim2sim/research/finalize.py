@@ -140,6 +140,7 @@ def document_sidecars(out):
         def contract(p):
             return dict(obs=p.obs_dim, act=p.act_dim, scale=p.action_scale,
                         time=p.time_input_s, heading=p.heading_input,
+                        yaw_memory=p.yaw_memory_input,
                         stand=p.has_standing_partner, limits=asdict(p.twist_limits))
         before = contract(actor)
         probe = np.zeros(61, np.float32)
@@ -166,6 +167,9 @@ def document_sidecars(out):
                     command=commands[name],
                     training=dict(source=item['source'], checkpoint=item.get('checkpoint'), role=item['role']),
                     eval=dict(bundle='bundle.json', summary='holdout/summary.json'))
+        if actor.yaw_memory_input:
+            data['command']['memory']='obs[55]: bounded gyro/gravity yaw-drift integral; updated stateful runtime required'
+            data['runtime_requires']=['gyro_vertical_integral_v1','reset_memory_on_episode_or_policy_switch']
         data['sim2sim']['twist_limits'] = before['limits']
         data['sim2sim']['control'] = dict(dt=.005, decimation=4)
         side.write_text(json.dumps(data, indent=2) + '\n')

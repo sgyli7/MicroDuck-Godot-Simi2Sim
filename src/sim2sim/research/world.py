@@ -14,10 +14,13 @@ from sim2sim.train.rewards import sit_target_q
 from .tasks import DT, command
 
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False):
         self.task, self.backend_name = task, backend
         self.time_input_s=float(time_input_s);self.time_offset=0.
         self.heading_input=bool(heading_input)
+        from sim2sim.policy_memory import YawDriftMemory
+        if yaw_memory_input and task.name!='walking':raise ValueError('Yaw memory requires walking')
+        self.yaw_memory=YawDriftMemory() if yaw_memory_input else None
         self.entry_source=None if entry_source is None else Path(entry_source)
         self.roller_contract=bool(roller_contract)
         if self.roller_contract and task.name!='roller':raise ValueError('Native roller contract requires the roller task')
@@ -69,6 +72,7 @@ class World:
         self.pending_ball=None
 
     def reset(self, seed, condition="default", randomize=True, entry_speed=None, phase_start=0., q_override=None):
+        if self.yaw_memory is not None:self.yaw_memory.reset()
         self.pending_ball=None
         self.roll_start=None
         self.time_offset=0.
@@ -137,7 +141,8 @@ class World:
         return self.obs()
 
     def obs(self):
-        return build_obs(self.state,self.last,self.command(),self.home)
+        obs=build_obs(self.state,self.last,self.command(),self.home)
+        return obs if self.yaw_memory is None else self.yaw_memory.observe(obs,stamp=self.t)
 
     def command(self):
         if self.command_tape is not None:
@@ -287,6 +292,7 @@ class World:
 
     def finish_standing_entry(self):
         self.t=0.;self.time_offset=0.
+        if self.yaw_memory is not None:self.yaw_memory.reset()
         self.initial_xy=self.features["xy"].copy()
         yaw=self.features["yaw"];self.heading=np.array([math.cos(yaw),math.sin(yaw)])
         if self.roller_contract:

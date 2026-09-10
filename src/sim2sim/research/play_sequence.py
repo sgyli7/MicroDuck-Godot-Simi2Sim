@@ -23,7 +23,7 @@ def run(paths,out,seed=100,scene_robot='microduck_ball'):
     bank={k:OnnxPolicy(Path(p)) for k,p in paths.items()}
     brain=PlayBrain(has_standing='standing' in bank and bank['walking'].has_standing_partner,
         lim=bank['walking'].twist_limits)
-    w=World(replace(TASKS['kick_left'],robot=scene_robot));rows=[];segments=[];events=[]
+    w=World(replace(TASKS['kick_left'],robot=scene_robot));rows=[];segments=[];events=[];active_policy=None
     try:
         w.report_names=list(w.meta)
         w.reset(seed);w.pending_ball=[5.,5.,.035]
@@ -32,6 +32,8 @@ def run(paths,out,seed=100,scene_robot='microduck_ball'):
             for k in range(round(seconds/DT)):
                 control=brain.tick(held,[tap] if tap and k==0 else [],DT)
                 actor=bank[control.policy];cmd=control.command
+                if active_policy!=control.policy:
+                    actor.reset_context();active_policy=control.policy
                 if control.started_skill:
                     yaw=w.features['yaw'];w.heading=np.array([math.cos(yaw),math.sin(yaw)]);heading=w.heading.copy()
                     events.append(dict(time=w.t,skill=control.started_skill,q=w.state.q.tolist(),

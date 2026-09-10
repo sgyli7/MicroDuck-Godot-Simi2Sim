@@ -36,7 +36,7 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None,roller_contract=False):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None,roller_contract=False,yaw_memory_input=False):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         if environment_state is not None:
@@ -59,7 +59,7 @@ class Vector:
             self.roll_library=RollStarts();self.entry_counts["midroll"]=0
         try:
             for i in range(num_envs):
-                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source,roller_contract=roller_contract))
+                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source,roller_contract=roller_contract,yaw_memory_input=yaw_memory_input))
             self.reset_worlds(range(num_envs))
             self.objectives=[Objective(w,weights,reward_params) for w in self.worlds]
         except BaseException:
@@ -165,7 +165,7 @@ def run(args):
     config=vars(args).copy();config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=protocol)
     config["code_sha256"]={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
     package=Path(__file__).parents[1]
-    for name in ['obs.py','coords.py','policy_time.py','play_input.py','backends/mujoco_backend.py','backends/godot_backend.py']:
+    for name in ['obs.py','coords.py','policy_time.py','policy_memory.py','play_input.py','backends/mujoco_backend.py','backends/godot_backend.py']:
         config['code_sha256']['sim2sim/'+name]=hashlib.sha256((package/name).read_bytes()).hexdigest()
     (out/"config.json").write_text(json.dumps(config,indent=2))
     template=Path(args.template) if args.template else source
@@ -174,7 +174,8 @@ def run(args):
     policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate)
     policy.task_name=task.name
     policy.roller_contract=args.roller_contract
-    critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s,heading_input=policy.anchor.heading_input)
+    critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s,heading_input=policy.anchor.heading_input,yaw_memory_input=policy.anchor.yaw_memory_input)
+    if policy.anchor.yaw_memory_input and args.symmetry_weight:raise ValueError('Walking memory needs its own reflection contract')
     obs_sign=observation_sign(task.name,policy.anchor.heading_input)
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
     ao=torch.optim.Adam(actor_parameters,lr=args.actor_lr);co=torch.optim.Adam(critic.parameters(),lr=args.critic_lr)
@@ -201,11 +202,12 @@ def run(args):
             environment_state=dict(seed=prior.get('seed',args.seed),count=initial_iteration*prior.get('envs',16)*prior.get('steps',512)+prior.get('envs',16),rng=None)
             config['environment_resume']='legacy_disjoint_episode_seed_range'
         else:config['environment_resume']='restored_generator_and_episode_counter'
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank,args.roller_contract)
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank,args.roller_contract,policy.anchor.yaw_memory_input)
     if env.entry_bank is not None:config['entry_bank_sha256']=env.entry_bank.hashes
     if args.entry_source:config['entry_source_sha256']=hashlib.sha256(Path(args.entry_source).read_bytes()).hexdigest()
     config["time_input_s"]=policy.anchor.time_input_s
     config["heading_input"]=policy.anchor.heading_input
+    config['yaw_memory_input']=policy.anchor.yaw_memory_input
     config['environment_seed']=env.seed
     eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
     eval_seeds=range(getattr(args,'eval_seed_start',100),getattr(args,'eval_seed_start',100)+getattr(args,'eval_seeds',3))

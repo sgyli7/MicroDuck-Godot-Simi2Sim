@@ -389,6 +389,7 @@ def _run_episode(
     yaw = float(np.random.default_rng(_mix_seed(cond_idx, seed, 0)).uniform(-math.pi, math.pi))
     poses = rotate_poses_yaw(home_poses, yaw)
     policy = worker.policies[label]
+    policy.reset_context()
     st = worker.backend.reset(ctrl=home, bodies=poses)
     last_action = np.zeros(int(home.size), dtype=np.float32)
     brain: PlayBrain | None = None

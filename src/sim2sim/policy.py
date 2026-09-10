@@ -97,6 +97,9 @@ class PolicyBundle:
         from sim2sim.policy_time import time_input_seconds,has_heading_input
         self.time_input_s = time_input_seconds(meta)
         self.heading_input = has_heading_input(meta)
+        from sim2sim.policy_memory import has_yaw_memory,YawDriftMemory
+        self.yaw_memory_input = has_yaw_memory(meta)
+        self._yaw_memory = YawDriftMemory() if self.yaw_memory_input else None
         self.manifest = _load_sidecar(self.path)
         src: dict[str, Any] = dict(meta)
         if self.manifest is not None:
@@ -118,12 +121,16 @@ class PolicyBundle:
         if errs:
             raise PolicyShapeError(f"{self.path}: " + ", ".join(errs))
 
+    def reset_context(self) -> None:
+        if self._yaw_memory is not None:self._yaw_memory.reset()
+
     def infer(self, obs: np.ndarray) -> np.ndarray:
         x = np.asarray(obs, dtype=np.float32)
         if x.shape[-1] != self.obs_dim:
             raise PolicyShapeError(f"obs last dim {x.shape[-1]} != {self.obs_dim}")
         if not np.isfinite(x).all():
             raise PolicyNumericError(f"obs has NaN/inf ({self.path})")
+        if self._yaw_memory is not None:x=self._yaw_memory.observe(x.reshape(-1))
         y = self.sess.run([self.output_name], {self.input_name: x.reshape(1, -1)})[0]
         out = np.asarray(y, dtype=np.float32).reshape(-1)
         if not np.isfinite(out).all():

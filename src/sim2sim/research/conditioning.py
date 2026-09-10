@@ -11,7 +11,7 @@ import onnx
 from onnx import helper,numpy_helper,compose
 
 
-def adapt(source,dest,matrix=None,bias=None,task="walking",limits=None,forward_yaw_hinge=None):
+def adapt(source,dest,matrix=None,bias=None,task="walking",limits=None,forward_yaw_hinge=None,forward_command_hinge=None):
     matrix=np.asarray(np.eye(3) if matrix is None else matrix,np.float32).reshape(3,3)
     bias=np.asarray(np.zeros(3) if bias is None else bias,np.float32).reshape(3)
     original=onnx.load(source);m=compose.add_prefix(original,"conditioned/")
@@ -33,6 +33,17 @@ def adapt(source,dest,matrix=None,bias=None,task="walking",limits=None,forward_y
             helper.make_node("Mul",["positive_excess","forward_yaw_coeff"],["hinge_offset"]),
             helper.make_node("Add",[latent,"hinge_offset"],["hinged_command"])]
         latent="hinged_command"
+    if forward_command_hinge is not None:
+        threshold,coefficients=forward_command_hinge
+        coefficients=np.asarray(coefficients,np.float32).reshape(3)
+        arrays.update(speed_start=np.array([0],np.int64),speed_end=np.array([1],np.int64),
+            speed_threshold=np.array(threshold,np.float32),speed_coefficients=coefficients)
+        nodes += [helper.make_node('Slice',['command','speed_start','speed_end','feature_axis'],['speed_forward']),
+            helper.make_node('Sub',['speed_forward','speed_threshold'],['speed_excess']),
+            helper.make_node('Relu',['speed_excess'],['speed_positive_excess']),
+            helper.make_node('Mul',['speed_positive_excess','speed_coefficients'],['speed_offset']),
+            helper.make_node('Add',[latent,'speed_offset'],['speed_mapped_command'])]
+        latent='speed_mapped_command'
     if limits is not None:
         arrays["latent_min"]=np.asarray(limits[0],np.float32);arrays["latent_max"]=np.asarray(limits[1],np.float32)
         nodes += [helper.make_node("Max",[latent,"latent_min"],["lower_bounded"]),
@@ -50,19 +61,22 @@ def adapt(source,dest,matrix=None,bias=None,task="walking",limits=None,forward_y
         if p.key not in replaced:model.metadata_props.add(key=p.key,value=p.value)
     for k,v in dict(sim2sim_transform="affine_command_conditioning",sim2sim_task=task,
         sim2sim_source_sha256=hashlib.sha256(Path(source).read_bytes()).hexdigest(),
-        sim2sim_command_adapter=json.dumps(dict(matrix=matrix.tolist(),bias=bias.tolist(),limits=limits,forward_yaw_hinge=forward_yaw_hinge))).items():
+        sim2sim_command_adapter=json.dumps(dict(matrix=matrix.tolist(),bias=bias.tolist(),limits=limits,forward_yaw_hinge=forward_yaw_hinge,forward_command_hinge=forward_command_hinge))).items():
         model.metadata_props.add(key=k,value=v)
     onnx.checker.check_model(model);dest=Path(dest);dest.parent.mkdir(parents=True,exist_ok=True)
     onnx.save(model,str(dest));return dest
 
 
-def parity(source,adapted,matrix,bias=None,n=10000,limits=None,forward_yaw_hinge=None):
+def parity(source,adapted,matrix,bias=None,n=10000,limits=None,forward_yaw_hinge=None,forward_command_hinge=None):
     from .models import NativeAnchor
     x=np.random.default_rng(972).normal(0,.5,(n,61)).astype(np.float32)
     mapped=x.copy();mapped[:,48:51]=x[:,48:51]@np.asarray(matrix,np.float32)+(np.zeros(3,np.float32) if bias is None else np.asarray(bias,np.float32))
     if forward_yaw_hinge is not None:
         threshold,gain=np.asarray(forward_yaw_hinge,np.float32)
         mapped[:,50]+=np.maximum(x[:,48]-threshold,0)*gain
+    if forward_command_hinge is not None:
+        threshold,coefficients=forward_command_hinge
+        mapped[:,48:51]+=np.maximum(x[:,48:49]-np.float32(threshold),0)*np.asarray(coefficients,np.float32)
     if limits is not None:mapped[:,48:51]=np.clip(mapped[:,48:51],limits[0],limits[1])
     error=float(np.max(np.abs(NativeAnchor(source)(mapped)-NativeAnchor(adapted)(x))))
     return dict(samples=n,max_abs=error,threshold=1e-5,passed=error<1e-5)
