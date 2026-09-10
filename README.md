@@ -11,6 +11,9 @@
 站立、行走、坐起、低头拾取、左右踢球、前滚、轮足与下蹲滑行。真实 ONNX 控制、Godot/Jolt 物理，剪辑保留实际速度。
 本次使用最新选定九模型包；其中包含新训练结果和保留的旧／原版策略。轮足刹车尚未达标，在片中明确标记。
 
+**场景更新：** 修复货箱共面闪烁，维修站加入真实碰撞与毫米级台阶、缓坡、低挡块。
+[8 秒脚部接触实录](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/workshop-contacts.mp4) · [修复对照与验证](docs/workshop_contacts.md)。上方九技能 PV 保留原平地演示模式。
+
 <details>
 <summary>展开动作特写 · 姿态 / 踢球与前滚 / 轮足</summary>
 

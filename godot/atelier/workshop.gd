@@ -1,6 +1,6 @@
 extends Node3D
 const VisualProfile = preload("res://atelier/visual_profile.gd")
-## Original procedural artwork, metres. Every generated part is visual only.
+## Original procedural artwork in metres; major solids share their mesh with static collision.
 const PALETTE := {
 	"paper": Color("c6c4b7"), "porcelain": Color("d9d7c8"),
 	"graphite": Color("6c6a68"), "ink": Color("24232b"),
@@ -33,9 +33,24 @@ var rotors: Array[MeshInstance3D] = []
 var capture_camera: Dictionary = {}
 var open_route := VisualProfile.value("MD_OPEN_ROUTE")=="1"
 var printed_labels: Array[Dictionary] = []
+var visuals_enabled := true
+var collisions_enabled := OS.get_environment("MD_WORKSHOP_COLLISIONS") != "0"
+var collision_body: StaticBody3D
+var collision_cache: Dictionary = {}
+var contact_course: Node3D
+var solid_scope := false
 
 func build(host: Node3D) -> void:
 	server=host; name="AtelierVisuals"
+	visuals_enabled=not server._headless
+	if collisions_enabled:
+		collision_body=StaticBody3D.new();collision_body.name="WorkshopCollisions"
+		collision_body.collision_layer=1;collision_body.collision_mask=1
+		collision_body.physics_material_override=server.get_node("World/Floor").physics_material_override
+		add_child(collision_body)
+	if not visuals_enabled:
+		_build_solids()
+		return
 	camera=server.get_node("World/Camera3D")
 	camera.fov=48.0; camera.near=.015; camera.far=100.0
 	for key in PALETTE:
@@ -50,12 +65,7 @@ func build(host: Node3D) -> void:
 		materials[key]=mat
 		var builder:=SurfaceTool.new()
 		builder.begin(Mesh.PRIMITIVE_TRIANGLES); builders[key]=builder
-	_environment(); _floor(); _architecture()
-	_workbench(Vector3(-.52,0,-1.22))
-	_power_station(Vector3(-1.55,0,-.70))
-	_storage(Vector3(1.42,0,-.78))
-	_service_post(Vector3(.74,0,-1.34))
-	_cargo_group(); _small_details()
+	_environment(); _floor(); _build_solids()
 	load("res://atelier/workshop_details.gd").new().build(self)
 	_commit_geometry()
 	var all_roles: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://atelier/visual_mesh_roles.json"))
@@ -69,6 +79,33 @@ func build(host: Node3D) -> void:
 	if OS.get_environment("MD_MODE")=="tour":set_view("tour")
 	if OS.has_environment("MD_SHOWCASE_SHOT"):set_view("showcase")
 	print("ATELIER built ",world_objects," original parts into ",materials.size()," material batches")
+
+func _build_solids() -> void:
+	solid_scope=true
+	_architecture()
+	_workbench(Vector3(-.52,0,-1.22))
+	_power_station(Vector3(-1.55,0,-.70))
+	_storage(Vector3(1.42,0,-.78))
+	_service_post(Vector3(.74,0,-1.34))
+	_cargo_group(); _small_details()
+	solid_scope=false
+	if collisions_enabled:
+		contact_course=load("res://atelier/contact_course.gd").new()
+		contact_course.name="ContactCourse";add_child(contact_course)
+		contact_course.build(self,visuals_enabled)
+
+func _solid(mesh: Mesh, p: Vector3, basis: Basis=Basis.IDENTITY) -> void:
+	if not collisions_enabled or not solid_scope or collision_body==null:return
+	var id:=mesh.get_instance_id()
+	if not collision_cache.has(id):
+		var shape:=mesh.create_convex_shape(true,false)
+		shape.margin=.0002
+		collision_cache[id]=shape
+	var collider:=CollisionShape3D.new()
+	collider.name="Solid_%03d" % collision_body.get_child_count()
+	collider.shape=collision_cache[id]
+	collider.transform=Transform3D(basis,p)
+	collision_body.add_child(collider)
 
 func _environment() -> void:
 	var env:=Environment.new()
@@ -87,6 +124,7 @@ func _environment() -> void:
 	server.get_node("World/FillLight").light_energy=.08
 
 func _add(mesh: Mesh,p: Vector3,color: String,basis: Basis=Basis.IDENTITY) -> void:
+	if not visuals_enabled:return
 	(builders[color] as SurfaceTool).append_from(mesh,0,Transform3D(basis,p)); world_objects+=1
 
 func _box(p: Vector3,size: Vector3,color: String,bevel: float=.007,rot: float=0.0) -> void:
@@ -96,6 +134,10 @@ func _box(p: Vector3,size: Vector3,color: String,bevel: float=.007,rot: float=0.
 	var key:=str(size)+":"+str(bevel)
 	if not primitive_cache.has(key): primitive_cache[key]=_rounded_box(size,bevel)
 	_add(primitive_cache[key],p,color,Basis(Vector3.UP,rot))
+	# Paint, seams and tiny fittings have no independent collision. Structural
+	# parts keep their rounded mesh hull, including open spaces under furniture.
+	if size[size.min_axis_index()]>=.018 and p.y+size.y*.5>.015:
+		_solid(primitive_cache[key],p,Basis(Vector3.UP,rot))
 
 func _rounded_box(size: Vector3,radius: float) -> ArrayMesh:
 	var half:=size*.5
@@ -126,6 +168,7 @@ func _cylinder(p: Vector3,radius: float,height: float,color: String,axis: Vector
 	var basis:=Basis.IDENTITY
 	if axis.normalized().dot(Vector3.UP)<.999: basis=Basis(Quaternion(Vector3.UP,axis.normalized()))
 	_add(mesh,p,color,basis)
+	if radius>=.011 and height>=.015:_solid(mesh,p,basis)
 
 func _line(a: Vector3,b: Vector3,radius: float=.0013,color: String="ink") -> void:
 	var d:=b-a
@@ -133,6 +176,7 @@ func _line(a: Vector3,b: Vector3,radius: float=.0013,color: String="ink") -> voi
 	_cylinder((a+b)*.5,radius,d.length(),color,d.normalized())
 
 func _label(text: String,p: Vector3,size: int=42,pixel: float=.0005,color: String="ink",rot: Vector3=Vector3.ZERO) -> void:
+	if not visuals_enabled:return
 	var label:=Label3D.new()
 	label.text=text;label.position=p;label.font_size=size*3;label.pixel_size=pixel/3.0
 	label.modulate=PALETTE[color];label.outline_size=0
@@ -173,9 +217,9 @@ func _floor() -> void:
 	ground.set_shader_parameter("seam_color",PALETTE.shadow)
 	ground.set_shader_parameter("backdrop",Color("babfb3"))
 	ground.set_shader_parameter("open_route",open_route)
+	ground.set_shader_parameter("bay_paint",PALETTE.yellow)
 	floor_node.set_surface_override_material(0,ground)
-	for x in [-.52,.52]:_box(Vector3(x,.0008,0),Vector3(.018,.001,.83),"yellow",.0002)
-	for z in [-.41,.41]:_box(Vector3(0,.0008,z),Vector3(1.04,.001,.018),"yellow",.0002)
+	# Flush parking paint is evaluated once in the floor shader, including corners.
 	_label("MD / 01",Vector3(0,.002,.32),46,.0007,"ink",Vector3(-90,0,0))
 	for i in range(8):_box(Vector3(.75+i*.11,.001,.67),Vector3(.055,.001,.018),"porcelain",.0002)
 	for x in [-1.25,1.25]:
@@ -185,7 +229,7 @@ func _floor() -> void:
 func _architecture() -> void:
 	_box(Vector3(0,.42,-1.63),Vector3(3.55,.84,.15),"paper",.025)
 	_box(Vector3(0,.055,-1.53),Vector3(3.6,.10,.20),"graphite",.014)
-	_box(Vector3(0,.83,-1.58),Vector3(3.65,.065,.25),"porcelain",.014)
+	_box(Vector3(0,.83,-1.575),Vector3(3.65,.065,.25),"porcelain",.014)
 	for x in [-1.72,-.82,.24,1.72]:_box(Vector3(x,.43,-1.532),Vector3(.036,.73,.04),"metal",.005)
 	for x in [-1.20,-.32,.93]:
 		_panel(Vector3(x,.51,-1.535),Vector2(.65,.45),"porcelain")
@@ -222,7 +266,7 @@ func _architecture() -> void:
 func _workbench(p: Vector3) -> void:
 	for x in [-.53,.53]:
 		for z in [-.16,.16]:_box(p+Vector3(x,.19,z),Vector3(.036,.38,.036),"graphite",.005)
-	_box(p+Vector3(0,.39,0),Vector3(1.20,.046,.45),"graphite",.012)
+	_box(p+Vector3(0,.39,0),Vector3(1.20,.046,.448),"graphite",.012)
 	_box(p+Vector3(0,.418,0),Vector3(1.17,.012,.43),"metal",.004)
 	_box(p+Vector3(-.33,.21,0),Vector3(.40,.31,.37),"paper",.010)
 	for y in [.13,.23,.33]:
@@ -256,7 +300,7 @@ func _crate(p: Vector3,size: Vector3,color: String,title: String) -> void:
 	_box(p+Vector3(0,size.y*.5,0),size,color,.011)
 	_box(p+Vector3(0,size.y-.022,0),Vector3(size.x+.006,.027,size.z+.006),color,.007)
 	for x in [-1,1]:
-		for z in [-1,1]:_box(p+Vector3(x*(size.x*.5-.014),size.y*.5,z*(size.z*.5-.014)),Vector3(.028,size.y+.006,.028),"graphite",.005)
+		for z in [-1,1]:_box(p+Vector3(x*(size.x*.5-.012),size.y*.5,z*(size.z*.5-.012)),Vector3(.028,size.y+.006,.028),"graphite",.005)
 	for x in [-.25,.25]:_box(p+Vector3(x*size.x,size.y-.026,size.z*.5+.005),Vector3(.024,.037,.012),"metal",.003)
 	_box(p+Vector3(0,size.y*.55,size.z*.5+.005),Vector3(size.x*.35,.023,.012),"ink",.004)
 	_label(title,p+Vector3(0,size.y*.25,size.z*.5+.007),27,.00035)

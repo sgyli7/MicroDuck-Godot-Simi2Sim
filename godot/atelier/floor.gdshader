@@ -3,6 +3,7 @@ render_mode specular_disabled;
 uniform vec4 pigment : source_color = vec4(0.69,0.69,0.64,1.0);
 uniform vec4 seam_color : source_color = vec4(0.45,0.48,0.47,1.0);
 uniform vec4 backdrop : source_color = vec4(0.73,0.75,0.70,1.0);
+uniform vec4 bay_paint : source_color = vec4(0.8784, 0.7412, 0.2196, 1.0);
 uniform bool open_route = false;
 varying vec3 world_position;
 void vertex() {
@@ -34,6 +35,12 @@ void fragment() {
     // A quiet ink border gives the paved area an intentional perimeter.
     float border = 1.0-smoothstep(0.001,0.001+length(footprint),abs(boundary));
     color = mix(color,seam_color.rgb,border*0.6);
+    // Flush yellow parking rectangle: one surface, no crossing decal boxes.
+    vec2 bay = abs(p) - vec2(0.52, 0.41);
+    float bay_distance = max(bay.x, bay.y);
+    float bay_aa = max(length(footprint), 0.00001);
+    float paint = 1.0 - smoothstep(0.009, 0.009 + bay_aa, abs(bay_distance));
+    color = mix(color, bay_paint.rgb, paint);
     float haze = smoothstep(6.0,18.0,length(VERTEX));
     ALBEDO = color*(1.0-haze);
     EMISSION = backdrop.rgb*haze;

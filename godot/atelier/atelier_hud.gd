@@ -56,6 +56,7 @@ func _ready() -> void:
 	var help:=Label.new()
 	help.text="操作指南\n\nW / S  前进 / 后退    A / D  转向\nQ / E  平移    空格  停止\n\n1  捡地    2  坐下 / 站起\n3 / 4  左踢 / 右踢    5  前滚\n6  切换轮滑    0  重置\n\nTab  观景 / 游玩    Esc  退出\nF2  运行信息"
 	if roller:help.text="轮滑操作\n\nW  滑行    S  刹车\nA / D  转向    空格  松开推进\n\n2 / Y  下蹲滑行后起身\n6  切回步行    0  重置\n\n右键  环视    滚轮  缩放\nTab  观景 / 游玩    Esc  退出\nF2  运行信息"
+	if workshop.collisions_enabled:help.text+="\n\n接触试验区：维修坪南侧\n5 / 10 / 15 mm 台阶、缓坡、矮挡块\n慢速接近，失稳后按 0 重置"
 	help.add_theme_color_override("font_color",Color("36343a"))
 	help.add_theme_font_size_override("font_size",16);help_panel.add_child(help)
 	help_panel.visible=false

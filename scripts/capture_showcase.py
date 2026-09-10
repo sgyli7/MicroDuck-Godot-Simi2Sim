@@ -53,7 +53,7 @@ def capture(args):
     state=preflight(30);state['session_reference']=checkpoint_session(state);state['render_fps']=30
     out.mkdir(parents=True);(out/'resource_before.json').write_text(json.dumps(state,indent=2))
     os.environ.update(MD_MODE='capture',MD_RENDER_FPS='30',MD_WIDTH='1920',MD_HEIGHT='1080',
-                      MD_SHOWCASE_SHOT=args.shot or SHOTS[args.skill],SIM2SIM_VISUAL_STYLE='legacy')
+                      MD_SHOWCASE_SHOT=args.shot or SHOTS[args.skill],SIM2SIM_VISUAL_STYLE='legacy',MD_WORKSHOP_COLLISIONS='0')
     actor=NativeAnchor(paths[args.skill])
     task=TASKS[args.skill]
     if task.robot!='microduck_roller':task=replace(task,robot='microduck_ball_stand_fix')

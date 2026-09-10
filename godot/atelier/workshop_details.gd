@@ -105,6 +105,7 @@ func _painted_labels() -> void:
 	w._label("01",Vector3(-1.38,.44,-.982),50,.0005,"porcelain")
 	# Small serial tags with a simple barcode.
 	for p in [Vector3(2.62 if w.open_route else 1.40,.30,1.11 if w.open_route else .67),Vector3(-1.41,.30,.79),Vector3(1.41,.41,-.565)]:
+		p.z+=.0015
 		w._box(p,Vector3(.085,.035,.002),"porcelain",.001)
 		for i in range(15):
 			var width:=.001 if i%3 else .0022

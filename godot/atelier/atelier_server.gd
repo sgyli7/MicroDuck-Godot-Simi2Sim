@@ -1,6 +1,6 @@
 extends "res://physics_server.gd"
 const VisualProfile = preload("res://atelier/visual_profile.gd")
-## Rendering and presentation only. Physics implementation stays in the snapshot.
+## Workshop terrain is local to this scene; the shared robot controller stays unchanged.
 
 var atelier: Node3D
 var draw_period_usec: int = 33334
@@ -36,6 +36,8 @@ func _ready() -> void:
 	atelier_mode = OS.get_environment("MD_MODE")
 	super._ready()
 	if _headless:
+		atelier=load("res://atelier/workshop.gd").new()
+		add_child(atelier);atelier.build(self)
 		return
 	draw_period_usec = int(1000000.0 / maxf(1.0, float(OS.get_environment("MD_RENDER_FPS") if OS.has_environment("MD_RENDER_FPS") else "30")))
 	RenderingServer.render_loop_enabled = false

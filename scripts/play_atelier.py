@@ -17,6 +17,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--bundle', type=Path, default=ROOT / 'bundles/delivery_v3')
     parser.add_argument('--roller', action='store_true')
+    parser.add_argument('--flat', action='store_true', help='Historical flat demo: no workshop prop collision or contact course')
     parser.add_argument('--tour', action='store_true', help='Scenic camera; controls remain active')
     args = parser.parse_args()
     verify(args.bundle)
@@ -24,6 +25,7 @@ def main():
                       MD_MODE='tour' if args.tour else 'play', MD_RENDER_FPS='30',
                       MD_WIDTH='1920', MD_HEIGHT='1080', SIM2SIM_VISUAL_STYLE='legacy')
     os.environ.pop('MD_SHOWCASE_SHOT', None)
+    os.environ['MD_WORKSHOP_COLLISIONS'] = '0' if args.flat else '1'
     command = [sys.executable, '-m', 'sim2sim.play', '--scene', 'res://atelier/atelier.tscn',
                '--robot', str(ROOT / 'robots/microduck_ball_stand_fix.json')]
     if args.roller:
