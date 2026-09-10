@@ -14,7 +14,7 @@ from sim2sim.train.rewards import sit_target_q
 from .tasks import DT, command
 
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False,scene_override=None):
         self.task, self.backend_name = task, backend
         self.time_input_s=float(time_input_s);self.time_offset=0.
         self.heading_input=bool(heading_input)
@@ -61,6 +61,10 @@ class World:
         self.site_id = mujoco.mj_name2id(self.mj.model,mujoco.mjtObj.mjOBJ_SITE,"mouth_tip")
         if task.name == "ground_pick" and self.site_id < 0:
             raise RuntimeError("ground_pick requires the real mouth_tip site")
+        if scene_override is not None:
+            if reference_profile != "xml":
+                raise ValueError("Presentation scene override requires the unchanged XML physics profile")
+            godot_scene = str(scene_override)
         self.backend = self.mj if backend == "mujoco" else GodotBackend(Path(self.cfg["godot_spec"]),headless=headless,scene=godot_scene,current_limit_a=1.75,recv_timeout=15)
         if backend == "mujoco":
             limit = 1.75*XL330_M6_KT

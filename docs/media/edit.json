@@ -1,0 +1,164 @@
+{
+  "source_prefix": "04",
+  "chapters": [
+    {
+      "skill": "standing",
+      "source": "results/showcase/04_standing/raw.mp4",
+      "source_sha256": "cf8ffe8a866e71a073d98f7c05fb24d1b43c03592f219f15309368ed6038a35e",
+      "source_start_seconds": 2.999962,
+      "duration_seconds": 2.999973,
+      "pv_start_seconds": 0.0,
+      "speed": 1.0,
+      "chapter": "SERVICE BAY 01"
+    },
+    {
+      "skill": "walking",
+      "source": "results/showcase/04_walking/raw.mp4",
+      "source_sha256": "821bf30a0f5e06d6fc6be8d798c44d19634ba10152008d909f4311094a70fb5b",
+      "source_start_seconds": 0.9663290000000001,
+      "duration_seconds": 9.99983,
+      "pv_start_seconds": 3.0,
+      "speed": 1.0,
+      "chapter": "WALK / TURN / STOP"
+    },
+    {
+      "skill": "sitstand",
+      "source": "results/showcase/04_sitstand/raw.mp4",
+      "source_sha256": "03fe081d12e50e9eaae02f3a8abddf34d3dbac5261b819bdb03bbd2064e12d77",
+      "source_start_seconds": 0.9666669999999999,
+      "duration_seconds": 11.999879000000002,
+      "pv_start_seconds": 13.0,
+      "speed": 1.0,
+      "chapter": "SIT / STAND"
+    },
+    {
+      "skill": "ground_pick",
+      "source": "results/showcase/04_ground_pick/raw.mp4",
+      "source_sha256": "86ad310dbd895230cd576849fc8020c486026501a8089777e86546e4d98e6f84",
+      "source_start_seconds": 0.96664,
+      "duration_seconds": 3.9999770000000003,
+      "pv_start_seconds": 25.0,
+      "speed": 1.0,
+      "chapter": "GROUND PICK"
+    },
+    {
+      "skill": "kick_left",
+      "source": "results/showcase/04_kick_left/raw.mp4",
+      "source_sha256": "c362caf1e61b223a3df05d6dde25afd72c374684fa31e82abc09067b8b41cb3a",
+      "source_start_seconds": 0.9666440000000001,
+      "duration_seconds": 4.9999400000000005,
+      "pv_start_seconds": 29.0,
+      "speed": 1.0,
+      "chapter": "LEFT KICK"
+    },
+    {
+      "skill": "kick_right",
+      "source": "results/showcase/04_kick_right/raw.mp4",
+      "source_sha256": "035d19cebdc9679bc81d0f65893525765496eb6151fb3822ecce4d9c84ecb776",
+      "source_start_seconds": 0.999988,
+      "duration_seconds": 4.966596,
+      "pv_start_seconds": 34.0,
+      "speed": 1.0,
+      "chapter": "RIGHT KICK"
+    },
+    {
+      "skill": "roulade",
+      "source": "results/showcase/04_roulade/raw.mp4",
+      "source_sha256": "6ff81bb4063056668c908803071954d19b14c4ffe28d64e91d7e7016883ea52b",
+      "source_start_seconds": 0.96666,
+      "duration_seconds": 5.000115999999999,
+      "pv_start_seconds": 38.96666666666667,
+      "speed": 1.0,
+      "chapter": "FORWARD ROLL"
+    },
+    {
+      "skill": "roller",
+      "source": "results/showcase/04_roller/raw.mp4",
+      "source_sha256": "981ca08a4f7594bf0f273c5cb92df3a254132ce532ee331c9e8d878ccdf7af2d",
+      "source_start_seconds": 0.966909,
+      "duration_seconds": 9.999989,
+      "pv_start_seconds": 43.96666666666667,
+      "speed": 1.0,
+      "chapter": "ROLLER / WORK IN PROGRESS"
+    },
+    {
+      "skill": "roller_crouch",
+      "source": "results/showcase/04_roller_crouch/raw.mp4",
+      "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
+      "source_start_seconds": 0.966619,
+      "duration_seconds": 4.999986000000001,
+      "pv_start_seconds": 53.96666666666667,
+      "speed": 1.0,
+      "chapter": "CROUCH / GLIDE / RISE"
+    }
+  ],
+  "gif_excerpts": {
+    "standing": [
+      [
+        0,
+        2.5
+      ]
+    ],
+    "walking": [
+      [
+        2.5,
+        6.8
+      ]
+    ],
+    "sitstand": [
+      [
+        0,
+        1.5
+      ],
+      [
+        5.8,
+        7.8
+      ]
+    ],
+    "ground_pick": [
+      [
+        0,
+        3.9
+      ]
+    ],
+    "kick_left": [
+      [
+        0,
+        2.4
+      ]
+    ],
+    "kick_right": [
+      [
+        0,
+        2.4
+      ]
+    ],
+    "roulade": [
+      [
+        0,
+        4.9
+      ]
+    ],
+    "roller": [
+      [
+        0.1,
+        1.6
+      ],
+      [
+        6.5,
+        9.8
+      ]
+    ],
+    "roller_crouch": [
+      [
+        0,
+        4.9
+      ]
+    ]
+  },
+  "fps_mp4": 30,
+  "silent": true,
+  "note": "Real captured frames at wall-clock speed. Cuts, letterbox graphics and captions only. GIF cuts shorten holds; MP4 retains full action durations except standing introduction.",
+  "gif_fps_target": 12,
+  "gif_leading_trim_seconds": 0.2
+}

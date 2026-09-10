@@ -35,5 +35,14 @@ logs/
 
 # local scratch / Godot editor
 *.uid
+/bundles/
+/runtime/
+/.tmp/
+/.cache/
+/.config/
+/.data/
+# Derived third-party meshes remain local; the generator is published instead.
+godot/atelier/robot_normals/
+godot/atelier/robot_normals_soft/
 /tmp_*.py
 /shots/

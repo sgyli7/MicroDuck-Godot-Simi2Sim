@@ -1,0 +1,57 @@
+{
+  "kicks-and-roll.gif": {
+    "sha256": "758a6f684d65fc166798312fbc5ed706fb575779ced66bcde849b5ef4ac7e4e0",
+    "bytes": 4228514,
+    "width": 640,
+    "height": 360,
+    "frames": 177,
+    "duration_seconds": 14.75,
+    "decoded_all_frames": true,
+    "monotonic_timestamps": true,
+    "effective_fps": 12.0
+  },
+  "microduck-service-bay-pv.mp4": {
+    "sha256": "683fe652a52b177f8ada7be982dad55168f47048cb25213b65a7cb88567d455c",
+    "bytes": 21060389,
+    "width": 1920,
+    "height": 1080,
+    "frames": 1768,
+    "duration_seconds": 58.93333333333333,
+    "decoded_all_frames": true,
+    "monotonic_timestamps": true,
+    "effective_fps": 30.0
+  },
+  "microduck-service-bay.gif": {
+    "sha256": "d5ee13c8f6a16798f50eaf09131b9bad7c43070d6c24243f9cae56aad10f29b2",
+    "bytes": 12993636,
+    "width": 640,
+    "height": 360,
+    "frames": 334,
+    "duration_seconds": 33.4,
+    "decoded_all_frames": true,
+    "monotonic_timestamps": true,
+    "effective_fps": 10.0
+  },
+  "postures.gif": {
+    "sha256": "c9c26094f23ab49607c4120d3e43038c50eb0afb79b7cb6de18540327a62a100",
+    "bytes": 6571635,
+    "width": 640,
+    "height": 360,
+    "frames": 190,
+    "duration_seconds": 15.83,
+    "decoded_all_frames": true,
+    "monotonic_timestamps": true,
+    "effective_fps": 12.002526847757423
+  },
+  "wheels.gif": {
+    "sha256": "511fbf2626aaa5e189256811670f019a2a1d7468069a84306cfa79ee36d0d108",
+    "bytes": 6830602,
+    "width": 640,
+    "height": 360,
+    "frames": 177,
+    "duration_seconds": 14.75,
+    "decoded_all_frames": true,
+    "monotonic_timestamps": true,
+    "effective_fps": 12.0
+  }
+}

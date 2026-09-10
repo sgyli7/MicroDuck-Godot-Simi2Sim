@@ -1,0 +1,32 @@
+{
+  "microduck": {
+    "2": "res://atelier/robot_normals/microduck/unnamed_2_2.obj",
+    "11": "res://atelier/robot_normals/microduck/unnamed_11_11.obj",
+    "18": "res://atelier/robot_normals/microduck/unnamed_18_18.obj",
+    "20": "res://atelier/robot_normals/microduck/unnamed_20_20.obj",
+    "25": "res://atelier/robot_normals/microduck/unnamed_25_25.obj",
+    "30": "res://atelier/robot_normals/microduck/unnamed_30_30.obj",
+    "33": "res://atelier/robot_normals/microduck/unnamed_33_33.obj",
+    "36": "res://atelier/robot_normals/microduck/unnamed_36_36.obj",
+    "37": "res://atelier/robot_normals/microduck/unnamed_37_37.obj",
+    "48": "res://atelier/robot_normals/microduck/unnamed_48_48.obj",
+    "57": "res://atelier/robot_normals/microduck/unnamed_57_57.obj",
+    "66": "res://atelier/robot_normals/microduck/unnamed_66_66.obj",
+    "75": "res://atelier/robot_normals/microduck/unnamed_75_75.obj",
+    "81": "res://atelier/robot_normals/microduck/unnamed_81_81.obj"
+  },
+  "microduck_roller": {
+    "2": "res://atelier/robot_normals/microduck_roller/unnamed_2_2.obj",
+    "11": "res://atelier/robot_normals/microduck_roller/unnamed_11_11.obj",
+    "18": "res://atelier/robot_normals/microduck_roller/unnamed_18_18.obj",
+    "20": "res://atelier/robot_normals/microduck_roller/unnamed_20_20.obj",
+    "25": "res://atelier/robot_normals/microduck_roller/unnamed_25_25.obj",
+    "37": "res://atelier/robot_normals/microduck_roller/unnamed_37_37.obj",
+    "40": "res://atelier/robot_normals/microduck_roller/unnamed_40_40.obj",
+    "41": "res://atelier/robot_normals/microduck_roller/unnamed_41_41.obj",
+    "52": "res://atelier/robot_normals/microduck_roller/unnamed_52_52.obj",
+    "61": "res://atelier/robot_normals/microduck_roller/unnamed_61_61.obj",
+    "70": "res://atelier/robot_normals/microduck_roller/unnamed_70_70.obj",
+    "79": "res://atelier/robot_normals/microduck_roller/unnamed_79_79.obj"
+  }
+}

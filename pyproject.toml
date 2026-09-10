@@ -12,6 +12,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+media = ["av>=18.1,<19", "pillow>=12.2,<13"]
 # Direct torch pin so [tool.uv.sources] can bind the CUDA index on aarch64
 # (uv applies sources to DIRECT dependencies only).
 train = [

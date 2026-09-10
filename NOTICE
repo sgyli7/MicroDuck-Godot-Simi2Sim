@@ -26,3 +26,10 @@ Pollen Robotics Microduck (robot MJCF, official ONNX policies, runtime)
 
 MuJoCo, Godot Engine, Jolt Physics, onnxruntime, numpy, scipy, matplotlib
   Used as dependencies under their respective licenses.
+
+Atelier workshop presentation:
+- Original procedural scene, shaders, graphics and PV layout: Apache-2.0.
+- Bundled NotoSansCJK-Regular.ttc: Noto CJK contributors, SIL Open Font
+  License 1.1. Full notices: godot/atelier/fonts/LICENSE.debian.
+- Robot renders use locally generated Pollen Robotics microduck_rl assets;
+  no third-party robot meshes or model weights are redistributed in Git.
