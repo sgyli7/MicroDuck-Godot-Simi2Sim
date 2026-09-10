@@ -896,3 +896,641 @@ physics. Phase-one artifacts remain sealed; supplementary experiments, failed
 adapters, wider and keyboard comparisons, and the selection rationale are all
 retained. A fresh independent assessment is still required even though the
 final selected actor bytes are unchanged.
+
+## Post-freeze kick recovery diagnostic (03:13 UTC)
+
+The phase-one right-kick failures first contact the ball correctly at
+0.10–0.12 s; tilt exceeds 20 degrees only at 2.02–2.44 s, and 70 degrees at
+2.90–3.44 s. This motivates a bounded development-only neural-recovery probe
+while delivery_v2's independent evaluation runs unchanged. Four explicit
+kick/stand ONNX mixtures start blending at 0.4/0.8/1.2/1.6 s over 0.2 s. Each
+executes a full native five-second episode, with elapsed time supplied by its
+isolated probe harness. No shared runtime or physical evaluator is edited.
+
+All four pass 6/6 development cases but worsen body yaw to 49.72–51.04 degrees
+against the parent's 30.67. All are rejected; no final selection changes and
+no test seeds are used. Functional checks are exact over 1,000 inputs. A scratch
+filename collision in the probe initially reused 0.onnx/1.onnx; the four graphs
+are reconstructed to distinct names and every SHA-256 is verified against all
+recorded episode hashes. Original summaries remain intact alongside explicit
+relocation records; no physical result is rerun or replaced. This is an
+additional negative architecture probe, not another PPO training run.
+
+## Last bounded recovery-learning hypothesis (03:20 UTC)
+
+With working-time budget remaining, KR05 receives a separate 20-minute run to
+test whether the rejected raw expert mixture can learn a better late recovery.
+Its clock and relative-heading features are explicit. An isolated harness
+subclass enables those inputs for kicks using the existing time_command; shared
+World/play/evaluation code and delivery_v2 remain unchanged. The harness path
+and SHA-256 are stored in every checkpoint configuration. Its residual is
+time-gated from 1.2 to 1.6 s, so the original successful launch is preserved;
+1,000 input checks before 1.2 s have exact zero error against the selected kick.
+
+Promotion criteria are registered before the first development evaluation:
+40/40 wider standalone cases, mean/p90 yaw no worse than the selected parent,
+bounded successful action variation, and 12/12 actual continuous maneuvers with
+no ordinary falls. Any qualified separate candidate would require verified
+deployment and new independent seeds 3000–3029 before the adjusted cutoff.
+Otherwise delivery_v2 remains the final bank. This late trial does not permit
+changing the already-open 2000–2029 selection or using those results to tune it.
+
+
+## Phase/heading right-kick experiment and deployable runtime (04:01 UTC)
+
+KR05 completed 54 iterations / 220,288 samples in 1,212.68 seconds. Its late
+stand-expert prior retained approximately 48.48 degrees of yaw on six development
+cases; rejected. KR06 instead retained the selected right-kick anchor, declared
+five-second time plus lateral-axis relative-heading inputs, and activated a
+bounded residual from 0.12 to 0.30 seconds. Final iteration 43 completed after
+172,832 samples / 909.12 seconds. Wide development: 40/40 versus parent 39/40,
+mean yaw 30.4354 versus 30.8525 degrees, p90 33.2300 versus 33.6062. Earlier
+checkpoint mean-yaw changes were partly failure-trajectory composition, not a
+reliable quality gain. All 12 continuous development sequences passed every
+maneuver with no ordinary falls.
+
+The production world, actual play, continuous evaluation, and native training
+prefix now support declared timed kicks while preserving existing actors. The
+clock resets on maneuver entry and relative heading captures entry orientation.
+The complete unittest suite passes 187 tests in 75.361 seconds. A separate final
+selection is frozen before any 3000-series seed is opened. It must be compared
+against V2 on the same fresh seeds and can be rejected without selecting another
+checkpoint from those final data. V2 remains sealed. See finalize_late.py, the
+preexisting late_kick_experiment_protocol.json, and late_selection_decision.json.
+
+
+V3 final-harness setup correction: source_play was accidentally passed to three
+Godot suites. All 180 attempts raised Unknown reference profile before reset or
+any physics step; no traces were produced. Their raw summaries remain at the
+original paths. correct_late_setup.py records the error before launching separate
+*_xml directories with the proper fixed Godot profile. No checkpoint, seeds,
+physical parameters, gates, or started physical rollouts were changed. Native
+continuous and MuJoCo evaluations proceed independently.
+
+
+## Final late holdout and delivery decision
+
+{
+  "recorded_unix": 1789013296.1755388,
+  "seeds": [
+    3000,
+    3029
+  ],
+  "invalid_setup_attempts": 180,
+  "valid_standalone_cases": 240,
+  "standalone": {
+    "candidate": {
+      "successes": 60,
+      "episodes": 60,
+      "errors": 0,
+      "failures": [],
+      "all": {
+        "yaw_drift_deg": 30.229024761726187,
+        "ball_peak_forward_speed": 0.8717731446305345,
+        "action_rate": 0.0961699320624272
+      },
+      "successful": {
+        "yaw_drift_deg": 30.229024761726187,
+        "ball_peak_forward_speed": 0.8717731446305345,
+        "action_rate": 0.0961699320624272
+      }
+    },
+    "prior_v2": {
+      "successes": 58,
+      "episodes": 60,
+      "errors": 0,
+      "failures": [
+        {
+          "seed": 3002,
+          "entry": "reset",
+          "error": null,
+          "fell": true,
+          "final_standing": false,
+          "yaw_drift_deg": 60.77970187528246
+        },
+        {
+          "seed": 3021,
+          "entry": "reset",
+          "error": null,
+          "fell": true,
+          "final_standing": false,
+          "yaw_drift_deg": 62.31928745126492
+        }
+      ],
+      "all": {
+        "yaw_drift_deg": 31.27130561883356,
+        "ball_peak_forward_speed": 0.8717742174171474,
+        "action_rate": 0.19860459802051386
+      },
+      "successful": {
+        "yaw_drift_deg": 30.227230134542523,
+        "ball_peak_forward_speed": 0.8705756200948735,
+        "action_rate": 0.09526982017118356
+      }
+    },
+    "source_mujoco": {
+      "successes": 45,
+      "episodes": 60,
+      "errors": 0,
+      "failures": [
+        {
+          "seed": 3001,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 20.75531456929168
+        },
+        {
+          "seed": 3004,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 23.705012676437974
+        },
+        {
+          "seed": 3006,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 24.10160310019483
+        },
+        {
+          "seed": 3008,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 29.43070252662635
+        },
+        {
+          "seed": 3010,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 19.637241320760598
+        },
+        {
+          "seed": 3013,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 21.096116942963572
+        },
+        {
+          "seed": 3016,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 21.629330235808055
+        },
+        {
+          "seed": 3017,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 19.26994237027226
+        },
+        {
+          "seed": 3018,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 22.30364692133295
+        },
+        {
+          "seed": 3020,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 9.244052151702524
+        },
+        {
+          "seed": 3021,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 12.696003516700873
+        },
+        {
+          "seed": 3022,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 14.485497812943938
+        },
+        {
+          "seed": 3023,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 19.84671037637593
+        },
+        {
+          "seed": 3024,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 21.33846384346928
+        },
+        {
+          "seed": 3026,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 17.54370329475193
+        }
+      ],
+      "all": {
+        "yaw_drift_deg": 12.32526043070177,
+        "ball_peak_forward_speed": 0.47187204969572183,
+        "action_rate": 0.060460813778142136
+      },
+      "successful": {
+        "yaw_drift_deg": 9.831828537388299,
+        "ball_peak_forward_speed": 0.6291627329276281,
+        "action_rate": 0.05532639647523562
+      }
+    },
+    "previous_godot": {
+      "successes": 40,
+      "episodes": 60,
+      "errors": 0,
+      "failures": [
+        {
+          "seed": 3001,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 2.703086900101325
+        },
+        {
+          "seed": 3003,
+          "entry": "standing",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 5.084202578997195
+        },
+        {
+          "seed": 3004,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 3.8075390420646484
+        },
+        {
+          "seed": 3006,
+          "entry": "reset",
+          "error": null,
+          "fell": true,
+          "final_standing": false,
+          "yaw_drift_deg": 36.41266599584503
+        },
+        {
+          "seed": 3007,
+          "entry": "standing",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 5.862580835818241
+        },
+        {
+          "seed": 3011,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 2.2961791350024248
+        },
+        {
+          "seed": 3013,
+          "entry": "reset",
+          "error": null,
+          "fell": true,
+          "final_standing": false,
+          "yaw_drift_deg": 151.9848586222024
+        },
+        {
+          "seed": 3014,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 8.43296671136678
+        },
+        {
+          "seed": 3015,
+          "entry": "reset",
+          "error": null,
+          "fell": true,
+          "final_standing": false,
+          "yaw_drift_deg": 116.11994935846069
+        },
+        {
+          "seed": 3015,
+          "entry": "standing",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 1.0219225306986568
+        },
+        {
+          "seed": 3017,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 1.844927953703084
+        },
+        {
+          "seed": 3017,
+          "entry": "standing",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 5.023592800542412
+        },
+        {
+          "seed": 3019,
+          "entry": "reset",
+          "error": null,
+          "fell": true,
+          "final_standing": false,
+          "yaw_drift_deg": 410.66337189978753
+        },
+        {
+          "seed": 3021,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 16.915339693702368
+        },
+        {
+          "seed": 3022,
+          "entry": "reset",
+          "error": null,
+          "fell": true,
+          "final_standing": false,
+          "yaw_drift_deg": 43.255382334048385
+        },
+        {
+          "seed": 3023,
+          "entry": "reset",
+          "error": null,
+          "fell": true,
+          "final_standing": false,
+          "yaw_drift_deg": 104.518138342821
+        },
+        {
+          "seed": 3024,
+          "entry": "standing",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 0.2358556211636598
+        },
+        {
+          "seed": 3026,
+          "entry": "reset",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 2.78203886401246
+        },
+        {
+          "seed": 3028,
+          "entry": "standing",
+          "error": null,
+          "fell": false,
+          "final_standing": true,
+          "yaw_drift_deg": 7.33807037688006
+        },
+        {
+          "seed": 3029,
+          "entry": "reset",
+          "error": null,
+          "fell": true,
+          "final_standing": false,
+          "yaw_drift_deg": 176.46088318466786
+        }
+      ],
+      "all": {
+        "yaw_drift_deg": 20.25663579675687,
+        "ball_peak_forward_speed": 0.6863704371114333,
+        "action_rate": 0.6943274325380723
+      },
+      "successful": {
+        "yaw_drift_deg": 2.815864875588148,
+        "ball_peak_forward_speed": 0.7935994652210686,
+        "action_rate": 0.09893949180841446
+      }
+    }
+  },
+  "continuous": {
+    "continuous_candidate": {
+      "cases": 30,
+      "errors": 0,
+      "successes": {
+        "ground_pick": 30,
+        "kick_left": 30,
+        "kick_right": 30,
+        "roulade": 28
+      },
+      "ordinary_falls": [],
+      "failures": [
+        {
+          "seed": 3005,
+          "skill": "roulade",
+          "metrics": {
+            "seconds": 4.999999999999893,
+            "fell": true,
+            "final_standing": true,
+            "final_z": 0.11590529058856122,
+            "final_tilt": 0.7160107141418502,
+            "max_tilt": 177.4850387633074,
+            "vel_err_1s": 0.6102731487638862,
+            "yaw_err_1s": 0.09621803378976918,
+            "yaw_drift_deg": 329.03465379257307,
+            "displacement": 0.6254124223090819,
+            "mean_vx": -0.01616421641793735,
+            "mean_wz": -0.05002763211254204,
+            "action_rate": 0.23446710407733917,
+            "head_contact_fraction": 0.28,
+            "head_top_pivot": true,
+            "inverted_trunk": true,
+            "ordered_roll_events": true,
+            "supported_fraction": 0.988,
+            "supported_forward_rotation": 7.542554544806479,
+            "net_rotation": 6.2436772338196125,
+            "rotation_frontier": 7.670729665160178,
+            "single_revolution": true,
+            "final_heading_error_deg": 31.118003710204402,
+            "success": false,
+            "score": 0.9136628410906596
+          }
+        },
+        {
+          "seed": 3009,
+          "skill": "roulade",
+          "metrics": {
+            "seconds": 4.999999999999893,
+            "fell": true,
+            "final_standing": true,
+            "final_z": 0.11591265773175695,
+            "final_tilt": 0.59322753022893,
+            "max_tilt": 176.79441868386476,
+            "vel_err_1s": 0.6120037555415968,
+            "yaw_err_1s": 0.09329556497633502,
+            "yaw_drift_deg": 329.4948657144122,
+            "displacement": 0.6352173773347837,
+            "mean_vx": -0.01704556428642551,
+            "mean_wz": -0.04854299930892014,
+            "action_rate": 0.27019327878952026,
+            "head_contact_fraction": 0.284,
+            "head_top_pivot": true,
+            "inverted_trunk": true,
+            "ordered_roll_events": true,
+            "supported_fraction": 0.988,
+            "supported_forward_rotation": 7.475481435954572,
+            "net_rotation": 6.1967949089474885,
+            "rotation_frontier": 7.673408195674421,
+            "single_revolution": true,
+            "final_heading_error_deg": 30.655895537691514,
+            "success": false,
+            "score": 0.9161470098706889
+          }
+        }
+      ]
+    },
+    "continuous_prior_v2": {
+      "cases": 30,
+      "errors": 0,
+      "successes": {
+        "ground_pick": 30,
+        "kick_left": 30,
+        "kick_right": 30,
+        "roulade": 28
+      },
+      "ordinary_falls": [],
+      "failures": [
+        {
+          "seed": 3005,
+          "skill": "roulade",
+          "metrics": {
+            "seconds": 4.999999999999893,
+            "fell": true,
+            "final_standing": true,
+            "final_z": 0.11590529058856122,
+            "final_tilt": 0.7160107141418502,
+            "max_tilt": 177.4850387633074,
+            "vel_err_1s": 0.6102731487638862,
+            "yaw_err_1s": 0.09621803378976918,
+            "yaw_drift_deg": 329.03465379257307,
+            "displacement": 0.6254124223090819,
+            "mean_vx": -0.01616421641793735,
+            "mean_wz": -0.05002763211254204,
+            "action_rate": 0.23446710407733917,
+            "head_contact_fraction": 0.28,
+            "head_top_pivot": true,
+            "inverted_trunk": true,
+            "ordered_roll_events": true,
+            "supported_fraction": 0.988,
+            "supported_forward_rotation": 7.542554544806479,
+            "net_rotation": 6.2436772338196125,
+            "rotation_frontier": 7.670729665160178,
+            "single_revolution": true,
+            "final_heading_error_deg": 31.118003710204402,
+            "success": false,
+            "score": 0.9136628410906596
+          }
+        },
+        {
+          "seed": 3009,
+          "skill": "roulade",
+          "metrics": {
+            "seconds": 4.999999999999893,
+            "fell": true,
+            "final_standing": true,
+            "final_z": 0.11591265773175695,
+            "final_tilt": 0.59322753022893,
+            "max_tilt": 176.79441868386476,
+            "vel_err_1s": 0.6120037555415968,
+            "yaw_err_1s": 0.09329556497633502,
+            "yaw_drift_deg": 329.4948657144122,
+            "displacement": 0.6352173773347837,
+            "mean_vx": -0.01704556428642551,
+            "mean_wz": -0.04854299930892014,
+            "action_rate": 0.27019327878952026,
+            "head_contact_fraction": 0.284,
+            "head_top_pivot": true,
+            "inverted_trunk": true,
+            "ordered_roll_events": true,
+            "supported_fraction": 0.988,
+            "supported_forward_rotation": 7.475481435954572,
+            "net_rotation": 6.1967949089474885,
+            "rotation_frontier": 7.673408195674421,
+            "single_revolution": true,
+            "final_heading_error_deg": 30.655895537691514,
+            "success": false,
+            "score": 0.9161470098706889
+          }
+        }
+      ]
+    }
+  },
+  "accepted": true,
+  "selection": "delivery_v3",
+  "unchanged_evidence": "Other eight models byte-identical to V2; standalone and keyboard evidence inherited from V2 seeds 2000\u20132029. No claim that those tests were rerun.",
+  "paired_successful_prior_v2": {
+    "n": 58,
+    "candidate": {
+      "yaw_drift_deg": 30.43557258386273,
+      "ball_peak_forward_speed": 0.8705745103156188,
+      "action_rate": 0.09525739542883017
+    },
+    "reference": {
+      "yaw_drift_deg": 30.227230134542523,
+      "ball_peak_forward_speed": 0.8705756200948735,
+      "action_rate": 0.09526982017118356
+    }
+  },
+  "paired_successful_source_mujoco": {
+    "n": 45,
+    "candidate": {
+      "yaw_drift_deg": 30.874402132057924,
+      "ball_peak_forward_speed": 0.8586624879092459,
+      "action_rate": 0.09056854794422785
+    },
+    "reference": {
+      "yaw_drift_deg": 9.831828537388299,
+      "ball_peak_forward_speed": 0.6291627329276281,
+      "action_rate": 0.05532639647523562
+    }
+  }
+}
+
+
+Final integrity: all 272 phase-one sealed files, 24 phase-two selected files, and
+24 phase-three selected files match their seals. All 18 original ONNX files match
+initial hashes. All nine selected graphs/manifests match the bundle; full tests
+pass 187/187. No owned training/evaluation job remains. The final two previously
+failing cold right kicks fall at 3.64/3.60 seconds under V2; KR06 maximum tilt
+is 6.67/6.61 degrees on the same already-counted seeds. This is a posthoc recovery
+diagnostic, not an additional test.
