@@ -117,7 +117,70 @@ def freeze(selection, out):
     (out / 'play.sh').write_text(script); os.chmod(out / 'play.sh', 0o755)
     record['verification_completed_unix'] = time.time()
     (out / 'bundle.json').write_text(json.dumps(record, indent=2))
-    return record
+    document_sidecars(out)
+    return json.loads((out / 'bundle.json').read_text())
+
+
+def document_sidecars(out):
+    """Complete descriptive schema-2 fields without changing runtime behavior.
+
+    This packaging step may follow selection freeze. Compare the actual loaded
+    contract before and after, and retain both manifest hashes in the audit.
+    """
+    from dataclasses import asdict
+    out = Path(out)
+    bundle_path = out / 'bundle.json'
+    bundle = json.loads(bundle_path.read_text())
+    checks = []
+    for name, item in bundle['skills'].items():
+        path = out / 'models' / Path(item['exported']).name
+        side = path.with_suffix('.manifest.json')
+        before_hash = digest(side)
+        actor = OnnxPolicy(path)
+        def contract(p):
+            return dict(obs=p.obs_dim, act=p.act_dim, scale=p.action_scale,
+                        time=p.time_input_s, heading=p.heading_input,
+                        stand=p.has_standing_partner, limits=asdict(p.twist_limits))
+        before = contract(actor)
+        probe = np.zeros(61, np.float32)
+        expected = actor.infer(probe)
+        data = json.loads(side.read_text())
+        commands = {
+            'standing': dict(encoding='constant', value=[0] * 13),
+            'walking': dict(encoding='twist', meaning='body vx, body vy, yaw rate; remaining command entries zero'),
+            'sitstand': dict(encoding='sit_flag', meaning='command[0]=1 sit; 0 stand'),
+            'ground_pick': dict(encoding='phase', period_s=4, meaning='command[0:2]=cos/sin(2*pi*t/4)'),
+            'kick_left': dict(encoding='constant', value=[0] * 13),
+            'kick_right': dict(encoding='constant', value=[0] * 13),
+            'roulade': dict(encoding='one_shot_time', period_s=5,
+                            meaning='obs[48]=elapsed_seconds/5; command[1:13]=0; updated time-aware runtime required'),
+            'roller': dict(encoding='roller_throttle_heading_error',
+                           meaning='positive push, zero coast, negative brake; command[2]=relative heading error'),
+            'roller_crouch': dict(encoding='phase', period_s=5, meaning='command[0:2]=cos/sin(2*pi*t/5)'),
+        }
+        data.update(schema_version=2, model_api=1, obs_len=61, action_len=14,
+                    robot=dict(model='microduck', hw_rev=1, servos='xl330', control_hz=50),
+                    name=path.stem.lower(), slot={'standing':'stand','walking':'walk'}.get(name, name),
+                    kind='perpetual' if name in ('standing','walking','roller') else 'behavior',
+                    entry_pose='standing', description='Experimental candidate: ' + item['role'],
+                    command=commands[name],
+                    training=dict(source=item['source'], checkpoint=item.get('checkpoint'), role=item['role']),
+                    eval=dict(bundle='bundle.json', summary='holdout/summary.json'))
+        data['sim2sim']['twist_limits'] = before['limits']
+        data['sim2sim']['control'] = dict(dt=.005, decimation=4)
+        side.write_text(json.dumps(data, indent=2) + '\n')
+        loaded = OnnxPolicy(path)
+        assert contract(loaded) == before
+        assert np.array_equal(loaded.infer(probe), expected)
+        assert digest(path) == item['sha256']
+        checks.append(dict(skill=name, before_manifest_sha256=before_hash,
+                           manifest_sha256=digest(side), runtime_contract=before,
+                           model_unchanged=True, contract_unchanged=True, inference_unchanged=True))
+        item['manifest_sha256'] = digest(side)
+    audit = dict(completed_unix=time.time(), purpose='descriptive schema-2 packaging only', checks=checks)
+    (out / 'manifest_packaging_check.json').write_text(json.dumps(audit, indent=2))
+    bundle_path.write_text(json.dumps(bundle, indent=2))
+    return audit
 
 
 def main():

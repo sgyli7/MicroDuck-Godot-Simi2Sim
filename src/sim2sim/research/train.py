@@ -46,8 +46,8 @@ class Vector:
         self.entry=entry;self.entry_counts={"reset":0,"standing":0}
         self.entry_bank=None
         if entry_bank:
-            if task.name!='roulade' or task.robot not in ('microduck_ball','microduck_ball_stand_fix') or entry_source:
-                raise ValueError('Native entry-bank prefixes require roulade in the ball scene, without --entry-source')
+            if task.name not in ('roulade','kick_left','kick_right') or task.robot not in ('microduck_ball','microduck_ball_stand_fix') or entry_source:
+                raise ValueError('Native entry-bank prefixes require a roll/kick in the ball scene, without --entry-source')
             from .entry_bank import EntryBank
             self.entry_bank=EntryBank(entry_bank)
         self.random_commands=random_commands
@@ -208,6 +208,7 @@ def run(args):
     config["heading_input"]=policy.anchor.heading_input
     config['environment_seed']=env.seed
     eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
+    eval_seeds=range(getattr(args,'eval_seed_start',100),getattr(args,'eval_seed_start',100)+getattr(args,'eval_seeds',3))
     config["physics"]=env.worlds[0].physics
     if env.roll_library is not None:config["roll_starts_sha256"]=env.roll_library.sha256
     if env.objectives[0].motion is not None:config["roll_motion_sha256"]=env.objectives[0].motion.sha256
@@ -309,7 +310,7 @@ def run(args):
                 # Report export roundoff independently of physical outcomes.
                 report=parity(policy,export,n=200)
                 selected=None if not args.eval_conditions else args.eval_conditions.split(",")
-                result=evaluate_skill(task.name,export,seeds=(100,101,102),workers=4,out=out/f"eval_{iteration:05d}",selected_conditions=selected,entry=eval_entry,**evaluation_kwargs)
+                result=evaluate_skill(task.name,export,seeds=eval_seeds,workers=4,out=out/f"eval_{iteration:05d}",selected_conditions=selected,entry=eval_entry,**evaluation_kwargs)
                 result_short={k:v for k,v in result.items() if k!="episodes"};result_short.update(iteration=iteration,parity=report)
                 evaluation_records.append(result_short)
                 (out/"evaluations.json").write_text(json.dumps(evaluation_records,indent=2))
@@ -327,7 +328,7 @@ def run(args):
         (out/"final_parity.json").write_text(json.dumps(report,indent=2))
         if time.time()<hard_deadline-30:
             selected=None if not args.eval_conditions else args.eval_conditions.split(",")
-            result=evaluate_skill(task.name,export,seeds=(100,101,102),workers=4,out=out/"eval_final",selected_conditions=selected,entry=eval_entry,**evaluation_kwargs)
+            result=evaluate_skill(task.name,export,seeds=eval_seeds,workers=4,out=out/"eval_final",selected_conditions=selected,entry=eval_entry,**evaluation_kwargs)
             if report["passed"] and not result["errors"] and (result["success_rate"],result["score"])>(best_success,best_score):
                 (out/"best.onnx").write_bytes(export.read_bytes());save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config,env);best_score=result["score"];best_success=result["success_rate"]
         (out/"completed.json").write_text(json.dumps({"status":status,"iterations":iteration,"samples":total_samples,"elapsed":time.time()-start,"best_dev_score":best_score if math.isfinite(best_score) else None,"best_dev_success":best_success,"final_parity":report,"entry_counts":env.entry_counts},indent=2))
@@ -353,6 +354,7 @@ def main():
     p.add_argument("--target-kl",type=float,default=.015);p.add_argument("--anchor-weight",type=float,default=10)
     p.add_argument("--residual-weight",type=float,default=1);p.add_argument("--weights",default="{}")
     p.add_argument("--conditions");p.add_argument("--eval-conditions");p.add_argument("--eval-seconds",type=float,default=300)
+    p.add_argument("--eval-seed-start",type=int,default=100);p.add_argument("--eval-seeds",type=int,default=3)
     p.add_argument("--source");p.add_argument("--resume");p.add_argument("--template")
     p.add_argument("--entry",choices=["reset","standing","mixed"],default="reset")
     p.add_argument("--eval-entry",choices=["reset","standing","both"])

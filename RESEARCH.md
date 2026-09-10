@@ -744,3 +744,46 @@ Holdout seeds 1000–1029 opened only after the completed freeze; selection is
 unchanged thereafter. Native Godot roll/kick and matching MuJoCo roll clips
 are recorded in the delivery directory, using development seed 100 solely
 for illustration.
+
+
+## Phase-one holdout and user-authorized active-time extension
+
+Phase-one holdout completed at 01:38:32 UTC, 31 seconds before the initial
+wall-clock cutoff. Nine candidate task counts were: standing 60/60, walking
+538/720, sitstand 240/240, ground pick 60/60, left kick 60/60, right kick 57/60,
+roll 59/60, roller 115/180, crouch 60/60. Continuous sequences: pick/left/right
+30/30, roll 28/30, zero ordinary falls. All three independent right-kick
+failures were cold-start falls. The three roll heading failures across the
+standalone and continuous checks still completed one revolution and stood up.
+Successful roll recovery averaged 2.79 s versus source 1.62 s. Full figures,
+source comparisons and their limitations are in RESEARCH_RESULT_20260910.md.
+No phase-one selected actor was changed after opening those test seeds.
+
+The user then clarified that eight hours means active work; disconnected hours
+are excluded and should be made up. The session records two observed assistant
+gaps, approximately 22:37–00:09 and 00:49–01:54 UTC (157 minutes total), and an
+adjusted cutoff of 04:16:04 UTC. This is an approximate observed-disconnection
+accounting, not a claim that background compute stopped throughout those gaps.
+Original timestamps and completed background jobs are retained. Phase-one
+artifacts are sealed by hash. Supplementary development seeds are 300–319;
+new final seeds are 2000–2029, untouched until the next selection freeze.
+
+WD06 gives a fresh bounded residual greater capacity and more high-speed and
+lateral-command samples while preserving keyboard/idle training. KR03 adapts
+the actual right-kick actor, with real controller prefixes including sit/rise;
+it does not assume that the reflected left actor is physically symmetric.
+R15 starts from a conservative 2.20–2.35 s expert blend and adds time/heading-
+aware residual recovery learning with a weak original motion reference.
+Earlier blend probes 2.10 and 2.15 pass only 2/6 and 4/6 new development cases;
+2.20 passes 6/6. A launch-time gate preserves the first 0.8 s of the R15 parent.
+All three new training runs have fixed 45-minute budgets. Initial exports
+retain the parent exactly, and the right-prefix smoke passes physical 6/6.
+
+The training runner now records configurable development seeds. Native prefix
+training supports kicks as well as rolls, and the bank optionally includes
+sit/rise. All 38 research regression tests pass. Final assessment can now run
+independent suites in separate processes, retaining the exact same episode
+function, conditions and gates; a two-process native/MuJoCo smoke passes.
+This reduces evaluation overhead and avoids a one-hour serial suite queue.
+Descriptive schema-2 packaging also records effective runtime contracts and
+checks them unchanged before/after, with all ONNX hashes and inference intact.

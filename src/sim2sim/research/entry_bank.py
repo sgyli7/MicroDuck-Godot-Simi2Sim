@@ -20,6 +20,7 @@ class EntryBank:
         walking=OnnxPolicy(Path(paths['walking']))
         if walking.has_standing_partner:raise ValueError('These prefixes require a walker that owns idle and braking')
         required={'walking','ground_pick','kick_left','kick_right'}
+        if paths.get('sitstand'):required.add('sitstand')
         self.actors={k:NativeAnchor(paths[k]) for k in required}
         if any(p.time_input_s for p in self.actors.values()):raise ValueError('Prefix actors must retain ordinary commands')
         self.hashes={k:v.sha256 for k,v in self.actors.items()}
@@ -34,6 +35,8 @@ class EntryBank:
             'kick_right':[(5.,set(),'kick_right'),idle(2.)],
             'game':[idle(1.),(2.,{'fwd'},None),idle(2.),(1.,{'left'},None),idle(1.),
                     (4.,set(),'pick'),idle(2.),(5.,set(),'kick_left'),idle(2.)]}
+        if 'sitstand' in self.actors:
+            programs['sit_rise']=[idle(1.),(6.,set(),'sit'),(6.,set(),'sit'),idle(1.)]
         self.tapes={}
         for name,program in programs.items():
             brain=PlayBrain(has_standing=False,lim=walking.twist_limits);tape=[]
