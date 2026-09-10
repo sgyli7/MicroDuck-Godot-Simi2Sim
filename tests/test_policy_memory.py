@@ -6,6 +6,16 @@ from sim2sim.policy_memory import YawDriftMemory
 
 
 class MemoryContract(unittest.TestCase):
+    def test_reflection_matches_mirrored_imu_history(self):
+        from sim2sim.research.mirror import reflect_obs
+        a=YawDriftMemory();b=YawDriftMemory();rng=np.random.default_rng(48)
+        for i in range(200):
+            obs=rng.normal(0,.2,61).astype(np.float32)
+            obs[3:6]/=np.linalg.norm(obs[3:6]);obs[50]=.5 if 30<i<60 else 0.
+            direct=a.observe(obs)
+            reflected=b.observe(reflect_obs(obs,task='kick_right'))
+            np.testing.assert_allclose(reflected,reflect_obs(direct,task='kick_right',yaw_memory_input=True),atol=1e-7)
+
     def test_vertical_projection_stamp_and_turn_reset(self):
         m=YawDriftMemory();obs=np.zeros(61,np.float32)
         obs[3:6]=[0,.6,-.8];obs[1]=1.

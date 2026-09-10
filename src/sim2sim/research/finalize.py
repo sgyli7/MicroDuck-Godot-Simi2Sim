@@ -33,7 +33,9 @@ def verify_mirror(source, reflected, n=10000):
     from .mirror import reflect_obs, reflect_action
     rng = np.random.default_rng(7319)
     obs = rng.standard_normal((n, 61), dtype=np.float32)
-    expected = reflect_action(NativeAnchor(source)(reflect_obs(obs, task='kick_right')))
+    parent = NativeAnchor(source)
+    expected = reflect_action(parent(reflect_obs(obs, task='kick_right',heading_input=parent.heading_input,
+                                               yaw_memory_input=parent.yaw_memory_input)))
     actual = NativeAnchor(reflected)(obs)
     error = float(np.max(np.abs(actual - expected)))
     return dict(samples=n, max_abs=error, threshold=1e-5, passed=error < 1e-5,

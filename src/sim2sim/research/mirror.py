@@ -10,20 +10,23 @@ JOINT_SIGN=np.array([-1,-1,-1,-1,-1,1,1,-1,-1,-1,-1,-1,-1,-1],np.float32)
 OBS_PERM=np.r_[np.arange(6),6+JOINT_PERM,20+JOINT_PERM,34+JOINT_PERM,np.arange(48,61)].astype(np.int64)
 OBS_SIGN=np.r_[[-1,1,-1],[1,-1,1],JOINT_SIGN,JOINT_SIGN,JOINT_SIGN,[1,-1,-1],[1,1,-1,-1],[1,-1,1,-1,1,-1]].astype(np.float32)
 
-def observation_sign(task=None,heading_input=False):
+def observation_sign(task=None,heading_input=False,yaw_memory_input=False):
     sign=OBS_SIGN.copy()
     if task in ('ground_pick','roller_crouch'):sign[48:50]=1. # Phase is independent of side.
     if heading_input:sign[50]=1. # Heading cosine is even.
+    if yaw_memory_input:sign[55]=-1. # Accumulated yaw drift is odd under reflection.
     return sign
 
-def reflect_obs(x,*,task=None,heading_input=False):return np.asarray(x)[...,OBS_PERM]*observation_sign(task,heading_input)
+def reflect_obs(x,*,task=None,heading_input=False,yaw_memory_input=False):return np.asarray(x)[...,OBS_PERM]*observation_sign(task,heading_input,yaw_memory_input)
 def reflect_action(x):return np.asarray(x)[...,JOINT_PERM]*JOINT_SIGN
 
 def mirror(source,dest,task="kick_right"):
     original=onnx.load(source);m=compose.add_prefix(original,"mirror_source/")
     input_name=m.graph.input[0].name
     from sim2sim.policy_time import has_heading_input
-    arrays={"obs_perm":OBS_PERM,"obs_sign":observation_sign(task,has_heading_input({p.key:p.value for p in original.metadata_props})),"joint_perm":JOINT_PERM,"joint_sign":JOINT_SIGN}
+    from sim2sim.policy_memory import has_yaw_memory
+    meta={p.key:p.value for p in original.metadata_props}
+    arrays={"obs_perm":OBS_PERM,"obs_sign":observation_sign(task,has_heading_input(meta),has_yaw_memory(meta)),"joint_perm":JOINT_PERM,"joint_sign":JOINT_SIGN}
     nodes=[helper.make_node("Gather",["obs","obs_perm"],["permuted_obs"],axis=1),helper.make_node("Mul",["permuted_obs","obs_sign"],[input_name])]
     nodes+=list(m.graph.node)
     nodes+=[helper.make_node("Gather",[m.graph.output[0].name,"joint_perm"],["permuted_action"],axis=1),helper.make_node("Mul",["permuted_action","joint_sign"],["actions"])]

@@ -152,6 +152,13 @@ def export_policy(policy,path):
     for key,value in metadata.items():result.metadata_props.add(key=key,value=value)
     onnx.checker.check_model(result)
     onnx.save(result,str(path));delta_path.unlink()
+    if getattr(policy,'task_name',None)=='walking':
+        import json
+        # This research actor controls whole trajectories including idle.
+        # Make every intermediate export playable under the same contract.
+        side=dict(action_scale=1.,sim2sim=dict(use_stand_policy=False),
+                  research=dict(skill='walking',source_sha256=policy.anchor.sha256))
+        path.with_suffix('.manifest.json').write_text(json.dumps(side,indent=2))
     return path
 
 def parity(policy,exported=None,n=10000):

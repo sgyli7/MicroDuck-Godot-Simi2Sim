@@ -842,3 +842,28 @@ This is a recorded learning-rate comparison, not an unlogged resume change.
 The final assessment runner skips a redundant phase-one comparison only when
 the actor is byte-identical, explicitly recording those identities instead of
 counting them as independent tests.
+
+## Supplementary deployment and wider checks (02:44 UTC)
+
+The complete suite now passes 186 tests. A new reflection check verifies that
+the declared yaw-memory feature changes sign consistently with a mirrored IMU
+history. Intermediate walking exports now carry their own idle-ownership
+sidecar; previously this was only attached at final packaging. Existing running
+WD08 checkpoints receive the same explicit sidecar before keyboard evaluation.
+Neither change alters the native physics or physical success thresholds.
+
+Wider development remains necessary: R16 iteration 89 passes 6/6 initial cases
+but only 37/40 across seeds 300–319, against R11's 40/40. Successful recovery is
+2.782 s versus 2.778 s, with worse mean final heading (13.86 versus 8.20 degrees).
+KR04 iteration 26 remains 39/40, equal to its parent, with body yaw 32.86 versus
+30.85 degrees. Neither checkpoint currently qualifies as an improvement.
+WD08 iteration 53 keeps 54/72 fixed-command cases but its six-seed keyboard
+forward drift is 6.09 versus 4.15 degrees; backward tracking also regresses.
+Lower last-second angular-rate error alone would conceal accumulated drift.
+
+The read-only results/analyze_results.py artifact records quality diagnostics
+alongside unchanged success flags. Roll recovery is the earliest post-inversion
+time whose remaining 0.5-second windows all contain at least 90% standing
+samples (tilt below 15 degrees, height above 0.08 m, at least one foot contact).
+It reproduces the phase-one 2.78915-second candidate result. This diagnostic
+does not replace the physical completion protocol or discard failed episodes.
