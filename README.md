@@ -11,7 +11,12 @@
 站立、行走、坐起、低头拾取、左右踢球、前滚、轮足与下蹲滑行。真实 ONNX 控制、Godot/Jolt 物理，剪辑保留实际速度。
 本次使用最新选定九模型包；其中包含新训练结果和保留的旧／原版策略。轮足刹车尚未达标，在片中明确标记。
 
-**场景更新：** 修复共面闪烁，维修站加入真实碰撞，以及 **6–15 克的动态箱、瓶、小球**。
+**场景更新：** 维修站背后补齐了旧工坊、配件领取间、储气设备、管线、暖灯和回收零件架；新增实体带碰撞，门洞与左右出口保持开放。
+[背景升级与前后对照](docs/workshop_atmosphere.md) · [6 秒小院实录](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/yard-atmosphere.mp4)
+
+![小小维修站 · 机械小院](docs/media/yard-after-courtyard.png)
+
+共面闪烁修复与 **6–15 克的动态箱、瓶、小球** 保留。
 **B** 选踢击目标，**3 / 4** 左右踢，**0** 归位。
 [12 秒动态物件实录](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/loose-props.mp4) · [动态刚体验证](docs/loose_props.md) · [闪烁修复对照](docs/workshop_contacts.md)。上方九技能 PV 保留原平地演示模式。
 

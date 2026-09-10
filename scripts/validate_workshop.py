@@ -19,8 +19,8 @@ def main():
         overlay = _headless_overlay(ROOT / 'godot')
         try:
             env = dict(os.environ, MD_AUDIT_OUTPUT=str(out / 'surfaces.json'),
-                       MD_CONTACT_REPORT=str(out / 'contacts.json'), MD_LOOSE_REPORT=str(out / 'loose_props.json'), MD_WORKSHOP_COLLISIONS='1', MD_STATIC_COURSE='1')
-            for name in ('workshop_surface_probe', 'workshop_contacts', 'workshop_loose_props'):
+                       MD_CONTACT_REPORT=str(out / 'contacts.json'), MD_LOOSE_REPORT=str(out / 'loose_props.json'), MD_YARD_REPORT=str(out / 'yard.json'), MD_WORKSHOP_COLLISIONS='1', MD_STATIC_COURSE='1')
+            for name in ('workshop_surface_probe', 'workshop_contacts', 'workshop_loose_props', 'workshop_yard'):
                 result = subprocess.run([godot_bin(), '--headless', '--fixed-fps', '200',
                     '--single-threaded-scene', '--path', str(overlay), '--script',
                     f'res://tests/{name}.gd'], env=env, text=True, stdout=subprocess.PIPE,

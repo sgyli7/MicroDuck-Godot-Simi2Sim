@@ -89,6 +89,7 @@ func _build_solids() -> void:
 	_storage(Vector3(1.42,0,-.78))
 	_service_post(Vector3(.74,0,-1.34))
 	_cargo_group(); _small_details()
+	load("res://atelier/workshop_yard.gd").new().build(self)
 	solid_scope=false
 	if collisions_enabled and OS.get_environment("MD_STATIC_COURSE")=="1":
 		contact_course=load("res://atelier/contact_course.gd").new()
@@ -225,6 +226,7 @@ func _floor() -> void:
 	ground.set_shader_parameter("seam_color",PALETTE.shadow)
 	ground.set_shader_parameter("backdrop",Color("babfb3"))
 	ground.set_shader_parameter("open_route",open_route)
+	ground.set_shader_parameter("yard_dressing",OS.get_environment("MD_YARD_DRESSING")!="0")
 	ground.set_shader_parameter("bay_paint",PALETTE.yellow)
 	floor_node.set_surface_override_material(0,ground)
 	# Flush parking paint is evaluated once in the floor shader, including corners.

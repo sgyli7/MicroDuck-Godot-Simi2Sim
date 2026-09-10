@@ -5,6 +5,7 @@ uniform vec4 seam_color : source_color = vec4(0.45,0.48,0.47,1.0);
 uniform vec4 backdrop : source_color = vec4(0.73,0.75,0.70,1.0);
 uniform vec4 bay_paint : source_color = vec4(0.8784, 0.7412, 0.2196, 1.0);
 uniform bool open_route = false;
+uniform bool yard_dressing = false;
 varying vec3 world_position;
 void vertex() {
     world_position = (MODEL_MATRIX * vec4(VERTEX,1.0)).xyz;
@@ -22,6 +23,11 @@ void fragment() {
         boundary = min(boundary,max(apron.x,apron.y));
         vec2 return_lane = abs(p - vec2(-2.45,0.035)) - vec2(0.85,0.405);
         boundary = min(boundary,max(return_lane.x,return_lane.y));
+    }
+    if (yard_dressing) {
+        vec2 rear = abs(p - vec2(0.05,-2.07)) - vec2(3.45,1.39);
+        vec2 side = abs(p - vec2(3.02,-0.43)) - vec2(0.48,1.04);
+        boundary = min(boundary, min(max(rear.x,rear.y),max(side.x,side.y)));
     }
     float yard = 1.0 - smoothstep(-0.005,0.005,boundary);
     vec2 dist = abs(fract((p + 0.22)/0.44)-0.5)*0.44;
