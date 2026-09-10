@@ -353,13 +353,15 @@ def main(argv: list[str] | None = None) -> int:
                 sess.reset_context(); active_policy = out.policy
             cmd = out.command
             if sess.time_input_s:
-                if out.policy != "roulade" or sess.time_input_s != brain.roulade_duration:
+                duration = brain.roulade_duration if out.policy == 'roulade' else (
+                    brain.kick_duration if out.policy in ('kick_left','kick_right') else 0.)
+                if not duration or sess.time_input_s != duration:
                     raise PolicyShapeError("Time-input policy does not match this maneuver")
                 rotation = quat_wxyz_to_mat(st.base_quat_wxyz)
-                if out.started_skill == "roulade":
+                if out.started_skill == out.policy:
                     yaw = np.arctan2(rotation[1,0],rotation[0,0])
                     maneuver_heading = np.array([np.cos(yaw),np.sin(yaw)])
-                cmd = time_command(brain.roulade_duration - brain.behavior_t, sess.time_input_s,
+                cmd = time_command(duration - brain.behavior_t, sess.time_input_s,
                                    rotation if sess.heading_input else None,maneuver_heading)
             obs = build_obs(st, last_action, cmd, home=home)
             t_inf = time.perf_counter()

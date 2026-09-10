@@ -25,8 +25,8 @@ class World:
         self.roller_contract=bool(roller_contract)
         if self.roller_contract and task.name!='roller':raise ValueError('Native roller contract requires the roller task')
         if self.heading_input and not self.time_input_s:raise ValueError("Relative heading requires a timed maneuver")
-        if self.time_input_s and (task.name!="roulade" or self.time_input_s!=task.seconds):
-            raise ValueError("Time input currently requires the full roulade duration")
+        if self.time_input_s and (task.name not in ('roulade','kick_left','kick_right') or self.time_input_s!=task.seconds):
+            raise ValueError("Time input requires the full declared roll or kick duration")
         self.cfg = load_robot_json(task.robot_path)
         files={"robot":task.robot_path,"mjcf":Path(self.cfg["mjcf"])}
         if backend=="godot":files.update(server=sim2sim_root()/"godot/physics_server.gd",spec=Path(self.cfg["godot_spec"]))

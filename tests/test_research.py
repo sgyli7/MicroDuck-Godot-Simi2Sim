@@ -84,13 +84,15 @@ class TaskSemantics(unittest.TestCase):
     def test_play_and_training_agree_on_one_shot_time(self):
         from sim2sim.play_input import PlayBrain
         from sim2sim.policy_time import time_command
-        brain=PlayBrain()
-        for k in range(20):
-            out=brain.tick(set(),["roulade"] if k==0 else [],.02)
-            self.assertEqual(out.policy,"roulade")
-            elapsed=brain.roulade_duration-brain.behavior_t
-            np.testing.assert_allclose(time_command(elapsed,5)[0],k*.02/5,atol=1e-7)
-            np.testing.assert_array_equal(out.command,0.) # Existing zero-command policies stay unchanged.
+        for skill in ('roulade','kick_left','kick_right'):
+            brain=PlayBrain()
+            for k in range(20):
+                out=brain.tick(set(),[skill] if k==0 else [],.02)
+                self.assertEqual(out.policy,skill)
+                duration=brain.roulade_duration if skill=='roulade' else brain.kick_duration
+                elapsed=duration-brain.behavior_t
+                np.testing.assert_allclose(time_command(elapsed,5)[0],k*.02/5,atol=1e-7)
+                np.testing.assert_array_equal(out.command,0.) # Existing zero-command policies stay unchanged.
         self.assertEqual(time_command(7.,5.)[0],1.)
 
     def test_interactive_command_tapes_are_reproducible_bounded_and_ramped(self):
@@ -255,6 +257,18 @@ class RealTelemetry(unittest.TestCase):
             self.assertEqual(w.t,0.);self.assertAlmostEqual(w.obs()[48],.25)
             w.reset(73001);self.assertEqual(w.obs()[48],0.)
         finally:w.close()
+
+    def test_timed_kick_clock_and_heading_reset_in_native_world(self):
+        for skill in ('kick_left','kick_right'):
+            w=World(TASKS[skill],'mujoco',time_input_s=5.,heading_input=True)
+            try:
+                w.reset(73411)
+                np.testing.assert_allclose(w.obs()[48:51],[0,0,1],atol=1e-6)
+                w.step(np.zeros(14));self.assertAlmostEqual(w.obs()[48],.004)
+                w.enter_from_standing();self.assertEqual(w.obs()[48],0.)
+                w.reset(73412)
+                np.testing.assert_allclose(w.obs()[48:51],[0,0,1],atol=1e-6)
+            finally:w.close()
 
     def test_body_transfer_velocity_matches_com_jacobian(self):
         import mujoco

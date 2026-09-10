@@ -170,6 +170,10 @@ def document_sidecars(out):
                     command=commands[name],
                     training=dict(source=item['source'], checkpoint=item.get('checkpoint'), role=item['role']),
                     eval=dict(bundle='../bundle.json', summary='../holdout/summary.json',relative_to='manifest_directory'))
+        if actor.time_input_s:
+            data['command']=dict(encoding='one_shot_time',period_s=actor.time_input_s,
+                meaning=f'obs[48]=elapsed_seconds/{actor.time_input_s:g}; remaining command entries zero')
+            data.setdefault('runtime_requires', []).append('one_shot_time')
         if actor.heading_input:
             data['command']['meaning']='obs[48]=elapsed_seconds/5; obs[49:51]=declared relative-heading sine/cosine; remaining command entries zero'
             data['command']['heading']='lateral_axis_sin_cos, relative to orientation at skill entry'

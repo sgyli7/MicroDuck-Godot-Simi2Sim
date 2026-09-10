@@ -39,8 +39,10 @@ def run(paths,out,seed=100,scene_robot='microduck_ball'):
                     events.append(dict(time=w.t,skill=control.started_skill,q=w.state.q.tolist(),
                         last_action=w.last.tolist(),gyro=w.features['gyro'].tolist(),tilt=w.features['tilt'],z=w.features['z']))
                 if actor.time_input_s:
-                    if control.policy!='roulade':raise ValueError('Unexpected timed skill')
-                    cmd=time_command(brain.roulade_duration-brain.behavior_t,actor.time_input_s,
+                    duration=brain.roulade_duration if control.policy=='roulade' else (
+                        brain.kick_duration if control.policy in ('kick_left','kick_right') else 0.)
+                    if not duration or actor.time_input_s!=duration:raise ValueError('Unexpected timed skill')
+                    cmd=time_command(duration-brain.behavior_t,actor.time_input_s,
                         w.features['rot'] if actor.heading_input else None,w.heading)
                 if control.started_skill in ('kick_left','kick_right'):
                     w.pending_ball=kick_ball_position(w.state,control.started_skill)

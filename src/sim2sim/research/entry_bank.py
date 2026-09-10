@@ -10,6 +10,7 @@ from sim2sim.play_input import PlayBrain
 from sim2sim.play import kick_ball_position
 from sim2sim.obs import build_obs
 from sim2sim.policy import OnnxPolicy
+from sim2sim.policy_time import time_command
 from .models import NativeAnchor
 from .tasks import DT
 
@@ -22,7 +23,8 @@ class EntryBank:
         required={'walking','ground_pick','kick_left','kick_right'}
         if paths.get('sitstand'):required.add('sitstand')
         self.actors={k:NativeAnchor(paths[k]) for k in required}
-        if any(p.time_input_s for p in self.actors.values()):raise ValueError('Prefix actors must retain ordinary commands')
+        if any(p.time_input_s and (k not in ('kick_left','kick_right') or p.time_input_s!=5.) for k,p in self.actors.items()):
+            raise ValueError('Timed prefixes require a declared five-second kick')
         self.hashes={k:v.sha256 for k,v in self.actors.items()}
         sidecar=Path(paths['walking']).with_suffix('.manifest.json')
         if sidecar.exists():self.hashes['walking_manifest']=hashlib.sha256(sidecar.read_bytes()).hexdigest()
@@ -43,15 +45,23 @@ class EntryBank:
             for seconds,held,tap in program:
                 for k in range(round(seconds/DT)):
                     out=brain.tick(held,[tap] if tap and k==0 else [],DT)
-                    tape.append((out.policy,out.command.copy(),out.started_skill))
+                    actor=self.actors[out.policy];cmd=out.command.copy()
+                    if actor.time_input_s:cmd=time_command(brain.kick_duration-brain.behavior_t,actor.time_input_s)
+                    tape.append((out.policy,cmd,out.started_skill))
             self.tapes[name]=tape
         self.names=list(self.tapes)
 
     def send(self,w,name,step):
         from sim2sim.policy_memory import YawDriftMemory
-        if step==0:w._entry_memory=YawDriftMemory();w._entry_memory_policy=None
+        if step==0:
+            w._entry_memory=YawDriftMemory();w._entry_memory_policy=None
+            w._entry_heading=np.array([np.cos(w.features['yaw']),np.sin(w.features['yaw'])])
         policy,cmd,started=self.tapes[name][step]
-        if started in ('kick_left','kick_right'):w.pending_ball=kick_ball_position(w.state,started)
+        if started in ('kick_left','kick_right'):
+            w.pending_ball=kick_ball_position(w.state,started)
+            w._entry_heading=np.array([np.cos(w.features['yaw']),np.sin(w.features['yaw'])])
+        actor=self.actors[policy]
+        if actor.heading_input:cmd=time_command(float(cmd[0])*actor.time_input_s,actor.time_input_s,w.features['rot'],w._entry_heading)
         obs=build_obs(w.state,w.last,cmd,w.home)
         if w._entry_memory_policy!=policy:w._entry_memory.reset();w._entry_memory_policy=policy
         if self.actors[policy].yaw_memory_input:obs=w._entry_memory.observe(obs)
