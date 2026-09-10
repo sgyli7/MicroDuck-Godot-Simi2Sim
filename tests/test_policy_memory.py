@@ -36,23 +36,28 @@ class MemoryContract(unittest.TestCase):
             self.assertTrue(parity(actor,export_policy(actor,Path(d)/'learned.onnx'),n=500)['passed'])
 
     def test_native_world_and_deployment_memory_agree(self):
+        self._native_world_and_deployment_memory_agree('walking')
+        self._native_world_and_deployment_memory_agree('kick_right')
+
+    def _native_world_and_deployment_memory_agree(self,skill):
         from sim2sim.research.tasks import TASKS
         from sim2sim.research.walk_memory import prepare
         from sim2sim.research.world import World
         from sim2sim.policy import PolicyBundle
         from sim2sim.obs import build_obs
         with tempfile.TemporaryDirectory() as d:
-            path=prepare(TASKS['walking'].source,Path(d)/'memory.onnx');actor=PolicyBundle(path)
-            w=World(replace(TASKS['walking'],robot='microduck_ball_stand_fix'),yaw_memory_input=True)
+            path=prepare(TASKS[skill].source,Path(d)/'memory.onnx');actor=PolicyBundle(path)
+            w=World(replace(TASKS[skill],robot='microduck_ball_stand_fix'),yaw_memory_input=True)
+            condition='walk_025' if skill=='walking' else 'default'
             try:
-                w.reset(93001,'walk_025')
+                w.reset(93001,condition)
                 for _ in range(30):
                     expected=w.obs();np.testing.assert_array_equal(w.obs(),expected)
                     raw=build_obs(w.state,w.last,w.command(),w.home)
                     action=actor.infer(raw)
                     self.assertAlmostEqual(actor._yaw_memory.error,float(expected[55]),places=7)
                     w.step(action)
-                actor.reset_context();w.reset(93002,'walk_025')
+                actor.reset_context();w.reset(93002,condition)
                 actor.infer(build_obs(w.state,w.last,w.command(),w.home))
                 self.assertEqual(actor._yaw_memory.error,0.)
                 self.assertEqual(w.obs()[55],0.)

@@ -1,4 +1,4 @@
-"""Expose explicit walking memory while preserving the exact parent actor."""
+"""Expose explicit locomotion/kick memory while preserving the exact parent."""
 import hashlib
 from pathlib import Path
 import numpy as np
@@ -8,6 +8,8 @@ from onnx import helper,numpy_helper,compose
 
 def prepare(source,dest):
     original=onnx.load(source);meta={p.key:p.value for p in original.metadata_props}
+    if meta.get('sim2sim_task','walking') not in ('walking','kick_left','kick_right'):
+        raise ValueError('Yaw memory requires locomotion or a kick')
     if meta.get('sim2sim_yaw_memory'):raise ValueError('Parent already has walking memory')
     parent=compose.add_prefix(original,'memory_free_parent/')
     mask=np.ones((1,61),np.float32);mask[:,55]=0

@@ -812,3 +812,33 @@ memory contract/export/native-equivalence checks. The training smoke passes
 all 12 idle/sequence cases with exact initial export parity. WD07 receives a
 40-minute budget and will be judged on full physical and keyboard behavior,
 not on whether the added memory is technically connected.
+
+
+## Supplementary observability and optimizer comparison (02:29 UTC)
+
+Wider new development: original right and KR03 iteration 26 both pass 39/40;
+R11 passes 40/40, R15 iteration 15 passes 39/40. Merely advancing the entire
+internal neural clock also fails (5/6, then 1/6 for the stronger warps), despite
+exact 1,000-input functional checks. Physics time and full rollout duration
+never change. No timing or high-speed adapter is selected from these probes.
+
+The IMU-memory contract is extended to kicks. A yaw-invariant zero-command
+actor sees angular rate but cannot directly distinguish equal stationary poses
+at different accumulated headings. Explicit gyro/gravity history is therefore
+a testable observability hypothesis; no claim is made that it has already
+improved quality. KR04 tests this information with real kick prefixes and a
+30-minute budget. A native smoke passes 6/6 and the state-consistency test now
+covers both walking and right kick. Policy switches clear each prefix actor's
+memory, including switches between two actors that both use it.
+
+R15 actual KL remains about 0.0005 against the 0.015 target; the previous
+scheduler only reduced learning rate. The locally installed rsl_rl adaptive
+scheduler also increases it when KL is small. An explicit, optional upward
+schedule is added with a much smaller 0.0003 cap, 1.2 growth, and the existing
+rollback/overshoot guards. R16 branches from R15 iteration 60 and WD08 from
+WD07 iteration 26, preserving actor, optimizer and episode-generator state;
+each receives 30 minutes. Their parent trials stop and finalize separately.
+This is a recorded learning-rate comparison, not an unlogged resume change.
+The final assessment runner skips a redundant phase-one comparison only when
+the actor is byte-identical, explicitly recording those identities instead of
+counting them as independent tests.

@@ -301,6 +301,9 @@ def run(args):
                 for g in ao.param_groups:g["lr"]*=.5
             elif actual_kl>args.target_kl*1.5:
                 for g in ao.param_groups:g["lr"]=max(1e-6,g["lr"]*.8)
+            elif getattr(args,'adaptive_lr_max',0.)>0 and update_count>0 and 0<actual_kl<args.target_kl/2:
+                for g in ao.param_groups:
+                    if g['lr']<args.adaptive_lr_max:g['lr']=min(args.adaptive_lr_max,g['lr']*1.2)
             entry={"iteration":iteration,"elapsed":time.time()-start,"samples":total_samples,"reward":float(b["physical_reward"].mean()),"bootstrapped_reward":float(b["reward"].mean()),"reward_logging":"physical_v2","value_loss":value_loss,"explained_variance":explained_variance,"delta_rms":delta_rms,"kl":actual_kl,"actor_lr":ao.param_groups[0]["lr"],"std":float(policy.log_std.detach().exp().mean()),"rejected":rejected,"actor_updates":update_count,"fps":T*N/(time.time()-iteration_start),"done_fraction":float(b["done"].float().mean()),"terms":{k:v/term_count for k,v in all_terms.items()}}
             log.write(json.dumps(entry)+"\n")
             print(json.dumps({k:v for k,v in entry.items() if k!="terms"}),flush=True)
@@ -350,6 +353,7 @@ def main():
     p.add_argument("--seed",type=int,default=42);p.add_argument("--threads",type=int,default=2)
     p.add_argument("--epochs",type=int,default=2);p.add_argument("--minibatch",type=int,default=2048)
     p.add_argument("--actor-lr",type=float,default=3e-5);p.add_argument("--critic-lr",type=float,default=3e-4)
+    p.add_argument('--adaptive-lr-max',type=float,default=0.,help='Optional upward KL adaptation cap; zero preserves the prior conservative schedule')
     p.add_argument("--std",type=float,default=.03);p.add_argument("--bound",type=float,default=.2)
     p.add_argument("--freeze-std",type=int,default=20);p.add_argument("--critic-warmup",type=int,default=2)
     p.add_argument("--gamma",type=float,default=.99);p.add_argument("--lam",type=float,default=.95)

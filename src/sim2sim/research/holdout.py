@@ -1,5 +1,5 @@
 """One final, fixed-seed evaluation after the candidate bundle is frozen."""
-import argparse, json, time
+import argparse, hashlib, json, time
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
 from .tasks import TASKS, BASELINE
@@ -38,6 +38,7 @@ def run(bundle, workers=6, seeds=range(1000, 1030), suite_processes=1, reference
                 labels=['candidate', 'source_mujoco', 'previous_godot'],
                 source_roller_profile='source_play', godot_roller_profile='xml',
                 suite_processes=suite_processes, workers_per_suite=workers,
+                phase1_identical_actors={},
                 reference_bundle=None if reference_bundle is None else str(reference_bundle))
     if reference_bank: plan['labels'].append('phase1_candidate')
     (out / 'plan.json').write_text(json.dumps(plan, indent=2))
@@ -46,10 +47,19 @@ def run(bundle, workers=6, seeds=range(1000, 1030), suite_processes=1, reference
         cases = [('candidate', bank[skill], 'godot'), ('source_mujoco', task.source, 'mujoco'),
                  ('previous_godot', BASELINE / task.previous, 'godot')]
         if skill in ('roller', 'roller_crouch'): cases.append(('source_mujoco_xml', task.source, 'mujoco'))
-        if reference_bank: cases.append(('phase1_candidate', reference_bank[skill], 'godot'))
+        if reference_bank:
+            current_hash=hashlib.sha256(Path(bank[skill]).read_bytes()).hexdigest()
+            prior_hash=hashlib.sha256(Path(reference_bank[skill]).read_bytes()).hexdigest()
+            if current_hash==prior_hash:
+                # One physical evaluation suffices for a byte-identical actor
+                # in this exact same scene/entry protocol. Do not call it a
+                # second independent test or silently duplicate its counts.
+                plan['phase1_identical_actors'][skill]=current_hash
+            else:cases.append(('phase1_candidate', reference_bank[skill], 'godot'))
         for label, source, backend in cases:
             dest = out / skill / label
             jobs.append((skill, label, source, backend, seeds, workers, dest))
+    (out / 'plan.json').write_text(json.dumps(plan, indent=2))
     def retain(short):
         summaries.append(short)
         summaries.sort(key=lambda x: (list(TASKS).index(x['skill']), x['label']))

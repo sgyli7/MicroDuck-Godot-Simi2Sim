@@ -78,6 +78,51 @@ def retime(source,dest,start,end):
     onnx.checker.check_model(model);dest=Path(dest);dest.parent.mkdir(parents=True,exist_ok=True);onnx.save(model,str(dest));return dest
 
 
+def warp_clock(source,dest,start=1.2,extra_gain=.2):
+    """Advance all neural phase-dependent branches together, after launch.
+
+    Only the actor's internal time feature changes. Physics/control dt and the
+    full five-second evaluation remain unchanged, and no body pose is imposed.
+    """
+    original=onnx.load(source);meta={p.key:p.value for p in original.metadata_props}
+    if float(meta.get('sim2sim_time_input_s',0))!=5 or not 0<=start<5 or not 0<=extra_gain<=1:
+        raise ValueError('Clock warp needs a declared five-second timed actor')
+    parent=compose.add_prefix(original,'clock_parent/')
+    mask=np.zeros((1,61),np.float32);mask[:,48]=1.
+    arrays=dict(clock_start=np.array([48],np.int64),clock_end=np.array([49],np.int64),
+        clock_axis=np.array([1],np.int64),clock_threshold=np.array(start/5,np.float32),
+        clock_gain=np.array(extra_gain,np.float32),clock_one=np.array(1.,np.float32),clock_mask=mask)
+    nodes=[helper.make_node('Slice',['obs','clock_start','clock_end','clock_axis'],['clock_fraction']),
+        helper.make_node('Sub',['clock_fraction','clock_threshold'],['clock_excess']),
+        helper.make_node('Relu',['clock_excess'],['clock_positive_excess']),
+        helper.make_node('Mul',['clock_positive_excess','clock_gain'],['clock_delta']),
+        helper.make_node('Add',['clock_fraction','clock_delta'],['clock_unbounded']),
+        helper.make_node('Min',['clock_unbounded','clock_one'],['clock_bounded']),
+        helper.make_node('Sub',['clock_bounded','clock_fraction'],['clock_offset']),
+        helper.make_node('Mul',['clock_offset','clock_mask'],['clock_feature_offset']),
+        helper.make_node('Add',['obs','clock_feature_offset'],[parent.graph.input[0].name])]
+    nodes+=list(parent.graph.node)+[helper.make_node('Identity',[parent.graph.output[0].name],['actions'])]
+    graph=helper.make_graph(nodes,'explicit_neural_clock_warp',
+        [helper.make_tensor_value_info('obs',onnx.TensorProto.FLOAT,[1,61])],
+        [helper.make_tensor_value_info('actions',onnx.TensorProto.FLOAT,[1,14])],
+        initializer=list(parent.graph.initializer)+[numpy_helper.from_array(v,k) for k,v in arrays.items()])
+    model=helper.make_model(graph,opset_imports=list(original.opset_import));model.ir_version=original.ir_version
+    meta.update(sim2sim_clock_warp=json.dumps(dict(start_s=start,extra_gain=extra_gain)),
+                sim2sim_clock_parent_sha256=hashlib.sha256(Path(source).read_bytes()).hexdigest())
+    for k,v in meta.items():model.metadata_props.add(key=k,value=v)
+    onnx.checker.check_model(model);dest=Path(dest);dest.parent.mkdir(parents=True,exist_ok=True);onnx.save(model,str(dest));return dest
+
+
+def clock_parity(source,exported,start,extra_gain,n=10000):
+    from .models import NativeAnchor
+    x=np.random.default_rng(491).normal(0,.5,(n,61)).astype(np.float32)
+    expected=x.copy();fraction=x[:,48:49]
+    mapped=np.minimum(fraction+np.maximum(fraction-np.float32(start/5),0)*np.float32(extra_gain),np.float32(1))
+    expected[:,48:49]=fraction+(mapped-fraction)
+    error=float(np.max(np.abs(NativeAnchor(source)(expected)-NativeAnchor(exported)(x))))
+    return dict(samples=n,max_abs=error,threshold=1e-5,passed=error<1e-5)
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('source',type=Path);p.add_argument('dest',type=Path)
     p.add_argument('--start',type=float,default=1.9);p.add_argument('--end',type=float,default=2.1)

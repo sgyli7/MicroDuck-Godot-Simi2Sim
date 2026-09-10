@@ -49,10 +49,11 @@ class EntryBank:
 
     def send(self,w,name,step):
         from sim2sim.policy_memory import YawDriftMemory
-        if step==0:w._entry_memory=YawDriftMemory()
+        if step==0:w._entry_memory=YawDriftMemory();w._entry_memory_policy=None
         policy,cmd,started=self.tapes[name][step]
         if started in ('kick_left','kick_right'):w.pending_ball=kick_ball_position(w.state,started)
         obs=build_obs(w.state,w.last,cmd,w.home)
+        if w._entry_memory_policy!=policy:w._entry_memory.reset();w._entry_memory_policy=policy
         if self.actors[policy].yaw_memory_input:obs=w._entry_memory.observe(obs)
         else:w._entry_memory.reset()
         w.send(self.actors[policy](obs[None])[0])

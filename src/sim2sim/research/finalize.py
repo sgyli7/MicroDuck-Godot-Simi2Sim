@@ -161,12 +161,13 @@ def document_sidecars(out):
         }
         data.update(schema_version=2, model_api=1, obs_len=61, action_len=14,
                     robot=dict(model='microduck', hw_rev=1, servos='xl330', control_hz=50),
-                    name=path.stem.lower(), slot={'standing':'stand','walking':'walk'}.get(name, name),
-                    kind='perpetual' if name in ('standing','walking','roller') else 'behavior',
+                    name={'standing':'stand_godot','walking':'walk_godot'}.get(name,name+'_godot'),
+                    slot={'standing':'stand','walking':'walk'}.get(name, name),
+                    kind='perpetual' if name in ('standing','walking','roller') else 'one_shot',
                     entry_pose='standing', description='Experimental candidate: ' + item['role'],
                     command=commands[name],
                     training=dict(source=item['source'], checkpoint=item.get('checkpoint'), role=item['role']),
-                    eval=dict(bundle='bundle.json', summary='holdout/summary.json'))
+                    eval=dict(bundle='../bundle.json', summary='../holdout/summary.json',relative_to='manifest_directory'))
         if actor.yaw_memory_input:
             data['command']['memory']='obs[55]: bounded gyro/gravity yaw-drift integral; updated stateful runtime required'
             data['runtime_requires']=['gyro_vertical_integral_v1','reset_memory_on_episode_or_policy_switch']

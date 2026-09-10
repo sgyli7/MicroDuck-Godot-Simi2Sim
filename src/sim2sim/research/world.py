@@ -19,7 +19,7 @@ class World:
         self.time_input_s=float(time_input_s);self.time_offset=0.
         self.heading_input=bool(heading_input)
         from sim2sim.policy_memory import YawDriftMemory
-        if yaw_memory_input and task.name!='walking':raise ValueError('Yaw memory requires walking')
+        if yaw_memory_input and task.name not in ('walking','kick_left','kick_right'):raise ValueError('Yaw memory requires walking or a kick')
         self.yaw_memory=YawDriftMemory() if yaw_memory_input else None
         self.entry_source=None if entry_source is None else Path(entry_source)
         self.roller_contract=bool(roller_contract)
