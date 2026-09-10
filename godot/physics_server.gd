@@ -193,6 +193,9 @@ func _ready() -> void:
 	if _hud != null and _hud.has_method("set_mode"):
 		_hud.set_mode("roller" if "roller" in _robot_scene else "walk")
 	_snapshot_kinematic_pose()
+	# Load presentation resources only for visible play; headless workers skip them.
+	if not _headless and OS.get_environment("SIM2SIM_VISUAL_STYLE") != "legacy":
+		load("res://visuals/microduck/style.gd").new().apply(self)
 
 	call_deferred("_maybe_dump_sim2sim_shot")
 

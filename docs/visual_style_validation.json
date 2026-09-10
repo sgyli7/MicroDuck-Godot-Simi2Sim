@@ -1,0 +1,47 @@
+{
+  "headless": {
+    "contract_nodes": 43,
+    "headless": true,
+    "new_visual_resources_loaded": false,
+    "ok": true,
+    "renderer": "forward_plus"
+  },
+  "forward_plus": {
+    "contract_nodes": 43,
+    "headless": false,
+    "ok": true,
+    "physics_camera_properties_unchanged": true,
+    "renderer": "forward_plus"
+  },
+  "default_entry": {
+    "contract_nodes": 43,
+    "default_entry_applied": true,
+    "headless": false,
+    "ok": true,
+    "physics_camera_properties_unchanged": true,
+    "renderer": "forward_plus"
+  },
+  "headless_state_equivalence": {
+    "samples": 100,
+    "fields": [
+      "t",
+      "q",
+      "qd",
+      "base_pos",
+      "base_quat"
+    ],
+    "max_absolute_difference": 0.0,
+    "baseline_commit": "0fe88910dc65185c1922d006ff0dd230fa89a967",
+    "headless": true,
+    "control_substeps": 4,
+    "note": "State equivalence, not a throughput benchmark. Physics loop source and project/ONNX settings are unchanged."
+  },
+  "scope": "Presentation-only startup; project, controllers, model files and per-step physics unchanged.",
+  "files": {
+    "godot/visuals/microduck/robot_parts.json": "ee8e21942d04a5495fc0425a4af273ada265008cc9b1700aa5ed9431e5d88e02",
+    "godot/visuals/microduck/ink.gdshader": "367d860fd5858b87c008864904102342b77975f41470a464971c5775cb237336",
+    "godot/visuals/microduck/style.gd": "622389a106211ac6c122ffd5f82381755b6b2c853e04778e13cd5e18777095d0",
+    "godot/visuals/microduck/enamel.gdshader": "630dea56847a259304c55769a6e6d97aab8c899c0e0d28441feb63804438bcdc",
+    "godot/visuals/microduck/lens.gdshader": "6f5a3a841c870d2fe8ff2c265868dd9e8b07f36fa2ce7cf91022cb7644274ab3"
+  }
+}
