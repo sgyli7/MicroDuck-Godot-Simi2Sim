@@ -170,9 +170,13 @@ def document_sidecars(out):
                     command=commands[name],
                     training=dict(source=item['source'], checkpoint=item.get('checkpoint'), role=item['role']),
                     eval=dict(bundle='../bundle.json', summary='../holdout/summary.json',relative_to='manifest_directory'))
+        if actor.heading_input:
+            data['command']['meaning']='obs[48]=elapsed_seconds/5; obs[49:51]=declared relative-heading sine/cosine; remaining command entries zero'
+            data['command']['heading']='lateral_axis_sin_cos, relative to orientation at skill entry'
+            data.setdefault('runtime_requires', []).append('lateral_axis_sin_cos')
         if actor.yaw_memory_input:
             data['command']['memory']='obs[55]: bounded gyro/gravity yaw-drift integral; updated stateful runtime required'
-            data['runtime_requires']=['gyro_vertical_integral_v1','reset_memory_on_episode_or_policy_switch']
+            data.setdefault('runtime_requires', []).extend(['gyro_vertical_integral_v1','reset_memory_on_episode_or_policy_switch'])
         data['sim2sim']['twist_limits'] = before['limits']
         data['sim2sim']['control'] = dict(dt=.005, decimation=4)
         side.write_text(json.dumps(data, indent=2) + '\n')

@@ -4,8 +4,12 @@ User-authorized objective: approach the original MuJoCo skill quality in real
 Godot/Jolt, continuously iterate for at most eight hours, and extend to all nine
 ONNX policies when the evidence supports it.
 
-Start: 2026-09-09 17:39:04 UTC. Hard deadline: 2026-09-10 01:39:04 UTC.
-This wall-clock cap includes implementation, diagnostics, training and evaluation.
+Start: 2026-09-09 17:39:04 UTC. Original wall deadline: 2026-09-10 01:39:04 UTC.
+The user later clarified eight hours of actual work, excluding disconnections.
+Two observed gaps total approximately 157 minutes; the recorded adjusted cutoff
+is 2026-09-10 04:16:04 UTC. Implementation, diagnostics, training and evaluation
+remain inside this working-time budget. See the supplementation section and
+session.json for the original timestamps and approximate accounting.
 
 ## Fixed rules
 
@@ -867,3 +871,28 @@ time whose remaining 0.5-second windows all contain at least 90% standing
 samples (tilt below 15 degrees, height above 0.08 m, at least one foot contact).
 It reproduces the phase-one 2.78915-second candidate result. This diagnostic
 does not replace the physical completion protocol or discard failed episodes.
+
+## Supplementary selection freeze (03:00 UTC)
+
+All supplementary training has ended. WD08 is stopped at iteration 121 after
+its interval evaluation falls to 44/72. KR04 ends at 71 and R16 at 147 under
+their recorded 30-minute caps. The final small-dev means remain unfavorable:
+right yaw 31.76 degrees and roll final heading 19.34 degrees. There are now 64
+completed run records, ten beyond phase one (seven training/resume runs and
+three smokes), not 64 independent successful models.
+
+R16 iteration 120 receives an additional actual-controller comparison over
+seeds 300–311. Both banks pass all four maneuvers in all 12 continuous tapes,
+with no ordinary falls. R16 improves continuous roll heading to 10.67 versus
+17.31 degrees, but its standalone mean is 14.22 versus 8.20 and recovery is
+2.786 versus 2.778 seconds. This context-dependent tradeoff does not demonstrate
+an overall advance toward source quality; the simpler, already selected R11 is
+retained. KR04 iteration 50 also falls to 38/40 versus the parent's 39/40.
+
+The final nine-slot selection therefore retains every phase-one ONNX. A new
+delivery_v2 bundle is frozen and independently export-verified before opening
+seeds 2000–2029. Its improved descriptive manifests do not change inference or
+physics. Phase-one artifacts remain sealed; supplementary experiments, failed
+adapters, wider and keyboard comparisons, and the selection rationale are all
+retained. A fresh independent assessment is still required even though the
+final selected actor bytes are unchanged.
