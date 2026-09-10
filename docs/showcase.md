@@ -83,7 +83,8 @@ nice -n 10 taskset -c 18,19 .venv/bin/python scripts/build_showcase_media.py --p
 
 当前物理服务器和选定模型来自 `da50221` 的最新研究代码，工作区为独立 Git worktree。
 原 `main.tscn` 及默认入口保持原定义；维修站通过可选 scene 参数接入。
-新版维修站默认启用道具碰撞与独立接触试验区，中央维修坪仍为原高度平面。
+新版维修站默认启用固定设施碰撞与六个轻质量动态刚体，中央维修坪仍为原高度平面。
+使用 B 切换踢击目标，0 同时归位物件；静态台阶改为可选 `--steps`。详见 [动态物件](loose_props.md)。
 使用 `scripts/play_atelier.sh --flat` 返回历史无道具碰撞演示模式。详见 [碰撞与闪烁修复](workshop_contacts.md)。
 
 1. 资源导入缓存缺失的首次采集弃用，补齐独立缓存。

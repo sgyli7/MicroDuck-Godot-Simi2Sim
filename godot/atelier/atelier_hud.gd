@@ -6,6 +6,7 @@ var state_label: Label
 var debug_panel: PanelContainer
 var debug_label: Label
 var roller := false
+var prop_label: Label
 
 func _ready() -> void:
 	layer=110
@@ -56,7 +57,10 @@ func _ready() -> void:
 	var help:=Label.new()
 	help.text="操作指南\n\nW / S  前进 / 后退    A / D  转向\nQ / E  平移    空格  停止\n\n1  捡地    2  坐下 / 站起\n3 / 4  左踢 / 右踢    5  前滚\n6  切换轮滑    0  重置\n\nTab  观景 / 游玩    Esc  退出\nF2  运行信息"
 	if roller:help.text="轮滑操作\n\nW  滑行    S  刹车\nA / D  转向    空格  松开推进\n\n2 / Y  下蹲滑行后起身\n6  切回步行    0  重置\n\n右键  环视    滚轮  缩放\nTab  观景 / 游玩    Esc  退出\nF2  运行信息"
-	if workshop.collisions_enabled:help.text+="\n\n接触试验区：维修坪南侧\n5 / 10 / 15 mm 台阶、缓坡、矮挡块\n慢速接近，失稳后按 0 重置"
+	if workshop.loose_props!=null:
+		help.text+="\n\n动态小物件：维修坪南侧\n"
+		if not roller:help.text+="B  切换踢击目标，再按 3 / 4 踢击\n"
+		help.text+="0  同时归位机器人与小物件"
 	help.add_theme_color_override("font_color",Color("36343a"))
 	help.add_theme_font_size_override("font_size",16);help_panel.add_child(help)
 	help_panel.visible=false
@@ -74,11 +78,20 @@ func _ready() -> void:
 	debug_label.custom_minimum_size.x=290;debug_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	debug_label.add_theme_color_override("font_color",Color("36343a"));debug_panel.add_child(debug_label)
 	debug_panel.visible=false
+	if workshop.loose_props!=null:
+		var prop_panel:=PanelContainer.new()
+		prop_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+		prop_panel.offset_left=-335;prop_panel.offset_right=-24;prop_panel.offset_top=20;prop_panel.offset_bottom=73
+		prop_panel.add_theme_stylebox_override("panel",style);root.add_child(prop_panel)
+		prop_label=Label.new();prop_label.add_theme_font_size_override("font_size",14)
+		prop_label.add_theme_color_override("font_color",Color("36343a"));prop_panel.add_child(prop_label)
 	for control in root.find_children("*","Control",true,false):
 		control.mouse_filter=Control.MOUSE_FILTER_IGNORE
 
 func _process(_delta: float) -> void:
 	if workshop==null or state_label==null:return
+	if prop_label!=null:
+		prop_label.text="小物件可推动 · 0 归位" if roller else "踢击目标："+workshop.loose_props.target_label()+"\nB 切换目标    3 / 4 踢击    0 归位"
 	var server: Node=workshop.server
 	if server._peer==null:
 		state_label.text="○  等待控制器"

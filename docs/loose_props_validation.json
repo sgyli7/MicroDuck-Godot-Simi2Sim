@@ -1,0 +1,317 @@
+{
+  "parent_commit": "cc8f73c069a22f92bad852fa51e025e38bedaa31",
+  "reference_ball_mass_kg": 0.015,
+  "jolt": {
+    "bodies": {
+      "Ball10g": {
+        "angular_speed": 7.85361003875732,
+        "impulse_velocity": 0.149940013885498,
+        "mass": 0.00999999977648258,
+        "rest_displacement": 0.0011085340520367,
+        "rest_speed": 2.08869699314107e-09
+      },
+      "Ball15g": {
+        "angular_speed": 5.23573923110962,
+        "impulse_velocity": 0.099960021674633,
+        "mass": 0.0149999996647239,
+        "rest_displacement": 0.00110732042230666,
+        "rest_speed": 3.73640851591972e-09
+      },
+      "Bin10g": {
+        "angular_speed": 0.706907033920288,
+        "impulse_velocity": 0.149940013885498,
+        "mass": 0.00999999977648258,
+        "rest_displacement": 0.00251758005470037,
+        "rest_speed": 3.40495021067255e-10
+      },
+      "Bin12g": {
+        "angular_speed": 0.589088916778564,
+        "impulse_velocity": 0.124950014054775,
+        "mass": 0.0120000001043081,
+        "rest_displacement": 0.00251758494414389,
+        "rest_speed": 1.64401914304335e-09
+      },
+      "Bottle6g": {
+        "angular_speed": 2.61493825912476,
+        "impulse_velocity": 0.24990002810955,
+        "mass": 0.00600000005215406,
+        "rest_displacement": 0.00219996622763574,
+        "rest_speed": 1.44925405010099e-09
+      },
+      "Bottle8g": {
+        "angular_speed": 1.96120321750641,
+        "impulse_velocity": 0.187425002455711,
+        "mass": 0.00800000037997961,
+        "rest_displacement": 0.00219996436499059,
+        "rest_speed": 9.62328439158e-10
+      }
+    },
+    "engine": "Jolt Physics",
+    "errors": []
+  },
+  "controls": {
+    "b_key_cycle": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      0
+    ],
+    "reset_transforms_exact": true,
+    "reset_velocities_zero": true,
+    "selection_preserved": true
+  },
+  "isolation": {
+    "main": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "atelier": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "flat": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "headless_solid_nodes": {
+      "atelier": 132,
+      "flat": 0
+    },
+    "headless_dynamic_bodies": {
+      "atelier": 6,
+      "flat": 0
+    }
+  },
+  "cases": [
+    {
+      "skill": "kick_left",
+      "target": "Bin12g",
+      "mass": 0.0120000001043081,
+      "model_sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "seed": 61000,
+      "entry_seconds": 1,
+      "skill_seconds": 5,
+      "headless": false,
+      "displacement_m": 0.06327084494492435,
+      "max_rotation_degrees": 39.6165286750575,
+      "max_speed_mps": 0.9335587344873657,
+      "max_angular_speed_rad_s": 8.273009206979191,
+      "robot_fell": false,
+      "robot_final_tilt": 3.8312129863666664,
+      "robot_final_height": 0.11861422914913552,
+      "pauses": [],
+      "note": "One policy-triggered target placement, then native Jolt; no artificial impulse, animation or mid-action pose correction. Not a general success-rate benchmark.",
+      "reset_speeds_zero": true,
+      "max_object_tilt_degrees": 7.94859973480977,
+      "contact_counts": {
+        "ankle_left": 196
+      },
+      "raw_evidence": "results/loose_props/20260910-233603_kick_left_box",
+      "props_sha256": "dbcda243b5c3c02f7f0124188409462f00a79451c1af3a53484c84b22be1089a",
+      "trajectory_sha256": "c1b3013802cba9965c035ee3e156e0c2593a2e71161ca995d27432b1be037d4f"
+    },
+    {
+      "skill": "kick_left",
+      "target": "Bottle6g",
+      "mass": 0.00600000005215406,
+      "model_sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "seed": 61000,
+      "entry_seconds": 1,
+      "skill_seconds": 5,
+      "headless": true,
+      "displacement_m": 0.06880368130780672,
+      "max_rotation_degrees": 6.689487722740338,
+      "max_object_tilt_degrees": 4.376515899279102,
+      "max_speed_mps": 0.7482161943561653,
+      "max_angular_speed_rad_s": 6.345146057860036,
+      "robot_fell": false,
+      "robot_final_tilt": 3.7737295037246694,
+      "robot_final_height": 0.11852649167361987,
+      "pauses": [],
+      "note": "One policy-triggered target placement, then native Jolt; no artificial impulse, animation or mid-action pose correction. Not a general success-rate benchmark.",
+      "reset_speeds_zero": true,
+      "contact_counts": {
+        "ankle_left": 2
+      },
+      "raw_evidence": "results/loose_props/20260910-234035_kick_left_bottle",
+      "props_sha256": "bce841a4273e7ca87c57eca268a0c43d6abc4e2e6bdaddd39c8e6782386c53be",
+      "trajectory_sha256": "0d65e486845189663ecff2e9f16665ed0f690fb5f3d3c24362f2486e722d1370"
+    },
+    {
+      "skill": "kick_left",
+      "target": "Ball10g",
+      "mass": 0.00999999977648258,
+      "model_sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "seed": 61000,
+      "entry_seconds": 1,
+      "skill_seconds": 5,
+      "headless": false,
+      "displacement_m": 0.34329670994839484,
+      "max_rotation_degrees": 179.32151082801525,
+      "max_speed_mps": 0.8621171970436944,
+      "max_angular_speed_rad_s": 17.103506289313394,
+      "robot_fell": false,
+      "robot_final_tilt": 3.9025035595544146,
+      "robot_final_height": 0.11843734309267905,
+      "pauses": [],
+      "note": "One policy-triggered target placement, then native Jolt; no artificial impulse, animation or mid-action pose correction. Not a general success-rate benchmark.",
+      "reset_speeds_zero": true,
+      "max_object_tilt_degrees": 126.1093956895643,
+      "contact_counts": {
+        "ankle_left": 2
+      },
+      "raw_evidence": "results/loose_props/20260910-233348_kick_left_ball",
+      "props_sha256": "fefb507c9a35b4f04e4cb4fd1531e8585a2c5cd03bca3d9b817d0d10c49816b3",
+      "trajectory_sha256": "e926d3ab01fed0367266e5ed8492c717a48673a6744a0255d6e0eb7f6a2407be"
+    },
+    {
+      "skill": "kick_right",
+      "target": "Bin12g",
+      "mass": 0.0120000001043081,
+      "model_sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "seed": 61000,
+      "entry_seconds": 1,
+      "skill_seconds": 5,
+      "headless": true,
+      "displacement_m": 0.0908308336901528,
+      "max_rotation_degrees": 53.98976735186001,
+      "max_speed_mps": 0.9320471867817857,
+      "max_angular_speed_rad_s": 7.71566546548769,
+      "robot_fell": false,
+      "robot_final_tilt": 4.006416170037561,
+      "robot_final_height": 0.11987755167817159,
+      "pauses": [],
+      "note": "One policy-triggered target placement, then native Jolt; no artificial impulse, animation or mid-action pose correction. Not a general success-rate benchmark.",
+      "reset_speeds_zero": true,
+      "max_object_tilt_degrees": 8.241852988185888,
+      "contact_counts": {
+        "ankle_right": 5
+      },
+      "raw_evidence": "results/loose_props/20260910-233338_kick_right_box",
+      "props_sha256": "4d1c2e3879845e4714a572974ad5633b6aa5e15ae3ca138a696d9444fa302dde",
+      "trajectory_sha256": "f026d48e479cb7a988dbf2714d2b0b69a16b8124a39e8c5693ea3d9d2d9d79bf"
+    },
+    {
+      "skill": "kick_right",
+      "target": "Bottle6g",
+      "mass": 0.00600000005215406,
+      "model_sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "seed": 61000,
+      "entry_seconds": 1,
+      "skill_seconds": 5,
+      "headless": false,
+      "displacement_m": 0.09581109519618777,
+      "max_rotation_degrees": 140.82131110866166,
+      "max_speed_mps": 0.8426013040176692,
+      "max_angular_speed_rad_s": 17.789461620592675,
+      "robot_fell": false,
+      "robot_final_tilt": 4.079595576909081,
+      "robot_final_height": 0.11933274712275307,
+      "pauses": [],
+      "note": "One policy-triggered target placement, then native Jolt; no artificial impulse, animation or mid-action pose correction. Not a general success-rate benchmark.",
+      "reset_speeds_zero": true,
+      "max_object_tilt_degrees": 93.41831486811067,
+      "contact_counts": {
+        "ankle_right": 2
+      },
+      "raw_evidence": "results/loose_props/20260910-233623_kick_right_bottle",
+      "props_sha256": "1b0d2ef1e2219ca14449e7cdec57c508666a2dee58812cde3110399738f72dad",
+      "trajectory_sha256": "40595620142e65bca51d21cc6385e9e0b433aa7fec6b79b9b929d532866a64a6"
+    },
+    {
+      "skill": "kick_right",
+      "target": "Ball10g",
+      "mass": 0.00999999977648258,
+      "model_sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "seed": 61000,
+      "entry_seconds": 1,
+      "skill_seconds": 5,
+      "headless": true,
+      "displacement_m": 0.5163234452898413,
+      "max_rotation_degrees": 176.9500928011095,
+      "max_speed_mps": 0.9738054545835718,
+      "max_angular_speed_rad_s": 20.84768187638634,
+      "robot_fell": false,
+      "robot_final_tilt": 4.017890769122361,
+      "robot_final_height": 0.11975728054330854,
+      "pauses": [],
+      "note": "One policy-triggered target placement, then native Jolt; no artificial impulse, animation or mid-action pose correction. Not a general success-rate benchmark.",
+      "reset_speeds_zero": true,
+      "max_object_tilt_degrees": 175.11782161165797,
+      "contact_counts": {
+        "ankle_right": 2
+      },
+      "raw_evidence": "results/loose_props/20260910-233343_kick_right_ball",
+      "props_sha256": "46f8f93bce527676af1e8dda1298da0123f14f901357d9a3eab7bb286a4adf8e",
+      "trajectory_sha256": "0067ca4d82cc6eee6fdae57f54c6d78f4cb119d02e8f32e0a8bc38eb9cac83c7"
+    }
+  ],
+  "rejected_analytic_spheres": {
+    "ball10g_speed_after_2s": 0.12084,
+    "ball15g_speed_after_2s": 0.11991,
+    "changes_without_effect": [
+      "initial height",
+      "CCD toggle"
+    ],
+    "retained": "Fine convex shells with initial supporting facet; no added stabilization force"
+  },
+  "video": {
+    "seconds": 12.033333333333333,
+    "width": 1920,
+    "height": 1080,
+    "frames": 361,
+    "unique_frames": 361,
+    "speed": 1,
+    "edits": [
+      {
+        "source": "results/loose_props/20260910-233603_kick_left_box/raw.mp4",
+        "sha256": "11df5ea43309313691c6b5220206d3cb2e6f46dbc24efd040d6d16511b1d1377",
+        "start": 0.8995409999999999,
+        "duration": 4,
+        "speed": 1
+      },
+      {
+        "source": "results/loose_props/20260910-233623_kick_right_bottle/raw.mp4",
+        "sha256": "5cd0f068893bc658a279d9531bc6ca21cbf89d8ec122d8c82ef6561978526978",
+        "start": 0.900218,
+        "duration": 4,
+        "speed": 1
+      },
+      {
+        "source": "results/loose_props/20260910-233348_kick_left_ball/raw.mp4",
+        "sha256": "0ded961cee61d35427461eb6946deec1beac1407d5372f0ec2781deaed31bd17",
+        "start": 0.866917,
+        "duration": 4,
+        "speed": 1
+      }
+    ],
+    "sha256": "05fdc0bf6ea52e41829effdf03e1fc4e47cf5d9c423a6b61d17f646403b02ebe"
+  },
+  "source_sha256": {
+    "godot/atelier/atelier_server.gd": "826b063cb7eb1ca3fc012afcdfa794fa84e50b2a5146b36e29da1fb1d4b978c1",
+    "godot/atelier/workshop.gd": "e7ddbcb95af5f6f18e86cd93e04bd38e390b3d3cdadfdb565e1c03f88460dff4",
+    "godot/atelier/loose_props.gd": "a120b8e6c7040b9124b99d3b048c48f98615f36a048d79c99caae77c521a1ec4",
+    "godot/atelier/atelier_hud.gd": "1ff4ca7f222fe430e472ac078820b7840aff9d914d1860ea9c4dce34a0591c6f",
+    "godot/tests/workshop_loose_props.gd": "8d03acf46daccb5440bd1bf25db4a7dbb7d67a943af0609dc84206d449d18a8f",
+    "scripts/play_atelier.py": "a4dddb66a2273efedfbeb475eabc62c2fa48dc6ef1a3fc7f6e1c6b32cb821211",
+    "scripts/capture_loose_props.py": "c1ad5ac76202d47cbe83dc861cf3aad1829dfcf1c3b54ad2faeaef67799959c0",
+    "scripts/verify_loose_prop_controls.py": "d9ef11fda1e7ff6cc50d0683da91b0db00db55fe5c7ebc6bfe6e6dd3954a6345",
+    "scripts/validate_workshop.py": "8bdcc4f75a412688a16ca56e6eec90dc1f281fd422e8bf3ea96ccfc22e8c2e03",
+    "scripts/verify_workshop_isolation.py": "cca428b7f04a8629a64951ce104956805a12df2301d7f6461c4f1fbcad543afb",
+    "scripts/build_loose_props_media.py": "606934705fb8238ac6b44537c664f1a42f27b67ddcbd16d870401ebe16f4cfa7"
+  },
+  "unchanged_shared_sha256": {
+    "godot/physics_server.gd": "2163e2b7e696f3611c563bb8148ef89317db51d46cecc0c9de2554d6b5f6b120",
+    "godot/main.tscn": "3848afad86c25ed690eded5dfab9721c45e39f821fdbf998d48aa205a3978ff1",
+    "godot/project.godot": "17bc203516a4edb25f6a74aa645b7918d984592386dec329f2e3bb66600ef5f2"
+  },
+  "limitations": [
+    "Six fixed-start kick demonstrations; not a held-out success-rate evaluation.",
+    "Small convex balls approximate an analytic sphere and alter rolling resistance.",
+    "Dynamic body costs belong to the workshop scene; no zero-overhead claim."
+  ]
+}

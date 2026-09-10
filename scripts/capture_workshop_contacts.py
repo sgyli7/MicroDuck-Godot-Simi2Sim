@@ -30,7 +30,7 @@ def main():
     os.sched_setaffinity(0, set(sorted(os.sched_getaffinity(0))[-2:]))
     os.nice(10)
     os.environ.update(MD_MODE='capture', MD_WIDTH='1920', MD_HEIGHT='1080',
-                      MD_RENDER_FPS='30', MD_WORKSHOP_COLLISIONS='1', SIM2SIM_VISUAL_STYLE='legacy')
+                      MD_RENDER_FPS='30', MD_WORKSHOP_COLLISIONS='1', MD_STATIC_COURSE='1', SIM2SIM_VISUAL_STYLE='legacy')
     os.environ.pop('MD_SHOWCASE_SHOT', None)
     paths = bundle_paths(ROOT / 'bundles/delivery_v3')
     actor = NativeAnchor(paths['walking'])

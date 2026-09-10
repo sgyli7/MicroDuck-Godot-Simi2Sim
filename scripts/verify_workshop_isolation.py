@@ -32,6 +32,7 @@ def main():
                 ('atelier', 'res://atelier/atelier.tscn', '1'),
                 ('flat', 'res://atelier/atelier.tscn', '0')]:
             os.environ['MD_WORKSHOP_COLLISIONS'] = collisions
+            os.environ['MD_STATIC_COURSE'] = '0'
             world = World(replace(TASKS['standing'], robot='microduck_ball_stand_fix'), scene_override=scene)
             try:
                 world.reset(61000, randomize=False)
@@ -49,10 +50,13 @@ def main():
     report = {k: dict(steps=100, max_abs=float(abs(v-traces['main']).max())) for k,v in traces.items()}
     report['headless_solid_nodes'] = {k: sum('WorkshopCollisions' in n['path'] or 'ContactCourse' in n['path']
         for n in c['physics']) for k,c in contracts.items()}
+    report['headless_dynamic_bodies'] = {k: sum(n['type']=='RigidBody3D' and 'LooseProps' in n['path'] for n in c['physics']) for k,c in contracts.items()}
     out = ROOT / 'results/workshop_validation/isolation.json'
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2)+'\n')
     print(json.dumps(report, indent=2))
+    if report['headless_dynamic_bodies'] != {'atelier': 6, 'flat': 0}:
+        raise SystemExit('Wrong free-body scene isolation')
     if report['flat']['max_abs'] != 0 or report['atelier']['max_abs'] > 1e-5:
         raise SystemExit('Spawn rollout changed; inspect the isolation report')
     if report['headless_solid_nodes']['atelier'] < 100 or report['headless_solid_nodes']['flat']:

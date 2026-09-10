@@ -144,11 +144,39 @@ func _follow_camera(dt: float) -> void:
 		return
 	super._follow_camera(dt)
 
+func _freeze(value: bool) -> void:
+	super._freeze(value)
+	if atelier!=null and atelier.loose_props!=null:atelier.loose_props.set_frozen(value)
+
+func _do_reset(cmd: Dictionary) -> void:
+	if atelier!=null and atelier.loose_props!=null:atelier.loose_props.reset()
+	super._do_reset(cmd)
+
+func _send_dict(data: Dictionary) -> void:
+	# Same counted physics reply, no diagnostic RPC that would insert extra ticks.
+	if OS.get_environment("MD_PROP_TELEMETRY")=="1" and data.get("cmd","") in ["step","reset"] and atelier!=null and atelier.loose_props!=null:
+		data["workshop_props"]=atelier.loose_props.telemetry()
+	super._send_dict(data)
+
 func _handle(cmd: Variant) -> void:
 	# Presentation events attached to a normal control command must not create
 	# extra returns from the inherited physics command pump.
 	if str(cmd.get("cmd",""))=="step":
+		if atelier!=null and atelier.loose_props!=null and atelier.loose_props.selected>0 and cmd.has("place_ball"):
+			var bp:Array=cmd.place_ball
+			var target:=_m2g(Vector3(float(bp[0]),float(bp[1]),float(bp[2])))
+			# Ignore the controller's far-away "hide ball" setup command.
+			if _base!=null and Vector2(target.x-_base.global_position.x,target.z-_base.global_position.z).length()<.4:
+				atelier.loose_props.place_target(target)
+				cmd=cmd.duplicate();cmd.place_ball=[5.0,5.0,.035]
 		for action in cmd.get("atelier_actions",[]):_apply_presentation_action(action)
+	if str(cmd.get("cmd", "")) == "atelier_prop_target":
+		if atelier==null or atelier.loose_props==null:
+			_send_dict({"ok":false,"error":"loose props disabled"})
+		else:
+			atelier.loose_props.selected=clampi(int(cmd.get("index",0)),0,atelier.loose_props.items.size())
+			_send_dict({"ok":true,"target":atelier.loose_props.target_label()})
+		return
 	if str(cmd.get("cmd", "")) == "atelier_camera_lock":
 		# Replay a measured camera for exact before/after framing; no body is moved.
 		atelier.capture_camera=cmd.camera
@@ -190,7 +218,7 @@ func _handle(cmd: Variant) -> void:
 	if str(cmd.get("cmd", "")) == "atelier_contract":
 		var physics: Array = []
 		_collect_contract(self, physics)
-		_send_dict({"ok":true,"cmd":"atelier_contract","physics":physics,"ticks":Engine.physics_ticks_per_second,"view":atelier.view if atelier!=null else "follow","help_visible":atelier.hud.help_panel.visible if atelier!=null and atelier.hud!=null else false,"debug_visible":atelier.hud.debug_panel.visible if atelier!=null and atelier.hud!=null else false})
+		_send_dict({"ok":true,"cmd":"atelier_contract","physics":physics,"prop_target":atelier.loose_props.selected if atelier!=null and atelier.loose_props!=null else 0,"ticks":Engine.physics_ticks_per_second,"view":atelier.view if atelier!=null else "follow","help_visible":atelier.hud.help_panel.visible if atelier!=null and atelier.hud!=null else false,"debug_visible":atelier.hud.debug_panel.visible if atelier!=null and atelier.hud!=null else false})
 		return
 	if str(cmd.get("cmd", "")) == "close":
 		_finish_recording_task()

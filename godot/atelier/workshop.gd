@@ -38,6 +38,7 @@ var collisions_enabled := OS.get_environment("MD_WORKSHOP_COLLISIONS") != "0"
 var collision_body: StaticBody3D
 var collision_cache: Dictionary = {}
 var contact_course: Node3D
+var loose_props: Node3D
 var solid_scope := false
 
 func build(host: Node3D) -> void:
@@ -89,10 +90,17 @@ func _build_solids() -> void:
 	_service_post(Vector3(.74,0,-1.34))
 	_cargo_group(); _small_details()
 	solid_scope=false
-	if collisions_enabled:
+	if collisions_enabled and OS.get_environment("MD_STATIC_COURSE")=="1":
 		contact_course=load("res://atelier/contact_course.gd").new()
 		contact_course.name="ContactCourse";add_child(contact_course)
 		contact_course.build(self,visuals_enabled)
+	if collisions_enabled and OS.get_environment("MD_STATIC_COURSE")!="1":
+		loose_props=load("res://atelier/loose_props.gd").new()
+		loose_props.name="LooseProps";add_child(loose_props)
+		var reference_mass:=.015
+		var bodies:Variant=server.get("_bodies")
+		if bodies is Dictionary and bodies.has("ball"):reference_mass=bodies.ball.mass
+		loose_props.build(self,visuals_enabled,reference_mass)
 
 func _solid(mesh: Mesh, p: Vector3, basis: Basis=Basis.IDENTITY) -> void:
 	if not collisions_enabled or not solid_scope or collision_body==null:return
@@ -522,6 +530,8 @@ func update_camera(dt: float) -> bool:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
+		if event.physical_keycode==KEY_B and loose_props!=null:
+			loose_props.cycle_target();get_viewport().set_input_as_handled()
 		if event.physical_keycode==KEY_TAB:
 			set_view("tour" if view=="follow" else "follow");get_viewport().set_input_as_handled()
 		if event.physical_keycode==KEY_F1 and hud!=null:
