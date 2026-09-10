@@ -7,6 +7,7 @@ from .evaluate import run_suite
 from .roller_evaluate import run_suite as roller_suite
 from .play_sequence import run as play_sequence
 from .keyboard_walk import run as keyboard_walk
+from .bundle import bundle_paths
 
 
 def suite_job(job):
@@ -25,14 +26,19 @@ def suite_job(job):
     return short
 
 
-def run(bundle, workers=6, seeds=range(1000, 1030), suite_processes=1, reference_bundle=None):
+def run(bundle, workers=6, seeds=range(1000, 1030), suite_processes=1, reference_bundle=None, out=None):
     bundle = Path(bundle)
     frozen = json.loads((bundle / 'bundle.json').read_text())
     if not frozen.get('verification_completed_unix'): raise ValueError('Bundle is not verified')
-    out = bundle / 'holdout'; out.mkdir(exist_ok=False)
-    bank = json.loads((bundle / 'bank.json').read_text())
+    bank = bundle_paths(bundle)
+    reference_bank = None if reference_bundle is None else bundle_paths(reference_bundle)
+    missing = [str(BASELINE / name) for task in TASKS.values()
+               for name in (task.factory, task.previous) if not (BASELINE / name).is_file()]
+    if missing:
+        raise FileNotFoundError('Full A/B requires setup init --require-previous; missing: ' + ', '.join(missing))
+    out = Path(out) if out is not None else bundle / 'holdout'
+    out.mkdir(parents=True, exist_ok=False)
     seeds = list(seeds)
-    reference_bank = None if reference_bundle is None else json.loads((Path(reference_bundle) / 'bank.json').read_text())
     plan = dict(seeds=seeds, started_unix=time.time(), bundle_frozen_unix=frozen['frozen_unix'],
                 selection_changes_allowed=False, normal_scene='microduck_ball_stand_fix',
                 labels=['candidate', 'source_mujoco', 'previous_godot'],
@@ -105,9 +111,10 @@ def main():
     p.add_argument('--suite-processes', type=int, default=1)
     p.add_argument('--seed-start', type=int, default=1000); p.add_argument('--seeds', type=int, default=30)
     p.add_argument('--reference-bundle', type=Path)
+    p.add_argument('--out', type=Path, help='New output directory; never overwrite frozen holdout evidence')
     a = p.parse_args()
     if min(a.workers,a.suite_processes,a.seeds)<1:p.error('Worker and seed counts must be positive')
-    run(a.bundle, a.workers, range(a.seed_start,a.seed_start+a.seeds),a.suite_processes,a.reference_bundle)
+    run(a.bundle, a.workers, range(a.seed_start,a.seed_start+a.seeds),a.suite_processes,a.reference_bundle,a.out)
 
 
 if __name__ == '__main__': main()

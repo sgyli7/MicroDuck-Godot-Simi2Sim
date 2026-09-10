@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "artifact": "MicroDuck_sim2sim_20260910_candidates.zip",
+  "bytes": 49835120,
+  "sha256": "51e5c2b77f302467a30892dbd87bd8e0eacc34a3d648f043399e868c45b97407",
+  "bundle_directory": "delivery_v3",
+  "source_commit": "0fe88910dc65185c1922d006ff0dd230fa89a967",
+  "upstream_microduck_rl_commit": "5946fd9cdbc58956424420153e51975af3b30d77",
+  "download_url": null,
+  "availability": "Supplied alongside this research session; copy the local artifact to other machines and verify SHA-256. No hosted release is registered.",
+  "local_path": "results/research_20260910/MicroDuck_sim2sim_20260910_candidates.zip",
+  "models": {
+    "standing": {
+      "filename": "Stand_Godot.onnx",
+      "sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+      "manifest_sha256": "191265c3288825e8e13c667b1b7b0cf0a1ce88714e1545a136be5bff7564452c",
+      "role": "retained_factory"
+    },
+    "walking": {
+      "filename": "Walk_Godot.onnx",
+      "sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+      "manifest_sha256": "bb0dee5657430fb682c4b9948d4418c81613144fff34b178149f462e37832a89",
+      "role": "distilled_and_adapted_with_native_keyboard_training"
+    },
+    "sitstand": {
+      "filename": "Sitstand_Godot.onnx",
+      "sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+      "manifest_sha256": "8fd27e5a03ceb60602adae52f265b7fe1022bcfc2a323ba1735369683ff78c58",
+      "role": "retained_previous"
+    },
+    "ground_pick": {
+      "filename": "GroundPick_Godot.onnx",
+      "sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "manifest_sha256": "c7bbe0e8198d877f9adfa48d111c885f15c30dc838a6d05b7172c0967fe65923",
+      "role": "retained_factory"
+    },
+    "kick_left": {
+      "filename": "KickLeft_Godot.onnx",
+      "sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "manifest_sha256": "a3b7a73a56c2e6e1b3e7cb8ef6ba132e283ab22c53796562a2c42eb2f5e2cdd1",
+      "role": "learned_residual"
+    },
+    "kick_right": {
+      "filename": "KickRight_Godot.onnx",
+      "sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "manifest_sha256": "d2e015add54267c967ccf67195aab562e7e1149702805c5849e5e05c7dfa7471",
+      "role": "learned_phase_and_relative_heading_residual_on_adapted_right"
+    },
+    "roulade": {
+      "filename": "Roulade_Godot.onnx",
+      "sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+      "manifest_sha256": "7e46f630b731fe1f6628e956fd6fa73e5bd29e7d882af2930bd3c644ad8f6a5c",
+      "role": "two_neural_experts_with_learned_residual_and_time_input"
+    },
+    "roller": {
+      "filename": "Roller_Godot.onnx",
+      "sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+      "manifest_sha256": "4f3acf33b0889c42847e262a2d938ce9295bb9244c3699629b301998e56625da",
+      "role": "retained_factory"
+    },
+    "roller_crouch": {
+      "filename": "RollerCrouch_Godot.onnx",
+      "sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+      "manifest_sha256": "388ddc4af52add78a53954b815158085922074d94ace2d26bee7c78e18e5a664",
+      "role": "retained_factory"
+    }
+  },
+  "evidence": {
+    "unchanged_eight_skills_seed_range": [
+      2000,
+      2029
+    ],
+    "new_right_and_continuous_seed_range": [
+      3000,
+      3029
+    ],
+    "right_successes": 60,
+    "right_episodes": 60,
+    "continuous_successes": {
+      "ground_pick": 30,
+      "kick_left": 30,
+      "kick_right": 30,
+      "roulade": 28
+    },
+    "ordinary_falls": 0,
+    "full_mujoco_motion_quality_achieved": false
+  },
+  "limitations": [
+    "Weights, training checkpoints and rollouts are not tracked in Git.",
+    "The candidate zip includes selected weights and summaries. The companion reference zip contains original factory and previous Godot ONNX; full training checkpoints and raw traces remain in the local archive.",
+    "Frozen metadata contains historical absolute paths; use sim2sim.research.bundle to resolve a relocated copy."
+  ],
+  "reference_package": {
+    "artifact": "MicroDuck_sim2sim_20260910_baselines.zip",
+    "local_path": "results/research_20260910/MicroDuck_sim2sim_20260910_baselines.zip",
+    "bytes": 13246248,
+    "sha256": "79034240f7eba17d5db9a92398de7a458e9e58125f1ee5d05128f6872ad9fb58",
+    "files": {
+      "GroundPick_Godot.onnx": "d4e6439fa195299f885b5e3a571df23ea3c83f72972d0a2644135cfc3ea318af",
+      "KickLeft_Godot.onnx": "be66551af62850e029449580587f962aba88f25e4a087df44e29827fa1499144",
+      "KickRight_Godot.onnx": "7c10503a68295d49fc25d767d57a2cc2d63d4049663c515be0407e69a6d5b9c2",
+      "RollerCrouch_Godot.onnx": "80eabe28e28649ff8d888852203b7f25373231b23e0e331c1934db6949a12d0e",
+      "Roller_Godot.onnx": "5cc3bc77a4f29f98b94776b64c9c599662c94359e0446c44504e97af106dd1ae",
+      "Roulade_Godot.onnx": "c0d0c29dfe38a304614fdb7fe9200e2bcde67a0f90ba8d02851f01c7692affb8",
+      "Sitstand_Godot.onnx": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+      "Stand_Godot.onnx": "8f684675f09f0a8f95a15f146756deb2409113071f4be6574408dfb9d7fb17c3",
+      "Walk_Godot.onnx": "63edd66c12854f5b78faad5555ec8749c613a547393c1cb84785fe880f30b7e6",
+      "alpha_ground_pick.onnx": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "alpha_sitstand.onnx": "c6c40e35e726eabd803d633e090d112994f469921152448367953fbaf9799bc8",
+      "alpha_stand.onnx": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+      "alpha_walking.onnx": "e36332d383997d51401897734cd3e79cf5038406feddb18b4d57ecfb141daa6c",
+      "ball_kick_left.onnx": "d6928284dccd3dd61e08bf2f760effa74309fbefd97b2b31afb2a60f526d196a",
+      "ball_kick_right.onnx": "147a32c388c6b19111b3ac3b550a9a6dc8b8bf267118af4d8c3712522eedb5af",
+      "roller.onnx": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+      "roller_crouch.onnx": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+      "roulade.onnx": "3d60da08fc13f29c1b57f41977aa898132c0d60042100149d8e775affcbca32b"
+    },
+    "download_url": null,
+    "availability": "Companion ZIP supplied locally alongside the candidate package; contains nine original factory and nine previous Godot policies."
+  }
+}

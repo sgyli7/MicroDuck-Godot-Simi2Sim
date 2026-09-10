@@ -1,0 +1,83 @@
+{
+  "checked_unix": 1789019143.92036,
+  "tested_parent_commit": "924adf73f7d92ccb5ce9afe9ddfd0b95fc45ea31",
+  "scope": "Isolated checkout with current committed visual changes plus only the proposed research closeout files; externally supplied MJCF and ONNX inputs.",
+  "tests": {
+    "run": 195,
+    "passed": 195,
+    "skipped": 0,
+    "failed": 0
+  },
+  "initial_minimal_policy_run": {
+    "run": 194,
+    "passed": 192,
+    "skipped": 2,
+    "reason": "Optional historical local-ppo/checkpoint pair was absent from the first external policy directory; final run supplied it explicitly."
+  },
+  "preparation": {
+    "generated_scenes": 4,
+    "snapshotted_policies": 18,
+    "isolated_session": true
+  },
+  "training": {
+    "residual_iterations": 2,
+    "anchor_iterations": 2,
+    "anchor_actor_updated": true,
+    "source_references_collected": true,
+    "export_parity_passed": true
+  },
+  "relocated_bundle": {
+    "models": 9,
+    "manifests": 9,
+    "original_bank_paths_ignored": true,
+    "original_metadata_not_rewritten": true,
+    "right_recheck": {
+      "seeds": [
+        5000,
+        5001,
+        5002
+      ],
+      "episodes": 6,
+      "successes": 6,
+      "errors": 0
+    },
+    "continuous_seed": 5000,
+    "continuous_successes": {
+      "ground_pick": true,
+      "kick_left": true,
+      "roulade": true,
+      "kick_right": true
+    },
+    "ordinary_falls": []
+  },
+  "full_holdout_smoke": {
+    "seed": 5001,
+    "suites": 29,
+    "physical_episodes": 158,
+    "engine_errors": 0,
+    "continuous_sequences": 1,
+    "keyboard_sequences": 6,
+    "new_output_directory": true,
+    "not_a_new_quality_benchmark": true
+  },
+  "sealed_artifact_files_verified": {
+    "phase1_seal.json": 272,
+    "final_selection_seal.json": 24,
+    "late_selection_seal.json": 24
+  },
+  "source_files_sha256": {
+    "src/sim2sim/research/setup.py": "d63908b6dabedbda157cef574a8d292f1294e61739bfcc025dc53cbc971cacc9",
+    "src/sim2sim/research/bundle.py": "377511159c8edcb3254c7d7d80cee860001e67adf3f217c03b9f8e59fbf7ba71",
+    "src/sim2sim/research/tasks.py": "6233c10be5b7ef8d2e4f5581df7a62a802e30fbcf063a34780b82567f7c323cb",
+    "src/sim2sim/research/train.py": "77357bb8402c8fc545cfb92c154a413abb32325829eb76c9d2e7b911d076437f",
+    "src/sim2sim/research/holdout.py": "00059fe52e666f5f27c3a61f8168b3bb0303b274ce299910e2ea971529a8defb",
+    "src/sim2sim/research/play_sequence.py": "08807c90711d6069dd30385ef92c93260002893ad90c2ec3ffeba37a0ad5dd81",
+    "tests/test_research_setup.py": "38d17434f518472479881e7868c28ee137109753e52121f0133848267223ac2d",
+    "tests/test_eval_walk.py": "ec6669eefd31305e09f2d75e69ca097f261554633283ad8e3d802f524bb9bff1",
+    "tests/test_export.py": "523cf93b6acebfb4ce47e24c8c9fa2d33d659166b3fe275cd83edaebb615e63a",
+    "tests/test_onnx_import.py": "bb0f2bbb1901f06e7177541fc9d0775df0fb62605839f2274ed271246d503924",
+    "tests/test_policy_bundle.py": "a8086a2f1c22c374f0a5fc21689314a06f6161edd6db499468d8e94b4b0c842a",
+    "tests/test_train_runner.py": "374cfb9f9eac36ae80c9d97c59b75d59677baa986d974cc77e599de809fef571"
+  },
+  "local_logs": "results/git_closeout_20260910/"
+}

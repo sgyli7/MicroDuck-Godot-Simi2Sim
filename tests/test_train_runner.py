@@ -8,12 +8,12 @@ import unittest
 from pathlib import Path
 
 from sim2sim.godot_proc import godot_bin
-from sim2sim.paths import sim2sim_root
+from sim2sim.paths import policies_dir, sim2sim_root
 
 ROOT = sim2sim_root()
 YAML = ROOT / "configs/walk_godot.yaml"
 CFG_PATH = ROOT / "robots/microduck.json"
-ALPHA_ONNX = Path("/home/ethan/Projects/MicroDuck/policies/alpha_walking.onnx")
+ALPHA_ONNX = policies_dir() / "alpha_walking.onnx"
 
 
 def _train_extra_installed() -> bool:

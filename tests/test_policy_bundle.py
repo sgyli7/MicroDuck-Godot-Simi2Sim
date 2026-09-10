@@ -23,10 +23,7 @@ from sim2sim.policy import (
 
 
 def _walking_onnx() -> Path:
-    p = policies_dir() / "alpha_walking.onnx"
-    if not p.is_file():
-        p = Path("/home/ethan/Projects/MicroDuck/policies/alpha_walking.onnx")
-    return p
+    return policies_dir() / "alpha_walking.onnx"
 
 
 class TestPolicyBundle(unittest.TestCase):

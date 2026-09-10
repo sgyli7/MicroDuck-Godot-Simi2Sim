@@ -73,7 +73,8 @@ def run(paths,out,seed=100,scene_robot='microduck_ball'):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('bank',type=Path);p.add_argument('--out',type=Path,required=True);p.add_argument('--seed',type=int,default=100)
-    a=p.parse_args();r=run(json.loads(a.bank.read_text()),a.out,a.seed)
+    p.add_argument('--scene-robot',choices=['microduck_ball','microduck_ball_stand_fix'],default='microduck_ball_stand_fix')
+    a=p.parse_args();r=run(json.loads(a.bank.read_text()),a.out,a.seed,a.scene_robot)
     for s in r['segments']:print(s['label'],s['policies'],s['metrics'])
 
 

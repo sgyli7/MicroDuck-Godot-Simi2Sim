@@ -13,8 +13,6 @@ from sim2sim.paths import policies_dir, sim2sim_root
 from sim2sim.play_input import TwistLimits
 
 ALPHA_ONNX = policies_dir() / "alpha_walking.onnx"
-if not ALPHA_ONNX.is_file():
-    ALPHA_ONNX = Path("/home/ethan/Projects/MicroDuck/policies/alpha_walking.onnx")
 
 
 def _godot_ready() -> bool:

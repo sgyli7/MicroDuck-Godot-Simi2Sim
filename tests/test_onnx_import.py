@@ -3,14 +3,15 @@
 from __future__ import annotations
 
 import unittest
+import os
 from pathlib import Path
 
-ALPHA_ONNX = Path("/home/ethan/Projects/MicroDuck/policies/alpha_walking.onnx")
-LOCAL_ONNX = Path("/home/ethan/Projects/MicroDuck/policies/local-ppo/local_velocity_walk_run_idle.onnx")
-RSL_CKPT = Path(
-    "/home/ethan/Projects/microduck_rl/logs/rsl_rl/local_ppo_velocity/"
-    "2026-09-02_01-47-57_local_walk_run_idle/model_2999.pt"
-)
+from sim2sim.paths import microduck_rl, policies_dir
+
+ALPHA_ONNX = policies_dir() / "alpha_walking.onnx"
+LOCAL_ONNX = policies_dir() / "local-ppo/local_velocity_walk_run_idle.onnx"
+RSL_CKPT = Path(os.environ.get("SIM2SIM_TEST_CHECKPOINT") or
+    microduck_rl() / "logs/rsl_rl/local_ppo_velocity/2026-09-02_01-47-57_local_walk_run_idle/model_2999.pt")
 
 _EXPECTED_ACTOR_KEYS = {
     "obs_normalizer._mean",
@@ -90,7 +91,7 @@ class TestOnnxImportAlpha(unittest.TestCase):
     def test_zero_variance_std_is_clamped(self) -> None:
         from sim2sim.train.onnx_import import PARITY_FAIL_ABS, build_actor_state_dict, parse_mlp_onnx, verify_parity
 
-        sit = Path("/home/ethan/Projects/MicroDuck/policies/alpha_sitstand.onnx")
+        sit = policies_dir() / "alpha_sitstand.onnx"
         if not sit.is_file():
             self.skipTest("alpha_sitstand.onnx missing")
         rec = parse_mlp_onnx(sit)

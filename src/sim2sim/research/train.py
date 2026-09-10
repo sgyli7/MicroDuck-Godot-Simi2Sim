@@ -10,6 +10,7 @@ from .models import Policy,Critic,export_policy,parity
 from .rewards import Objective,EXTRA_DIM
 from .evaluate import run_suite,PROTOCOL_VERSION
 from .mirror import OBS_PERM,JOINT_PERM,JOINT_SIGN,observation_sign
+from .setup import read_session
 from sim2sim.obs import build_obs
 
 def seed_all(seed):
@@ -21,13 +22,19 @@ def reference_observations(task):
     Locomotion references retain stable moving trajectories and idle explicitly;
     no claim that their command tracking satisfies the stricter new protocol.
     """
-    root=SESSION/"evaluation_v4"/task.name/"factory_mujoco"
+    root=SESSION/"references"/task.name
+    if not (root/"summary.json").is_file():
+        root=SESSION/"evaluation_v4"/task.name/"factory_mujoco"
+    if not (root/"summary.json").is_file():
+        raise FileNotFoundError('Prepare anchor observations with: python -m sim2sim.research.setup '
+                                f'references --skill {task.name}')
     summary=json.loads((root/"summary.json").read_text())
     handoff=SESSION/"evaluation_v4_standing"/task.name/"factory_mujoco/summary.json"
     if not handoff.exists():handoff=SESSION/"handoff_probe"/task.name/"factory_mujoco/summary.json"
     if handoff.exists():summary["episodes"].extend(json.loads(handoff.read_text())["episodes"])
     selected=[]
     for e in summary["episodes"]:
+        if 'error' in e:continue
         ok=e["success"]
         if task.name in ("standing","walking","roller"):
             ok=not e["fell"] and (e["condition"] in ("default","idle","game_seq") or abs(e["mean_vx"])>.05 or abs(e["mean_wz"])>.1)
@@ -144,7 +151,7 @@ def run(args):
         recorded_gate=resume_checkpoint['config'].get('time_gate','')
         if not args.time_gate:args.time_gate=recorded_gate
         if args.time_gate!=recorded_gate:raise ValueError('Resume cannot change the actor time gate')
-    task=TASKS[args.skill];session=json.loads((SESSION/"session.json").read_text())
+    task=TASKS[args.skill];session=read_session()
     evaluate_skill=run_suite;protocol=PROTOCOL_VERSION
     evaluation_kwargs={} if args.eval_scene_robot is None else {'scene_robot':args.eval_scene_robot}
     if args.roller_contract:

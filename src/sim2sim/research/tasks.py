@@ -1,12 +1,14 @@
 """Shared task contracts. Evaluation tolerances live separately in evaluate.py."""
 from dataclasses import dataclass
+import os
 from pathlib import Path
 import numpy as np
 
 from sim2sim.paths import sim2sim_root
 from sim2sim.train.rewards import sit_target_q
 
-SESSION = sim2sim_root() / "results/research_20260910"
+SESSION = Path(os.environ.get("SIM2SIM_RESEARCH_DIR") or
+               sim2sim_root() / "results/research_20260910").expanduser().resolve()
 BASELINE = SESSION / "baseline"
 DT = 0.02
 

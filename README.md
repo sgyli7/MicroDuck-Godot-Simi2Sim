@@ -6,6 +6,11 @@ Python 是唯一控制器。编译后的 `MjModel` 是模型真源；ONNX 只在
 
 详细映射、已知不映射项、训练循环和门禁数字见 [SIM2SIM.md](SIM2SIM.md)。
 
+2026-09-10 研究结果与候选模型见 [实验报告](RESEARCH_RESULT_20260910.md)；
+新克隆的场景准备、实验初始化、模型包校验与复测见 [复现说明](REPRODUCING.md)。
+九个 ONNX 通过独立模型包交付，不随 Git clone 下载。
+[HANDOFF.md](HANDOFF.md) 保留此前八技能训练的历史交接，当前方案以研究报告为准。
+
 ## 需要
 
 - Godot **4.7.2**（`godot` 在 `PATH`，或 `export GODOT=...`）
@@ -34,8 +39,8 @@ uv run --no-sync sim2sim-play --walking policies/Walk_Godot.onnx
 uv run --no-sync sim2sim-eval-walk --a "$MICRODUCK_POLICIES/alpha_walking.onnx" --b policies/Walk_Godot.onnx
 uv run --no-sync sim2sim-export --checkpoint path/to/model_k.pt --out policies/Walk_Godot.onnx
 uv run --no-sync sim2sim-bench-godot --workers 1 4 8 16
-./scripts/train_skills_godot.sh          # standing/sit/pick/kick/roulade/roller
-uv run --no-sync sim2sim-eval-skill
+./scripts/train_skills_godot.sh          # 8 技能 continue-train 入口
+# 对齐需求与交接：HANDOFF.md（不要把 sim2sim-eval-skill 当验收）
 ```
 
 之后训练相关命令用 `uv run --no-sync`（或 `./scripts/train_walk_godot.sh`，它 `exec` `.venv/bin/sim2sim-train`，SIGINT 能进 checkpoint）。裸 `uv sync` 会卸掉 `[train]` extra；`./run.sh` 用 `uv sync --inexact` 保住它。不要 `kill` `uv run` 包装进程，信号到不了 Python。
@@ -50,6 +55,7 @@ uv run --no-sync sim2sim-eval-skill
 | `MICRODUCK_RL` | `microduck_rl` 检出路径 |
 | `MICRODUCK_POLICIES` | ONNX 目录 |
 | `GODOT` | Godot 可执行文件，默认 `~/.local/bin/godot` |
+| `SIM2SIM_RESEARCH_DIR` | 新实验目录；先按复现说明初始化，避免使用已结束的旧预算 |
 
 `robots/*.json` 里的路径用 `${MICRODUCK_RL}` / `${MICRODUCK_POLICIES}` / `${SIM2SIM_ROOT}`，不要写死本机绝对路径。
 

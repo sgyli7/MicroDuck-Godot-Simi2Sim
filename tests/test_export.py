@@ -14,8 +14,6 @@ from sim2sim.play_input import TwistLimits
 from sim2sim.policy import PolicyBundle, PolicyShapeError
 
 ALPHA_ONNX = policies_dir() / "alpha_walking.onnx"
-if not ALPHA_ONNX.is_file():
-    ALPHA_ONNX = Path("/home/ethan/Projects/MicroDuck/policies/alpha_walking.onnx")
 
 _ALPHA_META_KEYS = (
     "run_path",
