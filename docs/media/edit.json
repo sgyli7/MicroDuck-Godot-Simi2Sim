@@ -1,164 +1,514 @@
 {
   "source_prefix": "04",
-  "chapters": [
-    {
-      "skill": "standing",
-      "source": "results/showcase/04_standing/raw.mp4",
-      "source_sha256": "cf8ffe8a866e71a073d98f7c05fb24d1b43c03592f219f15309368ed6038a35e",
-      "source_start_seconds": 2.999962,
-      "duration_seconds": 2.999973,
-      "pv_start_seconds": 0.0,
-      "speed": 1.0,
-      "chapter": "SERVICE BAY 01"
-    },
-    {
-      "skill": "walking",
-      "source": "results/showcase/04_walking/raw.mp4",
-      "source_sha256": "821bf30a0f5e06d6fc6be8d798c44d19634ba10152008d909f4311094a70fb5b",
-      "source_start_seconds": 0.9663290000000001,
-      "duration_seconds": 9.99983,
-      "pv_start_seconds": 3.0,
-      "speed": 1.0,
-      "chapter": "WALK / TURN / STOP"
-    },
-    {
-      "skill": "sitstand",
-      "source": "results/showcase/04_sitstand/raw.mp4",
-      "source_sha256": "03fe081d12e50e9eaae02f3a8abddf34d3dbac5261b819bdb03bbd2064e12d77",
-      "source_start_seconds": 0.9666669999999999,
-      "duration_seconds": 11.999879000000002,
-      "pv_start_seconds": 13.0,
-      "speed": 1.0,
-      "chapter": "SIT / STAND"
-    },
-    {
-      "skill": "ground_pick",
-      "source": "results/showcase/04_ground_pick/raw.mp4",
-      "source_sha256": "86ad310dbd895230cd576849fc8020c486026501a8089777e86546e4d98e6f84",
-      "source_start_seconds": 0.96664,
-      "duration_seconds": 3.9999770000000003,
-      "pv_start_seconds": 25.0,
-      "speed": 1.0,
-      "chapter": "GROUND PICK"
-    },
-    {
-      "skill": "kick_left",
-      "source": "results/showcase/04_kick_left/raw.mp4",
-      "source_sha256": "c362caf1e61b223a3df05d6dde25afd72c374684fa31e82abc09067b8b41cb3a",
-      "source_start_seconds": 0.9666440000000001,
-      "duration_seconds": 4.9999400000000005,
-      "pv_start_seconds": 29.0,
-      "speed": 1.0,
-      "chapter": "LEFT KICK"
-    },
-    {
-      "skill": "kick_right",
-      "source": "results/showcase/04_kick_right/raw.mp4",
-      "source_sha256": "035d19cebdc9679bc81d0f65893525765496eb6151fb3822ecce4d9c84ecb776",
-      "source_start_seconds": 0.999988,
-      "duration_seconds": 4.966596,
-      "pv_start_seconds": 34.0,
-      "speed": 1.0,
-      "chapter": "RIGHT KICK"
-    },
-    {
-      "skill": "roulade",
-      "source": "results/showcase/04_roulade/raw.mp4",
-      "source_sha256": "6ff81bb4063056668c908803071954d19b14c4ffe28d64e91d7e7016883ea52b",
-      "source_start_seconds": 0.96666,
-      "duration_seconds": 5.000115999999999,
-      "pv_start_seconds": 38.96666666666667,
-      "speed": 1.0,
-      "chapter": "FORWARD ROLL"
-    },
-    {
-      "skill": "roller",
-      "source": "results/showcase/04_roller/raw.mp4",
-      "source_sha256": "981ca08a4f7594bf0f273c5cb92df3a254132ce532ee331c9e8d878ccdf7af2d",
-      "source_start_seconds": 0.966909,
-      "duration_seconds": 9.999989,
-      "pv_start_seconds": 43.96666666666667,
-      "speed": 1.0,
-      "chapter": "ROLLER / WORK IN PROGRESS"
-    },
-    {
-      "skill": "roller_crouch",
-      "source": "results/showcase/04_roller_crouch/raw.mp4",
-      "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
-      "source_start_seconds": 0.966619,
-      "duration_seconds": 4.999986000000001,
-      "pv_start_seconds": 53.96666666666667,
-      "speed": 1.0,
-      "chapter": "CROUCH / GLIDE / RISE"
-    }
-  ],
-  "gif_excerpts": {
-    "standing": [
-      [
-        0,
-        2.5
-      ]
+  "cuts": {
+    "pv_short": [
+      {
+        "skill": "roulade",
+        "source": "results/showcase/04_roulade/raw.mp4",
+        "source_sha256": "6ff81bb4063056668c908803071954d19b14c4ffe28d64e91d7e7016883ea52b",
+        "policy_start_seconds": 0.35,
+        "policy_end_seconds": 3.85,
+        "source_start_seconds": 1.33333,
+        "duration_seconds": 3.500038,
+        "output_start_seconds": 0.0,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 3.5
+      },
+      {
+        "skill": "walking",
+        "source": "results/showcase/04_walking/raw.mp4",
+        "source_sha256": "821bf30a0f5e06d6fc6be8d798c44d19634ba10152008d909f4311094a70fb5b",
+        "policy_start_seconds": 2.55,
+        "policy_end_seconds": 4.1,
+        "source_start_seconds": 3.5329479999999998,
+        "duration_seconds": 1.5666310000000006,
+        "output_start_seconds": 3.5,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 1.5666666666666667
+      },
+      {
+        "skill": "walking",
+        "source": "results/showcase/04_walking/raw.mp4",
+        "source_sha256": "821bf30a0f5e06d6fc6be8d798c44d19634ba10152008d909f4311094a70fb5b",
+        "policy_start_seconds": 5.1,
+        "policy_end_seconds": 6.6,
+        "source_start_seconds": 6.099589,
+        "duration_seconds": 1.4999850000000006,
+        "output_start_seconds": 5.066666666666666,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 1.5
+      },
+      {
+        "skill": "kick_left",
+        "source": "results/showcase/04_kick_left/raw.mp4",
+        "source_sha256": "c362caf1e61b223a3df05d6dde25afd72c374684fa31e82abc09067b8b41cb3a",
+        "policy_start_seconds": -0.1,
+        "policy_end_seconds": 1.0,
+        "source_start_seconds": 0.866611,
+        "duration_seconds": 1.133359,
+        "output_start_seconds": 6.566666666666666,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.1333333333333333
+      },
+      {
+        "skill": "kick_right",
+        "source": "results/showcase/04_kick_right/raw.mp4",
+        "source_sha256": "035d19cebdc9679bc81d0f65893525765496eb6151fb3822ecce4d9c84ecb776",
+        "policy_start_seconds": -0.1,
+        "policy_end_seconds": 1.0,
+        "source_start_seconds": 0.900594,
+        "duration_seconds": 1.099529,
+        "output_start_seconds": 7.699999999999999,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.0666666666666667
+      },
+      {
+        "skill": "sitstand",
+        "source": "results/showcase/04_sitstand/raw.mp4",
+        "source_sha256": "03fe081d12e50e9eaae02f3a8abddf34d3dbac5261b819bdb03bbd2064e12d77",
+        "policy_start_seconds": 0,
+        "policy_end_seconds": 0.95,
+        "source_start_seconds": 0.9666669999999999,
+        "duration_seconds": 0.9666840000000001,
+        "output_start_seconds": 8.766666666666666,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 0.9666666666666667
+      },
+      {
+        "skill": "sitstand",
+        "source": "results/showcase/04_sitstand/raw.mp4",
+        "source_sha256": "03fe081d12e50e9eaae02f3a8abddf34d3dbac5261b819bdb03bbd2064e12d77",
+        "policy_start_seconds": 5.9,
+        "policy_end_seconds": 7.2,
+        "source_start_seconds": 6.899952999999999,
+        "duration_seconds": 1.3000180000000023,
+        "output_start_seconds": 9.733333333333333,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 1.3
+      },
+      {
+        "skill": "ground_pick",
+        "source": "results/showcase/04_ground_pick/raw.mp4",
+        "source_sha256": "86ad310dbd895230cd576849fc8020c486026501a8089777e86546e4d98e6f84",
+        "policy_start_seconds": 0.25,
+        "policy_end_seconds": 2.9,
+        "source_start_seconds": 1.233421,
+        "duration_seconds": 2.6665469999999996,
+        "output_start_seconds": 11.033333333333333,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 2.6333333333333333
+      },
+      {
+        "skill": "roller",
+        "source": "results/showcase/04_roller/raw.mp4",
+        "source_sha256": "981ca08a4f7594bf0f273c5cb92df3a254132ce532ee331c9e8d878ccdf7af2d",
+        "policy_start_seconds": 1.0,
+        "policy_end_seconds": 2.4,
+        "source_start_seconds": 1.96747,
+        "duration_seconds": 1.3992740000000001,
+        "output_start_seconds": 13.666666666666666,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.3666666666666667
+      },
+      {
+        "skill": "roller",
+        "source": "results/showcase/04_roller/raw.mp4",
+        "source_sha256": "981ca08a4f7594bf0f273c5cb92df3a254132ce532ee331c9e8d878ccdf7af2d",
+        "policy_start_seconds": 7.8,
+        "policy_end_seconds": 9.2,
+        "source_start_seconds": 8.767840999999999,
+        "duration_seconds": 1.3987440000000007,
+        "output_start_seconds": 15.033333333333333,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.3666666666666667
+      },
+      {
+        "skill": "roller_crouch",
+        "source": "results/showcase/04_roller_crouch/raw.mp4",
+        "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
+        "policy_start_seconds": 0,
+        "policy_end_seconds": 0.85,
+        "source_start_seconds": 0.966619,
+        "duration_seconds": 0.866928,
+        "output_start_seconds": 16.4,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.8666666666666667
+      },
+      {
+        "skill": "roller_crouch",
+        "source": "results/showcase/04_roller_crouch/raw.mp4",
+        "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
+        "policy_start_seconds": 2.25,
+        "policy_end_seconds": 3.55,
+        "source_start_seconds": 3.233422,
+        "duration_seconds": 1.2998259999999995,
+        "output_start_seconds": 17.266666666666666,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.2666666666666666
+      },
+      {
+        "skill": "roller_crouch",
+        "source": "results/showcase/04_roller_crouch/raw.mp4",
+        "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
+        "policy_start_seconds": 3.7,
+        "policy_end_seconds": 4.6,
+        "source_start_seconds": 4.699929,
+        "duration_seconds": 0.9000320000000004,
+        "output_start_seconds": 18.53333333333333,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.9
+      },
+      {
+        "skill": "standing",
+        "source": "results/showcase/04_standing/raw.mp4",
+        "source_sha256": "cf8ffe8a866e71a073d98f7c05fb24d1b43c03592f219f15309368ed6038a35e",
+        "policy_start_seconds": 0.5,
+        "policy_end_seconds": 1.1,
+        "source_start_seconds": 1.499981,
+        "duration_seconds": 0.5999380000000003,
+        "output_start_seconds": 19.43333333333333,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.6
+      }
     ],
-    "walking": [
-      [
-        2.5,
-        6.8
-      ]
+    "preview_short": [
+      {
+        "skill": "roulade",
+        "source": "results/showcase/04_roulade/raw.mp4",
+        "source_sha256": "6ff81bb4063056668c908803071954d19b14c4ffe28d64e91d7e7016883ea52b",
+        "policy_start_seconds": 0.55,
+        "policy_end_seconds": 3.75,
+        "source_start_seconds": 1.5333189999999999,
+        "duration_seconds": 3.199999000000001,
+        "output_start_seconds": 0.0,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 3.2
+      },
+      {
+        "skill": "walking",
+        "source": "results/showcase/04_walking/raw.mp4",
+        "source_sha256": "821bf30a0f5e06d6fc6be8d798c44d19634ba10152008d909f4311094a70fb5b",
+        "policy_start_seconds": 2.6,
+        "policy_end_seconds": 4.1,
+        "source_start_seconds": 3.599931,
+        "duration_seconds": 1.499648,
+        "output_start_seconds": 3.2,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 1.5
+      },
+      {
+        "skill": "kick_left",
+        "source": "results/showcase/04_kick_left/raw.mp4",
+        "source_sha256": "c362caf1e61b223a3df05d6dde25afd72c374684fa31e82abc09067b8b41cb3a",
+        "policy_start_seconds": -0.08,
+        "policy_end_seconds": 0.72,
+        "source_start_seconds": 0.900029,
+        "duration_seconds": 0.7999660000000002,
+        "output_start_seconds": 4.7,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.8
+      },
+      {
+        "skill": "kick_right",
+        "source": "results/showcase/04_kick_right/raw.mp4",
+        "source_sha256": "035d19cebdc9679bc81d0f65893525765496eb6151fb3822ecce4d9c84ecb776",
+        "policy_start_seconds": -0.08,
+        "policy_end_seconds": 0.72,
+        "source_start_seconds": 0.900594,
+        "duration_seconds": 0.799583,
+        "output_start_seconds": 5.5,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.7666666666666667
+      },
+      {
+        "skill": "sitstand",
+        "source": "results/showcase/04_sitstand/raw.mp4",
+        "source_sha256": "03fe081d12e50e9eaae02f3a8abddf34d3dbac5261b819bdb03bbd2064e12d77",
+        "policy_start_seconds": 0,
+        "policy_end_seconds": 0.6,
+        "source_start_seconds": 0.9666669999999999,
+        "duration_seconds": 0.6333330000000001,
+        "output_start_seconds": 6.266666666666667,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 0.6333333333333333
+      },
+      {
+        "skill": "sitstand",
+        "source": "results/showcase/04_sitstand/raw.mp4",
+        "source_sha256": "03fe081d12e50e9eaae02f3a8abddf34d3dbac5261b819bdb03bbd2064e12d77",
+        "policy_start_seconds": 5.9,
+        "policy_end_seconds": 6.6,
+        "source_start_seconds": 6.899952999999999,
+        "duration_seconds": 0.6999480000000009,
+        "output_start_seconds": 6.9,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 0.7
+      },
+      {
+        "skill": "ground_pick",
+        "source": "results/showcase/04_ground_pick/raw.mp4",
+        "source_sha256": "86ad310dbd895230cd576849fc8020c486026501a8089777e86546e4d98e6f84",
+        "policy_start_seconds": 0.35,
+        "policy_end_seconds": 1.15,
+        "source_start_seconds": 1.333374,
+        "duration_seconds": 0.7999049999999999,
+        "output_start_seconds": 7.6000000000000005,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 0.7666666666666667
+      },
+      {
+        "skill": "ground_pick",
+        "source": "results/showcase/04_ground_pick/raw.mp4",
+        "source_sha256": "86ad310dbd895230cd576849fc8020c486026501a8089777e86546e4d98e6f84",
+        "policy_start_seconds": 2.1,
+        "policy_end_seconds": 2.8,
+        "source_start_seconds": 3.099938,
+        "duration_seconds": 0.6999419999999996,
+        "output_start_seconds": 8.366666666666667,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 0.7
+      },
+      {
+        "skill": "roller",
+        "source": "results/showcase/04_roller/raw.mp4",
+        "source_sha256": "981ca08a4f7594bf0f273c5cb92df3a254132ce532ee331c9e8d878ccdf7af2d",
+        "policy_start_seconds": 1.1,
+        "policy_end_seconds": 1.9,
+        "source_start_seconds": 2.06712,
+        "duration_seconds": 0.8001589999999998,
+        "output_start_seconds": 9.066666666666666,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.8
+      },
+      {
+        "skill": "roller",
+        "source": "results/showcase/04_roller/raw.mp4",
+        "source_sha256": "981ca08a4f7594bf0f273c5cb92df3a254132ce532ee331c9e8d878ccdf7af2d",
+        "policy_start_seconds": 8.2,
+        "policy_end_seconds": 8.8,
+        "source_start_seconds": 9.166576,
+        "duration_seconds": 0.6005970000000005,
+        "output_start_seconds": 9.866666666666667,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.6
+      },
+      {
+        "skill": "roller_crouch",
+        "source": "results/showcase/04_roller_crouch/raw.mp4",
+        "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
+        "policy_start_seconds": 0.1,
+        "policy_end_seconds": 0.8,
+        "source_start_seconds": 1.06667,
+        "duration_seconds": 0.7332690000000002,
+        "output_start_seconds": 10.466666666666667,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.7333333333333333
+      },
+      {
+        "skill": "roller_crouch",
+        "source": "results/showcase/04_roller_crouch/raw.mp4",
+        "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
+        "policy_start_seconds": 2.5,
+        "policy_end_seconds": 3.7,
+        "source_start_seconds": 3.499998,
+        "duration_seconds": 1.1999309999999999,
+        "output_start_seconds": 11.2,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.2
+      },
+      {
+        "skill": "standing",
+        "source": "results/showcase/04_standing/raw.mp4",
+        "source_sha256": "cf8ffe8a866e71a073d98f7c05fb24d1b43c03592f219f15309368ed6038a35e",
+        "policy_start_seconds": 0.5,
+        "policy_end_seconds": 0.9,
+        "source_start_seconds": 1.499981,
+        "duration_seconds": 0.39993999999999996,
+        "output_start_seconds": 12.399999999999999,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.4
+      }
     ],
-    "sitstand": [
-      [
-        0,
-        1.5
-      ],
-      [
-        5.8,
-        7.8
-      ]
+    "postures_short": [
+      {
+        "skill": "sitstand",
+        "source": "results/showcase/04_sitstand/raw.mp4",
+        "source_sha256": "03fe081d12e50e9eaae02f3a8abddf34d3dbac5261b819bdb03bbd2064e12d77",
+        "policy_start_seconds": 0,
+        "policy_end_seconds": 0.95,
+        "source_start_seconds": 0.9666669999999999,
+        "duration_seconds": 0.9666840000000001,
+        "output_start_seconds": 0.0,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 0.9666666666666667
+      },
+      {
+        "skill": "sitstand",
+        "source": "results/showcase/04_sitstand/raw.mp4",
+        "source_sha256": "03fe081d12e50e9eaae02f3a8abddf34d3dbac5261b819bdb03bbd2064e12d77",
+        "policy_start_seconds": 5.9,
+        "policy_end_seconds": 7.2,
+        "source_start_seconds": 6.899952999999999,
+        "duration_seconds": 1.3000180000000023,
+        "output_start_seconds": 0.9666666666666667,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 1.3
+      },
+      {
+        "skill": "ground_pick",
+        "source": "results/showcase/04_ground_pick/raw.mp4",
+        "source_sha256": "86ad310dbd895230cd576849fc8020c486026501a8089777e86546e4d98e6f84",
+        "policy_start_seconds": 0.25,
+        "policy_end_seconds": 2.9,
+        "source_start_seconds": 1.233421,
+        "duration_seconds": 2.6665469999999996,
+        "output_start_seconds": 2.2666666666666666,
+        "speed": 1.0,
+        "center_crop": false,
+        "encoded_duration_seconds": 2.6333333333333333
+      }
     ],
-    "ground_pick": [
-      [
-        0,
-        3.9
-      ]
+    "kicks-and-roll_short": [
+      {
+        "skill": "roulade",
+        "source": "results/showcase/04_roulade/raw.mp4",
+        "source_sha256": "6ff81bb4063056668c908803071954d19b14c4ffe28d64e91d7e7016883ea52b",
+        "policy_start_seconds": 0.35,
+        "policy_end_seconds": 3.85,
+        "source_start_seconds": 1.33333,
+        "duration_seconds": 3.500038,
+        "output_start_seconds": 0.0,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 3.5
+      },
+      {
+        "skill": "kick_left",
+        "source": "results/showcase/04_kick_left/raw.mp4",
+        "source_sha256": "c362caf1e61b223a3df05d6dde25afd72c374684fa31e82abc09067b8b41cb3a",
+        "policy_start_seconds": -0.1,
+        "policy_end_seconds": 1.0,
+        "source_start_seconds": 0.866611,
+        "duration_seconds": 1.133359,
+        "output_start_seconds": 3.5,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.1333333333333333
+      },
+      {
+        "skill": "kick_right",
+        "source": "results/showcase/04_kick_right/raw.mp4",
+        "source_sha256": "035d19cebdc9679bc81d0f65893525765496eb6151fb3822ecce4d9c84ecb776",
+        "policy_start_seconds": -0.1,
+        "policy_end_seconds": 1.0,
+        "source_start_seconds": 0.900594,
+        "duration_seconds": 1.099529,
+        "output_start_seconds": 4.633333333333333,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.0666666666666667
+      }
     ],
-    "kick_left": [
-      [
-        0,
-        2.4
-      ]
-    ],
-    "kick_right": [
-      [
-        0,
-        2.4
-      ]
-    ],
-    "roulade": [
-      [
-        0,
-        4.9
-      ]
-    ],
-    "roller": [
-      [
-        0.1,
-        1.6
-      ],
-      [
-        6.5,
-        9.8
-      ]
-    ],
-    "roller_crouch": [
-      [
-        0,
-        4.9
-      ]
+    "wheels_short": [
+      {
+        "skill": "roller",
+        "source": "results/showcase/04_roller/raw.mp4",
+        "source_sha256": "981ca08a4f7594bf0f273c5cb92df3a254132ce532ee331c9e8d878ccdf7af2d",
+        "policy_start_seconds": 1.0,
+        "policy_end_seconds": 2.4,
+        "source_start_seconds": 1.96747,
+        "duration_seconds": 1.3992740000000001,
+        "output_start_seconds": 0.0,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.3666666666666667
+      },
+      {
+        "skill": "roller",
+        "source": "results/showcase/04_roller/raw.mp4",
+        "source_sha256": "981ca08a4f7594bf0f273c5cb92df3a254132ce532ee331c9e8d878ccdf7af2d",
+        "policy_start_seconds": 7.8,
+        "policy_end_seconds": 9.2,
+        "source_start_seconds": 8.767840999999999,
+        "duration_seconds": 1.3987440000000007,
+        "output_start_seconds": 1.3666666666666667,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.3666666666666667
+      },
+      {
+        "skill": "roller_crouch",
+        "source": "results/showcase/04_roller_crouch/raw.mp4",
+        "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
+        "policy_start_seconds": 0,
+        "policy_end_seconds": 0.85,
+        "source_start_seconds": 0.966619,
+        "duration_seconds": 0.866928,
+        "output_start_seconds": 2.7333333333333334,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.8666666666666667
+      },
+      {
+        "skill": "roller_crouch",
+        "source": "results/showcase/04_roller_crouch/raw.mp4",
+        "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
+        "policy_start_seconds": 2.25,
+        "policy_end_seconds": 3.55,
+        "source_start_seconds": 3.233422,
+        "duration_seconds": 1.2998259999999995,
+        "output_start_seconds": 3.6,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 1.2666666666666666
+      },
+      {
+        "skill": "roller_crouch",
+        "source": "results/showcase/04_roller_crouch/raw.mp4",
+        "source_sha256": "2ea8965a9db5493d95af8e53b9839b0250b677ea2e67a30cd4a229652bb970ee",
+        "policy_start_seconds": 3.7,
+        "policy_end_seconds": 4.6,
+        "source_start_seconds": 4.699929,
+        "duration_seconds": 0.9000320000000004,
+        "output_start_seconds": 4.866666666666667,
+        "speed": 1.0,
+        "center_crop": true,
+        "encoded_duration_seconds": 0.9
+      }
     ]
   },
   "fps_mp4": 30,
-  "silent": true,
-  "note": "Real captured frames at wall-clock speed. Cuts, letterbox graphics and captions only. GIF cuts shorten holds; MP4 retains full action durations except standing introduction.",
   "gif_fps_target": 12,
-  "gif_leading_trim_seconds": 0.2
+  "silent": true,
+  "revision": "action-first-under-15-seconds",
+  "note": "Real captured frames at original wall-clock speed. Hard cuts remove holds; selected wide shots are cropped for action readability. Complete cycles remain in the raw evidence archive."
 }

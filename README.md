@@ -2,9 +2,11 @@
 
 **小小身体，自主行动。** 在莫比乌斯式维修站里，观看九个 ONNX 策略驱动的真实机器人动作。
 
-[![MicroDuck 维修站：九项真实策略演示](docs/media/microduck-service-bay.gif)](https://github.com/sgyli7/MicroDuck-Godot-Simi2Sim/releases/tag/atelier-20260910)
+[![MicroDuck：13 秒动作速览，点击播放](docs/media/microduck-service-bay-15s.gif)](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/microduck-service-bay-15s.gif)
 
-**[▶ 1080p PV 与完整原片](https://github.com/sgyli7/MicroDuck-Godot-Simi2Sim/releases/tag/atelier-20260910)** · **[启动维修站](docs/showcase.md#运行最新模型的维修站)** · **[训练结果](RESEARCH_RESULT_20260910.md)**
+**[▶ 20 秒 1080p PV 与完整原片](https://github.com/sgyli7/MicroDuck-Godot-Simi2Sim/releases/tag/atelier-20260910-short)** · **[启动维修站](docs/showcase.md#运行最新模型的维修站)** · **[训练结果](RESEARCH_RESULT_20260910.md)**
+
+动图约 13 秒，开场直接前滚；若 GitHub 暂停动图，点图可直接播放。
 
 站立、行走、坐起、低头拾取、左右踢球、前滚、轮足与下蹲滑行。真实 ONNX 控制、Godot/Jolt 物理，剪辑保留实际速度。
 本次使用最新选定九模型包；其中包含新训练结果和保留的旧／原版策略。轮足刹车尚未达标，在片中明确标记。
@@ -16,7 +18,7 @@
 
 ![坐起与低头](docs/media/postures.gif)
 
-**触球，翻滚，再站起来。** 左右脚触球与完整前滚恢复。
+**触球，翻滚，再站起来。** 左右脚触球与前滚恢复。
 
 ![踢球与前滚](docs/media/kicks-and-roll.gif)
 

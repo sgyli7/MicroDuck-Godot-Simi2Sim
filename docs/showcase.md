@@ -2,9 +2,9 @@
 
 2026-09-10 选定九模型包接入原创维修站场景。Python 运行 ONNX，Godot/Jolt 提供真实物理和画面。
 
-[观看 1080p PV](media/microduck-service-bay-pv.mp4) · [完整原片与轨迹](https://github.com/sgyli7/MicroDuck-Godot-Simi2Sim/releases/tag/atelier-20260910) · [实验报告](../RESEARCH_RESULT_20260910.md)
+[观看 1080p PV](media/microduck-service-bay-pv.mp4) · [完整原片与轨迹](https://github.com/sgyli7/MicroDuck-Godot-Simi2Sim/releases/tag/atelier-20260910-short) · [实验报告](../RESEARCH_RESULT_20260910.md)
 
-![维修站九项策略剪辑](media/microduck-service-bay.gif)
+![维修站九项策略剪辑](media/microduck-service-bay-15s.gif)
 
 ## 本次展示了什么
 
@@ -25,8 +25,8 @@
 轮足下蹲沿用原任务的初始 0.3 m/s 速度。没有技能中途重置、位姿动画、瞬移恢复或视频加速。
 前滚统计中的 `fell=true` 表示经历了倒置姿态，应结合有序前滚事件与最终站立判定，而非单看这个通用标志。
 
-59 秒、1920×1080 的 PV 与 33 秒首页 GIF 已提供；三组动作特写保留各自完整周期。
-完整 PV 保留各动作全周期，站立开场节选 3 秒；首页 GIF 删减等待，仍保留翻滚与下蹲恢复。画面上的轮足说明同步标记刹车问题。
+20 秒、1920×1080 的 PV 与约 13 秒首页 GIF 已提供；三组动作特写也都短于 15 秒。
+PV 与 GIF 均为动作精选：开场直接翻滚，删去等待与保持段，并适当裁切远景，让机器人动作更清楚。完整周期保存在原片 ZIP。画面上的轮足说明同步标记刹车问题。
 原片按实际采集时间戳编码，30 FPS 的成片会重复未产生新画面的帧，不会把低帧率伪装成加速动作。视频无声。
 
 ## 运行最新模型的维修站
@@ -89,6 +89,7 @@ nice -n 10 taskset -c 18,19 .venv/bin/python scripts/build_showcase_media.py --p
 2. 九项完整录制，检查动作、相机和模型协议。
 3. 发现长距离轮足路线经过装饰物，开放右侧出口、连同货箱标签和机械细节一起移动。
 4. 重新采集最终版本，逐帧检查主要动作，制作真实速度的章节 PV 和 GIF。
+5. 根据反馈将 59 秒 PV 缩至约 20 秒、33 秒 GIF 缩至约 13 秒；所有动图验证多帧变化与 15 秒时长上限，首页另提供原始 GIF 直达播放。
 
 与原平地 headless 世界复跑相同九项，合计 3,300 个控制步的动作、关节、接触、底座运动及任务遥测逐项完全一致。
 详见 [轨迹等价结果](showcase_physics_equivalence.json)。步行与轮足独立入口各进行了 12 秒限时启动，均加载候选包并报告 50 Hz 控制循环；限时退出的 KeyboardInterrupt 属于测试主动中断，确认没有遗留 Godot 进程。

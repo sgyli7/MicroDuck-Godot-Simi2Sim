@@ -5,6 +5,7 @@ motion, speed changes or replacement robot frames are used.
 """
 from pathlib import Path
 import argparse
+import av
 import hashlib
 import json
 import shutil
@@ -52,79 +53,95 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     path.write_text(header + content)
 
 
+# Policy-time seconds: trim holds, retain real speed and the actual contact/recovery.
+PV_CUTS = [
+ ('roulade',.35,3.85), ('walking',2.55,4.1), ('walking',5.1,6.6),
+ ('kick_left',-.1,1.), ('kick_right',-.1,1.),
+ ('sitstand',0,.95), ('sitstand',5.9,7.2), ('ground_pick',.25,2.9),
+ ('roller',1.,2.4), ('roller',7.8,9.2),
+ ('roller_crouch',0,.85), ('roller_crouch',2.25,3.55), ('roller_crouch',3.7,4.6),
+ ('standing',.5,1.1),
+]
+GIF_CUTS = [
+ ('roulade',.55,3.75), ('walking',2.6,4.1),
+ ('kick_left',-.08,.72), ('kick_right',-.08,.72),
+ ('sitstand',0,.6), ('sitstand',5.9,6.6),
+ ('ground_pick',.35,1.15), ('ground_pick',2.1,2.8),
+ ('roller',1.1,1.9), ('roller',8.2,8.8),
+ ('roller_crouch',.1,.8), ('roller_crouch',2.5,3.7), ('standing',.5,.9),
+]
+SHORT_NAMES = {'roulade':'前滚 · 恢复站立','walking':'行走 · 转向',
+ 'kick_left':'左脚触球','kick_right':'右脚触球','sitstand':'坐下 · 起身',
+ 'ground_pick':'低头 · 拾取动作','roller':'轮足 · 刹车待改进',
+ 'roller_crouch':'下蹲 · 滑行 · 起身','standing':'MICRODUCK / 小小维修站'}
+
+
 def build(prefix):
     ffmpeg = shutil.which('ffmpeg')
-    if not ffmpeg:
-        raise SystemExit('FFmpeg is required')
+    if not ffmpeg:raise SystemExit('FFmpeg is required')
     MEDIA.mkdir(parents=True,exist_ok=True); EDIT.mkdir(parents=True,exist_ok=True)
-    segments=[]; recipe=[]; offset=0.
     common=[ffmpeg,'-hide_banner','-loglevel','error','-nostdin','-y','-threads','2','-filter_threads','2']
-    for i,(skill,title,english,subtitle) in enumerate(SKILLS,1):
-        directory=ROOT/'results/showcase'/f'{prefix}_{skill}'
-        data=json.loads((directory/'capture.json').read_text())
-        # The full action duration is retained. The standing introduction uses
-        # three seconds; its full ten-second recording remains in the archive.
-        first=data['entry_seconds']; last=first+data['skill_seconds']
-        if skill=='standing':first=3.;last=6.
-        frames=data['frames'];base=frames[0]['milliseconds']
-        start=min(frames,key=lambda f:abs(f['sim_seconds']-first))['milliseconds']
-        finish=min(frames,key=lambda f:abs(f['sim_seconds']-last))['milliseconds']
-        start=(start-base)/1000.;duration=(finish-base)/1000.-start
-        subtitles=EDIT/f'{skill}.ass';ass(subtitles,title,subtitle,i,duration)
-        output=EDIT/f'{skill}.mp4'
-        filters=(f'fps=30,drawbox=x=0:y=0:w=iw:h=82:color=0x24232b:t=fill,'
-                 f'drawbox=x=0:y=925:w=iw:h=155:color=0x24232b:t=fill,'
-                 f'drawbox=x=64:y=919:w=130:h=6:color=0xe0bd38:t=fill,'
-                 f"ass=filename='{subtitles}':fontsdir='{ROOT / 'godot/atelier/fonts'}',"
-                 f'fade=t=in:st=0:d=0.13,fade=t=out:st={max(0,duration-.13):.4f}:d=0.13')
-        run(common+['-ss',f'{start:.6f}','-i',str(directory/'raw.mp4'),'-t',f'{duration:.6f}',
-                    '-vf',filters,'-an','-c:v','libx264','-threads','2','-preset','fast','-crf','18',
-                    '-pix_fmt','yuv420p','-movflags','+faststart',str(output)])
-        segments.append(output)
-        recipe.append({'skill':skill,'source':str((directory/'raw.mp4').relative_to(ROOT)),
-                       'source_sha256':hashlib.sha256((directory/'raw.mp4').read_bytes()).hexdigest(),
-                       'source_start_seconds':start,'duration_seconds':duration,'pv_start_seconds':offset,
-                       'speed':1.0,'chapter':english})
-        offset+=round(duration*30)/30
-        print('Edited',skill,flush=True)
-    concat=EDIT/'chapters.txt';concat.write_text(''.join(f"file '{p}'\n" for p in segments))
-    run(common+['-f','concat','-safe','0','-i',str(concat),'-c','copy','-movflags','+faststart',str(MEDIA/'microduck-service-bay-pv.mp4')])
-    # GIF edit points refer to already captioned chapters and never accelerate
-    # motion. Cuts compress idle holds; roll and crouch recovery remain intact.
-    excerpts={'standing':[(0,2.5)],'walking':[(2.5,6.8)],'sitstand':[(0,1.5),(5.8,7.8)],
-              'ground_pick':[(0,3.9)],'kick_left':[(0,2.4)],'kick_right':[(0,2.4)],
-              'roulade':[(0,4.9)],'roller':[(.1,1.6),(6.5,9.8)],'roller_crouch':[(0,4.9)]}
-    cuts=[]
-    for segment,(skill,*_) in zip(segments,SKILLS):
-        for k,(start,end) in enumerate(excerpts[skill]):
-            output=EDIT/f'preview_{skill}_{k}.mp4'
-            run(common+['-ss',str(start),'-i',str(segment),'-t',str(end-start),'-an','-c:v','libx264',
-                        '-threads','2','-preset','fast','-crf','20','-vf','scale=768:432',str(output)])
-            cuts.append(output)
-    short=EDIT/'preview.txt';short.write_text(''.join(f"file '{p}'\n" for p in cuts))
-    run(common+['-f','concat','-safe','0','-i',str(short),'-c','copy',str(EDIT/'preview.mp4')])
-    gif(common,EDIT/'preview.mp4',MEDIA/'microduck-service-bay.gif',640,12)
+    data={name:json.loads((ROOT/'results/showcase'/f'{prefix}_{name}'/'capture.json').read_text()) for name,*_ in SKILLS}
+    titles={name:(title,subtitle) for name,title,_,subtitle in SKILLS}
+    order=list(dict.fromkeys(c[0] for c in PV_CUTS))
+    recipes={}
+    def montage(label,cuts,target,brief=False):
+        segments=[];recipe=[];offset=0.
+        for i,(skill,begin,end) in enumerate(cuts):
+            report=data[skill];frames=report['frames'];base=frames[0]['milliseconds']
+            def stamp(t):
+                f=min(frames,key=lambda f:abs(f['sim_seconds']-(report['entry_seconds']+t)))
+                return (f['milliseconds']-base)/1000.
+            start=stamp(begin);duration=stamp(end)-start
+            directory=ROOT/'results/showcase'/f'{prefix}_{skill}'
+            title,subtitle=titles[skill]
+            if brief:title,subtitle=SHORT_NAMES[skill],''
+            subtitles=EDIT/f'{label}_{i}.ass';ass(subtitles,title,subtitle,order.index(skill)+1,duration)
+            output=EDIT/f'{label}_{i}.mp4'
+            crop=skill in ('roulade','kick_left','kick_right','roller','roller_crouch','standing')
+            framing='crop=1536:864:192:108,scale=1920:1080,' if crop else ''
+            filters=(framing+'fps=30,drawbox=x=0:y=0:w=iw:h=82:color=0x24232b:t=fill,'
+                     'drawbox=x=0:y=925:w=iw:h=155:color=0x24232b:t=fill,'
+                     'drawbox=x=64:y=919:w=130:h=6:color=0xe0bd38:t=fill,'
+                     f"ass=filename='{subtitles}':fontsdir='{ROOT / 'godot/atelier/fonts'}'")
+            run(common+['-ss',f'{start:.6f}','-i',str(directory/'raw.mp4'),'-t',f'{duration:.6f}',
+                        '-vf',filters,'-an','-c:v','libx264','-threads','2','-preset','fast','-crf','18',
+                        '-pix_fmt','yuv420p','-movflags','+faststart',str(output)])
+            with av.open(str(output)) as encoded:
+                encoded_duration=encoded.streams.video[0].frames/30.0
+            segments.append(output)
+            recipe.append({'skill':skill,'source':str((directory/'raw.mp4').relative_to(ROOT)),
+                           'source_sha256':hashlib.sha256((directory/'raw.mp4').read_bytes()).hexdigest(),
+                           'policy_start_seconds':begin,'policy_end_seconds':end,
+                           'source_start_seconds':start,'duration_seconds':duration,
+                           'output_start_seconds':offset,'encoded_duration_seconds':encoded_duration,'speed':1.0,'center_crop':crop})
+            offset+=encoded_duration
+        concat=EDIT/f'{label}.txt';concat.write_text(''.join(f"file '{p}'\n" for p in segments))
+        run(common+['-f','concat','-safe','0','-i',str(concat),'-c','copy','-movflags','+faststart',str(target)])
+        recipes[label]=recipe
+        print(label,round(offset,3),'seconds',flush=True)
+    montage('pv_short',PV_CUTS,MEDIA/'microduck-service-bay-pv.mp4')
+    montage('preview_short',GIF_CUTS,EDIT/'preview_short.mp4',brief=True)
+    gif(common,EDIT/'preview_short.mp4',MEDIA/'microduck-service-bay-15s.gif',640,12)
     for filename,names in [('postures',['sitstand','ground_pick']),('kicks-and-roll',['kick_left','kick_right','roulade']),('wheels',['roller','roller_crouch'])]:
-        path=EDIT/f'{filename}.txt';path.write_text(''.join(f"file '{EDIT / (name+'.mp4')}'\n" for name in names))
-        video=EDIT/f'{filename}.mp4'
-        run(common+['-f','concat','-safe','0','-i',str(path),'-c','copy',str(video)])
-        gif(common,video,MEDIA/f'{filename}.gif',640,12)
-    run(common+['-ss','3.3','-i',str(EDIT/'walking.mp4'),'-frames:v','1',str(MEDIA/'poster.jpg')])
-    (MEDIA/'edit.json').write_text(json.dumps({'source_prefix':prefix,'chapters':recipe,
-        'gif_excerpts':excerpts,'fps_mp4':30,'gif_fps_target':12,'gif_leading_trim_seconds':.2,'silent':True,
-        'note':'Real captured frames at wall-clock speed. Cuts, letterbox graphics and captions only. GIF cuts shorten holds; MP4 retains full action durations except standing introduction.'},ensure_ascii=False,indent=2)+'\n')
+        montage(filename+'_short',[cut for cut in PV_CUTS if cut[0] in names],EDIT/f'{filename}_short.mp4')
+        gif(common,EDIT/f'{filename}_short.mp4',MEDIA/f'{filename}.gif',640,12)
+    run(common+['-ss','0.5','-i',str(MEDIA/'microduck-service-bay-pv.mp4'),'-frames:v','1',str(MEDIA/'poster.jpg')])
+    (MEDIA/'edit.json').write_text(json.dumps({'source_prefix':prefix,'cuts':recipes,
+        'fps_mp4':30,'gif_fps_target':12,'silent':True,'revision':'action-first-under-15-seconds',
+        'note':'Real captured frames at original wall-clock speed. Hard cuts remove holds; selected wide shots are cropped for action readability. Complete cycles remain in the raw evidence archive.'},ensure_ascii=False,indent=2)+'\n')
 
 
 def gif(common,source,dest,width,fps):
     # Flat comic colors compress more cleanly without moving dither noise.
-    hero = dest.name == 'microduck-service-bay.gif'
-    budget = 15_000_000 if hero else 10_000_000
-    profiles = [(640,10,64),(640,10,48)] if hero else [(width,fps,96),(560,10,64),(480,10,48)]
+    hero = dest.name == 'microduck-service-bay-15s.gif'
+    budget = 10_000_000
+    profiles = [(640,12,96),(640,12,64),(640,10,64)] if hero else [(width,fps,96),(560,10,64),(480,10,48)]
     for size,rate,colors in profiles:
         filters=(f'fps={rate},scale={size}:-2:flags=lanczos,split[a][b];'
                  f'[a]palettegen=max_colors={colors}:stats_mode=diff[p];'
                  '[b][p]paletteuse=dither=none:diff_mode=rectangle')
-        run(common+['-ss','0.20','-i',str(source),'-filter_complex_threads','2',
+        run(common+['-i',str(source),'-filter_complex_threads','2',
                     '-filter_complex',filters,'-loop','0',str(dest)])
         if dest.stat().st_size<=budget:
             break
