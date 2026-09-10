@@ -1,5 +1,6 @@
 """Exercise the real PlayBrain across skills in one continuous native world."""
 import argparse,json,math
+from dataclasses import replace
 from pathlib import Path
 import numpy as np
 from sim2sim.obs import build_obs
@@ -18,11 +19,11 @@ SEQUENCE=[('idle',1.,set(),None),('forward',2.,{'fwd'},None),('brake',2.,set(),N
     ('rise',6.,set(),'sit'),('kick_right',5.,set(),'kick_right'),('idle',2.,set(),None)]
 
 
-def run(paths,out,seed=100):
+def run(paths,out,seed=100,scene_robot='microduck_ball'):
     bank={k:OnnxPolicy(Path(p)) for k,p in paths.items()}
     brain=PlayBrain(has_standing='standing' in bank and bank['walking'].has_standing_partner,
         lim=bank['walking'].twist_limits)
-    w=World(TASKS['kick_left']);rows=[];segments=[];events=[]
+    w=World(replace(TASKS['kick_left'],robot=scene_robot));rows=[];segments=[];events=[]
     try:
         w.report_names=list(w.meta)
         w.reset(seed);w.pending_ball=[5.,5.,.035]

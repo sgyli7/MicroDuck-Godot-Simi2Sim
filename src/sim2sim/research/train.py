@@ -46,7 +46,7 @@ class Vector:
         self.entry=entry;self.entry_counts={"reset":0,"standing":0}
         self.entry_bank=None
         if entry_bank:
-            if task.name!='roulade' or task.robot!='microduck_ball' or entry_source:
+            if task.name!='roulade' or task.robot not in ('microduck_ball','microduck_ball_stand_fix') or entry_source:
                 raise ValueError('Native entry-bank prefixes require roulade in the ball scene, without --entry-source')
             from .entry_bank import EntryBank
             self.entry_bank=EntryBank(entry_bank)
@@ -146,7 +146,9 @@ def run(args):
         if args.time_gate!=recorded_gate:raise ValueError('Resume cannot change the actor time gate')
     task=TASKS[args.skill];session=json.loads((SESSION/"session.json").read_text())
     evaluate_skill=run_suite;protocol=PROTOCOL_VERSION
+    evaluation_kwargs={} if args.eval_scene_robot is None else {'scene_robot':args.eval_scene_robot}
     if args.roller_contract:
+        if evaluation_kwargs:raise ValueError('Native roller evaluation has its own scene contract')
         if task.name!='roller' or args.entry!='reset' or args.random_commands:raise ValueError('Native roller contract uses its own task starts and command cases')
         from .roller_evaluate import run_suite as evaluate_skill
         from .roller_tasks import PROTOCOL,CONDITIONS
@@ -307,7 +309,7 @@ def run(args):
                 # Report export roundoff independently of physical outcomes.
                 report=parity(policy,export,n=200)
                 selected=None if not args.eval_conditions else args.eval_conditions.split(",")
-                result=evaluate_skill(task.name,export,seeds=(100,101,102),workers=4,out=out/f"eval_{iteration:05d}",selected_conditions=selected,entry=eval_entry)
+                result=evaluate_skill(task.name,export,seeds=(100,101,102),workers=4,out=out/f"eval_{iteration:05d}",selected_conditions=selected,entry=eval_entry,**evaluation_kwargs)
                 result_short={k:v for k,v in result.items() if k!="episodes"};result_short.update(iteration=iteration,parity=report)
                 evaluation_records.append(result_short)
                 (out/"evaluations.json").write_text(json.dumps(evaluation_records,indent=2))
@@ -325,7 +327,7 @@ def run(args):
         (out/"final_parity.json").write_text(json.dumps(report,indent=2))
         if time.time()<hard_deadline-30:
             selected=None if not args.eval_conditions else args.eval_conditions.split(",")
-            result=evaluate_skill(task.name,export,seeds=(100,101,102),workers=4,out=out/"eval_final",selected_conditions=selected,entry=eval_entry)
+            result=evaluate_skill(task.name,export,seeds=(100,101,102),workers=4,out=out/"eval_final",selected_conditions=selected,entry=eval_entry,**evaluation_kwargs)
             if report["passed"] and not result["errors"] and (result["success_rate"],result["score"])>(best_success,best_score):
                 (out/"best.onnx").write_bytes(export.read_bytes());save_checkpoint(out/"best.pt",policy,critic,ao,co,iteration,config,env);best_score=result["score"];best_success=result["success_rate"]
         (out/"completed.json").write_text(json.dumps({"status":status,"iterations":iteration,"samples":total_samples,"elapsed":time.time()-start,"best_dev_score":best_score if math.isfinite(best_score) else None,"best_dev_success":best_success,"final_parity":report,"entry_counts":env.entry_counts},indent=2))
@@ -356,7 +358,8 @@ def main():
     p.add_argument("--eval-entry",choices=["reset","standing","both"])
     p.add_argument("--entry-source",help="Optional deployed idle actor used for training handoffs; standard evaluation keeps its original entry actor")
     p.add_argument("--entry-bank",help="Training-only native controller prefixes from a declared deployment bank")
-    p.add_argument("--scene-robot",choices=['microduck','microduck_ball','microduck_roller'])
+    p.add_argument("--scene-robot",choices=['microduck','microduck_ball','microduck_ball_stand_fix','microduck_roller'])
+    p.add_argument("--eval-scene-robot",choices=['microduck','microduck_ball','microduck_ball_stand_fix'],help='Explicit separate evaluation scene; omitted keeps the original task scene')
     p.add_argument("--roller-contract",choices=['native'],help='Use native push/coast/brake and relative-heading tasks for roller')
     p.add_argument("--roll-starts",type=float,default=0.,help="Training-only fraction of source mid-roll resets")
     p.add_argument("--symmetry-weight",type=float,default=0.,help="Bilateral actor consistency loss using the upstream observation/action transform")

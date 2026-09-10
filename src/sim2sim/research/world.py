@@ -27,6 +27,7 @@ class World:
         self.cfg = load_robot_json(task.robot_path)
         files={"robot":task.robot_path,"mjcf":Path(self.cfg["mjcf"])}
         if backend=="godot":files.update(server=sim2sim_root()/"godot/physics_server.gd",spec=Path(self.cfg["godot_spec"]))
+        if backend=="godot":files['robot_scene']=Path(self.cfg['godot_spec']).with_name('robot.tscn')
         self.physics={"backend":backend,"joint_limits":"signed_fresh_reset_v1","dt":DT,"current_limit_a":1.75,
                       "state_transfer":"inertial_com_velocity_v2","velocity_metric":"trunk_inertial_com_v2",
                       "files":{k:{"path":str(p),"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for k,p in files.items()}}
@@ -74,6 +75,11 @@ class World:
         self.rng = np.random.default_rng(seed)
         self.condition = condition
         self.command_schedule=None
+        self.command_tape=None
+        if condition.startswith('keyboard_'):
+            if self.task.name!='walking':raise ValueError('Keyboard training tapes require walking')
+            from .schedules import keyboard_commands
+            self.command_tape=keyboard_commands(condition.removeprefix('keyboard_'),DT)
         if condition=="random_seq":
             if self.task.name not in ("walking","roller"):raise ValueError("Random twist schedule requires locomotion")
             from .schedules import random_schedule
@@ -134,6 +140,8 @@ class World:
         return build_obs(self.state,self.last,self.command(),self.home)
 
     def command(self):
+        if self.command_tape is not None:
+            return self.command_tape[min(int(round(self.t/DT)),len(self.command_tape)-1)].copy()
         if self.roller_contract:
             from .roller_tasks import command as roller_command
             return roller_command(self)

@@ -1,6 +1,24 @@
 """Reproducible interactive command tapes, separate from fixed test cases."""
 import numpy as np
 
+KEYBOARD_TAPES = {
+    'forward': [('idle', 1., set()), ('forward', 2., {'fwd'}), ('brake', 2., set())],
+    'turn': [('idle', 1., set()), ('turn', 2., {'left'}), ('brake', 2., set())],
+    'mixed': [('idle', 1., set()), ('forward', 2., {'fwd'}),
+              ('walk_turn', 2., {'fwd', 'left'}), ('back', 1., {'back'}), ('brake', 2., set())],
+}
+
+
+def keyboard_commands(condition, dt=.02):
+    """Actual default keyboard commands for supplementary training episodes."""
+    from sim2sim.play_input import PlayBrain
+    brain = PlayBrain(has_standing=False)
+    commands = []
+    for _, seconds, held in KEYBOARD_TAPES[condition]:
+        for _ in range(round(seconds / dt)):
+            commands.append(brain.tick(held, [], dt).command.copy())
+    return np.stack(commands)
+
 
 def random_schedule(task,seed):
     rng=np.random.default_rng(int(seed)+92317);t=0.;schedule=[]

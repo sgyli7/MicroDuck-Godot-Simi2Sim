@@ -574,7 +574,7 @@ existing locomotion gate's 0.5-second braking allowance. Early transient yaw
 (roughly 18–20 degrees after keyboard forward release) remains visible and is
 not erased by the steady-state check.
 
-## Roller command-contract correction (22:29 UTC)
+## Roller command-contract correction (22:23 UTC)
 
 Pinned upstream `microduck_velocity_rollers_env_cfg.py` describes command x
 as push/coast/brake, not desired forward velocity, and the third command as
@@ -616,3 +616,63 @@ deceleration. No support force, position target or default physics change is
 introduced. This explicit profile also gives 12/18, score 0.5725; it corrects
 coasting decay but does not solve active reverse motion. Both physics profiles
 and their hashes remain separate. It is not selected as a default change.
+
+## Missing ball-scene STAND changes the physical feet (22:36 UTC)
+
+Keyboard checks exposed a systematic scene gap: the current walking actor's
+six-seed forward yaw averages 4.38 degrees in the normal scene but 21.39 in
+the actual ball scene. The robot specs have identical robot masses, inertias,
+joints and MJCF geoms. Comparing the generated collision resources reveals
+different left/right foot hulls. `scene_ball.xml` has no keyframes, whereas
+`scene.xml` has STAND. The converter's support-patch approximation silently
+used qpos0 when STAND was missing; some hull boundaries differ by almost
+9 mm. Thus scene construction, not just entry history, caused distribution
+shift between training and play.
+
+The converter now falls back to the exact named Microduck STAND joint values
+when all fourteen expected joints exist. It does not apply that pose to
+unknown robots. A separate `microduck_ball_stand_fix` robot/scene preserves
+the original scene for running trials and legacy comparisons. Both corrected
+foot vertex arrays exactly equal the normal scene's arrays (max error zero).
+Four conversion tests pass, including equivalent foot geometry with/without
+ball keyframes. This restores consistency of the existing foot proxy; it
+does not assert that the proxy equals MuJoCo's contact model.
+
+Without changing the walking actor, the corrected ball scene reproduces the
+normal scene's six-seed mean forward yaw of 4.38 degrees. Braking still needs
+improvement. Corrected-scene kick checks: K07 5/6, K09 iteration 116 6/6,
+factory left 0/6, factory right 2/6. K10 is therefore assigned the K09 parent
+and this explicit corrected scene for both training and evaluation. All
+earlier ball-scene results retain their original physics identity. Future
+fingerprints additionally hash `robot.tscn`, since collision points are
+stored there rather than fully represented in robot_spec.json.
+
+Before the geometry finding, R13 iteration 25 passed 59/60 standard and 8/9
+legacy-ball continuous sequences (the failure is 30.27-degree heading).
+Iteration 37 passes only 7/9 despite a higher six-case score. Retiming the
+blend from 2.3 to 2.2 seconds passes six training probes but degrades legacy
+continuous sequences to 5/9; it is not selected. These findings remain valid
+for their recorded scenes and do not establish corrected-scene performance.
+
+Corrected-scene continuous checks then passed 9/9 for both r11 iteration 145
+and r12 iteration 121, with no ordinary-action falls. R11's heading mean is
+14.28 degrees (max 23.76), versus 17.91 for r12. R13 iteration 25 achieves
+7/9 in the corrected scene, despite 8/9 in the legacy scene. R11 is retained
+as the conservative corrected-scene roll parent.
+
+At 00:11 UTC, the session has about 88 minutes remaining. K10 completed
+30 minutes on canonical feet: iteration 81 keeps 6/6 physical successes and
+reduces mean body yaw to 28.88 degrees and action variation to 0.097. Later
+checkpoints regress in yaw despite the same binary success, so the earlier
+checkpoint is retained. Its mirrored right actor is checked separately.
+WH03's corrected roller contract ends at 12/18 and score 0.5933, below the
+original actor's 0.5986; the original remains preferred. C01 keeps 6/6 crouch
+success but increases tilt to roughly 9.5 degrees, so the original remains
+the conservative choice there too.
+
+The last short trials are R14 (22 minutes from r11 iteration 145, native
+prefixes on canonical feet), K11 (22 minutes from K10 iteration 81, stronger
+heading/smoothness objective), and WD05 (actual keyboard tapes added to broad
+walking commands, canonical scene). WD05's smoke passes with exact export
+parity. All final candidate selection must precede reserved holdout evaluation;
+no holdout seed is used for optimization or repeated checkpoint selection.

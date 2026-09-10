@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -397,6 +398,23 @@ def _apply_stand_keyframe(model: mujoco.MjModel, data: mujoco.MjData) -> None:
             mujoco.mj_resetDataKeyframe(model, data, k)
             mujoco.mj_forward(model, data)
             return
+    # scene_ball.xml includes the same robot but omits scene.xml's keyframes.
+    # The support-patch approximation must use the same reference posture in
+    # both scenes; using qpos0 silently shortens the ball scene's foot hulls.
+    # Match the named Microduck joints, never assume generic actuator ordering.
+    stand = {
+        "left_hip_yaw": 0., "left_hip_roll": -math.pi / 36,
+        "left_hip_pitch": -.457924, "left_knee": -.00494, "left_ankle": .452984,
+        "neck_pitch": math.pi / 9, "head_pitch": math.pi / 9,
+        "head_yaw": 0., "head_roll": 0., "right_hip_yaw": 0.,
+        "right_hip_roll": math.pi / 36, "right_hip_pitch": .457924,
+        "right_knee": .00494, "right_ankle": -.452984,
+    }
+    joints = {name: mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, name) for name in stand}
+    if all(j >= 0 for j in joints.values()):
+        for name, joint in joints.items():
+            data.qpos[int(model.jnt_qposadr[joint])] = stand[name]
+        mujoco.mj_forward(model, data)
 
 
 def _foot_mesh_inertial(model: mujoco.MjModel, data: mujoco.MjData, bid: int, gidx: int, verts: np.ndarray) -> np.ndarray:
