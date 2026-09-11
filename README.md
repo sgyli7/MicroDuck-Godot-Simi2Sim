@@ -1,142 +1,59 @@
-# MicroDuck · 小小维修站
+# MicroDuck Sim2Sim
 
-**小小身体，自主行动。** 在莫比乌斯式维修站里，观看九个 ONNX 策略驱动的真实机器人动作。
+将 MuJoCo 训练的机器人控制策略迁移到 **Godot / Jolt**，比较两种物理引擎中的运动表现。以 MicroDuck 为例，提供场景转换、策略运行、物理校准与训练评估工具。
 
-**最新远景预览 · 正常跟随视角**
+![MicroDuck 在 Godot / Jolt 中运行 ONNX 控制策略](docs/media/microduck-service-bay-15s.gif)
 
-[![MicroDuck 远景预览：正常跟随视角下的行走与环视](docs/media/distant-scenery-04s.jpg)](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/distant-scenery-preview.mp4)
+## 功能
 
-**[▶ 播放 11 秒远景预览（720p）](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/distant-scenery-preview.mp4)**
-
-保留原来的跟随、右键环视和滚轮缩放，四周补充工坊与远处坡地。视频来自真实 ONNX 行走与 Godot/Jolt 运行，按已保存帧序列整理为 10.8 秒预览。
-
-这是制作中的远景版本，完整环视及边缘验收仍待完成；远景工程尚未合入主分支，当前启动入口仍使用下方的已发布维修站。
+- 从编译后的 MuJoCo 模型生成 Godot 刚体、碰撞和关节。
+- 由 Python 运行 ONNX 策略，同步推进 MuJoCo 与 Jolt，采集并对比轨迹。
+- 支持站立、行走、踢球、翻滚和轮足等动作，以及键鼠交互。
+- 支持 Godot / Jolt 环境中的 PPO 微调与策略评估。
 
 <details>
-<summary>手机直接看截图 · 第 1、7、10 秒</summary>
+<summary>更多演示：行走、场景与刚体交互</summary>
 
-![第 1 秒：维修站旁的跟随视角](docs/media/distant-scenery-01s.jpg)
+**行走与跟随视角**
 
-![第 7 秒：转动镜头后的周边工坊](docs/media/distant-scenery-07s.jpg)
+![MicroDuck 行走与环视](docs/media/distant-scenery-preview.gif)
 
-![第 10 秒：行走与远景](docs/media/distant-scenery-10s.jpg)
+**轻质刚体交互**
+
+![踢动箱子、小瓶和小球](docs/media/loose-props.gif)
+
+**Godot 场景**
+
+![维修站场景](docs/media/yard-atmosphere.gif)
 
 </details>
 
----
+## 快速开始
 
-**已发布版本 · 九技能演示与维修站**
-
-[![MicroDuck：13 秒动作速览，点击播放](docs/media/microduck-service-bay-15s.gif)](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/microduck-service-bay-15s.gif)
-
-**[▶ 20 秒 1080p PV 与完整原片](https://github.com/sgyli7/MicroDuck-Godot-Simi2Sim/releases/tag/atelier-20260910-short)** · **[启动维修站](docs/showcase.md#运行最新模型的维修站)** · **[训练结果](RESEARCH_RESULT_20260910.md)**
-
-动图约 13 秒，开场直接前滚；若 GitHub 暂停动图，点图可直接播放。
-
-站立、行走、坐起、低头拾取、左右踢球、前滚、轮足与下蹲滑行。真实 ONNX 控制、Godot/Jolt 物理，剪辑保留实际速度。
-本次使用最新选定九模型包；其中包含新训练结果和保留的旧／原版策略。轮足刹车尚未达标，在片中明确标记。
-
-**场景更新：** 维修站背后补齐了旧工坊、配件领取间、储气设备、管线、暖灯和回收零件架；新增实体带碰撞，门洞与左右出口保持开放。
-[背景升级与前后对照](docs/workshop_atmosphere.md) · [6 秒小院实录](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/yard-atmosphere.mp4)
-
-![小小维修站 · 机械小院](docs/media/yard-after-courtyard.png)
-
-共面闪烁修复与 **6–15 克的动态箱、瓶、小球** 保留。
-**B** 选踢击目标，**3 / 4** 左右踢，**0** 归位。
-[12 秒动态物件实录](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/loose-props.mp4) · [动态刚体验证](docs/loose_props.md) · [闪烁修复对照](docs/workshop_contacts.md)。上方九技能 PV 保留原平地演示模式。
-
-<details>
-<summary>展开动作特写 · 姿态 / 踢球与前滚 / 轮足</summary>
-
-**收起身形，贴近地面。** 坐下、起身与低头动作。
-
-![坐起与低头](docs/media/postures.gif)
-
-**触球，翻滚，再站起来。** 左右脚触球与前滚恢复。
-
-![踢球与前滚](docs/media/kicks-and-roll.gif)
-
-**压低重心，滑出工位。** 轮足推进与下蹲滑行；连续刹车仍有反向滑动。
-
-![轮足与下蹲滑行](docs/media/wheels.gif)
-
-</details>
-
-## MuJoCo → Godot / Jolt
-
-MuJoCo 训练出的 ONNX policy，在 **Godot 4.7 + 内置 Jolt** 上当第二个物理后端重放，并和 MuJoCo lockstep 对比。
-
-Python 是唯一控制器。编译后的 `MjModel` 是模型真源；ONNX 只在 Python 里跑。这不是「Godot 里嵌 MuJoCo」也不是 Hakoniwa 那种 viewer，而是 **sim2sim**：两端各自步进，能量化 walk / run 是否还站得住。
-
-详细映射、已知不映射项、训练循环和门禁数字见 [SIM2SIM.md](SIM2SIM.md)。
-
-2026-09-10 研究结果与候选模型见 [实验报告](RESEARCH_RESULT_20260910.md)；
-新克隆的场景准备、实验初始化、模型包校验与复测见 [复现说明](REPRODUCING.md)。
-九个 ONNX 通过独立模型包交付，不随 Git clone 下载。
-[HANDOFF.md](HANDOFF.md) 保留此前八技能训练的历史交接，当前方案以研究报告为准。
-
-## 需要
-
-- Godot **4.7.2**（`godot` 在 `PATH`，或 `export GODOT=...`）
-- Python 3.12 + [uv](https://docs.astral.sh/uv/)
-- [microduck_rl](https://github.com/pollen-robotics/microduck_rl) 的 MJCF（本仓不发布 NC 网格）
-- ONNX：官方 `alpha_walking.onnx` 或你自己训的权重（本仓不提交 `.onnx`）
+需要 Python 3.12、[uv](https://docs.astral.sh/uv/)、Godot 4.7.2，以及 [microduck_rl](https://github.com/pollen-robotics/microduck_rl) 的机器人资源和 ONNX 权重。
 
 ```bash
-export MICRODUCK_RL=$HOME/Projects/microduck_rl
-export MICRODUCK_POLICIES=$HOME/Projects/MicroDuck/policies   # 或任意放 onnx 的目录
-export PATH="$HOME/.local/bin:$PATH"
-export DISPLAY="${DISPLAY:-:1}"
-
+git clone https://github.com/sgyli7/MicroDuck-Godot-Simi2Sim.git
 cd MicroDuck-Godot-Simi2Sim
-uv sync                      # 基础门禁；会卸掉未在 pyproject 声明的 extra
-uv sync --extra train        # 训练 / eval / export（装一次）
-./run.sh                     # convert → spikes → calib → dual rollout → compare
-uv run --no-sync sim2sim-play      # 窗口；按住 W/↑ 才走
-uv run --no-sync sim2sim-play --local-ppo
-uv run --no-sync sim2sim-play --scene res://scenes/rough_forest_play.tscn
+uv sync
 
-# Godot/Jolt PPO 微调（详见 SIM2SIM.md「训练循环」）
-./scripts/train_walk_godot.sh --config configs/walk_godot.yaml --init-onnx alpha
-./scripts/walk_godot_smoke.sh
-uv run --no-sync sim2sim-play --walking policies/Walk_Godot.onnx
-uv run --no-sync sim2sim-eval-walk --a "$MICRODUCK_POLICIES/alpha_walking.onnx" --b policies/Walk_Godot.onnx
-uv run --no-sync sim2sim-export --checkpoint path/to/model_k.pt --out policies/Walk_Godot.onnx
-uv run --no-sync sim2sim-bench-godot --workers 1 4 8 16
-./scripts/train_skills_godot.sh          # 8 技能 continue-train 入口
-# 对齐需求与交接：HANDOFF.md（不要把 sim2sim-eval-skill 当验收）
+export MICRODUCK_RL=/path/to/microduck_rl
+export MICRODUCK_POLICIES=/path/to/onnx_models
+export GODOT=/path/to/godot
+
+uv run --no-sync python -m sim2sim.research.setup scenes
+uv run --no-sync sim2sim-play
 ```
 
-之后训练相关命令用 `uv run --no-sync`（或 `./scripts/train_walk_godot.sh`，它 `exec` `.venv/bin/sim2sim-train`，SIGINT 能进 checkpoint）。裸 `uv sync` 会卸掉 `[train]` extra；`./run.sh` 用 `uv sync --inexact` 保住它。不要 `kill` `uv run` 包装进程，信号到不了 Python。
+机器人网格与模型权重需单独准备。资源配置和模型加载见[运行说明](REPRODUCING.md)。
 
-崎岖森林地形要先跑 `godot/scripts/setup_forest_vendor.sh`（克隆 [godot-forest-demo](https://github.com/GamesNotDeveloped/godot-forest-demo)，CC BY 4.0，需署名）。默认平地 `main.tscn` 不依赖 vendor。
+## 文档
 
-## 环境变量
-
-| 变量 | 含义 |
-|---|---|
-| `SIM2SIM_ROOT` | 本仓库根。一般不用设 |
-| `MICRODUCK_RL` | `microduck_rl` 检出路径 |
-| `MICRODUCK_POLICIES` | ONNX 目录 |
-| `GODOT` | Godot 可执行文件，默认 `~/.local/bin/godot` |
-| `SIM2SIM_RESEARCH_DIR` | 新实验目录；先按复现说明初始化，避免使用已结束的旧预算 |
-
-`robots/*.json` 里的路径用 `${MICRODUCK_RL}` / `${MICRODUCK_POLICIES}` / `${SIM2SIM_ROOT}`，不要写死本机绝对路径。
-
-## 布局
-
-```
-src/mjcf2godot/    MJCF → Godot 场景
-src/sim2sim/       双后端、obs、policy、校准、compare、play、train
-godot/             Godot 4.7.2 + Jolt 工程
-robots/            机器人 JSON
-configs/           walk_godot.yaml 等
-scripts/           train_walk_godot.sh、walk_godot_smoke.sh
-```
-
-协议是 TCP 行分隔 JSON（MuJoCo 坐标系）。`hello` / `reset` / `step`（可选 `report: "lite"`）/ `pin` / `nudge` / `set_tau_limit` / `close`。
+- [物理映射、校准与双后端对比](SIM2SIM.md)
+- [环境配置、模型加载与复现](REPRODUCING.md)
+- [实验结果](RESEARCH_RESULT_20260910.md)
+- [Godot 交互场景](docs/showcase.md)
 
 ## 许可
 
-- 本仓库原创代码：**Apache-2.0**（[LICENSE](LICENSE)）
-- 第三方与可选森林资源：[NOTICE](NOTICE)
+原创代码采用 [Apache-2.0](LICENSE)。第三方软件、机器人资源及其许可见 [NOTICE](NOTICE)。
