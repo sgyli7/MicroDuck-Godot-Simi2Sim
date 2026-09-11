@@ -1,0 +1,836 @@
+[
+  {
+    "backend": "mujoco",
+    "profile": "xml",
+    "case": "roller_brake_1s",
+    "seed": 917000,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 2.0,
+      "initial_speed": 0.6374657733663321,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 3.4624357642348613,
+      "distance_limit": 0.7649589280395985,
+      "fell": false,
+      "first_fall_s": null,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.9286557178326482,
+      "final_speed": 0.8463910637478409,
+      "max_tilt": 23.10345931268329,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_xml_roller_brake_1s_917000.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "xml",
+    "case": "roller_brake_1s",
+    "seed": 917001,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 2.0,
+      "initial_speed": 0.5987141250025395,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 3.450107146135645,
+      "distance_limit": 0.7184569500030474,
+      "fell": false,
+      "first_fall_s": null,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.652127479968342,
+      "final_speed": 0.8142562367111588,
+      "max_tilt": 13.527356883127089,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_xml_roller_brake_1s_917001.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "xml",
+    "case": "roller_brake_3s",
+    "seed": 917000,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 4.0,
+      "initial_speed": 0.9228976884877063,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.8597507524469785,
+      "distance_limit": 1.1074772261852475,
+      "fell": true,
+      "first_fall_s": 0.8399999999999848,
+      "sustained_backwards": false,
+      "minimum_forward_02s": -0.0022492520664565523,
+      "final_speed": 0.0012081323955984596,
+      "max_tilt": 104.09265853591744,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_xml_roller_brake_3s_917000.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "xml",
+    "case": "roller_brake_3s",
+    "seed": 917001,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 4.0,
+      "initial_speed": 0.9212703008701812,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.8334900505247657,
+      "distance_limit": 1.1055243610442174,
+      "fell": true,
+      "first_fall_s": 1.019999999999981,
+      "sustained_backwards": false,
+      "minimum_forward_02s": -0.02666136350608983,
+      "final_speed": 9.969638451173837e-05,
+      "max_tilt": 108.43122495663228,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_xml_roller_brake_3s_917001.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "xml",
+    "case": "roller_turn_brake",
+    "seed": 917000,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 5.0,
+      "initial_speed": 0.020331924685493587,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.011017564566655823,
+      "distance_limit": 0.15,
+      "fell": true,
+      "first_fall_s": -1.865174681370263e-14,
+      "sustained_backwards": false,
+      "minimum_forward_02s": -0.0023299438692076357,
+      "final_speed": 0.00011263390901061494,
+      "max_tilt": 105.85705193032342,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_xml_roller_turn_brake_917000.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "xml",
+    "case": "roller_turn_brake",
+    "seed": 917001,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 5.0,
+      "initial_speed": 0.13475313568148853,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.019155622196055096,
+      "distance_limit": 0.16170376281778623,
+      "fell": true,
+      "first_fall_s": -1.865174681370263e-14,
+      "sustained_backwards": false,
+      "minimum_forward_02s": -0.04668647380221438,
+      "final_speed": 0.00013837787665228412,
+      "max_tilt": 107.09428777654246,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_xml_roller_turn_brake_917001.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "source_play",
+    "case": "roller_brake_1s",
+    "seed": 917000,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 2.0,
+      "initial_speed": 0.3649989284474142,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 2.130210564168844,
+      "distance_limit": 0.43799871413689706,
+      "fell": false,
+      "first_fall_s": null,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.42327046639031124,
+      "final_speed": 0.4341805658948727,
+      "max_tilt": 8.036523160137964,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      },
+      "source_play_overrides": {
+        "passive_wheel_frictionloss": 0.003
+      },
+      "reference_profile": "source_play"
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_source_play_roller_brake_1s_917000.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "source_play",
+    "case": "roller_brake_1s",
+    "seed": 917001,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 2.0,
+      "initial_speed": 0.3900552875052991,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 2.1685747060776888,
+      "distance_limit": 0.4680663450063589,
+      "fell": false,
+      "first_fall_s": null,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.5373589020539716,
+      "final_speed": 0.45010902526520113,
+      "max_tilt": 11.845833425297664,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      },
+      "source_play_overrides": {
+        "passive_wheel_frictionloss": 0.003
+      },
+      "reference_profile": "source_play"
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_source_play_roller_brake_1s_917001.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "source_play",
+    "case": "roller_brake_3s",
+    "seed": 917000,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 4.0,
+      "initial_speed": 0.5801413773779887,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.4680854441057698,
+      "distance_limit": 0.6961696528535863,
+      "fell": true,
+      "first_fall_s": 1.05999999999998,
+      "sustained_backwards": false,
+      "minimum_forward_02s": -0.0442695857807648,
+      "final_speed": 0.00014562211207102172,
+      "max_tilt": 110.41779334953976,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      },
+      "source_play_overrides": {
+        "passive_wheel_frictionloss": 0.003
+      },
+      "reference_profile": "source_play"
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_source_play_roller_brake_3s_917000.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "source_play",
+    "case": "roller_brake_3s",
+    "seed": 917001,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 4.0,
+      "initial_speed": 0.3306407847675094,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 2.1816107818521746,
+      "distance_limit": 0.3967689417210113,
+      "fell": false,
+      "first_fall_s": null,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.5244579755421436,
+      "final_speed": 0.4561758216260442,
+      "max_tilt": 13.653507727670528,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      },
+      "source_play_overrides": {
+        "passive_wheel_frictionloss": 0.003
+      },
+      "reference_profile": "source_play"
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_source_play_roller_brake_3s_917001.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "source_play",
+    "case": "roller_turn_brake",
+    "seed": 917000,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 5.0,
+      "initial_speed": 0.2828003423212424,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.3314965821400489,
+      "distance_limit": 0.3393604107854909,
+      "fell": true,
+      "first_fall_s": 0.5999999999999686,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.07345015748327989,
+      "final_speed": 0.00013959558337259926,
+      "max_tilt": 99.21179124830343,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      },
+      "source_play_overrides": {
+        "passive_wheel_frictionloss": 0.003
+      },
+      "reference_profile": "source_play"
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_source_play_roller_turn_brake_917000.json"
+  },
+  {
+    "backend": "mujoco",
+    "profile": "source_play",
+    "case": "roller_turn_brake",
+    "seed": 917001,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 5.0,
+      "initial_speed": 0.3658310409387962,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 2.1520164947477882,
+      "distance_limit": 0.4389972491265554,
+      "fell": false,
+      "first_fall_s": null,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.35638552275443786,
+      "final_speed": 0.44076110855559475,
+      "max_tilt": 12.27830019983686,
+      "success": false
+    },
+    "physics": {
+      "backend": "mujoco",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        }
+      },
+      "source_play_overrides": {
+        "passive_wheel_frictionloss": 0.003
+      },
+      "reference_profile": "source_play"
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/mujoco_source_play_roller_turn_brake_917001.json"
+  },
+  {
+    "backend": "godot",
+    "profile": "xml",
+    "case": "roller_brake_1s",
+    "seed": 917000,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 2.0,
+      "initial_speed": 0.48711246930275226,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 2.9403285430434467,
+      "distance_limit": 0.5845349631633027,
+      "fell": false,
+      "first_fall_s": null,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.717066052828324,
+      "final_speed": 0.6357679533669486,
+      "max_tilt": 26.098997462567866,
+      "success": false
+    },
+    "physics": {
+      "backend": "godot",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        },
+        "server": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd",
+          "sha256": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e"
+        },
+        "spec": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot_spec.json",
+          "sha256": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7"
+        },
+        "robot_scene": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot.tscn",
+          "sha256": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/godot_xml_roller_brake_1s_917000.json"
+  },
+  {
+    "backend": "godot",
+    "profile": "xml",
+    "case": "roller_brake_1s",
+    "seed": 917001,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 2.0,
+      "initial_speed": 0.44945508204786216,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 2.7073472776998675,
+      "distance_limit": 0.5393460984574345,
+      "fell": false,
+      "first_fall_s": null,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.5766617943142335,
+      "final_speed": 0.6234467856958021,
+      "max_tilt": 27.210346650571008,
+      "success": false
+    },
+    "physics": {
+      "backend": "godot",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        },
+        "server": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd",
+          "sha256": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e"
+        },
+        "spec": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot_spec.json",
+          "sha256": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7"
+        },
+        "robot_scene": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot.tscn",
+          "sha256": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/godot_xml_roller_brake_1s_917001.json"
+  },
+  {
+    "backend": "godot",
+    "profile": "xml",
+    "case": "roller_brake_3s",
+    "seed": 917000,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 4.0,
+      "initial_speed": 0.644665188303464,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.5299606198675375,
+      "distance_limit": 0.7735982259641567,
+      "fell": true,
+      "first_fall_s": 0.8599999999999843,
+      "sustained_backwards": false,
+      "minimum_forward_02s": -0.10752511290318909,
+      "final_speed": 0.0011745824000697152,
+      "max_tilt": 108.18930093584153,
+      "success": false
+    },
+    "physics": {
+      "backend": "godot",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        },
+        "server": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd",
+          "sha256": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e"
+        },
+        "spec": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot_spec.json",
+          "sha256": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7"
+        },
+        "robot_scene": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot.tscn",
+          "sha256": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/godot_xml_roller_brake_3s_917000.json"
+  },
+  {
+    "backend": "godot",
+    "profile": "xml",
+    "case": "roller_brake_3s",
+    "seed": 917001,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 4.0,
+      "initial_speed": 0.6987774921055734,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.6870506461974167,
+      "distance_limit": 0.8385329905266881,
+      "fell": true,
+      "first_fall_s": 0.8399999999999848,
+      "sustained_backwards": false,
+      "minimum_forward_02s": -0.10103966665761403,
+      "final_speed": 0.001608208422987854,
+      "max_tilt": 113.82442637586885,
+      "success": false
+    },
+    "physics": {
+      "backend": "godot",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        },
+        "server": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd",
+          "sha256": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e"
+        },
+        "spec": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot_spec.json",
+          "sha256": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7"
+        },
+        "robot_scene": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot.tscn",
+          "sha256": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/godot_xml_roller_brake_3s_917001.json"
+  },
+  {
+    "backend": "godot",
+    "profile": "xml",
+    "case": "roller_turn_brake",
+    "seed": 917000,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 5.0,
+      "initial_speed": 0.5201855576393393,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.6530468143046271,
+      "distance_limit": 0.6242226691672071,
+      "fell": true,
+      "first_fall_s": 0.859999999999963,
+      "sustained_backwards": true,
+      "minimum_forward_02s": -0.22349667666890666,
+      "final_speed": 0.0010089183853941597,
+      "max_tilt": 113.31363701610512,
+      "success": false
+    },
+    "physics": {
+      "backend": "godot",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        },
+        "server": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd",
+          "sha256": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e"
+        },
+        "spec": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot_spec.json",
+          "sha256": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7"
+        },
+        "robot_scene": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot.tscn",
+          "sha256": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/godot_xml_roller_turn_brake_917000.json"
+  },
+  {
+    "backend": "godot",
+    "profile": "xml",
+    "case": "roller_turn_brake",
+    "seed": 917001,
+    "source_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "metrics": {
+      "brake_at": 5.0,
+      "initial_speed": 0.6092845635221267,
+      "stop_onset_s": null,
+      "stop_confirmed_s": null,
+      "braking_distance": 0.5644606114052844,
+      "distance_limit": 0.731141476226552,
+      "fell": true,
+      "first_fall_s": 0.859999999999963,
+      "sustained_backwards": false,
+      "minimum_forward_02s": -0.017552078664496353,
+      "final_speed": 0.0009983871191163716,
+      "max_tilt": 105.23627200050613,
+      "success": false
+    },
+    "physics": {
+      "backend": "godot",
+      "joint_limits": "signed_fresh_reset_v1",
+      "dt": 0.02,
+      "current_limit_a": 1.75,
+      "state_transfer": "inertial_com_velocity_v2",
+      "velocity_metric": "trunk_inertial_com_v2",
+      "files": {
+        "robot": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json",
+          "sha256": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd"
+        },
+        "mjcf": {
+          "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml",
+          "sha256": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d"
+        },
+        "server": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd",
+          "sha256": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e"
+        },
+        "spec": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot_spec.json",
+          "sha256": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7"
+        },
+        "robot_scene": {
+          "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot.tscn",
+          "sha256": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8"
+        }
+      }
+    },
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/source_references/godot_xml_roller_turn_brake_917001.json"
+  }
+]

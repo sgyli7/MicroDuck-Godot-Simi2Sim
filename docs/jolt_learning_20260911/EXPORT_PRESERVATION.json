@@ -1,0 +1,140 @@
+[
+  {
+    "case": "ground_pick",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "kick_left",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "kick_right",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_brake_1s",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_brake_2s",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_brake_3s",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_brake_5s",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_crouch",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_crouch_brake",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_release_3s",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_repeated_brake",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_space_3s",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roller_turn_brake",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "roulade",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "sitstand",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "standing",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "walking_back",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "walking_forward_long",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "walking_repeated_start",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "walking_strafe",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "walking_straight",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "walking_turn_left",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  },
+  {
+    "case": "walking_turn_right",
+    "max_action_abs": 0.0,
+    "same_task_success": true,
+    "same_brake_success": true
+  }
+]

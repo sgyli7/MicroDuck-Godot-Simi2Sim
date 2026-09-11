@@ -5,6 +5,7 @@ extends "res://physics_server.gd"
 const Brain = preload("res://standalone/play_brain.gd")
 const Contract = preload("res://standalone/policy_contract.gd")
 const Motion = preload("res://standalone/motion_control.gd")
+const BrakeTask = preload("res://standalone/brake_task_state.gd")
 const CONTROL_DT := 0.02
 const MOTOR_KT := 0.36601349688984386
 const SKILL_LABELS := {"standing":"站立","walking":"行走","sitstand":"坐下 / 起身",
@@ -15,6 +16,7 @@ var robot_config: Dictionary
 var bank: Dictionary = {}
 var brain = Brain.new()
 var motion = Motion.new()
+var brake_task = BrakeTask.new()
 var local_reply: Dictionary = {}
 var home := PackedFloat32Array()
 var last_action := PackedFloat32Array()
@@ -171,6 +173,10 @@ func _load_models() -> bool:
 		if state_mode != "" and (state_mode != "planar_com_velocity_height_v1" or skill != "roller"):
 			_fatal("Unknown or incompatible policy state input: "+state_mode)
 			return false
+		var task_mode: String = item.get("task_input", "")
+		if task_mode != "" and (task_mode != "brake_markov_68_v1" or skill != "roller" or state_mode == ""):
+			_fatal("Unknown or incompatible task observation: "+task_mode)
+			return false
 		var policy = ClassDB.instantiate("MicroDuckPolicy")
 		if not policy.load_model(FileAccess.get_file_as_bytes(item.path)):
 			_fatal("Cannot load "+skill+": "+policy.get_last_error())
@@ -181,12 +187,16 @@ func _load_models() -> bool:
 		if policy.get_metadata().get("sim2sim_brake_state_input", "") != state_mode:
 			_fatal("Policy state contract does not match deployment: "+skill)
 			return false
+		if policy.get_metadata().get("sim2sim_roller_task_input", "") != task_mode:
+			_fatal("Policy task contract does not match deployment: "+skill)
+			return false
 		bank[skill] = policy
 	return true
 
 func _reset_controller() -> void:
 	brain.reset_motion()
 	motion.reset()
+	brake_task.reset()
 	last_action.fill(0.0)
 	heading = [1.0,0.0]
 	fall_time = 0.0
@@ -195,7 +205,7 @@ func _reset_controller() -> void:
 		"report_bodies":_telemetry_bodies("standing")})
 	if not local_reply.get("missing",[]).is_empty():
 		_fatal("Reset references missing rigid bodies")
-	_report_mode = "research" if session.trace_path != "" else "lite"
+	_report_mode = "research" if session.trace_path != "" or _needs_task_telemetry() else "lite"
 
 func _physics_process(delta: float) -> void:
 	if not ready_to_run or get_tree().paused: return
@@ -306,6 +316,13 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 	var obs := Contract.observation(raw,body,last_action,command,home)
 	if item.get("state_input", "") == "planar_com_velocity_height_v1":
 		obs = Contract.brake_state_observation(obs,body)
+	if item.get("task_input", "") == "brake_markov_68_v1":
+		obs = brake_task.observe(obs,raw,robot_config.get("support_groups",[]),_t)
+		if obs.size()!=68:
+			_fatal("Task observation is missing wheel telemetry or has invalid time")
+			return false
+	else:
+		brake_task.reset()
 	var action: PackedFloat32Array = bank[skill].infer(obs)
 	if action.size() != 14:
 		_fatal("Inference failed for "+skill+": "+bank[skill].get_last_error())
@@ -328,7 +345,7 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 	var hud_status: String = SKILL_LABELS.get(skill,skill)
 	if fell and skill != "roulade": hud_status += " · 已失去平衡，按 0 复位"
 	var step := {"cmd":"step","ctrl":Array(ctrl),"n_substeps":4,"hud":hud_status,
-		"report":"research" if session.trace_path != "" else "lite"}
+		"report":"research" if session.trace_path != "" or _needs_task_telemetry() else "lite"}
 	_research_bodies = _telemetry_bodies(skill)
 	if out.started_skill in ["kick_left","kick_right"]:
 		step.place_ball=Contract.ball_position(body,out.started_skill)
@@ -336,8 +353,11 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 	session.steps += 1
 	return true
 
+func _needs_task_telemetry() -> bool:
+	return session.mode == "roller" and deployment.policies.roller.get("task_input","") != ""
+
 func _telemetry_bodies(skill: String) -> Array:
-	if session.trace_path == "": return []
+	if session.trace_path == "" and not _needs_task_telemetry(): return []
 	if skill == "roulade": return _bodies.keys()
 	var names: Array = []
 	for body_name in _bodies:

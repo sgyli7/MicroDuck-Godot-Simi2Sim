@@ -42,12 +42,15 @@ def prepare(models, *, fixtures=None, fixture_count=128, real_traces=(), control
         policy.check_dims(14)
         if policy.state_input and (skill!='roller' or policy.time_input_s or policy.heading_input or policy.yaw_memory_input):
             raise ValueError('State input requires the native roller actor only')
+        if policy.task_input and (skill!='roller' or not policy.state_input):
+            raise ValueError('Task input requires the roller velocity-state actor')
         target = destination/'policies'/source.name
         shutil.copyfile(source, target)
         shutil.copyfile(manifest_path, target.with_suffix('.manifest.json'))
         result['policies'][skill] = dict(path='res://runtime_assets/policies/'+source.name,
             sha256=hashlib.sha256(target.read_bytes()).hexdigest(), manifest=manifest,
-            time_input_s=policy.time_input_s, heading_input=policy.heading_input,state_input=policy.state_input)
+            time_input_s=policy.time_input_s, heading_input=policy.heading_input,state_input=policy.state_input,
+            task_input=policy.task_input,obs_dim=policy.obs_dim)
     for mode, name in [('walk','microduck_ball_stand_fix'),('roller','microduck_roller')]:
         cfg = load_robot_json(root/'robots'/f'{name}.json')
         ensure_godot_scene(cfg)
@@ -63,6 +66,13 @@ def prepare(models, *, fixtures=None, fixture_count=128, real_traces=(), control
             base_body=cfg.get('base_body','trunk_base'), ipos=base['ipos'], iquat=base['iquat_wxyz'],
             poses=capture_home_poses(cfg),
             spec_sha256=hashlib.sha256(spec_path.read_bytes()).hexdigest())
+        if mode=='roller':
+            from sim2sim.train.reset_poses import HomePoseSampler
+            from sim2sim.research.world import roller_support_groups
+            sampler=HomePoseSampler(cfg)
+            try:
+                result['robots'][mode]['support_groups']=roller_support_groups(sampler.mj.model,[b['name'] for b in spec['bodies']])
+            finally:sampler.close()
     result['roller_limits'] = vars(ROLLER_LIMITS)
     result['control_config']={} if control_config is None else json.loads(Path(control_config).read_text())
     result['ui_font']=prepare_ui_font(destination)
@@ -86,7 +96,8 @@ def prepare(models, *, fixtures=None, fixture_count=128, real_traces=(), control
             source=destination/'policies'/Path(item['path']).name
             options=ort.SessionOptions();options.intra_op_num_threads=1;options.inter_op_num_threads=1
             policy=ort.InferenceSession(str(source),options,providers=['CPUExecutionProvider'])
-            observations=rng.normal(0,.5,(fixture_count,61)).astype(np.float32)
+            width=item['obs_dim']
+            observations=rng.normal(0,.5,(fixture_count,width)).astype(np.float32)
             observations[0]=0;observations[:,3:6]=[0,0,-1]
             if item['time_input_s']:
                 observations[:,48]=np.linspace(0,1,fixture_count)
@@ -97,7 +108,7 @@ def prepare(models, *, fixtures=None, fixture_count=128, real_traces=(), control
             headings=[-np.pi,-np.pi+1e-7,-np.pi/2,0.,np.pi/2,np.pi-1e-7,np.pi] if item['heading_input'] else [None]
             for command in commands:
                 for angle in headings:
-                    boundary=np.zeros(61,np.float32);boundary[5]=-1.;boundary[48]=command
+                    boundary=np.zeros(width,np.float32);boundary[5]=-1.;boundary[48]=command
                     if angle is not None:boundary[49:51]=[np.sin(angle),np.cos(angle)]
                     boundaries.append(boundary)
             observations=np.concatenate([observations,np.array(boundaries,np.float32)])

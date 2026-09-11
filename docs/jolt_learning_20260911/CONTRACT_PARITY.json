@@ -1,0 +1,44 @@
+[
+  {
+    "case": "roller_brake_1s",
+    "rows": [
+      400,
+      400
+    ],
+    "max_abs": {
+      "action": 0.0,
+      "ctrl": 0.0,
+      "command": 0.0,
+      "base_obs": 0.0
+    },
+    "passed": true
+  },
+  {
+    "case": "roller_crouch_brake",
+    "rows": [
+      800,
+      800
+    ],
+    "max_abs": {
+      "action": 0.0,
+      "ctrl": 0.0,
+      "command": 0.0,
+      "base_obs": 0.0
+    },
+    "passed": true
+  },
+  {
+    "case": "roller_turn_brake",
+    "rows": [
+      550,
+      550
+    ],
+    "max_abs": {
+      "action": 0.0,
+      "ctrl": 0.0,
+      "command": 0.0,
+      "base_obs": 0.0
+    },
+    "passed": true
+  }
+]

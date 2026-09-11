@@ -51,7 +51,7 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None,roller_contract=False,yaw_memory_input=False,state_input=''):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None,roller_contract=False,yaw_memory_input=False,state_input='',roller_objective='legacy',task_input=''):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         if environment_state is not None:
@@ -74,9 +74,9 @@ class Vector:
             self.roll_library=RollStarts();self.entry_counts["midroll"]=0
         try:
             for i in range(num_envs):
-                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source,roller_contract=roller_contract,yaw_memory_input=yaw_memory_input,state_input=state_input))
+                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source,roller_contract=roller_contract,yaw_memory_input=yaw_memory_input,state_input=state_input,task_input=task_input))
             self.reset_worlds(range(num_envs))
-            self.objectives=[Objective(w,weights,reward_params) for w in self.worlds]
+            self.objectives=[Objective(w,weights,reward_params,roller_objective) for w in self.worlds]
         except BaseException:
             self.close();raise
 
@@ -164,6 +164,9 @@ def run(args):
     torch.set_num_threads(args.threads);seed_all(args.seed)
     resume_checkpoint=torch.load(args.resume,weights_only=False) if args.resume else None
     if resume_checkpoint is not None:
+        for key,default in [('roller_objective','legacy'),('mask_task_state',False),('action_basis','')]:
+            if getattr(args,key,default)!=resume_checkpoint['config'].get(key,default):
+                raise ValueError('Resume cannot change '+key+'; start a separately recorded experiment')
         recorded_gate=resume_checkpoint['config'].get('time_gate','')
         if not args.time_gate:args.time_gate=recorded_gate
         if args.time_gate!=recorded_gate:raise ValueError('Resume cannot change the actor time gate')
@@ -195,7 +198,7 @@ def run(args):
     config=vars(args).copy();config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=protocol)
     config["code_sha256"]={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
     package=Path(__file__).parents[1]
-    for name in ['obs.py','coords.py','policy_time.py','policy_memory.py','policy_state.py','play_input.py','backends/mujoco_backend.py','backends/godot_backend.py']:
+    for name in ['obs.py','coords.py','policy_time.py','policy_memory.py','policy_state.py','policy_task_state.py','play_input.py','backends/mujoco_backend.py','backends/godot_backend.py']:
         config['code_sha256']['sim2sim/'+name]=hashlib.sha256((package/name).read_bytes()).hexdigest()
     (out/"config.json").write_text(json.dumps(config,indent=2))
     template=Path(args.template) if args.template else source
@@ -203,10 +206,11 @@ def run(args):
     time_gate=None if not args.time_gate else tuple(float(x) for x in args.time_gate.split(','))
     if args.command_gate and (task.name!='roller' or not args.roller_contract):
         raise ValueError('Negative-throttle gate requires the native roller command contract')
-    policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate,command_gate=args.command_gate)
+    policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate,command_gate=args.command_gate,mask_task_state=getattr(args,'mask_task_state',False),action_basis=getattr(args,'action_basis',''))
     policy.task_name=task.name
     policy.roller_contract=args.roller_contract
-    critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s,heading_input=policy.anchor.heading_input,yaw_memory_input=policy.anchor.yaw_memory_input,state_input=policy.anchor.state_input)
+    critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s,heading_input=policy.anchor.heading_input,yaw_memory_input=policy.anchor.yaw_memory_input,state_input=policy.anchor.state_input,input_dim=policy.anchor.obs_dim)
+    if policy.anchor.task_input and args.symmetry_weight:raise ValueError('Task-state symmetry is not defined')
     if policy.anchor.yaw_memory_input and args.symmetry_weight:raise ValueError('Walking memory needs its own reflection contract')
     obs_sign=observation_sign(task.name,policy.anchor.heading_input,policy.anchor.yaw_memory_input,policy.anchor.state_input)
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
@@ -234,13 +238,14 @@ def run(args):
             environment_state=dict(seed=prior.get('seed',args.seed),count=initial_iteration*prior.get('envs',16)*prior.get('steps',512)+prior.get('envs',16),rng=None)
             config['environment_resume']='legacy_disjoint_episode_seed_range'
         else:config['environment_resume']='restored_generator_and_episode_counter'
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank,args.roller_contract,policy.anchor.yaw_memory_input,policy.anchor.state_input)
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank,args.roller_contract,policy.anchor.yaw_memory_input,policy.anchor.state_input,getattr(args,'roller_objective','legacy'),policy.anchor.task_input)
     if env.entry_bank is not None:config['entry_bank_sha256']=env.entry_bank.hashes
     if args.entry_source:config['entry_source_sha256']=hashlib.sha256(Path(args.entry_source).read_bytes()).hexdigest()
     config["time_input_s"]=policy.anchor.time_input_s
     config["heading_input"]=policy.anchor.heading_input
     config['yaw_memory_input']=policy.anchor.yaw_memory_input
     config['state_input']=policy.anchor.state_input
+    config['task_input']=policy.anchor.task_input
     config['environment_seed']=env.seed
     eval_entry=args.eval_entry or ("both" if args.entry=="mixed" else args.entry)
     eval_seeds=range(getattr(args,'eval_seed_start',100),getattr(args,'eval_seed_start',100)+getattr(args,'eval_seeds',3))
@@ -369,6 +374,8 @@ def run(args):
                 last_eval=time.time()
             if rejected and ao.param_groups[0]["lr"]<1e-6:status="repeated_kl_rejection";break
         save_checkpoint(out/"latest.pt",policy,critic,ao,co,iteration,config,env)
+        if args.iterations and iteration>=initial_iteration+args.iterations and status=='time_limit':
+            status='iteration_limit'
         if _STOP_REQUESTED:status="interrupted_checkpointed"
         export=export_policy(policy,out/"final.onnx")
         report=parity(policy,export,n=1000)
@@ -412,6 +419,9 @@ def main():
     p.add_argument("--scene-robot",choices=['microduck','microduck_ball','microduck_ball_stand_fix','microduck_roller'])
     p.add_argument("--eval-scene-robot",choices=['microduck','microduck_ball','microduck_ball_stand_fix'],help='Explicit separate evaluation scene; omitted keeps the original task scene')
     p.add_argument("--roller-contract",choices=['native'],help='Use native push/coast/brake and relative-heading tasks for roller')
+    p.add_argument('--roller-objective',choices=['legacy','command_heading_v1','stop_hold_v1'],default='legacy',help='Explicit objective version; legacy retains sealed experiment semantics')
+    p.add_argument('--mask-task-state',action='store_true',help='68D actor ablation: keep architecture and critic fixed but hide the seven added actor features')
+    p.add_argument('--action-basis',choices=['','brake_sagittal_v1'],default='',help='Restrict brake learning and exploration to hip pitch and knee targets; preserve the anchor elsewhere')
     p.add_argument("--roll-starts",type=float,default=0.,help="Training-only fraction of source mid-roll resets")
     p.add_argument("--symmetry-weight",type=float,default=0.,help="Bilateral actor consistency loss using the upstream observation/action transform")
     p.add_argument("--reward-params",default="{}",help="Explicit tracking-kernel variances")

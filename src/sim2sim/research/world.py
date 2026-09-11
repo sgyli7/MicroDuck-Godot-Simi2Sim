@@ -32,7 +32,7 @@ def roller_support_groups(model,names):
     return groups
 
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False,state_input=''):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False,state_input='',task_input=''):
         self.task, self.backend_name = task, backend
         self.time_input_s=float(time_input_s);self.time_offset=0.
         self.heading_input=bool(heading_input)
@@ -41,6 +41,12 @@ class World:
         self.yaw_memory=YawDriftMemory() if yaw_memory_input else None
         self.entry_source=None if entry_source is None else Path(entry_source)
         self.state_input=state_input
+        from sim2sim.policy_task_state import BrakeTaskState, task_input as validate_task_input, TASK_STATE_KEY
+        from sim2sim.policy_state import BRAKE_STATE_V1
+        validate_task_input({TASK_STATE_KEY:task_input})
+        if task_input and state_input!=BRAKE_STATE_V1:
+            raise ValueError('Task observation requires declared velocity-state input')
+        self.task_state=BrakeTaskState() if task_input else None
         if state_input and (task.name!='roller' or not roller_contract or time_input_s or heading_input or yaw_memory_input):
             raise ValueError('Residual state input requires the native roller contract only')
         self.roller_contract=bool(roller_contract)
@@ -94,6 +100,7 @@ class World:
 
     def reset(self, seed, condition="default", randomize=True, entry_speed=None, phase_start=0., q_override=None):
         if self.yaw_memory is not None:self.yaw_memory.reset()
+        if self.task_state is not None:self.task_state.reset()
         self.pending_ball=None
         self.roll_start=None
         self.time_offset=0.
@@ -167,6 +174,7 @@ class World:
         obs=build_obs(self.state,self.last,self.command(),self.home)
         from sim2sim.policy_state import inject_state
         obs=inject_state(obs,self.state,self.state_input)
+        if self.task_state is not None:obs=self.task_state.observe(obs,self.features['contact'],self.t)
         return obs if self.yaw_memory is None else self.yaw_memory.observe(obs,stamp=self.t)
 
     def command(self):
@@ -187,6 +195,10 @@ class World:
     def send(self, action, capture_path=None):
         if not np.isfinite(action).all(): raise FloatingPointError("nonfinite policy action")
         self.executed_command=self.command()
+        if self.roller_contract:
+            # The actor receives a relative heading error, including keyboard
+            # commands. Capture its world target before applying this action.
+            self.executed_heading_target=self.features['yaw']+float(self.executed_command[2])
         self.old_last=self.last.copy()
         self.last=np.asarray(action,np.float32).copy()
         ctrl=self.home+self.last
@@ -318,6 +330,7 @@ class World:
     def finish_standing_entry(self):
         self.t=0.;self.time_offset=0.
         if self.yaw_memory is not None:self.yaw_memory.reset()
+        if self.task_state is not None:self.task_state.reset()
         self.initial_xy=self.features["xy"].copy()
         yaw=self.features["yaw"];self.heading=np.array([math.cos(yaw),math.sin(yaw)])
         if self.roller_contract:

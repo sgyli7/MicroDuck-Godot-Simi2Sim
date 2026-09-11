@@ -1,0 +1,278 @@
+[
+  {
+    "name": "r0_legacy_s71",
+    "passes": 43,
+    "regressions": 8,
+    "cases": {
+      "roller_brake_1s": [
+        5,
+        5
+      ],
+      "roller_brake_2s": [
+        7,
+        7
+      ],
+      "roller_brake_3s": [
+        8,
+        7
+      ],
+      "roller_brake_5s": [
+        8,
+        4
+      ],
+      "roller_crouch_brake": [
+        7,
+        7
+      ],
+      "roller_release_3s": [
+        0,
+        0
+      ],
+      "roller_repeated_brake": [
+        8,
+        5
+      ],
+      "roller_space_3s": [
+        0,
+        0
+      ],
+      "roller_turn_brake": [
+        8,
+        8
+      ]
+    },
+    "falls": 0,
+    "reverse": 1,
+    "late": 13
+  },
+  {
+    "name": "r0_command_heading_v1_s71",
+    "passes": 41,
+    "regressions": 10,
+    "cases": {
+      "roller_brake_1s": [
+        5,
+        4
+      ],
+      "roller_brake_2s": [
+        7,
+        6
+      ],
+      "roller_brake_3s": [
+        8,
+        6
+      ],
+      "roller_brake_5s": [
+        8,
+        5
+      ],
+      "roller_crouch_brake": [
+        7,
+        7
+      ],
+      "roller_release_3s": [
+        0,
+        0
+      ],
+      "roller_repeated_brake": [
+        8,
+        5
+      ],
+      "roller_space_3s": [
+        0,
+        0
+      ],
+      "roller_turn_brake": [
+        8,
+        8
+      ]
+    },
+    "falls": 0,
+    "reverse": 0,
+    "late": 15
+  },
+  {
+    "name": "r0_legacy_s72",
+    "passes": 50,
+    "regressions": 1,
+    "cases": {
+      "roller_brake_1s": [
+        5,
+        5
+      ],
+      "roller_brake_2s": [
+        7,
+        7
+      ],
+      "roller_brake_3s": [
+        8,
+        8
+      ],
+      "roller_brake_5s": [
+        8,
+        8
+      ],
+      "roller_crouch_brake": [
+        7,
+        7
+      ],
+      "roller_release_3s": [
+        0,
+        0
+      ],
+      "roller_repeated_brake": [
+        8,
+        7
+      ],
+      "roller_space_3s": [
+        0,
+        0
+      ],
+      "roller_turn_brake": [
+        8,
+        8
+      ]
+    },
+    "falls": 0,
+    "reverse": 2,
+    "late": 6
+  },
+  {
+    "name": "r0_command_heading_v1_s72",
+    "passes": 44,
+    "regressions": 7,
+    "cases": {
+      "roller_brake_1s": [
+        5,
+        2
+      ],
+      "roller_brake_2s": [
+        7,
+        7
+      ],
+      "roller_brake_3s": [
+        8,
+        7
+      ],
+      "roller_brake_5s": [
+        8,
+        8
+      ],
+      "roller_crouch_brake": [
+        7,
+        7
+      ],
+      "roller_release_3s": [
+        0,
+        0
+      ],
+      "roller_repeated_brake": [
+        8,
+        6
+      ],
+      "roller_space_3s": [
+        0,
+        0
+      ],
+      "roller_turn_brake": [
+        8,
+        7
+      ]
+    },
+    "falls": 0,
+    "reverse": 2,
+    "late": 12
+  },
+  {
+    "name": "r0_legacy_s73",
+    "passes": 47,
+    "regressions": 5,
+    "cases": {
+      "roller_brake_1s": [
+        5,
+        3
+      ],
+      "roller_brake_2s": [
+        7,
+        8
+      ],
+      "roller_brake_3s": [
+        8,
+        7
+      ],
+      "roller_brake_5s": [
+        8,
+        8
+      ],
+      "roller_crouch_brake": [
+        7,
+        7
+      ],
+      "roller_release_3s": [
+        0,
+        0
+      ],
+      "roller_repeated_brake": [
+        8,
+        6
+      ],
+      "roller_space_3s": [
+        0,
+        0
+      ],
+      "roller_turn_brake": [
+        8,
+        8
+      ]
+    },
+    "falls": 0,
+    "reverse": 1,
+    "late": 9
+  },
+  {
+    "name": "r0_command_heading_v1_s73",
+    "passes": 41,
+    "regressions": 10,
+    "cases": {
+      "roller_brake_1s": [
+        5,
+        1
+      ],
+      "roller_brake_2s": [
+        7,
+        7
+      ],
+      "roller_brake_3s": [
+        8,
+        8
+      ],
+      "roller_brake_5s": [
+        8,
+        7
+      ],
+      "roller_crouch_brake": [
+        7,
+        7
+      ],
+      "roller_release_3s": [
+        0,
+        0
+      ],
+      "roller_repeated_brake": [
+        8,
+        5
+      ],
+      "roller_space_3s": [
+        0,
+        0
+      ],
+      "roller_turn_brake": [
+        8,
+        6
+      ]
+    },
+    "falls": 0,
+    "reverse": 2,
+    "late": 15
+  }
+]

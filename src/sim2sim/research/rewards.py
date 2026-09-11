@@ -1,5 +1,6 @@
 """Task-specific training objectives; never used by the physical evaluator."""
 import math
+from collections import deque
 import numpy as np
 from sim2sim.train.rewards import sit_target_q
 from .tasks import DT,CROUCH_STAND,CROUCH_DOWN,crouch_blend
@@ -7,7 +8,12 @@ from .tasks import DT,CROUCH_STAND,CROUCH_DOWN,crouch_blend
 EXTRA_DIM=26
 
 class Objective:
-    def __init__(self,w,weights=None,params=None):
+    def __init__(self,w,weights=None,params=None,roller_objective='legacy'):
+        if roller_objective not in ('legacy','command_heading_v1','stop_hold_v1'):
+            raise ValueError('Unknown roller objective: '+roller_objective)
+        if roller_objective!='legacy' and (w.task.name!='roller' or not getattr(w,'roller_contract',False)):
+            raise ValueError('Versioned roller objective requires the native roller contract')
+        self.roller_objective=roller_objective
         self.w=w;self.weights=weights or {};self.params=params or {};self.reset()
         if set(self.params)-{"velocity_variance","yaw_variance","ball_speed_target","brake_velocity_variance"}:raise ValueError("Unknown reward parameter")
         if 'brake_velocity_variance' in self.params and (w.task.name!='roller' or not getattr(w,'roller_contract',False)):
@@ -27,6 +33,10 @@ class Objective:
         self.ball_best=0.;self.yaw0=w.features["yaw"];self.start_xy=w.features["xy"].copy()
         self.previous_score=0.
         self.was_idle=False
+        self.brake_started=None
+        self.brake_speeds=deque(maxlen=10)
+        self.low_speed_stability=deque(maxlen=50)
+        self.stop_paid=False
         if getattr(w,"roll_start",None) is not None:
             self.net,self.frontier,pivot,inverted=w.roll_start
             self.pivot=bool(pivot);self.inverted=bool(inverted)
@@ -51,7 +61,8 @@ class Objective:
         pose=float(np.exp(-np.mean((w.state.q-w.home)**2)/.12))
         terms={"action_rate":-.08*rate,"joint_speed":-.00002*float(np.sum(w.state.qd**2))}
         if name=='roller' and getattr(w,'roller_contract',False):
-            delta=w.roller_target_yaw-f['yaw'];error=math.atan2(math.sin(delta),math.cos(delta))
+            target=w.roller_target_yaw if self.roller_objective=='legacy' else w.executed_heading_target
+            delta=target-f['yaw'];error=math.atan2(math.sin(delta),math.cos(delta))
             throttle=float(cmd[0]);speed=float(np.linalg.norm(self.smooth[:2]))
             terms.update(push=10*max(0.,throttle)*np.tanh(max(0.,self.smooth[0])/.3),
                 brake=8*max(0.,-throttle)*np.exp(-speed**2/self.params.get('brake_velocity_variance',.09)),
@@ -61,6 +72,30 @@ class Objective:
                 yaw_rate_cost=-.02*float(f['gyro'][2]**2),pose=.2*pose)
             if 'brake_speed_cost' in self.weights:
                 terms['brake_speed_cost']=-speed*float(throttle<-.01)
+            if self.roller_objective=='stop_hold_v1':
+                braking=throttle<-.01
+                if not braking:
+                    self.brake_started=None;self.brake_speeds.clear()
+                    self.low_speed_stability.clear();self.stop_paid=False
+                elif self.brake_started is None:
+                    self.brake_started=t-DT
+                elapsed=0. if self.brake_started is None else t-self.brake_started
+                self.brake_speeds.append(float(np.linalg.norm(f['vel'][:2])))
+                average=float(np.mean(self.brake_speeds))
+                stable=f['tilt']<15 and f['z']>.08 and np.sum(f['contact'])>0
+                if braking and len(self.brake_speeds)==10 and average<.05:
+                    self.low_speed_stability.append(bool(stable))
+                else:self.low_speed_stability.clear()
+                hold=len(self.low_speed_stability)/50.
+                stable_fraction=float(np.mean(self.low_speed_stability)) if hold else 0.
+                confirmed=hold>=1. and stable_fraction>=.9
+                # A linear speed objective retains a gradient near zero. The
+                # hold phase keeps running after confirmation; no early reset.
+                terms['brake']=8*max(0.,-throttle)*max(-2.,1.-average/.3)
+                terms['brake_clock']=-2*float(braking)*min(3.,elapsed)*min(1.,average/.05)
+                terms['stop_hold']=8*float(braking)*hold*stable_fraction
+                terms['stop_confirmed']=20*float(confirmed and not self.stop_paid and elapsed<=2.+1e-9)
+                if confirmed:self.stop_paid=True
         elif name in ("standing","walking","roller"):
             target=cmd[:3] if name!="standing" else np.zeros(3)
             v_err=float(np.sum((self.smooth[:2]-target[:2])**2))

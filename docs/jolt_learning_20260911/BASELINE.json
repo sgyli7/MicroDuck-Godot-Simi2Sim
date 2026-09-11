@@ -1,0 +1,140 @@
+{
+  "ground_pick": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 0
+  },
+  "kick_left": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 0
+  },
+  "kick_right": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 0
+  },
+  "roller_brake_1s": {
+    "total": 8,
+    "task": 0,
+    "brake": 5,
+    "falls": 0
+  },
+  "roller_brake_2s": {
+    "total": 8,
+    "task": 0,
+    "brake": 7,
+    "falls": 0
+  },
+  "roller_brake_3s": {
+    "total": 8,
+    "task": 0,
+    "brake": 8,
+    "falls": 0
+  },
+  "roller_brake_5s": {
+    "total": 8,
+    "task": 0,
+    "brake": 8,
+    "falls": 0
+  },
+  "roller_crouch": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 0
+  },
+  "roller_crouch_brake": {
+    "total": 8,
+    "task": 0,
+    "brake": 7,
+    "falls": 0
+  },
+  "roller_release_3s": {
+    "total": 8,
+    "task": 0,
+    "brake": 0,
+    "falls": 0
+  },
+  "roller_repeated_brake": {
+    "total": 8,
+    "task": 0,
+    "brake": 8,
+    "falls": 0
+  },
+  "roller_space_3s": {
+    "total": 8,
+    "task": 0,
+    "brake": 0,
+    "falls": 0
+  },
+  "roller_turn_brake": {
+    "total": 8,
+    "task": 0,
+    "brake": 8,
+    "falls": 0
+  },
+  "roulade": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 8
+  },
+  "sitstand": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 0
+  },
+  "standing": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 0
+  },
+  "walking_back": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 0
+  },
+  "walking_forward_long": {
+    "total": 8,
+    "task": 1,
+    "brake": 0,
+    "falls": 0
+  },
+  "walking_repeated_start": {
+    "total": 8,
+    "task": 0,
+    "brake": 0,
+    "falls": 0
+  },
+  "walking_strafe": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 0
+  },
+  "walking_straight": {
+    "total": 8,
+    "task": 8,
+    "brake": 0,
+    "falls": 0
+  },
+  "walking_turn_left": {
+    "total": 8,
+    "task": 0,
+    "brake": 0,
+    "falls": 0
+  },
+  "walking_turn_right": {
+    "total": 8,
+    "task": 0,
+    "brake": 0,
+    "falls": 0
+  }
+}

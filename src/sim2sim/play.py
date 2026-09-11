@@ -249,6 +249,18 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit(f"walking ONNX missing: {args.walking}")
     paths = policy_paths(local_ppo=args.local_ppo, roller=args.roller, walking=args.walking)
     bank = load_bank(paths, home_len=int(home.size))
+    task_contacts = None
+    if any(actor.task_state is not None for actor in bank.values()):
+        if not args.roller:
+            raise PolicyShapeError('Roller task-state policies require the roller robot')
+        from sim2sim.train.reset_poses import HomePoseSampler
+        from sim2sim.research.world import roller_support_groups
+        sampler = HomePoseSampler(cfg)
+        try:
+            task_contacts = roller_support_groups(sampler.mj.model,
+                [body['name'] for body in json.loads(spec.read_text())['bodies']])
+        finally:
+            sampler.mj.close()
     if args.roller:
         lim = ROLLER_LIMITS
         use_stand = True
@@ -302,7 +314,8 @@ def main(argv: list[str] | None = None) -> int:
     press_order: list[str] = []
     taps: list[str] = []
     fall_acc = 0.0
-    st = backend.reset(ctrl=home, bodies=poses)
+    report_bodies = None if task_contacts is None else sum(task_contacts, [])
+    st = backend.reset(ctrl=home, bodies=poses, report_bodies=report_bodies)
     next_t = time.perf_counter()
     hz_n = 0
     hz_t0 = time.perf_counter()
@@ -352,7 +365,7 @@ def main(argv: list[str] | None = None) -> int:
                 active_policy = None
                 last_action[:] = 0.0
                 fall_acc = 0.0
-                st = backend.reset(ctrl=home, bodies=poses)
+                st = backend.reset(ctrl=home, bodies=poses, report_bodies=report_bodies)
                 held, taps = set(), []
                 next_t = time.perf_counter()
                 continue
@@ -378,6 +391,10 @@ def main(argv: list[str] | None = None) -> int:
             obs = build_obs(st, last_action, cmd, home=home)
             from sim2sim.policy_state import inject_state
             obs=inject_state(obs,st,sess.state_input)
+            if sess.task_state is not None:
+                from sim2sim.policy_task_state import contacts_from_raw
+                obs = sess.task_state.observe(obs,
+                    contacts_from_raw(st.extra['raw'], task_contacts), st.t)
             t_inf = time.perf_counter()
             try:
                 action = sess.infer(obs)
@@ -388,7 +405,7 @@ def main(argv: list[str] | None = None) -> int:
                 active_policy = None
                 last_action[:] = 0.0
                 fall_acc = 0.0
-                st = backend.reset(ctrl=home, bodies=poses)
+                st = backend.reset(ctrl=home, bodies=poses, report_bodies=report_bodies)
                 held, taps = set(), []
                 next_t = time.perf_counter()
                 continue
@@ -397,7 +414,8 @@ def main(argv: list[str] | None = None) -> int:
             ctrl = home + last_action * scale
             t_step = time.perf_counter()
             ball = kick_ball_position(st, out.started_skill) if out.started_skill in ("kick_left", "kick_right") else None
-            st = backend.step(ctrl, n_substeps=decimation, hud=out.status, place_ball=ball)
+            st = backend.step(ctrl, n_substeps=decimation, hud=out.status, place_ball=ball,
+                report='research' if task_contacts is not None else None)
             step_ms += (time.perf_counter() - t_step) * 1000.0
             raw = st.extra.get("raw") or {}
             held = {str(x) for x in (raw.get("held") or [])}

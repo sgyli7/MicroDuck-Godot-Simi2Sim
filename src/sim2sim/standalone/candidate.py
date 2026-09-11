@@ -26,10 +26,17 @@ def stage(incumbent,overrides,output):
     output.mkdir(parents=True,exist_ok=False);records={}
     for skill,task in TASKS.items():
         original=incumbent/task.previous
-        source=Path(overrides.get(skill,original)).resolve();OnnxPolicy(source).check_dims(14)
+        source=Path(overrides.get(skill,original)).resolve()
+        actor=OnnxPolicy(source);actor.check_dims(14)
         target=output/task.previous;shutil.copyfile(source,target)
         manifest=json.loads(original.with_suffix('.manifest.json').read_text())
         if skill in overrides:
+            manifest['obs_len']=actor.obs_dim
+            manifest['action_len']=actor.act_dim
+            if actor.task_input:
+                manifest['observation_extension']=actor.task_input
+            else:
+                manifest.pop('observation_extension',None)
             manifest['research']=dict(skill=skill,source=str(source),sha256=checksum(source),
                 parent_sha256=checksum(original),status='unpromoted_candidate')
             manifest['training']=dict(source=str(source),parent_sha256=checksum(original),role='targeted_experiment')

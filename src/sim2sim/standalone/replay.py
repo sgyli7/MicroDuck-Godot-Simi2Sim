@@ -39,6 +39,7 @@ def bank_and_brain(config, mode, control_config=None, project=None):
         has_kick_right=not roller,has_roulade=not roller,has_roller_crouch=roller,has_stand_hold=not roller,
         lim=limits)
     brain.motion_control=MotionControl(control_config.get(mode,{}))
+    brain.roller_support_groups=config['robots'][mode].get('support_groups')
     return bank,brain
 
 
@@ -57,6 +58,12 @@ def control(brain,bank,state,held,taps,order,last,home,heading,mode):
     obs=build_obs(state,last,cmd,home)
     from sim2sim.policy_state import inject_state
     obs=inject_state(obs,state,actor.state_input)
+    if actor.task_state is not None:
+        from sim2sim.policy_task_state import contacts_from_raw
+        contacts=contacts_from_raw(state.extra['raw'],brain.roller_support_groups)
+        obs=actor.task_state.observe(obs,contacts,state.t)
+    elif 'roller' in bank:
+        bank['roller'].reset_context()
     action=actor.infer(obs)
     ball=kick_ball_position(state,out.started_skill) if out.started_skill in ('kick_left','kick_right') else None
     return skill,cmd,obs,action,ball,out
@@ -66,7 +73,7 @@ def raw_state(raw, robot):
     pos,quat=inertial_to_body(raw['base_pos'],raw['base_quat'],robot['ipos'],robot['iquat'])
     return SimState(t=raw['t'],q=np.array(raw['q']),qd=np.array(raw['qd']),base_pos=pos,
         base_quat_wxyz=quat,base_linvel=np.array(raw['base_linvel']),
-        base_angvel_local=np.array(raw['base_angvel_local']))
+        base_angvel_local=np.array(raw['base_angvel_local']),extra={'raw':raw})
 
 
 def shadow(trace,project=None):
@@ -84,6 +91,7 @@ def shadow(trace,project=None):
             previous_mode=mode;previous_episode_t=-1.
         elif row['episode_t']<previous_episode_t:
             brain.reset_motion();brain.motion_control.reset();last[:]=0;heading[:]=[1.,0.]
+            for actor in bank.values():actor.reset_context()
         previous_episode_t=row['episode_t']
         state=raw_state(row['raw'],robot)
         skill,cmd,obs,action,_,_=control(brain,bank,state,row['held'],row['taps'],row['order'],last,home,heading,mode)
@@ -119,8 +127,11 @@ def reference(replay_path, output):
             skill,cmd,obs,action,ball,out=control(brain,bank,state,held,taps,order,last,home,heading,mode)
             if out.switch_robot:raise ValueError('Reference runner: split robot-switch cases into episodes')
             if out.reset:
-                state=backend.reset(ctrl=home,bodies=robot['poses']);brain.reset_motion();last[:]=0
+                state=backend.reset(ctrl=home,bodies=robot['poses'],
+                    report_bodies=[b['name'] for b in backend.spec['bodies']])
+                brain.reset_motion();last[:]=0
                 brain.motion_control.reset()
+                for actor in bank.values():actor.reset_context()
                 continue
             ctrl=home+action*robot['action_scale']
             rows.append(dict(t=elapsed,mode=mode,skill=skill,command=cmd.tolist(),obs=obs.tolist(),

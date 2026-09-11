@@ -59,7 +59,7 @@ uv sync --extra train
 ./MicroDuck.arm64 --headless --fixed-fps 200 -- --replay=/absolute/case.json --trace=/absolute/trace.json
 ```
 
-回放 JSON 使用 `mode`、`seconds`、`segments`；每段以 `at` 秒定义 `held`、`taps` 和可选 `order`。测试入口支持 `--seed`、`--roller`、`--render-fps`。物理固定 200 Hz，每四次物理积分后生成下一条观测，策略固定 50 Hz；渲染帧率不改变这个采样顺序。完整轨迹记录请求命令、控制后命令、61 维观测、上次动作、当前动作和执行目标。
+回放 JSON 使用 `mode`、`seconds`、`segments`；每段以 `at` 秒定义 `held`、`taps` 和可选 `order`。测试入口支持 `--seed`、`--roller`、`--render-fps`。物理固定 200 Hz，每四次物理积分后生成下一条观测，策略固定 50 Hz；渲染帧率不改变这个采样顺序。完整轨迹记录请求命令、控制后命令、模型声明的完整观测、上次动作、当前动作和执行目标。
 
 训练环境中的评分、原生回放和 Python 影子对照入口：
 
@@ -103,3 +103,7 @@ Python/TCP 保留为离线训练工具；其世界、物理脚本、坐标转换
 只有明确声明 `sim2sim_brake_state_input=planar_com_velocity_height_v1` 的轮滑候选使用新状态。obs[58:61] 分别为沿当前朝向的平移 COM 速度、侧向 COM 速度（m/s）和躯干 body 高度（m）。坐标计算使用双精度，最后转为 float32；观测总维度仍为 61。
 
 一个输入屏蔽节点让原 ONNX 锚点的这三个位置继续读取零，只有新增残差可见状态。原图节点及内部 DOUBLE 张量保持不变；残差仅在负油门启用，推进和中性动作保留原图。训练、Python Play、离线对照和 GDScript 同步解释声明，未知声明或部署／模型不一致会失败。该契约是否有效以配对实验为准，不能仅凭新增信息推断模型改善。
+
+新一轮路线试验还支持显式声明 `sim2sim_roller_task_input=brake_markov_68_v1` 的 **68 维轮滑模型**。在已有速度／高度输入之上，追加制动计时、连续低速时长、0.2 秒速度历史与左右轮接地，共七维；具体索引及因果采样规则见 [任务学习协议](docs/jolt_learning_20260911/PLAN.md)。旧 61 维模型继续按原契约执行。68 维模型必须同时声明对应元数据，且部署的 `obs_dim`、sidecar 的 `obs_len` 与模型一致。
+
+该任务状态在物理复位和离开轮滑策略时清除。同一仿真时刻的重复读取不会推进计时；没有录制轨迹时也必须提供轮接地传感信息。原生扩展、Python 交互和离线对照均支持这一契约；缺少所需传感信息会使该次运行失败。68 维部署能力本身不构成模型质量改善，候选仍需通过原有配对验收。

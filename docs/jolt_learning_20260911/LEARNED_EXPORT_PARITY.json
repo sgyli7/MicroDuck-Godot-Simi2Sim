@@ -1,0 +1,8 @@
+{
+  "random_max_abs": 0.0,
+  "random_batch_max_abs": 0.0,
+  "realistic_max_abs": 0.0,
+  "realistic_batch_max_abs": 0.0,
+  "threshold": 1e-05,
+  "passed": true
+}
