@@ -150,7 +150,9 @@ class Vector:
             except Exception:pass
 
 def rng_state():
-    return {"python":random.getstate(),"numpy":np.random.get_state(),"torch":torch.get_rng_state()}
+    state={"python":random.getstate(),"numpy":np.random.get_state(),"torch":torch.get_rng_state()}
+    if torch.cuda.is_initialized():state['cuda']=torch.cuda.get_rng_state_all()
+    return state
 
 def save_checkpoint(path,policy,critic,ao,co,iteration,config,environment=None):
     path=Path(path)
@@ -162,7 +164,7 @@ def save_checkpoint(path,policy,critic,ao,co,iteration,config,environment=None):
 
 def run(args):
     torch.set_num_threads(args.threads);seed_all(args.seed)
-    resume_checkpoint=torch.load(args.resume,weights_only=False) if args.resume else None
+    resume_checkpoint=torch.load(args.resume,weights_only=False,map_location='cpu') if args.resume else None
     if resume_checkpoint is not None:
         for key,default in [('roller_objective','legacy'),('mask_task_state',False),('action_basis',''),
                             ('teacher_mode',''),('teacher_replay',None),('teacher_weight',.02),('teacher_samples',384)]:
@@ -199,7 +201,7 @@ def run(args):
     config=vars(args).copy();config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=protocol)
     config["code_sha256"]={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
     package=Path(__file__).parents[1]
-    for name in ['obs.py','coords.py','policy_time.py','policy_memory.py','policy_state.py','policy_task_state.py','play_input.py','backends/mujoco_backend.py','backends/godot_backend.py']:
+    for name in ['obs.py','coords.py','godot_proc.py','policy_time.py','policy_memory.py','policy_state.py','policy_task_state.py','play_input.py','backends/mujoco_backend.py','backends/godot_backend.py']:
         config['code_sha256']['sim2sim/'+name]=hashlib.sha256((package/name).read_bytes()).hexdigest()
     (out/"config.json").write_text(json.dumps(config,indent=2))
     template=Path(args.template) if args.template else source
@@ -221,6 +223,15 @@ def run(args):
     if policy.anchor.task_input and args.symmetry_weight:raise ValueError('Task-state symmetry is not defined')
     if policy.anchor.yaw_memory_input and args.symmetry_weight:raise ValueError('Walking memory needs its own reflection contract')
     obs_sign=observation_sign(task.name,policy.anchor.heading_input,policy.anchor.yaw_memory_input,policy.anchor.state_input)
+    from .learner_device import LearnerDevice
+    learner=LearnerDevice(policy,critic,getattr(args,'learner_device','cpu'))
+    config['learner_device']=learner.device.type
+    config['collection_device']='cpu'
+    config['learner_actor_dtype']=str(next(policy.delta.net.parameters()).dtype)
+    config['learner_critic_dtype']=str(next(critic.parameters()).dtype)
+    if learner.device.type=='cuda':
+        config['accelerator']=dict(name=torch.cuda.get_device_name(),torch=torch.__version__,cuda=torch.version.cuda)
+    if retention is not None:retention.to(learner.device)
     actor_parameters=list(policy.delta.net.parameters())+[policy.log_std]
     ao=torch.optim.Adam(actor_parameters,lr=args.actor_lr);co=torch.optim.Adam(critic.parameters(),lr=args.critic_lr)
     initial_iteration=0
@@ -231,7 +242,10 @@ def run(args):
         ao.load_state_dict(ck["actor_optimizer"]);co.load_state_dict(ck["critic_optimizer"])
         initial_iteration=ck["iteration"]
         random.setstate(ck["rng"]["python"]);np.random.set_state(ck["rng"]["numpy"]);torch.set_rng_state(ck["rng"]["torch"])
-    references=reference_observations(task) if args.variant=="anchor" else None
+        if 'cuda' in ck['rng'] and learner.device.type=='cuda':torch.cuda.set_rng_state_all(ck['rng']['cuda'])
+        config['resume_learner_device_from']=ck['config'].get('learner_device','cpu')
+    learner.sync_collectors()
+    references=reference_observations(task).to(learner.device) if args.variant=="anchor" else None
     initial_export=export_policy(policy,out/"initial.onnx")
     initial_parity=parity(policy,initial_export,n=1000)
     (out/"initial_parity.json").write_text(json.dumps(initial_parity,indent=2))
@@ -274,18 +288,20 @@ def run(args):
             buffers={k:[] for k in ["obs","critic_obs","anchor","action","logprob","mean","std","value","reward","physical_reward","done"]}
             faults=0;all_terms={};term_count=0
             policy.train()
+            collect_policy=learner.collect_policy;collect_critic=learner.collect_critic
+            collection_start=time.perf_counter()
             with torch.no_grad():
                 for step in range(args.steps):
                     if step%25==0 and time_left()<=0:break
-                    obs,cobs=env.observations();anchor=policy.anchor_values(obs)
-                    dist=policy.distribution(obs,anchor);action=dist.sample();value=critic(cobs)
+                    obs,cobs=env.observations();anchor=collect_policy.anchor_values(obs)
+                    dist=collect_policy.distribution(obs,anchor);action=dist.sample();value=collect_critic(cobs)
                     reward,done,timeouts,terminal_cobs,terms=env.step(action.numpy())
                     if hasattr(env,'nonfinite_terminal'):
                         torch.save(env.nonfinite_terminal,out/'nonfinite_terminal.pt')
                         raise FloatingPointError('Nonfinite terminal critic observation; preserved nonfinite_terminal.pt')
                     physical_reward=reward.clone()
                     # Truncated time limits bootstrap terminal state, never the reset state.
-                    reward=reward+args.gamma*critic(terminal_cobs)*timeouts
+                    reward=reward+args.gamma*collect_critic(terminal_cobs)*timeouts
                     for k,v in [("obs",obs),("critic_obs",cobs),("anchor",anchor),("action",action),("logprob",dist.log_prob(action).sum(-1)),("mean",dist.mean),("std",dist.stddev),("value",value),("reward",reward),("physical_reward",physical_reward),("done",done)]:buffers[k].append(v)
                     for entry in terms:
                         for k,v in entry.items():all_terms[k]=all_terms.get(k,0.)+v
@@ -294,7 +310,7 @@ def run(args):
                 b={k:torch.stack(v) for k,v in buffers.items()}
                 T,N=b["value"].shape;total_samples+=T*N
                 advantage=torch.zeros_like(b["reward"]);gae=torch.zeros(N)
-                next_value=critic(env.observations()[1])
+                next_value=collect_critic(env.observations()[1])
                 for s in reversed(range(T)):
                     active=(~b["done"][s]).float()
                     delta=b["reward"][s]+args.gamma*next_value*active-b["value"][s]
@@ -305,6 +321,9 @@ def run(args):
                 if args.symmetry_weight:
                     flat["mirrored_obs"]=flat["obs"][:,OBS_PERM]*torch.from_numpy(obs_sign)
                     flat["mirrored_anchor"]=policy.anchor_values(flat["mirrored_obs"])
+            collection_seconds=time.perf_counter()-collection_start
+            learner_start=time.perf_counter()
+            flat=learner.batch(flat);advantage=advantage.to(learner.device);returns=returns.to(learner.device)
             before=copy.deepcopy(policy.state_dict());optbefore=copy.deepcopy(ao.state_dict())
             losses=[];kls=[];teacher_losses=[];stop_actor=False;update_count=0
             for epoch in range(args.epochs):
@@ -335,7 +354,7 @@ def run(args):
                         loss=loss+args.teacher_weight*teacher_loss
                     if args.symmetry_weight:
                         mirrored=policy(flat["mirrored_obs"][ix],flat["mirrored_anchor"][ix])
-                        reflected=dist.mean[:,JOINT_PERM]*torch.from_numpy(JOINT_SIGN)
+                        reflected=dist.mean[:,JOINT_PERM]*torch.from_numpy(JOINT_SIGN).to(learner.device)
                         loss=loss+args.symmetry_weight*(mirrored-reflected).square().mean()
                     if not torch.isfinite(loss):raise FloatingPointError("nonfinite actor loss")
                     ao.zero_grad();loss.backward()
@@ -361,7 +380,12 @@ def run(args):
             elif getattr(args,'adaptive_lr_max',0.)>0 and update_count>0 and 0<actual_kl<args.target_kl/2:
                 for g in ao.param_groups:
                     if g['lr']<args.adaptive_lr_max:g['lr']=min(args.adaptive_lr_max,g['lr']*1.2)
+            learner.synchronize()
+            learner_seconds=time.perf_counter()-learner_start
+            sync_start=time.perf_counter();learner.sync_collectors();sync_seconds=time.perf_counter()-sync_start
             entry={"iteration":iteration,"elapsed":time.time()-start,"samples":total_samples,"reward":float(b["physical_reward"].mean()),"bootstrapped_reward":float(b["reward"].mean()),"reward_logging":"physical_v2","value_loss":value_loss,"explained_variance":explained_variance,"delta_rms":delta_rms,"kl":actual_kl,"actor_lr":ao.param_groups[0]["lr"],"std":float(policy.log_std.detach().exp().mean()),"rejected":rejected,"actor_updates":update_count,"fps":T*N/(time.time()-iteration_start),"done_fraction":float(b["done"].float().mean()),"terms":{k:v/term_count for k,v in all_terms.items()}}
+            entry.update(learner_device=learner.device.type,collection_seconds=collection_seconds,
+                         learner_seconds=learner_seconds,collector_sync_seconds=sync_seconds)
             if retention is not None:entry['teacher_kl']=float(np.mean(teacher_losses)) if teacher_losses else 0.
             log.write(json.dumps(entry)+"\n")
             print(json.dumps({k:v for k,v in entry.items() if k!="terms"}),flush=True)
@@ -414,6 +438,7 @@ def main():
     p.add_argument("--minutes",type=float,default=15);p.add_argument("--iterations",type=int,default=0)
     p.add_argument("--envs",type=int,default=16);p.add_argument("--steps",type=int,default=512)
     p.add_argument("--seed",type=int,default=42);p.add_argument("--threads",type=int,default=2)
+    p.add_argument('--learner-device',choices=['auto','cpu','cuda'],default='auto',help='GPU batch updates when CUDA is available; Jolt collection and frozen ORT anchor stay on CPU')
     p.add_argument("--epochs",type=int,default=2);p.add_argument("--minibatch",type=int,default=2048)
     p.add_argument("--actor-lr",type=float,default=3e-5);p.add_argument("--critic-lr",type=float,default=3e-4)
     p.add_argument('--adaptive-lr-max',type=float,default=0.,help='Optional upward KL adaptation cap; zero preserves the prior conservative schedule')

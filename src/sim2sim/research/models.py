@@ -151,8 +151,8 @@ class Policy(nn.Module):
 
     @torch.no_grad()
     def predict(self,obs):
-        x=torch.as_tensor(np.asarray(obs,np.float32).reshape(-1,self.anchor.obs_dim))
-        return self(x).numpy()
+        x=torch.as_tensor(np.asarray(obs,np.float32).reshape(-1,self.anchor.obs_dim),device=self.log_std.device)
+        return self(x).cpu().numpy()
 
 class Critic(nn.Module):
     def __init__(self,source,extra_dim,time_input_s=0.,heading_input=False,yaw_memory_input=False,state_input='',input_dim=61):
@@ -179,7 +179,8 @@ def export_policy(policy,path):
     from onnx import helper,compose
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
     delta_path=path.with_suffix(".delta.onnx")
-    torch.onnx.export(policy.delta.eval(),(torch.zeros(1,policy.anchor.obs_dim),),str(delta_path),input_names=["obs"],output_names=["increment"],opset_version=18,dynamo=False)
+    delta_actor=policy.delta if policy.log_std.device.type=='cpu' else copy.deepcopy(policy.delta).cpu()
+    torch.onnx.export(delta_actor.eval(),(torch.zeros(1,policy.anchor.obs_dim),),str(delta_path),input_names=["obs"],output_names=["increment"],opset_version=18,dynamo=False)
     original=compose.add_prefix(onnx.load_model_from_string(policy.anchor.raw),"factory/")
     delta=compose.add_prefix(onnx.load(str(delta_path)),"adapt/")
     for model in (original,delta):

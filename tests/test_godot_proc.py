@@ -4,12 +4,17 @@ from __future__ import annotations
 
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from sim2sim.backends.godot_backend import _robot_user_args
-from sim2sim.godot_proc import GODOT_PROJECT, sim2sim_root
+from sim2sim.godot_proc import GODOT_PROJECT, sim2sim_root, _headless_core
 
 
 class TestSim2simRoot(unittest.TestCase):
+    def test_workers_cannot_expand_the_supervisor_cpu_affinity(self):
+        with patch('os.sched_getaffinity',return_value={16,17,18,19}):
+            self.assertEqual({_headless_core() for _ in range(8)},{16,17,18,19})
+
     def test_godot_project_is_repo_godot(self) -> None:
         root = sim2sim_root()
         self.assertTrue((root / "robots" / "microduck.json").is_file(), root)

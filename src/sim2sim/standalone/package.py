@@ -55,6 +55,11 @@ def package(output,archive=False,project=None):
     required=['MicroDuck.arm64','MicroDuck.pck','libmicroduck_policy.linux.release.arm64.so','libonnxruntime.so.1']
     for name in required:
         if not (output/name).is_file():raise RuntimeError('Export did not produce '+name)
+    # Editor/debug success does not prove the release extension supports this
+    # model contract. Exercise the actual exported binary before publishing it.
+    with (output/'self_test.log').open('w') as log:
+        subprocess.run([str(binary),'--headless','--','--self-test'],stdout=log,
+                       stderr=subprocess.STDOUT,timeout=45,check=True)
     # The build retains symbols; the redistributable can be stripped independently.
     subprocess.run(['strip','--strip-unneeded',str(output/required[2])],timeout=30,check=True)
     licenses=output/'licenses';licenses.mkdir()

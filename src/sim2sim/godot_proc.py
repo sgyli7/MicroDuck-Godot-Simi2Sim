@@ -22,6 +22,14 @@ GODOT_PROJECT = sim2sim_root() / "godot"
 _CORE_SEQ = itertools.count()
 
 
+def _headless_core() -> int:
+    # A supervisor/taskset restriction must survive spawning physics workers.
+    # On unrestricted hosts retain the original two-core reservation.
+    allowed=sorted(os.sched_getaffinity(0))
+    pool=allowed[:-2] if len(allowed)>4 else allowed
+    return pool[next(_CORE_SEQ)%len(pool)]
+
+
 def godot_bin() -> str:
     return os.environ.get("GODOT") or os.path.expanduser("~/.local/bin/godot")
 
@@ -194,9 +202,7 @@ def _spawn_godot_locked(
     log_path=Path(log_file.name)
     core: int | None = None
     if headless:
-        nproc = os.cpu_count() or 1
-        n_godot = max(1, int(nproc) - 2)
-        core = next(_CORE_SEQ) % n_godot
+        core = _headless_core()
     proc = subprocess.Popen(
         cmd,
         stdout=log_file,

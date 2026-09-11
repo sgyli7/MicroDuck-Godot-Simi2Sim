@@ -1,4 +1,7 @@
 import json
+import os
+import signal
+import subprocess
 from pathlib import Path
 import sys
 import tempfile
@@ -89,6 +92,55 @@ class ActiveBudgetTests(unittest.TestCase):
         code='import os,json,pathlib;pathlib.Path('+repr(str(target))+').write_text(json.dumps({k:os.environ.get(k) for k in ["SIM2SIM_ACTIVE_BUDGET_DIR","SIM2SIM_RESEARCH_DIR"]}))'
         self.assertEqual(run_supervised(self.path,[sys.executable,'-c',code],timeout=10),0)
         self.assertEqual(set(json.loads(target.read_text()).values()),{str(self.path.resolve())})
+
+    def test_normal_exit_reaps_live_children_without_touching_other_jobs(self):
+        target=self.path/'descendant.json'
+        external=subprocess.Popen([sys.executable,'-c','import time;time.sleep(60)'])
+        self.addCleanup(lambda: (external.terminate(),external.wait()))
+        code=('import subprocess,sys,pathlib,json,time;'
+              'p=subprocess.Popen([sys.executable,"-c","import time;time.sleep(60)"]);'
+              'pathlib.Path('+repr(str(target))+').write_text(json.dumps({"pid":p.pid}));'
+              'time.sleep(.1)')
+        try:
+            self.assertEqual(run_supervised(self.path,[sys.executable,'-c',code],timeout=10),0)
+            pid=json.loads(target.read_text())['pid']
+            stat=Path(f'/proc/{pid}/stat')
+            self.assertTrue(not stat.exists() or stat.read_text().rsplit(') ',1)[1].split()[0]=='Z',
+                            'A finished job left its child running')
+            self.assertIsNone(external.poll())
+        finally:
+            if target.exists():
+                try:os.kill(json.loads(target.read_text())['pid'],signal.SIGKILL)
+                except ProcessLookupError:pass
+
+    def test_default_job_has_bounded_cpus_and_background_priority(self):
+        target=self.path/'resources.json'
+        code=('import os,json,pathlib;pathlib.Path('+repr(str(target))+').write_text('
+              'json.dumps({"cpus":list(os.sched_getaffinity(0)),"nice":os.getpriority(os.PRIO_PROCESS,0)}))')
+        self.assertEqual(run_supervised(self.path,[sys.executable,'-c',code],timeout=10),0)
+        result=json.loads(target.read_text())
+        self.assertLessEqual(len(result['cpus']),4)
+        self.assertGreaterEqual(result['nice'],10)
+
+    def test_detached_supervisor_finishes_after_launcher_exits(self):
+        target=self.path/'detached_done'
+        child='import pathlib,time;time.sleep(.5);pathlib.Path('+repr(str(target))+').write_text("done")'
+        launcher=('import sys,json;from sim2sim.research.budget import start_supervised;'
+                  'p,r=start_supervised('+repr(str(self.path))+',[sys.executable,"-c",'+repr(child)+'],timeout=5);'
+                  'print(json.dumps(r))')
+        result=json.loads(subprocess.check_output([sys.executable,'-c',launcher],text=True))
+        try:
+            until=time.monotonic()+10
+            while time.monotonic()<until:
+                events=json.loads(self.budget.path.read_text())['events']
+                if events and events[-1]['kind']=='job_finished':break
+                time.sleep(.1)
+            self.assertTrue(target.exists())
+            self.assertEqual(events[-1]['kind'],'job_finished')
+            self.assertEqual(events[-1]['process_cleanup']['remaining'],[])
+        finally:
+            try:os.kill(result['supervisor_pid'],signal.SIGTERM)
+            except ProcessLookupError:pass
 
 
 if __name__ == '__main__':

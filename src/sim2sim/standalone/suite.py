@@ -30,6 +30,7 @@ test "$(wc -l < /proc/net/route)" -eq 1
 printf 'python=absent repository=absent network_routes=none\\n'
 '''
     command=['docker','run','--rm','--pull','never','--name',name,'--network','none',
+        '--cpuset-cpus',','.join(map(str,sorted(os.sched_getaffinity(0)))),
         '--read-only','--user',f'{os.getuid()}:{os.getgid()}','--env','HOME=/tmp',
         '--tmpfs','/tmp:rw,size=128m','--mount',f'type=bind,source={package},target=/app,readonly',
         image,'/bin/sh','-c',script]
@@ -63,6 +64,7 @@ def run_case(case,output,models,executable=None,timeout=45.,resume=False,project
             binary=Path(executable).resolve();container='microduck-case-'+uuid.uuid4().hex
             command=['docker','run','--rm','--pull','never','--name',container,
                 '--network','none','--read-only','--user',f'{os.getuid()}:{os.getgid()}',
+                '--cpuset-cpus',','.join(map(str,sorted(os.sched_getaffinity(0)))),
                 '--env','HOME=/tmp','--tmpfs','/tmp:rw,size=128m',
                 '--mount',f'type=bind,source={binary.parent},target=/app,readonly',
                 '--mount',f'type=bind,source={case},target=/case.json,readonly',

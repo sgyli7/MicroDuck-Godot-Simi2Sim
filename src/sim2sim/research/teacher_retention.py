@@ -52,6 +52,10 @@ class TeacherRetention:
             self.audit.update(data_sha256=record['sha256'],manifest_sha256=hashlib.sha256(manifest.read_bytes()).hexdigest(),
                 anchor_sha256=record['anchor_sha256'],teacher_sha256=record['teacher_sha256'],frames=len(x))
 
+    def to(self, device):
+        if self.reference is not None:self.reference=self.reference.to(device)
+        return self
+
     def loss(self, policy, online_observations):
         reference=self.reference if self.reference is not None else online_observations
         x=phase_sample(reference,self.samples)
