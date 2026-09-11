@@ -2,6 +2,31 @@
 
 **小小身体，自主行动。** 在莫比乌斯式维修站里，观看九个 ONNX 策略驱动的真实机器人动作。
 
+**最新远景预览 · 正常跟随视角**
+
+[![MicroDuck 远景预览：正常跟随视角下的行走与环视](docs/media/distant-scenery-04s.jpg)](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/distant-scenery-preview.mp4)
+
+**[▶ 播放 11 秒远景预览（720p）](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/distant-scenery-preview.mp4)**
+
+保留原来的跟随、右键环视和滚轮缩放，四周补充工坊与远处坡地。视频来自真实 ONNX 行走与 Godot/Jolt 运行，按已保存帧序列整理为 10.8 秒预览。
+
+这是制作中的远景版本，完整环视及边缘验收仍待完成；远景工程尚未合入主分支，当前启动入口仍使用下方的已发布维修站。
+
+<details>
+<summary>手机直接看截图 · 第 1、7、10 秒</summary>
+
+![第 1 秒：维修站旁的跟随视角](docs/media/distant-scenery-01s.jpg)
+
+![第 7 秒：转动镜头后的周边工坊](docs/media/distant-scenery-07s.jpg)
+
+![第 10 秒：行走与远景](docs/media/distant-scenery-10s.jpg)
+
+</details>
+
+---
+
+**已发布版本 · 九技能演示与维修站**
+
 [![MicroDuck：13 秒动作速览，点击播放](docs/media/microduck-service-bay-15s.gif)](https://raw.githubusercontent.com/sgyli7/MicroDuck-Godot-Simi2Sim/main/docs/media/microduck-service-bay-15s.gif)
 
 **[▶ 20 秒 1080p PV 与完整原片](https://github.com/sgyli7/MicroDuck-Godot-Simi2Sim/releases/tag/atelier-20260910-short)** · **[启动维修站](docs/showcase.md#运行最新模型的维修站)** · **[训练结果](RESEARCH_RESULT_20260910.md)**
