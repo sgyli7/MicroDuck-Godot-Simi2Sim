@@ -1,0 +1,15 @@
+{
+  "closed_unix": 1789150121.9435842,
+  "status": "bounded_pilot_complete; model_quality_gate_failed",
+  "budget": {
+    "limit_seconds": 28800.0,
+    "used_seconds": 16116.941478720488,
+    "remaining_seconds": 12683.058521279512,
+    "actors": [],
+    "unconfirmed_gaps": 0
+  },
+  "model_promoted": false,
+  "final_seeds_consumed": true,
+  "engineering_commit": "84fd55f",
+  "pre_experiment_commit": "26a4e67"
+}

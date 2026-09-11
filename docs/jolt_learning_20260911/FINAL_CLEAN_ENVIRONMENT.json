@@ -1,0 +1,33 @@
+{
+  "image": "ubuntu@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--name",
+    "microduck-environment-c47d06b567364fdd8ae7d00a53bc1b1c",
+    "--network",
+    "none",
+    "--cpuset-cpus",
+    "16,17,18,19",
+    "--read-only",
+    "--user",
+    "1000:1000",
+    "--env",
+    "HOME=/tmp",
+    "--tmpfs",
+    "/tmp:rw,size=128m",
+    "--mount",
+    "type=bind,source=/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/final_validation_retry/candidate_package,target=/app,readonly",
+    "ubuntu@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254",
+    "/bin/sh",
+    "-c",
+    "set -eu\n. /etc/os-release\nprintf 'os=%s version=%s arch=%s\\n' \"$ID\" \"$VERSION_ID\" \"$(uname -m)\"\n[ \"$ID\" = ubuntu ] && [ \"$VERSION_ID\" = 24.04 ] && [ \"$(uname -m)\" = aarch64 ]\n! command -v python\n! command -v python3\ntest ! -e /repo && test ! -e /workspace\ntest \"$(wc -l < /proc/net/route)\" -eq 1\nprintf 'python=absent repository=absent network_routes=none\\n'\n"
+  ],
+  "returncode": 0,
+  "stdout": "os=ubuntu version=24.04 arch=aarch64\npython=absent repository=absent network_routes=none\n",
+  "stderr": "",
+  "passed": true
+}

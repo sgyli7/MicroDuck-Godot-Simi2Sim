@@ -1,0 +1,12 @@
+{
+  "unix": 1789148394.2342937,
+  "failed_attempt": "final_validation",
+  "failure": "Exported old release native extension rejected 68D model before any final-seed generation or evaluation",
+  "old_release_sha256": "e581c0533cc8132e63a7f5d0c666ad1376e32d5cbe5a0be92bd8cd935a3cf748",
+  "replacement_release_sha256": "9bd53f161febfc8348a9a8f448036bce9990c59fe613545a30371ac3f4c29106",
+  "model_change": false,
+  "control_change": false,
+  "physics_change": false,
+  "final_seeds_consumed": false,
+  "retry": "final_validation_retry"
+}

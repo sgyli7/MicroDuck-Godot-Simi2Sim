@@ -1,0 +1,565 @@
+{
+  "protocol": "Frozen final seeds 918000\u2013918029, no post-final selection",
+  "model_sha256": "fb196f8d72234aef276e09cdd26560c28c9cef248fa73fd2d714623704ecf466",
+  "cases": [
+    {
+      "case": "ground_pick",
+      "skill": "ground_pick",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": null
+    },
+    {
+      "case": "kick_left",
+      "skill": "kick_left",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": null
+    },
+    {
+      "case": "kick_right",
+      "skill": "kick_right",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": null
+    },
+    {
+      "case": "roller_brake_1s",
+      "skill": "roller",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 10,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 20,
+        "backwards": 1
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 10,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 20,
+        "backwards": 4
+      },
+      "moving_speed_ratio": 0.9874859896705668
+    },
+    {
+      "case": "roller_brake_2s",
+      "skill": "roller",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 28,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 2,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 29,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 1,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 0.9980176623939558
+    },
+    {
+      "case": "roller_brake_3s",
+      "skill": "roller",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 30,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 30,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 0.9992190955101237
+    },
+    {
+      "case": "roller_brake_5s",
+      "skill": "roller",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 30,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 29,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 1,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 0.9995466980618509
+    },
+    {
+      "case": "roller_crouch",
+      "skill": "roller_crouch",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 1.0
+    },
+    {
+      "case": "roller_crouch_brake",
+      "skill": "roller",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 28,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 2,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 28,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 2,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 0.9980265989868974
+    },
+    {
+      "case": "roller_release_3s",
+      "skill": "roller",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 30,
+        "backwards": 28
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 30,
+        "backwards": 28
+      },
+      "moving_speed_ratio": 1.0
+    },
+    {
+      "case": "roller_repeated_brake",
+      "skill": "roller",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 30,
+        "brake_events": 90,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 29,
+        "brake_events": 90,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 1,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 0.9996324190910655
+    },
+    {
+      "case": "roller_space_3s",
+      "skill": "roller",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 30,
+        "backwards": 28
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 30,
+        "backwards": 28
+      },
+      "moving_speed_ratio": 1.0
+    },
+    {
+      "case": "roller_turn_brake",
+      "skill": "roller",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 27,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 3,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 28,
+        "brake_events": 30,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 2,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 0.9978201173211897
+    },
+    {
+      "case": "roulade",
+      "skill": "roulade",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 29,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 29,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": null
+    },
+    {
+      "case": "sitstand",
+      "skill": "sitstand",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": null
+    },
+    {
+      "case": "standing",
+      "skill": "standing",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": null
+    },
+    {
+      "case": "walking_back",
+      "skill": "walking",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 1.0
+    },
+    {
+      "case": "walking_forward_long",
+      "skill": "walking",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 2,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 2,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 1.0
+    },
+    {
+      "case": "walking_repeated_start",
+      "skill": "walking",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 1.0
+    },
+    {
+      "case": "walking_strafe",
+      "skill": "walking",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 30,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 1.0
+    },
+    {
+      "case": "walking_straight",
+      "skill": "walking",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 22,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 22,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 1.0
+    },
+    {
+      "case": "walking_turn_left",
+      "skill": "walking",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 1.0
+    },
+    {
+      "case": "walking_turn_right",
+      "skill": "walking",
+      "episodes": 30,
+      "baseline": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "candidate": {
+        "task_success": 0,
+        "brake_success": 0,
+        "brake_events": 0,
+        "brake_falls": 0,
+        "unconfirmed_or_late": 0,
+        "backwards": 0
+      },
+      "moving_speed_ratio": 1.0
+    }
+  ],
+  "active_braking": {
+    "baseline": 183,
+    "candidate": 183
+  },
+  "active_episodes": 210,
+  "regressions": [
+    {
+      "case": [
+        "roller_brake_1s",
+        918001
+      ],
+      "reason": "brake_success_lost"
+    },
+    {
+      "case": [
+        "roller_brake_1s",
+        918009
+      ],
+      "reason": "brake_success_lost"
+    },
+    {
+      "case": [
+        "roller_brake_2s",
+        918027
+      ],
+      "reason": "brake_success_lost"
+    },
+    {
+      "case": [
+        "roller_brake_5s",
+        918027
+      ],
+      "reason": "brake_success_lost"
+    },
+    {
+      "case": [
+        "roller_repeated_brake",
+        918004
+      ],
+      "reason": "brake_success_lost"
+    }
+  ],
+  "cruise_retained": true,
+  "candidate_brake_falls": 0,
+  "brake_hard_gate": false,
+  "paired_quality_improvement": false,
+  "final_seed_range_consumed": true,
+  "automatic_promotion": false,
+  "raw_directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/final_validation_retry",
+  "summaries_sha256": {
+    "baseline": "26eaaacb81a89a0a75364db599193004c06889f16dd20a9f56914e81726402a2",
+    "candidate": "c88495164489952006f749289e3351fb5abe717b29230a95549bdfe19789f702"
+  }
+}
