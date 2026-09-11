@@ -2,7 +2,7 @@
 
 将 MuJoCo 训练的机器人控制策略迁移到 **Godot / Jolt**，比较两种物理引擎中的运动表现。以 MicroDuck 为例，提供场景转换、策略运行、物理校准与训练评估工具。
 
-![MicroDuck 在 Godot / Jolt 中运行 ONNX 控制策略](docs/media/microduck-service-bay-15s.gif)
+![MicroDuck：场景行走、刚体交互、前滚与轮足动作](docs/media/microduck-sim2sim.gif)
 
 ## 功能
 
@@ -12,7 +12,11 @@
 - 支持 Godot / Jolt 环境中的 PPO 微调与策略评估。
 
 <details>
-<summary>更多演示：行走、场景与刚体交互</summary>
+<summary>完整技能与场景演示</summary>
+
+**技能演示**
+
+![MicroDuck 在 Godot / Jolt 中运行 ONNX 控制策略](docs/media/microduck-service-bay-15s.gif)
 
 **行走与跟随视角**
 
