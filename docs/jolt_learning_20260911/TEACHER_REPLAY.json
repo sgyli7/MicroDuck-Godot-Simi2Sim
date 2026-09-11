@@ -1,0 +1,49 @@
+{
+  "recipe": {
+    "registered_unix": 1789139155.2971275,
+    "seeds": [
+      71010000,
+      71010001,
+      71010002,
+      71010003,
+      71010004,
+      71010005,
+      71010006,
+      71010007,
+      71010008,
+      71010009,
+      71010010,
+      71010011,
+      71010012,
+      71010013,
+      71010014,
+      71010015
+    ],
+    "cases": [
+      "roller_brake_1s",
+      "roller_brake_2s",
+      "roller_brake_3s",
+      "roller_brake_5s",
+      "roller_turn_brake",
+      "roller_repeated_brake",
+      "roller_crouch_brake"
+    ],
+    "teacher": "Frozen feedback candidate with zero-increment 68D wrapper",
+    "inclusion": "Whole episode must pass unchanged active-brake scorer; retain only roller negative-throttle pre-action observations.",
+    "use": "Training-only teacher regularization; never final acceptance",
+    "phase_sampling": "Three bins by brake elapsed: <1s, 1\u20132s, >=2s, sampled equally in regularizer"
+  },
+  "source_summary": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/teacher_training_suite/summary.json",
+  "teacher_sha256": "bb1ecdea13459ef58448e145e47101ce5779ad0ad51a68d4ae4f1a4c5f2673e2",
+  "episodes": 112,
+  "successful_episodes": 94,
+  "frames": 32906,
+  "phase_counts": [
+    6300,
+    6300,
+    20306
+  ],
+  "sha256": "c9491031b8f9189049390fadb435711e9ba2e0701268eae19796270b04d6a782",
+  "data": "teacher_replay.npz",
+  "anchor_sha256": "601dc60244bdf1a9d6ca1ab358d016aa8cb0d783058583065939e9e68722c414"
+}

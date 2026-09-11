@@ -164,7 +164,8 @@ def run(args):
     torch.set_num_threads(args.threads);seed_all(args.seed)
     resume_checkpoint=torch.load(args.resume,weights_only=False) if args.resume else None
     if resume_checkpoint is not None:
-        for key,default in [('roller_objective','legacy'),('mask_task_state',False),('action_basis','')]:
+        for key,default in [('roller_objective','legacy'),('mask_task_state',False),('action_basis',''),
+                            ('teacher_mode',''),('teacher_replay',None),('teacher_weight',.02),('teacher_samples',384)]:
             if getattr(args,key,default)!=resume_checkpoint['config'].get(key,default):
                 raise ValueError('Resume cannot change '+key+'; start a separately recorded experiment')
         recorded_gate=resume_checkpoint['config'].get('time_gate','')
@@ -209,6 +210,13 @@ def run(args):
     policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate,command_gate=args.command_gate,mask_task_state=getattr(args,'mask_task_state',False),action_basis=getattr(args,'action_basis',''))
     policy.task_name=task.name
     policy.roller_contract=args.roller_contract
+    retention=None
+    if getattr(args,'teacher_mode',''):
+        from .teacher_retention import TeacherRetention
+        retention=TeacherRetention(policy,args.teacher_mode,args.teacher_replay,args.teacher_samples)
+        config['teacher_retention']=retention.audit
+        if resume_checkpoint is not None and retention.audit!=resume_checkpoint['config'].get('teacher_retention'):
+            raise ValueError('Resume cannot change teacher data or its retention contract')
     critic=Critic(template,EXTRA_DIM,time_input_s=policy.anchor.time_input_s,heading_input=policy.anchor.heading_input,yaw_memory_input=policy.anchor.yaw_memory_input,state_input=policy.anchor.state_input,input_dim=policy.anchor.obs_dim)
     if policy.anchor.task_input and args.symmetry_weight:raise ValueError('Task-state symmetry is not defined')
     if policy.anchor.yaw_memory_input and args.symmetry_weight:raise ValueError('Walking memory needs its own reflection contract')
@@ -298,7 +306,7 @@ def run(args):
                     flat["mirrored_obs"]=flat["obs"][:,OBS_PERM]*torch.from_numpy(obs_sign)
                     flat["mirrored_anchor"]=policy.anchor_values(flat["mirrored_obs"])
             before=copy.deepcopy(policy.state_dict());optbefore=copy.deepcopy(ao.state_dict())
-            losses=[];kls=[];stop_actor=False;update_count=0
+            losses=[];kls=[];teacher_losses=[];stop_actor=False;update_count=0
             for epoch in range(args.epochs):
                 for ix in torch.randperm(T*N).split(args.minibatch):
                     pred=critic(flat["critic_obs"][ix]);closs=(pred-returns[ix]).square().mean()
@@ -321,6 +329,10 @@ def run(args):
                         ref=references[torch.randint(len(references),(min(args.minibatch,len(references)),))]
                         loss=loss+args.anchor_weight*policy.delta(ref).square().mean()
                     if args.variant=="residual":loss=loss+args.residual_weight*policy.delta(flat["obs"][ix]).square().mean()
+                    if retention is not None:
+                        teacher_loss=retention.loss(policy,flat['obs'])
+                        teacher_losses.append(float(teacher_loss.detach()))
+                        loss=loss+args.teacher_weight*teacher_loss
                     if args.symmetry_weight:
                         mirrored=policy(flat["mirrored_obs"][ix],flat["mirrored_anchor"][ix])
                         reflected=dist.mean[:,JOINT_PERM]*torch.from_numpy(JOINT_SIGN)
@@ -350,6 +362,7 @@ def run(args):
                 for g in ao.param_groups:
                     if g['lr']<args.adaptive_lr_max:g['lr']=min(args.adaptive_lr_max,g['lr']*1.2)
             entry={"iteration":iteration,"elapsed":time.time()-start,"samples":total_samples,"reward":float(b["physical_reward"].mean()),"bootstrapped_reward":float(b["reward"].mean()),"reward_logging":"physical_v2","value_loss":value_loss,"explained_variance":explained_variance,"delta_rms":delta_rms,"kl":actual_kl,"actor_lr":ao.param_groups[0]["lr"],"std":float(policy.log_std.detach().exp().mean()),"rejected":rejected,"actor_updates":update_count,"fps":T*N/(time.time()-iteration_start),"done_fraction":float(b["done"].float().mean()),"terms":{k:v/term_count for k,v in all_terms.items()}}
+            if retention is not None:entry['teacher_kl']=float(np.mean(teacher_losses)) if teacher_losses else 0.
             log.write(json.dumps(entry)+"\n")
             print(json.dumps({k:v for k,v in entry.items() if k!="terms"}),flush=True)
             # Only atomic, completed updates are eligible for automatic resume.
@@ -422,6 +435,10 @@ def main():
     p.add_argument('--roller-objective',choices=['legacy','command_heading_v1','stop_hold_v1'],default='legacy',help='Explicit objective version; legacy retains sealed experiment semantics')
     p.add_argument('--mask-task-state',action='store_true',help='68D actor ablation: keep architecture and critic fixed but hide the seven added actor features')
     p.add_argument('--action-basis',choices=['','brake_sagittal_v1'],default='',help='Restrict brake learning and exploration to hip pitch and knee targets; preserve the anchor elsewhere')
+    p.add_argument('--teacher-mode',choices=['','online_kl','replay_kl'],default='',help='Compare phase-balanced teacher KL on current versus successful teacher occupancy')
+    p.add_argument('--teacher-replay',help='Completed, checksummed teacher-data manifest; only for replay_kl')
+    p.add_argument('--teacher-weight',type=float,default=.02)
+    p.add_argument('--teacher-samples',type=int,default=384)
     p.add_argument("--roll-starts",type=float,default=0.,help="Training-only fraction of source mid-roll resets")
     p.add_argument("--symmetry-weight",type=float,default=0.,help="Bilateral actor consistency loss using the upstream observation/action transform")
     p.add_argument("--reward-params",default="{}",help="Explicit tracking-kernel variances")
@@ -429,6 +446,8 @@ def main():
     p.add_argument("--time-gate",default="",help="Optional start,end seconds for a learned increment on a declared time-input actor")
     p.add_argument('--command-gate',choices=['','negative_throttle'],default='',help='Only adapt negative roller throttle; preserve factory push/coast exactly')
     args=p.parse_args()
+    if args.teacher_replay and args.teacher_mode!='replay_kl':p.error('--teacher-replay requires --teacher-mode replay_kl')
+    if args.teacher_mode and (not math.isfinite(args.teacher_weight) or args.teacher_weight<=0):p.error('--teacher-weight must be positive and finite')
     if not 0<=args.roll_starts<=1:p.error("--roll-starts must be in [0,1]")
     if not 0<=args.random_commands<=1:p.error("--random-commands must be in [0,1]")
     out=SESSION/"runs"/args.name;existed_before=out.exists()
