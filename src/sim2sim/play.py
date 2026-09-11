@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import subprocess
 import sys
@@ -215,6 +216,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--robot", type=Path, default=ROOT / "robots/microduck.json")
     p.add_argument("--local-ppo", action="store_true", help="shortcut: local_ppo walking ONNX")
     p.add_argument("--walking", type=Path, default=None, help="override walking ONNX path")
+    p.add_argument("--control-config",type=Path,help="Explicit versioned controller configuration used by standalone replay")
     p.add_argument(
         "--roller",
         action="store_true",
@@ -254,6 +256,12 @@ def main(argv: list[str] | None = None) -> int:
         walk = bank.get("walking")
         lim = walk.twist_limits if walk is not None else TwistLimits()
         use_stand = True if walk is None else walk.has_standing_partner
+    from dataclasses import replace
+    from sim2sim.motion_control import MotionControl
+    controls={} if args.control_config is None else json.loads(args.control_config.read_text())
+    motion_settings=controls.get('roller' if args.roller else 'walk',{})
+    lim=replace(lim,**motion_settings.get('twist_limits',{}))
+    motion=MotionControl(motion_settings)
     brain = PlayBrain(
         has_walking="walking" in bank,
         has_standing="standing" in bank and use_stand,
@@ -263,6 +271,7 @@ def main(argv: list[str] | None = None) -> int:
         has_kick_right="kick_right" in bank,
         has_roulade="roulade" in bank,
         has_roller_crouch="roller_crouch" in bank,
+        has_stand_hold="standing" in bank,
         lim=lim,
     )
     poses = capture_home_poses(cfg)
@@ -339,6 +348,7 @@ def main(argv: list[str] | None = None) -> int:
                     do_reset = True
             if do_reset:
                 brain.reset_motion()
+                motion.reset()
                 active_policy = None
                 last_action[:] = 0.0
                 fall_acc = 0.0
@@ -363,13 +373,18 @@ def main(argv: list[str] | None = None) -> int:
                     maneuver_heading = np.array([np.cos(yaw),np.sin(yaw)])
                 cmd = time_command(duration - brain.behavior_t, sess.time_input_s,
                                    rotation if sess.heading_input else None,maneuver_heading)
+            skill='roller' if args.roller and out.policy=='walking' else out.policy
+            cmd=motion.command(cmd,st,skill,dt_ctrl)
             obs = build_obs(st, last_action, cmd, home=home)
+            from sim2sim.policy_state import inject_state
+            obs=inject_state(obs,st,sess.state_input)
             t_inf = time.perf_counter()
             try:
                 action = sess.infer(obs)
             except PolicyNumericError as e:
                 print(f"policy numeric error: {e}")
                 brain.reset_motion()
+                motion.reset()
                 active_policy = None
                 last_action[:] = 0.0
                 fall_acc = 0.0

@@ -1,0 +1,13 @@
+[configuration]
+entry_symbol = "microduck_library_init"
+compatibility_minimum = "4.5"
+reloadable = false
+
+[libraries]
+linux.debug.arm64 = "res://native/bin/libmicroduck_policy.linux.debug.arm64.so"
+linux.release.arm64 = "res://native/bin/libmicroduck_policy.linux.release.arm64.so"
+
+[dependencies]
+linux.arm64 = {
+"res://native/bin/libonnxruntime.so.1": ""
+}

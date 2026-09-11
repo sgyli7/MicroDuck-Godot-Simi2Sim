@@ -14,7 +14,8 @@ from .tasks import TASKS,SESSION,BASELINE,DT,conditions,command
 from .world import World
 from .models import NativeAnchor
 
-PROTOCOL_VERSION="physical_tasks_v7"
+# v8 fixes roller support ownership during side falls; physics and thresholds are unchanged.
+PROTOCOL_VERSION="physical_tasks_v8"
 
 def window_mean(x,n=50):
     x=np.asarray(x)
@@ -135,6 +136,8 @@ def record(w,action):
 
 def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=None,noise_std=0.,headless=True,entry="reset",reference_profile="xml",entry_source=None,scene_robot=None):
     task=TASKS[skill];policy=NativeAnchor(onnx)
+    if policy.state_input:
+        raise ValueError('Residual state actors require roller_evaluate or the standalone keyboard suite')
     if scene_robot is not None:task=replace(task,robot=scene_robot)
     w=World(task,backend,headless=headless,reference_profile=reference_profile,time_input_s=policy.time_input_s,heading_input=policy.heading_input,entry_source=entry_source,yaw_memory_input=policy.yaw_memory_input)
     rows=[];observations=[];actions=[];rng=np.random.default_rng(seed+123456)

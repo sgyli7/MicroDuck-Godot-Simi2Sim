@@ -1,5 +1,11 @@
-# 8 技能 Godot 继续训练 — 交接
+# MicroDuck 九技能独立运行与训练 — 交接
 
+> 本轮已冻结九技能 Linux ARM64 原生候选：C++ GDExtension + ORT 1.29.0，运行无需 Python/TCP。
+> 最终制动由 0/210 提升至 180/210，零跌倒，但仍未通过全部硬门槛；候选不覆盖旧模型。
+> 结果与后续训练方向见 [2026-09-11 报告](docs/overnight_20260911/RESULT.md)，
+> 构建／操作见 [STANDALONE.md](STANDALONE.md)，证据与复现见 [本轮复现说明](docs/overnight_20260911/REPRODUCE.md)。
+> 本轮已完成冻结候选的验收，保留种子已使用，不得在该会话继续挑参数；下一轮另建会话。以下保留历史结论。
+>
 > 历史交接：下文保留本轮研究开始前已对齐的需求和当时事实，不改写旧实验结论。
 > 2026-09-10 后的物理修复、walking 扩展、技能契约与最终模型选择见
 > [RESEARCH_RESULT_20260910.md](RESEARCH_RESULT_20260910.md)。

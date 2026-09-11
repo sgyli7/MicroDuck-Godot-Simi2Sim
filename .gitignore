@@ -37,3 +37,14 @@ logs/
 *.uid
 /tmp_*.py
 /shots/
+
+# Native inference dependencies, build products, and generated release inputs
+native/.deps/
+native/build/
+native/build-release/
+godot/native/bin/
+godot/runtime_assets/
+dist/
+
+# Local planning scratch; durable findings belong in docs/ and CONTEXT.md.
+.scratch/

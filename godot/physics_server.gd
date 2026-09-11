@@ -170,13 +170,7 @@ func _ready() -> void:
 	_setup_sprung_floor()
 	_setup_sole_springs()
 	_setup_jaw_spring()
-	_server = TCPServer.new()
-	var err := _server.listen(_port, "127.0.0.1")
-	if err != OK:
-		push_error("listen failed on port %s err=%s" % [_port, err])
-		get_tree().quit(1)
-		return
-	print("sim2sim_physics_server listening 127.0.0.1:%s" % _port)
+	_start_controller()
 	print(
 		"play_pacing display=%s max_phys=%s max_fps=%s vsync=%s"
 		% [
@@ -198,6 +192,16 @@ func _ready() -> void:
 		load("res://visuals/microduck/style.gd").new().apply(self)
 
 	call_deferred("_maybe_dump_sim2sim_shot")
+
+
+func _start_controller() -> void:
+	_server = TCPServer.new()
+	var err := _server.listen(_port, "127.0.0.1")
+	if err != OK:
+		push_error("listen failed on port %s err=%s" % [_port, err])
+		get_tree().quit(1)
+		return
+	print("sim2sim_physics_server listening 127.0.0.1:%s" % _port)
 
 
 
@@ -1079,7 +1083,7 @@ func _freeze(v: bool) -> void:
 		_restore_velocities()
 
 
-func _physics_process(delta: float) -> void:
+func _refresh_after_physics(delta: float) -> void:
 	# Jolt integrated after the previous _physics_process. Refresh kinematic
 	# ω/qd from the new pose before PD or the step reply reads them.
 	if _kin_after_tick:
@@ -1109,6 +1113,10 @@ func _physics_process(delta: float) -> void:
 		var cam_dt := minf(_cam_wall_seconds() - _cam_last_sec, 0.1)
 		_cam_last_sec = _cam_wall_seconds()
 		_follow_camera(cam_dt)
+
+
+func _physics_process(delta: float) -> void:
+	_refresh_after_physics(delta)
 	if _peer == null:
 		_try_accept()
 		return
@@ -1166,6 +1174,10 @@ func _physics_process(delta: float) -> void:
 			return
 		_timing_phys_t0 = Time.get_ticks_usec()
 		_timing_pd_usec = 0
+	_advance_physics_tick(delta)
+
+
+func _advance_physics_tick(delta: float) -> void:
 	var pd_t0 := Time.get_ticks_usec()
 	_apply_pd()
 	if not _sole.is_empty():
@@ -2065,6 +2077,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_add_tap("roulade")
 		KEY_6:
 			_add_tap("switch_robot")
+		KEY_7:
+			_add_tap("stand")
 		KEY_0, KEY_BACKSPACE:
 			_add_tap("reset")
 		KEY_P:

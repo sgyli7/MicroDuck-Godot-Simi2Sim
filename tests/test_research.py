@@ -38,6 +38,30 @@ class TaskSemantics(unittest.TestCase):
         self.assertGreater(stopped['brake'],reverse['brake']);self.assertLess(reverse['reverse'],0.)
         self.assertEqual(stopped['push'],0.)
 
+    def test_brake_speed_tolerance_only_changes_the_declared_reward_term(self):
+        w=fake_world('roller');w.roller_contract=True;w.roller_target_yaw=0.;w.executed_command[0]=-.5
+        w.features['vel']=np.array([.1,0.,0.])
+        def terms(params):
+            reward=Objective(w,params=params);reward.smooth=np.array([.1,0.,0.])
+            return reward.compute()[2]
+        broad=terms({});narrow=terms({'brake_velocity_variance':.0025})
+        self.assertLess(narrow['brake'],broad['brake'])
+        for key in broad:
+            if key!='brake':self.assertEqual(narrow[key],broad[key])
+        for invalid in [0.,-1.,float('nan'),float('inf')]:
+            with self.assertRaises(ValueError):Objective(w,params={'brake_velocity_variance':invalid})
+        with self.assertRaises(ValueError):
+            Objective(fake_world('walking'),params={'brake_velocity_variance':.0025})
+
+    def test_dense_brake_cost_is_explicit_and_inactive_during_push_or_coast(self):
+        w=fake_world('roller');w.roller_contract=True;w.roller_target_yaw=0.
+        for throttle in [-.5,0.,.6]:
+            w.executed_command[0]=throttle;w.features['vel']=np.array([.3,.4,0.])
+            reward=Objective(w,{'brake_speed_cost':4.});reward.smooth=np.array([.3,.4,0.])
+            terms=reward.compute()[2]
+            self.assertAlmostEqual(terms['brake_speed_cost'],-2. if throttle<0 else 0.)
+            self.assertNotIn('brake_speed_cost',Objective(w).compute()[2])
+
     def test_reflection_preserves_phase_and_heading_cosine(self):
         from sim2sim.research.mirror import reflect_obs
         x=np.zeros(61,np.float32);x[48:51]=[.2,.3,.4]

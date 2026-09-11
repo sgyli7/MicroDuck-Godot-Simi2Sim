@@ -24,6 +24,42 @@ func set_status(text: String) -> void:
 		_status.text = text
 
 
+func configure_standalone(font: Font = null) -> void:
+	if font != null:
+		var theme := Theme.new()
+		theme.default_font = font
+		(_status.get_parent() as Control).theme = theme
+		for label in [_status,_help]:
+			label.add_theme_color_override("font_shadow_color",Color(0.0,0.0,0.0,0.8))
+			label.add_theme_constant_override("shadow_offset_x",1)
+			label.add_theme_constant_override("shadow_offset_y",1)
+	# The player uses a fixed simulation timestep. Replace the research pacing
+	# slider with explicit standing access and pause, without changing physics.
+	_slider.hide()
+	_scale_label.hide()
+	var box := _slider.get_parent()
+	_tap_btn(box,"站立 7","stand")
+	_tap_btn(box,"暂停 F8","pause")
+	_tap_btns.stand.disabled = not _strafe_btns[0].visible
+	_help.text += " · 7站立 F8暂停"
+	# Two rows fit next to the direction controls without hiding the exit button.
+	var old_skills: Control = _tap_btns.idle.get_parent()
+	var skills := GridContainer.new()
+	skills.columns = 5
+	skills.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	skills.offset_left = -600
+	skills.offset_right = -24
+	skills.offset_top = -124
+	skills.offset_bottom = -24
+	skills.add_theme_constant_override("h_separation",8)
+	skills.add_theme_constant_override("v_separation",8)
+	old_skills.get_parent().add_child(skills)
+	for button in old_skills.get_children(): button.reparent(skills)
+	old_skills.queue_free()
+	_tap_btns.idle.text = "松开 · 空格"
+	_tap_btns.quit.text = "退出 Esc"
+
+
 func _hold(bit: String, on: bool) -> void:
 	if on:
 		_held_bits[bit] = true

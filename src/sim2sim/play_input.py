@@ -44,13 +44,14 @@ KEY_TO_TAP: dict[str, str] = {
     "R": "roulade",
     "KEY_5": "roulade",
     "KEY_6": "switch_robot",
+    "KEY_7": "stand",
     "KEY_0": "reset",
     "BACKSPACE": "reset",
     "P": "push",
     "ESCAPE": "quit",
 }
 
-SKILL_TAPS = ("pick", "sit", "kick_left", "kick_right", "roulade")
+SKILL_TAPS = ("pick", "sit", "kick_left", "kick_right", "roulade", "stand")
 LOCO_HOLDS = ("fwd", "back", "left", "right", "strafe_l", "strafe_r", "idle")
 
 TIME_SCALE_MIN = 0.25
@@ -278,6 +279,8 @@ class PlayBrain:
     has_kick_right: bool = True
     has_roulade: bool = True
     has_roller_crouch: bool = False
+    # Explicit standing access is independent of the walk model's idle partner.
+    has_stand_hold: bool = False
     lim: TwistLimits = field(default_factory=TwistLimits)
     pick_period: float = 4.0
     kick_duration: float = 5.0
@@ -288,6 +291,7 @@ class PlayBrain:
     policy: str = "standing"
     vel: np.ndarray = field(default_factory=lambda: np.zeros(3, dtype=np.float32))
     sit: bool = False
+    stand_hold: bool = False
     pick_phase: float = 0.0
     behavior_t: float = 0.0
     rise_t: float = 0.0
@@ -318,6 +322,7 @@ class PlayBrain:
     def reset_motion(self) -> None:
         self.vel[:] = 0.0
         self.sit = False
+        self.stand_hold = False
         self.pick_phase = 0.0
         self.behavior_t = 0.0
         self.rise_t = 0.0
@@ -343,6 +348,11 @@ class PlayBrain:
     def _set_loco(self, held: set[str], dt: float) -> None:
         if self._busy() or self.sit:
             return
+        if self.stand_hold:
+            if not (held - {"idle"}):
+                self.policy = "standing"
+                return
+            self.stand_hold = False
         if self._ext_order_active:
             # Godot-side sampler owns press order + edges (play.py echoes
             # held_order every tick): newest press == last entry of the
@@ -383,6 +393,15 @@ class PlayBrain:
             self.policy = "standing"
 
     def _tap(self, action: str) -> None:
+        if action == "stand":
+            if not self.has_stand_hold or self._busy() or self.sit:
+                return
+            self.reset_motion()
+            self.stand_hold = True
+            self.policy = "standing"
+            return
+        if action in SKILL_TAPS and not self._busy():
+            self.stand_hold = False
         if action == "sit":
             if self.has_roller_crouch and not self._busy():
                 self.policy = "roller_crouch"

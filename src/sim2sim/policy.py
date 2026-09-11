@@ -99,6 +99,8 @@ class PolicyBundle:
         self.heading_input = has_heading_input(meta)
         from sim2sim.policy_memory import has_yaw_memory,YawDriftMemory
         self.yaw_memory_input = has_yaw_memory(meta)
+        from sim2sim.policy_state import state_input
+        self.state_input=state_input(meta)
         self._yaw_memory = YawDriftMemory() if self.yaw_memory_input else None
         self.manifest = _load_sidecar(self.path)
         src: dict[str, Any] = dict(meta)

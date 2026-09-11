@@ -9,8 +9,11 @@ EXTRA_DIM=26
 class Objective:
     def __init__(self,w,weights=None,params=None):
         self.w=w;self.weights=weights or {};self.params=params or {};self.reset()
-        if set(self.params)-{"velocity_variance","yaw_variance","ball_speed_target"}:raise ValueError("Unknown reward parameter")
-        if any(float(v)<=0 for v in self.params.values()):raise ValueError("Reward variances must be positive")
+        if set(self.params)-{"velocity_variance","yaw_variance","ball_speed_target","brake_velocity_variance"}:raise ValueError("Unknown reward parameter")
+        if 'brake_velocity_variance' in self.params and (w.task.name!='roller' or not getattr(w,'roller_contract',False)):
+            raise ValueError('Brake variance requires the native roller task')
+        if any(not math.isfinite(float(v)) or float(v)<=0 for v in self.params.values()):
+            raise ValueError("Reward parameters must be positive and finite")
         self.motion=None
         if any(k.startswith("motion_") for k in self.weights):
             if w.task.name!="roulade" or not getattr(w,"time_input_s",0.):raise ValueError("Motion-reference rewards require an explicit timed roll")
@@ -51,11 +54,13 @@ class Objective:
             delta=w.roller_target_yaw-f['yaw'];error=math.atan2(math.sin(delta),math.cos(delta))
             throttle=float(cmd[0]);speed=float(np.linalg.norm(self.smooth[:2]))
             terms.update(push=10*max(0.,throttle)*np.tanh(max(0.,self.smooth[0])/.3),
-                brake=8*max(0.,-throttle)*np.exp(-speed**2/.09),
+                brake=8*max(0.,-throttle)*np.exp(-speed**2/self.params.get('brake_velocity_variance',.09)),
                 heading=3*np.exp(-error**2/.25),upright=2*up,height=stand,
                 coast_calm=float(abs(throttle)<.01)*np.exp(-np.sum(w.state.qd[np.r_[0:5,9:14]]**2)/25),
                 reverse=-6*max(0.,-self.smooth[0]),excess_speed=-3*max(0.,self.smooth[0]-.7)**2,
                 yaw_rate_cost=-.02*float(f['gyro'][2]**2),pose=.2*pose)
+            if 'brake_speed_cost' in self.weights:
+                terms['brake_speed_cost']=-speed*float(throttle<-.01)
         elif name in ("standing","walking","roller"):
             target=cmd[:3] if name!="standing" else np.zeros(3)
             v_err=float(np.sum((self.smooth[:2]-target[:2])**2))

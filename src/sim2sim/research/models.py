@@ -28,18 +28,22 @@ class NativeAnchor:
         self.time_input_s=time_input_seconds(meta);self.heading_input=has_heading_input(meta)
         from sim2sim.policy_memory import has_yaw_memory
         self.yaw_memory_input=has_yaw_memory(meta)
+        from sim2sim.policy_state import state_input
+        self.state_input=state_input(meta)
 
     def __call__(self, obs):
         obs=np.asarray(obs,np.float32).reshape(-1,61)
         return np.concatenate([self.session.run(None,{self.input:o[None]})[0] for o in obs],axis=0)
 
 class Increment(nn.Module):
-    def __init__(self, source, variant="anchor", bound=.2,time_gate=None):
+    def __init__(self, source, variant="anchor", bound=.2,time_gate=None,command_gate=''):
         super().__init__()
         rec=parse_mlp_onnx(source)
         self.variant=variant
         self.bound=float(bound)
         self.time_gate=time_gate
+        if command_gate not in ('','negative_throttle'):raise ValueError('Unknown command gate')
+        self.command_gate=command_gate
         self.register_buffer("mean",torch.from_numpy(rec.mean.copy()))
         self.register_buffer("denominator",torch.from_numpy(rec.std.copy()))
         if variant=="residual":
@@ -67,21 +71,29 @@ class Increment(nn.Module):
             start,end,seconds=self.time_gate
             gate=((obs[:,48:49]*seconds-start)/(end-start)).clamp(0.,1.)
             delta=delta*gate
+        if self.command_gate:delta=delta*self.command_weight(obs)
         return delta
 
+    def command_weight(self,obs):
+        return (-obs[:,48:49]/.05).clamp(0.,1.)
+
 class Policy(nn.Module):
-    def __init__(self, source, variant="anchor", std=.03, bound=.2, template=None,time_gate=None):
+    def __init__(self, source, variant="anchor", std=.03, bound=.2, template=None,time_gate=None,command_gate=''):
         super().__init__()
         self.anchor=NativeAnchor(source)
         if time_gate is not None:
             start,end=map(float,time_gate)
             if not 0<=start<end<=self.anchor.time_input_s:raise ValueError("Time gate requires a declared time-input actor")
             time_gate=(start,end,self.anchor.time_input_s)
-        self.delta=Increment(template or source,variant,bound,time_gate)
+        self.delta=Increment(template or source,variant,bound,time_gate,command_gate)
         if self.anchor.time_input_s:
             self.delta.mean[48]=0.;self.delta.denominator[48]=1.
         if self.anchor.heading_input:self.delta.mean[49:51]=0.;self.delta.denominator[49:51]=1.
         if self.anchor.yaw_memory_input:self.delta.mean[55]=0.;self.delta.denominator[55]=1.
+        if self.anchor.state_input:
+            if variant!='residual':raise ValueError('State input requires a residual increment')
+            self.delta.mean[58:61]=torch.tensor([0.,0.,.115])
+            self.delta.denominator[58:61]=torch.tensor([.6,.6,.05])
         self.log_std=nn.Parameter(torch.full((14,),float(np.log(std))))
         self.variant=variant
 
@@ -95,7 +107,9 @@ class Policy(nn.Module):
 
     def distribution(self,obs,anchor=None):
         mean=self(obs,anchor)
-        return torch.distributions.Normal(mean,self.log_std.clamp(np.log(.005),np.log(.3)).exp())
+        std=self.log_std.clamp(np.log(.005),np.log(.3)).exp()
+        if self.delta.command_gate:std=std*self.delta.command_weight(obs)+1e-5
+        return torch.distributions.Normal(mean,std)
 
     @torch.no_grad()
     def predict(self,obs):
@@ -103,7 +117,7 @@ class Policy(nn.Module):
         return self(x).numpy()
 
 class Critic(nn.Module):
-    def __init__(self,source,extra_dim,time_input_s=0.,heading_input=False,yaw_memory_input=False):
+    def __init__(self,source,extra_dim,time_input_s=0.,heading_input=False,yaw_memory_input=False,state_input=''):
         super().__init__()
         rec=parse_mlp_onnx(source)
         self.register_buffer("mean",torch.from_numpy(rec.mean.copy()))
@@ -111,6 +125,9 @@ class Critic(nn.Module):
         if time_input_s:self.mean[48]=0.;self.denominator[48]=1.
         if heading_input:self.mean[49:51]=0.;self.denominator[49:51]=1.
         if yaw_memory_input:self.mean[55]=0.;self.denominator[55]=1.
+        if state_input:
+            self.mean[58:61]=torch.tensor([0.,0.,.115])
+            self.denominator[58:61]=torch.tensor([.6,.6,.05])
         self.net=nn.Sequential(nn.Linear(61+extra_dim,256),nn.ELU(),nn.Linear(256,128),nn.ELU(),nn.Linear(128,1))
 
     def forward(self,obs):
@@ -142,6 +159,7 @@ def export_policy(policy,path):
     if policy.delta.time_gate is not None:
         import json
         metadata["sim2sim_increment_time_gate_s"]=json.dumps(policy.delta.time_gate)
+    if policy.delta.command_gate:metadata['sim2sim_increment_command_gate']=policy.delta.command_gate
     if getattr(policy,"task_name",None):
         from .tasks import TASKS
         task=TASKS[policy.task_name]
