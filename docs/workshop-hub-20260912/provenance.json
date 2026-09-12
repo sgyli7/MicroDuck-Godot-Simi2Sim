@@ -1,683 +1,1183 @@
 {
-  "godot/hub/hub.gd": "a3b5a2719677a6837c380a0c25c3878c7d9b8307f582d732c5b5b43aa6de3749",
-  "godot/hub/sai.gd": "d900b458ad9f1dfa3c5aff223ac0833e7531b9067edd4e1bab5f195b14e0b5db",
+  "godot/hub/hub.gd": "342aa34aaed65fd9051080466c59ce25ecfdb7cad62df81a294f48bc2bf44633",
+  "godot/hub/sai.gd": "d3d26b503d5bfaaea21084890586c287cfca28fe25d3d77e0dd9c971a6e72063",
   "godot/hub/microduck.gd": "56b6cb46dbc16cf3798ba0cee12bcfbf0e03b434bf01c1d150d56866cbf2eb33",
-  "godot/hub/sai_materials.gd": "5e901ea72db784f7f4deebd95357f5f8a697eb511f971b85ae0de2f69f3cf398",
+  "godot/hub/sai_materials.gd": "b7e7f7b66c11c1088c5ae16cb4491a8bde1be967c87e6e902e20dfca720f6e41",
   "src/sim2sim/workshop.py": "7ace73f8ef6d53831f17635e559cde5d69267cd4be74c88820787db53111f203",
   "godot/physics_server.gd": "4ee85783d70e33c474987c19509e29d7180f324d521f907f748a40b388a385ad",
   "sai_robot_sha256": "178b8ec121798561d708ed1706d8c4e08d3ddd1d2281313d3f7ee5ceb23d7713",
   "sai_model_sha256": "eb623e9f6ad784c45c3e78c575f45f97793728acf47fe24e9eea5a5f127f41f7",
   "microduck_deployment": {
-    "schema_version": 1,
-    "runtime": "onnxruntime",
-    "runtime_version": "1.29.0",
-    "physics_hz": 200,
-    "decimation": 4,
+    "control_config": {},
+    "decimation": 4.0,
+    "physics_hz": 200.0,
     "policies": {
-      "standing": {
-        "path": "res://runtime_assets/policies/Stand_Godot.onnx",
-        "sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
-        "manifest": {
-          "action_scale": 1.0,
-          "sim2sim": {
-            "use_stand_policy": true,
-            "twist_limits": {
-              "vmax_x": 0.3,
-              "vmin_x": -0.3,
-              "vmax_y": 0.2,
-              "vmin_y": -0.2,
-              "vmax_ang": 1.5,
-              "switch_threshold": 0.05,
-              "switch_on": 0.1,
-              "switch_off": 0.03,
-              "accel": 12.0,
-              "decel": 20.0
-            },
-            "control": {
-              "dt": 0.005,
-              "decimation": 4
-            }
-          },
-          "research": {
-            "skill": "standing",
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/alpha_stand.onnx",
-            "sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
-            "status": "experimental_candidate",
-            "role": "retained_factory"
-          },
-          "schema_version": 2,
-          "model_api": 1,
-          "obs_len": 61,
-          "action_len": 14,
-          "robot": {
-            "model": "microduck",
-            "hw_rev": 1,
-            "servos": "xl330",
-            "control_hz": 50
-          },
-          "name": "stand_godot",
-          "slot": "stand",
-          "kind": "perpetual",
-          "entry_pose": "standing",
-          "description": "Experimental candidate: retained_factory",
-          "command": {
-            "encoding": "constant",
-            "value": [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0
-            ]
-          },
-          "training": {
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/alpha_stand.onnx",
-            "checkpoint": null,
-            "role": "retained_factory"
-          },
-          "eval": {
-            "bundle": "../bundle.json",
-            "summary": "../holdout/summary.json",
-            "relative_to": "manifest_directory"
-          }
-        },
-        "time_input_s": 0.0,
-        "heading_input": false,
-        "state_input": ""
-      },
-      "walking": {
-        "path": "res://runtime_assets/policies/Walk_Godot.onnx",
-        "sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
-        "manifest": {
-          "action_scale": 1.0,
-          "sim2sim": {
-            "use_stand_policy": false,
-            "twist_limits": {
-              "vmax_x": 0.3,
-              "vmin_x": -0.3,
-              "vmax_y": 0.2,
-              "vmin_y": -0.2,
-              "vmax_ang": 1.5,
-              "switch_threshold": 0.05,
-              "switch_on": 0.1,
-              "switch_off": 0.03,
-              "accel": 12.0,
-              "decel": 20.0
-            },
-            "control": {
-              "dt": 0.005,
-              "decimation": 4
-            }
-          },
-          "research": {
-            "skill": "walking",
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/wd05_keyboard_braking/iteration_00090.onnx",
-            "sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
-            "status": "experimental_candidate",
-            "role": "distilled_and_adapted_with_native_keyboard_training"
-          },
-          "schema_version": 2,
-          "model_api": 1,
-          "obs_len": 61,
-          "action_len": 14,
-          "robot": {
-            "model": "microduck",
-            "hw_rev": 1,
-            "servos": "xl330",
-            "control_hz": 50
-          },
-          "name": "walk_godot",
-          "slot": "walk",
-          "kind": "perpetual",
-          "entry_pose": "standing",
-          "description": "Experimental candidate: distilled_and_adapted_with_native_keyboard_training",
-          "command": {
-            "encoding": "twist",
-            "meaning": "body vx, body vy, yaw rate; remaining command entries zero"
-          },
-          "training": {
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/wd05_keyboard_braking/iteration_00090.onnx",
-            "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/wd05_keyboard_braking/iteration_00090.pt",
-            "role": "distilled_and_adapted_with_native_keyboard_training"
-          },
-          "eval": {
-            "bundle": "../bundle.json",
-            "summary": "../holdout/summary.json",
-            "relative_to": "manifest_directory"
-          }
-        },
-        "time_input_s": 0.0,
-        "heading_input": false,
-        "state_input": ""
-      },
-      "sitstand": {
-        "path": "res://runtime_assets/policies/Sitstand_Godot.onnx",
-        "sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
-        "manifest": {
-          "action_scale": 1.0,
-          "sim2sim": {
-            "use_stand_policy": true,
-            "twist_limits": {
-              "vmax_x": 0.3,
-              "vmin_x": -0.3,
-              "vmax_y": 0.2,
-              "vmin_y": -0.2,
-              "vmax_ang": 1.5,
-              "switch_threshold": 0.05,
-              "switch_on": 0.1,
-              "switch_off": 0.03,
-              "accel": 12.0,
-              "decel": 20.0
-            },
-            "control": {
-              "dt": 0.005,
-              "decimation": 4
-            }
-          },
-          "research": {
-            "skill": "sitstand",
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/Sitstand_Godot.onnx",
-            "sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
-            "status": "experimental_candidate",
-            "role": "retained_previous"
-          },
-          "schema_version": 2,
-          "model_api": 1,
-          "obs_len": 61,
-          "action_len": 14,
-          "robot": {
-            "model": "microduck",
-            "hw_rev": 1,
-            "servos": "xl330",
-            "control_hz": 50
-          },
-          "name": "sitstand_godot",
-          "slot": "sitstand",
-          "kind": "one_shot",
-          "entry_pose": "standing",
-          "description": "Experimental candidate: retained_previous",
-          "command": {
-            "encoding": "sit_flag",
-            "meaning": "command[0]=1 sit; 0 stand"
-          },
-          "training": {
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/Sitstand_Godot.onnx",
-            "checkpoint": null,
-            "role": "retained_previous"
-          },
-          "eval": {
-            "bundle": "../bundle.json",
-            "summary": "../holdout/summary.json",
-            "relative_to": "manifest_directory"
-          }
-        },
-        "time_input_s": 0.0,
-        "heading_input": false,
-        "state_input": ""
-      },
       "ground_pick": {
-        "path": "res://runtime_assets/policies/GroundPick_Godot.onnx",
-        "sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "heading_input": false,
         "manifest": {
+          "action_len": 14.0,
           "action_scale": 1.0,
-          "sim2sim": {
-            "use_stand_policy": true,
-            "twist_limits": {
-              "vmax_x": 0.3,
-              "vmin_x": -0.3,
-              "vmax_y": 0.2,
-              "vmin_y": -0.2,
-              "vmax_ang": 1.5,
-              "switch_threshold": 0.05,
-              "switch_on": 0.1,
-              "switch_off": 0.03,
-              "accel": 12.0,
-              "decel": 20.0
-            },
-            "control": {
-              "dt": 0.005,
-              "decimation": 4
-            }
-          },
-          "research": {
-            "skill": "ground_pick",
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/alpha_ground_pick.onnx",
-            "sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
-            "status": "experimental_candidate",
-            "role": "retained_factory"
-          },
-          "schema_version": 2,
-          "model_api": 1,
-          "obs_len": 61,
-          "action_len": 14,
-          "robot": {
-            "model": "microduck",
-            "hw_rev": 1,
-            "servos": "xl330",
-            "control_hz": 50
-          },
-          "name": "ground_pick_godot",
-          "slot": "ground_pick",
-          "kind": "one_shot",
-          "entry_pose": "standing",
-          "description": "Experimental candidate: retained_factory",
           "command": {
             "encoding": "phase",
-            "period_s": 4,
-            "meaning": "command[0:2]=cos/sin(2*pi*t/4)"
+            "meaning": "command[0:2]=cos/sin(2*pi*t/4)",
+            "period_s": 4.0
           },
-          "training": {
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/alpha_ground_pick.onnx",
-            "checkpoint": null,
-            "role": "retained_factory"
-          },
+          "description": "Experimental candidate: retained_factory",
+          "entry_pose": "standing",
           "eval": {
             "bundle": "../bundle.json",
-            "summary": "../holdout/summary.json",
-            "relative_to": "manifest_directory"
+            "relative_to": "manifest_directory",
+            "summary": "../holdout/summary.json"
+          },
+          "kind": "one_shot",
+          "model_api": 1.0,
+          "name": "ground_pick_godot",
+          "obs_len": 61.0,
+          "research": {
+            "role": "retained_factory",
+            "sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+            "skill": "ground_pick",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/alpha_ground_pick.onnx",
+            "status": "experimental_candidate"
+          },
+          "robot": {
+            "control_hz": 50.0,
+            "hw_rev": 1.0,
+            "model": "microduck",
+            "servos": "xl330"
+          },
+          "schema_version": 2.0,
+          "sim2sim": {
+            "control": {
+              "decimation": 4.0,
+              "dt": 0.005
+            },
+            "twist_limits": {
+              "accel": 12.0,
+              "decel": 20.0,
+              "switch_off": 0.03,
+              "switch_on": 0.1,
+              "switch_threshold": 0.05,
+              "vmax_ang": 1.5,
+              "vmax_x": 0.3,
+              "vmax_y": 0.2,
+              "vmin_x": -0.3,
+              "vmin_y": -0.2
+            },
+            "use_stand_policy": true
+          },
+          "slot": "ground_pick",
+          "training": {
+            "checkpoint": null,
+            "role": "retained_factory",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/alpha_ground_pick.onnx"
           }
         },
-        "time_input_s": 0.0,
-        "heading_input": false,
-        "state_input": ""
+        "path": "res://runtime_assets/policies/GroundPick_Godot.onnx",
+        "sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "state_input": "",
+        "time_input_s": 0.0
       },
       "kick_left": {
-        "path": "res://runtime_assets/policies/KickLeft_Godot.onnx",
-        "sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "heading_input": false,
         "manifest": {
+          "action_len": 14.0,
           "action_scale": 1.0,
-          "sim2sim": {
-            "use_stand_policy": true,
-            "twist_limits": {
-              "vmax_x": 0.3,
-              "vmin_x": -0.3,
-              "vmax_y": 0.2,
-              "vmin_y": -0.2,
-              "vmax_ang": 1.5,
-              "switch_threshold": 0.05,
-              "switch_on": 0.1,
-              "switch_off": 0.03,
-              "accel": 12.0,
-              "decel": 20.0
-            },
-            "control": {
-              "dt": 0.005,
-              "decimation": 4
-            }
-          },
-          "research": {
-            "skill": "kick_left",
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/k10_quality_larger_residual/iteration_00081.onnx",
-            "sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
-            "status": "experimental_candidate",
-            "role": "learned_residual"
-          },
-          "schema_version": 2,
-          "model_api": 1,
-          "obs_len": 61,
-          "action_len": 14,
-          "robot": {
-            "model": "microduck",
-            "hw_rev": 1,
-            "servos": "xl330",
-            "control_hz": 50
-          },
-          "name": "kick_left_godot",
-          "slot": "kick_left",
-          "kind": "one_shot",
-          "entry_pose": "standing",
-          "description": "Experimental candidate: learned_residual",
           "command": {
             "encoding": "constant",
             "value": [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
             ]
           },
-          "training": {
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/k10_quality_larger_residual/iteration_00081.onnx",
-            "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/k10_quality_larger_residual/iteration_00081.pt",
-            "role": "learned_residual"
-          },
+          "description": "Experimental candidate: learned_residual",
+          "entry_pose": "standing",
           "eval": {
             "bundle": "../bundle.json",
-            "summary": "../holdout/summary.json",
-            "relative_to": "manifest_directory"
+            "relative_to": "manifest_directory",
+            "summary": "../holdout/summary.json"
+          },
+          "kind": "one_shot",
+          "model_api": 1.0,
+          "name": "kick_left_godot",
+          "obs_len": 61.0,
+          "research": {
+            "role": "learned_residual",
+            "sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+            "skill": "kick_left",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/k10_quality_larger_residual/iteration_00081.onnx",
+            "status": "experimental_candidate"
+          },
+          "robot": {
+            "control_hz": 50.0,
+            "hw_rev": 1.0,
+            "model": "microduck",
+            "servos": "xl330"
+          },
+          "schema_version": 2.0,
+          "sim2sim": {
+            "control": {
+              "decimation": 4.0,
+              "dt": 0.005
+            },
+            "twist_limits": {
+              "accel": 12.0,
+              "decel": 20.0,
+              "switch_off": 0.03,
+              "switch_on": 0.1,
+              "switch_threshold": 0.05,
+              "vmax_ang": 1.5,
+              "vmax_x": 0.3,
+              "vmax_y": 0.2,
+              "vmin_x": -0.3,
+              "vmin_y": -0.2
+            },
+            "use_stand_policy": true
+          },
+          "slot": "kick_left",
+          "training": {
+            "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/k10_quality_larger_residual/iteration_00081.pt",
+            "role": "learned_residual",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/k10_quality_larger_residual/iteration_00081.onnx"
           }
         },
-        "time_input_s": 0.0,
-        "heading_input": false,
-        "state_input": ""
+        "path": "res://runtime_assets/policies/KickLeft_Godot.onnx",
+        "sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "state_input": "",
+        "time_input_s": 0.0
       },
       "kick_right": {
-        "path": "res://runtime_assets/policies/KickRight_Godot.onnx",
-        "sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "heading_input": true,
         "manifest": {
+          "action_len": 14.0,
           "action_scale": 1.0,
-          "sim2sim": {
-            "use_stand_policy": true,
-            "twist_limits": {
-              "vmax_x": 0.3,
-              "vmin_x": -0.3,
-              "vmax_y": 0.2,
-              "vmin_y": -0.2,
-              "vmax_ang": 1.5,
-              "switch_threshold": 0.05,
-              "switch_on": 0.1,
-              "switch_off": 0.03,
-              "accel": 12.0,
-              "decel": 20.0
-            },
-            "control": {
-              "dt": 0.005,
-              "decimation": 4
-            }
-          },
-          "research": {
-            "skill": "kick_right",
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/kr06_phase_support/final.onnx",
-            "sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
-            "status": "experimental_candidate",
-            "role": "learned_phase_and_relative_heading_residual_on_adapted_right"
-          },
-          "schema_version": 2,
-          "model_api": 1,
-          "obs_len": 61,
-          "action_len": 14,
-          "robot": {
-            "model": "microduck",
-            "hw_rev": 1,
-            "servos": "xl330",
-            "control_hz": 50
-          },
-          "name": "kick_right_godot",
-          "slot": "kick_right",
-          "kind": "one_shot",
-          "entry_pose": "standing",
-          "description": "Experimental candidate: learned_phase_and_relative_heading_residual_on_adapted_right",
           "command": {
             "encoding": "one_shot_time",
-            "period_s": 5.0,
+            "heading": "lateral_axis_sin_cos, relative to orientation at skill entry",
             "meaning": "obs[48]=elapsed_seconds/5; obs[49:51]=declared relative-heading sine/cosine; remaining command entries zero",
-            "heading": "lateral_axis_sin_cos, relative to orientation at skill entry"
+            "period_s": 5.0
           },
-          "training": {
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/kr06_phase_support/final.onnx",
-            "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/kr06_phase_support/final_00043.pt",
-            "role": "learned_phase_and_relative_heading_residual_on_adapted_right"
-          },
+          "description": "Experimental candidate: learned_phase_and_relative_heading_residual_on_adapted_right",
+          "entry_pose": "standing",
           "eval": {
             "bundle": "../bundle.json",
-            "summary": "../holdout/summary.json",
-            "relative_to": "manifest_directory"
+            "relative_to": "manifest_directory",
+            "summary": "../holdout/summary.json"
+          },
+          "kind": "one_shot",
+          "model_api": 1.0,
+          "name": "kick_right_godot",
+          "obs_len": 61.0,
+          "research": {
+            "role": "learned_phase_and_relative_heading_residual_on_adapted_right",
+            "sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+            "skill": "kick_right",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/kr06_phase_support/final.onnx",
+            "status": "experimental_candidate"
+          },
+          "robot": {
+            "control_hz": 50.0,
+            "hw_rev": 1.0,
+            "model": "microduck",
+            "servos": "xl330"
           },
           "runtime_requires": [
             "one_shot_time",
             "lateral_axis_sin_cos"
-          ]
-        },
-        "time_input_s": 5.0,
-        "heading_input": true,
-        "state_input": ""
-      },
-      "roulade": {
-        "path": "res://runtime_assets/policies/Roulade_Godot.onnx",
-        "sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
-        "manifest": {
-          "action_scale": 1.0,
+          ],
+          "schema_version": 2.0,
           "sim2sim": {
-            "use_stand_policy": true,
-            "twist_limits": {
-              "vmax_x": 0.3,
-              "vmin_x": -0.3,
-              "vmax_y": 0.2,
-              "vmin_y": -0.2,
-              "vmax_ang": 1.5,
-              "switch_threshold": 0.05,
-              "switch_on": 0.1,
-              "switch_off": 0.03,
-              "accel": 12.0,
-              "decel": 20.0
-            },
             "control": {
-              "dt": 0.005,
-              "decimation": 4
-            }
+              "decimation": 4.0,
+              "dt": 0.005
+            },
+            "twist_limits": {
+              "accel": 12.0,
+              "decel": 20.0,
+              "switch_off": 0.03,
+              "switch_on": 0.1,
+              "switch_threshold": 0.05,
+              "vmax_ang": 1.5,
+              "vmax_x": 0.3,
+              "vmax_y": 0.2,
+              "vmin_x": -0.3,
+              "vmin_y": -0.2
+            },
+            "use_stand_policy": true
           },
-          "research": {
-            "skill": "roulade",
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/r11_early_yaw_control_resume/iteration_00145.onnx",
-            "sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
-            "status": "experimental_candidate",
-            "role": "two_neural_experts_with_learned_residual_and_time_input"
-          },
-          "schema_version": 2,
-          "model_api": 1,
-          "obs_len": 61,
-          "action_len": 14,
-          "robot": {
-            "model": "microduck",
-            "hw_rev": 1,
-            "servos": "xl330",
-            "control_hz": 50
-          },
-          "name": "roulade_godot",
-          "slot": "roulade",
-          "kind": "one_shot",
-          "entry_pose": "standing",
-          "description": "Experimental candidate: two_neural_experts_with_learned_residual_and_time_input",
-          "command": {
-            "encoding": "one_shot_time",
-            "period_s": 5.0,
-            "meaning": "obs[48]=elapsed_seconds/5; remaining command entries zero"
-          },
+          "slot": "kick_right",
           "training": {
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/r11_early_yaw_control_resume/iteration_00145.onnx",
-            "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/r11_early_yaw_control_resume/iteration_00145.pt",
-            "role": "two_neural_experts_with_learned_residual_and_time_input"
-          },
-          "eval": {
-            "bundle": "../bundle.json",
-            "summary": "../holdout/summary.json",
-            "relative_to": "manifest_directory"
-          },
-          "runtime_requires": [
-            "one_shot_time"
-          ]
+            "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/kr06_phase_support/final_00043.pt",
+            "role": "learned_phase_and_relative_heading_residual_on_adapted_right",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/kr06_phase_support/final.onnx"
+          }
         },
-        "time_input_s": 5.0,
-        "heading_input": false,
-        "state_input": ""
+        "path": "res://runtime_assets/policies/KickRight_Godot.onnx",
+        "sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "state_input": "",
+        "time_input_s": 5.0
       },
       "roller": {
-        "path": "res://runtime_assets/policies/Roller_Godot.onnx",
-        "sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "heading_input": false,
         "manifest": {
+          "action_len": 14.0,
           "action_scale": 1.0,
-          "sim2sim": {
-            "use_stand_policy": false,
-            "twist_limits": {
-              "vmax_x": 0.3,
-              "vmin_x": -0.3,
-              "vmax_y": 0.2,
-              "vmin_y": -0.2,
-              "vmax_ang": 1.5,
-              "switch_threshold": 0.05,
-              "switch_on": 0.1,
-              "switch_off": 0.03,
-              "accel": 12.0,
-              "decel": 20.0
-            },
-            "control": {
-              "dt": 0.005,
-              "decimation": 4
-            }
-          },
-          "research": {
-            "skill": "roller",
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/roller.onnx",
-            "sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
-            "status": "experimental_candidate",
-            "role": "retained_factory"
-          },
-          "schema_version": 2,
-          "model_api": 1,
-          "obs_len": 61,
-          "action_len": 14,
-          "robot": {
-            "model": "microduck",
-            "hw_rev": 1,
-            "servos": "xl330",
-            "control_hz": 50
-          },
-          "name": "roller_godot",
-          "slot": "roller",
-          "kind": "perpetual",
-          "entry_pose": "standing",
-          "description": "Experimental candidate: retained_factory",
           "command": {
             "encoding": "roller_throttle_heading_error",
             "meaning": "positive push, zero coast, negative brake; command[2]=relative heading error"
           },
-          "training": {
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/roller.onnx",
-            "checkpoint": null,
-            "role": "retained_factory"
-          },
+          "description": "Experimental candidate: retained_factory",
+          "entry_pose": "standing",
           "eval": {
             "bundle": "../bundle.json",
-            "summary": "../holdout/summary.json",
-            "relative_to": "manifest_directory"
+            "relative_to": "manifest_directory",
+            "summary": "../holdout/summary.json"
+          },
+          "kind": "perpetual",
+          "model_api": 1.0,
+          "name": "roller_godot",
+          "obs_len": 61.0,
+          "research": {
+            "role": "retained_factory",
+            "sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+            "skill": "roller",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/roller.onnx",
+            "status": "experimental_candidate"
+          },
+          "robot": {
+            "control_hz": 50.0,
+            "hw_rev": 1.0,
+            "model": "microduck",
+            "servos": "xl330"
+          },
+          "schema_version": 2.0,
+          "sim2sim": {
+            "control": {
+              "decimation": 4.0,
+              "dt": 0.005
+            },
+            "twist_limits": {
+              "accel": 12.0,
+              "decel": 20.0,
+              "switch_off": 0.03,
+              "switch_on": 0.1,
+              "switch_threshold": 0.05,
+              "vmax_ang": 1.5,
+              "vmax_x": 0.3,
+              "vmax_y": 0.2,
+              "vmin_x": -0.3,
+              "vmin_y": -0.2
+            },
+            "use_stand_policy": false
+          },
+          "slot": "roller",
+          "training": {
+            "checkpoint": null,
+            "role": "retained_factory",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/roller.onnx"
           }
         },
-        "time_input_s": 0.0,
-        "heading_input": false,
-        "state_input": ""
+        "path": "res://runtime_assets/policies/Roller_Godot.onnx",
+        "sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "state_input": "",
+        "time_input_s": 0.0
       },
       "roller_crouch": {
-        "path": "res://runtime_assets/policies/RollerCrouch_Godot.onnx",
-        "sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "heading_input": false,
         "manifest": {
+          "action_len": 14.0,
           "action_scale": 1.0,
-          "sim2sim": {
-            "use_stand_policy": true,
-            "twist_limits": {
-              "vmax_x": 0.3,
-              "vmin_x": -0.3,
-              "vmax_y": 0.2,
-              "vmin_y": -0.2,
-              "vmax_ang": 1.5,
-              "switch_threshold": 0.05,
-              "switch_on": 0.1,
-              "switch_off": 0.03,
-              "accel": 12.0,
-              "decel": 20.0
-            },
-            "control": {
-              "dt": 0.005,
-              "decimation": 4
-            }
-          },
-          "research": {
-            "skill": "roller_crouch",
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/roller_crouch.onnx",
-            "sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
-            "status": "experimental_candidate",
-            "role": "retained_factory"
-          },
-          "schema_version": 2,
-          "model_api": 1,
-          "obs_len": 61,
-          "action_len": 14,
-          "robot": {
-            "model": "microduck",
-            "hw_rev": 1,
-            "servos": "xl330",
-            "control_hz": 50
-          },
-          "name": "roller_crouch_godot",
-          "slot": "roller_crouch",
-          "kind": "one_shot",
-          "entry_pose": "standing",
-          "description": "Experimental candidate: retained_factory",
           "command": {
             "encoding": "phase",
-            "period_s": 5,
-            "meaning": "command[0:2]=cos/sin(2*pi*t/5)"
+            "meaning": "command[0:2]=cos/sin(2*pi*t/5)",
+            "period_s": 5.0
           },
-          "training": {
-            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/roller_crouch.onnx",
-            "checkpoint": null,
-            "role": "retained_factory"
-          },
+          "description": "Experimental candidate: retained_factory",
+          "entry_pose": "standing",
           "eval": {
             "bundle": "../bundle.json",
-            "summary": "../holdout/summary.json",
-            "relative_to": "manifest_directory"
+            "relative_to": "manifest_directory",
+            "summary": "../holdout/summary.json"
+          },
+          "kind": "one_shot",
+          "model_api": 1.0,
+          "name": "roller_crouch_godot",
+          "obs_len": 61.0,
+          "research": {
+            "role": "retained_factory",
+            "sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+            "skill": "roller_crouch",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/roller_crouch.onnx",
+            "status": "experimental_candidate"
+          },
+          "robot": {
+            "control_hz": 50.0,
+            "hw_rev": 1.0,
+            "model": "microduck",
+            "servos": "xl330"
+          },
+          "schema_version": 2.0,
+          "sim2sim": {
+            "control": {
+              "decimation": 4.0,
+              "dt": 0.005
+            },
+            "twist_limits": {
+              "accel": 12.0,
+              "decel": 20.0,
+              "switch_off": 0.03,
+              "switch_on": 0.1,
+              "switch_threshold": 0.05,
+              "vmax_ang": 1.5,
+              "vmax_x": 0.3,
+              "vmax_y": 0.2,
+              "vmin_x": -0.3,
+              "vmin_y": -0.2
+            },
+            "use_stand_policy": true
+          },
+          "slot": "roller_crouch",
+          "training": {
+            "checkpoint": null,
+            "role": "retained_factory",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/roller_crouch.onnx"
           }
         },
-        "time_input_s": 0.0,
+        "path": "res://runtime_assets/policies/RollerCrouch_Godot.onnx",
+        "sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "state_input": "",
+        "time_input_s": 0.0
+      },
+      "roulade": {
         "heading_input": false,
-        "state_input": ""
+        "manifest": {
+          "action_len": 14.0,
+          "action_scale": 1.0,
+          "command": {
+            "encoding": "one_shot_time",
+            "meaning": "obs[48]=elapsed_seconds/5; remaining command entries zero",
+            "period_s": 5.0
+          },
+          "description": "Experimental candidate: two_neural_experts_with_learned_residual_and_time_input",
+          "entry_pose": "standing",
+          "eval": {
+            "bundle": "../bundle.json",
+            "relative_to": "manifest_directory",
+            "summary": "../holdout/summary.json"
+          },
+          "kind": "one_shot",
+          "model_api": 1.0,
+          "name": "roulade_godot",
+          "obs_len": 61.0,
+          "research": {
+            "role": "two_neural_experts_with_learned_residual_and_time_input",
+            "sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+            "skill": "roulade",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/r11_early_yaw_control_resume/iteration_00145.onnx",
+            "status": "experimental_candidate"
+          },
+          "robot": {
+            "control_hz": 50.0,
+            "hw_rev": 1.0,
+            "model": "microduck",
+            "servos": "xl330"
+          },
+          "runtime_requires": [
+            "one_shot_time"
+          ],
+          "schema_version": 2.0,
+          "sim2sim": {
+            "control": {
+              "decimation": 4.0,
+              "dt": 0.005
+            },
+            "twist_limits": {
+              "accel": 12.0,
+              "decel": 20.0,
+              "switch_off": 0.03,
+              "switch_on": 0.1,
+              "switch_threshold": 0.05,
+              "vmax_ang": 1.5,
+              "vmax_x": 0.3,
+              "vmax_y": 0.2,
+              "vmin_x": -0.3,
+              "vmin_y": -0.2
+            },
+            "use_stand_policy": true
+          },
+          "slot": "roulade",
+          "training": {
+            "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/r11_early_yaw_control_resume/iteration_00145.pt",
+            "role": "two_neural_experts_with_learned_residual_and_time_input",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/r11_early_yaw_control_resume/iteration_00145.onnx"
+          }
+        },
+        "path": "res://runtime_assets/policies/Roulade_Godot.onnx",
+        "sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "state_input": "",
+        "time_input_s": 5.0
+      },
+      "sitstand": {
+        "heading_input": false,
+        "manifest": {
+          "action_len": 14.0,
+          "action_scale": 1.0,
+          "command": {
+            "encoding": "sit_flag",
+            "meaning": "command[0]=1 sit; 0 stand"
+          },
+          "description": "Experimental candidate: retained_previous",
+          "entry_pose": "standing",
+          "eval": {
+            "bundle": "../bundle.json",
+            "relative_to": "manifest_directory",
+            "summary": "../holdout/summary.json"
+          },
+          "kind": "one_shot",
+          "model_api": 1.0,
+          "name": "sitstand_godot",
+          "obs_len": 61.0,
+          "research": {
+            "role": "retained_previous",
+            "sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+            "skill": "sitstand",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/Sitstand_Godot.onnx",
+            "status": "experimental_candidate"
+          },
+          "robot": {
+            "control_hz": 50.0,
+            "hw_rev": 1.0,
+            "model": "microduck",
+            "servos": "xl330"
+          },
+          "schema_version": 2.0,
+          "sim2sim": {
+            "control": {
+              "decimation": 4.0,
+              "dt": 0.005
+            },
+            "twist_limits": {
+              "accel": 12.0,
+              "decel": 20.0,
+              "switch_off": 0.03,
+              "switch_on": 0.1,
+              "switch_threshold": 0.05,
+              "vmax_ang": 1.5,
+              "vmax_x": 0.3,
+              "vmax_y": 0.2,
+              "vmin_x": -0.3,
+              "vmin_y": -0.2
+            },
+            "use_stand_policy": true
+          },
+          "slot": "sitstand",
+          "training": {
+            "checkpoint": null,
+            "role": "retained_previous",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/Sitstand_Godot.onnx"
+          }
+        },
+        "path": "res://runtime_assets/policies/Sitstand_Godot.onnx",
+        "sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "state_input": "",
+        "time_input_s": 0.0
+      },
+      "standing": {
+        "heading_input": false,
+        "manifest": {
+          "action_len": 14.0,
+          "action_scale": 1.0,
+          "command": {
+            "encoding": "constant",
+            "value": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "description": "Experimental candidate: retained_factory",
+          "entry_pose": "standing",
+          "eval": {
+            "bundle": "../bundle.json",
+            "relative_to": "manifest_directory",
+            "summary": "../holdout/summary.json"
+          },
+          "kind": "perpetual",
+          "model_api": 1.0,
+          "name": "stand_godot",
+          "obs_len": 61.0,
+          "research": {
+            "role": "retained_factory",
+            "sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+            "skill": "standing",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/alpha_stand.onnx",
+            "status": "experimental_candidate"
+          },
+          "robot": {
+            "control_hz": 50.0,
+            "hw_rev": 1.0,
+            "model": "microduck",
+            "servos": "xl330"
+          },
+          "schema_version": 2.0,
+          "sim2sim": {
+            "control": {
+              "decimation": 4.0,
+              "dt": 0.005
+            },
+            "twist_limits": {
+              "accel": 12.0,
+              "decel": 20.0,
+              "switch_off": 0.03,
+              "switch_on": 0.1,
+              "switch_threshold": 0.05,
+              "vmax_ang": 1.5,
+              "vmax_x": 0.3,
+              "vmax_y": 0.2,
+              "vmin_x": -0.3,
+              "vmin_y": -0.2
+            },
+            "use_stand_policy": true
+          },
+          "slot": "stand",
+          "training": {
+            "checkpoint": null,
+            "role": "retained_factory",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/baseline/alpha_stand.onnx"
+          }
+        },
+        "path": "res://runtime_assets/policies/Stand_Godot.onnx",
+        "sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "state_input": "",
+        "time_input_s": 0.0
+      },
+      "walking": {
+        "heading_input": false,
+        "manifest": {
+          "action_len": 14.0,
+          "action_scale": 1.0,
+          "command": {
+            "encoding": "twist",
+            "meaning": "body vx, body vy, yaw rate; remaining command entries zero"
+          },
+          "description": "Experimental candidate: distilled_and_adapted_with_native_keyboard_training",
+          "entry_pose": "standing",
+          "eval": {
+            "bundle": "../bundle.json",
+            "relative_to": "manifest_directory",
+            "summary": "../holdout/summary.json"
+          },
+          "kind": "perpetual",
+          "model_api": 1.0,
+          "name": "walk_godot",
+          "obs_len": 61.0,
+          "research": {
+            "role": "distilled_and_adapted_with_native_keyboard_training",
+            "sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+            "skill": "walking",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/wd05_keyboard_braking/iteration_00090.onnx",
+            "status": "experimental_candidate"
+          },
+          "robot": {
+            "control_hz": 50.0,
+            "hw_rev": 1.0,
+            "model": "microduck",
+            "servos": "xl330"
+          },
+          "schema_version": 2.0,
+          "sim2sim": {
+            "control": {
+              "decimation": 4.0,
+              "dt": 0.005
+            },
+            "twist_limits": {
+              "accel": 12.0,
+              "decel": 20.0,
+              "switch_off": 0.03,
+              "switch_on": 0.1,
+              "switch_threshold": 0.05,
+              "vmax_ang": 1.5,
+              "vmax_x": 0.3,
+              "vmax_y": 0.2,
+              "vmin_x": -0.3,
+              "vmin_y": -0.2
+            },
+            "use_stand_policy": false
+          },
+          "slot": "walk",
+          "training": {
+            "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/wd05_keyboard_braking/iteration_00090.pt",
+            "role": "distilled_and_adapted_with_native_keyboard_training",
+            "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260910/runs/wd05_keyboard_braking/iteration_00090.onnx"
+          }
+        },
+        "path": "res://runtime_assets/policies/Walk_Godot.onnx",
+        "sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+        "state_input": "",
+        "time_input_s": 0.0
       }
     },
     "robots": {
-      "walk": {
-        "scene": "res://generated/microduck_ball_stand_fix/robot.tscn",
-        "spec": "res://generated/microduck_ball_stand_fix/robot_spec.json",
+      "roller": {
+        "action_scale": 1.0,
+        "base_body": "trunk_base",
+        "current_limit_a": 1.75,
+        "decimation": 4.0,
         "home": [
           0.0,
-          -0.08730000257492065,
-          -0.4578999876976013,
-          -0.004900000058114529,
+          -0.0873000025749207,
+          -0.457899987697601,
+          -0.00490000005811452,
           0.453000009059906,
-          0.3490999937057495,
-          0.3490999937057495,
+          0.34909999370575,
+          0.34909999370575,
           0.0,
           0.0,
           0.0,
-          0.08730000257492065,
-          0.4578999876976013,
-          0.004900000058114529,
+          0.0873000025749207,
+          0.457899987697601,
+          0.00490000005811452,
           -0.453000009059906
         ],
-        "action_scale": 1.0,
-        "timestep": 0.005,
-        "decimation": 4,
-        "current_limit_a": 1.75,
-        "base_body": "trunk_base",
         "ipos": [
           -0.0226332,
           -2.70828e-05,
           0.00280064
         ],
         "iquat": [
-          0.6648657170652855,
-          0.23838070223751756,
-          0.23501206510316727,
-          0.6677556052388912
+          0.664865717065286,
+          0.238380702237518,
+          0.235012065103167,
+          0.667755605238891
         ],
         "poses": [
           {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "trunk_base",
+            "pos": [
+              -0.0226332,
+              -2.70828e-05,
+              0.14130064
+            ],
+            "quat": [
+              0.664865717065285,
+              0.238380702237517,
+              0.235012065103167,
+              0.667755605238891
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "yaw2roll",
+            "pos": [
+              0.00699413999999999,
+              0.017499999912,
+              0.1166083
+            ],
+            "quat": [
+              0.0164393298564053,
+              0.706915658642438,
+              0.706915658642438,
+              0.0164393298564053
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "hip_l",
+            "pos": [
+              0.01420008,
+              0.0322585825473318,
+              0.119708308785408
+            ],
+            "quat": [
+              0.661244796088173,
+              0.605897761222268,
+              0.326114129123303,
+              0.298819004379413
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "upper_leg_left",
+            "pos": [
+              -0.0135353608476633,
+              0.0543954947946357,
+              0.10152382116915
+            ],
+            "quat": [
+              0.687237633441981,
+              0.176758323677686,
+              0.269469084233627,
+              0.651035592601519
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "leg",
+            "pos": [
+              -0.00440725173010187,
+              0.0423189302921855,
+              0.0543559799688767
+            ],
+            "quat": [
+              0.0438254622706123,
+              0.220250421798695,
+              0.10611690662623,
+              -0.968663142006727
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "ankle_l_v1",
+            "pos": [
+              0.00682218063373652,
+              0.0415489143290114,
+              0.0308790513579577
+            ],
+            "quat": [
+              0.727484365125328,
+              -0.0541241971868464,
+              -0.680629924726739,
+              0.0676755150963182
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "tire",
+            "pos": [
+              0.039515920245335,
+              0.040451226981673,
+              0.0127735070915158
+            ],
+            "quat": [
+              0.0308557722452245,
+              0.706441688158077,
+              0.706424821475967,
+              -0.0308550507075509
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "tire_2",
+            "pos": [
+              -0.0254840797546649,
+              0.0404512271030688,
+              0.0127735084785408
+            ],
+            "quat": [
+              0.0308557722452245,
+              0.706441688158077,
+              0.706424821475967,
+              -0.0308550507075509
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "neck",
+            "pos": [
+              0.0174486943165042,
+              0.0003335,
+              0.194413523563487
+            ],
+            "quat": [
+              6.75955177099529e-18,
+              -0.173664989938292,
+              -2.49714283726941e-18,
+              0.984804788407191
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "neck_pitch",
+            "pos": [
+              0.00889739516600836,
+              -3.46944695195361e-18,
+              0.229569647126973
+            ],
+            "quat": [
+              1.62759972787276e-17,
+              -1.62759972787276e-17,
+              -0.707106781186548,
+              -0.707106781186547
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "yaw_roll_motion",
+            "pos": [
+              0.00873073163300836,
+              -0.00500964,
+              0.254405147126973
+            ],
+            "quat": [
+              0.174482681357568,
+              0.690172179222361,
+              -0.0192577321013776,
+              0.702030837419584
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "jaw_soft",
+            "pos": [
+              0.0234734886330084,
+              0.00120046999999999,
+              0.255703877126973
+            ],
+            "quat": [
+              0.693278635274442,
+              0.0164671112143907,
+              -0.720381084544804,
+              0.0120275163817056
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "bearing_roll",
+            "pos": [
+              0.00699413999999999,
+              -0.017500000088,
+              0.1166083
+            ],
+            "quat": [
+              0.0164393298564053,
+              0.706915658642438,
+              0.706915658642438,
+              0.0164393298564053
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "hip_l_2",
+            "pos": [
+              0.01420008,
+              -0.0322585797231879,
+              0.119708276517761
+            ],
+            "quat": [
+              0.661243740862806,
+              -0.605898912837454,
+              0.326114649542447,
+              -0.298818436422456
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "upper_leg_right",
+            "pos": [
+              -0.0135353608476633,
+              -0.0543954947946357,
+              0.10152382116915
+            ],
+            "quat": [
+              0.687237633441981,
+              -0.176758323677686,
+              0.269469084233627,
+              -0.651035592601518
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "leg_2",
+            "pos": [
+              -0.00440725200343987,
+              -0.0423189302805849,
+              0.0543559798363333
+            ],
+            "quat": [
+              0.968663142006727,
+              -0.10611690662623,
+              -0.220250421798695,
+              -0.0438254622706123
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "ankle_r_v1",
+            "pos": [
+              0.00682245063373224,
+              -0.0417510242021915,
+              0.0308611614400386
+            ],
+            "quat": [
+              0.0603328768885736,
+              -0.726747698110475,
+              0.0770919055762308,
+              -0.679893054349065
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "tire_3",
+            "pos": [
+              0.039515920245335,
+              -0.0406684964076544,
+              0.0127544911368007
+            ],
+            "quat": [
+              0.0308557873771403,
+              -0.706441687497149,
+              -0.70642482213691,
+              -0.0308550355752738
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "name": "tire_4",
+            "pos": [
+              -0.0254840797546649,
+              -0.0406684965290502,
+              0.0127544925238256
+            ],
+            "quat": [
+              0.0308557873771403,
+              -0.706441687497149,
+              -0.70642482213691,
+              -0.0308550355752738
+            ]
+          }
+        ],
+        "scene": "res://generated/microduck_roller/robot.tscn",
+        "spec": "res://generated/microduck_roller/robot_spec.json",
+        "spec_sha256": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7",
+        "timestep": 0.005
+      },
+      "walk": {
+        "action_scale": 1.0,
+        "base_body": "trunk_base",
+        "current_limit_a": 1.75,
+        "decimation": 4.0,
+        "home": [
+          0.0,
+          -0.0873000025749207,
+          -0.457899987697601,
+          -0.00490000005811452,
+          0.453000009059906,
+          0.34909999370575,
+          0.34909999370575,
+          0.0,
+          0.0,
+          0.0,
+          0.0873000025749207,
+          0.457899987697601,
+          0.00490000005811452,
+          -0.453000009059906
+        ],
+        "ipos": [
+          -0.0226332,
+          -2.70828e-05,
+          0.00280064
+        ],
+        "iquat": [
+          0.664865717065286,
+          0.238380702237518,
+          0.235012065103167,
+          0.667755605238891
+        ],
+        "poses": [
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "linvel": [
+              0.0,
+              0.0,
+              0.0
+            ],
             "name": "trunk_base",
             "pos": [
               -0.0226332,
@@ -685,359 +1185,359 @@
               0.12780064
             ],
             "quat": [
-              0.6648657170652846,
-              0.23838070223751748,
-              0.2350120651031671,
+              0.664865717065285,
+              0.238380702237517,
+              0.235012065103167,
               0.667755605238891
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "yaw2roll",
             "pos": [
-              0.006994139999999999,
-              0.017499999912000002,
+              0.00699413999999999,
+              0.017499999912,
               0.1031083
             ],
             "quat": [
-              0.016439329856405324,
-              0.7069156586424383,
-              0.7069156586424383,
-              0.016439329856405324
+              0.0164393298564053,
+              0.706915658642438,
+              0.706915658642438,
+              0.0164393298564053
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "hip_l",
             "pos": [
-              0.014200080000000002,
-              0.032258582547331854,
-              0.10620830878540834
+              0.01420008,
+              0.0322585825473318,
+              0.106208308785408
             ],
             "quat": [
-              0.6612447960881729,
-              0.6058977612222678,
-              0.3261141291233032,
-              0.29881900437941344
+              0.661244796088173,
+              0.605897761222268,
+              0.326114129123303,
+              0.298819004379413
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "upper_leg_left",
             "pos": [
-              -0.013535360847663273,
-              0.05439549479463571,
-              0.08802382116915013
+              -0.0135353608476633,
+              0.0543954947946357,
+              0.0880238211691501
             ],
             "quat": [
-              0.6872376334419811,
-              0.17675832367768574,
-              0.2694690842336268,
-              0.6510355926015187
+              0.687237633441981,
+              0.176758323677686,
+              0.269469084233627,
+              0.651035592601519
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "leg",
             "pos": [
-              -0.004407251730101876,
-              0.04231893029218549,
-              0.04085597996887673
+              -0.00440725173010187,
+              0.0423189302921855,
+              0.0408559799688767
             ],
             "quat": [
-              0.043825462270612264,
-              0.2202504217986946,
-              0.10611690662622955,
+              0.0438254622706123,
+              0.220250421798695,
+              0.10611690662623,
               -0.968663142006727
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "ankle_left",
             "pos": [
-              0.006173300647004337,
-              0.04113122248771239,
-              0.018037376621737405
+              0.00617330064700433,
+              0.0411312224877124,
+              0.0180373766217374
             ],
             "quat": [
-              0.7204270579482087,
-              -0.020337418041436517,
+              0.720427057948209,
+              -0.0203374180414365,
               -0.691298398575441,
-              0.05174715190739847
+              0.0517471519073985
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "neck",
             "pos": [
-              0.017448694316504185,
-              0.00033350000000000046,
-              0.18091352356348664
+              0.0174486943165042,
+              0.0003335,
+              0.180913523563487
             ],
             "quat": [
-              6.759551770995292e-18,
-              -0.17366498993829171,
-              -2.4971428372694066e-18,
-              0.9848047884071914
+              6.75955177099529e-18,
+              -0.173664989938292,
+              -2.49714283726941e-18,
+              0.984804788407191
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "neck_pitch",
             "pos": [
-              0.008897395166008367,
-              -3.469446951953614e-18,
-              0.2160696471269733
+              0.00889739516600836,
+              -3.46944695195361e-18,
+              0.216069647126973
             ],
             "quat": [
-              1.6275997278727603e-17,
-              -1.6275997278727603e-17,
-              -0.7071067811865476,
-              -0.7071067811865475
+              1.62759972787276e-17,
+              -1.62759972787276e-17,
+              -0.707106781186548,
+              -0.707106781186547
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "yaw_roll_motion",
             "pos": [
-              0.008730731633008368,
-              -0.005009640000000004,
-              0.2409051471269733
+              0.00873073163300836,
+              -0.00500964,
+              0.240905147126973
             ],
             "quat": [
-              0.17448268135756814,
-              0.6901721792223605,
-              -0.01925773210137761,
-              0.7020308374195844
+              0.174482681357568,
+              0.690172179222361,
+              -0.0192577321013776,
+              0.702030837419584
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "jaw_soft",
             "pos": [
-              0.02347348863300836,
-              0.0012004699999999965,
-              0.2422038771269733
+              0.0234734886330084,
+              0.00120046999999999,
+              0.242203877126973
             ],
             "quat": [
-              0.6932786352744421,
-              0.016467111214390748,
-              -0.7203810845448039,
-              0.012027516381705612
+              0.693278635274442,
+              0.0164671112143907,
+              -0.720381084544804,
+              0.0120275163817056
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "bearing_roll",
             "pos": [
-              0.006994139999999999,
+              0.00699413999999999,
               -0.017500000088,
               0.1031083
             ],
             "quat": [
-              0.016439329856405324,
-              0.7069156586424383,
-              0.7069156586424383,
-              0.016439329856405324
+              0.0164393298564053,
+              0.706915658642438,
+              0.706915658642438,
+              0.0164393298564053
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "hip_l_2",
             "pos": [
-              0.014200080000000002,
-              -0.03225857972318793,
-              0.10620827651776057
+              0.01420008,
+              -0.0322585797231879,
+              0.106208276517761
             ],
             "quat": [
-              0.6612437408628058,
-              -0.6058989128374536,
-              0.32611464954244734,
-              -0.29881843642245565
+              0.661243740862806,
+              -0.605898912837454,
+              0.326114649542447,
+              -0.298818436422456
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "upper_leg_right",
             "pos": [
-              -0.013535360847663273,
-              -0.05439549479463571,
-              0.08802382116915013
+              -0.0135353608476633,
+              -0.0543954947946357,
+              0.0880238211691501
             ],
             "quat": [
               0.687237633441981,
-              -0.1767583236776857,
-              0.26946908423362675,
-              -0.6510355926015184
+              -0.176758323677686,
+              0.269469084233627,
+              -0.651035592601518
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "leg_2",
             "pos": [
               -0.00440725200343987,
-              -0.042318930280584956,
-              0.04085597983633328
+              -0.0423189302805849,
+              0.0408559798363333
             ],
             "quat": [
-              0.9686631420067269,
-              -0.10611690662622957,
-              -0.22025042179869475,
-              -0.04382546227061235
+              0.968663142006727,
+              -0.10611690662623,
+              -0.220250421798695,
+              -0.0438254622706123
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "ankle_right",
             "pos": [
-              0.006171310647006482,
-              -0.041133223590180276,
-              0.018037301862647195
+              0.00617131064700648,
+              -0.0411332235901803,
+              0.0180373018626472
             ],
             "quat": [
-              0.020302809936088143,
-              -0.7203963047292891,
-              0.05184230899418683,
-              -0.6913243341870988
+              0.0203028099360881,
+              -0.720396304729289,
+              0.0518423089941868,
+              -0.691324334187099
+            ]
+          },
+          {
+            "angvel": [
+              0.0,
+              0.0,
+              0.0
             ],
             "linvel": [
               0.0,
               0.0,
               0.0
             ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
             "name": "ball",
             "pos": [
               5.0,
@@ -1049,537 +1549,38 @@
               0.0,
               0.0,
               0.0
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
             ]
           }
         ],
-        "spec_sha256": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc"
-      },
-      "roller": {
-        "scene": "res://generated/microduck_roller/robot.tscn",
-        "spec": "res://generated/microduck_roller/robot_spec.json",
-        "home": [
-          0.0,
-          -0.08730000257492065,
-          -0.4578999876976013,
-          -0.004900000058114529,
-          0.453000009059906,
-          0.3490999937057495,
-          0.3490999937057495,
-          0.0,
-          0.0,
-          0.0,
-          0.08730000257492065,
-          0.4578999876976013,
-          0.004900000058114529,
-          -0.453000009059906
-        ],
-        "action_scale": 1.0,
-        "timestep": 0.005,
-        "decimation": 4,
-        "current_limit_a": 1.75,
-        "base_body": "trunk_base",
-        "ipos": [
-          -0.0226332,
-          -2.70828e-05,
-          0.00280064
-        ],
-        "iquat": [
-          0.6648657170652855,
-          0.23838070223751756,
-          0.23501206510316727,
-          0.6677556052388912
-        ],
-        "poses": [
-          {
-            "name": "trunk_base",
-            "pos": [
-              -0.0226332,
-              -2.70828e-05,
-              0.14130064
-            ],
-            "quat": [
-              0.6648657170652846,
-              0.23838070223751748,
-              0.2350120651031671,
-              0.667755605238891
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "yaw2roll",
-            "pos": [
-              0.006994139999999999,
-              0.017499999912000002,
-              0.11660830000000001
-            ],
-            "quat": [
-              0.016439329856405324,
-              0.7069156586424383,
-              0.7069156586424383,
-              0.016439329856405324
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "hip_l",
-            "pos": [
-              0.014200080000000002,
-              0.032258582547331854,
-              0.11970830878540835
-            ],
-            "quat": [
-              0.6612447960881729,
-              0.6058977612222678,
-              0.3261141291233032,
-              0.29881900437941344
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "upper_leg_left",
-            "pos": [
-              -0.013535360847663273,
-              0.05439549479463571,
-              0.10152382116915014
-            ],
-            "quat": [
-              0.6872376334419811,
-              0.17675832367768574,
-              0.2694690842336268,
-              0.6510355926015187
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "leg",
-            "pos": [
-              -0.004407251730101876,
-              0.04231893029218549,
-              0.05435597996887674
-            ],
-            "quat": [
-              0.043825462270612264,
-              0.2202504217986946,
-              0.10611690662622955,
-              -0.968663142006727
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "ankle_l_v1",
-            "pos": [
-              0.006822180633736529,
-              0.04154891432901145,
-              0.0308790513579577
-            ],
-            "quat": [
-              0.7274843651253278,
-              -0.054124197186846405,
-              -0.6806299247267389,
-              0.0676755150963182
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "tire",
-            "pos": [
-              0.03951592024533503,
-              0.04045122698167299,
-              0.01277350709151583
-            ],
-            "quat": [
-              0.030855772245224494,
-              0.7064416881580774,
-              0.7064248214759665,
-              -0.030855050707550926
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "tire_2",
-            "pos": [
-              -0.025484079754664907,
-              0.04045122710306884,
-              0.012773508478540783
-            ],
-            "quat": [
-              0.030855772245224494,
-              0.7064416881580774,
-              0.7064248214759665,
-              -0.030855050707550926
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "neck",
-            "pos": [
-              0.017448694316504185,
-              0.00033350000000000046,
-              0.19441352356348665
-            ],
-            "quat": [
-              6.759551770995292e-18,
-              -0.17366498993829171,
-              -2.4971428372694066e-18,
-              0.9848047884071914
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "neck_pitch",
-            "pos": [
-              0.008897395166008367,
-              -3.469446951953614e-18,
-              0.2295696471269733
-            ],
-            "quat": [
-              1.6275997278727603e-17,
-              -1.6275997278727603e-17,
-              -0.7071067811865476,
-              -0.7071067811865475
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "yaw_roll_motion",
-            "pos": [
-              0.008730731633008368,
-              -0.005009640000000004,
-              0.2544051471269733
-            ],
-            "quat": [
-              0.17448268135756814,
-              0.6901721792223605,
-              -0.01925773210137761,
-              0.7020308374195844
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "jaw_soft",
-            "pos": [
-              0.02347348863300836,
-              0.0012004699999999965,
-              0.25570387712697334
-            ],
-            "quat": [
-              0.6932786352744421,
-              0.016467111214390748,
-              -0.7203810845448039,
-              0.012027516381705612
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "bearing_roll",
-            "pos": [
-              0.006994139999999999,
-              -0.017500000088,
-              0.11660830000000001
-            ],
-            "quat": [
-              0.016439329856405324,
-              0.7069156586424383,
-              0.7069156586424383,
-              0.016439329856405324
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "hip_l_2",
-            "pos": [
-              0.014200080000000002,
-              -0.03225857972318793,
-              0.11970827651776059
-            ],
-            "quat": [
-              0.6612437408628058,
-              -0.6058989128374536,
-              0.32611464954244734,
-              -0.29881843642245565
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "upper_leg_right",
-            "pos": [
-              -0.013535360847663273,
-              -0.05439549479463571,
-              0.10152382116915014
-            ],
-            "quat": [
-              0.687237633441981,
-              -0.1767583236776857,
-              0.26946908423362675,
-              -0.6510355926015184
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "leg_2",
-            "pos": [
-              -0.00440725200343987,
-              -0.042318930280584956,
-              0.05435597983633329
-            ],
-            "quat": [
-              0.9686631420067269,
-              -0.10611690662622957,
-              -0.22025042179869475,
-              -0.04382546227061235
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "ankle_r_v1",
-            "pos": [
-              0.006822450633732247,
-              -0.0417510242021915,
-              0.030861161440038604
-            ],
-            "quat": [
-              0.06033287688857363,
-              -0.7267476981104747,
-              0.07709190557623077,
-              -0.6798930543490646
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "tire_3",
-            "pos": [
-              0.03951592024533503,
-              -0.04066849640765437,
-              0.012754491136800696
-            ],
-            "quat": [
-              0.030855787377140263,
-              -0.7064416874971493,
-              -0.7064248221369103,
-              -0.030855035575273852
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          {
-            "name": "tire_4",
-            "pos": [
-              -0.0254840797546649,
-              -0.0406684965290502,
-              0.012754492523825642
-            ],
-            "quat": [
-              0.030855787377140263,
-              -0.7064416874971493,
-              -0.7064248221369103,
-              -0.030855035575273852
-            ],
-            "linvel": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "angvel": [
-              0.0,
-              0.0,
-              0.0
-            ]
-          }
-        ],
-        "spec_sha256": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7"
+        "scene": "res://generated/microduck_ball_stand_fix/robot.tscn",
+        "spec": "res://generated/microduck_ball_stand_fix/robot_spec.json",
+        "spec_sha256": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+        "timestep": 0.005
       }
     },
     "roller_limits": {
-      "vmax_x": 0.6,
-      "vmin_x": -0.5,
-      "vmax_y": 0.0,
-      "vmin_y": 0.0,
-      "vmax_ang": 1.0,
-      "switch_threshold": 0.05,
-      "switch_on": 0.1,
-      "switch_off": 0.03,
       "accel": 12.0,
-      "decel": 20.0
+      "decel": 20.0,
+      "switch_off": 0.03,
+      "switch_on": 0.1,
+      "switch_threshold": 0.05,
+      "vmax_ang": 1.0,
+      "vmax_x": 0.6,
+      "vmax_y": 0.0,
+      "vmin_x": -0.5,
+      "vmin_y": 0.0
     },
-    "control_config": {},
+    "runtime": "onnxruntime",
+    "runtime_version": "1.29.0",
+    "schema_version": 1.0,
     "ui_font": {
-      "path": "res://runtime_assets/fonts/ui-font.bin",
-      "face_index": 2,
+      "face_index": 2.0,
       "family": "Noto Sans CJK SC",
-      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
       "license": "res://runtime_assets/fonts/LICENSE.txt",
+      "path": "res://runtime_assets/fonts/ui-font.bin",
+      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
       "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
     }
-  }
+  },
+  "scope": "Final publication source; capture data and motor/controller hashes are archived separately."
 }
