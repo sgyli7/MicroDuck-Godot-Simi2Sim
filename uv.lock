@@ -313,6 +313,9 @@ media = [
     { name = "av" },
     { name = "pillow" },
 ]
+sai = [
+    { name = "sai-agent-001" },
+]
 train = [
     { name = "onnx" },
     { name = "pyyaml" },
@@ -333,12 +336,13 @@ requires-dist = [
     { name = "pillow", marker = "extra == 'media'", specifier = ">=12.2,<13" },
     { name = "pyyaml", marker = "extra == 'train'" },
     { name = "rsl-rl-lib", marker = "extra == 'train'", specifier = "==5.0.1" },
+    { name = "sai-agent-001", marker = "extra == 'sai'", git = "https://github.com/sgyli7/Sai_Agent_001.git?rev=8ea8348d95193c2bad91874816a76e5527238e30" },
     { name = "scipy", specifier = ">=1.14" },
     { name = "tensorboard", marker = "extra == 'train'" },
     { name = "torch", marker = "platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'train'", specifier = "==2.9.1", index = "https://download.pytorch.org/whl/cu129" },
     { name = "torch", marker = "(platform_machine != 'aarch64' and extra == 'train') or (sys_platform != 'linux' and extra == 'train')", specifier = "==2.9.1" },
 ]
-provides-extras = ["media", "train"]
+provides-extras = ["sai", "media", "train"]
 
 [[package]]
 name = "ml-dtypes"
@@ -367,7 +371,7 @@ wheels = [
 
 [[package]]
 name = "mujoco"
-version = "3.12.0"
+version = "3.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "absl-py" },
@@ -376,12 +380,13 @@ dependencies = [
     { name = "numpy" },
     { name = "pyopengl" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a6/cd/40c929fa073d6b25d44c9f32b3dbbfcb025053cba54f57f8d46d84cdc034/mujoco-3.12.0.tar.gz", hash = "sha256:38bb3eaf4251937a85d58b25f55b1679297155bc4f4e964490d1fd9f42f8bf93", size = 1209771, upload-time = "2026-08-20T11:01:09.106Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a2/3b/c76837b7fdb007f7605ff783689a0bd23a5a49b065928bec2f1fa7ea3d67/mujoco-3.10.0.tar.gz", hash = "sha256:c9e8d5d87d82204ed5bccc87d843c0a53e75aaf381de2938ec46d04f1ac6e24e", size = 1094987, upload-time = "2026-06-22T17:40:59.904Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fe/eb/c167f660219f72595ea1f89f5bc22b2b9bd43dad6779ce77895d679896bd/mujoco-3.12.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:8e9cfd259b2614e858c6d86a2d095c627d11083203ecad7a42286122e671aac9", size = 18305972, upload-time = "2026-08-20T11:47:52.559Z" },
-    { url = "https://files.pythonhosted.org/packages/51/d9/f3cb98d7e37439ffa912b8c63f63e065473523d958cc9eebf40bf8cf9c96/mujoco-3.12.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:b10fd3040f5c71504f25a560d8e2fea881f0dc27a9cfd22b4b0a79e65c942f20", size = 18506697, upload-time = "2026-08-20T11:47:55.661Z" },
-    { url = "https://files.pythonhosted.org/packages/b7/2e/389e8aaa3ce75e21f97ac9e7c48235b6b7acbfb1f370fd3ffb334f77b905/mujoco-3.12.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:7ec16ce408871a0a9157cc556958ab66cd34db9fc1dccd3ef07717170163a4e0", size = 19816226, upload-time = "2026-08-20T11:47:58.602Z" },
-    { url = "https://files.pythonhosted.org/packages/18/2e/7c42bb3c57b0ae6c37f55f47af94bcc7ea1fe9c39d76df99fb55c3d28591/mujoco-3.12.0-cp312-cp312-win_amd64.whl", hash = "sha256:d575c455829c8b8d2ffeff4eb3341115623f2e10a250271e73ad94219b707a35", size = 16733176, upload-time = "2026-08-20T11:48:01.552Z" },
+    { url = "https://files.pythonhosted.org/packages/03/a2/4dd9f4cec6ce92f836a8b2de1cc799c4458af1467d7a044ef8014217bdb4/mujoco-3.10.0-cp312-cp312-macosx_10_16_x86_64.whl", hash = "sha256:47d4a22b7667c60e24e7ef6acb027c13abe9abba9acf17cc8db6fb250ba275ea", size = 7772567, upload-time = "2026-06-22T17:40:16.539Z" },
+    { url = "https://files.pythonhosted.org/packages/5d/7d/ebe5342c136de27e0c430ba781f829df2cd66c00ed22627c1964fbd5d7fe/mujoco-3.10.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:a4d35e9d0b13ff9ad3196294a7dac363f1d0cdaa988832d0b687d42d98f4ee29", size = 19380823, upload-time = "2026-06-22T17:40:19.211Z" },
+    { url = "https://files.pythonhosted.org/packages/d8/5d/43d1b2b9fe97676e5af03020e132ac497b45a0333a4c61de657d0d52170a/mujoco-3.10.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:cb7f0d7c148a588f3633020807fc0ec3f3a9aff1f647406e3e0ffe96b05dfd57", size = 19705628, upload-time = "2026-06-22T17:40:22.549Z" },
+    { url = "https://files.pythonhosted.org/packages/c3/11/c69199e4123935f98068ab6ab6b35955b4de0f6a91d3f9883805a5789394/mujoco-3.10.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:966d12f88e77e2b188e7530667b519d6963b9b906cff83bab534e5e4279325a0", size = 20904309, upload-time = "2026-06-22T17:40:25.861Z" },
+    { url = "https://files.pythonhosted.org/packages/47/13/07bf2550c7dcd69ee8c7fd1f5c400a4ba2e4ede0a29a463ad3ac4cc9da90/mujoco-3.10.0-cp312-cp312-win_amd64.whl", hash = "sha256:708edb5aceee96f2767b1072641523060043b2c67000e39e6e9797addf073696", size = 17865123, upload-time = "2026-06-22T17:40:28.996Z" },
 ]
 
 [[package]]
@@ -755,20 +760,21 @@ wheels = [
 
 [[package]]
 name = "onnxruntime"
-version = "1.29.0"
+version = "1.24.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "flatbuffers" },
     { name = "numpy" },
     { name = "packaging" },
     { name = "protobuf" },
+    { name = "sympy" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d4/80/381c1e9efed9cc32d00aa7cab0547dc84116cec906c3ffe3613686d6963a/onnxruntime-1.29.0-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:3a3814c041251d6a77fdf513fb282056538ee826d2f1178a0df3c549d3fff6ba", size = 21430049, upload-time = "2026-08-17T22:53:48.286Z" },
-    { url = "https://files.pythonhosted.org/packages/30/12/4be0e345d38fe707a701ca07e8f63c05b152a2e6285d1e43a7faf63fedd2/onnxruntime-1.29.0-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:d2fb19e848f7c33ed8d3182b52504aaa11c5e8da438bbb47296f85b133cbcf6b", size = 20816870, upload-time = "2026-08-17T22:53:51.169Z" },
-    { url = "https://files.pythonhosted.org/packages/96/eb/e6968f5e41aac3125f2ff5708855f09cb0b70d85ed3115b625b0b58305ba/onnxruntime-1.29.0-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:2b80d8c7ec2cc7438e4da3760b88c24568cba72c9ace96d668800a6c79419acb", size = 23136745, upload-time = "2026-08-17T22:53:53.92Z" },
-    { url = "https://files.pythonhosted.org/packages/b4/80/5b28f1f1111210fc4a336ddbc6950f468ebf9a6a265420568f4f43fa33ce/onnxruntime-1.29.0-cp312-cp312-win_amd64.whl", hash = "sha256:4acf2b4948b7ede87221ca6332344b8facdc8059d6ac751a7d367d04532b02dd", size = 14001407, upload-time = "2026-08-17T22:53:56.486Z" },
-    { url = "https://files.pythonhosted.org/packages/6f/d6/6883f89ea4b044e6e8447ebfaf9bcecdf457b7d80a683635e130b25498e0/onnxruntime-1.29.0-cp312-cp312-win_arm64.whl", hash = "sha256:dc61a79cb39afd66ab3f01fd2c23591a7f01de89c1668e1fb6315067fc279164", size = 13746981, upload-time = "2026-08-17T22:53:58.977Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/38/31db1b232b4ba960065a90c1506ad7a56995cd8482033184e97fadca17cc/onnxruntime-1.24.4-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:cad1c2b3f455c55678ab2a8caa51fb420c25e6e3cf10f4c23653cdabedc8de78", size = 17341875, upload-time = "2026-03-17T22:05:51.669Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/60/c4d1c8043eb42f8a9aa9e931c8c293d289c48ff463267130eca97d13357f/onnxruntime-1.24.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:1a5c5a544b22f90859c88617ecb30e161ee3349fcc73878854f43d77f00558b5", size = 15172485, upload-time = "2026-03-17T22:03:32.182Z" },
+    { url = "https://files.pythonhosted.org/packages/6d/ab/5b68110e0460d73fad814d5bd11c7b1ddcce5c37b10177eb264d6a36e331/onnxruntime-1.24.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:0d640eb9f3782689b55cfa715094474cd5662f2f137be6a6f847a594b6e9705c", size = 17244912, upload-time = "2026-03-17T22:04:37.251Z" },
+    { url = "https://files.pythonhosted.org/packages/8b/f4/6b89e297b93704345f0f3f8c62229bee323ef25682a3f9b4f89a39324950/onnxruntime-1.24.4-cp312-cp312-win_amd64.whl", hash = "sha256:535b29475ca42b593c45fbb2152fbf1cdf3f287315bf650e6a724a0a1d065cdb", size = 12596856, upload-time = "2026-03-17T22:05:41.224Z" },
+    { url = "https://files.pythonhosted.org/packages/43/06/8b8ec6e9e6a474fcd5d772453f627ad4549dfe3ab8c0bf70af5afcde551b/onnxruntime-1.24.4-cp312-cp312-win_arm64.whl", hash = "sha256:e6214096e14b7b52e3bee1903dc12dc7ca09cb65e26664668a4620cc5e6f9a90", size = 12270275, upload-time = "2026-03-17T22:05:31.132Z" },
 ]
 
 [[package]]
@@ -922,6 +928,17 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d5/23/dae404688e571e73662b7754ab2a8bddcc48f625c338b7f55576ad528653/rsl_rl_lib-5.0.1.tar.gz", hash = "sha256:b6e1fce8f4481c6118d53c7b03b80c8070d0a1edd3df3efbec5e5e6ff7c92132", size = 58623, upload-time = "2026-03-04T08:19:49.671Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ad/25/293a8ffd929d40accab30057b962084601133bd8a6779c156c2f58eb93bc/rsl_rl_lib-5.0.1-py3-none-any.whl", hash = "sha256:2f71a4f753537faf7826d0b74815160e37c409b39ab80a4581524b7ef7bd8539", size = 84202, upload-time = "2026-03-04T08:19:48.044Z" },
+]
+
+[[package]]
+name = "sai-agent-001"
+version = "0.1.0a1"
+source = { git = "https://github.com/sgyli7/Sai_Agent_001.git?rev=8ea8348d95193c2bad91874816a76e5527238e30#8ea8348d95193c2bad91874816a76e5527238e30" }
+dependencies = [
+    { name = "mujoco" },
+    { name = "numpy" },
+    { name = "onnxruntime" },
+    { name = "scipy" },
 ]
 
 [[package]]
