@@ -9,6 +9,15 @@ from types import SimpleNamespace
 
 
 class SprintLearning(unittest.TestCase):
+    def test_training_handoff_uses_deployed_normal_speed_and_acceleration(self):
+        tape,selected=commands('sprint_030_wfirst',include_selection=True,
+            twist_limits={'vmax_x':.25,'vmax_ang':.8,'accel':1.2,'sprint_vmax_x':.9})
+        self.assertFalse(selected[100]);self.assertTrue(selected[200]);self.assertFalse(selected[350])
+        self.assertAlmostEqual(float(tape[100,0]),.25,places=6)
+        self.assertAlmostEqual(float(tape[200,0]),.3,places=6)
+        self.assertAlmostEqual(float(tape[350,0]),.25,places=6)
+        self.assertAlmostEqual(float(tape[50,0]),.024,places=6)
+
     def test_composed_controller_uses_actual_skill_selection_not_velocity_magnitude(self):
         from sim2sim.research.sprint_composition import SprintComposition
         tape,selected=commands('sprint_030_release',include_selection=True)

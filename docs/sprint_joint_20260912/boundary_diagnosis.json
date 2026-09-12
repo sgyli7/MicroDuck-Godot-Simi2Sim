@@ -1,0 +1,64 @@
+{
+  "minimal_seconds": 4,
+  "only_intervention": "initial horizontal position",
+  "unchanged_export_and_physics": true,
+  "rows": [
+    {
+      "offset_x": 0.0,
+      "first_fall": null,
+      "fall_pos": null,
+      "fall_tilt": null,
+      "initial_pos": [
+        2.47226698049288e-10,
+        4.08316428782683e-10,
+        0.12500000156844
+      ],
+      "final_pos": [
+        0.616406234789478,
+        0.00366502157490782,
+        0.117887453398907
+      ],
+      "passed_flat_motion": true,
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260912-sprint-trial/MicroDuck.arm64",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/boundary_probe/center.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/boundary_probe/center_trace.json"
+      ]
+    },
+    {
+      "offset_x": 19.75,
+      "first_fall": 2.48,
+      "fall_pos": [
+        20.0846580564514,
+        0.00713053358555587,
+        0.052459554289048
+      ],
+      "fall_tilt": 7.78341276212925,
+      "initial_pos": [
+        19.7500006018816,
+        4.08316428782683e-10,
+        0.12500000156844
+      ],
+      "final_pos": [
+        20.6855963347982,
+        -0.220953399815428,
+        -12.3421852915836
+      ],
+      "passed_flat_motion": false,
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260912-sprint-trial/MicroDuck.arm64",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/boundary_probe/edge.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/boundary_probe/edge_trace.json"
+      ]
+    }
+  ],
+  "boundary_prediction_confirmed": true
+}

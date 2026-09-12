@@ -4,7 +4,6 @@
   "goal_complete": false,
   "reason": [
     "34 held-out physical failures",
-    "continuous stress fall at 222.48 seconds",
     "OS keyboard acceptance blocked by locked desktop"
   ],
   "package": {
@@ -423,7 +422,14 @@
     "steps": 12000,
     "resets": 0,
     "trace_sha256": "84204874a40e2c7c290f49814845cb5d4de5f3620afcddf6ecfaa617dd8ba248",
-    "note": "Post-freeze engineering stress failure. No further model/control selection."
+    "note": "Post-freeze engineering stress failure. No further model/control selection.",
+    "diagnostic_correction": {
+      "cause": "left finite floor at x=20 m; not evidence of in-arena long-horizon instability",
+      "body_x_at_first_fall": 20.0791542208997,
+      "tilt_deg_at_first_fall": 3.6731181284717,
+      "evidence": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/boundary_probe/result.json",
+      "evidence_sha256": "f5b490067fa0d69df7efd6fad7dbbee02a7efea60f7311ba85dfe8d496ec20b0"
+    }
   },
   "tests": {
     "total": 266,

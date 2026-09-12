@@ -3,14 +3,18 @@ import numpy as np
 from sim2sim.play_input import PlayBrain, TwistLimits
 
 
-def commands(condition, dt=.02, seconds=10., *, include_selection=False, ordinary_turn_rate=1.5):
+def commands(condition, dt=.02, seconds=10., *, include_selection=False, ordinary_turn_rate=1.5, twist_limits=None):
     # Explicit cases keep one speed/turn cell auditable across training runs.
     _, speed_text, direction = condition.split('_')
     speed = int(speed_text)/100.
     if not .2 <= speed <= 1.:raise ValueError('Sprint speed outside experiment bounds')
     if direction not in ('straight','left','right','alternate','release','wfirst','turnrelease','repeat'):raise ValueError(direction)
-    brain = PlayBrain(has_standing=False,has_sprint=True,
-                      lim=TwistLimits(sprint_vmax_x=speed,sprint_vmax_ang=.8,vmax_ang=ordinary_turn_rate))
+    limits=dict(vmax_ang=ordinary_turn_rate,sprint_vmax_ang=.8)
+    limits.update(twist_limits or {})
+    # The named curriculum cell owns sprint speed. All remaining limits come
+    # from the actual deployment, including ordinary speed and input ramps.
+    limits['sprint_vmax_x']=speed
+    brain = PlayBrain(has_standing=False,has_sprint=True,lim=TwistLimits(**limits))
     tape=[];selection=[]
     for step in range(round(seconds/dt)):
         t=step*dt;held=set()
