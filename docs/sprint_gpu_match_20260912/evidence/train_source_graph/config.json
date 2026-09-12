@@ -1,0 +1,180 @@
+{
+  "source": "results/sprint_20260912/runs/s05_native_handoff/final.onnx",
+  "template": "results/sprint_20260912/gpu_proxy/jolt_torque_512/final.onnx",
+  "template_sha256": "cb22d4fa6d0af80a43a4e281a337a6eb4aba8e8607f30a444c28d3ec8337231e",
+  "source_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+  "variant": "residual",
+  "std": 0.02,
+  "bound": 0.2,
+  "feet": "source",
+  "cuda_graphs": true,
+  "iterations": 128,
+  "envs": 512,
+  "steps": 64,
+  "seed": 951101,
+  "control": "results/sprint_joint_20260912/delivery/control.json",
+  "control_sha256": "e53bccafe0877681429d0babe4dcb103fab5aedd9f9472117ea4aee26081be4c",
+  "code_sha256": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/scripts/sprint_gpu_train.py": "96c0dcaaabb0082c6db17a43a33add894729553997f5150443a16af040d5fc7d",
+    "scripts/sprint_gpu_world.py": "d8d4edbb0b4b638eade57f0795b7043d2c16f44c760e330cdd5d067d3141b4d9",
+    "scripts/sprint_gpu_proxy.py": "b267e971c49f18b54ab73b9172648a37c207cd54c54e85bf5a885a7e5f9333eb",
+    "src/sim2sim/research/torch_anchor.py": "d31fe272609b9f2d0d64f6671add5ea3cdd9fa6ebc67397039b8b38bb96dd21a",
+    "src/sim2sim/research/torch_walking.py": "2c7c6f5dbc85ad21e2b58d6ccda60ff0c715757b8ed8582ba8e8d4410b3825ad",
+    "src/sim2sim/research/models.py": "d6462530b72da2940e2728b6fc87ba9def0ebf4a3c725a9f56ecdf62c6e9fa06"
+  },
+  "device": "NVIDIA GB10",
+  "collection_device": "cuda",
+  "learner_device": "cuda",
+  "ordinary_controller": "frozen S05",
+  "actor_mask": "actual sprint selection only",
+  "reward": "native_progress_v1",
+  "gamma": 0.99,
+  "lam": 0.95,
+  "epochs": 4,
+  "minibatch": 4096,
+  "actor_lr": 0.0001,
+  "critic_lr": 0.0003,
+  "target_kl": 0.008,
+  "critic_warmup": 2,
+  "reset": "uniform yaw and joint noise +/- .015 rad, clipped joint limits",
+  "task_termination": "finite keyboard episode ends after final stop; no continuing-task bootstrap",
+  "game_physics_changed": false,
+  "foot_hulls": null,
+  "inertia": {
+    "spec_sha256": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+    "bodies": {
+      "yaw2roll": {
+        "index": 2,
+        "inertia": [
+          0.00017984346131252635,
+          0.00017984346131252635,
+          0.0017984346131252635
+        ],
+        "triangle_inequality": false
+      },
+      "hip_l": {
+        "index": 3,
+        "inertia": [
+          0.0006681177008731595,
+          0.00011333945131234017,
+          0.0011333945131234016
+        ],
+        "triangle_inequality": false
+      },
+      "upper_leg_left": {
+        "index": 4,
+        "inertia": [
+          0.0018146285840155666,
+          0.00018146285840155667,
+          0.00018146285840155667
+        ],
+        "triangle_inequality": false
+      },
+      "leg": {
+        "index": 5,
+        "inertia": [
+          0.00016417173539496694,
+          0.0016417173539496695,
+          0.00016477696605033038
+        ],
+        "triangle_inequality": false
+      },
+      "ankle_left": {
+        "index": 6,
+        "inertia": [
+          0.00018035173817402167,
+          0.0018035173817402166,
+          0.00018035173817402167
+        ],
+        "triangle_inequality": false
+      },
+      "neck": {
+        "index": 7,
+        "inertia": [
+          0.00018163707,
+          0.0018163707,
+          0.00018163707
+        ],
+        "triangle_inequality": false
+      },
+      "neck_pitch": {
+        "index": 8,
+        "inertia": [
+          0.0001800512111,
+          0.0001800512111,
+          0.001800512111
+        ],
+        "triangle_inequality": false
+      },
+      "yaw_roll_motion": {
+        "index": 9,
+        "inertia": [
+          0.0017234648715777994,
+          0.00017234648715777994,
+          0.00017234648715777994
+        ],
+        "triangle_inequality": false
+      },
+      "jaw_soft": {
+        "index": 10,
+        "inertia": [
+          0.0003236924609678202,
+          0.0002572039194068711,
+          0.0019438976196253087
+        ],
+        "triangle_inequality": false
+      },
+      "bearing_roll": {
+        "index": 11,
+        "inertia": [
+          0.00017984346131252635,
+          0.00017984346131252635,
+          0.0017984346131252635
+        ],
+        "triangle_inequality": false
+      },
+      "hip_l_2": {
+        "index": 12,
+        "inertia": [
+          0.0006681177008731595,
+          0.00011333945131234017,
+          0.0011333945131234016
+        ],
+        "triangle_inequality": false
+      },
+      "upper_leg_right": {
+        "index": 13,
+        "inertia": [
+          0.0018146285840155666,
+          0.00018146285840155667,
+          0.00018146285840155667
+        ],
+        "triangle_inequality": false
+      },
+      "leg_2": {
+        "index": 14,
+        "inertia": [
+          0.000164171735394967,
+          0.00164171735394967,
+          0.00016477696605033025
+        ],
+        "triangle_inequality": false
+      },
+      "ankle_right": {
+        "index": 15,
+        "inertia": [
+          0.00018034829349637655,
+          0.0018034829349637656,
+          0.00018034829349637655
+        ],
+        "triangle_inequality": false
+      }
+    },
+    "max_abs_after_set_const": 0.0,
+    "supported_physical_solid": false,
+    "scope": "experimental Jolt diagonal rotor-map proxy; distinct contact solver"
+  },
+  "torch": "2.9.1+cu129",
+  "cuda": "12.9",
+  "started_unix": 1789211126.1968284
+}

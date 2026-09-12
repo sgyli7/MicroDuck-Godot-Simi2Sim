@@ -1,0 +1,26 @@
+{
+  "s05": {
+    "sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+    "rows": 606,
+    "cuda_max_abs": 2.384185791015625e-06,
+    "cpu_max_abs": 1.9669532775878906e-06,
+    "batch_vs_single": 3.5762786865234375e-07,
+    "passed": true,
+    "dtypes": [
+      "torch.float32"
+    ],
+    "device": "NVIDIA GB10"
+  },
+  "running": {
+    "sha256": "007707dd7779b2756ded67c58b2e9f94fe5071794a48c2b5a20d5f8d841efbeb",
+    "rows": 606,
+    "cuda_max_abs": 9.1552734375e-05,
+    "cpu_max_abs": 7.62939453125e-05,
+    "batch_vs_single": 3.337860107421875e-06,
+    "passed": false,
+    "dtypes": [
+      "torch.float32"
+    ],
+    "device": "NVIDIA GB10"
+  }
+}

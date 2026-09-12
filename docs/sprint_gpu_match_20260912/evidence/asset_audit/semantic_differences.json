@@ -1,0 +1,91 @@
+{
+  "matching": "body/type/pose/size, ignoring unnamed numeric IDs",
+  "missing_game_collision_geometries": [
+    {
+      "name": "9",
+      "body": "trunk_base",
+      "type": 7
+    },
+    {
+      "name": "19",
+      "body": "hip_l",
+      "type": 7
+    },
+    {
+      "name": "49",
+      "body": "jaw_soft",
+      "type": 7
+    },
+    {
+      "name": "56",
+      "body": "jaw_soft",
+      "type": 7
+    },
+    {
+      "name": "58",
+      "body": "jaw_soft",
+      "type": 7
+    },
+    {
+      "name": "67",
+      "body": "hip_l_2",
+      "type": 7
+    }
+  ],
+  "matching_geometry_with_different_contact_attributes": [
+    {
+      "training_geom": "70",
+      "game_geom": "76",
+      "body": "leg_2",
+      "differences": {
+        "contype": {
+          "training": 2,
+          "game_source": 1
+        },
+        "conaffinity": {
+          "training": 2,
+          "game_source": 1
+        }
+      }
+    },
+    {
+      "training_geom": "24",
+      "game_geom": "26",
+      "body": "leg",
+      "differences": {
+        "contype": {
+          "training": 2,
+          "game_source": 1
+        },
+        "conaffinity": {
+          "training": 2,
+          "game_source": 1
+        }
+      }
+    },
+    {
+      "training_geom": "right_foot_collision",
+      "game_geom": "right_foot_collision",
+      "body": "ankle_right",
+      "differences": {
+        "priority": {
+          "training": 1,
+          "game_source": 0
+        }
+      }
+    },
+    {
+      "training_geom": "left_foot_collision",
+      "game_geom": "left_foot_collision",
+      "body": "ankle_left",
+      "differences": {
+        "priority": {
+          "training": 1,
+          "game_source": 0
+        }
+      }
+    }
+  ],
+  "masses_and_joint_frames_equal": true,
+  "scope": "compiled MJCF before game prism/hull conversion; exact foot export audited separately"
+}

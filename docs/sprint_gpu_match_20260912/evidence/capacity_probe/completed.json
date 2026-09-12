@@ -1,0 +1,40 @@
+{
+  "status": "completed",
+  "results": {
+    "2048": {
+      "njmax": 2048,
+      "worlds": 512,
+      "physical_steps": 80,
+      "elapsed_s": 7.031460771977436,
+      "max_nefc": 88,
+      "max_nacon": 3766,
+      "naconmax": 65536,
+      "overflow": false
+    },
+    "512": {
+      "njmax": 512,
+      "worlds": 512,
+      "physical_steps": 80,
+      "elapsed_s": 7.210276263998821,
+      "max_nefc": 88,
+      "max_nacon": 3783,
+      "naconmax": 65536,
+      "overflow": false,
+      "qpos_max_abs_vs_2048": 0.024682819843292236,
+      "qvel_max_abs_vs_2048": 0.6312389373779297
+    },
+    "256": {
+      "njmax": 256,
+      "worlds": 512,
+      "physical_steps": 80,
+      "elapsed_s": 7.322370275011053,
+      "max_nefc": 88,
+      "max_nacon": 3758,
+      "naconmax": 65536,
+      "overflow": false,
+      "qpos_max_abs_vs_2048": 0.02724170684814453,
+      "qvel_max_abs_vs_2048": 0.6980265378952026
+    }
+  },
+  "scope": "Allocation capacity only; same model/timestep/motor equation/initial states/held targets. Includes near-fall snapshots and checks every substep for overflow."
+}

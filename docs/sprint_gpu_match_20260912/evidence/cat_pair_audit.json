@@ -1,0 +1,12 @@
+{
+  "config_differences": [
+    "constraints",
+    "constraint_probability_schedule",
+    "started_unix"
+  ],
+  "equal_budget": true,
+  "equal_source": true,
+  "equal_control": true,
+  "equal_code": true,
+  "equal_geometry": true
+}

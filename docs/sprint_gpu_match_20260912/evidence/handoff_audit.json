@@ -1,0 +1,257 @@
+{
+  "records": [
+    {
+      "case": "sprint_repeat",
+      "seed": 925002,
+      "baseline_success": true,
+      "segments": [
+        {
+          "kind": "straight",
+          "start": 4,
+          "end": 6,
+          "held": [
+            "fwd"
+          ],
+          "skills": [
+            "walking"
+          ],
+          "previous_skill": "sprint",
+          "action_jump_l2": 0.3373363919098595,
+          "metrics": {
+            "at": 4,
+            "heading_error_deg": 9.313645728760385,
+            "lateral_path_m": 0.0519459595049446,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        }
+      ],
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 850,
+        "max_abs": {
+          "command": 5.551115123125783e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 5.10702591327572e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 1.021405182655144e-14,
+          "body_quat": 1.304512053934559e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    },
+    {
+      "case": "sprint_shift_first",
+      "seed": 925012,
+      "baseline_success": true,
+      "segments": [
+        {
+          "kind": "stops",
+          "start": 9,
+          "end": 12,
+          "held": [],
+          "skills": [
+            "walking"
+          ],
+          "previous_skill": "sprint",
+          "action_jump_l2": 0.5161541051037603,
+          "metrics": {
+            "at": 9,
+            "onset_s": null,
+            "passed": false
+          }
+        }
+      ],
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 600,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.325873406851315e-15,
+          "body_quat": 8.743006318923108e-16
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 925005,
+      "baseline_success": true,
+      "segments": [
+        {
+          "kind": "turns",
+          "start": 7,
+          "end": 9,
+          "held": [
+            "fwd",
+            "left"
+          ],
+          "skills": [
+            "walking"
+          ],
+          "previous_skill": "sprint",
+          "action_jump_l2": 0.7770373313094008,
+          "metrics": {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4686446708631211,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        }
+      ],
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 800,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 8.659739592076221e-15,
+          "body_quat": 1.6653345369377348e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 925007,
+      "baseline_success": true,
+      "segments": [
+        {
+          "kind": "turns",
+          "start": 7,
+          "end": 9,
+          "held": [
+            "fwd",
+            "left"
+          ],
+          "skills": [
+            "walking"
+          ],
+          "previous_skill": "sprint",
+          "action_jump_l2": 0.7609212489486512,
+          "metrics": {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.41448639806893145,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        }
+      ],
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 800,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.325873406851315e-15,
+          "body_quat": 1.2212453270876722e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 925006,
+      "baseline_success": true,
+      "segments": [
+        {
+          "kind": "straight",
+          "start": 10,
+          "end": 12,
+          "held": [
+            "fwd"
+          ],
+          "skills": [
+            "walking"
+          ],
+          "previous_skill": "sprint",
+          "action_jump_l2": 0.24703716402696776,
+          "metrics": {
+            "at": 10,
+            "heading_error_deg": 8.916781488201199,
+            "lateral_path_m": 0.056272323532150156,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        }
+      ],
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 800,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 3.1086244689504383e-15,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 3.1086244689504383e-15,
+          "body_pos": 9.769962616701378e-15,
+          "body_quat": 1.27675647831893e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 925015,
+      "baseline_success": true,
+      "segments": [
+        {
+          "kind": "straight",
+          "start": 10,
+          "end": 12,
+          "held": [
+            "fwd"
+          ],
+          "skills": [
+            "walking"
+          ],
+          "previous_skill": "sprint",
+          "action_jump_l2": 0.31412391296129083,
+          "metrics": {
+            "at": 10,
+            "heading_error_deg": 6.730596914276706,
+            "lateral_path_m": 0.05148073558267337,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        }
+      ],
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 800,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 1.3322676295501878e-15,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 1.3322676295501878e-15,
+          "body_pos": 9.769962616701378e-15,
+          "body_quat": 1.27675647831893e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    }
+  ],
+  "all_failures_after_sprint_to_walking": true,
+  "all_old_cases_pass": true,
+  "interpretation": "All six new failing segments run frozen ordinary S05 after sprint. This supports an off-distribution handoff hypothesis; not proof of a specific mechanical cause or a tested unified-policy remedy."
+}

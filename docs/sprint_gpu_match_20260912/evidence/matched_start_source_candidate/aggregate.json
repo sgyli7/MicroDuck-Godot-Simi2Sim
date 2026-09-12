@@ -1,0 +1,16 @@
+{
+  "status": "completed",
+  "actor_sha256": "edf8f1ca0e1bb7bb754e4cf7770b3ab38856f239eac89b121e5a8d356c03bc2a",
+  "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+  "feet": "source",
+  "worlds": 257,
+  "elapsed_rollout_s": 7.285810672008665,
+  "parity_max_abs": 1.1920928955078125e-06,
+  "passes": 58,
+  "falls": 0,
+  "candidate_count": 129,
+  "scope": "Projected native zero-velocity reset and identical input tapes; different contact solver, no native acceptance substitution",
+  "original_path": "results/sprint_gpu_match_20260912/matched_start_source_candidate/completed.json",
+  "original_sha256": "30d6c8938c64b04588946c752c2b24a401f2810866da69fd2776a729d8b151b1",
+  "archive_projection": "Aggregate; per-case metrics remain in original results file"
+}

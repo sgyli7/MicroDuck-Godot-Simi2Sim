@@ -1,0 +1,16 @@
+{
+  "status": "completed",
+  "actor_sha256": "0ac2603f63823860ec6c2dee6f52cf6a46e51ddcb2452ae07591083de21ea36d",
+  "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+  "feet": "jolt",
+  "worlds": 257,
+  "elapsed_rollout_s": 5.983431432017824,
+  "parity_max_abs": 1.1920928955078125e-06,
+  "passes": 66,
+  "falls": 0,
+  "candidate_count": 129,
+  "scope": "Projected native zero-velocity reset and identical input tapes; different contact solver, no native acceptance substitution",
+  "original_path": "results/sprint_gpu_match_20260912/matched_start_jolt_candidate/completed.json",
+  "original_sha256": "ab091fc8eae00796fe3f8a4179fa16bb67045accc696b67ac03ca436c84af3cb",
+  "archive_projection": "Aggregate; per-case metrics remain in original results file"
+}

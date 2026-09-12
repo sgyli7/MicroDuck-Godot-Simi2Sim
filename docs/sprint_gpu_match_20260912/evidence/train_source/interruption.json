@@ -1,0 +1,11 @@
+{
+  "status": "interrupted_after_complete_checkpoint",
+  "reason": "Observed ~22-25 s per 32768 samples projects beyond the 1600 s per-arm budget; profile allocation before further training",
+  "pid": 329417,
+  "pgid": 329416,
+  "checkpoint": "results/sprint_gpu_match_20260912/train_source/latest.pt",
+  "checkpoint_sha256": "e59c099b3014cd3e91f75c5f06c92bee91a522a77d0b05d6abd1ab738541365b",
+  "minimum_complete_iteration": 16,
+  "eligible_for_candidate_selection": false,
+  "unix": 1789210305.5501008
+}

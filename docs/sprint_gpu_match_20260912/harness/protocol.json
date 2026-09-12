@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "hypotheses": [
+    {
+      "id": "P1",
+      "hypothesis": "Compiled training assets/rotor/contact response differ",
+      "prediction": "Matching frozen game assets and rotor decreases independent one-step/closed-loop discrepancy"
+    },
+    {
+      "id": "P2",
+      "hypothesis": "Training observation latency/frames disagree with native control",
+      "prediction": "Exact native observation contract removes same-state differences"
+    },
+    {
+      "id": "P3",
+      "hypothesis": "Absent lateral/transition commands limit trained recovery",
+      "prediction": "Matched GPU course improves native turn-exit cases without speed loss"
+    }
+  ],
+  "physics": "frozen Jolt 200/50 Hz, existing masses/gravity/collisions/actuators unchanged",
+  "selection": "No candidate promotion without native zero-fall, direction/turn/stop and paired speed gates; preserve final seeds",
+  "new_work": "Training-side CUDA inference and batched physics, no further CPU-collected PPO",
+  "actor_parity": "Source-specific max absolute error <1e-5; running source currently failed random/real combined test, excluded from GPU learning pending a valid adapter"
+}

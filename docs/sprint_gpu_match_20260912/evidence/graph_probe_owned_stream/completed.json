@@ -1,0 +1,33 @@
+{
+  "status": "completed",
+  "results": {
+    "False": {
+      "graphs": false,
+      "worlds": 512,
+      "decision_steps": 20,
+      "elapsed_s": 8.404800236021401,
+      "max_nefc": 80,
+      "max_nacon": 2899,
+      "overflow": false
+    },
+    "True": {
+      "graphs": true,
+      "worlds": 512,
+      "decision_steps": 20,
+      "elapsed_s": 0.40831877998425625,
+      "max_nefc": 80,
+      "max_nacon": 2905,
+      "overflow": false,
+      "20ms": {
+        "qpos_max_abs": 0.00012909993529319763,
+        "qvel_max_abs": 0.004849433898925781
+      },
+      "400ms": {
+        "qpos_max_abs": 0.009378194808959961,
+        "qvel_max_abs": 0.27338406443595886
+      }
+    }
+  },
+  "speedup": 20.583917879911056,
+  "scope": "Same exact game foot hulls, 2048 constraint capacity and motor equation; only raw launch versus captured graph changes. Close-to-fall snapshots included."
+}

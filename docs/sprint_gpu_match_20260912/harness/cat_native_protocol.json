@@ -1,0 +1,22 @@
+{
+  "commands": [
+    [
+      ".venv/bin/python",
+      "results/sprint_gpu_match_20260912/native_pair.py",
+      "--actor",
+      "results/sprint_gpu_match_20260912/train_positive/final.onnx",
+      "--out",
+      "results/sprint_gpu_match_20260912/native_positive"
+    ],
+    [
+      ".venv/bin/python",
+      "results/sprint_gpu_match_20260912/native_pair.py",
+      "--actor",
+      "results/sprint_gpu_match_20260912/train_cat/final.onnx",
+      "--out",
+      "results/sprint_gpu_match_20260912/native_cat"
+    ]
+  ],
+  "per_arm_timeout_s": 400,
+  "selection": "same257 frozen development replays and no old success loss; no new final seeds"
+}

@@ -1,0 +1,71 @@
+{
+  "hypothesis": "Matching the actual game foot convex hulls improves transfer of GPU-learned sprint updates versus source foot mesh, with identical commands/reward/source/budget",
+  "only_difference": "--feet source vs --feet jolt",
+  "iterations": 128,
+  "envs": 512,
+  "steps": 64,
+  "samples_per_arm": 4194304,
+  "seed": 951101,
+  "actor_source": "results/sprint_20260912/runs/s05_native_handoff/final.onnx",
+  "ordinary_controller": "same frozen S05",
+  "control": "results/sprint_joint_20260912/delivery/control.json",
+  "contact": "source .02s (harder .01s rejected by same-state response)",
+  "training_script_sha256": "96c0dcaaabb0082c6db17a43a33add894729553997f5150443a16af040d5fc7d",
+  "selection": "Only each fixed-budget final model. Native 8 courses x16 dev seeds plus paired ordinary and known minimal replay. No holdouts unless every hard gate and no loss of old successes.",
+  "phase": "graph_execution_v2",
+  "acceptance": "same native direction/turn/stop/zero-fall and >=15% paired speed; candidate must improve previous retained baseline",
+  "reward": "native_progress_v1 linear capped direction-progress with upright/path/turn penalties; only actual sprint rows update actor",
+  "final_seeds": "926000-926049 untouched; 924000-924049 also untouched",
+  "implementation_revisions": [
+    {
+      "previous_sha256": "467ee8ed284ddd8e9c4e4819133bf3f108e97a8702fb93115b69bf96db66c25b",
+      "reason": "Declare the original normalization template for the already-composed S05 graph; smoke exposed multi-branch parser rejection"
+    },
+    {
+      "reason": "Raw Warp dispatch too slow at512. Both arms use the same validated CUDA Graph stream implementation; restart same budget and seed from source, no reuse of interrupted checkpoint."
+    }
+  ],
+  "commands": [
+    [
+      "env",
+      "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+      "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+      "scripts/sprint_gpu_train.py",
+      "--output",
+      "results/sprint_gpu_match_20260912/train_source_graph",
+      "--feet",
+      "source",
+      "--iterations",
+      "128",
+      "--envs",
+      "512",
+      "--steps",
+      "64",
+      "--seed",
+      "951101",
+      "--cuda-graphs"
+    ],
+    [
+      "env",
+      "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+      "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+      "scripts/sprint_gpu_train.py",
+      "--output",
+      "results/sprint_gpu_match_20260912/train_jolt_graph",
+      "--feet",
+      "jolt",
+      "--iterations",
+      "128",
+      "--envs",
+      "512",
+      "--steps",
+      "64",
+      "--seed",
+      "951101",
+      "--cuda-graphs"
+    ]
+  ],
+  "supersedes": "Interrupted raw-dispatch pair, source complete16 only; no candidate",
+  "cuda_graphs": true,
+  "per_arm_timeout_s": 300
+}

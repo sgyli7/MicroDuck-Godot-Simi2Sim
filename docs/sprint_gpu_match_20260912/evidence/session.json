@@ -1,0 +1,23 @@
+{
+  "predecessor": "c38cedb",
+  "previous_goal_turn": "progress",
+  "objective": "GPU domain matching and controlled sprint transfer toward stable fast Shift+W/A/D walking",
+  "dev_seeds": [
+    925000,
+    925015
+  ],
+  "final_seeds": [
+    926000,
+    926049
+  ],
+  "final_seeds_used": false,
+  "old_unused_final_seeds": [
+    924000,
+    924049
+  ],
+  "started_unix": 1789208198.5473175,
+  "phase": "closed_frozen_development_results",
+  "game_physics_frozen": true,
+  "objective_complete": false,
+  "promoted": false
+}
