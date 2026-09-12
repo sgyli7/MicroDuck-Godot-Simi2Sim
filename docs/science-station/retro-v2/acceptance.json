@@ -1,0 +1,1031 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "loop-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/loop-microduck",
+      "route": {
+        "minimum_upright": 0.993613591587189,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -1.85482442378998,
+              0.122994683682919,
+              3.99059867858887
+            ],
+            "target": [
+              -2.0,
+              3.8
+            ],
+            "time": 25.4149999999992
+          },
+          {
+            "position": [
+              -4.77831125259399,
+              0.122497536242008,
+              1.09170651435852
+            ],
+            "target": [
+              -5.0,
+              1.0
+            ],
+            "time": 48.2450000000062
+          },
+          {
+            "position": [
+              4.78819370269775,
+              0.123478777706623,
+              4.88754320144653
+            ],
+            "target": [
+              5.0,
+              5.0
+            ],
+            "time": 108.754999999974
+          },
+          {
+            "position": [
+              0.239024266600609,
+              0.122845664620399,
+              6.99863481521606
+            ],
+            "target": [
+              0.0,
+              7.0
+            ],
+            "time": 141.754999999944
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 141.754999999944
+    },
+    {
+      "case": "loop-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/loop-roller",
+      "route": {
+        "minimum_upright": 0.916976150773882,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -1.76754248142242,
+              0.119129665195942,
+              3.85943913459778
+            ],
+            "target": [
+              -2.0,
+              3.8
+            ],
+            "time": 8.86999999999999
+          },
+          {
+            "position": [
+              -4.78023529052734,
+              0.127083703875542,
+              1.08861708641052
+            ],
+            "target": [
+              -5.0,
+              1.0
+            ],
+            "time": 15.305000000001
+          },
+          {
+            "position": [
+              4.76241827011108,
+              0.12715382874012,
+              5.02864933013916
+            ],
+            "target": [
+              5.0,
+              5.0
+            ],
+            "time": 33.5499999999987
+          },
+          {
+            "position": [
+              0.123770132660866,
+              0.119254291057587,
+              6.79482841491699
+            ],
+            "target": [
+              0.0,
+              7.0
+            ],
+            "time": 42.6000000000033
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 42.6000000000033
+    },
+    {
+      "case": "loop-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/loop-sai",
+      "route": {
+        "minimum_upright": 0.999505221843719,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -1.77824103832245,
+              0.219870120286942,
+              3.89168787002563
+            ],
+            "target": [
+              -2.0,
+              3.8
+            ],
+            "time": 38.6665000000026
+          },
+          {
+            "position": [
+              -4.92300891876221,
+              0.219324231147766,
+              1.22729110717773
+            ],
+            "target": [
+              -5.0,
+              1.0
+            ],
+            "time": 70.2570000001534
+          },
+          {
+            "position": [
+              4.88525247573853,
+              0.219993487000465,
+              4.78928136825562
+            ],
+            "target": [
+              5.0,
+              5.0
+            ],
+            "time": 160.177999999668
+          },
+          {
+            "position": [
+              0.236653715372086,
+              0.219391524791718,
+              7.03977108001709
+            ],
+            "target": [
+              0.0,
+              7.0
+            ],
+            "time": 207.227999998556
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 207.227999998556
+    },
+    {
+      "case": "slope-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/slope-microduck",
+      "route": {
+        "minimum_upright": 0.991720681368093,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -18.2379150390625,
+              0.260583907365799,
+              -3.02806115150452
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 27.8499999999987
+          },
+          {
+            "position": [
+              -14.2389793395996,
+              0.175555139780045,
+              -3.00936889648438
+            ],
+            "target": [
+              -14.0,
+              -3.0
+            ],
+            "time": 45.6000000000049
+          },
+          {
+            "position": [
+              -17.7755870819092,
+              0.260439842939377,
+              -2.91611003875732
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 78.1350000000014
+          },
+          {
+            "position": [
+              -21.7613430023193,
+              0.169434368610382,
+              -3.02170467376709
+            ],
+            "target": [
+              -22.0,
+              -3.0
+            ],
+            "time": 98.8799999999826
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 98.8799999999826
+    },
+    {
+      "case": "slope-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/slope-roller",
+      "route": {
+        "minimum_upright": 0.957241856480837,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -18.2116088867188,
+              0.261048227548599,
+              -2.89291024208069
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 8.3049999999999
+          },
+          {
+            "position": [
+              -14.1902284622192,
+              0.166097447276115,
+              -2.85824203491211
+            ],
+            "target": [
+              -14.0,
+              -3.0
+            ],
+            "time": 14.5000000000009
+          },
+          {
+            "position": [
+              -17.7947998046875,
+              0.265632659196854,
+              -3.11999821662903
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 21.68
+          },
+          {
+            "position": [
+              -21.7812900543213,
+              0.176494538784027,
+              -3.09290719032288
+            ],
+            "target": [
+              -22.0,
+              -3.0
+            ],
+            "time": 27.8699999999987
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 27.8699999999987
+    },
+    {
+      "case": "slope-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/slope-sai",
+      "route": {
+        "minimum_upright": 0.96122407913208,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -18.22340965271,
+              0.362895339727402,
+              -2.9125964641571
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 30.4784999999743
+          },
+          {
+            "position": [
+              -14.2066955566406,
+              0.268833070993423,
+              -3.12186312675476
+            ],
+            "target": [
+              -14.0,
+              -3.0
+            ],
+            "time": 61.3985000001111
+          },
+          {
+            "position": [
+              -17.7869873046875,
+              0.356247872114182,
+              -2.8894579410553
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 97.2425000002823
+          },
+          {
+            "position": [
+              -21.7939434051514,
+              0.269324839115143,
+              -3.12301135063171
+            ],
+            "target": [
+              -22.0,
+              -3.0
+            ],
+            "time": 128.468000000418
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 128.468000000418
+    },
+    {
+      "case": "tower-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/tower-microduck",
+      "route": {
+        "minimum_upright": 0.994377557818185,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              6.76077890396118,
+              0.121416494250298,
+              -17.0024032592773
+            ],
+            "target": [
+              7.0,
+              -17.0
+            ],
+            "time": 17.0000000000009
+          },
+          {
+            "position": [
+              9.76132678985596,
+              0.122703149914742,
+              -17.0204620361328
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 32.6949999999983
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 32.6949999999983
+    },
+    {
+      "case": "tower-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/tower-roller",
+      "route": {
+        "minimum_upright": 0.958395170293067,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              6.77132415771484,
+              0.1256502866745,
+              -16.9368553161621
+            ],
+            "target": [
+              7.0,
+              -17.0
+            ],
+            "time": 6.06499999999989
+          },
+          {
+            "position": [
+              9.80163669586182,
+              0.128709718585014,
+              -16.8701477050781
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 10.7600000000003
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 10.7600000000003
+    },
+    {
+      "case": "tower-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/tower-sai",
+      "route": {
+        "minimum_upright": 0.95486444234848,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              6.7754807472229,
+              0.220109879970551,
+              -16.9155464172363
+            ],
+            "target": [
+              7.0,
+              -17.0
+            ],
+            "time": 27.2884999999818
+          },
+          {
+            "position": [
+              9.80668067932129,
+              0.220333710312843,
+              -16.8578643798828
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 64.2200000001246
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 64.2200000001246
+    },
+    {
+      "case": "lab-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/lab-microduck",
+      "route": {
+        "minimum_upright": 0.991294101296038,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -7.45961427688599,
+              0.122757792472839,
+              -0.113704934716225
+            ],
+            "target": [
+              -7.5,
+              -0.35
+            ],
+            "time": 23.0249999999997
+          },
+          {
+            "position": [
+              -7.4770073890686,
+              0.120108760893345,
+              2.86156058311462
+            ],
+            "target": [
+              -7.5,
+              3.1
+            ],
+            "time": 46.8900000000055
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 46.8900000000055
+    },
+    {
+      "case": "lab-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/lab-roller",
+      "route": {
+        "minimum_upright": 0.961737886340604,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -7.38533163070679,
+              0.119568631052971,
+              -0.140984252095222
+            ],
+            "target": [
+              -7.5,
+              -0.35
+            ],
+            "time": 7.76999999999986
+          },
+          {
+            "position": [
+              -7.61610555648804,
+              0.125275269150734,
+              2.89299654960632
+            ],
+            "target": [
+              -7.5,
+              3.1
+            ],
+            "time": 14.1250000000008
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 14.1250000000008
+    },
+    {
+      "case": "lab-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/lab-sai",
+      "route": {
+        "minimum_upright": 0.999334812164307,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -7.36834764480591,
+              0.220011457800865,
+              -0.149416446685791
+            ],
+            "target": [
+              -7.5,
+              -0.35
+            ],
+            "time": 33.5464999999782
+          },
+          {
+            "position": [
+              -7.61456727981567,
+              0.220629513263702,
+              2.8891122341156
+            ],
+            "target": [
+              -7.5,
+              3.1
+            ],
+            "time": 70.4295000001543
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 70.4295000001543
+    },
+    {
+      "case": "north-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/north-microduck",
+      "route": {
+        "minimum_upright": 0.992314447899501,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              0.0821089595556259,
+              0.121683426201344,
+              -13.7745065689087
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 32.3399999999981
+          },
+          {
+            "position": [
+              -3.76201725006104,
+              0.122283607721329,
+              -15.5741262435913
+            ],
+            "target": [
+              -4.0,
+              -15.6
+            ],
+            "time": 59.1400000000118
+          },
+          {
+            "position": [
+              -0.227234959602356,
+              0.121071055531502,
+              -14.0742063522339
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 86.7949999999935
+          },
+          {
+            "position": [
+              3.86185622215271,
+              0.119671411812305,
+              -16.8038177490234
+            ],
+            "target": [
+              4.0,
+              -17.0
+            ],
+            "time": 115.764999999967
+          },
+          {
+            "position": [
+              9.76821231842041,
+              0.12201364338398,
+              -17.058988571167
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 149.429999999937
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 149.429999999937
+    },
+    {
+      "case": "north-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/north-roller",
+      "route": {
+        "minimum_upright": 0.956478798135313,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              0.161380127072334,
+              0.113589785993099,
+              -13.8256187438965
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 10.2550000000002
+          },
+          {
+            "position": [
+              -3.76681852340698,
+              0.125911757349968,
+              -15.6405954360962
+            ],
+            "target": [
+              -4.0,
+              -15.6
+            ],
+            "time": 17.1150000000009
+          },
+          {
+            "position": [
+              -0.232922747731209,
+              0.112620934844017,
+              -13.9524364471436
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 25.0599999999993
+          },
+          {
+            "position": [
+              3.90559840202332,
+              0.117049053311348,
+              -16.7794628143311
+            ],
+            "target": [
+              4.0,
+              -17.0
+            ],
+            "time": 32.9499999999984
+          },
+          {
+            "position": [
+              9.80249881744385,
+              0.117245569825172,
+              -16.8671321868896
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 42.3900000000032
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 42.3900000000032
+    },
+    {
+      "case": "north-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/north-sai",
+      "route": {
+        "minimum_upright": 0.970025837421417,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              0.149279877543449,
+              0.219584539532661,
+              -13.8121128082275
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 46.2245000000387
+          },
+          {
+            "position": [
+              -3.76475834846497,
+              0.220381587743759,
+              -15.6473693847656
+            ],
+            "target": [
+              -4.0,
+              -15.6
+            ],
+            "time": 85.3105000002253
+          },
+          {
+            "position": [
+              -0.236064344644547,
+              0.220161363482475,
+              -13.9571056365967
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 123.97650000041
+          },
+          {
+            "position": [
+              3.92822360992432,
+              0.220123872160912,
+              -16.7709865570068
+            ],
+            "target": [
+              4.0,
+              -17.0
+            ],
+            "time": 168.475999999472
+          },
+          {
+            "position": [
+              9.78878688812256,
+              0.220228105783463,
+              -16.8860855102539
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 220.071999998252
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 220.071999998252
+    },
+    {
+      "case": "switches",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/switches",
+      "checks": {
+        "scene": true,
+        "switch_order": true,
+        "same_scenery": true,
+        "props_preserved": true,
+        "safe_spawn": true,
+        "props_reset": true
+      },
+      "simulation_seconds": 19.0000000000021
+    },
+    {
+      "case": "grab",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/grab",
+      "grab": [
+        {
+          "deliveries": [
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.145550549030304,
+                  0.258698582649231,
+                  0.00909996032714844
+                ],
+                [
+                  -0.0507854819297791,
+                  0.362372934818268,
+                  0.076807975769043
+                ]
+              ],
+              "event": "complete",
+              "id": 210151412551,
+              "lift_m": 0.315341487526894,
+              "object": "Bin12g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.24
+            }
+          ],
+          "history": [
+            {
+              "event": "start",
+              "id": 210151412551,
+              "object": "Bin12g",
+              "time": 2.0055
+            },
+            {
+              "event": "attach",
+              "object": "Bin12g",
+              "time": 10.36
+            },
+            {
+              "event": "release",
+              "object": "Bin12g",
+              "time": 37.38
+            },
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.145550549030304,
+                  0.258698582649231,
+                  0.00909996032714844
+                ],
+                [
+                  -0.0507854819297791,
+                  0.362372934818268,
+                  0.076807975769043
+                ]
+              ],
+              "event": "complete",
+              "id": 210151412551,
+              "lift_m": 0.315341487526894,
+              "object": "Bin12g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.24
+            }
+          ],
+          "retained": {
+            "Ball10g": false,
+            "Ball15g": false,
+            "Bin10g": false,
+            "Bin12g": true,
+            "Bottle6g": false,
+            "Bottle8g": false
+          }
+        }
+      ],
+      "checks": {
+        "scene": true,
+        "delivered": true
+      },
+      "simulation_seconds": 47.2635000000436
+    },
+    {
+      "case": "cancel",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/cancel",
+      "checks": {
+        "scene": true,
+        "cancelled": true,
+        "not_delivered": true
+      },
+      "simulation_seconds": 14.0000000000056
+    },
+    {
+      "case": "play",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/play",
+      "kicked_bin_peak_speed_m_s": 0.7661749024481316,
+      "checks": {
+        "scene": true,
+        "kick_command": true,
+        "physical_prop_motion": true,
+        "walked": true
+      },
+      "simulation_seconds": 23.0049999999997
+    },
+    {
+      "case": "workshop",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/retro-v2/acceptance/workshop",
+      "checks": {
+        "scene": true,
+        "existing_regression": true
+      },
+      "simulation_seconds": 49.0025000000345
+    }
+  ],
+  "method": "Native Godot/Jolt, normal input events, unpaced headless rendering; original physics timestep and policies",
+  "revision": "retro-v2",
+  "retests": "After the full suite, all three lab routes were rerun with the widened physical doorway. Sai north route was rerun with a 300-second limit; path, controller and balance check unchanged."
+}

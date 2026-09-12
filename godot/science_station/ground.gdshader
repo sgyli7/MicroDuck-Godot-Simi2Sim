@@ -8,10 +8,15 @@ float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 float segment(vec2 p,vec2 a,vec2 b){vec2 d=b-a;return length(p-a-d*clamp(dot(p-a,d)/dot(d,d),0.,1.));}
 void fragment(){
  vec2 p=world.xz;
- vec3 sand=vec3(.57,.39,.21), slab=vec3(.87,.85,.71), blue=vec3(.13,.40,.55);
+ vec3 sand=vec3(.56,.39,.25), slab=vec3(.79,.80,.74), blue=vec3(.09,.31,.46);
  float pads=max(box(p,vec2(0.,7.),vec2(3.,2.6)),box(p,vec2(-6.,.1),vec2(3.6,3.3)));
+ // The operations court belongs to an engineered station, with sand around it.
+ float court=box(p,vec2(-3.5,-16.4),vec2(9.8,7.4));
+ pads=max(pads,court);
+ float apron=1.-smoothstep(3.8,4.0,length((p-vec2(-7.5,-.5))*vec2(1.,1.1)));
+ pads=max(pads,apron);
  float berth=box(p,vec2(13.,-2.),vec2(10.,6.));
- float lane=line(p.x+0.7*sin(p.y*.19),1.3);
+ float lane=line(p.x+0.7*sin(p.y*.19),1.8);
  float branch=min(segment(p,vec2(0.,7.),vec2(-2.,3.8)),segment(p,vec2(-2.,3.8),vec2(-5.,1.)));
  branch=min(branch,segment(p,vec2(-5.,1.),vec2(5.,5.)));
  branch=min(branch,segment(p,vec2(5.,5.),vec2(0.,7.)));
@@ -25,6 +30,14 @@ void fragment(){
  float dotted=(1.-smoothstep(.012,.012+max(fwidth(branch),.003),branch))*step(.57,fract((p.x+p.y*.47)*2.7));
  float rim=box(p,vec2(13.,-2.),vec2(9.6,5.6))-box(p,vec2(13.,-2.),vec2(9.54,5.54));
  color=mix(color,blue,max(max(guide,rim),dotted*.70));
+ // Flush service trenches and inspection covers; no collision-height mismatch.
+ float trench=line(p.x+11.35,.12)*box(p,vec2(-11.35,-12.),vec2(.3,8.));
+ float slots=step(.45,fract(p.y*5.));
+ color=mix(color,vec3(.21,.25,.28),trench*(.55+.45*slots));
+ float cover=box(p,vec2(-3.,-12.),vec2(.7,.43));
+ color=mix(color,vec3(.34,.40,.41),cover);
+ float edge=box(p,vec2(-3.,-12.),vec2(.73,.46))-cover;
+ color=mix(color,blue,edge);
  // Sparse wind-scoured strokes; the large sand and concrete fields stay calm.
  vec2 cell=floor(p*.65), local=fract(p*.65)-.5;
  float seed=hash(cell);

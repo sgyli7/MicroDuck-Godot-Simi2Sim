@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "checks": {
+    "arrival": true,
+    "overview": true,
+    "towers": true,
+    "samples": true,
+    "berth": true,
+    "hills": true,
+    "above_terrain": true,
+    "full_orbit": true,
+    "no_native_fall": true
+  },
+  "orbit_radians": -6.280706122115037,
+  "source": "results/science-station/retro-v2/publication/camera",
+  "minimum_camera_y": 0.2737837433815,
+  "method": "Actual camera basis rotation, not requested mouse motion; six native preset positions; terrain upper bound clearance."
+}

@@ -1,0 +1,20 @@
+{
+  "sai-windpass-15s.mp4": {
+    "decoded_frames": 450,
+    "duration_seconds": 15.0,
+    "sha256": "d1f7595dcded49a557ee2274697d3bd0ae83942864627f8636c19c0afaa3eaf1"
+  },
+  "sai-windpass-film.mp4": {
+    "decoded_frames": 2319,
+    "duration_seconds": 77.3,
+    "sha256": "c4413bdf0c3d3171dfc4d06c6fd395ed6629adead97a22de3c8f22ecdd3ddaff"
+  },
+  "gif": {
+    "frames": 180,
+    "duration_ms": 15000,
+    "bytes": 757379
+  },
+  "eight_native_screenshots": true,
+  "documentation_links": true,
+  "source_fingerprints": true
+}

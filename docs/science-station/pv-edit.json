@@ -1,54 +1,54 @@
 {
   "pv": [
     {
-      "source": "results/science-station/publication/service",
+      "source": "results/science-station/retro-v2/publication/service",
       "area": "service",
-      "start": 3.9549,
+      "start": 3.945096,
       "duration": 4
     },
     {
-      "source": "results/science-station/publication/samples",
+      "source": "results/science-station/retro-v2/publication/samples",
       "area": "samples",
-      "start": 11.0353,
+      "start": 20.090502,
       "duration": 4
     },
     {
-      "source": "results/science-station/publication/towers",
+      "source": "results/science-station/retro-v2/publication/towers",
       "area": "towers",
-      "start": 15.9471,
+      "start": 17.935377,
       "duration": 4
     },
     {
-      "source": "results/science-station/publication/hills",
+      "source": "results/science-station/retro-v2/publication/hills",
       "area": "hills",
-      "start": 5.9485,
+      "start": 5.944096,
       "duration": 3
     }
   ],
   "film": [
     {
-      "source": "results/science-station/publication/service",
+      "source": "results/science-station/retro-v2/publication/service",
       "area": "service",
-      "start": 2.9551,
-      "duration": 10.0
+      "start": 2.942922,
+      "duration": 10
     },
     {
-      "source": "results/science-station/publication/samples",
+      "source": "results/science-station/retro-v2/publication/samples",
       "area": "samples",
-      "start": 8.0125,
-      "duration": 38.26
+      "start": 6.013763,
+      "duration": 41.291
     },
     {
-      "source": "results/science-station/publication/towers",
+      "source": "results/science-station/retro-v2/publication/towers",
       "area": "towers",
-      "start": 10.9494,
-      "duration": 12.999
+      "start": 9.939192,
+      "duration": 16
     },
     {
-      "source": "results/science-station/publication/hills",
+      "source": "results/science-station/retro-v2/publication/hills",
       "area": "hills",
-      "start": 2.9534,
-      "duration": 9.995
+      "start": 2.943265,
+      "duration": 10
     }
   ]
 }

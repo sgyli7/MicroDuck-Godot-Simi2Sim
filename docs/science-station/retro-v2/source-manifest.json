@@ -1,0 +1,28 @@
+{
+  "base_commit": "341f882c3afb23d77accb5803a7bac31052bd9eb",
+  "capture_version": "retro-v2",
+  "method": "SHA-256 of actual source files; final commit must retain these bytes.",
+  "files": {
+    "godot/science_station/command_station.gd": "36ff3c8132103e4252c58c1f7e3c0d121eca24e993b80d33560c295bd3e87b6e",
+    "godot/science_station/laboratory.gd": "41957c0a0b4083ab6f6bc4d643bad1c6d5de6dc9cf976e2cf38f331cee952992",
+    "godot/science_station/landscape.gd": "2aff6f28ade7d62eea02755e443d720821f1366fb95a7be596c09e7fee71b023",
+    "godot/science_station/layout.gd": "02e053538873e3b9ba999804736afb23362d34dbc63481de34d5aab3a7b8b28e",
+    "godot/science_station/retro_fittings.gd": "8a6456dddf588658ff447808a76e234917095ed17750b5d7129858261ab9260a",
+    "godot/science_station/ridge_observatory.gd": "eb4bdd2150fd20c24a4e296051aedc723ef27c4c99b0abb57950dff38350e17f",
+    "godot/science_station/service_module.gd": "1e37d36400042f366aeb0612b682d5e41526655ec6f6dcc49d1a97761ca7a2e9",
+    "godot/science_station/station.gd": "9f71103ad706d897c5aa216585c31941621211d3c1bfbc4770413fc01e0e6acd",
+    "godot/science_station/station_details.gd": "0010e567e89bf432706b43a48435ff61e1db79ea3e1581682b8dae4700c9f057",
+    "godot/science_station/tower_details.gd": "3fe44745044db4a45bd3efe8e021458a87cefc616dbb6c25765702e3bf22e65c",
+    "godot/science_station/ground.gdshader": "c5602c6b51ea7a118a1110b98c806a910eb37c58c82b26b786b6888cdbabcfb5",
+    "godot/science_station/sky.gdshader": "d3679934e774fc43f69c1b2d97c8f7ae9a22523f3c999632e694cb2d90114572",
+    "godot/atelier/workshop.gd": "05f7d336761fdebe5e85e26e43f1fe08099f62dc1d2868155874a30185ccb02e",
+    "godot/atelier/enamel.gdshader": "630dea56847a259304c55769a6e6d97aab8c899c0e0d28441feb63804438bcdc",
+    "godot/atelier/ink.gdshader": "45e0c09ce561b247cf363deb0a865e23bb0c5e0facf366d181973a1619a9ee26",
+    "godot/hub/hub.gd": "3db108d428bd5cc7fe83f6be54d84a3972056b293ecb6fa82848ddf7a04c874c",
+    "src/sim2sim/workshop.py": "165e26ef2a7f0a3c41ee0d07a7f5a15b01c7be6a0a0e43f9b3091f0fc3d757e9",
+    "docs/science-station/plans/pv-samples.json": "b3c99a6c8e484a59770f934648bfe994f37638ab2220488b058af84234f0c1ed",
+    "docs/science-station/plans/pv-hills.json": "7e58aa38fbbf66d2a582377b087e7650833984be19126129a3b25e0d4cb52ebc",
+    "docs/science-station/plans/pv-towers.json": "dc9d75e3dcdee68cc84afb99703b69025370ba0ef63789b1b7d77143d78ad3b7",
+    "docs/science-station/plans/pv-service.json": "f0f01a4f339a68a279d869e5f3cb05d19660e4494aac15646e747ffe044b127d"
+  }
+}

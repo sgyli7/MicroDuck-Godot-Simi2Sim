@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "berth_clear": true,
+    "camera_crest": true,
+    "camera_lab": true,
+    "camera_rock": true,
+    "closed_horizon": true,
+    "command_hull_solid": true,
+    "ground": true,
+    "lab_door": true,
+    "lab_exit_margin": true,
+    "lab_wall_solid": true,
+    "service_bay": true,
+    "six_props": true,
+    "terrain_patches": 30,
+    "tower_passages": true
+  },
+  "passed": true
+}

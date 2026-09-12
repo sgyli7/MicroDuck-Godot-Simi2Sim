@@ -11,7 +11,7 @@ from PIL import Image
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('gallery',type=Path)
-    parser.add_argument('play',type=Path)
+    parser.add_argument('play',type=Path,nargs='?',help='Optional native recording to encode alongside the gallery')
     parser.add_argument('--movie-name',default='science-station-play.mp4')
     parser.add_argument('--output',type=Path,default=Path('docs/science-station/media'))
     args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=True)
@@ -19,9 +19,15 @@ def main():
     selected={}
     for frame in gallery['frames']:
         if frame['shot']!='interactive':selected[frame['shot']]=frame
-    assert len(selected)==6, f'Expected six views, got {list(selected)}'
+    required={'arrival','overview','towers','samples','berth','hills'}
+    assert required <= selected.keys(), f'Missing preset views: {required-selected.keys()}'
     for name,frame in selected.items():
         shutil.copy2(frame['file'],args.output/(name+'.jpg'))
+    if args.play is None:
+        metadata=dict(screenshots={k:v['file'] for k,v in selected.items()},
+                      source='Unmodified native Godot 1920 × 1080 viewport captures')
+        (args.output/'media.json').write_text(json.dumps(metadata,indent=2)+'\n')
+        print(json.dumps(metadata,indent=2));return
     play=json.loads((args.play/'hub.json').read_text())
     frames=play['frames']
     assert len(frames)>30

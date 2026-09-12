@@ -1,6 +1,8 @@
 # 风口科学站
 
-可启动的独立探索场景，原维修站保留。站点约 48 × 40 米，包含服务小院、样本圆顶舱、两座 7／10 米观测塔和 20 × 12 米空设备泊位。外围西侧有高 14 厘米、宽 12 米的真实缓坡，站外是完整三维丘陵与远处观测屋。
+可启动的独立探索场景，原维修站保留。站点约 48 × 40 米，包含硬壳维修舱、光谱实验舱、北侧通信楼、两座 7／10 米观测塔和 20 × 12 米空设备泊位。外围西侧有高 14 厘米、宽 12 米的真实缓坡，站外是完整三维丘陵与远处观测屋。
+
+当前为[复古科考设施重建版](science-station/retro-v2.md)：更新了建筑轮廓、压力壳、深色仪器窗、反射天线与外露机械设备，首页 PV 和下方截图均已重录。
 
 ## 启动
 
@@ -43,9 +45,9 @@ python3 scripts/install_worlds_desktop.py
 [15 秒 1080p PV](science-station/media/sai-windpass-15s.mp4) · [更长的原速影片](science-station/media/sai-windpass-film.mp4) · [剪辑配方](science-station/pv-edit.json) · [逐镜头采集验证](science-station/media/pv-validation.json)
 
 
-六张截图均为 Godot 原生 1920 × 1080 视口，没有绘画后处理。下列早期交互验收短片保留游戏界面与原始时间；最新建筑和光照以 PV 与六张截图为准。
+六个预设机位及两张建筑近景均为 Godot 原生 1920 × 1080 视口，没有绘画后处理。下列早期交互验收短片保留游戏界面与原始时间；最新建筑和光照以 PV 与当前截图为准。
 
-[移动与踢碰短片（23 秒）](science-station/media/science-station-play.mp4) · [Sai 完整抓取（52 秒，原速）](science-station/media/science-station-grab.mp4) · [六张截图目录](science-station/media/) · [视觉研究与设计取舍](science-station/art-direction.md)
+[移动与踢碰短片（23 秒）](science-station/media/science-station-play.mp4) · [Sai 完整抓取（52 秒，原速）](science-station/media/science-station-grab.mp4) · [八张截图目录](science-station/media/) · [视觉研究与设计取舍](science-station/art-direction.md)
 
 ![到达科学站](science-station/media/arrival.jpg)
 
@@ -57,9 +59,22 @@ python3 scripts/install_worlds_desktop.py
 
 ![岩丘上的观测屋](science-station/media/hills.jpg)
 
+[维修舱近景](science-station/media/service.jpg) · [北侧通信楼近景](science-station/media/command.jpg)
+
 ## 验收
 
-[14 项原生回放结果](science-station/acceptance.json)全部通过：三种机器人分别完成主环路、缓坡往返和塔底通道；切换／复位保留或恢复正确的物件状态；Sai 抓取入仓、取消以及 MicroDuck 踢碰均通过。旧维修站的 17 项既有回归检查通过。测试只回放正常按键，移动过程中不写入机器人位姿或速度。合入主分支最新步行策略后，针对下行前倾问题拓宽了西侧坡面；[单程诊断与修正记录](science-station/terrain-adaptation.json)保留了失败和通过数据，坡道完整往返重新验收，模型与物理参数未改动。
+重建版的 20 项原生路线与交互检查已通过，包括三种机器人进出实验舱和北侧通信广场。结果见[新版验收](science-station/retro-v2/acceptance.json)、[几何检查](science-station/retro-v2/geometry.json)、[性能与相机记录](science-station/retro-v2/runtime.json)。
+
+本机正常运行：三种机器人均为中位 30 FPS；MicroDuck 与轮足版最低 30 FPS，Sai 最低 29 FPS，仿真／墙钟比约 0.999。六个观景机位和约 360° 实际环视通过检查。
+
+轮足版回程曾擦碰左门框；同一回放两次复现后，加宽了显示与碰撞一致的门洞，原回放通过。三种机器人的进出舱路线均重新检查。[门口余量记录](science-station/retro-v2/door-clearance.json)保留失败和通过数据。北侧路线的 Sai 回放时限延长到 300 秒，以容纳正常步行所需时间；路径与姿态判定不变。
+
+本轮一次未录屏的小球抓取完成了提起和释放，但没有满足留在货仓内的成功判定；两次录屏的小球抓取均成功。原有抓取控制器未改动，小球入仓仍有物理波动。箱体抓取回归已通过，完整结果保存在性能记录中。
+
+<details>
+<summary>首版历史验证</summary>
+
+首版的 [14 项原生回放结果](science-station/acceptance.json)全部通过：三种机器人分别完成主环路、缓坡往返和塔底通道；切换／复位保留或恢复正确的物件状态；Sai 抓取入仓、取消以及 MicroDuck 踢碰均通过。旧维修站的 17 项既有回归检查通过。测试只回放正常按键，移动过程中不写入机器人位姿或速度。合入主分支最新步行策略后，针对下行前倾问题拓宽了西侧坡面；[单程诊断与修正记录](science-station/terrain-adaptation.json)保留了失败和通过数据，坡道完整往返重新验收，模型与物理参数未改动。
 
 [几何检查](science-station/geometry.json)通过：30 块地形、实际地表高度、两座塔的横向通道、完整泊位、六件物件、越过坡脊的相机避障及远景闭合接缝。[相机回放](science-station/camera.json)覆盖塔底 360° 右键环视、滚轮和六机位切换。
 
@@ -69,13 +84,16 @@ python3 scripts/install_worlds_desktop.py
 
 画面经过多个机位检查。阴影与极细线条仍受实时阴影分辨率和抗锯齿影响，特别是远距离接缝。这里没有新策略训练、大型载具、任务链或楼内多层探索。
 
+
+</details>
+
 ## 复现
 
 首页 PV 的四个镜头可分别重录，然后按同一份墙钟剪辑配方导出。每次录制保留已有资源检查；本机受控共享命令在下方完整验收示例中。
 
 ```bash
 for zone in service samples towers hills; do
-  uv run --extra sai --extra media python scripts/run_science_check.py --scene science_station --robot sai --record --plan "docs/science-station/plans/pv-$zone.json" --output "results/science-station/publication/$zone"
+  uv run --extra sai --extra media python scripts/run_science_check.py --scene science_station --robot sai --record --plan "docs/science-station/plans/pv-$zone.json" --output "results/science-station/retro-v2/publication/$zone"
 done
 uv run --extra sai --extra media python scripts/build_science_pv.py
 ```
@@ -83,7 +101,7 @@ uv run --extra sai --extra media python scripts/build_science_pv.py
 
 ```bash
 # 完整原生回放；默认保留既有资源排他检查
-uv run --extra sai python scripts/accept_science_station.py
+uv run --extra sai python scripts/accept_science_station.py --output results/science-station/retro-v2/acceptance
 # 已确认可共享资源时，限制在两个 CPU 核心并继续监测压力与训练吞吐
 nice -n 10 taskset -c 10,11 .venv/bin/python scripts/accept_science_station.py --share-resources
 # 实机截图与正常游玩录制

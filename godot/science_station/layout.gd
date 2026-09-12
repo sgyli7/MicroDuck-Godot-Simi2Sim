@@ -9,12 +9,12 @@ const CHECKPOINTS := {
 const PROPS := [Vector2(.30,7),Vector2(.66,7.08),Vector2(-4.70,1),Vector2(-4.34,1.08),Vector2(5.30,5),Vector2(5.66,5.08)]
 const BERTH := Rect2(3,-8,20,12)
 const VIEWS := {
-	"arrival":[Vector3(-1.0,.55,8.3),Vector3(5,2,-11),57.],
-	"overview":[Vector3(-29,23,32),Vector3(0,1,-5),52.],
-	"towers":[Vector3(10.5,2.,-7.5),Vector3(10.8,3.5,-18.5),64.],
-	"samples":[Vector3(-9,1.3,5),Vector3(-6,.65,-1.7),53.],
-	"berth":[Vector3(23,6,10),Vector3(8,2,-12),55.],
-	"hills":[Vector3(-16,1,-1),Vector3(-34,3,-22),62.]
+	"arrival":[Vector3(4.,1.3,10.8),Vector3(-3.,2.5,-9.),61.],
+	"overview":[Vector3(-24.0,12.0,22.0),Vector3(-1.0,1.0,-7.0),53.],
+	"towers":[Vector3(10.5,2.0,-7.5),Vector3(10.8,4.0,-18.5),64.],
+	"samples":[Vector3(-0.8,1.7,5.5),Vector3(-7.6,1.9,-0.5),59.],
+	"berth":[Vector3(23.0,4.0,8.0),Vector3(-2.0,3.0,-16.0),60.],
+	"hills":[Vector3(-16.0,1.4,-1.0),Vector3(-34.0,3.0,-22.0),58.]
 }
 
 static func height_at(x: float,z: float) -> float:

@@ -16,7 +16,7 @@ def main():
     parser.add_argument('--cases',nargs='*',help='Optional subset, for retrying a corrected case')
     args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=True)
     cases=[(f'{route}-{robot}',robot,route,'science_station')
-           for route in ['loop','slope','tower'] for robot in ['microduck','roller','sai']]
+           for route in ['loop','slope','tower','lab','north'] for robot in ['microduck','roller','sai']]
     cases += [('switches','microduck','switches','science_station'),
               ('grab','sai','grab','science_station'),('cancel','sai','cancel','science_station'),
               ('play','microduck','play','science_station'),('workshop','microduck','controls','workshop')]
@@ -36,7 +36,7 @@ def main():
         if path.exists() and process.returncode==0:
             h=json.loads(path.read_text())
             checks={'scene':h['scene']==scene}
-            if plan in ['loop','slope','tower']:
+            if plan in ['loop','slope','tower','lab','north']:
                 checks['route']=h['route'].get('passed',False)
                 checks['no_native_fall']=all(json.loads(p.read_text())['first_fall'] is None for p in destination.glob('native-*.json'))
                 record['route']=h['route']

@@ -1,185 +1,51 @@
 {
   "screenshots": {
-    "arrival": {
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/publication/gallery/frames/00004.jpg",
-      "sha256": "23c4d3749e3d6fe0cc4814dbd8c17afac7d3708a1d421cf32d4ec19e9d22884f",
-      "camera_position": [
-        -1.0,
-        0.550000011920929,
-        8.30000019073486
-      ],
-      "camera_basis": [
-        [
-          0.954919159412384,
-          0.0,
-          0.296866089105606
-        ],
-        [
-          -0.021243354305625,
-          0.99743640422821,
-          0.0683327838778496
-        ],
-        [
-          -0.296105057001114,
-          -0.0715587139129639,
-          0.952471137046814
-        ]
-      ],
-      "fov": 57.0
-    },
-    "overview": {
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/publication/gallery/frames/00008.jpg",
-      "sha256": "8c93187766f745a5e20e9d0f089c6fc234bb5fda40813541a14d4a7fce878485",
-      "camera_position": [
-        -29.0,
-        23.0,
-        32.0
-      ],
-      "camera_basis": [
-        [
-          0.787055909633636,
-          0.0,
-          0.616881668567657
-        ],
-        [
-          0.261472344398499,
-          0.905727088451385,
-          -0.333602666854858
-        ],
-        [
-          -0.55872642993927,
-          0.423861443996429,
-          0.712857842445374
-        ]
-      ],
-      "fov": 52.0
-    },
-    "towers": {
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/publication/towers/frames/00329.jpg",
-      "sha256": "63e8d7a39d3148a13dc912ffaa9856670f3600d152e6ea8b2e1b5421154b239c",
-      "camera_position": [
-        10.5,
-        2.0,
-        -7.5
-      ],
-      "camera_basis": [
-        [
-          0.999628305435181,
-          0.0,
-          0.0272626057267189
-        ],
-        [
-          -0.00368219404481351,
-          0.990836918354034,
-          0.135013714432716
-        ],
-        [
-          -0.0270127952098846,
-          -0.135063916444778,
-          0.990468621253967
-        ]
-      ],
-      "fov": 64.0
-    },
-    "samples": {
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/publication/gallery/frames/00016.jpg",
-      "sha256": "22e77d4ed4c314108375fb6bb6aa56ebff903e3c197cdec6ae6f360b7f31f43a",
-      "camera_position": [
-        -9.0,
-        1.29999995231628,
-        5.0
-      ],
-      "camera_basis": [
-        [
-          0.912684619426727,
-          0.0,
-          0.408664762973785
-        ],
-        [
-          0.0360438041388988,
-          0.996102869510651,
-          -0.0804978311061859
-        ],
-        [
-          -0.407072126865387,
-          0.0881989672780037,
-          0.909127771854401
-        ]
-      ],
-      "fov": 53.0
-    },
-    "berth": {
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/publication/gallery/frames/00020.jpg",
-      "sha256": "f71eff80cf9e0725cac32835c9800afa145c202830d397cdb2e28097f01bcd83",
-      "camera_position": [
-        23.0,
-        6.0,
-        10.0
-      ],
-      "camera_basis": [
-        [
-          0.826227307319641,
-          0.0,
-          -0.563336849212646
-        ],
-        [
-          -0.0836872309446335,
-          0.988903999328613,
-          -0.122741244733334
-        ],
-        [
-          0.557086050510406,
-          0.148556277155876,
-          0.817059516906738
-        ]
-      ],
-      "fov": 55.0
-    },
-    "hills": {
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/publication/gallery/frames/00028.jpg",
-      "sha256": "19472a29bca66b99601880149a3ae55732757e237019339ab6ae996347068d1c",
-      "camera_position": [
-        -16.0,
-        1.0,
-        -1.0
-      ],
-      "camera_basis": [
-        [
-          0.759256601333618,
-          0.0,
-          -0.650791347026825
-        ],
-        [
-          0.0469362773001194,
-          0.997395873069763,
-          0.0547589883208275
-        ],
-        [
-          0.649096608161926,
-          -0.0721218436956406,
-          0.757279396057129
-        ]
-      ],
-      "fov": 62.0
+    "arrival": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/retro-v2/publication/gallery/frames/00004.jpg",
+    "overview": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/retro-v2/publication/gallery/frames/00008.jpg",
+    "towers": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/retro-v2/publication/gallery/frames/00012.jpg",
+    "samples": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/retro-v2/publication/gallery/frames/00016.jpg",
+    "berth": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/retro-v2/publication/gallery/frames/00020.jpg",
+    "hills": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/retro-v2/publication/gallery/frames/00024.jpg",
+    "service": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/retro-v2/publication/gallery/frames/00028.jpg",
+    "command": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/retro-v2/publication/gallery/frames/00036.jpg"
+  },
+  "source": "Unmodified native Godot 1920 \u00d7 1080 viewport captures",
+  "world_source": {
+    "base_commit": "341f882c3afb23d77accb5803a7bac31052bd9eb",
+    "capture_version": "retro-v2",
+    "method": "SHA-256 of actual source files; final commit must retain these bytes.",
+    "files": {
+      "godot/science_station/command_station.gd": "36ff3c8132103e4252c58c1f7e3c0d121eca24e993b80d33560c295bd3e87b6e",
+      "godot/science_station/laboratory.gd": "41957c0a0b4083ab6f6bc4d643bad1c6d5de6dc9cf976e2cf38f331cee952992",
+      "godot/science_station/landscape.gd": "2aff6f28ade7d62eea02755e443d720821f1366fb95a7be596c09e7fee71b023",
+      "godot/science_station/layout.gd": "02e053538873e3b9ba999804736afb23362d34dbc63481de34d5aab3a7b8b28e",
+      "godot/science_station/retro_fittings.gd": "8a6456dddf588658ff447808a76e234917095ed17750b5d7129858261ab9260a",
+      "godot/science_station/ridge_observatory.gd": "eb4bdd2150fd20c24a4e296051aedc723ef27c4c99b0abb57950dff38350e17f",
+      "godot/science_station/service_module.gd": "1e37d36400042f366aeb0612b682d5e41526655ec6f6dcc49d1a97761ca7a2e9",
+      "godot/science_station/station.gd": "9f71103ad706d897c5aa216585c31941621211d3c1bfbc4770413fc01e0e6acd",
+      "godot/science_station/station_details.gd": "0010e567e89bf432706b43a48435ff61e1db79ea3e1581682b8dae4700c9f057",
+      "godot/science_station/tower_details.gd": "3fe44745044db4a45bd3efe8e021458a87cefc616dbb6c25765702e3bf22e65c",
+      "godot/science_station/ground.gdshader": "c5602c6b51ea7a118a1110b98c806a910eb37c58c82b26b786b6888cdbabcfb5",
+      "godot/science_station/sky.gdshader": "d3679934e774fc43f69c1b2d97c8f7ae9a22523f3c999632e694cb2d90114572",
+      "godot/atelier/workshop.gd": "05f7d336761fdebe5e85e26e43f1fe08099f62dc1d2868155874a30185ccb02e",
+      "godot/atelier/enamel.gdshader": "630dea56847a259304c55769a6e6d97aab8c899c0e0d28441feb63804438bcdc",
+      "godot/atelier/ink.gdshader": "45e0c09ce561b247cf363deb0a865e23bb0c5e0facf366d181973a1619a9ee26",
+      "godot/hub/hub.gd": "3db108d428bd5cc7fe83f6be54d84a3972056b293ecb6fa82848ddf7a04c874c",
+      "src/sim2sim/workshop.py": "165e26ef2a7f0a3c41ee0d07a7f5a15b01c7be6a0a0e43f9b3091f0fc3d757e9",
+      "docs/science-station/plans/pv-samples.json": "b3c99a6c8e484a59770f934648bfe994f37638ab2220488b058af84234f0c1ed",
+      "docs/science-station/plans/pv-hills.json": "7e58aa38fbbf66d2a582377b087e7650833984be19126129a3b25e0d4cb52ebc",
+      "docs/science-station/plans/pv-towers.json": "dc9d75e3dcdee68cc84afb99703b69025370ba0ef63789b1b7d77143d78ad3b7",
+      "docs/science-station/plans/pv-service.json": "f0f01a4f339a68a279d869e5f3cb05d19660e4494aac15646e747ffe044b127d"
     }
   },
-  "resolution": [
-    1920,
-    1080
-  ],
-  "source": "Unmodified native Godot viewport",
-  "world_source": {
-    "commit": "5e81df674c89aeb8bf3b0e15b8d169ea8a547791",
-    "files": {
-      "godot/science_station/ground.gdshader": "2f5b5918c8f9eabc07e0184b6795b3cda6d6f053eab427c727fcacf0752f29b6",
-      "godot/science_station/icon.svg": "b7eb7abfc685d087a947129fdd1c0afde7a78dfbe4036ee9dda8d2672d19a59e",
-      "godot/science_station/landscape.gd": "2aff6f28ade7d62eea02755e443d720821f1366fb95a7be596c09e7fee71b023",
-      "godot/science_station/layout.gd": "e5715860cd214b6880dffc2d8b54b6c82bbc2b2b5296d1510f2a660ab251e0c3",
-      "godot/science_station/ridge_observatory.gd": "eb4bdd2150fd20c24a4e296051aedc723ef27c4c99b0abb57950dff38350e17f",
-      "godot/science_station/sky.gdshader": "1c177ba043667d0399c24b74c1d032b7201ab517d780600c557b8c741880a42e",
-      "godot/science_station/station.gd": "de5510906817780a8e94434397d63f912340c9e2f94c072a5c7d9c4ac8e9d83f",
-      "godot/science_station/station_details.gd": "111928643d92c221b8e1d0873d7fb23a813db17d511cc56fbabcd3a820061129",
-      "godot/science_station/tower_details.gd": "da52d79b68ee04f0a32031e9a16e35536f9de5bb8a3782fd548740f5dc0151c0"
-    }
+  "screenshots_sha256": {
+    "arrival": "f11dd6a6763d1445d6ed3ff09dd3e8abf61826ef996dbdab6596b4146f8a7723",
+    "overview": "23f5e9be2b01f00917d2a352d62878cc0d39a046bcf004a8543d57de478cfc7b",
+    "towers": "edf5686a593797e8b5e8489ac2095c7e98c6e76537ae773955febb8ba6b7a5f5",
+    "samples": "fc20e53a3d84d8b179c51f6e60b29e24eb1f765768af9ca62eaac99abaeb33d4",
+    "berth": "024ce3c23c6a3e24fb97f2a242b6c9312a164a77098534d09d7676e7228d0216",
+    "hills": "d9f1f47bee87d7a071d6e6bbc268f48ceef3649f7b05a8da18d56026254fe4fa",
+    "service": "167eed37130c0ea85c9d019b367062876d7a2074aaf43005c37aef94a7171fbb",
+    "command": "d9c9f80beb8c67cf49c9975360ae8dcbaf4da9250333affd38f871b97d5324e4"
   }
 }

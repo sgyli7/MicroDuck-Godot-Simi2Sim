@@ -1,0 +1,114 @@
+{
+  "symptom": "Roller enters the lab, reverses, then clips the left jamb on exit.",
+  "reproduction": {
+    "original": {
+      "minimum_upright": 0.435286937842371,
+      "passed": false,
+      "reached": [
+        {
+          "position": [
+            -7.42047595977783,
+            0.12579607963562,
+            -0.123622551560402
+          ],
+          "target": [
+            -7.5,
+            -0.35
+          ],
+          "time": 10.0450000000002
+        }
+      ],
+      "reason": "robot fell"
+    },
+    "repeat": {
+      "minimum_upright": 0.435286937842371,
+      "passed": false,
+      "reached": [
+        {
+          "position": [
+            -7.42047595977783,
+            0.12579607963562,
+            -0.123622551560402
+          ],
+          "target": [
+            -7.5,
+            -0.35
+          ],
+          "time": 10.0450000000002
+        }
+      ],
+      "reason": "robot fell"
+    },
+    "entry_only": {
+      "minimum_upright": 0.796089807149138,
+      "passed": true,
+      "reached": [
+        {
+          "position": [
+            -7.42047595977783,
+            0.12579607963562,
+            -0.123622551560402
+          ],
+          "target": [
+            -7.5,
+            -0.35
+          ],
+          "time": 10.0450000000002
+        }
+      ]
+    }
+  },
+  "geometry_probe": {
+    "wheel_envelope_ray": [
+      [
+        -8.02,
+        0.1,
+        0.7
+      ],
+      [
+        -8.02,
+        0.1,
+        1.3
+      ]
+    ],
+    "before_clear": false,
+    "after_clear": true
+  },
+  "fix": "Widen the actual visible doorway and its matching collision opening from about 0.862 m to 1.245 m. No controller, input replay, physics, or balance thresholds changed.",
+  "final_full_route": {
+    "minimum_upright": 0.961737886340604,
+    "passed": true,
+    "reached": [
+      {
+        "position": [
+          -7.38533163070679,
+          0.119568631052971,
+          -0.140984252095222
+        ],
+        "target": [
+          -7.5,
+          -0.35
+        ],
+        "time": 7.76999999999986
+      },
+      {
+        "position": [
+          -7.61610555648804,
+          0.125275269150734,
+          2.89299654960632
+        ],
+        "target": [
+          -7.5,
+          3.1
+        ],
+        "time": 14.1250000000008
+      }
+    ]
+  },
+  "passed": true,
+  "sources": {
+    "before": "results/science-station/retro-v2/diagnostics/lab-roller-original",
+    "repeat": "results/science-station/retro-v2/diagnostics/lab-repeat",
+    "after": "results/science-station/retro-v2/acceptance/lab-roller"
+  }
+}

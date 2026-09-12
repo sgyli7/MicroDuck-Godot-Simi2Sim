@@ -5,6 +5,8 @@ var towers: Array[Dictionary]=[]
 func _init() -> void:
 	label_font=load("res://atelier/ui_font.tres")
 	palette.merge({"blue":Color("6796ae"),"sand":Color("cbb995"),"rock":Color("c8c5ad"),"distant":Color("a8b7be"),
+		"paper":Color("d7d8ce"),"porcelain":Color("e9e8da"),"graphite":Color("464e58"),
+		"metal":Color("889999"),"glass":Color("263f51"),"signal":Color("c57d52"),
 		"silt":Color("b7a78f"),"chalk":Color("dfd9bc"),"ochre":Color("c6a57c"),"far_rock":Color("a7aea7"),"strata":Color("77756e")})
 
 func ground_height(x:float,z:float) -> float:
@@ -45,6 +47,7 @@ func _build_solids() -> void:
 	_terrain()
 	solid_scope=true
 	_service();_samples();_tower(Vector3(7,0,-17),7.,1.32,"01");_tower(Vector3(16,0,-21),10.,1.7,"02")
+	load("res://science_station/command_station.gd").new().build(self)
 	_field_details();_perimeter()
 	solid_scope=false
 	if visuals_enabled:_landscape()
@@ -74,50 +77,10 @@ func _terrain() -> void:
 				var visual:=MeshInstance3D.new();visual.mesh=mesh;visual.material_override=material;patch.add_child(visual)
 
 func _service() -> void:
-	# An open-front repair shelter, familiar at robot height.
-	var p:=Vector3(-1.7,0,9.1)
-	_box(p+Vector3(0,.66,0),Vector3(3.3,1.32,.16),"paper",.035)
-	_box(p+Vector3(-1.62,.65,-.52),Vector3(.14,1.3,1.05),"paper",.025)
-	_box(p+Vector3(0,1.37,-.46),Vector3(3.7,.075,1.45),"purple",.02)
-	for x in [-1.7,1.7]:
-		_cylinder(p+Vector3(x,.67,-1.12),.027,1.34,"graphite")
-		_line(p+Vector3(x,1.0,-1.12),p+Vector3(x,1.34,-.64),.014,"metal")
-	_panel(p+Vector3(-.7,.84,-.09),Vector2(.75,.42),"blue")
-	_label("FIELD SERVICE / 07",p+Vector3(.36,1.08,-.105),36,.0014,"ink",Vector3(0,180,0))
-	# Furniture faces into the open yard.
-	for x in [-.6,.2]:
-		for z in [-.2,-.55]:_box(p+Vector3(x,.2,z),Vector3(.035,.40,.035),"graphite",.005)
-	_box(p+Vector3(-.2,.415,-.37),Vector3(1.1,.035,.49),"metal",.006)
-	_crate(p+Vector3(-.30,.434,-.34),Vector3(.30,.15,.22),"yellow","TOOLS")
-	_cylinder(p+Vector3(-.7,.465,-.34),.025,.075,"paper")
-	_cabinet(Vector3(1.6,0,9),"blue","CHARGE / 03")
-	_lamp(Vector3(-3.7,0,7.1),1.85)
-	_sign(Vector3(.9,0,8.8),"风口科学站\nWINDPASS / 07",.9)
+	load("res://science_station/service_module.gd").new().build(self)
 
 func _samples() -> void:
-	var p:=Vector3(-7.5,0,-.5)
-	# Separate hemisphere and short cylindrical wall; inset entrance is a real gap.
-	_dome(p+Vector3(0,1.1,0),1.65,.78,"paper")
-	for i in range(24):
-		var a:float=i*TAU/24.
-		if i in [0,1,23]:continue
-		_box(p+Vector3(sin(a)*1.5,.55,cos(a)*1.5),Vector3(.40,1.1,.16),"paper",.013,a)
-	_ring(p+Vector3(0,1.10,0),1.68,.028,"graphite")
-	_ring(p+Vector3(0,1.16,0),1.65,.021,"blue")
-	_cylinder(p+Vector3(0,2.02,0),.18,.26,"graphite")
-	_cylinder(p+Vector3(0,2.18,0),.22,.055,"paper")
-	_line(p+Vector3(0,2.2,0),p+Vector3(0,3.1,0),.012,"graphite")
-	for x in [-1.8,1.8]:_cylinder(p+Vector3(x,.70,2.65),.029,1.4,"graphite")
-	_box(p+Vector3(0,1.45,2.1),Vector3(4.,.065,1.5),"blue",.018)
-	_box(p+Vector3(-.9,.40,1.8),Vector3(.85,.045,.6),"metal",.008)
-	for x in [-1.25,-.55]:
-		for z in [1.56,2.04]:_box(p+Vector3(x,.19,z),Vector3(.038,.38,.038),"graphite",.006)
-	for i in range(3):
-		_cylinder(p+Vector3(-1.1+i*.19,.48,1.8),.055,.11,"porcelain")
-		_cylinder(p+Vector3(-1.1+i*.19,.542,1.8),.058,.015,"purple")
-	_sign(Vector3(-4.1,0,-.35),"样本处理\nSAMPLE / 04",.7)
-	_cabinet(Vector3(-9.5,0,1.7),"purple","ARCHIVE")
-	load("res://science_station/station_details.gd").new().sample_room(self,p)
+	load("res://science_station/laboratory.gd").new().build(self,Vector3(-7.5,0,-.5))
 
 func _tower(p:Vector3,h:float,r:float,id:String) -> void:
 	towers.append({"position":p,"height":h,"radius":r})
@@ -136,15 +99,15 @@ func _tower(p:Vector3,h:float,r:float,id:String) -> void:
 	var bottom:=1.8;var top:float=h-.65
 	for j in range(4):
 		var y0:float=lerpf(bottom,top,j/4.);var y1:float=lerpf(bottom,top,(j+1)/4.)
-		var r0:float=lerpf(r,r*.64,j/4.);var r1:float=lerpf(r,r*.64,(j+1)/4.)
+		var r0:float=lerpf(r,r*.87,j/4.);var r1:float=lerpf(r,r*.87,(j+1)/4.)
 		_frustum(p+Vector3(0,(y0+y1)*.5,0),r0,r1,y1-y0-.025,"paper")
 		_ring(p+Vector3(0,y0+.012,0),r0+.008,.013,"graphite")
 		if j==1:_ring(p+Vector3(0,y0+.06,0),r0+.012,.032,"blue")
-	_dome(p+Vector3(0,top,0),r*.64,.40,"paper")
-	for i in range(12):
-		var a:float=i*TAU/12.
+	_dome(p+Vector3(0,top,0),r*.87,.40,"paper")
+	for i in range(6):
+		var a:float=i*TAU/6.
 		var start:=p+Vector3(sin(a)*(r+.012),bottom+.15,cos(a)*(r+.012))
-		var end:=p+Vector3(sin(a)*(r*.65+.01),top-.1,cos(a)*(r*.65+.01))
+		var end:=p+Vector3(sin(a)*(r*.88+.01),top-.1,cos(a)*(r*.88+.01))
 		_line(start,end,.0035,"strata")
 		# Sparse fasteners, paired service panels and repairs, not evenly dense greebles.
 		if i%3==0:
@@ -162,7 +125,7 @@ func _tower(p:Vector3,h:float,r:float,id:String) -> void:
 		_cylinder(q+Vector3(0,.15,0),.032,.30,"graphite")
 		_line(q,q+Vector3(0,1.1+float(i%2)*1.45,0),.012,"graphite")
 	var panel_y:float=bottom+1.0
-	var panel_r:float=lerpf(r,r*.64,(panel_y-bottom)/(top-bottom))
+	var panel_r:float=lerpf(r,r*.87,(panel_y-bottom)/(top-bottom))
 	_box(p+Vector3(0,panel_y,panel_r+.02),Vector3(.90,.38,.18),"paper",.022)
 	_label("W / "+id,p+Vector3(0,panel_y,panel_r+.115),64,.0032,"blue")
 	_cabinet(p+Vector3(-r-.55,0,1.6),"blue","OBS / "+id)
@@ -177,11 +140,11 @@ func _tower(p:Vector3,h:float,r:float,id:String) -> void:
 	load("res://science_station/tower_details.gd").new().build(self,p,h,r,id)
 
 func _field_details() -> void:
-	_sign(Vector3(3,0,7.5),"设备泊位 / 20 × 12 m\nEQUIPMENT / 02",.85)
+	_sign(Vector3(7.2,0,5.8),"设备泊位 / 20 × 12 m\nEQUIPMENT / 02",.85)
 	_cabinet(Vector3(2.5,0,-.8),"blue","POWER / 02")
 	_cabinet(Vector3(-1.6,0,-4.),"yellow","ATMOSPHERE")
 	_cabinet(Vector3(-3.4,0,-10.),"blue","METEO / 08")
-	for p in [Vector3(-2.8,0,3.5),Vector3(1.8,0,-8.5),Vector3(-10.5,0,-7.5),Vector3(4,0,-13.5)]:_lamp(p,2.2)
+	for p in [Vector3(-10.9,0,3.5),Vector3(1.8,0,-8.5),Vector3(-10.5,0,-7.5),Vector3(4,0,-13.5)]:_lamp(p,2.2)
 	_sign(Vector3(-11.5,0,-2),"岩丘步道\nFIELD LOOP",.6)
 	for p in [Vector3(-2.8,0,-1),Vector3(-4,0,-6),Vector3(1.9,0,-12)]:
 		_cylinder(p+Vector3(0,.19,0),.065,.38,"metal")
@@ -198,13 +161,13 @@ func _field_details() -> void:
 		for x in [-.35,.35]:_box(p+Vector3(x,.12,0),Vector3(.065,.24,.28),"graphite",.008)
 
 func _perimeter() -> void:
-	# Visible stone edging closes the physics boundary, including behind distant scenery.
+	# Low fractured rock closes the boundary with the same visible collision hull.
 	for i in range(12):
 		var x:float=-22.+i*4.
-		for z in [-26.,14.]:_box(Vector3(x,.22,z),Vector3(4.02,.44,.38),"rock",.07)
+		for z in [-26.,14.]:_rock(Vector3(x,-.08,z),Vector3(2.23,.47,.38))
 	for i in range(10):
 		var z:float=-24.+i*4.
-		for x in [-24.,24.]:_box(Vector3(x,.22,z),Vector3(.38,.44,4.02),"rock",.07)
+		for x in [-24.,24.]:_rock(Vector3(x,-.08,z),Vector3(.38,.47,2.23))
 	for p in [Vector3(-20,0,9),Vector3(-21,0,-12),Vector3(-15,0,-23),Vector3(22,0,-13)]:
 		_rock(p,Vector3(1.3,.9,.8))
 
@@ -222,10 +185,12 @@ func _cabinet(p:Vector3,color:String,label_text:String) -> void:
 	_box(p+Vector3(0,.70,0),Vector3(.49,.04,.36),"paper",.012)
 
 func _lamp(p:Vector3,h:float) -> void:
-	_cylinder(p+Vector3(0,h*.5,0),.024,h,"graphite")
-	_line(p+Vector3(0,h,0),p+Vector3(.20,h+.12,0),.024,"graphite")
-	_cylinder(p+Vector3(.20,h+.1,0),.14,.055,"paper")
-	_cylinder(p+Vector3(.20,h+.057,0),.10,.025,"light")
+	_box(p+Vector3(0,.10,0),Vector3(.18,.20,.18),"graphite",.02)
+	_box(p+Vector3(0,h*.5,0),Vector3(.065,h,.08),"metal",.015)
+	_box(p+Vector3(0,h-.10,0),Vector3(.14,.42,.15),"paper",.035)
+	_box(p+Vector3(0,h-.09,.09),Vector3(.085,.23,.025),"blue",.014)
+	_box(p+Vector3(.15,h+.12,0),Vector3(.53,.10,.24),"porcelain",.04)
+	_box(p+Vector3(.19,h+.061,0),Vector3(.22,.015,.14),"light",.006)
 
 func _sign(p:Vector3,text:String,h:float) -> void:
 	for x in [-.27,.27]:_cylinder(p+Vector3(x,h*.45,0),.015,h*.9,"graphite")

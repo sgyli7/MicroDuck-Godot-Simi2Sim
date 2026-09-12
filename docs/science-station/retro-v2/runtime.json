@@ -1,0 +1,84 @@
+{
+  "revision": "retro-v2",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "renderer": "Godot 4.7.2 / Forward+ / NVIDIA GB10",
+  "cpu_affinity": [
+    10,
+    11
+  ],
+  "nice": 10,
+  "method": "Native, paced gameplay. No JPEG capture. Exclude first 2 seconds of startup. Physics and policy rates unchanged.",
+  "normal_play": {
+    "microduck": {
+      "minimum_fps": 30.0,
+      "median_fps": 30.0,
+      "sim_wall_ratio": 0.9990215704093405,
+      "measured_seconds": 20.90999999999972,
+      "source": "results/science-station/retro-v2/publication/performance-microduck",
+      "hub_sha256": "0d869797354909b2df0b60ea44413dbcab99e9d8fff446c6861ad5fa3352959e"
+    },
+    "roller": {
+      "minimum_fps": 30.0,
+      "median_fps": 30.0,
+      "sim_wall_ratio": 0.9988453549194121,
+      "measured_seconds": 13.880000000001122,
+      "source": "results/science-station/retro-v2/publication/performance-roller",
+      "hub_sha256": "150db796e9d66e743c56ef990356dc3852cc1589af68f593ad6ea08563b05a50"
+    },
+    "sai": {
+      "minimum_fps": 29.0,
+      "median_fps": 30.0,
+      "sim_wall_ratio": 0.9995122237947566,
+      "measured_seconds": 45.199500000043564,
+      "source": "results/science-station/retro-v2/publication/performance-sai",
+      "hub_sha256": "8e75cab31e689ac9f6f6f988c5bc72072e8c2114b5ccf564df25eafe709d1cac",
+      "deliveries": [
+        {
+          "captured": true,
+          "cargo_bounds": [
+            [
+              -0.0455942153930664,
+              0.257342636585236,
+              -0.0498560667037964
+            ],
+            [
+              0.0237255096435547,
+              0.326904475688934,
+              0.0193641185760498
+            ]
+          ],
+          "event": "complete",
+          "id": 319471752351,
+          "lift_m": 0.315703425556421,
+          "object": "Ball10g",
+          "released": true,
+          "success": false,
+          "supported": true,
+          "time": 44.28
+        }
+      ]
+    }
+  },
+  "camera": {
+    "passed": true,
+    "checks": {
+      "arrival": true,
+      "overview": true,
+      "towers": true,
+      "samples": true,
+      "berth": true,
+      "hills": true,
+      "above_terrain": true,
+      "full_orbit": true,
+      "no_native_fall": true
+    },
+    "orbit_radians": -6.280706122115037,
+    "source": "results/science-station/retro-v2/publication/camera",
+    "minimum_camera_y": 0.2737837433815,
+    "method": "Actual camera basis rotation, not requested mouse motion; six native preset positions; terrain upper bound clearance."
+  },
+  "interaction_note": "The unrecorded Ball10g attempt was lifted, released and supported but did not satisfy retained-in-cargo success. Both native filmed Ball10g attempts succeeded. Existing grasp/controller code is unchanged; small-ball retention remains variable. The service-bin regression in the 20-case suite passed."
+}

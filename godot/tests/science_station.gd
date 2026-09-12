@@ -38,7 +38,14 @@ func run() -> void:
 	for x in [4.,8.,13.,18.,22.]:
 		var hit:=space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(x,.22,-7),Vector3(x,.22,3),3))
 		if not hit.is_empty():checks.berth_clear=false
-	var passed:bool=checks.terrain_patches==30 and checks.ground and checks.tower_passages and checks.berth_clear and checks.six_props and checks.camera_crest and checks.camera_rock and checks.closed_horizon
+	checks["lab_door"]=space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-7.5,.30,2.6),Vector3(-7.5,.30,-.7),3)).is_empty()
+	checks["service_bay"]=space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-3,.3,7.1),Vector3(-3,.3,10.4),3)).is_empty()
+	# Outbound left-wheel envelope measured from the native roller reversal.
+	checks["lab_exit_margin"]=space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-8.02,.10,.70),Vector3(-8.02,.10,1.30),3)).is_empty()
+	checks["lab_wall_solid"]=not space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-4.9,.8,-.5),Vector3(-6.5,.8,-.5),3)).is_empty()
+	checks["command_hull_solid"]=not space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-8.,1.5,-17.),Vector3(-8.,1.5,-21.),3)).is_empty()
+	checks["camera_lab"]=station._unobstructed_position(Vector3(-4.5,2.4,-.5),Vector3(-8.5,2.4,-.5)).x > -5.7
+	var passed:bool=checks.terrain_patches==30 and checks.ground and checks.tower_passages and checks.berth_clear and checks.six_props and checks.camera_crest and checks.camera_rock and checks.closed_horizon and checks.lab_door and checks.service_bay and checks.lab_wall_solid and checks.command_hull_solid and checks.camera_lab and checks.lab_exit_margin
 	print("SCIENCE_GEOMETRY ",JSON.stringify({"passed":passed,"checks":checks}))
 	host.queue_free();await process_frame
 	quit(0 if passed else 1)
