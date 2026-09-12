@@ -1,0 +1,48 @@
+extends SceneTree
+const Layout=preload("res://science_station/layout.gd")
+func _initialize() -> void:
+	call_deferred("run")
+func run() -> void:
+	var scene:Node3D=load("res://hub/main.tscn").instantiate()
+	scene.set_script(null)
+	# A small host supplies the same fields the production builder reads.
+	var host:=Host.new()
+	for child in scene.get_children():child.owner=null;scene.remove_child(child);host.add_child(child)
+	scene.free();root.add_child(host)
+	var station:Node3D=load("res://science_station/station.gd").new();host.add_child(station);station.build(host)
+	await physics_frame
+	var checks:Dictionary={"terrain_patches":0,"tower_passages":true,"berth_clear":true,"ground":true,"six_props":station.loose_props.items.size()==6}
+	for child in station.get_children():
+		if str(child.name).begins_with("Terrain_"):checks.terrain_patches+=1
+	var space:=host.get_world_3d().direct_space_state
+	var landscape=load("res://science_station/landscape.gd").new()
+	checks["closed_horizon"]=true
+	for band in range(9):
+		var r:float=[1.,1.20,1.52,1.95,2.55,3.5,5.5,9.,18.][band]
+		if landscape.ridge(0.,r,band).distance_to(landscape.ridge(TAU,r,band))>.0001:checks.closed_horizon=false
+	for x in [-22.,-18.,-15.,0.,5.,13.,22.]:
+		for z in [-24.,-17.,-3.,1.,7.,12.]:
+			var hit:=space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(x,.25,z),Vector3(x,-.2,z),3))
+			if hit.is_empty() or absf(hit.position.y-Layout.height_at(x,z))>.002:checks.ground=false
+	for x in [-21.83,-19.14,-17.27,-14.77]:
+		var hit:=space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(x,.3,-3.17),Vector3(x,-.2,-3.17),3))
+		# Jolt compresses triangle vertices; allow 50 micrometres at this scale.
+		if hit.is_empty() or absf(hit.position.y-Layout.height_at(x,-3.17))>.00005:
+			checks.ground=false;print("GROUND_ERROR ",x," ",hit," expected=",Layout.height_at(x,-3.17))
+	var corrected:Vector3=station._unobstructed_position(Vector3(-22,.12,-3),Vector3(-16,.12,-3))
+	checks["camera_crest"]=corrected.x < -18.
+	checks["camera_rock"]=station._unobstructed_position(Vector3(-18,.4,9),Vector3(-22,.4,9)).x > -20.
+	for p in [Vector3(7,.20,-17),Vector3(16,.20,-21)]:
+		var query:=PhysicsRayQueryParameters3D.create(p+Vector3(-3,0,0),p+Vector3(3,0,0),3)
+		if not space.intersect_ray(query).is_empty():checks.tower_passages=false
+	for x in [4.,8.,13.,18.,22.]:
+		var hit:=space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(x,.22,-7),Vector3(x,.22,3),3))
+		if not hit.is_empty():checks.berth_clear=false
+	var passed:bool=checks.terrain_patches==30 and checks.ground and checks.tower_passages and checks.berth_clear and checks.six_props and checks.camera_crest and checks.camera_rock and checks.closed_horizon
+	print("SCIENCE_GEOMETRY ",JSON.stringify({"passed":passed,"checks":checks}))
+	host.queue_free();await process_frame
+	quit(0 if passed else 1)
+class Host extends Node3D:
+	var _headless:=true
+	var _bodies:Dictionary={}
+	var options:Dictionary={"scene":"science_station"}

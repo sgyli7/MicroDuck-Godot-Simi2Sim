@@ -14,6 +14,8 @@
 
 Linux 应用菜单入口统一为 **小小维修站**。在项目中运行 `python3 scripts/install_workshop_desktop.py` 安装；旧版两个快捷方式会自动备份并归并到新入口。
 
+新增探索场景：[风口科学站](docs/science-station.md)。运行 `./run-workshop.sh --scene science_station`，或通过桌面入口选择场景。
+
 ## 功能
 
 - 同一个维修站窗口中动态加载三种机器人，保留场景物件。

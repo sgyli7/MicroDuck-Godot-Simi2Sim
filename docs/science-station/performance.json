@@ -1,0 +1,82 @@
+{
+  "gallery-complete": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "median_fps": 30.0,
+    "min_fps": 30.0,
+    "simulation_to_wall_ratio": 0.9986500571324353,
+    "recording": true,
+    "saved_frames": 27,
+    "dropped_capture_frames": 0,
+    "simulation_seconds": 14.0000000000008
+  },
+  "play-delivery": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "median_fps": 30.0,
+    "min_fps": 30.0,
+    "simulation_to_wall_ratio": 0.9991232466545602,
+    "recording": true,
+    "saved_frames": 683,
+    "dropped_capture_frames": 3,
+    "simulation_seconds": 23.0049999999997
+  },
+  "performance-sai": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "median_fps": 30.0,
+    "min_fps": 29.0,
+    "simulation_to_wall_ratio": 0.9982577880810584,
+    "recording": false,
+    "saved_frames": 0,
+    "dropped_capture_frames": 0,
+    "simulation_seconds": 18.0000000000034
+  },
+  "grab-visible": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "median_fps": 18.0,
+    "min_fps": 17.0,
+    "simulation_to_wall_ratio": 0.8957067724809988,
+    "recording": true,
+    "saved_frames": 986,
+    "dropped_capture_frames": 16,
+    "simulation_seconds": 47.2810000000437
+  },
+  "environment": {
+    "engine": "Godot 4.7.2 Forward+",
+    "device": "NVIDIA GB10",
+    "affinity": [
+      10,
+      11
+    ],
+    "priority": "nice 10",
+    "conditions": "Shared host with background evaluations; existing pressure/throughput monitor, explicit bounded sharing; no exclusive-idle claim",
+    "warmup_seconds": 2,
+    "physics_hz": {
+      "microduck": 200,
+      "roller": 200,
+      "sai": 2000
+    },
+    "policy_hz": 50
+  },
+  "performance-roller": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "median_fps": 30.0,
+    "min_fps": 30.0,
+    "simulation_to_wall_ratio": 0.9984475304813208,
+    "recording": false,
+    "simulation_seconds": 18.0000000000007
+  }
+}

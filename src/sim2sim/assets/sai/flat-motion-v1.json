@@ -1,0 +1,20 @@
+{
+  "id": "sai-flat-motion-v1",
+  "base_control_contract": "sai-flat-v1+heading-v1",
+  "observation_size": 82,
+  "action_size": 16,
+  "control_hz": 50,
+  "onnx_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d",
+  "checkpoint_sha256": "5d5ebb6b6798161abacaec27ce07468c930df52d700b97e24298c49a2cc111bd",
+  "normalization_included": true,
+  "seed": 47,
+  "training_steps": 4063232,
+  "training_iterations": 496,
+  "training_seconds": 300.2233893069788,
+  "training_model_sha256": "af174c649acca3dfec7e60c896c4a9603d3ed2864862534c81053517e6500f7f",
+  "max_onnx_export_error": 1.430511474609375e-06,
+  "training_script": "scripts/train_sai_flat.py",
+  "acceptance": "docs/sai-motion-20260913/RESULT.md",
+  "source_release": "Sai_Agent_001@5d2ab070dcdbae61a8d750a3f812e77ad2568f26",
+  "purpose": "Flat rolling motion quality; stairs and cargo actors retain their published weights."
+}

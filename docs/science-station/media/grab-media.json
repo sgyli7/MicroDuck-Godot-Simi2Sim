@@ -1,0 +1,14 @@
+{
+  "screenshots": {
+    "arrival": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/gallery-complete/frames/00003.jpg",
+    "overview": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/gallery-complete/frames/00007.jpg",
+    "towers": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/gallery-complete/frames/00011.jpg",
+    "samples": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/gallery-complete/frames/00015.jpg",
+    "berth": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/gallery-complete/frames/00018.jpg",
+    "hills": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/gallery-complete/frames/00026.jpg"
+  },
+  "frames": 986,
+  "wall_seconds": 52.459256,
+  "simulation_seconds": 47.215500000043704,
+  "source": "Native Godot viewport, original wall timestamps, no speed-up or pose animation"
+}

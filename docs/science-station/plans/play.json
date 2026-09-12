@@ -1,0 +1,51 @@
+{
+  "seconds": 23,
+  "capture_interval": 0.033333,
+  "events": [
+    {
+      "at": 2,
+      "key": "B"
+    },
+    {
+      "at": 2.1,
+      "key": "B",
+      "pressed": false
+    },
+    {
+      "at": 3,
+      "key": "L"
+    },
+    {
+      "at": 3.1,
+      "key": "L",
+      "pressed": false
+    },
+    {
+      "at": 7,
+      "key": "W"
+    },
+    {
+      "at": 12,
+      "key": "W",
+      "pressed": false
+    },
+    {
+      "at": 13,
+      "key": "A"
+    },
+    {
+      "at": 15,
+      "key": "A",
+      "pressed": false
+    },
+    {
+      "at": 16,
+      "key": "W"
+    },
+    {
+      "at": 21,
+      "key": "W",
+      "pressed": false
+    }
+  ]
+}

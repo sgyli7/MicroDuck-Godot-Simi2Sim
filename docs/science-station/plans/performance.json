@@ -1,0 +1,14 @@
+{
+  "seconds": 18,
+  "events": [
+    {
+      "at": 2,
+      "key": "G"
+    },
+    {
+      "at": 2.1,
+      "key": "G",
+      "pressed": false
+    }
+  ]
+}

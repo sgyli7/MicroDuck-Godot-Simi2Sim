@@ -57,7 +57,7 @@ def prepare(runtime: Path, godot: str) -> Path:
 
 
 def serve(listener, stop, bundle, trace):
-    from sai_agent.godot_controller import GodotController
+    from sim2sim.workshop_grab import WorkshopController
     from sai_agent.cargo_godot import CargoGodotController
     while not stop.is_set():
         try:
@@ -91,7 +91,7 @@ def serve(listener, stop, bundle, trace):
                         config = state["hub_config"]
                         skill = config.get("skill", "")
                         profile = bundle / "policies/experimental" / f"{skill}.json" if skill else None
-                        controller = CargoGodotController() if config["task"] == "cargo" else GodotController(bundle, stair_profile=profile)
+                        controller = CargoGodotController() if config["task"] == "cargo" else WorkshopController(bundle, stair_profile=profile)
                     response = controller.command(state)
                     client.sendall((json.dumps(response, separators=(",", ":")) + "\n").encode())
                     if trace:
@@ -102,22 +102,33 @@ def serve(listener, stop, bundle, trace):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--scene", choices=("workshop", "science_station"), default="workshop")
+    parser.add_argument("--choose-scene", action="store_true", help="Show the desktop scene picker")
     parser.add_argument("--robot", choices=("microduck", "roller", "sai"), default="microduck")
-    parser.add_argument("--task", default="drive", choices=("drive", "cargo18", "cargo25", "up20", "down20", "up40", "down40", "up60", "down60"))
+    parser.add_argument("--task", default="drive", choices=("drive", "sort", "cargo18", "cargo25", "up20", "down20", "up40", "down40", "up60", "down60"))
     parser.add_argument("--godot-bin", default=os.environ.get("GODOT") or shutil.which("godot"))
     parser.add_argument("--runtime-dir", type=Path, default=ROOT / "results/workshop-hub/runtime")
     parser.add_argument("--headless", action="store_true")
+    parser.add_argument("--fast-check", action="store_true", help="Unpaced headless plan; physics step and policy rates stay unchanged")
     parser.add_argument("--plan", type=Path, help="Timed integration test / capture plan")
     parser.add_argument("--output", type=Path, default=ROOT / "results/workshop-hub/play")
     parser.add_argument("--record", action="store_true", help="Timestamped native game frames and policy trace")
     args = parser.parse_args(argv)
+    if args.fast_check and not (args.headless and args.plan):
+        parser.error("--fast-check requires --headless and --plan")
+    if args.scene == "science_station" and args.task not in ("drive", "sort"):
+        parser.error("Science station supports free exploration and scene pickup; use workshop for task courses")
     if not args.godot_bin:
         parser.error("Godot 4.7.2 is required")
     args.output = args.output.resolve()
     args.output.mkdir(parents=True, exist_ok=True)
     os.environ.update(SIM2SIM_VISUAL_STYLE="legacy", MD_WORKSHOP_COLLISIONS="1", MD_MODE="hub")
     bundle = prepare(args.runtime_dir.resolve(), args.godot_bin)
-    options = dict(robot=args.robot, task=args.task, output=str(args.output), record=args.record,
+    if args.choose_scene or args.scene == "science_station":
+        project = args.runtime_dir / "project.godot"
+        project.write_text(project.read_text().replace('config/name="Robot Godot Workshop"',
+                                                       'config/name="Robot Godot Worlds"'))
+    options = dict(scene=args.scene, fast_check=args.fast_check, choose_scene=args.choose_scene and not args.headless and not args.plan, robot=args.robot, task=args.task, output=str(args.output), record=args.record,
                    plan=json.loads(args.plan.read_text()) if args.plan else {})
     (args.runtime_dir / "hub/options.json").write_text(json.dumps(options))
     with socket.socket() as listener:
@@ -129,6 +140,8 @@ def main(argv=None):
         command = [args.godot_bin, "--path", str(args.runtime_dir.resolve()), "res://hub/main.tscn", "--disable-vsync", "--max-fps", "30"]
         if args.headless:
             command += ["--headless"]
+        if args.fast_check:
+            command += ["--fixed-fps", "30"]
         command += ["--", f"--port={listener.getsockname()[1]}"]
         with ThreadPoolExecutor(max_workers=1) as pool:
             service = pool.submit(serve, listener, stop, bundle, trace)

@@ -1,0 +1,45 @@
+{
+  "seconds": 19,
+  "initial_checkpoint": "samples",
+  "events": [
+    {
+      "at": 0.5,
+      "key": "B"
+    },
+    {
+      "at": 0.6,
+      "key": "B",
+      "pressed": false
+    },
+    {
+      "at": 1,
+      "key": "L"
+    },
+    {
+      "at": 1.1,
+      "key": "L",
+      "pressed": false
+    },
+    {
+      "at": 7,
+      "robot": "sai"
+    },
+    {
+      "at": 10,
+      "robot": "roller"
+    },
+    {
+      "at": 13,
+      "robot": "microduck"
+    },
+    {
+      "at": 16,
+      "key": "0"
+    },
+    {
+      "at": 16.1,
+      "key": "0",
+      "pressed": false
+    }
+  ]
+}

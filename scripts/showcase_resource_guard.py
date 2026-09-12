@@ -21,16 +21,26 @@ def default_training_root():
 
 
 TRAINING_ROOT = Path(os.environ.get('SIM2SIM_TRAINING_ROOT', str(default_training_root()))).resolve()
-RUNS = TRAINING_ROOT / 'results/research_20260910/runs'
+RUNS = Path(os.environ.get('SIM2SIM_TRAINING_RUNS', str(TRAINING_ROOT / 'results/research_20260910/runs')))
 
 
 class PreviewDeferred(RuntimeError):
     """A resource boundary prevented rendering; this is not a renderer failure."""
 
 
+def is_interactive_workshop(args):
+    if '-m' not in args or args.index('-m') + 1 >= len(args):
+        return False
+    if args[args.index('-m') + 1] != 'sim2sim.workshop':
+        return False
+    return not any(arg == flag or arg.startswith(flag + '=')
+                   for arg in args for flag in ('--plan', '--headless', '--record'))
+
+
 def training_processes():
     """Only retain IDs/run names, never log unrelated process arguments."""
     result = []
+    interactive = set()
     for proc in Path('/proc').iterdir():
         if not proc.name.isdigit():
             continue
@@ -46,11 +56,17 @@ def training_processes():
                     or any(str(TRAINING_ROOT) in arg for arg in args)):
                 continue
             run = args[args.index('--name') + 1] if '--name' in args else None
-            result.append({'pid': int(proc.name), 'name': name, 'run': run})
+            # A user's persistent play window is not a training/evaluation job.
+            # Planned, recorded and headless workshop runs remain protected.
+            if is_interactive_workshop(args):
+                interactive.add(int(proc.name))
+            supervisor = any(arg == str(TRAINING_ROOT / 'src/sim2sim/research/budget.py') for arg in args)
+            result.append({'pid': int(proc.name), 'name': name, 'run': run, 'budget_supervisor': supervisor})
         except (OSError, IndexError):
             # Process may exit between reading its fields.
             continue
-    return result
+    return [proc for proc in result if proc['pid'] not in interactive
+            and not (_process_ancestors(proc['pid']) & interactive)]
 
 
 def training_sample():
@@ -136,8 +152,34 @@ def pressure_reason(sample):
     return None
 
 
-def preflight(fps=30):
+def competing_processes(processes, cpu_only=False):
+    """Headless checks may share the host only with disjoint CPU allocations.
+
+    Visible captures retain the original full-host exclusion. An unpinned
+    evaluator intersects our allocation and therefore still blocks headless.
+    """
+    if not cpu_only:
+        return processes
+    ours = os.sched_getaffinity(0)
+    result = []
+    for proc in processes:
+        # The repository's budget wrapper only monitors its pinned subprocess.
+        # Keep that subprocess (and every worker) subject to the affinity check.
+        if proc.get('budget_supervisor') and any(
+                proc['pid'] in _process_ancestors(child['pid']) for child in processes if child != proc):
+            continue
+        try:
+            if ours & os.sched_getaffinity(proc['pid']):
+                result.append(proc)
+        except ProcessLookupError:
+            continue
+    return result
+
+
+def preflight(fps=30, cpu_only=False, shared_eval=False):
     processes = training_processes()
+    observed = processes
+    processes = competing_processes(processes, cpu_only)
     samples = training_sample()
     pressure = pressure_sample()
     reason = pressure_reason(pressure)
@@ -145,14 +187,16 @@ def preflight(fps=30):
         raise PreviewDeferred(reason)
     if fps > 30 and processes:
         raise PreviewDeferred('training processes are active; tests above 30 FPS are deferred')
-    if unmeasured_processes(processes):
+    if unmeasured_processes(processes) and not shared_eval:
         raise PreviewDeferred('independent training/evaluation activity has no comparable throughput; rendering deferred')
     active_runs = {p['run'] for p in processes if p['run']}
     unavailable = [name for name in active_runs
                    if name not in samples or len(samples[name]['rows']) < 8]
-    if unavailable or (processes and not active_runs):
+    if unavailable or (processes and not active_runs and not shared_eval):
         raise PreviewDeferred('training throughput cannot be compared reliably yet; rendering deferred')
-    return {'time': time.time(), 'processes': processes, 'samples': samples, 'pressure': pressure}
+    return {'time': time.time(), 'processes': processes, 'samples': samples, 'pressure': pressure,
+            'cpu_only': cpu_only, 'shared_eval': shared_eval,
+            'cpu_affinity': sorted(os.sched_getaffinity(0)), 'observed_processes': observed}
 
 
 def _checkpoint_session_unlocked(snapshot):
@@ -245,14 +289,14 @@ def _watch(stop, baseline, pause):
     while not stop.wait(5):
         pressure = pressure_sample()
         reason = pressure_reason(pressure)
-        processes=training_processes()
+        processes=competing_processes(training_processes(), baseline.get('cpu_only', False))
         active_runs={(p['run'],p['pid']) for p in processes if p['run']}
         samples=training_sample()
-        if unmeasured_processes(processes):
+        if unmeasured_processes(processes) and not baseline.get('shared_eval',False):
             reason = reason or 'independent training/evaluation activity has no comparable throughput'
         if baseline.get('render_fps',30)>30 and processes:
             reason = reason or 'training became active during the independent performance test'
-        if (processes and not active_runs) or any(name not in samples for name,_ in active_runs):
+        if (processes and not active_runs and not baseline.get('shared_eval',False)) or any(name not in samples for name,_ in active_runs):
             reason=reason or 'the active training phase has no reliable throughput record'
         if active_runs-baseline_runs:
             reason=reason or 'training changed phase; capture a new phase baseline before rendering'
@@ -260,7 +304,7 @@ def _watch(stop, baseline, pause):
         if time.monotonic() - last_window >= 60:
             runs = {p['run'] for p in processes if p['run']}
             reason, ratios = guard.compare(samples, runs) if not reason else (reason, {})
-            if processes and not samples:
+            if processes and not samples and not baseline.get('shared_eval',False):
                 reason = reason or 'active training has no reliable throughput record'
             record.update({'samples': samples, 'ratios': ratios, 'strikes': guard.strikes})
             last_window = time.monotonic()

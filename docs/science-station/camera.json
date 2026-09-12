@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": {
+    "six_views": true,
+    "camera_above_ground": true,
+    "native_no_fall": true,
+    "full_orbit": true
+  },
+  "method": "Replayed right mouse, wheel, seven Tab presses; native viewport captures inspected at tower base"
+}

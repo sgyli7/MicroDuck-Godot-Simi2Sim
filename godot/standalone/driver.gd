@@ -275,6 +275,9 @@ func _replay_error(replay: Dictionary) -> String:
 					return "Unknown replay "+key+" input: "+str(value)
 	return ""
 
+func _ground_height_at(_body_pos: Array) -> float:
+	return 0.0
+
 func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 	var raw := local_reply.duplicate(true)
 	var body := Contract.body_state(raw,robot_config)
@@ -317,7 +320,9 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 	command = motion.command(command,body,skill,CONTROL_DT)
 	var obs := Contract.observation(raw,body,last_action,command,home)
 	if item.get("state_input", "") == "planar_com_velocity_height_v1":
-		obs = Contract.brake_state_observation(obs,body)
+		var height_body: Dictionary = body.duplicate(true)
+		height_body.base_pos[2]-=_ground_height_at(body.base_pos)
+		obs = Contract.brake_state_observation(obs,height_body)
 	if item.get("task_input", "") == "brake_markov_68_v1":
 		obs = brake_task.observe(obs,raw,robot_config.get("support_groups",[]),_t)
 		if obs.size()!=68:
@@ -333,7 +338,7 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 	_record_latency(skill,infer_usec)
 	var ctrl := Contract.control(action,home,float(robot_config.action_scale))
 	var tilt := rad_to_deg(acos(clampf(-obs[5],-1.0,1.0)))
-	var fell: bool = tilt > 70.0 or body.base_pos[2] < 0.055
+	var fell: bool = tilt > 70.0 or body.base_pos[2]-_ground_height_at(body.base_pos) < 0.055
 	if fell and session.first_fall == null: session.first_fall=elapsed
 	if session.trace_path != "":
 		session.rows.append({"t":elapsed,"episode_t":_t,"mode":session.mode,"skill":skill,

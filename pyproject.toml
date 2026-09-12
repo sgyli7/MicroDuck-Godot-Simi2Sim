@@ -48,6 +48,9 @@ build-backend = "hatchling.build"
 # so `uv run` executed a stale snapshot instead of the working tree.
 [tool.hatch.build.targets.wheel]
 packages = ["src/sim2sim", "src/mjcf2godot"]
+# This frozen runtime policy is required even though generated ONNX files are
+# normally ignored. Keep editable Python modules pointed at the source tree.
+artifacts = ["src/sim2sim/assets/sai/flat-motion-v1.onnx"]
 
 [tool.uv]
 package = true

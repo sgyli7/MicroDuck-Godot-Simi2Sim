@@ -40,6 +40,8 @@ var collision_cache: Dictionary = {}
 var contact_course: Node3D
 var loose_props: Node3D
 var solid_scope := false
+var palette: Dictionary = PALETTE.duplicate()
+var label_font: Font
 
 func build(host: Node3D) -> void:
 	server=host; name="AtelierVisuals"
@@ -54,10 +56,10 @@ func build(host: Node3D) -> void:
 		return
 	camera=server.get_node("World/Camera3D")
 	camera.fov=48.0; camera.near=.015; camera.far=100.0
-	for key in PALETTE:
+	for key in palette:
 		var mat:=ShaderMaterial.new()
 		mat.shader=load("res://atelier/enamel.gdshader")
-		mat.set_shader_parameter("pigment",PALETTE[key])
+		mat.set_shader_parameter("pigment",palette[key])
 		if OS.get_environment("MD_HATCH")=="0":mat.set_shader_parameter("hatch_strength",0.0)
 		var ink:=ShaderMaterial.new()
 		ink.shader=load("res://atelier/ink.gdshader")
@@ -67,7 +69,7 @@ func build(host: Node3D) -> void:
 		var builder:=SurfaceTool.new()
 		builder.begin(Mesh.PRIMITIVE_TRIANGLES); builders[key]=builder
 	_environment(); _floor(); _build_solids()
-	load("res://atelier/workshop_details.gd").new().build(self)
+	_build_details()
 	_commit_geometry()
 	var all_roles: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://atelier/visual_mesh_roles.json"))
 	var model_name: String = "microduck_roller" if "roller" in server._robot_scene else "microduck"
@@ -80,6 +82,12 @@ func build(host: Node3D) -> void:
 	if OS.get_environment("MD_MODE")=="tour":set_view("tour")
 	if OS.has_environment("MD_SHOWCASE_SHOT"):set_view("showcase")
 	print("ATELIER built ",world_objects," original parts into ",materials.size()," material batches")
+
+func _build_details() -> void:
+	load("res://atelier/workshop_details.gd").new().build(self)
+
+func ground_height(_x: float, _z: float) -> float:
+	return 0.0
 
 func _build_solids() -> void:
 	solid_scope=true
@@ -195,12 +203,13 @@ func _line(a: Vector3,b: Vector3,radius: float=.0013,color: String="ink") -> voi
 func _label(text: String,p: Vector3,size: int=42,pixel: float=.0005,color: String="ink",rot: Vector3=Vector3.ZERO) -> void:
 	if not visuals_enabled:return
 	var label:=Label3D.new()
+	if label_font!=null:label.font=label_font
 	label.text=text;label.position=p;label.font_size=size*3;label.pixel_size=pixel/3.0
-	label.modulate=PALETTE[color];label.outline_size=0
+	label.modulate=palette[color];label.outline_size=0
 	label.no_depth_test=false;label.shaded=false;label.rotation_degrees=rot
 	label.texture_filter=BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	add_child(label)
-	if VisualProfile.value("MD_LABEL_LOD")=="1":printed_labels.append({"node":label,"color":PALETTE[color],"em":size*pixel})
+	if VisualProfile.value("MD_LABEL_LOD")=="1":printed_labels.append({"node":label,"color":palette[color],"em":size*pixel})
 
 func update_printed_labels() -> void:
 	if printed_labels.is_empty() or camera==null:return

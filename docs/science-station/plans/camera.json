@@ -1,0 +1,206 @@
+{
+  "seconds": 17,
+  "initial_position": [
+    7,
+    -17
+  ],
+  "capture_interval": 0.25,
+  "events": [
+    {
+      "at": 1,
+      "mouse_button": "right"
+    },
+    {
+      "at": 1.2,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 1.7999999999999998,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 2.4,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 3.0,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 3.5999999999999996,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 4.2,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 4.8,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 5.4,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 6.0,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 6.6,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 7.2,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 7.8,
+      "motion": [
+        87.26646,
+        0
+      ]
+    },
+    {
+      "at": 8.5,
+      "mouse_button": "right",
+      "pressed": false
+    },
+    {
+      "at": 9.0,
+      "mouse_button": "up"
+    },
+    {
+      "at": 9.12,
+      "mouse_button": "up"
+    },
+    {
+      "at": 9.24,
+      "mouse_button": "up"
+    },
+    {
+      "at": 9.36,
+      "mouse_button": "up"
+    },
+    {
+      "at": 9.48,
+      "mouse_button": "up"
+    },
+    {
+      "at": 10.0,
+      "mouse_button": "down"
+    },
+    {
+      "at": 10.12,
+      "mouse_button": "down"
+    },
+    {
+      "at": 10.24,
+      "mouse_button": "down"
+    },
+    {
+      "at": 10.36,
+      "mouse_button": "down"
+    },
+    {
+      "at": 10.48,
+      "mouse_button": "down"
+    },
+    {
+      "at": 11.0,
+      "key": "Tab"
+    },
+    {
+      "at": 11.1,
+      "key": "Tab",
+      "pressed": false
+    },
+    {
+      "at": 11.7,
+      "key": "Tab"
+    },
+    {
+      "at": 11.799999999999999,
+      "key": "Tab",
+      "pressed": false
+    },
+    {
+      "at": 12.4,
+      "key": "Tab"
+    },
+    {
+      "at": 12.5,
+      "key": "Tab",
+      "pressed": false
+    },
+    {
+      "at": 13.1,
+      "key": "Tab"
+    },
+    {
+      "at": 13.2,
+      "key": "Tab",
+      "pressed": false
+    },
+    {
+      "at": 13.8,
+      "key": "Tab"
+    },
+    {
+      "at": 13.899999999999999,
+      "key": "Tab",
+      "pressed": false
+    },
+    {
+      "at": 14.5,
+      "key": "Tab"
+    },
+    {
+      "at": 14.6,
+      "key": "Tab",
+      "pressed": false
+    },
+    {
+      "at": 15.2,
+      "key": "Tab"
+    },
+    {
+      "at": 15.299999999999999,
+      "key": "Tab",
+      "pressed": false
+    }
+  ]
+}

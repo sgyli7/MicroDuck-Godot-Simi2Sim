@@ -1,6 +1,7 @@
 extends "res://sai_release/main.gd"
 var hub: Node3D
 var settings: Dictionary
+var grab: Node3D
 
 func _ready() -> void:
 	settings = hub.task_settings()
@@ -14,6 +15,10 @@ func _ready() -> void:
 	for action in ["forward","reverse","left","right","crouch"]:
 		if InputMap.has_action(action): InputMap.erase_action(action)
 	super._ready()
+	if hub.active_task in ["drive", "sort"]:
+		grab = load("res://hub/scene_grab.gd").new()
+		grab.scene = self
+		add_child(grab)
 	if visuals:
 		var paint = load("res://hub/sai_materials.gd").new()
 		paint.scene = self
@@ -53,10 +58,23 @@ func height_scan() -> Array:
 func exchange(state: Dictionary) -> Dictionary:
 	state["hub_config"] = settings
 	state["world_origin"] = robot.source(global_position)
+	# Record actual wheel state in the same 50 Hz packet as the policy input.
+	# These diagnostics do not participate in observation construction/control.
+	var wheel_positions: Array = []
+	var supported := 0
+	for leg in specification.leg_order:
+		var wheel: RigidBody3D = robot.bodies[str(leg)+"_wheel"]
+		wheel_positions.append(robot.source(wheel.position))
+		if not wheel.get_colliding_bodies().is_empty(): supported += 1
+	state["wheel_positions"] = wheel_positions
+	state["wheels_supported"] = supported
 	# The release FK/task operates in its original local metre frame.
 	var offset: Array = robot.source(global_position)
 	for i in range(3): state.tool_m[i] -= offset[i]
-	return super.exchange(state)
+	if grab != null: state["workshop_grab"] = grab.observation()
+	var result := super.exchange(state)
+	if grab != null: grab.accept(result)
+	return result
 
 func finish_run() -> void:
 	finished = true
