@@ -1,5 +1,5 @@
 {
-  "status": "sprint_flat_acceptance_passed_default_installed",
+  "status": "completed_default_sprint_published",
   "goal_scope": "Walking-only left Shift + W, native inference, ordinary walking retained, flat terrain; obstacle traversal and avoidance excluded.",
   "new_policy_training": false,
   "trained_sprint_sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
@@ -183,7 +183,7 @@
     "main_game_open_floor: stair course_2 contact 5.84s, fall 8.34s"
   ],
   "final_seeds_consumed": "928000-928049",
-  "github_status": "pending final push",
+  "github_status": "published and remote commit verified",
   "package": {
     "completed": true,
     "directory": "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260913-sprint-reversal-trial",
@@ -224,7 +224,7 @@
     "hashes_match": true
   },
   "resources": {
-    "unix": 1789239948.6805356,
+    "unix": 1789240164.432365,
     "started": 27,
     "finished": 27,
     "missing_terminal": [],
@@ -235,7 +235,7 @@
     "all_godot_processes": [
       {
         "pid": 1679586,
-        "state": "S",
+        "state": "R",
         "ppid": 1679440,
         "pgrp": 1679434,
         "session": 1679434,
@@ -262,7 +262,7 @@
         "--format=csv,noheader"
       ],
       "returncode": 0,
-      "stdout": "NVIDIA GB10, 5 %, [N/A]",
+      "stdout": "NVIDIA GB10, 6 %, [N/A]",
       "stderr": ""
     },
     "gpu_apps": {
@@ -414,5 +414,35 @@
     ],
     "passed": true,
     "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+  },
+  "publication": {
+    "commit": "a9281148df9630e0aec91392f88fe5536c8bf429",
+    "url": "https://github.com/sgyli7/Robot_Godot_Sim2Sim/commit/a9281148df9630e0aec91392f88fe5536c8bf429",
+    "branch": "main",
+    "verified": true
+  },
+  "active_time": {
+    "sealed_unix": 1789240211.5573192,
+    "status": "completed",
+    "active_budget": {
+      "limit_seconds": 5400.0,
+      "used_seconds": 5708.6247251339955,
+      "remaining_seconds": 0.0,
+      "actors": [],
+      "unconfirmed_gaps": 0
+    },
+    "initial_estimated_seconds": 180.0,
+    "initial_estimate_note": "Explicit 180-second preledger audit/telemetry design estimate; subsequent work measured by heartbeat and jobs.",
+    "overrun_seconds": 308.6247251339955,
+    "overrun_reason": "Finishing the additionally requested main-game default integration, UI, source distribution and GitHub publication; no new optimization experiments after freeze.",
+    "accounting_boundary": "Includes work through verified implementation push and resource cleanup. The final Git commit/push of this sealing record itself follows this timestamp.",
+    "supervised_tasks": 27,
+    "resource_audit_passed": true,
+    "publication": {
+      "commit": "a9281148df9630e0aec91392f88fe5536c8bf429",
+      "url": "https://github.com/sgyli7/Robot_Godot_Sim2Sim/commit/a9281148df9630e0aec91392f88fe5536c8bf429",
+      "branch": "main",
+      "verified": true
+    }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "unix": 1789239948.6805356,
+  "unix": 1789240164.432365,
   "started": 27,
   "finished": 27,
   "missing_terminal": [],
@@ -10,7 +10,7 @@
   "all_godot_processes": [
     {
       "pid": 1679586,
-      "state": "S",
+      "state": "R",
       "ppid": 1679440,
       "pgrp": 1679434,
       "session": 1679434,
@@ -37,7 +37,7 @@
       "--format=csv,noheader"
     ],
     "returncode": 0,
-    "stdout": "NVIDIA GB10, 5 %, [N/A]",
+    "stdout": "NVIDIA GB10, 6 %, [N/A]",
     "stderr": ""
   },
   "gpu_apps": {

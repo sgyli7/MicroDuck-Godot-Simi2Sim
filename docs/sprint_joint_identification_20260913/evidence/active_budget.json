@@ -8,38 +8,11 @@
     "3b388277-2a59-4f02-b6ad-c6507ba4a8e9": [
       [
         262629.848714436,
-        266711.725623237
-      ],
-      [
-        266881.06141324,
-        267014.733496537
-      ],
-      [
-        267092.242602177,
-        267154.599345615
-      ],
-      [
-        267193.916951011,
-        267223.105785446
-      ],
-      [
-        267346.576345329,
-        267370.748150027
+        268158.47343957
       ]
     ]
   },
-  "actors": {
-    "agent": {
-      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
-      "monotonic": 266711.725623237,
-      "unix": 1789238764.8079824
-    },
-    "archive_evidence:743cfe6c68": {
-      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
-      "monotonic": 267471.659448755,
-      "unix": 1789239524.7415216
-    }
-  },
+  "actors": {},
   "gaps": [],
   "events": [
     {
@@ -1652,6 +1625,35 @@
       ],
       "nice": 10,
       "supervisor_pid": 1719698
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789239534.8466513,
+      "actor": "archive_evidence:743cfe6c68",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "closeout_scope_extension",
+      "unix": 1789239948.477338,
+      "note": "The self-selected 90 minute research budget is exhausted; all experiments are frozen and all supervised jobs have terminated. Continue only documentation, merge, package archive and GitHub publication explicitly requested by user. Original limit remains unchanged; actual overrun will be reported, not excluded from working time."
+    },
+    {
+      "kind": "published",
+      "unix": 1789240211.5521152,
+      "commit": "a9281148df9630e0aec91392f88fe5536c8bf429",
+      "remote": "https://github.com/sgyli7/Robot_Godot_Sim2Sim.git",
+      "branch": "main",
+      "verification": "git ls-remote returned the exact commit after successful fast-forward push"
+    },
+    {
+      "kind": "sealed",
+      "unix": 1789240211.5540955,
+      "note": "All 27 supervised jobs have terminal records; no owned Godot/training/container remains. Subsequent work is only committing/pushing this sealing record. The original 90 minute limit was not changed; final minutes over it are recorded."
     }
   ]
 }
