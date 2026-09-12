@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-sai = ["sai-agent-001 @ git+https://github.com/sgyli7/Sai_Agent_001.git@8ea8348d95193c2bad91874816a76e5527238e30"]
+sai = ["sai-agent-001 @ git+https://github.com/sgyli7/Sai_Agent_001.git@6eb18b2abf97ce6de11a18daba93729848736adf"]
 media = ["av>=18.1,<19", "pillow>=12.2,<13"]
 # Direct torch pin so [tool.uv.sources] can bind the CUDA index on aarch64
 # (uv applies sources to DIRECT dependencies only).

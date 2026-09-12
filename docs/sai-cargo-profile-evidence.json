@@ -1,0 +1,43 @@
+{
+  "package_commit": "6eb18b2abf97ce6de11a18daba93729848736adf",
+  "install": "uv sync --extra sai; fetched from GitHub, no local source override",
+  "entrypoint": "sim2sim-play --robot Sai_Agent_001 --headless --task cargo",
+  "existing_md_input_tests": 38,
+  "result": {
+    "actual_wheel_course_contacts": [
+      "course_0",
+      "course_1",
+      "course_2"
+    ],
+    "body_count": 26,
+    "cargo_coupling": "force-level elastic belt, 20000 N/m and 4 Ns/m per branch; uncalibrated approximation",
+    "cargo_obstacle_height_m": 0.018,
+    "controller_hz": 50,
+    "duration_s": 71.34,
+    "engine": "4.7.2-stable (official)",
+    "final_object_chassis_m": [
+      -0.0713884830474854,
+      8.50781798362732e-05,
+      0.27895575761795
+    ],
+    "hinge_count": 23,
+    "independent_physics": true,
+    "joint_count": 25,
+    "jolt_penetration_slop_m": 0.0002,
+    "jolt_speculative_contact_distance_m": 0.0005,
+    "max_object_height_m": 0.331436097621918,
+    "max_transport_lateral_m": 0.0486350618302822,
+    "outside_cargo_steps": 0,
+    "physics": "Jolt Physics",
+    "physics_cargo_checks": 44000,
+    "physics_hz": 2000,
+    "placed_in_cargo": true,
+    "rearmost_wheel_edge_m": 2.51538745732329,
+    "slider_count": 2,
+    "success": true,
+    "transport_distance_m": 2.690982747823,
+    "transport_policy_sha256": "23936037d12e71e7ca404148bf900d3ecb0d97f1fac4793699c28de351522c9c",
+    "two_finger_contact_samples": 1160,
+    "unclamped_steps": 0
+  }
+}
