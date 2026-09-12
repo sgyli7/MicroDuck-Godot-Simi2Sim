@@ -101,6 +101,7 @@ var _jaw_spring: Generic6DOFJoint3D = null
 var _jaw_body: RigidBody3D = null
 var _jaw_pad_y: float = 0.0
 var _held_now: Array = []
+var _left_shift_down := false
 var _held_press_order: Array = []  # held bits ordered oldest-press first
 var _prev_held_set: Dictionary = {}  # bit -> true while physically held
 var _taps: Array = []
@@ -170,13 +171,7 @@ func _ready() -> void:
 	_setup_sprung_floor()
 	_setup_sole_springs()
 	_setup_jaw_spring()
-	_server = TCPServer.new()
-	var err := _server.listen(_port, "127.0.0.1")
-	if err != OK:
-		push_error("listen failed on port %s err=%s" % [_port, err])
-		get_tree().quit(1)
-		return
-	print("sim2sim_physics_server listening 127.0.0.1:%s" % _port)
+	_start_controller()
 	print(
 		"play_pacing display=%s max_phys=%s max_fps=%s vsync=%s"
 		% [
@@ -198,6 +193,16 @@ func _ready() -> void:
 		load("res://visuals/microduck/style.gd").new().apply(self)
 
 	call_deferred("_maybe_dump_sim2sim_shot")
+
+
+func _start_controller() -> void:
+	_server = TCPServer.new()
+	var err := _server.listen(_port, "127.0.0.1")
+	if err != OK:
+		push_error("listen failed on port %s err=%s" % [_port, err])
+		get_tree().quit(1)
+		return
+	print("sim2sim_physics_server listening 127.0.0.1:%s" % _port)
 
 
 
@@ -1079,7 +1084,7 @@ func _freeze(v: bool) -> void:
 		_restore_velocities()
 
 
-func _physics_process(delta: float) -> void:
+func _refresh_after_physics(delta: float) -> void:
 	# Jolt integrated after the previous _physics_process. Refresh kinematic
 	# ω/qd from the new pose before PD or the step reply reads them.
 	if _kin_after_tick:
@@ -1109,6 +1114,10 @@ func _physics_process(delta: float) -> void:
 		var cam_dt := minf(_cam_wall_seconds() - _cam_last_sec, 0.1)
 		_cam_last_sec = _cam_wall_seconds()
 		_follow_camera(cam_dt)
+
+
+func _physics_process(delta: float) -> void:
+	_refresh_after_physics(delta)
 	if _peer == null:
 		_try_accept()
 		return
@@ -1166,6 +1175,10 @@ func _physics_process(delta: float) -> void:
 			return
 		_timing_phys_t0 = Time.get_ticks_usec()
 		_timing_pd_usec = 0
+	_advance_physics_tick(delta)
+
+
+func _advance_physics_tick(delta: float) -> void:
 	var pd_t0 := Time.get_ticks_usec()
 	_apply_pd()
 	if not _sole.is_empty():
@@ -2065,6 +2078,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_add_tap("roulade")
 		KEY_6:
 			_add_tap("switch_robot")
+		KEY_7:
+			_add_tap("stand")
 		KEY_0, KEY_BACKSPACE:
 			_add_tap("reset")
 		KEY_P:
@@ -2074,8 +2089,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.physical_keycode == KEY_SHIFT and event.location == KEY_LOCATION_LEFT:
+		_left_shift_down = event.pressed
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		_left_shift_down = false
+
 func _sample_held() -> void:
 	var held: Array = []
+	if _left_shift_down:
+		held.append("sprint")
 	if Input.is_physical_key_pressed(KEY_W) or Input.is_physical_key_pressed(KEY_UP):
 		held.append("fwd")
 	if Input.is_physical_key_pressed(KEY_S) or Input.is_physical_key_pressed(KEY_DOWN):

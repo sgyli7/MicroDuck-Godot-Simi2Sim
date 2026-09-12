@@ -90,6 +90,7 @@ func _build_solids() -> void:
 	_service_post(Vector3(.74,0,-1.34))
 	_cargo_group(); _small_details()
 	load("res://atelier/workshop_yard.gd").new().build(self)
+	load("res://atelier/neighbourhood.gd").new().build(self)
 	solid_scope=false
 	if collisions_enabled and OS.get_environment("MD_STATIC_COURSE")=="1":
 		contact_course=load("res://atelier/contact_course.gd").new()
@@ -119,10 +120,16 @@ func _solid(mesh: Mesh, p: Vector3, basis: Basis=Basis.IDENTITY) -> void:
 func _environment() -> void:
 	var env:=Environment.new()
 	env.background_mode=Environment.BG_COLOR; env.background_color=Color("babfb3")
+	if OS.get_environment("MD_NEIGHBOURHOOD")!="0":
+		var sky:=Sky.new();var sky_material:=ShaderMaterial.new()
+		sky_material.shader=load("res://atelier/district_sky.gdshader");sky.sky_material=sky_material
+		env.sky=sky;env.background_mode=Environment.BG_SKY
 	env.ambient_light_source=Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color=Color("c9c4ce"); env.ambient_light_energy=.45
 	env.tonemap_mode=Environment.TONE_MAPPER_LINEAR
 	env.fog_enabled=true; env.fog_light_color=Color("babfb3"); env.fog_density=.012
+	# Keep atmospheric depth on geometry without washing the whole sky to one color.
+	if OS.get_environment("MD_NEIGHBOURHOOD")!="0":env.fog_sky_affect=.18
 	server.get_node("WorldEnvironment").environment=env
 	var sun:=server.get_node("World/Sun") as DirectionalLight3D
 	sun.rotation_degrees=Vector3(-48,-32,0); sun.light_color=Color("fff9ed"); sun.light_energy=.52
@@ -228,6 +235,7 @@ func _floor() -> void:
 	ground.set_shader_parameter("backdrop",Color("babfb3"))
 	ground.set_shader_parameter("open_route",open_route)
 	ground.set_shader_parameter("yard_dressing",OS.get_environment("MD_YARD_DRESSING")!="0")
+	ground.set_shader_parameter("neighbourhood",OS.get_environment("MD_NEIGHBOURHOOD")!="0")
 	ground.set_shader_parameter("bay_paint",PALETTE.yellow)
 	floor_node.set_surface_override_material(0,ground)
 	# Flush parking paint is evaluated once in the floor shader, including corners.

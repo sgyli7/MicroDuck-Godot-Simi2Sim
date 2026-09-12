@@ -1,0 +1,20 @@
+{
+  "godot_version": "4.7.2.stable",
+  "godot_cpp": {
+    "url": "https://github.com/godotengine/godot-cpp.git",
+    "tag": "godot-4.5-stable",
+    "commit": "e83fd0904c13356ed1d4c3d09f8bb9132bdc6b77"
+  },
+  "onnxruntime": {
+    "version": "1.29.0",
+    "archive": "onnxruntime-linux-aarch64-1.29.0.tgz",
+    "directory": "onnxruntime-linux-aarch64-1.29.0",
+    "url": "https://github.com/microsoft/onnxruntime/releases/download/v1.29.0/onnxruntime-linux-aarch64-1.29.0.tgz",
+    "sha256": "e1799098ebc054b370f6176a450f158720f297818c613e5dc99b92e2ec82346f"
+  },
+  "templates": {
+    "archive": "Godot_v4.7.2-stable_export_templates.tpz",
+    "url": "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz",
+    "sha256": "f298490b8d44d934be425a5a65a51bf15f422428b229a06a6e11d9ffea248011"
+  }
+}

@@ -6,6 +6,7 @@ uniform vec4 backdrop : source_color = vec4(0.73,0.75,0.70,1.0);
 uniform vec4 bay_paint : source_color = vec4(0.8784, 0.7412, 0.2196, 1.0);
 uniform bool open_route = false;
 uniform bool yard_dressing = false;
+uniform bool neighbourhood = false;
 varying vec3 world_position;
 void vertex() {
     world_position = (MODEL_MATRIX * vec4(VERTEX,1.0)).xyz;
@@ -37,6 +38,20 @@ void fragment() {
     float line_fade = 1.0-smoothstep(0.01,0.035,max(footprint.x,footprint.y));
     tile = mix(tile,seam_color.rgb,line*line_fade*0.68);
     vec3 outside = pigment.rgb*0.90;
+    if (neighbourhood) {
+        // Complete ground surface across the district, with a curved service lane.
+        float radius=length(p);
+        float road=1.0-smoothstep(0.71,0.75,abs(radius-4.7));
+        vec2 block=abs(fract(p/0.27)-0.5)*0.27;
+        vec2 aa=max(fwidth(p),vec2(.00001));
+        vec2 joint=1.0-smoothstep(vec2(.0006),vec2(.0006)+aa,block);
+        float fade=1.0-smoothstep(.014,.05,max(aa.x,aa.y));
+        outside=pigment.rgb*(.88+variation*.045);
+        outside=mix(outside,seam_color.rgb,max(joint.x,joint.y)*fade*.32);
+        outside=mix(outside,seam_color.rgb*.93,road*.56);
+        float curb=1.0-smoothstep(.012,.012+length(aa),abs(abs(radius-4.7)-.74));
+        outside=mix(outside,pigment.rgb*1.06,curb*.8);
+    }
     vec3 color = mix(outside,tile,yard);
     // A quiet ink border gives the paved area an intentional perimeter.
     float border = 1.0-smoothstep(0.001,0.001+length(footprint),abs(boundary));
@@ -47,7 +62,7 @@ void fragment() {
     float bay_aa = max(length(footprint), 0.00001);
     float paint = 1.0 - smoothstep(0.009, 0.009 + bay_aa, abs(bay_distance));
     color = mix(color, bay_paint.rgb, paint);
-    float haze = smoothstep(6.0,18.0,length(VERTEX));
+    float haze = neighbourhood ? 0.0 : smoothstep(6.0,18.0,length(VERTEX));
     ALBEDO = color*(1.0-haze);
     EMISSION = backdrop.rgb*haze;
     ROUGHNESS=1.0;

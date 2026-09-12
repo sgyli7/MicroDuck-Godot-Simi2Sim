@@ -1,0 +1,37 @@
+{
+  "actual_wheel_course_contacts": [
+    "course_0",
+    "course_1",
+    "course_2"
+  ],
+  "body_count": 26,
+  "cargo_coupling": "force-level elastic belt, 20000 N/m and 4 Ns/m per branch; uncalibrated approximation",
+  "cargo_obstacle_height_m": 0.018,
+  "controller_hz": 50,
+  "duration_s": 71.34,
+  "engine": "4.7.2-stable (official)",
+  "final_object_chassis_m": [
+    -0.0688962936401367,
+    3.27229499816895e-05,
+    0.278961390256882
+  ],
+  "hinge_count": 23,
+  "independent_physics": true,
+  "joint_count": 25,
+  "jolt_penetration_slop_m": 0.0002,
+  "jolt_speculative_contact_distance_m": 0.0005,
+  "max_object_height_m": 0.331489324569702,
+  "max_transport_lateral_m": 0.0462503433227539,
+  "outside_cargo_steps": 0,
+  "physics": "Jolt Physics",
+  "physics_cargo_checks": 44000,
+  "physics_hz": 2000,
+  "placed_in_cargo": true,
+  "rearmost_wheel_edge_m": 2.52441244273287,
+  "slider_count": 2,
+  "success": true,
+  "transport_distance_m": 2.69965589046478,
+  "transport_policy_sha256": "23936037d12e71e7ca404148bf900d3ecb0d97f1fac4793699c28de351522c9c",
+  "two_finger_contact_samples": 1160,
+  "unclamped_steps": 0
+}

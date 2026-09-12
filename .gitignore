@@ -46,3 +46,19 @@ godot/atelier/robot_normals/
 godot/atelier/robot_normals_soft/
 /tmp_*.py
 /shots/
+
+.venv-sai/
+.venv-native/
+native/.deps/
+native/build/
+native/build-release/
+godot/native/bin/
+godot/runtime_assets/
+dist/
+
+# Match local asset links as well as directories.
+godot/generated
+godot/native/bin
+godot/runtime_assets
+godot/atelier/robot_normals
+godot/atelier/robot_normals_soft

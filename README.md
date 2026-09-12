@@ -1,10 +1,21 @@
-# MicroDuck Sim2Sim
+# Robot Godot Sim2Sim
 
-将 MuJoCo 训练的机器人控制策略迁移到 **Godot / Jolt**，比较两种物理引擎中的运动表现。以 MicroDuck 为例，提供场景转换、策略运行、物理校准与训练评估工具。
+将 MuJoCo 训练的机器人控制策略迁移到 **Godot / Jolt**，在墨比斯风格的「小小维修站」中运行真实刚体物理。支持 MicroDuck、MD 轮滑版和 Sai Robot 001，三种机器人可在同一游戏窗口中动态切换。
 
 ![MicroDuck：场景行走、刚体交互、前滚与轮足动作](docs/media/microduck-sim2sim.gif)
 
+**Sai Robot 001 · 小小维修站工作 PV**
+
+![Sai 001 抓取、入仓、夹紧并越障运输；加速倍率标在画面内](docs/media/sai-workshop-15s.gif)
+
+[观看 15 秒 1080p PV](docs/media/sai-workshop-15s.mp4) · [验收结果与截图](docs/workshop-hub-20260912/RESULT.md) · [原片与轨迹](https://github.com/sgyli7/Robot_Godot_Sim2Sim/releases/tag/workshop-hub-20260912)
+
+准备好模型和原生库后，运行 `./run-workshop.sh` 一键进入维修站。**F5 / F6 / F7** 切换机器人；Sai 任务菜单提供入仓运输和 20/40/60mm 上下阶。完整准备与按键见 [维修站运行说明](docs/workshop-hub.md)。
+
 ## 功能
+
+- 同一个维修站窗口中动态加载三种机器人，保留场景物件。
+- Sai alpha.3 发布模型与 ONNX：W/S、A/D、Shift 蹲起、R 复位，SO101 抓取入仓与夹紧运输。
 
 - 从编译后的 MuJoCo 模型生成 Godot 刚体、碰撞和关节。
 - 由 Python 运行 ONNX 策略，同步推进 MuJoCo 与 Jolt，采集并对比轨迹。
@@ -37,8 +48,8 @@
 需要 Python 3.12、[uv](https://docs.astral.sh/uv/)、Godot 4.7.2，以及 [microduck_rl](https://github.com/pollen-robotics/microduck_rl) 的机器人资源和 ONNX 权重。
 
 ```bash
-git clone https://github.com/sgyli7/MicroDuck-Godot-Simi2Sim.git
-cd MicroDuck-Godot-Simi2Sim
+git clone https://github.com/sgyli7/Robot_Godot_Sim2Sim.git
+cd Robot_Godot_Sim2Sim
 uv sync
 
 export MICRODUCK_RL=/path/to/microduck_rl

@@ -1,5 +1,5 @@
-MicroDuck-Godot-Simi2Sim
-Copyright 2026 the MicroDuck-Godot-Simi2Sim contributors
+Robot_Godot_Sim2Sim
+Copyright 2026 the Robot_Godot_Sim2Sim contributors
 
 This product includes original MuJoCo ↔ Godot/Jolt sim2sim tooling licensed
 under the Apache License, Version 2.0. See LICENSE.
@@ -33,3 +33,18 @@ Atelier workshop presentation:
   License 1.1. Full notices: godot/atelier/fonts/LICENSE.debian.
 - Robot renders use locally generated Pollen Robotics microduck_rl assets;
   no third-party robot meshes or model weights are redistributed in Git.
+
+Sai_Agent_001 (optional alpha.3 robot profile)
+  https://github.com/sgyli7/Sai_Agent_001
+  Revision: 5d2ab070dcdbae61a8d750a3f812e77ad2568f26 (v0.1.0-alpha.3)
+  Original software: Apache License 2.0.
+  scripts/sai_evaluate_flat.py and scripts/sai_evaluate_stairs.py are unchanged
+  copies of the release's scripts/evaluate_godot.py and evaluate_godot_stairs.py.
+  Model, redistributable display assets, policies and per-part notices are
+  supplied by the pinned optional package, including bundle/licenses and
+  bundle/THIRD_PARTY_NOTICES.md. Retain those notices with redistributed assets.
+
+Native MicroDuck player:
+- godot-cpp / Godot Engine: MIT; ONNX Runtime: MIT.
+- Pinned sources and archives: native/dependencies.json.
+- Generated meshes, weights and native binaries remain outside Git.
