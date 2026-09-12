@@ -216,6 +216,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--robot", type=Path, default=ROOT / "robots/microduck.json")
     p.add_argument("--local-ppo", action="store_true", help="shortcut: local_ppo walking ONNX")
     p.add_argument("--walking", type=Path, default=None, help="override walking ONNX path")
+    p.add_argument("--sprint", type=Path, help="optional walking sprint actor selected by left Shift+W")
     p.add_argument("--control-config",type=Path,help="Explicit versioned controller configuration used by standalone replay")
     p.add_argument(
         "--roller",
@@ -248,6 +249,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.walking is not None and not args.walking.is_file():
         raise SystemExit(f"walking ONNX missing: {args.walking}")
     paths = policy_paths(local_ppo=args.local_ppo, roller=args.roller, walking=args.walking)
+    if args.sprint is not None and not args.roller:
+        if not args.sprint.is_file():raise SystemExit(f'sprint ONNX missing: {args.sprint}')
+        paths['sprint']=args.sprint
     bank = load_bank(paths, home_len=int(home.size))
     task_contacts = None
     if any(actor.task_state is not None for actor in bank.values()):
@@ -275,6 +279,7 @@ def main(argv: list[str] | None = None) -> int:
     lim=replace(lim,**motion_settings.get('twist_limits',{}))
     motion=MotionControl(motion_settings)
     brain = PlayBrain(
+        has_sprint=not args.roller and 'sprint' in bank,
         has_walking="walking" in bank,
         has_standing="standing" in bank and use_stand,
         has_sitstand="sitstand" in bank,
@@ -371,9 +376,10 @@ def main(argv: list[str] | None = None) -> int:
                 continue
             if out.push:
                 backend.nudge(random_push())
-            sess = pick_session(bank, out.policy)
-            if active_policy != out.policy:
-                sess.reset_context(); active_policy = out.policy
+            selected_policy = 'sprint' if out.sprint else out.policy
+            sess = pick_session(bank, selected_policy)
+            if active_policy != selected_policy:
+                sess.reset_context(); active_policy = selected_policy
             cmd = out.command
             if sess.time_input_s:
                 duration = brain.roulade_duration if out.policy == 'roulade' else (

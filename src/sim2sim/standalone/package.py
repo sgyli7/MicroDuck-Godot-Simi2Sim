@@ -117,6 +117,10 @@ This is a development candidate until the separate acceptance report passes.
 Model hashes and provenance are in models.json / build.json. Licenses are in licenses/.
 ''')
     files=sorted(p for p in output.rglob('*') if p.is_file())
+    if 'sprint' in deployment['policies']:
+        readme=output/'README.txt'
+        readme.write_text(readme.read_text().replace('W/A/S/D: move and turn;',
+            'Left Shift + W: walking sprint; A/D turn while sprinting. Right Shift does not activate sprint.\nW/A/S/D: move and turn;'))
     (output/'SHA256SUMS').write_text(''.join(f'{sha256(p)}  {p.relative_to(output)}\n' for p in files))
     if archive:
         archive_path=output.with_suffix('.tar.gz')

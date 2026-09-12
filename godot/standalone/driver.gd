@@ -8,7 +8,7 @@ const Motion = preload("res://standalone/motion_control.gd")
 const BrakeTask = preload("res://standalone/brake_task_state.gd")
 const CONTROL_DT := 0.02
 const MOTOR_KT := 0.36601349688984386
-const SKILL_LABELS := {"standing":"站立","walking":"行走","sitstand":"坐下 / 起身",
+const SKILL_LABELS := {"standing":"站立","walking":"行走","sprint":"加速行走","sitstand":"坐下 / 起身",
 	"ground_pick":"捡地","kick_left":"左脚踢球","kick_right":"右脚踢球",
 	"roulade":"前滚翻","roller":"轮滑","roller_crouch":"轮滑下蹲 / 起身"}
 var deployment: Dictionary
@@ -103,6 +103,7 @@ func _ready() -> void:
 		flags.roller_crouch = true
 		limits = deployment.roller_limits
 	else:
+		flags.sprint = bank.has("sprint")
 		var sim: Dictionary = deployment.policies.walking.manifest.get("sim2sim",{})
 		limits = sim.get("twist_limits",{})
 		flags.standing = bool(sim.get("use_stand_policy",true))
@@ -111,7 +112,7 @@ func _ready() -> void:
 	limits = limits.duplicate()
 	var overrides: Dictionary = control_config.get(session.mode,{}).get("twist_limits",{})
 	for key in overrides:
-		if not key in ["vmax_x","vmin_x","vmax_y","vmin_y","vmax_ang","accel","decel","switch_on","switch_off","switch_threshold"] or not is_finite(float(overrides[key])):
+		if not key in ["vmax_x","vmin_x","vmax_y","vmin_y","vmax_ang","accel","decel","switch_on","switch_off","switch_threshold","sprint_vmax_x","sprint_vmax_ang"] or not is_finite(float(overrides[key])):
 			_fatal("Invalid control limit: "+str(key))
 			return
 		limits[key]=overrides[key]
@@ -119,7 +120,7 @@ func _ready() -> void:
 	super._ready()
 	Engine.max_fps = render_fps
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	if _hud != null: _hud.configure_standalone(ui_font)
+	if _hud != null: _hud.configure_standalone(ui_font,session.mode == "walk" and bank.has("sprint"))
 	if Engine.physics_ticks_per_second != 200:
 		_fatal("Physics must run at 200 Hz")
 		return
@@ -268,7 +269,7 @@ func _replay_error(replay: Dictionary) -> String:
 			var values: Variant = segment.get(key,[])
 			if typeof(values) != TYPE_ARRAY:
 				return "Replay "+key+" must be an array"
-			var allowed := ["pick","sit","kick_left","kick_right","roulade","stand","switch_robot","reset","push","quit"] if key == "taps" else ["fwd","back","left","right","strafe_l","strafe_r","idle"]
+			var allowed := ["pick","sit","kick_left","kick_right","roulade","stand","switch_robot","reset","push","quit"] if key == "taps" else ["fwd","back","left","right","strafe_l","strafe_r","idle","sprint"]
 			for value in values:
 				if value not in allowed:
 					return "Unknown replay "+key+" input: "+str(value)
@@ -298,6 +299,7 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 		var angle := randf()*TAU
 		_handle({"cmd":"nudge","linvel":[cos(angle),sin(angle),0.0]})
 	var skill: String = "roller" if session.mode == "roller" and out.policy == "walking" else out.policy
+	if session.mode == "walk" and out.sprint: skill = "sprint"
 	if forced_skill != "": skill=forced_skill
 	if not bank.has(skill):
 		_fatal("Unknown skill: "+skill)
@@ -312,7 +314,7 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 		command = Contract.time_command(float(item.time_input_s)-brain.behavior_t,
 			item.time_input_s,body,item.heading_input,heading)
 	var requested_command := command.duplicate()
-	command = motion.command(command,body,skill,CONTROL_DT)
+	command = motion.command(command,body,"walking" if skill == "sprint" else skill,CONTROL_DT)
 	var obs := Contract.observation(raw,body,last_action,command,home)
 	if item.get("state_input", "") == "planar_com_velocity_height_v1":
 		obs = Contract.brake_state_observation(obs,body)
@@ -472,6 +474,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	super._unhandled_input(event)
 
 func _input(event: InputEvent) -> void:
+	super._input(event)
 	if OS.get_environment("SIM2SIM_TRACE_INPUT") == "1" and event is InputEventKey:
 		print("STANDALONE_INPUT "+JSON.stringify({"physical":event.physical_keycode,
 			"logical":event.keycode,"pressed":event.pressed,"echo":event.echo}))

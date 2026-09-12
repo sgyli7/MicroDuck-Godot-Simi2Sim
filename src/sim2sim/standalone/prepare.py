@@ -28,26 +28,29 @@ def prepare_ui_font(destination):
         license='res://runtime_assets/fonts/LICENSE.txt',source=str(source))
 
 
-def prepare(models, *, fixtures=None, fixture_count=128, real_traces=(), control_config=None, project=None):
+def prepare(models, *, fixtures=None, fixture_count=128, real_traces=(), control_config=None, project=None, sprint=None):
     root = sim2sim_root()
     destination = (Path(project) if project else root/'godot')/'runtime_assets'
     (destination/'policies').mkdir(parents=True, exist_ok=True)
     result = dict(schema_version=1, runtime='onnxruntime', runtime_version='1.29.0',
                   physics_hz=200, decimation=4, policies={}, robots={})
-    for skill, task in TASKS.items():
-        source = Path(models)/task.previous
+    sources = {skill:Path(models)/task.previous for skill,task in TASKS.items()}
+    if sprint is not None:sources['sprint']=Path(sprint)
+    for skill, source in sources.items():
         manifest_path = source.with_suffix('.manifest.json')
         manifest = json.loads(manifest_path.read_text())
         policy = OnnxPolicy(source)
         policy.check_dims(14)
+        if skill=='sprint' and (policy.time_input_s or policy.heading_input or policy.state_input or policy.task_input):
+            raise ValueError('Sprint requires the walking observation contract')
         if policy.state_input and (skill!='roller' or policy.time_input_s or policy.heading_input or policy.yaw_memory_input):
             raise ValueError('State input requires the native roller actor only')
         if policy.task_input and (skill!='roller' or not policy.state_input):
             raise ValueError('Task input requires the roller velocity-state actor')
-        target = destination/'policies'/source.name
+        target = destination/'policies'/('Sprint_Godot.onnx' if skill=='sprint' else source.name)
         shutil.copyfile(source, target)
         shutil.copyfile(manifest_path, target.with_suffix('.manifest.json'))
-        result['policies'][skill] = dict(path='res://runtime_assets/policies/'+source.name,
+        result['policies'][skill] = dict(path='res://runtime_assets/policies/'+target.name,
             sha256=hashlib.sha256(target.read_bytes()).hexdigest(), manifest=manifest,
             time_input_s=policy.time_input_s, heading_input=policy.heading_input,state_input=policy.state_input,
             task_input=policy.task_input,obs_dim=policy.obs_dim)
@@ -133,12 +136,13 @@ def prepare(models, *, fixtures=None, fixture_count=128, real_traces=(), control
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--models',type=Path,required=True)
+    p.add_argument('--sprint',type=Path,help='Explicit optional trained walking sprint actor with manifest')
     p.add_argument('--fixtures',type=Path)
     p.add_argument('--fixture-count',type=int,default=128)
     p.add_argument('--real-traces',type=Path,nargs='*',default=[])
     p.add_argument('--control-config',type=Path)
     p.add_argument('--project',type=Path,help='Prepare an isolated copy of the Godot project')
-    a=p.parse_args();r=prepare(a.models,fixtures=a.fixtures,fixture_count=a.fixture_count,real_traces=a.real_traces,control_config=a.control_config,project=a.project)
+    a=p.parse_args();r=prepare(a.models,fixtures=a.fixtures,fixture_count=a.fixture_count,real_traces=a.real_traces,control_config=a.control_config,project=a.project,sprint=a.sprint)
     print(json.dumps(dict(policies=len(r['policies']),robots=list(r['robots']))))
 
 

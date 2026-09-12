@@ -16,7 +16,7 @@ def fake_world(name):
            foot_vel=np.zeros((2,3)),mouth_pos=np.array([.08,0,.17]),mouth_down=.5,
            head_contact=False,head_up=1.,supported=True,ball_pos=np.array([.09,.042,.035]),
            ball_vel=np.zeros(3),kick_contacts=[])
-    w=SimpleNamespace(task=TASKS[name],features=f,t=.02,home=np.zeros(14),last=np.zeros(14),old_last=np.zeros(14),heading=np.array([1.,0.]))
+    w=SimpleNamespace(task=TASKS[name],features=f,t=.02,home=np.zeros(14),last=np.zeros(14),old_last=np.zeros(14),heading=np.array([1.,0.]),motion=None)
     w.state=SimpleNamespace(q=np.zeros(14),qd=np.zeros(14),base_pos=np.array([0,0,.115]))
     w.executed_command=command(w.task,0)
     return w

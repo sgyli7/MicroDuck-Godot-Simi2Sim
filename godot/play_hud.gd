@@ -24,7 +24,7 @@ func set_status(text: String) -> void:
 		_status.text = text
 
 
-func configure_standalone(font: Font = null) -> void:
+func configure_standalone(font: Font = null, sprint_available: bool = false) -> void:
 	if font != null:
 		var theme := Theme.new()
 		theme.default_font = font
@@ -42,6 +42,7 @@ func configure_standalone(font: Font = null) -> void:
 	_tap_btn(box,"暂停 F8","pause")
 	_tap_btns.stand.disabled = not _strafe_btns[0].visible
 	_help.text += " · 7站立 F8暂停"
+	if sprint_available: _help.text += " · 左Shift+W 加速"
 	# Two rows fit next to the direction controls without hiding the exit button.
 	var old_skills: Control = _tap_btns.idle.get_parent()
 	var skills := GridContainer.new()

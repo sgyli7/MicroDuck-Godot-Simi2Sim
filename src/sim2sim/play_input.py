@@ -12,7 +12,7 @@ Locomotion shaping (see docs/research_3c_camera.md):
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 import numpy as np
 
@@ -29,6 +29,7 @@ KEY_TO_HOLD: dict[str, str] = {
     "Q": "strafe_l",
     "E": "strafe_r",
     "SPACE": "idle",
+    "SHIFT_LEFT": "sprint",
 }
 
 # One-shot taps (keyboard or HUD). Multiple aliases collapse to one action.
@@ -89,6 +90,8 @@ class TwistLimits:
     # ramp slew rates in command-units per second of wall sim time.
     accel: float = 12.0
     decel: float = 20.0
+    sprint_vmax_x: float = 0.5
+    sprint_vmax_ang: float = 0.8
 
 
 def keys_to_held(keys: set[str]) -> set[str]:
@@ -265,6 +268,7 @@ class BrainOut:
     switch_robot: bool = False
     status: str = ""
     started_skill: str | None = None
+    sprint: bool = False
 
 
 @dataclass
@@ -281,6 +285,7 @@ class PlayBrain:
     has_roller_crouch: bool = False
     # Explicit standing access is independent of the walk model's idle partner.
     has_stand_hold: bool = False
+    has_sprint: bool = False
     lim: TwistLimits = field(default_factory=TwistLimits)
     pick_period: float = 4.0
     kick_duration: float = 5.0
@@ -292,6 +297,7 @@ class PlayBrain:
     vel: np.ndarray = field(default_factory=lambda: np.zeros(3, dtype=np.float32))
     sit: bool = False
     stand_hold: bool = False
+    sprinting: bool = False
     pick_phase: float = 0.0
     behavior_t: float = 0.0
     rise_t: float = 0.0
@@ -323,6 +329,7 @@ class PlayBrain:
         self.vel[:] = 0.0
         self.sit = False
         self.stand_hold = False
+        self.sprinting = False
         self.pick_phase = 0.0
         self.behavior_t = 0.0
         self.rise_t = 0.0
@@ -346,6 +353,10 @@ class PlayBrain:
         return pressed_now
 
     def _set_loco(self, held: set[str], dt: float) -> None:
+        requested_sprint = 'sprint' in held
+        held = held - {'sprint'}
+        self.press_order = [bit for bit in self.press_order if bit != 'sprint']
+        self.sprinting = False
         if self._busy() or self.sit:
             return
         if self.stand_hold:
@@ -366,7 +377,10 @@ class PlayBrain:
         # deadlocks the duck at zero forever).
         if "idle" in held and last_pressed_bit(held, self.press_order) == "idle":
             held = {"idle"}
-        target = held_twist(held, self.lim, press_order=self.press_order)
+        self.sprinting = self.has_sprint and requested_sprint and 'fwd' in resolve_held(held, self.press_order)
+        limits = replace(self.lim, vmax_x=self.lim.sprint_vmax_x,
+                         vmax_ang=self.lim.sprint_vmax_ang) if self.sprinting else self.lim
+        target = held_twist(held, limits, press_order=self.press_order)
         # Local-mode idle stop (see the newest-wins block below): skip the
         # ramp step so a stale alphabetical fwd/back resolve can't re-drive
         # the duck after a tap stop.
@@ -534,7 +548,7 @@ class PlayBrain:
         if self.policy == "sitstand":
             status = "sit" if self.sit else ("rising" if self.rise_t > 0 else "sitstand-stand")
         elif self.policy == "walking":
-            status = f"walk vx={self.vel[0]:+.2f} vy={self.vel[1]:+.2f} w={self.vel[2]:+.2f}"
+            status = f"{'sprint' if self.sprinting else 'walk'} vx={self.vel[0]:+.2f} vy={self.vel[1]:+.2f} w={self.vel[2]:+.2f}"
         return BrainOut(
             policy=self.policy,
             command=self.command_13(),
@@ -544,4 +558,5 @@ class PlayBrain:
             switch_robot=switch_robot,
             status=status,
             started_skill=started_skill,
+            sprint=self.sprinting,
         )

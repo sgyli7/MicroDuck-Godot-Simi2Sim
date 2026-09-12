@@ -106,6 +106,9 @@ def score(trace_path,case_path):
         rotation=quat_wxyz_to_mat(first['body']['base_quat']);yaw=math.atan2(rotation[1,0],rotation[0,0])
         heading=np.array([math.cos(yaw),math.sin(yaw)])
         metrics=summarize(world.task,task_rows,heading)
+        if case.get('protocol')=='walking_sprint_v1':
+            from .sprint import metrics as sprint_metrics
+            metrics=sprint_metrics(rows,actions,case)
         result=dict(case=case['case'],skill=case['skill'],seed=case.get('seed'),
             randomized_start=case.get('randomized_start',False),protocol=case['protocol'],
             task_protocol=PROTOCOL_VERSION,models=trace['summary']['models'],task_metrics=metrics)

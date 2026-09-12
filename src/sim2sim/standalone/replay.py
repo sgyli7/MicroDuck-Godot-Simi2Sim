@@ -37,7 +37,7 @@ def bank_and_brain(config, mode, control_config=None, project=None):
     brain=PlayBrain(has_standing=not roller and bank['walking'].has_standing_partner,
         has_sitstand=not roller,has_pick=not roller,has_kick_left=not roller,
         has_kick_right=not roller,has_roulade=not roller,has_roller_crouch=roller,has_stand_hold=not roller,
-        lim=limits)
+        lim=limits,has_sprint=not roller and 'sprint' in bank)
     brain.motion_control=MotionControl(control_config.get(mode,{}))
     brain.roller_support_groups=config['robots'][mode].get('support_groups')
     return bank,brain
@@ -46,6 +46,7 @@ def bank_and_brain(config, mode, control_config=None, project=None):
 def control(brain,bank,state,held,taps,order,last,home,heading,mode):
     out=brain.tick(set(held),taps,.02,press_order=order)
     skill='roller' if mode=='roller' and out.policy=='walking' else out.policy
+    if mode=='walk' and out.sprint:skill='sprint'
     actor=bank[skill]
     cmd=out.command
     if actor.time_input_s:
@@ -54,7 +55,7 @@ def control(brain,bank,state,held,taps,order,last,home,heading,mode):
             yaw=np.arctan2(rotation[1,0],rotation[0,0]);heading[:]=[np.cos(yaw),np.sin(yaw)]
         cmd=time_command(actor.time_input_s-brain.behavior_t,actor.time_input_s,
                          rotation if actor.heading_input else None,heading)
-    cmd=brain.motion_control.command(cmd,state,skill)
+    cmd=brain.motion_control.command(cmd,state,'walking' if skill=='sprint' else skill)
     obs=build_obs(state,last,cmd,home)
     from sim2sim.policy_state import inject_state
     obs=inject_state(obs,state,actor.state_input)
@@ -135,7 +136,7 @@ def reference(replay_path, output):
                 continue
             ctrl=home+action*robot['action_scale']
             rows.append(dict(t=elapsed,mode=mode,skill=skill,command=cmd.tolist(),obs=obs.tolist(),
-              requested_command=(out.command if skill in ('walking','roller') else cmd).tolist(),
+              requested_command=(out.command if skill in ('walking','roller','sprint') else cmd).tolist(),
               action=action.tolist(),ctrl=ctrl.tolist(),held=held,taps=taps,order=order,body=dict(base_pos=state.base_pos.tolist(),
               base_quat=state.base_quat_wxyz.tolist()),raw=state.extra['raw'],
               fell=fallen(state.base_quat_wxyz,state.base_pos),tilt=tilt_deg(state.base_quat_wxyz)))

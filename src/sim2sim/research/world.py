@@ -32,8 +32,12 @@ def roller_support_groups(model,names):
     return groups
 
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False,state_input='',task_input=''):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False,state_input='',task_input='',motion_settings=None):
         self.task, self.backend_name = task, backend
+        from sim2sim.motion_control import MotionControl
+        if motion_settings is not None and task.name!='walking':raise ValueError('Training motion feedback is currently walking only')
+        self.motion=None if motion_settings is None else MotionControl(motion_settings)
+        self._command_stamp=None
         self.time_input_s=float(time_input_s);self.time_offset=0.
         self.heading_input=bool(heading_input)
         from sim2sim.policy_memory import YawDriftMemory
@@ -99,6 +103,8 @@ class World:
         self.pending_ball=None
 
     def reset(self, seed, condition="default", randomize=True, entry_speed=None, phase_start=0., q_override=None):
+        if self.motion is not None:self.motion.reset()
+        self._command_stamp=None
         if self.yaw_memory is not None:self.yaw_memory.reset()
         if self.task_state is not None:self.task_state.reset()
         self.pending_ball=None
@@ -108,6 +114,10 @@ class World:
         self.condition = condition
         self.command_schedule=None
         self.command_tape=None
+        if condition.startswith('sprint_'):
+            if self.task.name!='walking':raise ValueError('Sprint applies to walking only')
+            from .sprint_tasks import commands
+            self.command_tape=commands(condition,DT,self.task.seconds)
         if condition.startswith('keyboard_'):
             from .schedules import keyboard_commands,roller_keyboard_commands
             if self.task.name=='walking':self.command_tape=keyboard_commands(condition.removeprefix('keyboard_'),DT)
@@ -178,6 +188,13 @@ class World:
         return obs if self.yaw_memory is None else self.yaw_memory.observe(obs,stamp=self.t)
 
     def command(self):
+        if self.motion is None:return self.requested_command()
+        if self._command_stamp!=self.t:
+            self._controlled_command=self.motion.command(self.requested_command(),self.state,'walking',DT)
+            self._command_stamp=self.t
+        return self._controlled_command.copy()
+
+    def requested_command(self):
         if self.command_tape is not None:
             return self.command_tape[min(int(round(self.t/DT)),len(self.command_tape)-1)].copy()
         if self.roller_contract:
@@ -195,6 +212,7 @@ class World:
     def send(self, action, capture_path=None):
         if not np.isfinite(action).all(): raise FloatingPointError("nonfinite policy action")
         self.executed_command=self.command()
+        if self.motion is not None:self.executed_heading_target=self.motion.target_yaw
         if self.roller_contract:
             # The actor receives a relative heading error, including keyboard
             # commands. Capture its world target before applying this action.
@@ -327,8 +345,10 @@ class World:
         if "ball" in self.meta:self.pending_ball=[5.,5.,.035]
         return teacher,cmd
 
-    def finish_standing_entry(self):
+    def finish_standing_entry(self,reset_motion=True):
         self.t=0.;self.time_offset=0.
+        if reset_motion and self.motion is not None:self.motion.reset()
+        self._command_stamp=None
         if self.yaw_memory is not None:self.yaw_memory.reset()
         if self.task_state is not None:self.task_state.reset()
         self.initial_xy=self.features["xy"].copy()

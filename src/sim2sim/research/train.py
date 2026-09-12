@@ -51,7 +51,7 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None,roller_contract=False,yaw_memory_input=False,state_input='',roller_objective='legacy',task_input=''):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None,roller_contract=False,yaw_memory_input=False,state_input='',roller_objective='legacy',task_input='',walking_objective='legacy',motion_settings=None):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
         self.rng=np.random.default_rng(seed);self.count=0
         if environment_state is not None:
@@ -61,10 +61,16 @@ class Vector:
         self.entry=entry;self.entry_counts={"reset":0,"standing":0}
         self.entry_bank=None
         if entry_bank:
-            if task.name not in ('roulade','kick_left','kick_right') or task.robot not in ('microduck_ball','microduck_ball_stand_fix') or entry_source:
+            if task.name=='walking':
+                if walking_objective=='legacy' or entry_source or motion_settings is None:
+                    raise ValueError('Walking entry-bank requires sprint feedback training')
+                from .sprint_entry import SprintEntryBank
+                self.entry_bank=SprintEntryBank(entry_bank)
+            elif task.name not in ('roulade','kick_left','kick_right') or task.robot not in ('microduck_ball','microduck_ball_stand_fix') or entry_source:
                 raise ValueError('Native entry-bank prefixes require a roll/kick in the ball scene, without --entry-source')
-            from .entry_bank import EntryBank
-            self.entry_bank=EntryBank(entry_bank)
+            else:
+                from .entry_bank import EntryBank
+                self.entry_bank=EntryBank(entry_bank)
         self.random_commands=random_commands
         if random_commands and task.name not in ("walking","roller"):raise ValueError("Random commands require locomotion")
         self.roll_starts_fraction=roll_starts;self.roll_library=None
@@ -74,9 +80,9 @@ class Vector:
             self.roll_library=RollStarts();self.entry_counts["midroll"]=0
         try:
             for i in range(num_envs):
-                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source,roller_contract=roller_contract,yaw_memory_input=yaw_memory_input,state_input=state_input,task_input=task_input))
+                self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source,roller_contract=roller_contract,yaw_memory_input=yaw_memory_input,state_input=state_input,task_input=task_input,motion_settings=motion_settings))
             self.reset_worlds(range(num_envs))
-            self.objectives=[Objective(w,weights,reward_params,roller_objective) for w in self.worlds]
+            self.objectives=[Objective(w,weights,reward_params,roller_objective,walking_objective) for w in self.worlds]
         except BaseException:
             self.close();raise
 
@@ -113,7 +119,9 @@ class Vector:
                 active=[(w,n) for w,n in prefixes if step<len(self.entry_bank.tapes[n])]
                 for w,n in active:self.entry_bank.send(w,n,step)
                 for w,_ in active:w.recv()
-            for w,_ in prefixes:w.finish_standing_entry()
+            for w,_ in prefixes:
+                if self.task.name=='walking':self.entry_bank.finish(w)
+                else:w.finish_standing_entry()
 
     def next_condition(self,i=0):
         if self.random_commands and self.rng.random()<self.random_commands:return "random_seq"
@@ -166,7 +174,7 @@ def run(args):
     torch.set_num_threads(args.threads);seed_all(args.seed)
     resume_checkpoint=torch.load(args.resume,weights_only=False,map_location='cpu') if args.resume else None
     if resume_checkpoint is not None:
-        for key,default in [('roller_objective','legacy'),('mask_task_state',False),('action_basis',''),
+        for key,default in [('roller_objective','legacy'),('walking_objective','legacy'),('mask_task_state',False),('action_basis',''),
                             ('teacher_mode',''),('teacher_replay',None),('teacher_weight',.02),('teacher_samples',384)]:
             if getattr(args,key,default)!=resume_checkpoint['config'].get(key,default):
                 raise ValueError('Resume cannot change '+key+'; start a separately recorded experiment')
@@ -191,17 +199,19 @@ def run(args):
         task=replace(task,robot=args.scene_robot)
     from .budget import remaining,require_supervision
     require_supervision(SESSION)
-    budget_reserve=5400. if (SESSION/'active_budget.json').exists() else 60.
+    budget_reserve=float(getattr(args,'reserve_seconds',5400.)) if (SESSION/'active_budget.json').exists() else 60.
+    if not math.isfinite(budget_reserve) or budget_reserve<0:raise ValueError('Invalid closeout reserve')
     start=time.time();job_end=time.monotonic()+args.minutes*60
     def time_left():return 0. if _STOP_REQUESTED else min(remaining(SESSION,reserve=budget_reserve),job_end-time.monotonic())
     deadline=start+time_left()  # Audit estimate only; enforcement uses the live ledger.
     if time_left()<=0:raise RuntimeError("Experiment budget or reserved closeout boundary reached")
     out=SESSION/"runs"/args.name;out.mkdir(parents=True,exist_ok=False)
     source=Path(args.source) if args.source else task.source
-    config=vars(args).copy();config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=protocol)
+    config={k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()}
+    config.update(start_unix=start,deadline_unix=deadline,source=str(source),protocol=protocol)
     config["code_sha256"]={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
     package=Path(__file__).parents[1]
-    for name in ['obs.py','coords.py','godot_proc.py','policy_time.py','policy_memory.py','policy_state.py','policy_task_state.py','play_input.py','backends/mujoco_backend.py','backends/godot_backend.py']:
+    for name in ['obs.py','coords.py','godot_proc.py','policy_time.py','policy_memory.py','policy_state.py','policy_task_state.py','play_input.py','motion_control.py','backends/mujoco_backend.py','backends/godot_backend.py']:
         config['code_sha256']['sim2sim/'+name]=hashlib.sha256((package/name).read_bytes()).hexdigest()
     (out/"config.json").write_text(json.dumps(config,indent=2))
     template=Path(args.template) if args.template else source
@@ -260,7 +270,17 @@ def run(args):
             environment_state=dict(seed=prior.get('seed',args.seed),count=initial_iteration*prior.get('envs',16)*prior.get('steps',512)+prior.get('envs',16),rng=None)
             config['environment_resume']='legacy_disjoint_episode_seed_range'
         else:config['environment_resume']='restored_generator_and_episode_counter'
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank,args.roller_contract,policy.anchor.yaw_memory_input,policy.anchor.state_input,getattr(args,'roller_objective','legacy'),policy.anchor.task_input)
+    motion_settings=None
+    if getattr(args,'motion_config',None):
+        if task.name!='walking' or args.walking_objective not in ('sprint_v1','sprint_v2'):raise ValueError('Feedback training requires the sprint objective')
+        config['motion_config_sha256']=hashlib.sha256(Path(args.motion_config).read_bytes()).hexdigest()
+        if resume_checkpoint is not None and config['motion_config_sha256']!=resume_checkpoint['config'].get('motion_config_sha256'):
+            raise ValueError('Resume cannot change the motion feedback contract')
+        motion_settings=json.loads(Path(args.motion_config).read_text())['walk']
+        evaluation_kwargs['motion_settings']=motion_settings
+    elif resume_checkpoint is not None and resume_checkpoint['config'].get('motion_config_sha256'):
+        raise ValueError('Resume requires the original motion feedback contract')
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank,args.roller_contract,policy.anchor.yaw_memory_input,policy.anchor.state_input,getattr(args,'roller_objective','legacy'),policy.anchor.task_input,getattr(args,'walking_objective','legacy'),motion_settings)
     if env.entry_bank is not None:config['entry_bank_sha256']=env.entry_bank.hashes
     if args.entry_source:config['entry_source_sha256']=hashlib.sha256(Path(args.entry_source).read_bytes()).hexdigest()
     config["time_input_s"]=policy.anchor.time_input_s
@@ -436,6 +456,9 @@ def main():
     p.add_argument("--skill",required=True,choices=list(TASKS));p.add_argument("--name",required=True)
     p.add_argument("--variant",choices=["plain","anchor","residual"],default="residual")
     p.add_argument("--minutes",type=float,default=15);p.add_argument("--iterations",type=int,default=0)
+    p.add_argument('--reserve-seconds',type=float,default=5400.,help='Session closeout reserve; old eight-hour sessions retain 90 minutes by default')
+    p.add_argument('--walking-objective',choices=['legacy','sprint_v1','sprint_v2'],default='legacy')
+    p.add_argument('--motion-config',type=Path,help='Explicit game command feedback shared during sprint sampling and evaluation')
     p.add_argument("--envs",type=int,default=16);p.add_argument("--steps",type=int,default=512)
     p.add_argument("--seed",type=int,default=42);p.add_argument("--threads",type=int,default=2)
     p.add_argument('--learner-device',choices=['auto','cpu','cuda'],default='auto',help='GPU batch updates when CUDA is available; Jolt collection and frozen ORT anchor stay on CPU')

@@ -101,6 +101,7 @@ var _jaw_spring: Generic6DOFJoint3D = null
 var _jaw_body: RigidBody3D = null
 var _jaw_pad_y: float = 0.0
 var _held_now: Array = []
+var _left_shift_down := false
 var _held_press_order: Array = []  # held bits ordered oldest-press first
 var _prev_held_set: Dictionary = {}  # bit -> true while physically held
 var _taps: Array = []
@@ -2088,8 +2089,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.physical_keycode == KEY_SHIFT and event.location == KEY_LOCATION_LEFT:
+		_left_shift_down = event.pressed
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		_left_shift_down = false
+
 func _sample_held() -> void:
 	var held: Array = []
+	if _left_shift_down:
+		held.append("sprint")
 	if Input.is_physical_key_pressed(KEY_W) or Input.is_physical_key_pressed(KEY_UP):
 		held.append("fwd")
 	if Input.is_physical_key_pressed(KEY_S) or Input.is_physical_key_pressed(KEY_DOWN):

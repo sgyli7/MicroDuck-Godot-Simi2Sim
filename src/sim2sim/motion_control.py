@@ -19,7 +19,12 @@ class MotionControl:
         self.brake_speed=0.
         self.brake_target_yaw=0.
         self.walk_has_moved=False
+        self.walk_was_moving=False
         self.walk_idle_elapsed=0.
+        self.walk_path_started=False
+        self.walk_path_origin=np.zeros(2)
+        self.walk_path_yaw=0.
+        self.walk_path_speed=0.
 
     def command(self,command,state,skill,dt=.02):
         out=np.asarray(command,np.float32).copy()
@@ -28,7 +33,7 @@ class MotionControl:
         if not self.started or skill not in ('walking','roller'):
             self.target_yaw=yaw;self.started=True
         if skill not in ('walking','roller'):
-            self.brake_elapsed=0.;self.was_braking=False;self.walk_has_moved=False;return out
+            self.brake_elapsed=0.;self.was_braking=False;self.walk_has_moved=False;self.walk_path_started=False;self.walk_was_moving=False;return out
         if skill=='roller' and self.settings.get('heading_hold',False):
             self.target_yaw+=float(out[2])*dt
             difference=self.target_yaw-yaw
@@ -36,6 +41,9 @@ class MotionControl:
         elif skill=='walking' and self.settings.get('walk_heading_gain',0.)>0:
             idle_only=self.settings.get('walk_heading_scope','all')=='idle_after_motion'
             moving=math.sqrt(float(out[0])**2+float(out[1])**2)>.01 or abs(float(out[2]))>.05
+            if moving and not self.walk_was_moving and self.settings.get('walk_reanchor_on_start',False):
+                self.target_yaw=yaw
+            self.walk_was_moving=moving
             if moving:self.walk_has_moved=True;self.walk_idle_elapsed=0.
             if abs(float(out[2]))>.05 or (idle_only and moving):
                 self.target_yaw=yaw # Requested turns retain their original velocity command.
@@ -45,9 +53,26 @@ class MotionControl:
                 else:
                     difference=self.target_yaw-yaw
                     error=math.atan2(math.sin(difference),math.cos(difference))
-                    out[2]=np.clip(float(self.settings['walk_heading_gain'])*error,-.3,.3)
+                    limit=float(self.settings.get('walk_heading_limit',.3))
+                    out[2]=np.clip(float(self.settings['walk_heading_gain'])*error,-limit,limit)
                 self.walk_idle_elapsed+=dt
         if skill=='walking':
+            path_gain=float(self.settings.get('walk_path_gain',0.))
+            straight=float(command[0])>.01 and abs(float(command[1]))<.01 and abs(float(command[2]))<.05
+            if path_gain>0. and straight:
+                if not self.walk_path_started:
+                    self.walk_path_origin=np.asarray(state.base_pos[:2],float).copy()
+                    self.walk_path_yaw=yaw;self.walk_path_started=True
+                    self.walk_path_speed=0.
+                delta=np.asarray(state.base_pos[:2])-self.walk_path_origin
+                error=-math.sin(self.walk_path_yaw)*float(delta[0])+math.cos(self.walk_path_yaw)*float(delta[1])
+                damping=float(self.settings.get('walk_path_damping',0.))
+                if damping>0.:
+                    speed=-math.sin(self.walk_path_yaw)*float(state.base_linvel[0])+math.cos(self.walk_path_yaw)*float(state.base_linvel[1])
+                    self.walk_path_speed=.8*self.walk_path_speed+.2*speed
+                path_limit=float(self.settings.get('walk_path_limit',.15))
+                out[1]=np.clip(-path_gain*error-damping*self.walk_path_speed,-path_limit,path_limit)
+            else:self.walk_path_started=False
             scale=float(self.settings.get('walk_translation_scale',1.))
             # Calibrate the actor's translational command; scoring retains the
             # user's requested velocity. Match GDScript double multiplication.

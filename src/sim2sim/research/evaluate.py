@@ -134,12 +134,12 @@ def record(w,action):
             "lateral_z":f["rot"][2,1],"ball_pos":f["ball_pos"].copy(),"ball_vel":f["ball_vel"].copy(),
             "correct_kick":foot in f["kick_contacts"],"wrong_kick":other in f["kick_contacts"]}
 
-def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=None,noise_std=0.,headless=True,entry="reset",reference_profile="xml",entry_source=None,scene_robot=None):
+def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=None,noise_std=0.,headless=True,entry="reset",reference_profile="xml",entry_source=None,scene_robot=None,motion_settings=None):
     task=TASKS[skill];policy=NativeAnchor(onnx)
     if policy.state_input:
         raise ValueError('Residual state actors require roller_evaluate or the standalone keyboard suite')
     if scene_robot is not None:task=replace(task,robot=scene_robot)
-    w=World(task,backend,headless=headless,reference_profile=reference_profile,time_input_s=policy.time_input_s,heading_input=policy.heading_input,entry_source=entry_source,yaw_memory_input=policy.yaw_memory_input)
+    w=World(task,backend,headless=headless,reference_profile=reference_profile,time_input_s=policy.time_input_s,heading_input=policy.heading_input,entry_source=entry_source,yaw_memory_input=policy.yaw_memory_input,motion_settings=motion_settings)
     rows=[];observations=[];actions=[];rng=np.random.default_rng(seed+123456)
     start=time.monotonic()
     try:
@@ -162,6 +162,7 @@ def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=N
                   yaw_memory_input=policy.yaw_memory_input,
                   noise_std=noise_std,elapsed_s=time.monotonic()-start)
     result["heading"]=w.heading.tolist()
+    if motion_settings is not None:result['motion_settings']=motion_settings
     if entry_source is not None:
         result['entry_source']=str(entry_source);result['entry_source_sha256']=hashlib.sha256(Path(entry_source).read_bytes()).hexdigest()
     if save_trace:
@@ -170,7 +171,7 @@ def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=N
         result["trace"]=str(p)
     return result
 
-def run_suite(skill,onnx,backend="godot",seeds=(100,101,102),workers=4,out=None,selected_conditions=None,noise_std=0.,entry="reset",reference_profile="xml",entry_source=None,scene_robot=None):
+def run_suite(skill,onnx,backend="godot",seeds=(100,101,102),workers=4,out=None,selected_conditions=None,noise_std=0.,entry="reset",reference_profile="xml",entry_source=None,scene_robot=None,motion_settings=None):
     task=TASKS[skill];conds=selected_conditions or conditions(task)
     entries=("reset","standing") if entry=="both" else (entry,)
     jobs=[(c,s,e) for c in conds for s in seeds for e in entries]
@@ -178,7 +179,7 @@ def run_suite(skill,onnx,backend="godot",seeds=(100,101,102),workers=4,out=None,
     if out:Path(out).mkdir(parents=True,exist_ok=True)
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures={pool.submit(episode,skill,onnx,backend,s,c,
-                            None if out is None else Path(out)/(f"{e}_{c}_{s}.npz" if entry=="both" else f"{c}_{s}.npz"),noise_std,True,e,reference_profile,entry_source,scene_robot):(c,s,e) for c,s,e in jobs}
+                            None if out is None else Path(out)/(f"{e}_{c}_{s}.npz" if entry=="both" else f"{c}_{s}.npz"),noise_std,True,e,reference_profile,entry_source,scene_robot,motion_settings):(c,s,e) for c,s,e in jobs}
         for f in as_completed(futures):
             c,s,e=futures[f]
             try:results.append(f.result())

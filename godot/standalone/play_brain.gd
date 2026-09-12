@@ -8,6 +8,7 @@ var policy := "standing"
 var vel := PackedFloat32Array([0.0, 0.0, 0.0])
 var sit := false
 var stand_hold := false
+var sprinting := false
 var pick_phase := 0.0
 var behavior_t := 0.0
 var rise_t := 0.0
@@ -23,7 +24,8 @@ var previous_held: Array = []
 func configure(flags: Dictionary, config: Dictionary) -> void:
 	available = flags.duplicate()
 	limits = {"vmax_x":0.3,"vmin_x":-0.3,"vmax_y":0.2,"vmin_y":-0.2,
-		"vmax_ang":1.5,"switch_on":0.10,"switch_off":0.03,"accel":12.0,"decel":20.0}
+		"vmax_ang":1.5,"switch_on":0.10,"switch_off":0.03,"accel":12.0,"decel":20.0,
+		"sprint_vmax_x":0.5,"sprint_vmax_ang":0.8}
 	limits.merge(config, true)
 	reset_motion()
 
@@ -34,6 +36,7 @@ func reset_motion() -> void:
 	vel.fill(0.0)
 	sit = false
 	stand_hold = false
+	sprinting = false
 	pick_phase = 0.0
 	behavior_t = 0.0
 	rise_t = 0.0
@@ -116,19 +119,26 @@ func held_target(held: Array) -> PackedFloat32Array:
 			if press_order.is_empty():
 				keep = pair[0] if pair[0] > pair[1] else pair[1]
 			h.erase(pair[1] if keep == pair[0] else pair[0])
-	var vx: float = (float(limits.vmax_x) if h.has("fwd") else 0.0) + (float(limits.vmin_x) if h.has("back") else 0.0)
+	sprinting = sprinting and h.has("fwd")
+	var forward_limit: float = limits.sprint_vmax_x if sprinting else limits.vmax_x
+	var turn_limit: float = limits.sprint_vmax_ang if sprinting else limits.vmax_ang
+	var vx: float = (forward_limit if h.has("fwd") else 0.0) + (float(limits.vmin_x) if h.has("back") else 0.0)
 	var vy: float = (float(limits.vmax_y) if h.has("strafe_l") else 0.0) + (float(limits.vmin_y) if h.has("strafe_r") else 0.0)
-	var cap_x: float = limits.vmax_x if vx >= 0.0 else -limits.vmin_x
+	var cap_x: float = forward_limit if vx >= 0.0 else -limits.vmin_x
 	var cap_y: float = limits.vmax_y if vy >= 0.0 else -limits.vmin_y
 	var length := sqrt(vx*vx + vy*vy)
 	var cap := sqrt(cap_x*cap_x + cap_y*cap_y)
 	if length > cap and cap > 0.0:
 		vx *= cap/length
 		vy *= cap/length
-	var yaw: float = (float(limits.vmax_ang) if h.has("left") else 0.0) - (float(limits.vmax_ang) if h.has("right") else 0.0)
+	var yaw: float = (turn_limit if h.has("left") else 0.0) - (turn_limit if h.has("right") else 0.0)
 	return PackedFloat32Array([vx,vy,yaw])
 
 func set_locomotion(held: Array, dt: float) -> void:
+	var requested_sprint := held.has("sprint")
+	held = held.filter(func(bit): return bit != "sprint")
+	press_order = press_order.filter(func(bit): return bit != "sprint")
+	sprinting = false
 	if busy() or sit:
 		return
 	if stand_hold:
@@ -140,6 +150,7 @@ func set_locomotion(held: Array, dt: float) -> void:
 	previous_held = held.duplicate()
 	if held.has("idle") and last_pressed(held,press_order) == "idle":
 		held = ["idle"]
+	sprinting = has_policy("sprint") and requested_sprint and not held.has("idle")
 	var target := held_target(held)
 	for i in range(3):
 		var current: float = vel[i]
@@ -196,7 +207,7 @@ func tick(held: Array, taps: Array, dt: float, order: Array) -> Dictionary:
 	if policy == "sitstand":
 		status = "sit" if sit else ("rising" if rise_t > 0.0 else "sitstand-stand")
 	elif policy == "walking":
-		status = "walk vx=%+.2f vy=%+.2f w=%+.2f" % [vel[0],vel[1],vel[2]]
+		status = ("sprint" if sprinting else "walk") + " vx=%+.2f vy=%+.2f w=%+.2f" % [vel[0],vel[1],vel[2]]
 	return {"policy":policy,"command":command_13(),"started_skill":started,
 		"reset":taps.has("reset"),"quit":taps.has("quit"),"push":taps.has("push"),
-		"switch_robot":taps.has("switch_robot"),"status":status}
+		"switch_robot":taps.has("switch_robot"),"status":status,"sprint":sprinting}
