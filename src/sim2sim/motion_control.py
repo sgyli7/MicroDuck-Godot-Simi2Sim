@@ -74,6 +74,16 @@ class MotionControl:
                     self.walk_path_speed=.8*self.walk_path_speed+.2*speed
                 path_limit=float(self.settings.get('walk_path_limit',.15))
                 out[1]=np.clip(-path_gain*error-damping*self.walk_path_speed,-path_limit,path_limit)
+                lookahead=float(self.settings.get('walk_path_lookahead',0.))
+                if lookahead>0. and self.settings.get('walk_heading_gain',0.)>0.:
+                    # Face a point ahead on the original straight path. This
+                    # couples cross-track correction to turn authority instead
+                    # of relying entirely on learned sideways stepping.
+                    self.target_yaw=self.walk_path_yaw-math.atan2(error,lookahead)
+                    difference=self.target_yaw-yaw
+                    heading_error=math.atan2(math.sin(difference),math.cos(difference))
+                    limit=float(self.settings.get('walk_heading_limit',.3))
+                    out[2]=np.clip(float(self.settings['walk_heading_gain'])*heading_error,-limit,limit)
             else:self.walk_path_started=False
             scale=float(self.settings.get('walk_translation_scale',1.))
             # Calibrate the actor's translational command; scoring retains the

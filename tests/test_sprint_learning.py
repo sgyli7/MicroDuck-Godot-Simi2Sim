@@ -9,6 +9,32 @@ from types import SimpleNamespace
 
 
 class SprintLearning(unittest.TestCase):
+    def test_native_turn_exit_curriculum_keeps_sprinting_after_turn(self):
+        for direction,sign in [('nativeleft',1),('nativeright',-1)]:
+            with self.assertRaisesRegex(ValueError,'14 seconds'):commands('sprint_030_'+direction)
+            tape,selected=commands('sprint_030_'+direction,seconds=14,include_selection=True)
+            self.assertEqual(len(tape),700)
+            self.assertAlmostEqual(float(tape[350,2]),.8*sign,places=6)
+            self.assertTrue(selected[450]);self.assertAlmostEqual(float(tape[450,0]),.3,places=6)
+            self.assertAlmostEqual(float(tape[450,2]),0.,places=6)
+            self.assertFalse(selected[600]);np.testing.assert_array_equal(tape[600],np.zeros(13))
+
+    def test_path_lookahead_turns_toward_path_and_respects_manual_turns(self):
+        import math
+        cmd=np.array([.3,0,0,*([0]*10)],np.float32)
+        for yaw in [0.,math.pi/2]:
+            control=MotionControl({'walk_path_gain':4.,'walk_heading_gain':6.,
+                'walk_heading_limit':.6,'walk_path_lookahead':.3})
+            state=SimpleNamespace(base_pos=np.zeros(3),base_quat_wxyz=np.array([math.cos(yaw/2),0,0,math.sin(yaw/2)]))
+            control.command(cmd,state,'sprint')
+            state.base_pos[:2]=[-math.sin(yaw)*.03,math.cos(yaw)*.03]
+            corrected=control.command(cmd,state,'sprint')
+            self.assertAlmostEqual(float(corrected[2]),-6*math.atan2(.03,.3),places=6)
+            self.assertAlmostEqual(control.target_yaw,yaw-math.atan2(.03,.3),places=6)
+            turn=cmd.copy();turn[2]=.8
+            np.testing.assert_array_equal(control.command(turn,state,'sprint'),turn)
+            self.assertFalse(control.walk_path_started)
+
     def test_training_handoff_uses_deployed_normal_speed_and_acceleration(self):
         tape,selected=commands('sprint_030_wfirst',include_selection=True,
             twist_limits={'vmax_x':.25,'vmax_ang':.8,'accel':1.2,'sprint_vmax_x':.9})

@@ -183,7 +183,7 @@ def run(args):
     resume_checkpoint=torch.load(args.resume,weights_only=False,map_location='cpu') if args.resume else None
     if resume_checkpoint is not None:
         for key,default in [('roller_objective','legacy'),('walking_objective','legacy'),('mask_task_state',False),('action_basis',''),
-                            ('teacher_mode',''),('teacher_replay',None),('teacher_weight',.02),('teacher_samples',384)]:
+                            ('teacher_mode',''),('teacher_replay',None),('teacher_weight',.02),('teacher_samples',384),('walking_episode_seconds',0.)]:
             if getattr(args,key,default)!=resume_checkpoint['config'].get(key,default):
                 raise ValueError('Resume cannot change '+key+'; start a separately recorded experiment')
         recorded_gate=resume_checkpoint['config'].get('time_gate','')
@@ -207,6 +207,11 @@ def run(args):
             if getattr(args,'walking_controller_ablation','composed')!=resume_checkpoint['config'].get('walking_controller_ablation','composed'):
                 raise ValueError('Resume cannot change the walking controller ablation')
     task=TASKS[args.skill];session=read_session()
+    horizon=float(getattr(args,'walking_episode_seconds',0.))
+    if horizon:
+        if task.name!='walking' or not math.isfinite(horizon) or not 10.<=horizon<=60.:
+            raise ValueError('Walking episode length must be finite, between 10 and 60 seconds')
+        task=replace(task,seconds=horizon)
     evaluate_skill=run_suite;protocol=PROTOCOL_VERSION
     evaluation_kwargs={} if args.eval_scene_robot is None else {'scene_robot':args.eval_scene_robot}
     if args.roller_contract:
@@ -246,7 +251,10 @@ def run(args):
     policy.roller_contract=args.roller_contract
     retention=None
     if getattr(args,'teacher_mode',''):
-        from .teacher_retention import TeacherRetention
+        if task.name=='walking':
+            from .walking_retention import WalkingTeacherRetention as TeacherRetention
+        else:
+            from .teacher_retention import TeacherRetention
         retention=TeacherRetention(policy,args.teacher_mode,args.teacher_replay,args.teacher_samples)
         config['teacher_retention']=retention.audit
         if resume_checkpoint is not None and retention.audit!=resume_checkpoint['config'].get('teacher_retention'):
@@ -496,6 +504,7 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument("--skill",required=True,choices=list(TASKS));p.add_argument("--name",required=True)
     p.add_argument("--variant",choices=["plain","anchor","residual"],default="residual")
+    p.add_argument('--walking-episode-seconds',type=float,default=0.,help='Explicit walking training horizon; zero preserves the task default and does not change native evaluation programs')
     p.add_argument("--minutes",type=float,default=15);p.add_argument("--iterations",type=int,default=0)
     p.add_argument('--reserve-seconds',type=float,default=5400.,help='Session closeout reserve; old eight-hour sessions retain 90 minutes by default')
     p.add_argument('--walking-objective',choices=['legacy','sprint_v1','sprint_v2'],default='legacy')

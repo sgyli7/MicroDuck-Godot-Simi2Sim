@@ -89,6 +89,13 @@ func command(input: PackedFloat32Array, body: Dictionary, skill: String, dt: flo
 				walk_path_speed=0.8*walk_path_speed+0.2*speed
 			var path_limit := float(settings.get("walk_path_limit",0.15))
 			out[1]=clampf(-path_gain*error-damping*walk_path_speed,-path_limit,path_limit)
+			var lookahead := float(settings.get("walk_path_lookahead",0.0))
+			if lookahead>0.0 and float(settings.get("walk_heading_gain",0.0))>0.0:
+				target_yaw=walk_path_yaw-atan2(error,lookahead)
+				var difference := target_yaw-yaw
+				var heading_error := atan2(sin(difference),cos(difference))
+				var limit := float(settings.get("walk_heading_limit",0.3))
+				out[2]=clampf(float(settings.walk_heading_gain)*heading_error,-limit,limit)
 		else: walk_path_started=false
 		var scale := float(settings.get("walk_translation_scale",1.0))
 		out[0]=float(out[0])*scale
