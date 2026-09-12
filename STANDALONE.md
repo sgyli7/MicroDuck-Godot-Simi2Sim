@@ -51,6 +51,8 @@ uv sync --extra train
 
 行走加速使用 `prepare --sprint /absolute/Sprint_Godot.onnx` 显式加入第十个策略，随附 manifest，保持普通 61 维观测 / 14 维动作。普通九技能仍从 `--models` 读取。仅加入模型不表示质量验收通过；实验来源与物理对照见 [行走加速记录](docs/sprint_20260912/EXPERIMENTS.md)。Python 开发入口对应 `sim2sim-play --sprint ...`。`sprint_vmax_x` / `sprint_vmax_ang` 属于 `control_config.walk.twist_limits`，必须使用与模型一起评测的控制配置，不能用未核验的默认速度运行实验模型。
 
+2026-09-12 试验包为 `dist/MicroDuck-ARM64-20260912-sprint-trial.tar.gz`，使用已冻结模型和控制。长直行较配对普通 W 快约 32%，但完整最终集仅 206/240，持续反复操作 222.48 秒会跌倒，未晋级；宿主实际键盘仍待验收。包内其他九模型沿用上一轮候选包，默认工程未覆盖。详见 [冻结结果](docs/sprint_20260912/RESULT.md)。
+
 扩展分别链接 godot-cpp 的 `template_debug` 和 `template_release`，由 `.gdextension` 特征选择。不要把调试绑定库重命名后用于发布模板：两种构建的分配器布局不同。当前 bootstrap 校验 SDK 提交、ORT 下载和匹配模板，生成资源仍使用项目现有导入流程。
 
 ## 验证和复现
