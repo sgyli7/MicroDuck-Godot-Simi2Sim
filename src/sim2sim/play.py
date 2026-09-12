@@ -255,8 +255,8 @@ def main(argv: list[str] | None = None) -> int:
     bank = load_bank(paths, home_len=int(home.size))
     if 'sprint' in bank:
         actor=bank['sprint']
-        if actor.obs_dim!=61 or actor.time_input_s or actor.heading_input or actor.yaw_memory_input or actor.state_input or actor.task_input:
-            raise PolicyShapeError('Sprint requires the ordinary 61D walking contract')
+        if actor.obs_dim!=61 or actor.time_input_s or actor.heading_input or actor.yaw_memory_input or actor.task_input:
+            raise PolicyShapeError('Sprint requires the 61D walking contract')
     task_contacts = None
     if any(actor.task_state is not None for actor in bank.values()):
         if not args.roller:

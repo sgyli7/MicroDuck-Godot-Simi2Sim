@@ -1,4 +1,4 @@
-"""Versioned residual-only roller state, carried in three unused command slots.
+"""Versioned residual locomotion state, carried in three unused command slots.
 
 The frozen anchor sees zero in slots 58:61 through an ONNX input mask. Only
 the new residual sees forward/lateral COM velocity and trunk body height.
@@ -11,6 +11,7 @@ import numpy as np
 from sim2sim.coords import quat_wxyz_to_mat
 
 STATE_KEY = 'sim2sim_brake_state_input'
+# Retain the historical metadata key/version for existing roller exports.
 BRAKE_STATE_V1 = 'planar_com_velocity_height_v1'
 
 

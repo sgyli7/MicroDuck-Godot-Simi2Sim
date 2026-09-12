@@ -136,10 +136,10 @@ def record(w,action):
 
 def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=None,noise_std=0.,headless=True,entry="reset",reference_profile="xml",entry_source=None,scene_robot=None,motion_settings=None):
     task=TASKS[skill];policy=NativeAnchor(onnx)
-    if policy.state_input:
+    if policy.state_input and skill!='walking':
         raise ValueError('Residual state actors require roller_evaluate or the standalone keyboard suite')
     if scene_robot is not None:task=replace(task,robot=scene_robot)
-    w=World(task,backend,headless=headless,reference_profile=reference_profile,time_input_s=policy.time_input_s,heading_input=policy.heading_input,entry_source=entry_source,yaw_memory_input=policy.yaw_memory_input,motion_settings=motion_settings)
+    w=World(task,backend,headless=headless,reference_profile=reference_profile,time_input_s=policy.time_input_s,heading_input=policy.heading_input,entry_source=entry_source,yaw_memory_input=policy.yaw_memory_input,state_input=policy.state_input,task_input=policy.task_input,motion_settings=motion_settings)
     rows=[];observations=[];actions=[];rng=np.random.default_rng(seed+123456)
     start=time.monotonic()
     try:
@@ -160,6 +160,7 @@ def episode(skill,onnx,backend="godot",seed=100,condition="default",save_trace=N
                   time_input_s=policy.time_input_s,
                   heading_input=policy.heading_input,
                   yaw_memory_input=policy.yaw_memory_input,
+                  state_input=policy.state_input,
                   noise_std=noise_std,elapsed_s=time.monotonic()-start)
     result["heading"]=w.heading.tolist()
     if motion_settings is not None:result['motion_settings']=motion_settings

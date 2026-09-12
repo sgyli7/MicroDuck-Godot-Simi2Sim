@@ -41,7 +41,7 @@ class NativeAnchor:
         return np.concatenate([self.session.run(None,{self.input:o[None]})[0] for o in obs],axis=0)
 
 class Increment(nn.Module):
-    def __init__(self, source, variant="anchor", bound=.2,time_gate=None,command_gate='',input_dim=61,mask_task_state=False,action_basis=''):
+    def __init__(self, source, variant="anchor", bound=.2,time_gate=None,command_gate='',input_dim=61,mask_task_state=False,action_basis='',mask_motion_state=False):
         super().__init__()
         rec=parse_mlp_onnx(source)
         self.variant=variant
@@ -50,6 +50,7 @@ class Increment(nn.Module):
         if command_gate not in ('','negative_throttle'):raise ValueError('Unknown command gate')
         self.command_gate=command_gate
         self.input_dim=input_dim
+        self.mask_motion_state=mask_motion_state
         if action_basis not in ('','brake_sagittal_v1'):
             raise ValueError('Unknown learned action basis: '+action_basis)
         if action_basis and (input_dim!=68 or variant!='residual' or command_gate!='negative_throttle'):
@@ -64,6 +65,9 @@ class Increment(nn.Module):
         self.register_buffer("mean",torch.from_numpy(np.r_[rec.mean.copy(),np.zeros(input_dim-61)].astype(rec.mean.dtype)))
         self.register_buffer("denominator",torch.from_numpy(np.r_[rec.std.copy(),np.ones(input_dim-61)].astype(rec.std.dtype)))
         mask=torch.ones(input_dim)
+        if mask_motion_state:
+            if variant!='residual':raise ValueError('Motion-state ablation requires a residual actor')
+            mask[58:61]=0.
         if mask_task_state:
             if input_dim!=68:raise ValueError('Task-state ablation requires a declared 68D actor')
             mask[61:]=0.
@@ -105,7 +109,7 @@ class Increment(nn.Module):
         # Pre-task-state checkpoints had no identity observation mask. Preserve
         # their resume path; never infer missing learned parameters or 68D masks.
         key=prefix+'observation_mask'
-        if self.input_dim==61 and key not in state_dict:
+        if self.input_dim==61 and not self.mask_motion_state and key not in state_dict:
             state_dict[key]=torch.ones_like(self.observation_mask)
         key=prefix+'action_mask'
         if not self.action_basis and key not in state_dict:
@@ -113,15 +117,18 @@ class Increment(nn.Module):
         super()._load_from_state_dict(state_dict,prefix,local_metadata,strict,missing_keys,unexpected_keys,error_msgs)
 
 class Policy(nn.Module):
-    def __init__(self, source, variant="anchor", std=.03, bound=.2, template=None,time_gate=None,command_gate='',mask_task_state=False,action_basis=''):
+    def __init__(self, source, variant="anchor", std=.03, bound=.2, template=None,time_gate=None,command_gate='',mask_task_state=False,action_basis='',mask_motion_state=False):
         super().__init__()
         self.anchor=NativeAnchor(source)
         if time_gate is not None:
             start,end=map(float,time_gate)
             if not 0<=start<end<=self.anchor.time_input_s:raise ValueError("Time gate requires a declared time-input actor")
             time_gate=(start,end,self.anchor.time_input_s)
-        self.delta=Increment(template or source,variant,bound,time_gate,command_gate,self.anchor.obs_dim,mask_task_state,action_basis)
+        if mask_motion_state and not self.anchor.state_input:
+            raise ValueError('Motion-state ablation requires a declared state-input anchor')
+        self.delta=Increment(template or source,variant,bound,time_gate,command_gate,self.anchor.obs_dim,mask_task_state,action_basis,mask_motion_state)
         self.mask_task_state=mask_task_state
+        self.mask_motion_state=mask_motion_state
         if self.anchor.time_input_s:
             self.delta.mean[48]=0.;self.delta.denominator[48]=1.
         if self.anchor.heading_input:self.delta.mean[49:51]=0.;self.delta.denominator[49:51]=1.
@@ -198,6 +205,7 @@ def export_policy(policy,path):
     metadata={prop.key:prop.value for prop in original.metadata_props}
     metadata.update(sim2sim_factory_sha256=policy.anchor.sha256,sim2sim_adaptation=policy.variant)
     if policy.anchor.task_input:metadata['sim2sim_task_state_mask']=str(bool(policy.mask_task_state)).lower()
+    if policy.anchor.state_input:metadata['sim2sim_motion_state_mask']=str(bool(policy.mask_motion_state)).lower()
     if policy.delta.time_gate is not None:
         import json
         metadata["sim2sim_increment_time_gate_s"]=json.dumps(policy.delta.time_gate)

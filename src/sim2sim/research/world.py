@@ -48,11 +48,12 @@ class World:
         from sim2sim.policy_task_state import BrakeTaskState, task_input as validate_task_input, TASK_STATE_KEY
         from sim2sim.policy_state import BRAKE_STATE_V1
         validate_task_input({TASK_STATE_KEY:task_input})
-        if task_input and state_input!=BRAKE_STATE_V1:
-            raise ValueError('Task observation requires declared velocity-state input')
+        if task_input and (task.name!='roller' or state_input!=BRAKE_STATE_V1):
+            raise ValueError('Brake task observation requires the roller velocity-state input')
         self.task_state=BrakeTaskState() if task_input else None
-        if state_input and (task.name!='roller' or not roller_contract or time_input_s or heading_input or yaw_memory_input):
-            raise ValueError('Residual state input requires the native roller contract only')
+        if state_input and (state_input!=BRAKE_STATE_V1 or task.name not in ('walking','roller') or
+                            (task.name=='roller' and not roller_contract) or time_input_s or heading_input or yaw_memory_input):
+            raise ValueError('Residual state input requires walking or the native roller contract')
         self.roller_contract=bool(roller_contract)
         if self.roller_contract and task.name!='roller':raise ValueError('Native roller contract requires the roller task')
         if self.heading_input and not self.time_input_s:raise ValueError("Relative heading requires a timed maneuver")

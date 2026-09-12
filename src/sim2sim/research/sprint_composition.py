@@ -26,6 +26,12 @@ class SprintComposition:
         for i,w in enumerate(worlds):
             if self.learn_all or w.sprint_active():self.counts['learned']+=1
             else:
-                result[i]=self.actor(w.obs()[None])[0]
+                obs=w.obs()
+                if getattr(w,'state_input',''):
+                    # The frozen ordinary actor expects body commands, not the
+                    # learned residual's velocity/height in those same slots.
+                    from sim2sim.obs import build_obs
+                    obs=build_obs(w.state,w.last,w.command(),w.home)
+                result[i]=self.actor(obs[None])[0]
                 self.counts['ordinary']+=1
         return result

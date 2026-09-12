@@ -55,7 +55,11 @@ class SprintEntryBank:
             w.sprint_selection=np.array([actor=='sprint' for actor,_ in self.tapes[name]],bool)
             w._command_stamp=None
         actor,_=self.tapes[name][step]
-        w.send(self.actors[actor](w.obs()[None])[0])
+        from sim2sim.obs import build_obs
+        # Prefix actors retain their original command slots even when the
+        # subsequent learned policy declares residual velocity-state inputs.
+        obs=build_obs(w.state,w.last,w.command(),w.home)
+        w.send(self.actors[actor](obs[None])[0])
 
     def finish(self,w):
         # Keep actual pose, velocities, previous action and control memory.

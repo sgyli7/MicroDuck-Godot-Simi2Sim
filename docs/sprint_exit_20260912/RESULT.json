@@ -1,0 +1,1022 @@
+{
+  "status": "research_complete_no_model_promoted",
+  "goal_met": false,
+  "source_commit": "5b054b7",
+  "session": "results/sprint_exit_20260912",
+  "development_seeds": [
+    923000,
+    923015
+  ],
+  "final_seeds": [
+    924000,
+    924049
+  ],
+  "final_seeds_used": false,
+  "default_models_changed": false,
+  "game_physics_changed": false,
+  "new_package": false,
+  "models": {
+    "e04_motion_visible": {
+      "candidate_count": 128,
+      "candidate_pass": 117,
+      "candidate_falls": 0,
+      "accepted": false,
+      "mini": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.17261889347453074,
+        "sustained_p10_vx": 0.07591105973107856,
+        "max_tilt": 5.836616248686582,
+        "min_z": 0.11084178600159986,
+        "straight": [
+          {
+            "at": 6,
+            "heading_error_deg": 5.471028068222093,
+            "lateral_path_m": 0.05239346759745955,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 1,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6175190295809772,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 16,
+          "candidate_vx": 0.1804388932622762,
+          "ordinary_vx": 0.1498492899076876,
+          "ratio": 1.2041357911901542,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 16,
+          "candidate_vx": 0.17543781261727057,
+          "ordinary_vx": 0.14365953181724087,
+          "ratio": 1.2212055155550487,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 16,
+          "candidate_vx": 0.19996467171185836,
+          "ordinary_vx": 0.17299533995517355,
+          "ratio": 1.1558962904068577,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 16,
+          "candidate_vx": 0.2017484929847284,
+          "ordinary_vx": 0.1754436474079086,
+          "ratio": 1.1499333031743277,
+          "speed_pass": false
+        },
+        {
+          "case": "sprint_right",
+          "count": 16,
+          "candidate_vx": 0.1843853267993085,
+          "ordinary_vx": 0.14750223160435552,
+          "ratio": 1.2500510995242724,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 16,
+          "candidate_vx": 0.19982350297798404,
+          "ordinary_vx": 0.1737478576371343,
+          "ratio": 1.1500775071155567,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 16,
+          "candidate_vx": 0.17536352277924022,
+          "ordinary_vx": 0.14256153933583893,
+          "ratio": 1.2300899919867456,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 16,
+          "candidate_vx": 0.20233053555186073,
+          "ordinary_vx": 0.17294581710439197,
+          "ratio": 1.1699070780632517,
+          "speed_pass": true
+        }
+      ],
+      "sha256": "2dc9d02e466d4c9eceeab98a6485a31e33c57da11889b64a5101808ccb95a27b"
+    },
+    "e05_motion_masked": {
+      "candidate_count": 128,
+      "candidate_pass": 124,
+      "candidate_falls": 0,
+      "accepted": false,
+      "mini": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.17629033753601214,
+        "sustained_mean_vx": 0.17629033753601214,
+        "sustained_p10_vx": 0.07088879503337764,
+        "max_tilt": 6.063148379367049,
+        "min_z": 0.11144596375256365,
+        "straight": [
+          {
+            "at": 6,
+            "heading_error_deg": 3.743946506438858,
+            "lateral_path_m": 0.02458096127595155,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 1,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6378797340932301,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 16,
+          "candidate_vx": 0.18081042797032973,
+          "ordinary_vx": 0.15190480514296234,
+          "ratio": 1.1902877450134866,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 16,
+          "candidate_vx": 0.1712195668563505,
+          "ordinary_vx": 0.14225908094548775,
+          "ratio": 1.2035756573034526,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 16,
+          "candidate_vx": 0.19368616440258393,
+          "ordinary_vx": 0.16997625060859442,
+          "ratio": 1.1394895681549448,
+          "speed_pass": false
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 16,
+          "candidate_vx": 0.19569702190241892,
+          "ordinary_vx": 0.16974081426612098,
+          "ratio": 1.1529167145127723,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 16,
+          "candidate_vx": 0.184941615574212,
+          "ordinary_vx": 0.14380566959138544,
+          "ratio": 1.2860523239432193,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 16,
+          "candidate_vx": 0.19390236715586995,
+          "ordinary_vx": 0.16945233584127672,
+          "ratio": 1.144288546942753,
+          "speed_pass": false
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 16,
+          "candidate_vx": 0.17154405435642114,
+          "ordinary_vx": 0.14022653815835584,
+          "ratio": 1.223335159017467,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 16,
+          "candidate_vx": 0.19612674619522316,
+          "ordinary_vx": 0.171134279613544,
+          "ratio": 1.1460400957547328,
+          "speed_pass": false
+        }
+      ],
+      "sha256": "f4ca9c852626e278360b3258f0eb43193f348bd9c076ea5518f1bca1359e8f3b"
+    }
+  },
+  "matched_cuda_pair": {
+    "passed": true,
+    "shared_config_except": [
+      "deadline_unix",
+      "mask_motion_state",
+      "name",
+      "start_unix"
+    ],
+    "unexpected_config_differences": {},
+    "initial_graph_nodes_equal": true,
+    "initial_tensor_differences": [
+      "adapt/observation_mask"
+    ],
+    "only_feature_difference": "hide slots 58:61 from residual; identical critic and normalization",
+    "runs": [
+      {
+        "name": "e04_motion_visible",
+        "learner_device": "cuda",
+        "accelerator": {
+          "name": "NVIDIA GB10",
+          "torch": "2.9.1+cu129",
+          "cuda": "12.9"
+        },
+        "iterations": 96,
+        "samples": 393216,
+        "collection_seconds": 445.47043598711025,
+        "learner_seconds": 3.6953334091813304,
+        "updates": 704,
+        "final_sha256": "2dc9d02e466d4c9eceeab98a6485a31e33c57da11889b64a5101808ccb95a27b"
+      },
+      {
+        "name": "e05_motion_masked",
+        "learner_device": "cuda",
+        "accelerator": {
+          "name": "NVIDIA GB10",
+          "torch": "2.9.1+cu129",
+          "cuda": "12.9"
+        },
+        "iterations": 96,
+        "samples": 393216,
+        "collection_seconds": 447.8377177838702,
+        "learner_seconds": 3.721084891963983,
+        "updates": 704,
+        "final_sha256": "f4ca9c852626e278360b3258f0eb43193f348bd9c076ea5518f1bca1359e8f3b"
+      }
+    ]
+  },
+  "collection_share_of_collection_plus_learning": 0.9917661641182012,
+  "gpu_physics": {
+    "status": "completed",
+    "device": "NVIDIA GB10",
+    "mujoco": "3.10.0",
+    "torch": "2.9.1+cu129",
+    "cuda": "12.9",
+    "rows": 90,
+    "excluded_after_first_fall": 27,
+    "results": {
+      "torque_only": {
+        "gpu_vs_jolt_20ms": {
+          "base_position_m": {
+            "rms": 0.0005189934679160331,
+            "p50_abs": 0.00015547251451181188,
+            "p95_abs": 0.00115910958731196,
+            "max_abs": 0.002667150565272003
+          },
+          "base_com_velocity_mps": {
+            "rms": 0.037005180572666815,
+            "p50_abs": 0.010896150537632949,
+            "p95_abs": 0.08988835853445615,
+            "max_abs": 0.17033621172501012
+          },
+          "base_rotation_deg": {
+            "rms": 1.135917337501684,
+            "p50_abs": 0.46420185090680244,
+            "p95_abs": 2.977792388809291,
+            "max_abs": 4.113191516495215
+          },
+          "joint_position_rad": {
+            "rms": 0.01539095750196267,
+            "p50_abs": 0.003066151840543401,
+            "p95_abs": 0.031360981112358195,
+            "max_abs": 0.12043918446166035
+          },
+          "joint_velocity_radps": {
+            "rms": 0.8234048537643802,
+            "p50_abs": 0.15555444318472514,
+            "p95_abs": 1.6827898602747604,
+            "max_abs": 6.0235670499174905
+          }
+        },
+        "cpu_gpu_same_model": [
+          {
+            "snapshot": 0,
+            "qpos_max_abs": 5.6111110091627836e-08,
+            "qvel_max_abs": 1.2542070684795625e-07
+          },
+          {
+            "snapshot": 30,
+            "qpos_max_abs": 0.0017868956226290145,
+            "qvel_max_abs": 0.09383401097703792
+          },
+          {
+            "snapshot": 60,
+            "qpos_max_abs": 0.0014197354208235757,
+            "qvel_max_abs": 0.14139607992148667
+          },
+          {
+            "snapshot": 98,
+            "qpos_max_abs": 0.0007514153522436562,
+            "qvel_max_abs": 0.12024113898957922
+          }
+        ],
+        "inertia": null,
+        "elapsed_including_compile_seconds": 34.725923657999374,
+        "s05": {
+          "base_position_m": {
+            "rms": 0.0005070019107867037,
+            "p50_abs": 0.00014785491157611255,
+            "p95_abs": 0.0010470661963092244,
+            "max_abs": 0.002667150565272003
+          },
+          "base_com_velocity_mps": {
+            "rms": 0.03464332579039886,
+            "p50_abs": 0.011278488225916337,
+            "p95_abs": 0.07367046890244097,
+            "max_abs": 0.1668592641476705
+          },
+          "base_rotation_deg": {
+            "rms": 0.8090642939176204,
+            "p50_abs": 0.46420185090680244,
+            "p95_abs": 1.5262169091186382,
+            "max_abs": 2.7127379881581706
+          },
+          "joint_position_rad": {
+            "rms": 0.008731398879617588,
+            "p50_abs": 0.003089628163917311,
+            "p95_abs": 0.018921162555592133,
+            "max_abs": 0.05745648948627849
+          },
+          "joint_velocity_radps": {
+            "rms": 0.48224356829405074,
+            "p50_abs": 0.16094000258262087,
+            "p95_abs": 1.1498204501363722,
+            "max_abs": 2.5524753141406933
+          }
+        },
+        "donor": {
+          "base_position_m": {
+            "rms": 0.0005589415957262501,
+            "p50_abs": 0.0001793978831335398,
+            "p95_abs": 0.0012147466599621852,
+            "max_abs": 0.0022172208323937848
+          },
+          "base_com_velocity_mps": {
+            "rms": 0.04429068948550643,
+            "p50_abs": 0.00876973024054531,
+            "p95_abs": 0.12159768240857756,
+            "max_abs": 0.17033621172501012
+          },
+          "base_rotation_deg": {
+            "rms": 1.8749238060365694,
+            "p50_abs": 0.634319725674815,
+            "p95_abs": 3.78184508318502,
+            "max_abs": 4.113191516495215
+          },
+          "joint_position_rad": {
+            "rms": 0.028269001314868536,
+            "p50_abs": 0.002671404360339469,
+            "p95_abs": 0.07056187471913014,
+            "max_abs": 0.12043918446166035
+          },
+          "joint_velocity_radps": {
+            "rms": 1.4956684065490276,
+            "p50_abs": 0.1250119740750075,
+            "p95_abs": 3.653504842036125,
+            "max_abs": 6.0235670499174905
+          }
+        }
+      },
+      "torque_and_rotor": {
+        "gpu_vs_jolt_20ms": {
+          "base_position_m": {
+            "rms": 0.00032894613670526467,
+            "p50_abs": 0.00012913904878326943,
+            "p95_abs": 0.0007862406309748575,
+            "max_abs": 0.0018620516553384259
+          },
+          "base_com_velocity_mps": {
+            "rms": 0.02264228482509125,
+            "p50_abs": 0.007779226175595135,
+            "p95_abs": 0.05012809199509995,
+            "max_abs": 0.1421113904985874
+          },
+          "base_rotation_deg": {
+            "rms": 0.4884173459394082,
+            "p50_abs": 0.10495991949952807,
+            "p95_abs": 0.6896277950132549,
+            "max_abs": 3.326532641610201
+          },
+          "joint_position_rad": {
+            "rms": 0.006458288071977076,
+            "p50_abs": 0.0012305974900886085,
+            "p95_abs": 0.011269912857977122,
+            "max_abs": 0.08951086750570125
+          },
+          "joint_velocity_radps": {
+            "rms": 0.3429853173379912,
+            "p50_abs": 0.06553936275925955,
+            "p95_abs": 0.6234614489676696,
+            "max_abs": 4.883300723626796
+          }
+        },
+        "cpu_gpu_same_model": [
+          {
+            "snapshot": 0,
+            "qpos_max_abs": 4.293964839252595e-08,
+            "qvel_max_abs": 3.2156590482057545e-07
+          },
+          {
+            "snapshot": 30,
+            "qpos_max_abs": 0.003990079063972252,
+            "qvel_max_abs": 0.4316064918531619
+          },
+          {
+            "snapshot": 60,
+            "qpos_max_abs": 0.0004116803061061103,
+            "qvel_max_abs": 0.04558709544588113
+          },
+          {
+            "snapshot": 98,
+            "qpos_max_abs": 0.0008348354420236702,
+            "qvel_max_abs": 0.10708272680340969
+          }
+        ],
+        "inertia": {
+          "spec_sha256": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+          "bodies": {
+            "yaw2roll": {
+              "index": 2,
+              "inertia": [
+                0.00017984346131252635,
+                0.00017984346131252635,
+                0.0017984346131252635
+              ],
+              "triangle_inequality": false
+            },
+            "hip_l": {
+              "index": 3,
+              "inertia": [
+                0.0006681177008731595,
+                0.00011333945131234017,
+                0.0011333945131234016
+              ],
+              "triangle_inequality": false
+            },
+            "upper_leg_left": {
+              "index": 4,
+              "inertia": [
+                0.0018146285840155666,
+                0.00018146285840155667,
+                0.00018146285840155667
+              ],
+              "triangle_inequality": false
+            },
+            "leg": {
+              "index": 5,
+              "inertia": [
+                0.00016417173539496694,
+                0.0016417173539496695,
+                0.00016477696605033038
+              ],
+              "triangle_inequality": false
+            },
+            "ankle_left": {
+              "index": 6,
+              "inertia": [
+                0.00018035173817402167,
+                0.0018035173817402166,
+                0.00018035173817402167
+              ],
+              "triangle_inequality": false
+            },
+            "neck": {
+              "index": 7,
+              "inertia": [
+                0.00018163707,
+                0.0018163707,
+                0.00018163707
+              ],
+              "triangle_inequality": false
+            },
+            "neck_pitch": {
+              "index": 8,
+              "inertia": [
+                0.0001800512111,
+                0.0001800512111,
+                0.001800512111
+              ],
+              "triangle_inequality": false
+            },
+            "yaw_roll_motion": {
+              "index": 9,
+              "inertia": [
+                0.0017234648715777994,
+                0.00017234648715777994,
+                0.00017234648715777994
+              ],
+              "triangle_inequality": false
+            },
+            "jaw_soft": {
+              "index": 10,
+              "inertia": [
+                0.0003236924609678202,
+                0.0002572039194068711,
+                0.0019438976196253087
+              ],
+              "triangle_inequality": false
+            },
+            "bearing_roll": {
+              "index": 11,
+              "inertia": [
+                0.00017984346131252635,
+                0.00017984346131252635,
+                0.0017984346131252635
+              ],
+              "triangle_inequality": false
+            },
+            "hip_l_2": {
+              "index": 12,
+              "inertia": [
+                0.0006681177008731595,
+                0.00011333945131234017,
+                0.0011333945131234016
+              ],
+              "triangle_inequality": false
+            },
+            "upper_leg_right": {
+              "index": 13,
+              "inertia": [
+                0.0018146285840155666,
+                0.00018146285840155667,
+                0.00018146285840155667
+              ],
+              "triangle_inequality": false
+            },
+            "leg_2": {
+              "index": 14,
+              "inertia": [
+                0.000164171735394967,
+                0.00164171735394967,
+                0.00016477696605033025
+              ],
+              "triangle_inequality": false
+            },
+            "ankle_right": {
+              "index": 15,
+              "inertia": [
+                0.00018034829349637655,
+                0.0018034829349637656,
+                0.00018034829349637655
+              ],
+              "triangle_inequality": false
+            }
+          },
+          "max_abs_after_set_const": 0.0,
+          "supported_physical_solid": false,
+          "scope": "experimental Jolt diagonal rotor-map proxy; distinct contact solver"
+        },
+        "elapsed_including_compile_seconds": 0.26800928299780935,
+        "s05": {
+          "base_position_m": {
+            "rms": 0.000306405659147686,
+            "p50_abs": 0.00012248535675560973,
+            "p95_abs": 0.0007862406309748575,
+            "max_abs": 0.001285325570831608
+          },
+          "base_com_velocity_mps": {
+            "rms": 0.01734435111639711,
+            "p50_abs": 0.007244066512696837,
+            "p95_abs": 0.0271541581324542,
+            "max_abs": 0.08373447863646176
+          },
+          "base_rotation_deg": {
+            "rms": 0.23860646002620114,
+            "p50_abs": 0.10495991949952807,
+            "p95_abs": 0.594861169549044,
+            "max_abs": 0.8980817442677369
+          },
+          "joint_position_rad": {
+            "rms": 0.003347221857344703,
+            "p50_abs": 0.0011592735258856846,
+            "p95_abs": 0.00765773113328773,
+            "max_abs": 0.019998010081829026
+          },
+          "joint_velocity_radps": {
+            "rms": 0.22781440502380487,
+            "p50_abs": 0.06126173695574498,
+            "p95_abs": 0.5074727877850806,
+            "max_abs": 1.8333533844697718
+          }
+        },
+        "donor": {
+          "base_position_m": {
+            "rms": 0.00039790642868378775,
+            "p50_abs": 0.0001674530921896844,
+            "p95_abs": 0.0007614008872949894,
+            "max_abs": 0.0018620516553384259
+          },
+          "base_com_velocity_mps": {
+            "rms": 0.03541378227020489,
+            "p50_abs": 0.010382161775503315,
+            "p95_abs": 0.06654202180691482,
+            "max_abs": 0.1421113904985874
+          },
+          "base_rotation_deg": {
+            "rms": 0.9349952499790612,
+            "p50_abs": 0.12715232458656328,
+            "p95_abs": 1.8850939519395506,
+            "max_abs": 3.326532641610201
+          },
+          "joint_position_rad": {
+            "rms": 0.012185198074913873,
+            "p50_abs": 0.0017785233294139516,
+            "p95_abs": 0.02688673734059928,
+            "max_abs": 0.08951086750570125
+          },
+          "joint_velocity_radps": {
+            "rms": 0.5896840379519067,
+            "p50_abs": 0.09983099376898592,
+            "p95_abs": 1.0513118410603113,
+            "max_abs": 4.883300723626796
+          }
+        }
+      }
+    },
+    "scope": "Actual CUDA physics for 20 ms from projected Jolt states; no reward optimization, no game physics changes",
+    "limitations": [
+      "Projection cannot preserve independent rigid-body constraint errors/velocities; see projection.json",
+      "MuJoCo/Warp contacts differ from Jolt, even with identical motor equation",
+      "Rotor proxy includes non-solid diagonal inertia and is an explicit research approximation",
+      "This measures neither long-horizon validity nor learning throughput"
+    ],
+    "finished_unix": 1789207024.5445554
+  },
+  "numerical": {
+    "e04_motion_visible": {
+      "checkpoint": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 4.76837158203125e-07,
+        "realistic_batch_max_abs": 4.76837158203125e-07,
+        "threshold": 1e-05,
+        "passed": true,
+        "samples_per_distribution": 256,
+        "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/runs/e04_motion_visible/latest.pt",
+        "checkpoint_sha256": "6060cbbaf6fd04ab702e1dd718b625a295f1bf5f261f681c371a446a1e5adc5f",
+        "iteration": 96
+      },
+      "native_shadow": {
+        "check": "native_shadow",
+        "rows": 400,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 5.10702591327572e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.992007221626409e-16,
+          "body_quat": 1.4432899320127035e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    },
+    "e05_motion_masked": {
+      "checkpoint": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 2.384185791015625e-07,
+        "realistic_batch_max_abs": 2.384185791015625e-07,
+        "threshold": 1e-05,
+        "passed": true,
+        "samples_per_distribution": 256,
+        "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/runs/e05_motion_masked/latest.pt",
+        "checkpoint_sha256": "1ae6965232d2cad6f14eb0699ef8e942d034452c975a7c3619a7bc4fbeaca16a",
+        "iteration": 96
+      },
+      "native_shadow": {
+        "check": "native_shadow",
+        "rows": 400,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 4.996003610813204e-16,
+          "ctrl": 3.774758283725532e-15,
+          "last_action": 4.996003610813204e-16,
+          "body_pos": 1.0547118733938987e-15,
+          "body_quat": 1.4432899320127035e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    }
+  },
+  "tests": {
+    "full_suite_total": 273,
+    "full_suite_passed": 271,
+    "optional_skipped": 2,
+    "final_targeted_policy_state_tests": 4,
+    "note": "Full suite preceded final additional ordinary-command regression; final targeted suite includes it. Do not claim a full 274-test run."
+  },
+  "defaults_and_physics": {
+    "default_deployment": [
+      {
+        "skill": "standing",
+        "path": "godot/runtime_assets/policies/Stand_Godot.onnx",
+        "sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "previous_sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "unchanged": true
+      },
+      {
+        "skill": "walking",
+        "path": "godot/runtime_assets/policies/Walk_Godot.onnx",
+        "sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+        "previous_sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+        "unchanged": true
+      },
+      {
+        "skill": "sitstand",
+        "path": "godot/runtime_assets/policies/Sitstand_Godot.onnx",
+        "sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "previous_sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "unchanged": true
+      },
+      {
+        "skill": "ground_pick",
+        "path": "godot/runtime_assets/policies/GroundPick_Godot.onnx",
+        "sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "previous_sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "unchanged": true
+      },
+      {
+        "skill": "kick_left",
+        "path": "godot/runtime_assets/policies/KickLeft_Godot.onnx",
+        "sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "previous_sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "unchanged": true
+      },
+      {
+        "skill": "kick_right",
+        "path": "godot/runtime_assets/policies/KickRight_Godot.onnx",
+        "sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "previous_sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "unchanged": true
+      },
+      {
+        "skill": "roulade",
+        "path": "godot/runtime_assets/policies/Roulade_Godot.onnx",
+        "sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "previous_sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "unchanged": true
+      },
+      {
+        "skill": "roller",
+        "path": "godot/runtime_assets/policies/Roller_Godot.onnx",
+        "sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "previous_sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "unchanged": true
+      },
+      {
+        "skill": "roller_crouch",
+        "path": "godot/runtime_assets/policies/RollerCrouch_Godot.onnx",
+        "sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "previous_sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "unchanged": true
+      }
+    ],
+    "legacy_policies_walking": {
+      "path": "policies/Walk_Godot.onnx",
+      "sha256": "63edd66c12854f5b78faad5555ec8749c613a547393c1cb84785fe880f30b7e6",
+      "unchanged": true
+    },
+    "physics": {
+      "robot": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_ball_stand_fix.json",
+        "sha256": "3c21e73c6324bc51e6741c906a617c56f119bba09fbd17db587c6a19808844c7",
+        "current_sha256": "3c21e73c6324bc51e6741c906a617c56f119bba09fbd17db587c6a19808844c7",
+        "unchanged": true
+      },
+      "mjcf": {
+        "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_ball.xml",
+        "sha256": "3d59c82db5c3ac5cb35b1f5d4dfa550832be2eddffa9249ba0bfef3b6452e2bd",
+        "current_sha256": "3d59c82db5c3ac5cb35b1f5d4dfa550832be2eddffa9249ba0bfef3b6452e2bd",
+        "unchanged": true
+      },
+      "server": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd",
+        "sha256": "4ee85783d70e33c474987c19509e29d7180f324d521f907f748a40b388a385ad",
+        "current_sha256": "4ee85783d70e33c474987c19509e29d7180f324d521f907f748a40b388a385ad",
+        "unchanged": true
+      },
+      "spec": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_ball_stand_fix/robot_spec.json",
+        "sha256": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+        "current_sha256": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+        "unchanged": true
+      },
+      "robot_scene": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_ball_stand_fix/robot.tscn",
+        "sha256": "d21abf70e85ae9919c7ccba084f61b6c9ebd611cbae1de4a8296d92c1925a7b8",
+        "current_sha256": "d21abf70e85ae9919c7ccba084f61b6c9ebd611cbae1de4a8296d92c1925a7b8",
+        "unchanged": true
+      }
+    },
+    "passed": true
+  },
+  "cleanup": {
+    "records": [
+      {
+        "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/e04_motion_visible_native/prepared",
+        "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/e04_motion_visible_native/suite/runtime",
+        "identical": true,
+        "removed": true,
+        "differences": "",
+        "error": "",
+        "bytes": 1282239065,
+        "removed_unix": 1789207331.6558638,
+        "reason": "Identical staging copy; frozen runtime and raw trajectories retained",
+        "rehydrate": "cp -a /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/e04_motion_visible_native/suite/runtime /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/e04_motion_visible_native/prepared"
+      },
+      {
+        "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/e05_motion_masked_native/prepared",
+        "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/e05_motion_masked_native/suite/runtime",
+        "identical": true,
+        "removed": true,
+        "differences": "",
+        "error": "",
+        "bytes": 1282239033,
+        "removed_unix": 1789207332.2689211,
+        "reason": "Identical staging copy; frozen runtime and raw trajectories retained",
+        "rehydrate": "cp -a /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/e05_motion_masked_native/suite/runtime /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/e05_motion_masked_native/prepared"
+      },
+      {
+        "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/frame_probe/prepared",
+        "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/frame_probe/suite/runtime",
+        "identical": true,
+        "removed": true,
+        "differences": "",
+        "error": "",
+        "bytes": 1282936785,
+        "removed_unix": 1789207334.6401868,
+        "reason": "Identical staging copy; frozen runtime and raw trajectories retained",
+        "rehydrate": "cp -a /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/frame_probe/suite/runtime /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/frame_probe/prepared"
+      },
+      {
+        "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/running_zero_shot/prepared",
+        "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/running_zero_shot/suite/runtime",
+        "identical": true,
+        "removed": true,
+        "differences": "",
+        "error": "",
+        "bytes": 1281812800,
+        "removed_unix": 1789207336.463827,
+        "reason": "Identical staging copy; frozen runtime and raw trajectories retained",
+        "rehydrate": "cp -a /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/running_zero_shot/suite/runtime /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/running_zero_shot/prepared"
+      },
+      {
+        "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/speed_budget_probe/prepared",
+        "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/speed_budget_probe/suite/runtime",
+        "identical": true,
+        "removed": true,
+        "differences": "",
+        "error": "",
+        "bytes": 1282936755,
+        "removed_unix": 1789207339.270846,
+        "reason": "Identical staging copy; frozen runtime and raw trajectories retained",
+        "rehydrate": "cp -a /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/speed_budget_probe/suite/runtime /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/speed_budget_probe/prepared"
+      },
+      {
+        "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/state_contract/prepared",
+        "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/state_contract/suite/runtime",
+        "identical": true,
+        "removed": true,
+        "differences": "",
+        "error": "",
+        "bytes": 1282019756,
+        "removed_unix": 1789207341.0027301,
+        "reason": "Identical staging copy; frozen runtime and raw trajectories retained",
+        "rehydrate": "cp -a /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/state_contract/suite/runtime /home/ethan/Projects/MicroDuck/sim2sim/results/sprint_exit_20260912/state_contract/prepared"
+      }
+    ],
+    "removed": 6,
+    "bytes": 7694184194
+  },
+  "keyboard": "OS keyboard not verified in this round",
+  "not_run": [
+    "H6 lateral action basis training",
+    "baseline_all 128-case old model comparison",
+    "924000-924049 final holdout",
+    "new exported package acceptance"
+  ],
+  "evidence": [
+    {
+      "path": "results/sprint_exit_20260912/baseline_exits/completed.json",
+      "sha256": "b169ee4b454f8067beaab8a7839f8fb543458c95ac12af1fc5c271d3e41707af"
+    },
+    {
+      "path": "results/sprint_exit_20260912/minimize/completed.json",
+      "sha256": "8c83dd89cddd29c951368c3d40a597437fbf40587f2c9cfc2c57926fff0e5cac"
+    },
+    {
+      "path": "results/sprint_exit_20260912/channel_ablation/completed.json",
+      "sha256": "416b86742ef601aed22bcddde3db76f3cb1254386720cbc7b960e8b0263024a0"
+    },
+    {
+      "path": "results/sprint_exit_20260912/frame_probe/completed.json",
+      "sha256": "bc8deb3d0b5a238565c5608eff1e881dc085bbc9d623899cf9f1dcfc5dc53926"
+    },
+    {
+      "path": "results/sprint_exit_20260912/speed_budget_probe/completed.json",
+      "sha256": "202e7dc7e311a28613c3e6e8951e629ffc63fdc6a902e55afd883a28b6e8440d"
+    },
+    {
+      "path": "results/sprint_exit_20260912/state_contract/completed.json",
+      "sha256": "00d239f87cef8b35059b34bd6618ee7c7dbfa4787a038f4151904e77bfe15d36"
+    },
+    {
+      "path": "results/sprint_exit_20260912/state_shadow/result.json",
+      "sha256": "013f24aa1ba14ce413a7100d150f36b0dc754a0f38b2094dc28252a9b5818134"
+    },
+    {
+      "path": "results/sprint_exit_20260912/motion_pair_audit.json",
+      "sha256": "2ef716320e89d7244f8833d69eb641fe729d86371e4d150ed9d3e2f6db31c0ff"
+    },
+    {
+      "path": "results/sprint_exit_20260912/candidate_numerical_verification.json",
+      "sha256": "08ff2a0e5076319665cb49d928ecc0e1fe277dd9d72edee94c64f686f2e682ac"
+    },
+    {
+      "path": "results/sprint_exit_20260912/yaw_identification/completed.json",
+      "sha256": "1ca1deaa47bff1d563fbd769d7abc0a92feeb1e496ac20942d23d4a2ee9908d1"
+    },
+    {
+      "path": "results/sprint_exit_20260912/running_zero_shot/completed.json",
+      "sha256": "023b37f3dd33593bf321674469591eb018a8608a8dd5b478a945f605ed619d87"
+    },
+    {
+      "path": "results/sprint_exit_20260912/fast_entry_check/completed.json",
+      "sha256": "0943568a75bf7cb5ce6b18034c52f0bcab71e414d7b54f6b0c5028f65c83bce5"
+    },
+    {
+      "path": "results/sprint_exit_20260912/torque_comparison/completed.json",
+      "sha256": "eb0eadb9ff50f5315bcbc04660319ba848808ef5d6c02f893612252d37306de4"
+    },
+    {
+      "path": "results/sprint_exit_20260912/torque_comparison/envelope.json",
+      "sha256": "5f165f8a8e7b4df84801529febc3ef6dc14ed94739b8d7315b1624bf916302ca"
+    },
+    {
+      "path": "results/sprint_exit_20260912/gpu_dynamics_probe/gpu_completed.json",
+      "sha256": "0017cbe61738b2ad7471745bf6e621c8eca13bd653daef72f381c0669b19cf68"
+    },
+    {
+      "path": "results/sprint_exit_20260912/gpu_dynamics_probe/projection_prefall.json",
+      "sha256": "66f9bfd07367b85127f9547c8bbac30a5614c1c2bf331f53da0bd6f75c2fae15"
+    },
+    {
+      "path": "results/sprint_exit_20260912/prepared_duplicate_cleanup.json",
+      "sha256": "dbe81063c83aa11417bd64e142a4829e139ac4a8cb8e2c110f038b94b8055202"
+    },
+    {
+      "path": "results/sprint_exit_20260912/closeout/defaults_and_physics.json",
+      "sha256": "4fcbf18a01a8e993775010f9d87674164f83f6ef2f97c3b3e1288b089f981c3c"
+    }
+  ],
+  "active_budget_final": {
+    "limit_seconds": 7200.0,
+    "used_seconds": 5059.098434410989,
+    "remaining_seconds": 2140.9015655890107,
+    "actors": [],
+    "unconfirmed_gaps": 0
+  },
+  "resources": {
+    "created_unix": 1789208090.5075502,
+    "owned_live_processes": [],
+    "owned_live_supervisors": [],
+    "owned_running_containers": [],
+    "jobs_started": 26,
+    "jobs_finished": 26,
+    "actors": [],
+    "passed": true,
+    "note": "Read-only audit using recorded process groups/start ticks and container bind-mount ownership. Unrelated workloads were not stopped."
+  },
+  "local_commit_scope": "Only sprint state implementation, this round research and handoff; other shared-worktree edits excluded."
+}

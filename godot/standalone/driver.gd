@@ -171,7 +171,7 @@ func _load_models() -> bool:
 			_fatal("Model checksum mismatch: "+skill)
 			return false
 		var state_mode: String = item.get("state_input", "")
-		if state_mode != "" and (state_mode != "planar_com_velocity_height_v1" or skill != "roller"):
+		if state_mode != "" and (state_mode != "planar_com_velocity_height_v1" or skill not in ["walking", "sprint", "roller"] or item.get("time_input_s", 0.0) or item.get("heading_input", false)):
 			_fatal("Unknown or incompatible policy state input: "+state_mode)
 			return false
 		var task_mode: String = item.get("task_input", "")

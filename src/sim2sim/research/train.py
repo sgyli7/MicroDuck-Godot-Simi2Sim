@@ -182,7 +182,7 @@ def run(args):
     torch.set_num_threads(args.threads);seed_all(args.seed)
     resume_checkpoint=torch.load(args.resume,weights_only=False,map_location='cpu') if args.resume else None
     if resume_checkpoint is not None:
-        for key,default in [('roller_objective','legacy'),('walking_objective','legacy'),('mask_task_state',False),('action_basis',''),
+        for key,default in [('roller_objective','legacy'),('walking_objective','legacy'),('mask_task_state',False),('mask_motion_state',False),('action_basis',''),
                             ('teacher_mode',''),('teacher_replay',None),('teacher_weight',.02),('teacher_samples',384),('walking_episode_seconds',0.)]:
             if getattr(args,key,default)!=resume_checkpoint['config'].get(key,default):
                 raise ValueError('Resume cannot change '+key+'; start a separately recorded experiment')
@@ -246,7 +246,7 @@ def run(args):
     time_gate=None if not args.time_gate else tuple(float(x) for x in args.time_gate.split(','))
     if args.command_gate and (task.name!='roller' or not args.roller_contract):
         raise ValueError('Negative-throttle gate requires the native roller command contract')
-    policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate,command_gate=args.command_gate,mask_task_state=getattr(args,'mask_task_state',False),action_basis=getattr(args,'action_basis',''))
+    policy=Policy(source,args.variant,args.std,args.bound,template=template,time_gate=time_gate,command_gate=args.command_gate,mask_task_state=getattr(args,'mask_task_state',False),action_basis=getattr(args,'action_basis',''),mask_motion_state=getattr(args,'mask_motion_state',False))
     policy.task_name=task.name
     policy.roller_contract=args.roller_contract
     retention=None
@@ -534,6 +534,7 @@ def main():
     p.add_argument("--roller-contract",choices=['native'],help='Use native push/coast/brake and relative-heading tasks for roller')
     p.add_argument('--roller-objective',choices=['legacy','command_heading_v1','stop_hold_v1'],default='legacy',help='Explicit objective version; legacy retains sealed experiment semantics')
     p.add_argument('--mask-task-state',action='store_true',help='68D actor ablation: keep architecture and critic fixed but hide the seven added actor features')
+    p.add_argument('--mask-motion-state',action='store_true',help='Declared state actor ablation: hide planar velocity and height from the residual, retaining the same critic')
     p.add_argument('--action-basis',choices=['','brake_sagittal_v1'],default='',help='Restrict brake learning and exploration to hip pitch and knee targets; preserve the anchor elsewhere')
     p.add_argument('--teacher-mode',choices=['','online_kl','replay_kl'],default='',help='Compare phase-balanced teacher KL on current versus successful teacher occupancy')
     p.add_argument('--teacher-replay',help='Completed, checksummed teacher-data manifest; only for replay_kl')
