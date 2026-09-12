@@ -4,6 +4,20 @@
 
 Sai 沿用 [PR #4](https://github.com/sgyli7/Robot_Godot_Sim2Sim/pull/4) 的 v0.1.0-alpha.3 固定提交 `5d2ab070dcdbae61a8d750a3f812e77ad2568f26`。SO101、四组轮腿、蓝色货仓、碰撞、质量、关节和 ONNX 保持发布版定义。新增的是维修站材质、任务位置和会话管理。
 
+## 应用菜单入口
+
+Linux 应用菜单统一使用 **小小维修站**。模型和原生库准备好后，在当前项目执行一次：
+
+```bash
+python3 scripts/install_workshop_desktop.py
+```
+
+该入口通过 `scripts/run-workshop-desktop.sh` 调用同一份 `run-workshop.sh`，默认进入 MicroDuck，F5/F6/F7 切换三种机器人。重复点击会唤起已有窗口，不会重复启动游戏。窗口和任务栏使用统一的名称、图标及应用标识。
+
+安装器将旧的「MicroDuck · 小小维修站」和「MicroDuck · 最新策略维修站」快捷方式移出应用菜单，备份到 `~/.local/state/robot-godot-workshop/legacy-launchers/`；若旧图标已固定到收藏栏，也会迁移到新入口。原项目文件保留。移动项目后重新运行安装器即可更新路径。
+
+启动日志默认在 `~/.local/state/robot-godot-workshop/desktop.log`，启动失败时会显示通知。设置 `XDG_STATE_HOME` 时，日志与备份使用对应状态目录。[本机入口验证](workshop-desktop-20260913.json)。
+
 ## 操作
 
 | 输入 | 操作 |

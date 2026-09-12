@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-13",
+  "app_id": "robot-godot-workshop.desktop",
+  "name": "小小维修站",
+  "visible_workshop_apps": 1,
+  "command": "\"/home/ethan/Projects/MicroDuck/sim2sim/scripts/run-workshop-desktop.sh\"",
+  "wm_class": "Robot Godot Workshop",
+  "visible_windows": 1,
+  "godot_pid": 1309176,
+  "loaded_robots": [
+    "microduck",
+    "roller",
+    "sai"
+  ],
+  "same_process": true,
+  "repeated_click_single_window": true,
+  "reinstall_preserves_one_entry": true,
+  "desktop_entry_validation": "pass",
+  "legacy_shortcuts_backed_up": [
+    "microduck-atelier.desktop",
+    "microduck-showcase.desktop"
+  ],
+  "launch_log": "/home/ethan/.local/state/robot-godot-workshop/desktop.log",
+  "scope": "Desktop entry installation, visible game startup, observed robot loads and repeated activation. Existing motor/physics acceptance is unchanged.",
+  "source_sha256": {
+    "scripts/run-workshop-desktop.sh": "28e57f7463e7116474f92118bfac2d3227764ae329c82c605eb26f57e6b89d5b",
+    "scripts/install_workshop_desktop.py": "b5433b02aa09400c0084a297963e72e93b293500dc704ecfa15618042c41fc8b",
+    "src/sim2sim/workshop.py": "02f479fd018713f0cbdfe54932d447529f891e137f6aba18d17cf53bd22ba5ff"
+  }
+}

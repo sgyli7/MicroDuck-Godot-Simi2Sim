@@ -24,8 +24,10 @@ def prepare(runtime: Path, godot: str) -> Path:
                                                    "grass", "levels", "objects", "forest_generated", "addons"))
     # Bound engine worker allocation independently of host logical CPU count.
     # Scheduling only: no time scale, solver, policy or motor parameter changes.
-    with (runtime / "project.godot").open("a") as project:
-        project.write("\n[threading]\nworker_pool/max_threads=2\n")
+    project = runtime / "project.godot"
+    text = project.read_text().replace('config/name="Microduck Sim2Sim"',
+        'config/name="Robot Godot Workshop"\nconfig/icon="res://atelier/icon.svg"', 1)
+    project.write_text(text + "\n[threading]\nworker_pool/max_threads=2\n")
     bundle = resource_root()
     core = runtime.parent / "sai-release"
     prepare_godot(bundle, core)
