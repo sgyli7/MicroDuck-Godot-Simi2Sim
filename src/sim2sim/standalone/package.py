@@ -21,10 +21,18 @@ def source_hashes(root,project=None):
     # Include uncommitted source too: a base Git commit alone does not identify a build.
     candidates=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z'],
                                        cwd=root).decode().split('\0')
+    if project:
+        # A frozen project can predate files added in another workspace task.
+        # Inventory the build's actual Godot tree, including snapshot-only inputs.
+        project=Path(project)
+        candidates=[name for name in candidates if not name.startswith('godot/')]
+        candidates.extend('godot/'+p.relative_to(project).as_posix()
+                          for p in project.rglob('*') if p.is_file()
+                          and '.godot' not in p.relative_to(project).parts)
     def source(name):
         return Path(project)/name.removeprefix('godot/') if project and name.startswith('godot/') else root/name
     return {name:sha256(source(name)) for name in sorted(set(candidates))
-            if name and (root/name).is_file() and name.startswith(('godot/','native/','src/'))}
+            if name and name.startswith(('godot/','native/','src/')) and source(name).is_file()}
 
 
 def package(output,archive=False,project=None):

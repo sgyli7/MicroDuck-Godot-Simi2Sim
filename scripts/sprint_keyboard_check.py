@@ -81,7 +81,10 @@ class XKeys:
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--project',type=Path,required=True)
+    parser=argparse.ArgumentParser()
+    runtime=parser.add_mutually_exclusive_group(required=True)
+    runtime.add_argument('--project',type=Path)
+    runtime.add_argument('--executable',type=Path,help='Check the actual exported player')
     parser.add_argument('--out',type=Path,required=True);args=parser.parse_args()
     budget=os.environ.get('SIM2SIM_ACTIVE_BUDGET_DIR')
     if not budget or not args.out.resolve().is_relative_to(Path(budget).resolve()):
@@ -98,9 +101,12 @@ def main():
     keys=XKeys();process=None
     try:
         with (args.out/'window.log').open('w') as log:
-            process=subprocess.Popen(['godot','--path',str(args.project.resolve()),
-                '--rendering-method','gl_compatibility','--resolution','1280x800',
-                'res://standalone/main.tscn','--','--render-fps=60',f'--trace={trace}','--seconds=40'],
+            command=([str(args.executable.resolve())] if args.executable else
+                     ['godot','--path',str(args.project.resolve())])
+            command+=['--rendering-method','gl_compatibility','--resolution','1280x800']
+            if not args.executable:command+=['res://standalone/main.tscn']
+            command+=['--','--render-fps=60',f'--trace={trace}','--seconds=40']
+            process=subprocess.Popen(command,
                 stdout=log,stderr=subprocess.STDOUT,env={**os.environ,'SIM2SIM_TRACE_INPUT':'1'})
             end=time.monotonic()+25
             while time.monotonic()<end and process.poll() is None:
@@ -142,7 +148,8 @@ def main():
                 pause_events[0]['step']==pause_events[1]['step'],
             clean_exit=not data['summary'].get('error'))
         report=dict(check='x11_synthetic_host_keyboard',checks=checks,passed=all(checks.values()),
-                    rows=len(rows),trace=str(trace),window_pid=process.pid)
+                    rows=len(rows),trace=str(trace),window_pid=process.pid,command=command,
+                    runtime='exported_binary' if args.executable else 'prepared_project')
         (args.out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report))
         if not report['passed']:raise RuntimeError('Host keyboard checks failed')
     finally:

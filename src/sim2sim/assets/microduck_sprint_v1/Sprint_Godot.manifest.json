@@ -1,0 +1,13 @@
+{
+  "action_scale": 1.0,
+  "sim2sim": {
+    "use_stand_policy": false,
+    "skill": "sprint"
+  },
+  "research": {
+    "skill": "walking",
+    "source_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+  },
+  "sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+  "status": "experimental_gpu_sprint_not_promoted"
+}

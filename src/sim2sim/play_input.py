@@ -92,6 +92,11 @@ class TwistLimits:
     decel: float = 20.0
     sprint_vmax_x: float = 0.5
     sprint_vmax_ang: float = 0.8
+    sprint_yaw_reversal_s: float = 0.0
+
+    def __post_init__(self) -> None:
+        if not np.isfinite(self.sprint_yaw_reversal_s) or self.sprint_yaw_reversal_s < 0:
+            raise ValueError('Sprint yaw reversal duration must be finite and nonnegative')
 
 
 def keys_to_held(keys: set[str]) -> set[str]:
@@ -208,8 +213,11 @@ class TwistRamp:
     vel: np.ndarray = field(default_factory=lambda: np.zeros(3, dtype=np.float32))
     accel: float = 12.0
     decel: float = 20.0
+    yaw_reversing: bool = field(default=False, init=False)
 
-    def step(self, target: tuple[float, float, float], dt: float) -> np.ndarray:
+    def step(self, target: tuple[float, float, float], dt: float, *,
+             sprint: bool = False, turn_limit: float = 0.8,
+             reversal_seconds: float = 0.0) -> np.ndarray:
         tgt = np.asarray(target, dtype=np.float32)
         out = self.vel.copy()
         for i in range(3):
@@ -220,16 +228,27 @@ class TwistRamp:
             )
             rate = self.accel if away else self.decel
             max_d = rate * dt
+            if i == 2:
+                if not sprint or reversal_seconds <= 0 or abs(t) <= .05:
+                    self.yaw_reversing = False
+                elif cur * t < 0 and abs(cur) > .05:
+                    self.yaw_reversing = True
+                # Carry the reversal through zero rather than restarting acceleration there.
+                if self.yaw_reversing:
+                    max_d = 2. * turn_limit * dt / reversal_seconds
             d = t - cur
             if abs(d) <= max_d:
                 out[i] = t
             else:
                 out[i] = cur + np.sign(d) * max_d
+            if i == 2 and abs(float(out[i]) - t) < 1e-7:
+                self.yaw_reversing = False
         self.vel = out.astype(np.float32)
         return self.vel
 
     def reset(self) -> None:
         self.vel[:] = 0.0
+        self.yaw_reversing = False
 
 
 @dataclass
@@ -394,7 +413,11 @@ class PlayBrain:
                 self.press_order = [b for b in self.press_order if b != "idle"] + ["idle"]
                 skip_ramp = True
         if not skip_ramp:
-            self.vel[:] = self.ramp.step(target, dt)
+            self.vel[:] = self.ramp.step(
+                target, dt, sprint=self.sprinting,
+                turn_limit=self.lim.sprint_vmax_ang,
+                reversal_seconds=self.lim.sprint_yaw_reversal_s,
+            )
         if self.has_walking and self.has_standing:
             self.policy = "walking" if self.gait.settled(
                 float(np.hypot(self.vel[0], self.vel[1])),
