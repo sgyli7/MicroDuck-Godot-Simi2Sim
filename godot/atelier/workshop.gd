@@ -127,7 +127,8 @@ func _environment() -> void:
 	var sun:=server.get_node("World/Sun") as DirectionalLight3D
 	sun.rotation_degrees=Vector3(-48,-32,0); sun.light_color=Color("fff9ed"); sun.light_energy=.52
 	if OS.has_environment("MD_SUN_ENERGY"):sun.light_energy=float(OS.get_environment("MD_SUN_ENERGY"))
-	sun.shadow_enabled=OS.get_environment("MD_SHADOWS") != "0"; sun.shadow_bias=.1; sun.shadow_normal_bias=2.0
+	# Match the small robot/props: .1 detaches Forward+ contact shadows.
+	sun.shadow_enabled=OS.get_environment("MD_SHADOWS") != "0"; sun.shadow_bias=.005; sun.shadow_normal_bias=2.0
 	sun.directional_shadow_max_distance=6.0
 	sun.directional_shadow_mode=DirectionalLight3D.SHADOW_ORTHOGONAL
 	server.get_node("World/FillLight").light_energy=.08
