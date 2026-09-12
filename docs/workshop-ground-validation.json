@@ -1,0 +1,78 @@
+{
+  "source": "godot/hub/hub.gd",
+  "source_sha256": "a3b5a2719677a6837c380a0c25c3878c7d9b8307f582d732c5b5b43aa6de3749",
+  "cases": {
+    "cargo18": {
+      "before_overlap_m2": 4.34999942779541,
+      "after_overlap_m2": 0.0,
+      "before_triangles": 252,
+      "after_triangles": 180,
+      "collision_count": 21,
+      "same_physics": true
+    },
+    "cargo25": {
+      "before_overlap_m2": 4.34999942779541,
+      "after_overlap_m2": 0.0,
+      "before_triangles": 252,
+      "after_triangles": 180,
+      "collision_count": 21,
+      "same_physics": true
+    },
+    "down20": {
+      "before_overlap_m2": 4.90999960899353,
+      "after_overlap_m2": 0.0,
+      "before_triangles": 252,
+      "after_triangles": 180,
+      "collision_count": 21,
+      "same_physics": true
+    },
+    "down40": {
+      "before_overlap_m2": 4.90999960899353,
+      "after_overlap_m2": 0.0,
+      "before_triangles": 252,
+      "after_triangles": 180,
+      "collision_count": 21,
+      "same_physics": true
+    },
+    "down60": {
+      "before_overlap_m2": 4.90999984741211,
+      "after_overlap_m2": 0.0,
+      "before_triangles": 252,
+      "after_triangles": 180,
+      "collision_count": 21,
+      "same_physics": true
+    },
+    "drive": {
+      "before_overlap_m2": 4.34999942779541,
+      "after_overlap_m2": 0.0,
+      "before_triangles": 252,
+      "after_triangles": 180,
+      "collision_count": 21,
+      "same_physics": true
+    },
+    "up20": {
+      "before_overlap_m2": 4.34999942779541,
+      "after_overlap_m2": 0.0,
+      "before_triangles": 252,
+      "after_triangles": 180,
+      "collision_count": 21,
+      "same_physics": true
+    },
+    "up40": {
+      "before_overlap_m2": 4.34999942779541,
+      "after_overlap_m2": 0.0,
+      "before_triangles": 252,
+      "after_triangles": 180,
+      "collision_count": 21,
+      "same_physics": true
+    },
+    "up60": {
+      "before_overlap_m2": 4.34999942779541,
+      "after_overlap_m2": 0.0,
+      "before_triangles": 252,
+      "after_triangles": 180,
+      "collision_count": 21,
+      "same_physics": true
+    }
+  }
+}

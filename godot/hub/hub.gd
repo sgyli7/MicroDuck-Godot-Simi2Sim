@@ -206,10 +206,28 @@ func _task_box(parent: Node3D,name_text: String,p: Vector3,size: Vector3,color: 
 	body.add_child(collision)
 	parent.add_child(body)
 	if not _headless:
+		# The hub floor already renders y=0. Keep the full contact box, but
+		# draw only its exposed part so the entry decks cannot fight it.
+		var bottom := maxf(0.0, p.y-size.y*.5)
+		var top := p.y+size.y*.5
+		if top <= bottom+.000001: return
 		var mesh := MeshInstance3D.new()
 		var box := BoxMesh.new()
-		box.size = size
-		mesh.mesh = box
+		box.size = Vector3(size.x,top-bottom,size.z)
+		mesh.position.y = (top+bottom)*.5-p.y
+		var surface := SurfaceTool.new()
+		surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+		var faces := box.get_faces()
+		for i in range(0,faces.size(),3):
+			var a:=faces[i];var b:=faces[i+1];var c:=faces[i+2]
+			# Open underside: its inverted-hull ink pass must not draw on
+			# the floor either. Elevated boxes retain their visible bottom.
+			if bottom==0.0 and maxf(a.y,maxf(b.y,c.y)) < -box.size.y*.5+.000001: continue
+			var normal:=-(b-a).cross(c-a).normalized()
+			for v in [a,b,c]:
+				surface.set_normal(normal);surface.add_vertex(v)
+		surface.index()
+		mesh.mesh = surface.commit()
 		mesh.material_override = atelier.materials[color]
 		body.add_child(mesh)
 
