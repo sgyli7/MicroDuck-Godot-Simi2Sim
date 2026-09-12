@@ -1,0 +1,9 @@
+{
+  "counts": {
+    "ordinary_left": 101,
+    "ordinary_right": 0,
+    "sprint_left": 602,
+    "sprint_right": 400
+  },
+  "observation": "Eight sprint courses contain no ordinary right-turn collection; teacher references do not supply on-policy coverage of that missing task"
+}

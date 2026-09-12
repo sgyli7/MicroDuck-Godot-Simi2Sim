@@ -1,0 +1,156 @@
+[
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/baseline_s05/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/baseline_s05/suite/runtime",
+    "identical": true,
+    "bytes": 1282019210,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/baseline_s05/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/baseline_s05/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/baseline_cat_split/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/baseline_cat_split/suite/runtime",
+    "identical": true,
+    "bytes": 1282128487,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/baseline_cat_split/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/baseline_cat_split/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/frozen_cat_joint/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/frozen_cat_joint/suite/runtime",
+    "identical": true,
+    "bytes": 1282237783,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/frozen_cat_joint/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/frozen_cat_joint/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_split/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_split/suite/runtime",
+    "identical": true,
+    "bytes": 1282128498,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_split/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_split/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_shared/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_shared/suite/runtime",
+    "identical": true,
+    "bytes": 1282237739,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_shared/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_shared/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_tracking/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_tracking/suite/runtime",
+    "identical": true,
+    "bytes": 1282237661,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_tracking/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_tracking/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_tracking_split/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_tracking_split/suite/runtime",
+    "identical": true,
+    "bytes": 1282128398,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_tracking_split/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_tracking_split/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/runtime",
+    "identical": true,
+    "bytes": 1282129108,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_feedback/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_feedback/suite/runtime",
+    "identical": true,
+    "bytes": 1282129156,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_feedback/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_feedback/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_trained_tracking_split/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_trained_tracking_split/suite/runtime",
+    "identical": true,
+    "bytes": 1282128434,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_trained_tracking_split/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_trained_tracking_split/prepared"
+    ]
+  },
+  {
+    "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_complete_courses/prepared",
+    "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_complete_courses/suite/runtime",
+    "identical": true,
+    "bytes": 1282237689,
+    "deleted": true,
+    "restore": [
+      "cp",
+      "--reflink=auto",
+      "-a",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_complete_courses/suite/runtime",
+      "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/native_complete_courses/prepared"
+    ]
+  }
+]

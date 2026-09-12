@@ -1,0 +1,211 @@
+{
+  "regression_count": 7,
+  "regression_pass": 5,
+  "regression_failures": [
+    {
+      "case": "remove_forward_prefix",
+      "seed": 923000,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.29510302166646274,
+        "sustained_p10_vx": 0.18230361850523266,
+        "max_tilt": 9.651310849711809,
+        "min_z": 0.11318240931778818,
+        "straight": [
+          {
+            "at": 6,
+            "heading_error_deg": 7.042626233981064,
+            "lateral_path_m": 0.06733982547394651,
+            "lateral_limit_m": 0.061446826202193564,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 1,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.5387011328359499,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 925007,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.2917670854624162,
+        "sustained_p10_vx": 0.1768068561026238,
+        "max_tilt": 9.041399970267728,
+        "min_z": 0.1128627576671037,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 9.929063273449616,
+            "lateral_path_m": 0.031243428860852185,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 6.502832770899429,
+            "lateral_path_m": 0.02765232613353387,
+            "lateral_limit_m": 0.05257326724748225,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4627704773110629,
+            "sustained_reverse": false,
+            "passed": false
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6709837546441176,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.5399999999999991,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    }
+  ],
+  "ordinary_pass": 128,
+  "errors": 0,
+  "candidate_count": 128,
+  "candidate_pass": 91,
+  "candidate_falls": 0,
+  "accepted": false,
+  "mini": {
+    "success": false,
+    "fell": false,
+    "first_fall_s": null,
+    "score": 0.0,
+    "sustained_mean_vx": 0.29510302166646274,
+    "sustained_p10_vx": 0.18230361850523266,
+    "max_tilt": 9.651310849711809,
+    "min_z": 0.11318240931778818,
+    "straight": [
+      {
+        "at": 6,
+        "heading_error_deg": 7.042626233981064,
+        "lateral_path_m": 0.06733982547394651,
+        "lateral_limit_m": 0.061446826202193564,
+        "passed": false
+      }
+    ],
+    "turns": [
+      {
+        "at": 1,
+        "requested": 0.800000011920929,
+        "signed_yaw_rate": 0.5387011328359499,
+        "sustained_reverse": false,
+        "passed": true
+      }
+    ],
+    "stops": [],
+    "actor_selection_passed": true,
+    "speed_gain_gate": "requires paired ordinary result"
+  },
+  "models": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "80ed4a0a8e20dbbbf281cc67586cccf3b957ff44960b8d34ea73aef20bb90c29",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "80ed4a0a8e20dbbbf281cc67586cccf3b957ff44960b8d34ea73aef20bb90c29"
+  },
+  "comparisons": [
+    {
+      "case": "sprint_alternate",
+      "count": 16,
+      "candidate_vx": 0.29462176372958204,
+      "ordinary_vx": 0.16843471636460838,
+      "ratio": 1.749174814364387,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_left",
+      "count": 16,
+      "candidate_vx": 0.3150227923045977,
+      "ordinary_vx": 0.14950588558119166,
+      "ratio": 2.10709291530546,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_long",
+      "count": 16,
+      "candidate_vx": 0.2864869235099117,
+      "ordinary_vx": 0.20455343973398135,
+      "ratio": 1.4005480615847066,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_repeat",
+      "count": 16,
+      "candidate_vx": 0.29598602985641587,
+      "ordinary_vx": 0.20655082493663512,
+      "ratio": 1.4329936951218536,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_right",
+      "count": 16,
+      "candidate_vx": 0.2891132336705031,
+      "ordinary_vx": 0.1685190830295251,
+      "ratio": 1.7156112439791138,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_shift_first",
+      "count": 16,
+      "candidate_vx": 0.29080900318169817,
+      "ordinary_vx": 0.2041966899324743,
+      "ratio": 1.4241612010354607,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_turn_release",
+      "count": 16,
+      "candidate_vx": 0.31690522947364325,
+      "ordinary_vx": 0.14345707069534025,
+      "ratio": 2.209059671563034,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_w_first",
+      "count": 16,
+      "candidate_vx": 0.28797356860079365,
+      "ordinary_vx": 0.20367343047389502,
+      "ratio": 1.4138985528488137,
+      "speed_pass": true
+    }
+  ]
+}

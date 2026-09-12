@@ -1,0 +1,156 @@
+{
+  "unix": 1789220455.4449534,
+  "started": 22,
+  "finished": 22,
+  "missing_terminal": [],
+  "cleanup_remaining": {},
+  "live_owned_pids": [],
+  "live_owned_groups": [],
+  "live_session_marker_processes": [],
+  "all_godot_processes": [],
+  "docker": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.ID}}\t{{.Names}}\t{{.Image}}"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "gpu": {
+    "command": [
+      "nvidia-smi",
+      "--query-gpu=name,utilization.gpu,memory.used",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "NVIDIA GB10, 4 %, [N/A]",
+    "stderr": ""
+  },
+  "gpu_apps": {
+    "command": [
+      "nvidia-smi",
+      "--query-compute-apps=pid,process_name,used_gpu_memory",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 242 MiB",
+    "stderr": ""
+  },
+  "job_results": [
+    {
+      "actor": "ordinary_reference_replay:d7c8dd9c7e",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "frozen_actor_counterfactuals:543da4133f",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "shared_cuda_smoke:d9bfb3f013",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "shared_vs_split_cuda:5c357c94b5",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "handoff_path_diagnosis:cbdee9de36",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "matched_start_quality:5f90c1d5af",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_shared_vs_split:72b869939a",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "tracking_objective_tests:73fdecc6c1",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "bounded_tracking_ablation:22c445e043",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "post_action_score_validation:a9431ce2dd",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "tracking_sprint_with_s05_ordinary:484b2b16af",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "aligned_gpu_quality:fc49552888",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "sprint_turn_tracking_tests:18d5b8880e",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "sprint_turn_feedback:4337042093",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "complete_gpu_factorial:5723938dd8",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "paired_course_coverage:e2967daec7",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "stop_state_projection:1e94e08cb6",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "complete_paired_curriculum:9f68aa7f72",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "final_code_checks:4a0ed662ca",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "final_evidence_and_cleanup:7f0f9180ef",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "archive_evidence:4ec8e590de",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "archive_evidence_retry:d581e12c0c",
+      "returncode": 0,
+      "reason": "completed"
+    }
+  ],
+  "passed": true,
+  "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+}

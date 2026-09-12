@@ -1,0 +1,120 @@
+{
+  "regression_count": 7,
+  "regression_pass": 7,
+  "regression_failures": [],
+  "ordinary_pass": 128,
+  "errors": 0,
+  "candidate_count": 128,
+  "candidate_pass": 127,
+  "candidate_falls": 0,
+  "accepted": false,
+  "mini": {
+    "success": true,
+    "fell": false,
+    "first_fall_s": null,
+    "score": 0.23216185345296406,
+    "sustained_mean_vx": 0.23216185345296406,
+    "sustained_p10_vx": 0.14097498789176374,
+    "max_tilt": 7.5157139980379215,
+    "min_z": 0.11343872462934586,
+    "straight": [
+      {
+        "at": 6,
+        "heading_error_deg": 4.160095693610571,
+        "lateral_path_m": 0.0244951404130291,
+        "lateral_limit_m": 0.05,
+        "passed": true
+      }
+    ],
+    "turns": [
+      {
+        "at": 1,
+        "requested": 0.800000011920929,
+        "signed_yaw_rate": 0.6765181171839844,
+        "sustained_reverse": false,
+        "passed": true
+      }
+    ],
+    "stops": [],
+    "actor_selection_passed": true,
+    "speed_gain_gate": "requires paired ordinary result"
+  },
+  "models": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "1d2b330a588ae67a11d84e74fedf9ea48b3fadd684f81a552af62078b37c406b"
+  },
+  "comparisons": [
+    {
+      "case": "sprint_alternate",
+      "count": 16,
+      "candidate_vx": 0.2120621814322753,
+      "ordinary_vx": 0.168142226109605,
+      "ratio": 1.2612071716835762,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_left",
+      "count": 16,
+      "candidate_vx": 0.20554340019843828,
+      "ordinary_vx": 0.15286355478148964,
+      "ratio": 1.3446200468924834,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_long",
+      "count": 16,
+      "candidate_vx": 0.23311434059465078,
+      "ordinary_vx": 0.19321023067664278,
+      "ratio": 1.2065320753371058,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_repeat",
+      "count": 16,
+      "candidate_vx": 0.2355965854523042,
+      "ordinary_vx": 0.19399565845638242,
+      "ratio": 1.2144425670498973,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_right",
+      "count": 16,
+      "candidate_vx": 0.2219290587494581,
+      "ordinary_vx": 0.16720928897140488,
+      "ratio": 1.327253169454067,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_shift_first",
+      "count": 16,
+      "candidate_vx": 0.23358786251658745,
+      "ordinary_vx": 0.19315020143297829,
+      "ratio": 1.2093586275530794,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_turn_release",
+      "count": 16,
+      "candidate_vx": 0.20348083371639641,
+      "ordinary_vx": 0.15062002910411837,
+      "ratio": 1.3509546832960524,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_w_first",
+      "count": 16,
+      "candidate_vx": 0.23412179634562477,
+      "ordinary_vx": 0.19348123410403567,
+      "ratio": 1.2100491162865774,
+      "speed_pass": true
+    }
+  ]
+}

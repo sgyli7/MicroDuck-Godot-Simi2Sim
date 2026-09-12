@@ -10,7 +10,7 @@ import argparse,copy,hashlib,json,os,time,traceback
 import numpy as np
 import torch
 from sim2sim.play_input import PlayBrain,TwistLimits
-from sim2sim.research.sprint_courses import keyboard_courses
+from sim2sim.standalone.sprint import templates
 from sim2sim.research.models import Policy,Critic,NativeAnchor,export_policy
 from sim2sim.research.torch_anchor import TorchAnchor
 from sim2sim.research.torch_walking import rotate
@@ -24,7 +24,7 @@ from sim2sim.research.locomotion_objectives import command_tracking
 def main():
  p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);p.add_argument('--feet',choices=['source','jolt'],required=True)
  p.add_argument('--iterations',type=int,default=128);p.add_argument('--envs',type=int,default=512);p.add_argument('--steps',type=int,default=64)
- p.add_argument('--ordinary-courses',action='store_true');p.add_argument('--objective',choices=['progress','tracking'],default='progress');p.add_argument('--controller',choices=['split','shared'],default='split');p.add_argument('--teacher-replay',type=Path);p.add_argument('--teacher-weight',type=float,default=.02);p.add_argument('--constraints',choices=['none','positive','cat'],default='none');p.add_argument('--cuda-graphs',action='store_true');p.add_argument('--seed',type=int,default=951101);p.add_argument('--resume',type=Path);a=p.parse_args()
+ p.add_argument('--objective',choices=['progress','tracking'],default='progress');p.add_argument('--controller',choices=['split','shared'],default='split');p.add_argument('--teacher-replay',type=Path);p.add_argument('--teacher-weight',type=float,default=.02);p.add_argument('--constraints',choices=['none','positive','cat'],default='none');p.add_argument('--cuda-graphs',action='store_true');p.add_argument('--seed',type=int,default=951101);p.add_argument('--resume',type=Path);a=p.parse_args()
  session=Path(os.environ.get('SIM2SIM_ACTIVE_BUDGET_DIR','/nonexistent'))
  if not session.exists() or not a.output.resolve().is_relative_to(session.resolve()):raise RuntimeError('Active-budget supervisor required')
  if not 1<=a.iterations<=256 or not 1<=a.envs<=512 or not 1<=a.steps<=128:raise ValueError('Unbounded training request')
@@ -45,8 +45,8 @@ def main():
  constraints=SprintConstraints(a.envs,'cuda') if a.constraints!='none' else None
  constraint_returns=ConstraintReturns(4,'cuda') if constraints else None
  # All eight actual input programs, including released modifier and final idle.
- tapes=[];selection=[];lengths=[];courses=keyboard_courses(a.ordinary_courses);course_count=len(courses)
- for _,case in courses:
+ tapes=[];selection=[];lengths=[]
+ for case in templates().values():
   brain=PlayBrain(has_standing=False,has_sprint=True,lim=TwistLimits(**settings['twist_limits']));commands=[];chosen=[]
   lengths.append(round(case['seconds']/.02))
   for i in range(1250):
@@ -58,7 +58,7 @@ def main():
  lo=torch.tensor(world.model.jnt_range[world.model.actuator_trnid[:,0],0],device='cuda',dtype=torch.float32)
  hi=torch.tensor(world.model.jnt_range[world.model.actuator_trnid[:,0],1],device='cuda',dtype=torch.float32)
  def reset(ids):
-  program[ids]=torch.randint(course_count,(len(ids),),device='cuda');phase[ids]=0
+  program[ids]=torch.randint(8,(len(ids),),device='cuda');phase[ids]=0
   jitter=(torch.rand((len(ids),14),device='cuda')*2-1)*.015
   jitter=(world.home+jitter).clamp(lo,hi)-world.home
   world.reset(ids,jitter)
@@ -71,7 +71,7 @@ def main():
   diff=world.control.yaw_target-yaw;heading=torch.atan2(diff.sin(),diff.cos()).float()
   displacement=pos[:,:2].double()-world.control.origin;path=-world.control.path_yaw.sin()*displacement[:,0]+world.control.path_yaw.cos()*displacement[:,1]
   fraction=phase.float()/lengths[program]
-  extra=torch.cat((local,pos[:,2:3]/.125,heading[:,None],path.float()[:,None]/.05,sprint.float()[:,None],fraction[:,None],((lengths[program]-phase).float()/1250)[:,None],(program.float()/(course_count-1))[:,None]),dim=1)
+  extra=torch.cat((local,pos[:,2:3]/.125,heading[:,None],path.float()[:,None]/.05,sprint.float()[:,None],fraction[:,None],((lengths[program]-phase).float()/1250)[:,None],(program.float()/7)[:,None]),dim=1)
   return torch.cat((obs,extra),dim=1)
  def observe():
   requested=tapes[program,phase];sprint=selection[program,phase];obs,command=world.observe(requested,sprint)
@@ -96,13 +96,13 @@ def main():
   fell=(pos[:,2]<.055)|(tilt>np.pi/3)
   value=progression-tracking-balance-smooth-10*fell.float()
   return value,fell,dict(progress=progression.mean(),tracking=tracking.mean(),balance=balance.mean(),smooth=smooth.mean())
- files=[Path(__file__),Path('scripts/sprint_gpu_world.py'),Path('scripts/sprint_gpu_proxy.py'),Path('src/sim2sim/research/torch_anchor.py'),Path('src/sim2sim/research/torch_walking.py'),Path('src/sim2sim/research/models.py'),Path('src/sim2sim/research/constraint_returns.py'),Path('src/sim2sim/research/sprint_constraints.py'),Path('src/sim2sim/research/walking_retention.py'),Path('src/sim2sim/research/locomotion_objectives.py'),Path('src/sim2sim/research/sprint_courses.py')]
- config=dict(course_names=[name for name,_ in courses],critic_program_divisor=course_count-1,source=str(source),template=str(template),template_sha256=hashlib.sha256(template.read_bytes()).hexdigest(),source_sha256=anchor.sha256,controller=a.controller,teacher_retention=retention.audit if retention else None,teacher_weight=a.teacher_weight if retention else 0.,constraints=a.constraints,constraint_probability_schedule='0.05 to0.25 over128 iterations, EMA .95' if a.constraints=='cat' else 'zero',variant='residual',std=.02,bound=.2,feet=a.feet,cuda_graphs=a.cuda_graphs,iterations=a.iterations,envs=a.envs,steps=a.steps,seed=a.seed,control=str(control),control_sha256=hashlib.sha256(control.read_bytes()).hexdigest(),code_sha256={str(f):hashlib.sha256(f.read_bytes()).hexdigest() for f in files},device=torch.cuda.get_device_name(),collection_device='cuda',learner_device='cuda',ordinary_controller='shared learned actor' if a.controller=='shared' else 'frozen S05',actor_mask='all phases' if a.controller=='shared' else 'actual sprint selection only',reward='command_tracking_cat_table1_v1' if a.objective=='tracking' else 'native_progress_v1',gamma=.99,lam=.95,epochs=4,minibatch=4096,actor_lr=1e-4,critic_lr=3e-4,target_kl=.008,critic_warmup=2,reset='uniform yaw and joint noise +/- .015 rad, clipped joint limits',task_termination='finite keyboard episode ends after final stop; no continuing-task bootstrap',game_physics_changed=False,foot_hulls=world.feet,inertia=world.inertia,torch=torch.__version__,cuda=torch.version.cuda,started_unix=time.time())
+ files=[Path(__file__),Path('scripts/sprint_gpu_world.py'),Path('scripts/sprint_gpu_proxy.py'),Path('src/sim2sim/research/torch_anchor.py'),Path('src/sim2sim/research/torch_walking.py'),Path('src/sim2sim/research/models.py'),Path('src/sim2sim/research/constraint_returns.py'),Path('src/sim2sim/research/sprint_constraints.py'),Path('src/sim2sim/research/walking_retention.py'),Path('src/sim2sim/research/locomotion_objectives.py')]
+ config=dict(source=str(source),template=str(template),template_sha256=hashlib.sha256(template.read_bytes()).hexdigest(),source_sha256=anchor.sha256,controller=a.controller,teacher_retention=retention.audit if retention else None,teacher_weight=a.teacher_weight if retention else 0.,constraints=a.constraints,constraint_probability_schedule='0.05 to0.25 over128 iterations, EMA .95' if a.constraints=='cat' else 'zero',variant='residual',std=.02,bound=.2,feet=a.feet,cuda_graphs=a.cuda_graphs,iterations=a.iterations,envs=a.envs,steps=a.steps,seed=a.seed,control=str(control),control_sha256=hashlib.sha256(control.read_bytes()).hexdigest(),code_sha256={str(f):hashlib.sha256(f.read_bytes()).hexdigest() for f in files},device=torch.cuda.get_device_name(),collection_device='cuda',learner_device='cuda',ordinary_controller='shared learned actor' if a.controller=='shared' else 'frozen S05',actor_mask='all phases' if a.controller=='shared' else 'actual sprint selection only',reward='command_tracking_cat_table1_v1' if a.objective=='tracking' else 'native_progress_v1',gamma=.99,lam=.95,epochs=4,minibatch=4096,actor_lr=1e-4,critic_lr=3e-4,target_kl=.008,critic_warmup=2,reset='uniform yaw and joint noise +/- .015 rad, clipped joint limits',task_termination='finite keyboard episode ends after final stop; no continuing-task bootstrap',game_physics_changed=False,foot_hulls=world.feet,inertia=world.inertia,torch=torch.__version__,cuda=torch.version.cuda,started_unix=time.time())
  atomic_json(a.output/'config.json',config)
  initial_iteration=0
  if a.resume:
   old=torch.load(a.resume,map_location='cuda',weights_only=False)
-  for key in ['source_sha256','template_sha256','variant','std','bound','feet','cuda_graphs','envs','steps','seed','control_sha256','code_sha256','reward','constraints','controller','teacher_retention','teacher_weight','course_names']:
+  for key in ['source_sha256','template_sha256','variant','std','bound','feet','cuda_graphs','envs','steps','seed','control_sha256','code_sha256','reward','constraints','controller','teacher_retention','teacher_weight']:
    if config[key]!=old['config'][key]:raise ValueError('Resume changed '+key)
   policy.load_state_dict(old['policy']);critic.load_state_dict(old['critic']);ao.load_state_dict(old['actor_optimizer']);co.load_state_dict(old['critic_optimizer']);initial_iteration=old['iteration']
   torch.set_rng_state(old['rng_cpu'].cpu());torch.cuda.set_rng_state(old['rng_cuda'].cpu())
@@ -174,7 +174,6 @@ def main():
     for g in ao.param_groups:g['lr']=max(1e-6,g['lr']*.8)
    torch.cuda.synchronize();learning_s=time.monotonic()-learn_start
    rec=dict(iteration=iteration,samples=iteration*a.steps*a.envs,collection_s=collection_s,learning_s=learning_s,reward=float(b['reward'].mean()),actor_samples=int(b['mask'].sum()),actor_updates=updates,kl=actual_kl,rejected=rejected,actor_lr=ao.param_groups[0]['lr'],falls=falls_total,completed_tasks=completed_total,terms=torch.stack(terms).mean(0).tolist(),elapsed_s=time.monotonic()-start)
-   rec['course_samples']=torch.bincount((flat['cobs'][:,-1]*(course_count-1)).round().long(),minlength=course_count).tolist()
    if retention:rec['teacher_kl']=sum(teacher_losses)/max(1,len(teacher_losses))
    if constraint_returns:rec.update(constraint_fraction=(cost>0).float().mean((0,1)).tolist(),constraint_probability=float(probability.mean()),constraint_scale=constraint_returns.scale.tolist())
    records.append(rec)

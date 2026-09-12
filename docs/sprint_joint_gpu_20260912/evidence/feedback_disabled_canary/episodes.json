@@ -1,0 +1,1313 @@
+{
+  "source": "results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/summary.json",
+  "source_sha256": "882efa4efa8c98a98872862c30c84fa6b25e6f698f2908fddc8eb739e0b531ae",
+  "errors": 0,
+  "models": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "9c977fb98ffbaa5e658140592dcc4ed447c1f9aa037a661b8b4593417d19f994"
+  },
+  "episodes": [
+    {
+      "case": "remove_forward_prefix",
+      "seed": 923000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/regressions/6.json",
+      "case_sha256": "f6285268a459acde575bfd29b254ecdee726643299a2a77c3806c473d12a97ac",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.22267411475688167,
+        "sustained_mean_vx": 0.22267411475688167,
+        "sustained_p10_vx": 0.13020895568704788,
+        "max_tilt": 7.639018902114302,
+        "min_z": 0.11340246340722603,
+        "straight": [
+          {
+            "at": 6,
+            "heading_error_deg": 5.780959094209503,
+            "lateral_path_m": 0.028925054153122243,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 1,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7133788086044004,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/6/attempt_01/trace.json",
+        "sha256": "55cdfc55675f005f6f23e3d3b684a76936668434577c4ef59fb21fd9d5a09a35",
+        "bytes": 2968054
+      }
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_alternate_927000.json",
+      "case_sha256": "1291fd7bb78764e608be9c31d15313f45595f76e5dead7a82cbfbc17739e30ee",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.20578099464197658,
+        "sustained_mean_vx": 0.20578099464197658,
+        "sustained_p10_vx": 0.10935509839844636,
+        "max_tilt": 7.927067991495281,
+        "min_z": 0.11260302385573653,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.8146770626097766,
+            "lateral_path_m": 0.022019553461370217,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 3.850458085211659,
+            "lateral_path_m": 0.03280684316458243,
+            "lateral_limit_m": 0.10900315695073566,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7629086159585744,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.63437302144736,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 0.5800000000000001,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_alternate_927000/attempt_01/trace.json",
+        "sha256": "76ac0c70624046f834eccd9c1aa042856ffc9af687d8b39f24a63b9aff0879ef",
+        "bytes": 6762937
+      }
+    },
+    {
+      "case": "sprint_alternate_ordinary",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_alternate_ordinary_927000.json",
+      "case_sha256": "0534606594bf55e0d23f5cda9c1bc696401a282287de765664453960b6edce9d",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.17090601694794597,
+        "sustained_mean_vx": 0.17090601694794597,
+        "sustained_p10_vx": 0.06978788185869643,
+        "max_tilt": 5.808943594144589,
+        "min_z": 0.11296390853105266,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.631589290510866,
+            "lateral_path_m": 0.016949037149440023,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 5.639649900013293,
+            "lateral_path_m": 0.033943033571152276,
+            "lateral_limit_m": 0.09563343153817351,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7383027072348404,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6074353647121266,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_alternate_ordinary_927000/attempt_01/trace.json",
+        "sha256": "1c642649cd9cefa0bd309fd1f17a2c1b4ecda9333729970502fe20c0e6b8a095",
+        "bytes": 6733518
+      }
+    },
+    {
+      "case": "sprint_left",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_left_927000.json",
+      "case_sha256": "e6c78cac7a154dc99775d8549fb7c0278ec53b69fc2bd37de53091b0ed398a87",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.20825511322339169,
+        "sustained_mean_vx": 0.20825511322339169,
+        "sustained_p10_vx": 0.11796175061282371,
+        "max_tilt": 7.927067991495281,
+        "min_z": 0.11260302385573653,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.8146770626097766,
+            "lateral_path_m": 0.022019553461370217,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 5.377967796881612,
+            "lateral_path_m": 0.02976833009362996,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7737761452090182,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 0.7599999999999998,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_left_927000/attempt_01/trace.json",
+        "sha256": "ad7f04fbf12a7091cc95b5afd0f805ee2135d0a28a413f47d05fcca991a32e8e",
+        "bytes": 5332780
+      }
+    },
+    {
+      "case": "sprint_left_ordinary",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_left_ordinary_927000.json",
+      "case_sha256": "73daa277f3dad9c44955c6c78ea87339f33aef1280bb4975ac1c30a757b33587",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.15589567023770812,
+        "sustained_mean_vx": 0.15589567023770812,
+        "sustained_p10_vx": 0.060423171660541224,
+        "max_tilt": 6.287821553232271,
+        "min_z": 0.11296390853105266,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.631589290510866,
+            "lateral_path_m": 0.016949037149440023,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 4.356246869625225,
+            "lateral_path_m": 0.02469553038750341,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7537383794520971,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 0.8800000000000008,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_left_ordinary_927000/attempt_01/trace.json",
+        "sha256": "621e639bca3e4077ecfbaf4b5377aec0b9c8ce1c2189329320a67e011170791f",
+        "bytes": 5291176
+      }
+    },
+    {
+      "case": "sprint_long",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_long_927000.json",
+      "case_sha256": "ba6de3e0d2238c4dece6f3a391cf0d6c32f3cf32ca18abca95dc6cc6641af23d",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.2294282103501678,
+        "sustained_mean_vx": 0.2294282103501678,
+        "sustained_p10_vx": 0.11900846138201737,
+        "max_tilt": 7.927067991495281,
+        "min_z": 0.11260302385573653,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 3.1673656377727863,
+            "lateral_path_m": 0.029488862792707016,
+            "lateral_limit_m": 0.452243580119978,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_long_927000/attempt_01/trace.json",
+        "sha256": "a316e8b2c4e45ffff8df9892f84c5bb9d395032150c488147528eb4684436f64",
+        "bytes": 9283120
+      }
+    },
+    {
+      "case": "sprint_long_ordinary",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_long_ordinary_927000.json",
+      "case_sha256": "01c6a280f5b1c8c544ce382571ab415331717014d0ac71a50b0d942d927f9a79",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.19430732520393953,
+        "sustained_mean_vx": 0.19430732520393953,
+        "sustained_p10_vx": 0.08911631925806501,
+        "max_tilt": 5.703992383918318,
+        "min_z": 0.11296390853105266,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.7981919679923277,
+            "lateral_path_m": 0.027201914773410163,
+            "lateral_limit_m": 0.38307270001915067,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_long_ordinary_927000/attempt_01/trace.json",
+        "sha256": "390e1d4456ef535183d2792eac0ab585d49661166ae595cf85a3448cc2038c3c",
+        "bytes": 9263713
+      }
+    },
+    {
+      "case": "sprint_repeat",
+      "seed": 925002,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/regressions/0.json",
+      "case_sha256": "4c7ecf7f6a65efec555d6770c17db1e8836d272d1db7cd23adef228f79e455c0",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.22837699941381148,
+        "sustained_mean_vx": 0.22837699941381148,
+        "sustained_p10_vx": 0.11373133018635034,
+        "max_tilt": 7.821889011468436,
+        "min_z": 0.1127929120155444,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 3.1202620278406443,
+            "lateral_path_m": 0.022805991747354853,
+            "lateral_limit_m": 0.06335519724515519,
+            "passed": true
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 3.4733979062163214,
+            "lateral_path_m": 0.022513367849088195,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 2.5232061354096995,
+            "lateral_path_m": 0.017978619286216496,
+            "lateral_limit_m": 0.06642136190865329,
+            "passed": true
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 2.876264297469249,
+            "lateral_path_m": 0.02372569164248267,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 0.5999999999999996,
+            "passed": true
+          },
+          {
+            "at": 14,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/0/attempt_01/trace.json",
+        "sha256": "27d2725f874173afb49b484cb196848fca024a8026d6b20eadb31727f29b6b06",
+        "bytes": 6458979
+      }
+    },
+    {
+      "case": "sprint_repeat",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_repeat_927000.json",
+      "case_sha256": "0d7b6c182c52cdbdd9a8469f88bcec98082911af85bdbc3a4ac07ce6f4458421",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.23227040302452945,
+        "sustained_mean_vx": 0.23227040302452945,
+        "sustained_p10_vx": 0.12258952514744209,
+        "max_tilt": 7.927067991495281,
+        "min_z": 0.11260302385573653,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.8146770626097766,
+            "lateral_path_m": 0.022019553461370217,
+            "lateral_limit_m": 0.06250710213100039,
+            "passed": true
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 2.7767383006991855,
+            "lateral_path_m": 0.01946871035842191,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 3.9886266414134357,
+            "lateral_path_m": 0.02096341092673018,
+            "lateral_limit_m": 0.0693835496443562,
+            "passed": true
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 3.7061350001182896,
+            "lateral_path_m": 0.022476420285047954,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 0.9000000000000004,
+            "passed": true
+          },
+          {
+            "at": 14,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_repeat_927000/attempt_01/trace.json",
+        "sha256": "0bf10226d268e438e6902d1669080c7bdd1b8181f98ca8c5ff5763ab3aa4c7e5",
+        "bytes": 6465187
+      }
+    },
+    {
+      "case": "sprint_repeat_ordinary",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_repeat_ordinary_927000.json",
+      "case_sha256": "eafb56ef3d6470746c9066db086389e765b9e6366842313f3b98d27274cdb8cf",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.1971155018088808,
+        "sustained_mean_vx": 0.1971155018088808,
+        "sustained_p10_vx": 0.09199073900435732,
+        "max_tilt": 5.678187503611749,
+        "min_z": 0.11296390853105266,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.631589290510866,
+            "lateral_path_m": 0.01806364172818406,
+            "lateral_limit_m": 0.0540215708210938,
+            "passed": true
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 2.2927413576053945,
+            "lateral_path_m": 0.019144519279204283,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 2.584850548813447,
+            "lateral_path_m": 0.026437520960966673,
+            "lateral_limit_m": 0.05802449967327003,
+            "passed": true
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 2.3859989951576828,
+            "lateral_path_m": 0.024839991540163087,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          },
+          {
+            "at": 14,
+            "onset_s": 1.3399999999999999,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_repeat_ordinary_927000/attempt_01/trace.json",
+        "sha256": "b725ecad0d53b1b74fc20a0bd53c6db09a5c9cdd649680a65e252d006eb6b8d6",
+        "bytes": 6390144
+      }
+    },
+    {
+      "case": "sprint_right",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_right_927000.json",
+      "case_sha256": "12bd07817b9970050eb71dc09838412ef74525d3f917da2eb35fb616469e1325",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.21739785253125718,
+        "sustained_mean_vx": 0.21739785253125718,
+        "sustained_p10_vx": 0.11847102486391795,
+        "max_tilt": 8.505545141133686,
+        "min_z": 0.11260302385573653,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.8146770626097766,
+            "lateral_path_m": 0.022019553461370217,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 6.554368269464983,
+            "lateral_path_m": 0.02848788945787368,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7025194340769639,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 0.6799999999999997,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_right_927000/attempt_01/trace.json",
+        "sha256": "f2567b5b99d40ece2a4c187fcb879804469bbb17d2561190ae5e1a038ac406d4",
+        "bytes": 5349933
+      }
+    },
+    {
+      "case": "sprint_right_ordinary",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_right_ordinary_927000.json",
+      "case_sha256": "b30605f91e14dd6f7ad4af654cff8b07df868796c0bd7bdccff3844eeacba0be",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.1722802547679818,
+        "sustained_mean_vx": 0.1722802547679818,
+        "sustained_p10_vx": 0.0812633828254864,
+        "max_tilt": 5.55299830498852,
+        "min_z": 0.11296390853105266,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.631589290510866,
+            "lateral_path_m": 0.016949037149440023,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 4.743448518707712,
+            "lateral_path_m": 0.028795080365083273,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7205753339731439,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 0.46000000000000085,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_right_ordinary_927000/attempt_01/trace.json",
+        "sha256": "8d6b597f9917ccded6331a23485948f0c4cb95cdff263e0b361c0cebd5848fa2",
+        "bytes": 5310048
+      }
+    },
+    {
+      "case": "sprint_shift_first",
+      "seed": 925012,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/regressions/1.json",
+      "case_sha256": "cb7e3cb47926564b986e2a2eb8926a7f8c57d183f750864f7cf60c225aaf576b",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.2303187708583138,
+        "sustained_mean_vx": 0.2303187708583138,
+        "sustained_p10_vx": 0.1218595263265647,
+        "max_tilt": 7.962137483647339,
+        "min_z": 0.11257645354930534,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.6877361561814475,
+            "lateral_path_m": 0.03609906879860367,
+            "lateral_limit_m": 0.17842757498763998,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 0.8399999999999999,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/1/attempt_01/trace.json",
+        "sha256": "935398521aacacbd89de78f0ea10d71e43c75924b3b0f9f2a946f2d73187eb22",
+        "bytes": 4531129
+      }
+    },
+    {
+      "case": "sprint_shift_first",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_shift_first_927000.json",
+      "case_sha256": "c97838546c5c2789c501a9174f96ce8dd620d84ad02ce3384d316a3c9f5646bd",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.22940471731893852,
+        "sustained_mean_vx": 0.22940471731893852,
+        "sustained_p10_vx": 0.11900846138201737,
+        "max_tilt": 7.927067991495281,
+        "min_z": 0.11260302385573653,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.8146770626097766,
+            "lateral_path_m": 0.022118842270175576,
+            "lateral_limit_m": 0.1783800724372532,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 0.7400000000000002,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_shift_first_927000/attempt_01/trace.json",
+        "sha256": "c9ff1b1b8d7ea361e70ce4fa67c29dc22f13921f28b21a9f68e0565c6d6d2248",
+        "bytes": 4540364
+      }
+    },
+    {
+      "case": "sprint_shift_first_ordinary",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_shift_first_ordinary_927000.json",
+      "case_sha256": "59052d6f7d3b109cf8855be37478e6179924b589880968d6d413e314ab5b7f94",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.1941301308605488,
+        "sustained_mean_vx": 0.1941301308605488,
+        "sustained_p10_vx": 0.09066785478149603,
+        "max_tilt": 5.678187503611749,
+        "min_z": 0.11296390853105266,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.7981919679923277,
+            "lateral_path_m": 0.022822570349344595,
+            "lateral_limit_m": 0.15075895248617815,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_shift_first_ordinary_927000/attempt_01/trace.json",
+        "sha256": "aec3399631a296b57d0145aa2137b607953ea85d71d063e685fa8332eac02cf7",
+        "bytes": 4498775
+      }
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 925005,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/regressions/2.json",
+      "case_sha256": "6787958659f85f1c8997ea314fc058ea30a2fab380721b7797d6e8604174ef40",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.20610366156841373,
+        "sustained_mean_vx": 0.20610366156841373,
+        "sustained_p10_vx": 0.11573548367927898,
+        "max_tilt": 7.56535264217864,
+        "min_z": 0.11279855791702745,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 3.412600598820808,
+            "lateral_path_m": 0.022108624695046528,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 5.506567998737783,
+            "lateral_path_m": 0.02442181671369925,
+            "lateral_limit_m": 0.0511141162496785,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7941996087893646,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7882928717860951,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.8000000000000007,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/2/attempt_01/trace.json",
+        "sha256": "d6dd5ce8943f012ae38f2e24bb28098d4717ed72fabdaa3f84d6fe0fb74ca0df",
+        "bytes": 6060068
+      }
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 925007,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/regressions/3.json",
+      "case_sha256": "879483c3ef5b3b4a3566693f947e807e6348d2baae01d03756d65fc70b9ec14e",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.20106486816753966,
+        "sustained_mean_vx": 0.20106486816753966,
+        "sustained_p10_vx": 0.11187571090289537,
+        "max_tilt": 7.963553143265515,
+        "min_z": 0.11288533033090131,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.370183511622748,
+            "lateral_path_m": 0.025749642833817143,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 7.53189395328111,
+            "lateral_path_m": 0.027699781295346258,
+            "lateral_limit_m": 0.05273950300598862,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8022432038182639,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.703236468454849,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 1.0600000000000005,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/3/attempt_01/trace.json",
+        "sha256": "f87226bad317e6b24f50101d5d7caf9d377a86d500c3fc6b29a059428802880c",
+        "bytes": 6060874
+      }
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_turn_release_927000.json",
+      "case_sha256": "dfeb57cf1aea91235d45a7de2e3a782e5e26bb8d2d92cc5b064b037ab488fc3d",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.207779263185325,
+        "sustained_mean_vx": 0.207779263185325,
+        "sustained_p10_vx": 0.11796175061282371,
+        "max_tilt": 7.927067991495281,
+        "min_z": 0.11260302385573653,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.8146770626097766,
+            "lateral_path_m": 0.022019553461370217,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 6.227288796122692,
+            "lateral_path_m": 0.0272803926066517,
+            "lateral_limit_m": 0.05528992189759674,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7804918602560139,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7160719819052838,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.5,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_turn_release_927000/attempt_01/trace.json",
+        "sha256": "be6c6f3872dabad14dd92dfcaa46e6c520af5ff9c98cea18e59244556b41d519",
+        "bytes": 6032068
+      }
+    },
+    {
+      "case": "sprint_turn_release_ordinary",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_turn_release_ordinary_927000.json",
+      "case_sha256": "9a0abebc4c86af2be7105b4ff1751997ca01832783dbfb9b885ff81ef5b95554",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.15463472447243,
+        "sustained_mean_vx": 0.15463472447243,
+        "sustained_p10_vx": 0.06037585810528912,
+        "max_tilt": 5.6898042659778545,
+        "min_z": 0.11296390853105266,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.631589290510866,
+            "lateral_path_m": 0.016949037149440023,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 5.1588759484665845,
+            "lateral_path_m": 0.029311374553860063,
+            "lateral_limit_m": 0.05116763919664672,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7449067927025658,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7901326297183554,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.41999999999999993,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_turn_release_ordinary_927000/attempt_01/trace.json",
+        "sha256": "4f5f47e3948509c393a3050e9699382ba33f8973247bf30cf14274ec394a5be8",
+        "bytes": 6068366
+      }
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 925006,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/regressions/4.json",
+      "case_sha256": "4067dbb48ac5d8e9d5a3d10aa91e3502b85bbc5a0646b34a41d767e8c86c3603",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.2307214017205603,
+        "sustained_mean_vx": 0.2307214017205603,
+        "sustained_p10_vx": 0.11063103230238441,
+        "max_tilt": 7.517569743788298,
+        "min_z": 0.1128727041658104,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.106977284253909,
+            "lateral_path_m": 0.01749808517659625,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 2.822773308432357,
+            "lateral_path_m": 0.033296609041166214,
+            "lateral_limit_m": 0.15907849231421187,
+            "passed": true
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 4.076547516865795,
+            "lateral_path_m": 0.03140602176530932,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.5,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/4/attempt_01/trace.json",
+        "sha256": "2d41a3b3457b19053b56e3e93e644a568e88c1d126cde4a1fe6900cac6e7c9ad",
+        "bytes": 6037599
+      }
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 925015,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/regressions/5.json",
+      "case_sha256": "0a410030ffb44855fcba37e193f934dfa582ff39638831881a6530a5bd6011b6",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.2331834066217104,
+        "sustained_mean_vx": 0.2331834066217104,
+        "sustained_p10_vx": 0.12754154870593712,
+        "max_tilt": 7.9838965229782,
+        "min_z": 0.11284201380184886,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.875420669127339,
+            "lateral_path_m": 0.021508083931166294,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 3.9341394863788843,
+            "lateral_path_m": 0.04570336393653596,
+            "lateral_limit_m": 0.1606980598895151,
+            "passed": true
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 5.457278139405077,
+            "lateral_path_m": 0.04881773258174801,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.8000000000000007,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/5/attempt_01/trace.json",
+        "sha256": "ec19e3268408efb60f35b5bdac1a46c7cad2420cb84e82a11b885d346729059e",
+        "bytes": 6026174
+      }
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_w_first_927000.json",
+      "case_sha256": "4a59bbafa14ea92e83cb3b2b8bcd1f4b67be5ea644b9a67ed25c00c847719af9",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.23166043575743875,
+        "sustained_mean_vx": 0.23166043575743875,
+        "sustained_p10_vx": 0.12231947428652323,
+        "max_tilt": 7.68013690467513,
+        "min_z": 0.11296390853105266,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.631589290510866,
+            "lateral_path_m": 0.016949037149440023,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 2.7592355445833316,
+            "lateral_path_m": 0.03180931594170283,
+            "lateral_limit_m": 0.15874593542724377,
+            "passed": true
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 3.281837062123661,
+            "lateral_path_m": 0.033458413189125805,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.4800000000000004,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_w_first_927000/attempt_01/trace.json",
+        "sha256": "660b2bf786789a673d845f9f07feb1529fd5518c2f0ad3e2a15310ddada78cea",
+        "bytes": 6033919
+      }
+    },
+    {
+      "case": "sprint_w_first_ordinary",
+      "seed": 927000,
+      "completed": true,
+      "returncode": 0,
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/cases/sprint_w_first_ordinary_927000.json",
+      "case_sha256": "44d6ed67015e87cdbc93100f7ace96503754b1ea73c400d702069f1b058b5e35",
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.1947680468987156,
+        "sustained_mean_vx": 0.1947680468987156,
+        "sustained_p10_vx": 0.09215704434251433,
+        "max_tilt": 5.678187503611749,
+        "min_z": 0.11296390853105266,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.631589290510866,
+            "lateral_path_m": 0.016949037149440023,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 2.8786459030288647,
+            "lateral_path_m": 0.02714926319283406,
+            "lateral_limit_m": 0.13451967749500146,
+            "passed": true
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 2.2076838552720606,
+            "lateral_path_m": 0.02843424920600021,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.46000000000000085,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/feedback_disabled_canary/suite/sprint_w_first_ordinary_927000/attempt_01/trace.json",
+        "sha256": "38abc4a542293ecac204bcd2f47228aae9fb154c04594162f4bbacb90fcea20b",
+        "bytes": 6011691
+      }
+    }
+  ]
+}

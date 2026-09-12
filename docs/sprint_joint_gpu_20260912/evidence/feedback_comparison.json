@@ -1,0 +1,272 @@
+{
+  "arm": "native_feedback",
+  "errors": [],
+  "counts": {
+    "sprint_pass": 124,
+    "sprint_count": 128,
+    "ordinary_pass": 128,
+    "ordinary_count": 128,
+    "regression_pass": 7,
+    "regression_count": 7
+  },
+  "falls": 0,
+  "lost_baseline_successes": [
+    [
+      "sprint_alternate",
+      927009
+    ],
+    [
+      "sprint_left",
+      927004
+    ],
+    [
+      "sprint_right",
+      927005
+    ]
+  ],
+  "fixed_baseline_failures": [
+    [
+      "remove_forward_prefix",
+      923000
+    ],
+    [
+      "sprint_right",
+      927001
+    ],
+    [
+      "sprint_right",
+      927002
+    ],
+    [
+      "sprint_right",
+      927004
+    ],
+    [
+      "sprint_right",
+      927015
+    ]
+  ],
+  "failed": [
+    {
+      "case": [
+        "sprint_alternate",
+        927009
+      ],
+      "fell": false,
+      "straight": [],
+      "turns": [
+        {
+          "at": 6,
+          "requested": 0.800000011920929,
+          "signed_yaw_rate": 0.46100935244911806,
+          "sustained_reverse": false,
+          "passed": false
+        }
+      ],
+      "stops": []
+    },
+    {
+      "case": [
+        "sprint_left",
+        927004
+      ],
+      "fell": false,
+      "straight": [
+        {
+          "at": 8,
+          "heading_error_deg": 7.177029826733811,
+          "lateral_path_m": 0.05236196214549761,
+          "lateral_limit_m": 0.05,
+          "passed": false
+        }
+      ],
+      "turns": [],
+      "stops": []
+    },
+    {
+      "case": [
+        "sprint_right",
+        927003
+      ],
+      "fell": false,
+      "straight": [
+        {
+          "at": 8,
+          "heading_error_deg": 11.09065783118321,
+          "lateral_path_m": 0.109477458466037,
+          "lateral_limit_m": 0.05,
+          "passed": false
+        }
+      ],
+      "turns": [],
+      "stops": []
+    },
+    {
+      "case": [
+        "sprint_right",
+        927005
+      ],
+      "fell": false,
+      "straight": [],
+      "turns": [
+        {
+          "at": 3,
+          "requested": 0.800000011920929,
+          "signed_yaw_rate": 0.46964456681491473,
+          "sustained_reverse": false,
+          "passed": false
+        }
+      ],
+      "stops": []
+    }
+  ],
+  "paired_speed": [
+    {
+      "case": "sprint_alternate",
+      "count": 16,
+      "candidate_vx": 0.17868732695045056,
+      "ordinary_vx": 0.168142226109605,
+      "ratio": 1.0627153635635325,
+      "speed_pass": false
+    },
+    {
+      "case": "sprint_left",
+      "count": 16,
+      "candidate_vx": 0.20244261716202838,
+      "ordinary_vx": 0.15286355478148964,
+      "ratio": 1.3243354012760555,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_long",
+      "count": 16,
+      "candidate_vx": 0.23038350728795004,
+      "ordinary_vx": 0.19321023067664278,
+      "ratio": 1.1923980758219814,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_repeat",
+      "count": 16,
+      "candidate_vx": 0.23254324978432872,
+      "ordinary_vx": 0.19399565845638242,
+      "ratio": 1.1987033711716453,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_right",
+      "count": 16,
+      "candidate_vx": 0.14591959382024225,
+      "ordinary_vx": 0.16720928897140488,
+      "ratio": 0.8726763609717672,
+      "speed_pass": false
+    },
+    {
+      "case": "sprint_shift_first",
+      "count": 16,
+      "candidate_vx": 0.22970759641066552,
+      "ordinary_vx": 0.19315020143297829,
+      "ratio": 1.1892692562910547,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_turn_release",
+      "count": 16,
+      "candidate_vx": 0.20776922303180223,
+      "ordinary_vx": 0.15062002910411837,
+      "ratio": 1.3794262573683254,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_w_first",
+      "count": 16,
+      "candidate_vx": 0.2307175357568961,
+      "ordinary_vx": 0.19348123410403567,
+      "ratio": 1.1924543319422818,
+      "speed_pass": true
+    }
+  ],
+  "ordinary_retention": [
+    {
+      "case": "sprint_alternate",
+      "baseline_vx": 0.168142226109605,
+      "candidate_vx": 0.168142226109605,
+      "ratio": 1.0,
+      "passed": true
+    },
+    {
+      "case": "sprint_left",
+      "baseline_vx": 0.15286355478148964,
+      "candidate_vx": 0.15286355478148964,
+      "ratio": 1.0,
+      "passed": true
+    },
+    {
+      "case": "sprint_long",
+      "baseline_vx": 0.19321023067664278,
+      "candidate_vx": 0.19321023067664278,
+      "ratio": 1.0,
+      "passed": true
+    },
+    {
+      "case": "sprint_repeat",
+      "baseline_vx": 0.19399565845638242,
+      "candidate_vx": 0.19399565845638242,
+      "ratio": 1.0,
+      "passed": true
+    },
+    {
+      "case": "sprint_right",
+      "baseline_vx": 0.16720928897140488,
+      "candidate_vx": 0.16720928897140488,
+      "ratio": 1.0,
+      "passed": true
+    },
+    {
+      "case": "sprint_shift_first",
+      "baseline_vx": 0.19315020143297829,
+      "candidate_vx": 0.19315020143297829,
+      "ratio": 1.0,
+      "passed": true
+    },
+    {
+      "case": "sprint_turn_release",
+      "baseline_vx": 0.15062002910411837,
+      "candidate_vx": 0.15062002910411837,
+      "ratio": 1.0,
+      "passed": true
+    },
+    {
+      "case": "sprint_w_first",
+      "baseline_vx": 0.19348123410403567,
+      "candidate_vx": 0.19348123410403567,
+      "ratio": 1.0,
+      "passed": true
+    }
+  ],
+  "all_physical_pass": false,
+  "development_eligible": false,
+  "final_seeds_used": false,
+  "kind": "Control intervention, not additional model improvement",
+  "reference_routing": "Same tracking sprint actor and S05 ordinary as native_tracking_split",
+  "contract_change": {
+    "version": "sprint_turn_tracking_v1",
+    "walk": {
+      "walk_heading_gain": 6.0,
+      "walk_heading_scope": "all",
+      "walk_idle_delay_s": 0.5,
+      "walk_path_gain": 4.0,
+      "walk_heading_limit": 0.6,
+      "walk_reanchor_on_start": true,
+      "twist_limits": {
+        "vmax_ang": 0.8,
+        "sprint_vmax_x": 0.3,
+        "sprint_vmax_ang": 0.8,
+        "vmax_x": 0.25
+      },
+      "walk_path_lookahead": 0.2,
+      "walk_sprint_turn_tracking": true
+    }
+  },
+  "only_declared_control_changed": true
+}

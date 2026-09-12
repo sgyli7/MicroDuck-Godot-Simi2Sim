@@ -1,0 +1,16 @@
+{
+  "closed": true,
+  "goal_complete": false,
+  "promoted": false,
+  "used_final_seeds": false,
+  "budget": {
+    "limit_seconds": 7200.0,
+    "used_seconds": 6522.4481837719795,
+    "remaining_seconds": 677.5518162280205,
+    "actors": [],
+    "unconfirmed_gaps": 0,
+    "scope": "Effective union through report cutoff, including background work and closeout; final archive checksum and Git bookkeeping after cutoff excluded conservatively."
+  },
+  "closed_unix": 1789220721.4133406,
+  "next_step": "Jolt warm/cold vs GPU projected stop state diagnosis; no additional candidates in this sealed session"
+}

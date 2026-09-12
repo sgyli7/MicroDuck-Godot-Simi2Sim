@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "sprint_alternate",
+      "seed": 927001,
+      "max_error": 4.618527782440651e-14,
+      "old_pre_step_speed_error": 0.0003177938977338701,
+      "old_pre_step_success": false,
+      "native_success": false
+    },
+    {
+      "case": "sprint_left",
+      "seed": 927001,
+      "max_error": 5.1514348342607263e-14,
+      "old_pre_step_speed_error": 0.00024078688580830843,
+      "old_pre_step_success": true,
+      "native_success": true
+    },
+    {
+      "case": "sprint_long",
+      "seed": 927001,
+      "max_error": 4.618527782440651e-14,
+      "old_pre_step_speed_error": 1.058415688637293e-05,
+      "old_pre_step_success": true,
+      "native_success": true
+    },
+    {
+      "case": "sprint_repeat",
+      "seed": 927001,
+      "max_error": 1.425526363618701e-13,
+      "old_pre_step_speed_error": 0.00020388500591794756,
+      "old_pre_step_success": true,
+      "native_success": true
+    },
+    {
+      "case": "sprint_right",
+      "seed": 927001,
+      "max_error": 4.440892098500626e-14,
+      "old_pre_step_speed_error": 1.539030899336269e-05,
+      "old_pre_step_success": true,
+      "native_success": true
+    },
+    {
+      "case": "sprint_shift_first",
+      "seed": 927001,
+      "max_error": 4.618527782440651e-14,
+      "old_pre_step_speed_error": 0.0001113321275407475,
+      "old_pre_step_success": true,
+      "native_success": true
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 927001,
+      "max_error": 1.5276668818842154e-13,
+      "old_pre_step_speed_error": 0.00030755695157175245,
+      "old_pre_step_success": true,
+      "native_success": true
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 927001,
+      "max_error": 4.796163466380676e-14,
+      "old_pre_step_speed_error": 0.0003950014353088227,
+      "old_pre_step_success": true,
+      "native_success": true
+    }
+  ],
+  "sampling": "Physical state after each same action, including final state; native acceptance unchanged"
+}

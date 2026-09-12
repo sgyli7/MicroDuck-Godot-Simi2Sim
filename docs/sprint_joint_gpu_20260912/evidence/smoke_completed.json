@@ -1,0 +1,5 @@
+{
+  "completed": true,
+  "shared_actor_samples": 32768,
+  "resume_iterations": 16
+}
