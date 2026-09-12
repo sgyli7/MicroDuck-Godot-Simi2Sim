@@ -1,0 +1,16 @@
+[
+  {
+    "attempt": 1,
+    "directory": "results/sprint_contact_calibration_20260913/contact_probe_attempt_01",
+    "status": "failed_before_sampling",
+    "reason": "microstep parity exceeded 1e-7; diagnose before interpreting contact profiles",
+    "unix": 1789232199.2878308
+  },
+  {
+    "attempt": 2,
+    "directory": "results/sprint_contact_calibration_20260913/contact_probe_attempt_02",
+    "status": "partial_three_profiles",
+    "reason": "Fourth-profile canary exceeded whole-world caps; normal-repeat audit localized larger variation to remote ball DOF 23, robot remains within caps.",
+    "unix": 1789232424.946211
+  }
+]

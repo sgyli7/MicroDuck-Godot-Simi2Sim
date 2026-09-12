@@ -1,0 +1,112 @@
+{
+  "sealed_unix": 1789234493.632927,
+  "session": "results/sprint_contact_calibration_20260913",
+  "base_commit": "60ea7d7f8e46b43bcc0384ab49bdf59ad99f8e06",
+  "status": "calibration_completed_goal_incomplete",
+  "goal_complete": false,
+  "policy_training_started": false,
+  "policy_promoted": false,
+  "new_package": false,
+  "current_sprint_baseline": {
+    "sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+    "sprint_pass": 127,
+    "sprint_total": 128,
+    "ordinary_pass": 128,
+    "ordinary_total": 128,
+    "regression_pass": 7,
+    "falls": 0,
+    "scope": "Prior native results, not new results from this round"
+  },
+  "final_seeds_unused": "928000\u2013928049",
+  "keyboard_revalidated": false,
+  "experiments": {
+    "contact_probe": {
+      "eligible": [],
+      "completed": true
+    },
+    "compliance_probe": {
+      "eligible": [],
+      "completed": true
+    },
+    "compliance_direct_probe": {
+      "eligible": [],
+      "completed": true
+    }
+  },
+  "tests": {
+    "tests": 298,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "successful": true
+  },
+  "time": {
+    "limit_seconds": 5400.0,
+    "used_seconds": 2781.067812586989,
+    "remaining_seconds": 2618.932187413011,
+    "actors": [],
+    "unconfirmed_gaps": 0,
+    "used_minutes": 46.35113020978315,
+    "preledger_estimate_seconds": 120,
+    "excluded_after_seal": "Final evidence copying, checksums and Git bookkeeping"
+  },
+  "jobs": [
+    {
+      "actor": "gpu_contact_response:a6df541faf",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "microstep_reset_diagnosis:3f660ec943",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_contact_response_after_canary:7373bd4f09",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "strong_contact_canary:0520e5d3a2",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_contact_response_final_canary:99a7b19151",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_articulation_residual:e3d585e9e6",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_joint_compliance:20c47afd0c",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_compliance_stiffness:c6ff35e70b",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "regression_checks:6b15b1d33c",
+      "returncode": 0,
+      "reason": "completed"
+    }
+  ],
+  "source_validation": {
+    "passed": true,
+    "native_trace_hashes": 16,
+    "exact_experiment_source_hashes": true,
+    "protected_files": 15,
+    "local_arrays": 18,
+    "local_array_bytes": 12595569
+  },
+  "resource_audit_passed": true,
+  "conclusion": "Passive translation coordinates reduce foot representation residual, but no tested proxy passes full native short-horizon response gates. Per-joint constrained-axis telemetry is needed before further parameter fitting.",
+  "previous_turn": "progress",
+  "this_turn": "progress"
+}

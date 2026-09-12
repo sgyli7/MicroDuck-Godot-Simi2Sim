@@ -1,0 +1,8 @@
+{
+  "base_commit": "60ea7d7f8e46b43bcc0384ab49bdf59ad99f8e06",
+  "previous_turn": "progress",
+  "limit_minutes": 90,
+  "reserve_minutes": 20,
+  "created_unix": 1789231832.5676763,
+  "objective": "Calibrate GPU short-horizon contact response against frozen Jolt; train a sprint candidate only after a matched physical response improvement."
+}

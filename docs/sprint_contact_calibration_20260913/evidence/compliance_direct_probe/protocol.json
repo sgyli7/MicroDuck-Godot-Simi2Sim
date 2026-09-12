@@ -1,0 +1,79 @@
+{
+  "profiles": [
+    [
+      "rigid",
+      "source",
+      null
+    ],
+    [
+      "direct20k",
+      "source",
+      [
+        20000.0,
+        200.0
+      ]
+    ],
+    [
+      "direct20k_hard_contact",
+      "two_tick",
+      [
+        20000.0,
+        200.0
+      ]
+    ],
+    [
+      "direct30k",
+      "source",
+      [
+        30000.0,
+        200.0
+      ]
+    ],
+    [
+      "direct30k_hard_contact",
+      "two_tick",
+      [
+        30000.0,
+        200.0
+      ]
+    ]
+  ],
+  "seeds": [
+    927000,
+    927001,
+    927002,
+    927003,
+    927004,
+    927005,
+    927006,
+    927007,
+    927008,
+    927009,
+    927010,
+    927011,
+    927012,
+    927013,
+    927014,
+    927015
+  ],
+  "train_seed_count": 8,
+  "validation_seed_count": 8,
+  "physics_hz": 200,
+  "decision_hz": 50,
+  "horizon_seconds": 2,
+  "gate": "Same 20% landing/moving response improvement, no component/standing >10% regression, both splits; also >=20% reduction of actual foot-vs-rigid-manifold vector error on landing and moving. Pre-contact joint RMS <=baseline+1e-5 rad.",
+  "response_normalization": {
+    "velocity": 0.05,
+    "joint": 0.02,
+    "position": 0.002
+  },
+  "source": "Frozen a402 native recorded actions; no policy inference, training or game physics edits",
+  "assumptions": "Extra equalities are an experimental approximation of translation compliance, not an identified Jolt solver.",
+  "rationale": "10ms positive-solref equalities reduced landing manifold error but overestimated standing/start deflection. Fixed direct damping 200 with stiffness 20000/30000 tests approximately 2x/3x stiffness without increasing damping. All four predeclared profiles use the same physical response gates.",
+  "reference": "https://mujoco.readthedocs.io/en/stable/modeling.html#solver-parameters",
+  "code_sha256": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/compliance_direct_probe.py": "67354500d3fdcf156858088bf2197daeb65e7991456351b923548a4dc87d78db",
+    "scripts/sprint_gpu_world.py": "8398f39d59646798564a7872d2c0634f5e1c62f4e4820cd0142c332be00462f5",
+    "src/sim2sim/research/joint_compliance.py": "db3d6a322d56e6251b75457629a04e4cde0176a54cc792a57c0b225b9ea7675d"
+  }
+}

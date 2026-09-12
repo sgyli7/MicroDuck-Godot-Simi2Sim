@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "native_trace_hashes": 16,
+  "exact_experiment_source_hashes": true,
+  "protected_files": 15,
+  "local_arrays": 18,
+  "local_array_bytes": 12595569
+}

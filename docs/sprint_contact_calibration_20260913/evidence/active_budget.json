@@ -1,0 +1,515 @@
+{
+  "schema_version": 1,
+  "limit_seconds": 5400.0,
+  "initial_seconds": 120.0,
+  "credit_note": "Explicit 120-second estimate for preledger process/repository audit; subsequent work measured by heartbeats and supervised jobs.",
+  "created_unix": 1789231832.5631886,
+  "intervals": {
+    "3b388277-2a59-4f02-b6ad-c6507ba4a8e9": [
+      [
+        259779.481464133,
+        262440.54927672
+      ]
+    ]
+  },
+  "actors": {},
+  "gaps": [],
+  "events": [
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789232093.86386,
+      "supervisor_pid": 1302670,
+      "process_start_ticks": 26004078,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/supervisors/gpu_contact_response-661940a9d1.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/contact_probe.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789232093.8828971,
+      "actor": "gpu_contact_response:a6df541faf",
+      "pid": 1302671,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/contact_probe.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26004080,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1302670
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789232100.985071,
+      "actor": "gpu_contact_response:a6df541faf",
+      "returncode": 1,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789232199.436707,
+      "supervisor_pid": 1304332,
+      "process_start_ticks": 26014635,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/supervisors/microstep_reset_diagnosis-82369c1564.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/parity_probe.py"
+      ],
+      "timeout": 120.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789232199.4563699,
+      "actor": "microstep_reset_diagnosis:3f660ec943",
+      "pid": 1304333,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/parity_probe.py"
+      ],
+      "timeout": 120.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26014637,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1304332
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789232206.5569172,
+      "actor": "microstep_reset_diagnosis:3f660ec943",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789232264.9289875,
+      "supervisor_pid": 1305578,
+      "process_start_ticks": 26021184,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/supervisors/gpu_contact_response_after_canary-0a7e58ebff.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/contact_probe.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789232264.965058,
+      "actor": "gpu_contact_response_after_canary:7373bd4f09",
+      "pid": 1305579,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/contact_probe.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26021188,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1305578
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789232275.0773728,
+      "actor": "gpu_contact_response_after_canary:7373bd4f09",
+      "returncode": 1,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789232355.198985,
+      "supervisor_pid": 1307132,
+      "process_start_ticks": 26030211,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/supervisors/strong_contact_canary-0cedb95a1a.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/parity_probe_strong.py"
+      ],
+      "timeout": 120.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789232355.2334287,
+      "actor": "strong_contact_canary:0520e5d3a2",
+      "pid": 1307133,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/parity_probe_strong.py"
+      ],
+      "timeout": 120.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26030215,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1307132
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789232363.3478873,
+      "actor": "strong_contact_canary:0520e5d3a2",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789232425.1179242,
+      "supervisor_pid": 1308610,
+      "process_start_ticks": 26037203,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/supervisors/gpu_contact_response_final_canary-cc43b8f236.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/contact_probe.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789232425.146012,
+      "actor": "gpu_contact_response_final_canary:99a7b19151",
+      "pid": 1308611,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/contact_probe.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26037206,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1308610
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789232435.2574105,
+      "actor": "gpu_contact_response_final_canary:99a7b19151",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789232947.1642804,
+      "supervisor_pid": 1323386,
+      "process_start_ticks": 26089408,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/supervisors/native_articulation_residual-53bc1f1a9f.log",
+      "command": [
+        ".venv/bin/python",
+        "results/sprint_contact_calibration_20260913/manifold_probe.py"
+      ],
+      "timeout": 120.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789232947.202959,
+      "actor": "native_articulation_residual:e3d585e9e6",
+      "pid": 1323387,
+      "command": [
+        ".venv/bin/python",
+        "results/sprint_contact_calibration_20260913/manifold_probe.py"
+      ],
+      "timeout": 120.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26089412,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1323386
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789232949.2987726,
+      "actor": "native_articulation_residual:e3d585e9e6",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789233311.0064387,
+      "supervisor_pid": 1331885,
+      "process_start_ticks": 26125792,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/supervisors/gpu_joint_compliance-337943848e.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/compliance_probe.py"
+      ],
+      "timeout": 600.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789233311.0418246,
+      "actor": "gpu_joint_compliance:20c47afd0c",
+      "pid": 1331893,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/compliance_probe.py"
+      ],
+      "timeout": 600.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26125795,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1331885
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789233343.2818666,
+      "actor": "gpu_joint_compliance:20c47afd0c",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789233635.407076,
+      "supervisor_pid": 1338905,
+      "process_start_ticks": 26158232,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/supervisors/gpu_compliance_stiffness-196c025581.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/compliance_direct_probe.py"
+      ],
+      "timeout": 600.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789233635.4278443,
+      "actor": "gpu_compliance_stiffness:c6ff35e70b",
+      "pid": 1338906,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_contact_calibration_20260913/compliance_direct_probe.py"
+      ],
+      "timeout": 600.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26158234,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1338905
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789233649.647116,
+      "actor": "gpu_compliance_stiffness:c6ff35e70b",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789234041.5862317,
+      "supervisor_pid": 1349595,
+      "process_start_ticks": 26198850,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/supervisors/regression_checks-086357e4a5.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_contact_calibration_20260913/run_checks.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789234041.6281958,
+      "actor": "regression_checks:6b15b1d33c",
+      "pid": 1349603,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_contact_calibration_20260913/run_checks.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26198854,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1349595
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789234110.0034053,
+      "actor": "regression_checks:6b15b1d33c",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    }
+  ]
+}

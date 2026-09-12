@@ -1,0 +1,4 @@
+{
+  "ast_equal": true,
+  "changed_only": "Formatting of src/sim2sim/research/joint_compliance.py after regression; direct-experiment exact original preserved and protocol hashes rechecked"
+}

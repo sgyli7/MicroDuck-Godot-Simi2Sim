@@ -64,15 +64,13 @@ def patch_game_feet(spec, cfg):
 
 
 class GpuWorld:
-    def __init__(self, count, settings, *, contact='source', inertia=True, feet='source', graphs=False, velocity_observer='solver', joint_compliance_time=None, joint_compliance_direct=None):
+    def __init__(self, count, settings, *, contact='source', inertia=True, feet='source', graphs=False, velocity_observer='solver', joint_compliance_time=None):
         if not torch.cuda.is_available():
             raise RuntimeError('CUDA physics required; CPU fallback is disabled')
         if contact not in ('source', 'two_tick'):
             raise ValueError('Unknown contact proxy')
         if velocity_observer not in ('solver', 'joint_fd'):
             raise ValueError('Unknown velocity observer')
-        if joint_compliance_time is not None and joint_compliance_direct is not None:
-            raise ValueError('Choose one joint compliance parameterization')
         self.velocity_observer = velocity_observer
         self.observer = None
         self.count = count
@@ -100,9 +98,6 @@ class GpuWorld:
         if joint_compliance_time is not None:
             from sim2sim.research.joint_compliance import add_joint_compliance
             self.joint_compliance = add_joint_compliance(spec, self.cfg['godot_spec'], joint_compliance_time)
-        if joint_compliance_direct is not None:
-            from sim2sim.research.joint_compliance import add_joint_compliance_direct
-            self.joint_compliance = add_joint_compliance_direct(spec, self.cfg['godot_spec'], *joint_compliance_direct)
         self.model = spec.compile()
         self.model.opt.timestep = .005
         self.inertia = patch_game_inertia(self.model, self.cfg['godot_spec']) if inertia else None
