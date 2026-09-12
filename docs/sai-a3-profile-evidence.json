@@ -1,0 +1,49 @@
+{
+  "source_commit": "5d2ab070dcdbae61a8d750a3f812e77ad2568f26",
+  "installation": "uv sync --extra sai; exact GitHub dependency",
+  "command": "uv run --extra sai sim2sim-play --robot Sai_Agent_001 --headless --case W --stairs .06 --descending --stair-skill descent60 --duration 45",
+  "original_input_tests": {
+    "command": "uv run --extra sai --with pytest pytest -q tests/test_play_input.py",
+    "passed": 38
+  },
+  "raw_sha256": "0345db000aeddd3401e492261613df231a18b7dfee3207ada718ca1a6aeffa49",
+  "result": {
+    "suite": "godot-continuous-stairs-v1",
+    "engine": "4.7.2-stable (official)",
+    "physics_hz": 2000,
+    "controller_hz": 50,
+    "sensor": "Ground-only raycasts, not camera-based VLA",
+    "cases": [
+      {
+        "riser": 0.06,
+        "descending": true,
+        "duration": 16.48,
+        "final_xyz": [
+          1.20992600917816,
+          0.0252010244876146,
+          0.201555296778679
+        ],
+        "min_upright": 0.901032686233521,
+        "stair_profile": "experimental-descent60-trial011",
+        "effective_crouch": 0.5,
+        "tread": 0.18,
+        "initial_yaw": 0.0,
+        "maximum_lateral_m": 0.0440934561192989,
+        "checks": {
+          "all_wheels_cleared": true,
+          "three_second_stop": true,
+          "upright_on_final_level": true,
+          "remained_in_lane": true,
+          "height_on_final_level": true,
+          "four_wheels_supported": true,
+          "no_fall": true,
+          "real_forward_key": true,
+          "terrain_triggered_stair_policy": true,
+          "full_articulation": true
+        },
+        "passed": true
+      }
+    ],
+    "passed": true
+  }
+}
