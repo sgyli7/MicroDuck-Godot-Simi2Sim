@@ -1,0 +1,1031 @@
+{
+  "status": "not_promoted",
+  "goal_met": false,
+  "candidate": "j01d_joint_lookahead02",
+  "models": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+  },
+  "source_round": "sprint_20260912/S05; no newly trained joint actor selected",
+  "final_seed_start": 922000,
+  "final_seed_stop": 922030,
+  "episodes": 480,
+  "candidate_episodes": 240,
+  "candidate_success": 231,
+  "candidate_falls": 0,
+  "runtime_errors": 0,
+  "accepted": false,
+  "comparisons": [
+    {
+      "case": "sprint_alternate",
+      "count": 30,
+      "candidate_vx": 0.21635176393875186,
+      "ordinary_vx": 0.16817487887554883,
+      "ratio": 1.2864689743517188,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_left",
+      "count": 30,
+      "candidate_vx": 0.1973424955557555,
+      "ordinary_vx": 0.1528655177671576,
+      "ratio": 1.290954941560755,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_long",
+      "count": 30,
+      "candidate_vx": 0.22561252245395202,
+      "ordinary_vx": 0.19316787957599135,
+      "ratio": 1.1679608584469505,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_repeat",
+      "count": 30,
+      "candidate_vx": 0.2299443630322237,
+      "ordinary_vx": 0.19372606088699254,
+      "ratio": 1.186956272064803,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_right",
+      "count": 30,
+      "candidate_vx": 0.2284119477932993,
+      "ordinary_vx": 0.16680828617892077,
+      "ratio": 1.3693081622354277,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_shift_first",
+      "count": 30,
+      "candidate_vx": 0.22724765178382061,
+      "ordinary_vx": 0.19315489660319723,
+      "ratio": 1.176504741946361,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_turn_release",
+      "count": 30,
+      "candidate_vx": 0.1984957186173469,
+      "ordinary_vx": 0.15070133774762878,
+      "ratio": 1.317146361034676,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_w_first",
+      "count": 30,
+      "candidate_vx": 0.22843136049702756,
+      "ordinary_vx": 0.19293044392108,
+      "ratio": 1.184008888666993,
+      "speed_pass": true
+    }
+  ],
+  "failures": [
+    {
+      "case": "sprint_left",
+      "seed": 922004,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.19718835797292264,
+        "sustained_p10_vx": 0.09450126388017584,
+        "max_tilt": 7.267829075283597,
+        "min_z": 0.1121675177205736,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.816305090014906,
+            "lateral_path_m": 0.029545556957716712,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 8.907232776023742,
+            "lateral_path_m": 0.0524140562768399,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6789609456147528,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/sprint_left_922004/attempt_01/trace.json",
+      "trace_sha256": "3c778a7b08cc35efd010616a3065af75f4b92bb3817e6a7db36fd97aed8a723a"
+    },
+    {
+      "case": "sprint_left",
+      "seed": 922017,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.1899288901733978,
+        "sustained_p10_vx": 0.08926823749956118,
+        "max_tilt": 7.144006549722078,
+        "min_z": 0.11272940117436603,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.238806487651874,
+            "lateral_path_m": 0.03303181242518205,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 8.001610697279416,
+            "lateral_path_m": 0.053845225285354736,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7092418310143245,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/sprint_left_922017/attempt_01/trace.json",
+      "trace_sha256": "032ac55d7b5e4f48cdde3d9a612005f5613bbb2cb2229c010599f97fb6911e9f"
+    },
+    {
+      "case": "sprint_right",
+      "seed": 922000,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.21874530055797417,
+        "sustained_p10_vx": 0.11730300905064199,
+        "max_tilt": 7.057941769088885,
+        "min_z": 0.11280097313538649,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.512483703507808,
+            "lateral_path_m": 0.02200384686701186,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 9.520702934731403,
+            "lateral_path_m": 0.07861650063205886,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6797764388111229,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.3000000000000007,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/sprint_right_922000/attempt_01/trace.json",
+      "trace_sha256": "04de5e4035495eb61ecc350074ab445bf31fee4c9ccc369811864f57329590de"
+    },
+    {
+      "case": "sprint_right",
+      "seed": 922002,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.21719792589613743,
+        "sustained_p10_vx": 0.11005819934176934,
+        "max_tilt": 7.307345473580274,
+        "min_z": 0.11307485538835642,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.569686780975242,
+            "lateral_path_m": 0.02499152208305575,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 7.610285048173564,
+            "lateral_path_m": 0.05201507103006356,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7242124310781355,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.0,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/sprint_right_922002/attempt_01/trace.json",
+      "trace_sha256": "83c3dc27dc6f56e1e0744201bc7d61e5320612588375260e14b51c385d44bdf2"
+    },
+    {
+      "case": "sprint_right",
+      "seed": 922004,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.22704661632091008,
+        "sustained_p10_vx": 0.12485692615769607,
+        "max_tilt": 7.267829075283597,
+        "min_z": 0.1121675177205736,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.816305090014906,
+            "lateral_path_m": 0.029545556957716712,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 11.067700757791917,
+            "lateral_path_m": 0.05585876028259572,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6515441926405944,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.9399999999999995,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/sprint_right_922004/attempt_01/trace.json",
+      "trace_sha256": "c3af6a185dd3a0fea9a9e031f024946fb7bf2f1b351991f17a183d64dbe71d7d"
+    },
+    {
+      "case": "sprint_right",
+      "seed": 922006,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.21838725727832553,
+        "sustained_p10_vx": 0.12099509844013628,
+        "max_tilt": 7.499835677305042,
+        "min_z": 0.1132100914189177,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 5.885188366618039,
+            "lateral_path_m": 0.02275816487889801,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 9.024733965669158,
+            "lateral_path_m": 0.06762099559970634,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6469024187416142,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.42,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/sprint_right_922006/attempt_01/trace.json",
+      "trace_sha256": "6549745a2adb4eea451191b8adc7e0b4bc6e28a51c930f44ea75ba052e75a7fd"
+    },
+    {
+      "case": "sprint_right",
+      "seed": 922008,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.22408953253665506,
+        "sustained_p10_vx": 0.12590849314074012,
+        "max_tilt": 7.686277424353586,
+        "min_z": 0.11244443858901673,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.1458418040120275,
+            "lateral_path_m": 0.025834988069866366,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 10.077123926416874,
+            "lateral_path_m": 0.0662202909276525,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.64184689626496,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.3000000000000007,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/sprint_right_922008/attempt_01/trace.json",
+      "trace_sha256": "1bcdd4e2a6fded1518d11d807f9b4186335a2ddc5b3f7e090ffbede80637f165"
+    },
+    {
+      "case": "sprint_right",
+      "seed": 922012,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.21641754062005533,
+        "sustained_p10_vx": 0.10686691010620332,
+        "max_tilt": 7.340157251577223,
+        "min_z": 0.11263324071527854,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.651752967406825,
+            "lateral_path_m": 0.029176422738759714,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 8.660618219526537,
+            "lateral_path_m": 0.06069912702484366,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6753998915089656,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.0,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/sprint_right_922012/attempt_01/trace.json",
+      "trace_sha256": "e349a2d1196f3ecc07f44979cdb4265a130b4edb5c89dca41aba2f2cc7e8bbd0"
+    },
+    {
+      "case": "sprint_right",
+      "seed": 922027,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.2175831917892537,
+        "sustained_p10_vx": 0.11071590655192917,
+        "max_tilt": 7.279159696841507,
+        "min_z": 0.11265376737110148,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.673996435656558,
+            "lateral_path_m": 0.02833626547263529,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 8.325121702278393,
+            "lateral_path_m": 0.057875465331092474,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6876650755415838,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.2799999999999994,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/sprint_right_922027/attempt_01/trace.json",
+      "trace_sha256": "e2fea68a90dca7c74305ac05d6f152c00cc4df02a21496b6a18b301ed7f1aabf"
+    }
+  ],
+  "formal_training_samples": 1179648,
+  "training": {
+    "j02_joint_short": {
+      "status": "iteration_limit",
+      "iterations": 96,
+      "samples": 393216,
+      "elapsed": 768.0457656383514,
+      "best_dev_score": 0.4181228649982365,
+      "best_dev_success": 0.0,
+      "final_parity": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 2.384185791015625e-07,
+        "realistic_batch_max_abs": 2.384185791015625e-07,
+        "threshold": 1e-05,
+        "passed": true
+      },
+      "entry_counts": {
+        "reset": 387,
+        "standing": 401,
+        "ordinary_right_prefix": 84,
+        "ordinary_move_prefix": 80,
+        "repeat_sprint_prefix": 88,
+        "restart_sprint_prefix": 82,
+        "ordinary_left_prefix": 67
+      }
+    },
+    "j03_replay_teacher": {
+      "status": "iteration_limit",
+      "iterations": 64,
+      "samples": 262144,
+      "elapsed": 482.08389163017273,
+      "best_dev_score": 0.4854625662100056,
+      "best_dev_success": 0.5,
+      "final_parity": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 2.384185791015625e-07,
+        "realistic_batch_max_abs": 2.384185791015625e-07,
+        "threshold": 1e-05,
+        "passed": true
+      },
+      "entry_counts": {
+        "reset": 242,
+        "standing": 286,
+        "repeat_sprint_prefix": 57,
+        "ordinary_move_prefix": 57,
+        "ordinary_left_prefix": 57,
+        "ordinary_right_prefix": 65,
+        "restart_sprint_prefix": 50
+      }
+    },
+    "j04_online_teacher": {
+      "status": "iteration_limit",
+      "iterations": 64,
+      "samples": 262144,
+      "elapsed": 416.69533681869507,
+      "best_dev_score": 0.45947213778081525,
+      "best_dev_success": 0.5,
+      "final_parity": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 2.384185791015625e-07,
+        "realistic_batch_max_abs": 1.1920928955078125e-07,
+        "threshold": 1e-05,
+        "passed": true
+      },
+      "entry_counts": {
+        "reset": 242,
+        "standing": 286,
+        "repeat_sprint_prefix": 57,
+        "ordinary_move_prefix": 57,
+        "ordinary_left_prefix": 57,
+        "ordinary_right_prefix": 65,
+        "restart_sprint_prefix": 50
+      }
+    },
+    "j05_native_exit": {
+      "status": "iteration_limit",
+      "iterations": 64,
+      "samples": 262144,
+      "elapsed": 372.27927708625793,
+      "best_dev_score": 0.5009104757105479,
+      "best_dev_success": 0.3333333333333333,
+      "final_parity": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 2.384185791015625e-07,
+        "realistic_batch_max_abs": 2.384185791015625e-07,
+        "threshold": 1e-05,
+        "passed": true
+      },
+      "entry_counts": {
+        "reset": 174,
+        "standing": 202,
+        "repeat_sprint_prefix": 44,
+        "ordinary_move_prefix": 35,
+        "ordinary_left_prefix": 45,
+        "ordinary_right_prefix": 40,
+        "restart_sprint_prefix": 38
+      }
+    }
+  },
+  "evidence": {
+    "freeze": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/freeze.json",
+      "sha256": "cf7356af70b7f9453279f4226f3cc44b4ad950bccb7c5b96db49f25a4289ae0a"
+    },
+    "development": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_lookahead02/completed.json",
+      "sha256": "a0d6b4f8c7bfb553e44885527a48921e9726affe655e0e177a12071a0b60a64a"
+    },
+    "container": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_suite/container_environment.json",
+      "sha256": "ac1895e55736c2e93b47f511a6b33b9f9c657eee92b5a105305d9fb44c879d79"
+    },
+    "acceptance": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/delivery/final_acceptance.json",
+      "sha256": "0beff56690524b060933d714826a80c6b8daf88702c27a2c037505c74e6db87c"
+    },
+    "baseline_comparison": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/final_baseline/result.json",
+      "sha256": "8cc3abecf6b7c352974b3b55a98089f0656fcc2be8de642286fa7f54d0907e91"
+    },
+    "normal_regression": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/final_engineering/nine_regression.json",
+      "sha256": "ae3c481c5ab766888fbc84c7442ece704ffb91bd81f0fb3653009ff0097ec353"
+    },
+    "fps_lifecycle": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/final_engineering/fps_lifecycle.json",
+      "sha256": "f8b014798e14c24b68a6ddfebe7ac1557cf63e3f63e19973c7f543bb91b52eb8"
+    },
+    "handler": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/final_engineering/handler.json",
+      "sha256": "ae0c4713a9b65f383def16a3a84e3a1ec022897e8d36b7160f990957de4df91d"
+    },
+    "endurance": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/final_engineering/endurance/result.json",
+      "sha256": "36d0b62fc8a4540cb2614bf08f5a513e5fc4022f9eec7ce90fa68193f56c2a1d"
+    },
+    "performance": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/final_engineering/performance/metrics.json",
+      "sha256": "d1b84eed3220b40ca6e454e4c7a6b2fbe81172d0abcb9212e042b6b0c7f309f4"
+    },
+    "keyboard": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/host_keyboard/result.json",
+      "sha256": "440bcae9619ad918eb499d1cd46bb60c41d5856e721cc59a37fefc1e325a0138"
+    },
+    "archive": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/closeout/archive.json",
+      "sha256": "972a3cf2d89970049565359663013af532408048808531d13c8fd99881b068a8"
+    },
+    "demo": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/demo/verified.json",
+      "sha256": "0f8889def9ca8b2db03eec831bd82f92aec437089e8260ae088ca24e88670f82"
+    },
+    "defaults_audit": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/closeout/defaults_audit.json",
+      "sha256": "2fd4f7467518469b6caa64faf56a0bbb1990656ee73b1643ca375cfc70dd5dec"
+    },
+    "cleanup": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/closeout/resources.json",
+      "sha256": "e5b67117a5e81a5430bc4d0bf0ae2bd4a4bf6631649d6b638c53d0930a9d32b7"
+    },
+    "budget": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/active_budget.json",
+      "sha256": "dbd55e198b3c31550795468a257e7ef79f52abf1ca668f915989e36fad8013c4"
+    },
+    "budget_final": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/closeout/budget_final.json",
+      "sha256": "7be6f8ced50c301acd603ff10390d202d9088743d00bf0bca8a1f2be3d7a0884"
+    }
+  },
+  "defaults_changed": false,
+  "holdout_tuning": false,
+  "baseline_comparison": {
+    "completed": true,
+    "count": 480,
+    "old_errors": 0,
+    "new_errors": 0,
+    "old_candidate_pass": 211,
+    "new_candidate_pass": 231,
+    "old_candidate_falls": 0,
+    "new_candidate_falls": 0,
+    "normal_speed_retention": [
+      {
+        "case": "sprint_alternate_ordinary",
+        "old_vx": 0.15860974861252344,
+        "new_vx": 0.16817487887554883,
+        "ratio": 1.060306067859628,
+        "retained_95_percent": true
+      },
+      {
+        "case": "sprint_left_ordinary",
+        "old_vx": 0.13747222229534356,
+        "new_vx": 0.1528655177671576,
+        "ratio": 1.1119738607174274,
+        "retained_95_percent": true
+      },
+      {
+        "case": "sprint_long_ordinary",
+        "old_vx": 0.16665569827475027,
+        "new_vx": 0.19316787957599135,
+        "ratio": 1.1590835571522604,
+        "retained_95_percent": true
+      },
+      {
+        "case": "sprint_repeat_ordinary",
+        "old_vx": 0.16336266898043306,
+        "new_vx": 0.19372606088699254,
+        "ratio": 1.1858649353371933,
+        "retained_95_percent": true
+      },
+      {
+        "case": "sprint_right_ordinary",
+        "old_vx": 0.1665166656072844,
+        "new_vx": 0.16680828617892077,
+        "ratio": 1.0017512996105995,
+        "retained_95_percent": true
+      },
+      {
+        "case": "sprint_shift_first_ordinary",
+        "old_vx": 0.16649407501129782,
+        "new_vx": 0.19315489660319723,
+        "ratio": 1.1601307529417506,
+        "retained_95_percent": true
+      },
+      {
+        "case": "sprint_turn_release_ordinary",
+        "old_vx": 0.13402573656896605,
+        "new_vx": 0.15070133774762878,
+        "ratio": 1.1244208881484634,
+        "retained_95_percent": true
+      },
+      {
+        "case": "sprint_w_first_ordinary",
+        "old_vx": 0.16791512539381023,
+        "new_vx": 0.19293044392108,
+        "ratio": 1.1489759690712882,
+        "retained_95_percent": true
+      }
+    ],
+    "gains_count": 29,
+    "losses_count": 9,
+    "gain_cases": [
+      "sprint_repeat:922000",
+      "sprint_repeat:922001",
+      "sprint_repeat:922003",
+      "sprint_repeat:922004",
+      "sprint_repeat:922007",
+      "sprint_repeat:922010",
+      "sprint_repeat:922016",
+      "sprint_repeat:922019",
+      "sprint_repeat:922023",
+      "sprint_repeat:922029",
+      "sprint_shift_first:922003",
+      "sprint_shift_first:922017",
+      "sprint_turn_release:922002",
+      "sprint_turn_release:922003",
+      "sprint_turn_release:922005",
+      "sprint_turn_release:922008",
+      "sprint_turn_release:922012",
+      "sprint_turn_release:922019",
+      "sprint_turn_release:922021",
+      "sprint_w_first:922005",
+      "sprint_w_first:922011",
+      "sprint_w_first:922013",
+      "sprint_w_first:922016",
+      "sprint_w_first:922017",
+      "sprint_w_first:922019",
+      "sprint_w_first:922020",
+      "sprint_w_first:922023",
+      "sprint_w_first:922025",
+      "sprint_w_first:922026"
+    ],
+    "loss_cases": [
+      "sprint_left:922004",
+      "sprint_left:922017",
+      "sprint_right:922000",
+      "sprint_right:922002",
+      "sprint_right:922004",
+      "sprint_right:922006",
+      "sprint_right:922008",
+      "sprint_right:922012",
+      "sprint_right:922027"
+    ]
+  },
+  "normal_regression": {
+    "eight_models_unchanged": {
+      "standing": true,
+      "sitstand": true,
+      "ground_pick": true,
+      "kick_left": true,
+      "kick_right": true,
+      "roulade": true,
+      "roller": true,
+      "roller_crouch": true
+    },
+    "count": 69,
+    "baseline_summary": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/old/summary.json",
+    "baseline_summary_sha256": "3c4fe34105975df5cc34518eda30d58b6be70a86f1723cf2b8f3a90fc750d4f4",
+    "old_errors": 0,
+    "new_errors": 0,
+    "old_pass": 33,
+    "new_pass": 42,
+    "losses": [],
+    "brake_losses": [],
+    "gains_count": 9
+  },
+  "endurance": {
+    "protocol": "finite_arena_sprint_endurance_v1",
+    "completed": true,
+    "arena_source_sha256": "3848afad86c25ed690eded5dfab9721c45e39f821fdbf998d48aa205a3978ff1",
+    "seconds": 1800,
+    "models": {
+      "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+      "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+      "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+      "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+      "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+      "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+      "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+    },
+    "runtime_id": "d3c4239a51210f798aa869ab0c9cb632d812853cfa3de09a9a23a1266ed661fd",
+    "max_abs_xy": 7.33281212791054,
+    "first_arena_exit_s": null,
+    "arena_valid": true,
+    "resets": 0,
+    "physical_metrics": {
+      "success": true,
+      "fell": false,
+      "first_fall_s": null,
+      "score": 0.1943591993222738,
+      "sustained_mean_vx": 0.1943591993222738,
+      "sustained_p10_vx": 0.09674231293524906,
+      "max_tilt": 8.048280917305265,
+      "min_z": 0.11251718978958611,
+      "actor_selection_passed": true,
+      "speed_gain_gate": "requires paired ordinary result",
+      "straight_summary": {
+        "count": 180,
+        "passed": 180,
+        "failed": []
+      },
+      "turns_summary": {
+        "count": 180,
+        "passed": 180,
+        "failed": []
+      },
+      "stops_summary": {
+        "count": 90,
+        "passed": 90,
+        "failed": []
+      }
+    },
+    "passed": true,
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/final_engineering/endurance/suite/case/attempt_01/trace.json",
+    "trace_sha256": "daaed2a2f7029119e0d52d4d7c2d0aaa63eb2ae74b3b8859dd6b09cdb57bb395"
+  },
+  "archive": {
+    "path": "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260912-joint-trial.tar.gz",
+    "sha256": "cceee2f6734f280423ad22a3776fa681bd269f50635c28db2f46c380ca4c3241",
+    "size_bytes": 177961181,
+    "verified_files": 30,
+    "verified": true,
+    "finished_unix": 1789202296.3595085
+  },
+  "cleanup": {
+    "created_unix": 1789202687.5585575,
+    "owned_live_processes": [],
+    "owned_live_supervisors": [],
+    "owned_running_containers": [],
+    "jobs_started": 30,
+    "jobs_finished": 30,
+    "actors": [],
+    "passed": true,
+    "note": "Read-only audit using recorded process groups/start ticks and container bind-mount ownership. Unrelated workloads were not stopped."
+  },
+  "keyboard": {
+    "check": "x11_synthetic_host_keyboard",
+    "status": "blocked_desktop_locked",
+    "passed": false
+  },
+  "defaults_audit": {
+    "default_deployment": [
+      {
+        "skill": "standing",
+        "path": "godot/runtime_assets/policies/Stand_Godot.onnx",
+        "sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "declared": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "mtime": 1789103476.7660122,
+        "predates_session": true,
+        "hash_matches": true
+      },
+      {
+        "skill": "walking",
+        "path": "godot/runtime_assets/policies/Walk_Godot.onnx",
+        "sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+        "declared": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+        "mtime": 1789103476.8040123,
+        "predates_session": true,
+        "hash_matches": true
+      },
+      {
+        "skill": "sitstand",
+        "path": "godot/runtime_assets/policies/Sitstand_Godot.onnx",
+        "sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "declared": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "mtime": 1789103476.8238425,
+        "predates_session": true,
+        "hash_matches": true
+      },
+      {
+        "skill": "ground_pick",
+        "path": "godot/runtime_assets/policies/GroundPick_Godot.onnx",
+        "sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "declared": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "mtime": 1789103476.8365602,
+        "predates_session": true,
+        "hash_matches": true
+      },
+      {
+        "skill": "kick_left",
+        "path": "godot/runtime_assets/policies/KickLeft_Godot.onnx",
+        "sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "declared": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "mtime": 1789103476.851444,
+        "predates_session": true,
+        "hash_matches": true
+      },
+      {
+        "skill": "kick_right",
+        "path": "godot/runtime_assets/policies/KickRight_Godot.onnx",
+        "sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "declared": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "mtime": 1789103476.8713944,
+        "predates_session": true,
+        "hash_matches": true
+      },
+      {
+        "skill": "roulade",
+        "path": "godot/runtime_assets/policies/Roulade_Godot.onnx",
+        "sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "declared": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "mtime": 1789103476.893013,
+        "predates_session": true,
+        "hash_matches": true
+      },
+      {
+        "skill": "roller",
+        "path": "godot/runtime_assets/policies/Roller_Godot.onnx",
+        "sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "declared": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "mtime": 1789103476.908088,
+        "predates_session": true,
+        "hash_matches": true
+      },
+      {
+        "skill": "roller_crouch",
+        "path": "godot/runtime_assets/policies/RollerCrouch_Godot.onnx",
+        "sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "declared": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "mtime": 1789103476.9246163,
+        "predates_session": true,
+        "hash_matches": true
+      }
+    ],
+    "legacy_policies_walking": {
+      "path": "policies/Walk_Godot.onnx",
+      "sha256": "63edd66c12854f5b78faad5555ec8749c613a547393c1cb84785fe880f30b7e6",
+      "mtime": 1788723502.4943438,
+      "predates_session": true
+    },
+    "passed": true
+  },
+  "active_budget_final": {
+    "limit_seconds": 7200.0,
+    "used_seconds": 5888.671838044014,
+    "remaining_seconds": 1311.3281619559857,
+    "actors": [],
+    "unconfirmed_gaps": 0,
+    "actual_minutes": 98.14453063406691,
+    "note": "Conservative active work through session sealing; final report serialization and local Git bookkeeping are excluded."
+  }
+}
