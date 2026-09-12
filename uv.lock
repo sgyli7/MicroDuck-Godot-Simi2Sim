@@ -336,7 +336,7 @@ requires-dist = [
     { name = "pillow", marker = "extra == 'media'", specifier = ">=12.2,<13" },
     { name = "pyyaml", marker = "extra == 'train'" },
     { name = "rsl-rl-lib", marker = "extra == 'train'", specifier = "==5.0.1" },
-    { name = "sai-agent-001", marker = "extra == 'sai'", git = "https://github.com/sgyli7/Sai_Agent_001.git?rev=6eb18b2abf97ce6de11a18daba93729848736adf" },
+    { name = "sai-agent-001", marker = "extra == 'sai'", git = "https://github.com/sgyli7/Sai_Agent_001.git?rev=5d2ab070dcdbae61a8d750a3f812e77ad2568f26" },
     { name = "scipy", specifier = ">=1.14" },
     { name = "tensorboard", marker = "extra == 'train'" },
     { name = "torch", marker = "platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'train'", specifier = "==2.9.1", index = "https://download.pytorch.org/whl/cu129" },
@@ -932,8 +932,8 @@ wheels = [
 
 [[package]]
 name = "sai-agent-001"
-version = "0.1.0a2"
-source = { git = "https://github.com/sgyli7/Sai_Agent_001.git?rev=6eb18b2abf97ce6de11a18daba93729848736adf#6eb18b2abf97ce6de11a18daba93729848736adf" }
+version = "0.1.0a3"
+source = { git = "https://github.com/sgyli7/Sai_Agent_001.git?rev=5d2ab070dcdbae61a8d750a3f812e77ad2568f26#5d2ab070dcdbae61a8d750a3f812e77ad2568f26" }
 dependencies = [
     { name = "mujoco" },
     { name = "numpy" },
