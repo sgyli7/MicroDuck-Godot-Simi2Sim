@@ -54,3 +54,11 @@ MicroDuck 保持 200Hz 物理 / 50Hz 策略，Sai 保持 2000Hz / 50Hz。Jolt �
 [2026-09-12 验收、限制与截图](workshop-hub-20260912/RESULT.md) · [15 秒 PV](media/sai-workshop-15s.mp4) · [原片、轨迹与复现资料](https://github.com/sgyli7/Robot_Godot_Sim2Sim/releases/tag/workshop-hub-20260912)
 
 录制使用 Godot 原生视口图像和逐帧墙钟时间戳；原片按这些时间戳编码。15 秒 PV 只剪辑和加速，倍率写入画面和 [剪辑清单](media/sai-workshop-15s.json)。没有位姿动画、搬动被抓物体或更改仿真时间尺度。
+
+新版 PV 使用两个固定机位，前三段为近景，最后运输段直接切远景。位置、朝向、焦距逐帧写入 `hub.json`；编码脚本检查每个机位内只有一个相机变换。[新版原片与轨迹](https://github.com/sgyli7/Robot_Godot_Sim2Sim/releases/tag/workshop-pv-stable-20260912)。
+
+```bash
+./run-workshop.sh --robot sai --task cargo18 --plan docs/workshop-hub-20260912/plans/movie-stable.json --record --output results/new-movie
+# 在具有 PyAV / Pillow 和 ffmpeg 的媒体环境中：
+python scripts/build_sai_workshop_pv.py results/new-movie
+```

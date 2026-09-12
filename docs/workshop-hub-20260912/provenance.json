@@ -1,5 +1,5 @@
 {
-  "godot/hub/hub.gd": "342aa34aaed65fd9051080466c59ce25ecfdb7cad62df81a294f48bc2bf44633",
+  "godot/hub/hub.gd": "b2da48c34ee10b6b2e9d70c1032a21e79686dcb2c997633f0dfa5c420a41ff07",
   "godot/hub/sai.gd": "d3d26b503d5bfaaea21084890586c287cfca28fe25d3d77e0dd9c971a6e72063",
   "godot/hub/microduck.gd": "56b6cb46dbc16cf3798ba0cee12bcfbf0e03b434bf01c1d150d56866cbf2eb33",
   "godot/hub/sai_materials.gd": "b7e7f7b66c11c1088c5ae16cb4491a8bde1be967c87e6e902e20dfca720f6e41",
@@ -1582,5 +1582,7 @@
       "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
     }
   },
-  "scope": "Final publication source; capture data and motor/controller hashes are archived separately."
+  "scope": "Final publication source; capture data and motor/controller hashes are archived separately.",
+  "scripts/build_sai_workshop_pv.py": "dd4107717b512fde13c6dd7e1313cf75c51d35ce1991653a1c4a3671c077bab5",
+  "docs/workshop-hub-20260912/plans/movie-stable.json": "c9a876c23eb85b3ee7873ae3ca22828c0aa2c29a51606865ec1f2922ab8d43a8"
 }

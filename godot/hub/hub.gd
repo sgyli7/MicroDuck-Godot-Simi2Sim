@@ -44,6 +44,7 @@ var frame_index := 0
 var frames: Array = []
 var capture_job := -1
 var dropped := 0
+var recording_shot := "interactive"
 var stopping := false
 var world_id: int
 var samples: Array = []
@@ -372,11 +373,28 @@ func _process(delta: float) -> void:
 	if switching or stopping or actor == null: return
 	if not _headless:
 		atelier.update_camera(delta)
+		_update_recording_camera()
 		atelier.update_printed_labels()
 		label.text = "小小维修站 / %s\n%s" % [active_robot.to_upper(),_stage_label(str(actor.command.get("stage","就绪"))) if active_robot=="sai" else actor.SKILL_LABELS.get(actor.brain.policy,actor.brain.policy)]
 		task_menu.visible = active_robot == "sai"
 		task_menu.select(TASKS.keys().find(active_task))
 		if options.record: _capture()
+
+func _update_recording_camera() -> bool:
+	# Filming uses a tripod: no follow, orbit input, or obstacle-driven zoom.
+	# Only the camera changes; physics and controller time remain untouched.
+	var shots: Array = options.plan.get("fixed_shots",[])
+	if shots.is_empty(): return false
+	var shot: Dictionary = shots[0]
+	for candidate in shots:
+		if _t >= float(candidate.at): shot = candidate
+	var camera: Camera3D = get_node("World/Camera3D")
+	var position := Vector3(shot.position[0],shot.position[1],shot.position[2])
+	var target := Vector3(shot.target[0],shot.target[1],shot.target[2])
+	camera.global_transform = Transform3D(Basis.looking_at(target-position,Vector3.UP),position)
+	camera.fov = float(shot.fov)
+	recording_shot = str(shot.id)
+	return true
 
 func _capture() -> void:
 	var now := Time.get_ticks_usec()
@@ -393,8 +411,11 @@ func _capture() -> void:
 	var texture := get_viewport().get_texture()
 	var image := texture.get_image()
 	var camera: Camera3D = get_node("World/Camera3D")
+	var basis := camera.global_basis
 	frames.append({"file":path,"milliseconds":float(now-capture_start)/1000.,"sim_seconds":_t,"hub_seconds":elapsed,
-		"robot":active_robot,"task":active_task,"camera_position":[camera.position.x,camera.position.y,camera.position.z],"fov":camera.fov})
+		"robot":active_robot,"task":active_task,"shot":recording_shot,
+		"camera_position":[camera.global_position.x,camera.global_position.y,camera.global_position.z],
+		"camera_basis":[[basis.x.x,basis.x.y,basis.x.z],[basis.y.x,basis.y.y,basis.y.z],[basis.z.x,basis.z.y,basis.z.z]],"fov":camera.fov})
 	capture_job = WorkerThreadPool.add_task(func(): image.save_jpg(path,.97))
 
 func on_task_finished(result: Dictionary) -> void:

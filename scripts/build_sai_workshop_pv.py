@@ -27,6 +27,13 @@ def main():
     assert task['success'], 'Publish only a completed, passing cargo run'
     frames = data['frames']
     assert all(a['milliseconds'] < b['milliseconds'] for a,b in zip(frames,frames[1:]))
+    camera_audit=[]
+    for shot in dict.fromkeys(f.get('shot','interactive') for f in frames):
+        selected=[f for f in frames if f.get('shot','interactive')==shot]
+        poses={json.dumps([f['camera_position'],f.get('camera_basis'),f['fov']]) for f in selected}
+        assert shot!='interactive' and len(poses)==1, 'PV requires a fixed camera within each shot'
+        camera_audit.append(dict(shot=shot,frames=len(selected),unique_camera_transforms=len(poses),
+                                 position=selected[0]['camera_position'],basis=selected[0]['camera_basis'],fov=selected[0]['fov']))
     raw = args.capture / 'native-wall-time.mp4'
     if not raw.exists():
         with av.open(str(raw), 'w') as container:
@@ -39,23 +46,29 @@ def main():
                 frame.pts=round(info['milliseconds']*1000); frame.time_base=stream.time_base
                 for packet in stream.encode(frame): container.mux(packet)
             for packet in stream.encode(): container.mux(packet)
+    with av.open(str(raw)) as container:
+        raw_times=[float(frame.pts*frame.time_base) for frame in container.decode(video=0)]
+    assert len(raw_times)==len(frames)
+    timestamp_error=max(abs(t-info['milliseconds']/1000) for t,info in zip(raw_times,frames))
+    assert timestamp_error<=1/30
     args.media.mkdir(parents=True, exist_ok=True)
     cuts = [(5.90,13.82,3.5,'01   抓取零件 · 100 g'),
             (13.82,34.06,4.0,'02   SO101 · 放入蓝色货仓'),
-            (34.06,49.34,2.5,'03   收回机械臂 · 货仓夹紧'),
-            (49.36,69.34,5.0,'04   夹紧运输 · 越过 18 mm 障碍')]
+            (34.06,49.20,2.5,'03   收回机械臂 · 货仓夹紧'),
+            (49.50,69.34,5.0,'04   夹紧运输 · 越过 18 mm 障碍')]
     recipe=[];filters=[];command=['ffmpeg','-hide_banner','-loglevel','error','-nostdin']
     font=Path('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
     for i,(start,end,duration,caption) in enumerate(cuts):
         first=min(frames,key=lambda x:abs(x['sim_seconds']-start))
         last=min(frames,key=lambda x:abs(x['sim_seconds']-end))
+        assert len({f['shot'] for f in frames if first['sim_seconds']<=f['sim_seconds']<=last['sim_seconds']})==1
         a=first['milliseconds']/1000; b=last['milliseconds']/1000;speed=(b-a)/duration
         recipe.append(dict(sim_start=first['sim_seconds'],sim_end=last['sim_seconds'],
-                           source_start=a,source_end=b,output_seconds=duration,source_speed=speed,caption=caption))
+                           source_start=a,source_end=b,output_seconds=duration,source_speed=speed,caption=caption,shot=first['shot']))
         caption_file=args.capture/f'caption-{i}.txt'
         caption_file.write_text(caption)
         speed_file=args.capture/f'speed-{i}.txt'
-        speed_file.write_text(f'实机画面精选  /  原片 ×{speed:.1f}')
+        speed_file.write_text(f'Godot 实录 · 固定机位  /  原片 ×{speed:.1f}')
         overlay=args.capture/f'caption-{i}.png'
         plate=Image.new('RGBA',(1920,1080),(0,0,0,0));draw=ImageDraw.Draw(plate)
         draw.rounded_rectangle((40,35,600,118),radius=8,fill=(238,233,217,238),outline=(86,83,91,230),width=2)
@@ -84,6 +97,8 @@ def main():
             image.seek(i);duration+=image.info['duration'];unique.add(hashlib.sha256(image.convert('RGB').tobytes()).hexdigest())
     assert 14800<=duration<=15200 and len(unique)>count*.90 and gif.stat().st_size<10_000_000
     report=dict(capture=args.capture.name,physics='Godot/Jolt 2000 Hz; policy motor targets 50 Hz',
+        revision='v2-fixed-camera',camera_audit=camera_audit,
+        raw_timestamp_quantization_s=1/30,raw_timestamp_max_error_s=timestamp_error,
         cargo_success=True,frame_count=len(frames),source_wall_seconds=frames[-1]['milliseconds']/1000,
         native_sim_seconds=data['seconds'],cuts=recipe,seconds=duration/1000,frames=count,unique_frames=len(unique),
         gif_bytes=gif.stat().st_size,gif_sha256=sha(gif),mp4_sha256=sha(mp4),raw_mp4_sha256=sha(raw),

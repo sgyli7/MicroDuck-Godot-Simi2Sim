@@ -4,11 +4,11 @@
 
 ![MicroDuck：场景行走、刚体交互、前滚与轮足动作](docs/media/microduck-sim2sim.gif)
 
-**Sai Robot 001 · 小小维修站工作 PV**
+**Sai Robot 001 · 小小维修站工作 PV（固定机位重录）**
 
-![Sai 001 抓取、入仓、夹紧并越障运输；加速倍率标在画面内](docs/media/sai-workshop-15s.gif)
+![Sai 001 固定机位实录：抓取、入仓、夹紧并越障运输；加速倍率标在画面内](docs/media/sai-workshop-15s.gif)
 
-[观看 15 秒 1080p PV](docs/media/sai-workshop-15s.mp4) · [验收结果与截图](docs/workshop-hub-20260912/RESULT.md) · [原片与轨迹](https://github.com/sgyli7/Robot_Godot_Sim2Sim/releases/tag/workshop-hub-20260912)
+[观看新版 15 秒 1080p PV](docs/media/sai-workshop-15s.mp4) · [验收结果与截图](docs/workshop-hub-20260912/RESULT.md) · [新版原片与轨迹](https://github.com/sgyli7/Robot_Godot_Sim2Sim/releases/tag/workshop-pv-stable-20260912)
 
 准备好模型和原生库后，运行 `./run-workshop.sh` 一键进入维修站。**F5 / F6 / F7** 切换机器人；Sai 任务菜单提供入仓运输和 20/40/60mm 上下阶。完整准备与按键见 [维修站运行说明](docs/workshop-hub.md)。
 

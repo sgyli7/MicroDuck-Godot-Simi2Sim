@@ -20,7 +20,7 @@
 | 25mm 运送 | 发布版完整检查通过，运输 2.61m；见货物报告。不能外推为任意负载越障能力 |
 | 独立发布检出启动 | 三机器人循环加载通过，资源准备脚本成功生成九模型 / 两机型清单 |
 
-[17 项操作检查](controls-result.json) · [六种台阶的逐项判据](stairs.json) · [可见窗口切换身份记录](visible-final.json) · [发布检出运行](publish-smoke.json) · [18mm 工作 PV 对应货物报告](movie-release.json) · [25mm 货物报告](cargo25-release.json) · [模型与代码校验](provenance.json)
+[17 项操作检查](controls-result.json) · [六种台阶的逐项判据](stairs.json) · [可见窗口切换身份记录](visible-final.json) · [发布检出运行](publish-smoke.json) · [首次 18mm 货物报告](movie-release.json) · [25mm 货物报告](cargo25-release.json) · [模型与代码校验](provenance.json)
 
 这些是固定初态、固定输入的单次集成验收，不是多种子成功率评估。按键回放通过 Godot `InputEventKey` 输入通道，不能代替宿主操作系统的人工键盘验收。
 
@@ -34,9 +34,11 @@ Sai 节点移动到工位后，对工具 FK 坐标、地形射线和报告中的
 
 ## PV 与游戏截图
 
-[15 秒 1080p PV](../media/sai-workshop-15s.mp4) · [剪辑和速度清单](../media/sai-workshop-15s.json) · [原片 / 完整轨迹](https://github.com/sgyli7/Robot_Godot_Sim2Sim/releases/tag/workshop-hub-20260912)
+[15 秒 1080p PV](../media/sai-workshop-15s.mp4) · [剪辑和速度清单](../media/sai-workshop-15s.json) · [新版原片 / 完整轨迹](https://github.com/sgyli7/Robot_Godot_Sim2Sim/releases/tag/workshop-pv-stable-20260912)
 
-PV 分为抓取、移入蓝色货仓、收臂夹紧、夹紧越障运输四段。原片使用 Godot 视口的真实墙钟时间戳编码；加速发生在视频剪辑中，各段倍率印在画面上。首页保留原 MicroDuck GIF，并在其下增加 Sai GIF。
+PV 已重新实录为固定机位版：前三段用固定近景，运输段直接切到固定远景，机位内没有跟随、旋转或缩放。分为抓取、移入蓝色货仓、收臂夹紧、夹紧越障运输四段。原片使用 Godot 视口的真实墙钟时间戳编码；加速发生在视频剪辑中，各段倍率印在画面上。首页保留原 MicroDuck GIF，并在其下增加 Sai GIF。
+
+固定机位重录再次通过完整货物检查：71.34 秒仿真、约 74.13 秒原片，运输 2.70m；44,000 次运输物理检查零出仓、零失夹。1,591 帧中，近景 1,095 帧、远景 496 帧，各自仅有一个相机位置/朝向/焦距组合。[本次重录验收](movie-stable.json)。
 
 ![Sai 抓取](grasp.jpg)
 
@@ -61,7 +63,7 @@ PV 分为抓取、移入蓝色货仓、收臂夹紧、夹紧越障运输四段�
 ```bash
 ./run-workshop.sh --headless --plan docs/workshop-hub-20260912/plans/controls.json --output results/check-controls
 .venv-sai/bin/python scripts/accept_workshop.py results/check-controls --out results/check-controls/acceptance.json
-./run-workshop.sh --robot sai --task cargo18 --plan docs/workshop-hub-20260912/plans/movie.json --record --output results/new-movie
+./run-workshop.sh --robot sai --task cargo18 --plan docs/workshop-hub-20260912/plans/movie-stable.json --record --output results/new-movie
 # 使用具有 av / Pillow 的媒体环境：
 python scripts/build_sai_workshop_pv.py results/new-movie
 ```
