@@ -1,0 +1,131 @@
+{
+  "metrics": {
+    "train": {
+      "landing": {
+        "components": {
+          "velocity": 1.0452341586709057,
+          "joint": 0.09585329943604533,
+          "position": 12.97891413115291
+        },
+        "objective": 4.706667196419954,
+        "manifold_mse_m2": 5.0019849513403135e-05
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.8339036771641812,
+          "joint": 0.47613558100208847,
+          "position": 228.17587470268336
+        },
+        "objective": 76.49530465361654,
+        "manifold_mse_m2": 0.0009072148514494405
+      },
+      "moving": {
+        "components": {
+          "velocity": 2.3057747581239054,
+          "joint": 3.2172799405614767,
+          "position": 555.0240484094143
+        },
+        "objective": 186.84903436936656,
+        "manifold_mse_m2": 0.002106610928997127
+      }
+    },
+    "validation": {
+      "landing": {
+        "components": {
+          "velocity": 1.050944022920515,
+          "joint": 0.09838546530504497,
+          "position": 13.02622449903934
+        },
+        "objective": 4.725184662421634,
+        "manifold_mse_m2": 5.036082942227816e-05
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.8288430370886086,
+          "joint": 0.4499660670190249,
+          "position": 228.47220617994748
+        },
+        "objective": 76.58367176135171,
+        "manifold_mse_m2": 0.0009082951505084571
+      },
+      "moving": {
+        "components": {
+          "velocity": 2.3028977222600475,
+          "joint": 3.1680595471592112,
+          "position": 555.8669487957343
+        },
+        "objective": 187.1126353550512,
+        "manifold_mse_m2": 0.002111932923532339
+      }
+    }
+  },
+  "elapsed_physics_s": 1.3528302289778367,
+  "nq": 70,
+  "nv": 68,
+  "neq": 42,
+  "nu": 14,
+  "compliance": {
+    "mode": "passive_translation_equalities_v1",
+    "solref": [
+      0.0,
+      -200.0
+    ],
+    "solimp": [
+      0.99,
+      0.99,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "joint_names": [
+      "proxy_compliance_left_hip_yaw_0",
+      "proxy_compliance_left_hip_yaw_1",
+      "proxy_compliance_left_hip_yaw_2",
+      "proxy_compliance_left_hip_roll_0",
+      "proxy_compliance_left_hip_roll_1",
+      "proxy_compliance_left_hip_roll_2",
+      "proxy_compliance_left_hip_pitch_0",
+      "proxy_compliance_left_hip_pitch_1",
+      "proxy_compliance_left_hip_pitch_2",
+      "proxy_compliance_left_knee_0",
+      "proxy_compliance_left_knee_1",
+      "proxy_compliance_left_knee_2",
+      "proxy_compliance_left_ankle_0",
+      "proxy_compliance_left_ankle_1",
+      "proxy_compliance_left_ankle_2",
+      "proxy_compliance_neck_pitch_0",
+      "proxy_compliance_neck_pitch_1",
+      "proxy_compliance_neck_pitch_2",
+      "proxy_compliance_head_pitch_0",
+      "proxy_compliance_head_pitch_1",
+      "proxy_compliance_head_pitch_2",
+      "proxy_compliance_head_yaw_0",
+      "proxy_compliance_head_yaw_1",
+      "proxy_compliance_head_yaw_2",
+      "proxy_compliance_head_roll_0",
+      "proxy_compliance_head_roll_1",
+      "proxy_compliance_head_roll_2",
+      "proxy_compliance_right_hip_yaw_0",
+      "proxy_compliance_right_hip_yaw_1",
+      "proxy_compliance_right_hip_yaw_2",
+      "proxy_compliance_right_hip_roll_0",
+      "proxy_compliance_right_hip_roll_1",
+      "proxy_compliance_right_hip_roll_2",
+      "proxy_compliance_right_hip_pitch_0",
+      "proxy_compliance_right_hip_pitch_1",
+      "proxy_compliance_right_hip_pitch_2",
+      "proxy_compliance_right_knee_0",
+      "proxy_compliance_right_knee_1",
+      "proxy_compliance_right_knee_2",
+      "proxy_compliance_right_ankle_0",
+      "proxy_compliance_right_ankle_1",
+      "proxy_compliance_right_ankle_2"
+    ],
+    "scope": "Prototype velocity damping only; pose projection separately applied",
+    "stiffness": 0.0,
+    "damping": 200.0,
+    "solref_format": "direct"
+  },
+  "precontact_joint_rms": 4.1042454918400236e-05,
+  "minimum_body_height": 0.015018245205283165
+}

@@ -1,0 +1,512 @@
+{
+  "executable": "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260913-sprint-reversal-trial/MicroDuck.arm64",
+  "package_sha256": "d293dfd8d82952fb255a9c0e65f45bfe7ea816f8e99d246808d6a4173610f5dc",
+  "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/integrated_dev/cases/sprint_alternate_927001.json",
+  "case_sha256": "96cce2870b0fe2252b19e8aa61a3516cc4d63017ceaba5e09bf7bdbc5c7e20aa",
+  "command": [
+    "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260913-sprint-reversal-trial/MicroDuck.arm64",
+    "--windowed",
+    "--resolution",
+    "1280x720",
+    "--write-movie",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/demo/capture.avi",
+    "--fixed-fps",
+    "30",
+    "--disable-vsync",
+    "--",
+    "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/integrated_dev/cases/sprint_alternate_927001.json",
+    "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/demo/trace.json"
+  ],
+  "capture_fps": 30,
+  "timeout_seconds": 150.0,
+  "expected_seconds": 18,
+  "input_source": "declared replay; not a human keyboard acceptance",
+  "completed": true,
+  "returncode": 0,
+  "player": {
+    "control_config": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "twist_limits": {
+          "sprint_vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_yaw_reversal_s": 0.2,
+          "vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_heading_gain": 6.0,
+        "walk_heading_limit": 0.6,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_path_lookahead": 0.2,
+        "walk_reanchor_on_start": true
+      }
+    },
+    "error": "",
+    "events": [],
+    "final_raw": {
+      "base_angvel_local": [
+        1.83628289960325e-05,
+        -8.0960409832187e-05,
+        0.000331311312038451
+      ],
+      "base_linvel": [
+        -1.07517589640338e-05,
+        -1.64408666023519e-05,
+        -1.57596090843981e-07
+      ],
+      "base_pos": [
+        1.65536952018738,
+        1.49764168262482,
+        0.117648482322693
+      ],
+      "base_quat": [
+        0.451624870300293,
+        0.170454561710358,
+        0.292854338884354,
+        0.82535845041275
+      ],
+      "bodies": [
+        {
+          "contact": false,
+          "contacts": [],
+          "ground_contact": false,
+          "impulse": 0.0,
+          "linvel": [
+            -3.82401594833937e-05,
+            -1.53088349179598e-05,
+            7.10094764144742e-06
+          ],
+          "n_contacts": 0,
+          "name": "jaw_soft",
+          "pos": [
+            1.69756984710693,
+            1.5222190618515,
+            0.232246473431587
+          ],
+          "quat": [
+            0.675962030887604,
+            0.177344679832458,
+            -0.695946276187897,
+            0.165175467729568
+          ]
+        }
+      ],
+      "body_states": [
+        {
+          "contact": false,
+          "contact_events": [],
+          "contacts": [],
+          "ground_contact": false,
+          "impulse": 0.0,
+          "linvel": [
+            -1.07517589640338e-05,
+            -1.64408666023519e-05,
+            -1.57596090843981e-07
+          ],
+          "n_contacts": 0,
+          "name": "trunk_base",
+          "pos": [
+            1.65536952018738,
+            1.49764168262482,
+            0.117648482322693
+          ],
+          "quat": [
+            0.451624870300293,
+            0.170454561710358,
+            0.292854338884354,
+            0.82535845041275
+          ]
+        },
+        {
+          "contact": true,
+          "contact_events": [
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.000630851194728166,
+              "shape": "col_left_foot_collision_29_0"
+            }
+          ],
+          "contacts": [
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.000631159928161651,
+              "shape": "col_left_foot_collision_29_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.000912973249796778,
+              "shape": "col_left_foot_collision_29_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.0,
+              "shape": "col_left_foot_collision_29_0"
+            }
+          ],
+          "ground_contact": true,
+          "impulse": 0.00154413317795843,
+          "linvel": [
+            -1.34912477278704e-06,
+            -8.78468426890322e-07,
+            2.76728974313301e-06
+          ],
+          "n_contacts": 3,
+          "name": "ankle_left",
+          "pos": [
+            1.6564918756485,
+            1.5527948141098,
+            0.0108640482649207
+          ],
+          "quat": [
+            0.689416706562042,
+            0.17333422601223,
+            -0.66992062330246,
+            0.214164078235626
+          ]
+        },
+        {
+          "contact": false,
+          "contact_events": [],
+          "contacts": [],
+          "ground_contact": false,
+          "impulse": 0.0,
+          "linvel": [
+            -3.82401594833937e-05,
+            -1.53088349179598e-05,
+            7.10094764144742e-06
+          ],
+          "n_contacts": 0,
+          "name": "jaw_soft",
+          "pos": [
+            1.69756984710693,
+            1.5222190618515,
+            0.232246473431587
+          ],
+          "quat": [
+            0.675962030887604,
+            0.177344679832458,
+            -0.695946276187897,
+            0.165175467729568
+          ]
+        },
+        {
+          "contact": true,
+          "contact_events": [
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.00124113890342414,
+              "shape": "col_right_foot_collision_79_0"
+            }
+          ],
+          "contacts": [
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.00124124030116946,
+              "shape": "col_right_foot_collision_79_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.000363046623533592,
+              "shape": "col_right_foot_collision_79_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.0,
+              "shape": "col_right_foot_collision_79_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.0,
+              "shape": "col_right_foot_collision_79_0"
+            }
+          ],
+          "ground_contact": true,
+          "impulse": 0.00160428692470305,
+          "linvel": [
+            -1.01414547870604e-08,
+            -4.92895708248398e-07,
+            2.79713447071117e-07
+          ],
+          "n_contacts": 4,
+          "name": "ankle_right",
+          "pos": [
+            1.69678032398224,
+            1.47435569763184,
+            0.0101711452007294
+          ],
+          "quat": [
+            -0.20606991648674,
+            0.706887722015381,
+            0.150319620966911,
+            0.659734070301056
+          ]
+        },
+        {
+          "contact": true,
+          "contact_events": [
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.00073577684815973,
+              "shape": "col_ball_geom_82"
+            }
+          ],
+          "contacts": [
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.000735742214601487,
+              "shape": "col_ball_geom_82"
+            }
+          ],
+          "ground_contact": true,
+          "impulse": 0.000735742214601487,
+          "linvel": [
+            -1.24597590911435e-05,
+            -0.200639396905899,
+            2.74258945864858e-06
+          ],
+          "n_contacts": 1,
+          "name": "ball",
+          "pos": [
+            4.99918746948242,
+            1.785977602005,
+            0.0347865596413612
+          ],
+          "quat": [
+            -0.484328985214233,
+            0.874885976314545,
+            -0.000158040071255527,
+            0.000112884379632305
+          ]
+        }
+      ],
+      "cmd": "step",
+      "feet": [
+        {
+          "contact": true,
+          "contacts": [
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.000631159928161651,
+              "shape": "col_left_foot_collision_29_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.000912973249796778,
+              "shape": "col_left_foot_collision_29_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.0,
+              "shape": "col_left_foot_collision_29_0"
+            }
+          ],
+          "ground_contact": true,
+          "impulse": 0.00154413317795843,
+          "linvel": [
+            -1.34912477278704e-06,
+            -8.78468426890322e-07,
+            2.76728974313301e-06
+          ],
+          "n_contacts": 3,
+          "name": "ankle_left",
+          "pos": [
+            1.6564918756485,
+            1.5527948141098,
+            0.0108640482649207
+          ],
+          "quat": [
+            0.689416706562042,
+            0.17333422601223,
+            -0.66992062330246,
+            0.214164078235626
+          ]
+        },
+        {
+          "contact": true,
+          "contacts": [
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.00124124030116946,
+              "shape": "col_right_foot_collision_79_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.000363046623533592,
+              "shape": "col_right_foot_collision_79_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.0,
+              "shape": "col_right_foot_collision_79_0"
+            },
+            {
+              "body": "Floor",
+              "ground": true,
+              "impulse": 0.0,
+              "shape": "col_right_foot_collision_79_0"
+            }
+          ],
+          "ground_contact": true,
+          "impulse": 0.00160428692470305,
+          "linvel": [
+            -1.01414547870604e-08,
+            -4.92895708248398e-07,
+            2.79713447071117e-07
+          ],
+          "n_contacts": 4,
+          "name": "ankle_right",
+          "pos": [
+            1.69678032398224,
+            1.47435569763184,
+            0.0101711452007294
+          ],
+          "quat": [
+            -0.20606991648674,
+            0.706887722015381,
+            0.150319620966911,
+            0.659734070301056
+          ]
+        }
+      ],
+      "ok": true,
+      "q": [
+        0.0516793777286161,
+        -0.0447640498804809,
+        -0.429712578703085,
+        0.0734564146384232,
+        0.495268240186458,
+        0.311770286901183,
+        0.309007759136256,
+        -0.11209830208055,
+        0.00622010017904593,
+        0.0055857553542675,
+        0.0684275018558855,
+        0.338224828140001,
+        -0.0859336954725173,
+        -0.417088501846731
+      ],
+      "qd": [
+        0.000323197287710043,
+        -1.4771182469828e-05,
+        1.5667109468072e-05,
+        4.67312677513377e-06,
+        -6.11661969892033e-05,
+        0.000126659819201565,
+        -2.07905641627765e-05,
+        -0.000214081672126808,
+        2.65004506012459e-05,
+        0.000311208743706341,
+        2.96334888155291e-06,
+        0.000146000790685964,
+        -5.87329383996007e-05,
+        -7.17106817451348e-05
+      ],
+      "t": 18.0000000000007,
+      "tau": [
+        -0.0102400838818081,
+        -0.0426651854121799,
+        -0.0109768902060332,
+        -0.0377175634287141,
+        -0.0348540037825999,
+        -0.0110534108809173,
+        -0.0272446155568654,
+        0.000222481400327698,
+        -0.00219140346506161,
+        0.0231823187659138,
+        0.0443115223208021,
+        -0.00842145021021448,
+        0.099635705188063,
+        -0.0568325009003853
+      ]
+    },
+    "first_fall": null,
+    "inference": {
+      "sprint": {
+        "count": 650,
+        "histogram_cap_usec": 20000,
+        "max_usec": 1223,
+        "mean_usec": 137.824615384615,
+        "p50_usec": 116,
+        "p95_usec": 319,
+        "p99_usec": 724
+      },
+      "walking": {
+        "count": 250,
+        "histogram_cap_usec": 20000,
+        "max_usec": 1491,
+        "mean_usec": 134.364,
+        "p50_usec": 101,
+        "p95_usec": 302,
+        "p99_usec": 1182
+      }
+    },
+    "mode": "walk",
+    "models": {
+      "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+      "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+      "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+      "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+      "sprint": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+      "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+      "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+    },
+    "physics_hz": 200,
+    "policy_hz": 50,
+    "resets": 0,
+    "runtime_version": "1.29.0",
+    "schema_version": 1,
+    "sim_seconds": 18.0,
+    "steps": 900,
+    "switches": 0,
+    "tcp": false,
+    "wall_seconds": 8.894574
+  },
+  "encode_command": [
+    "ffmpeg",
+    "-nostdin",
+    "-i",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/demo/capture.avi",
+    "-an",
+    "-c:v",
+    "libx264",
+    "-threads",
+    "2",
+    "-preset",
+    "veryfast",
+    "-crf",
+    "20",
+    "-pix_fmt",
+    "yuv420p",
+    "-movflags",
+    "+faststart",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/demo/demo.mp4"
+  ],
+  "artifacts": {
+    "capture.avi": "1bf67c28a5ada9e83cd39097e7e0973b98ec842abfe99f7e7f8789ea3a9c96d7",
+    "demo.mp4": "2e4234d7378a558d54ffb92a4d870531ecd685458918c8c62632b78631bd8ce5",
+    "trace.json": "d38af80b1195bbde5069fa3f329387bd2d2ef9929d4174d07dfb34c0053fdac3"
+  },
+  "elapsed_s": 16.226774715003558
+}

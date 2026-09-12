@@ -1,0 +1,15 @@
+{
+  "wheel_sha256": "a4090f5e6c91a314d617b294c29838efefbef6bca981268a69750c90dd560356",
+  "assets": [
+    "sim2sim/assets/microduck_sprint_v1/README.md",
+    "sim2sim/assets/microduck_sprint_v1/Sprint_Godot.manifest.json",
+    "sim2sim/assets/microduck_sprint_v1/Walk_Godot.manifest.json",
+    "sim2sim/assets/microduck_sprint_v1/profile.json",
+    "sim2sim/assets/microduck_sprint_v1/self_test.json"
+  ],
+  "missing": [
+    "Sprint_Godot.onnx",
+    "Walk_Godot.onnx"
+  ],
+  "passed": false
+}

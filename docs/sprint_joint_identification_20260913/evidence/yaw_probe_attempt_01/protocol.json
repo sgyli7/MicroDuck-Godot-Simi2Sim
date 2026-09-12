@@ -1,0 +1,28 @@
+{
+  "seeds": [
+    927000,
+    927001,
+    927002,
+    927003,
+    927004,
+    927005,
+    927006,
+    927007,
+    927008,
+    927009,
+    927010,
+    927011,
+    927012,
+    927013,
+    927014,
+    927015
+  ],
+  "duration_seconds": 0.2,
+  "scope": "Control change only; a402 policy, ordinary controls and game physics frozen. No reduction of cruise speed; active reversal interpolates over ten decisions, straight/stop/ordinary immediately use old command.",
+  "gate": "Both direction phases and stop/straight/fall gates in original full 18s case, all 16 dev seeds; disabled canary is bit-identical, active prefix before first reversal is bit-identical. Python/native command and action parity use existing strict limits. No parameter sweep.",
+  "code_sha256": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_probe.py": "4cd2102165f7c9f7b6bc153220472b006c85bf83d87538d4cf3bb89244124f56",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_reversal.py": "ccca426943d186f8f19b198a0a8afec91810f76afcb5d3b3d029707f90585426",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_reversal.gd": "e34c3c6707a61d61a76b1e6b2e393cdff330595dbdbaaec08be2f27773db0558"
+  }
+}

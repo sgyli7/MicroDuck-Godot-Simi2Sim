@@ -1,0 +1,60 @@
+{
+  "scope": "Offline counterfactual kinematics, not physical trajectories or policy improvements",
+  "seeds": [
+    927000,
+    927001,
+    927002,
+    927003,
+    927004,
+    927005,
+    927006,
+    927007,
+    927008,
+    927009,
+    927010,
+    927011,
+    927012,
+    927013,
+    927014,
+    927015
+  ],
+  "q_error_cap_rad": 1e-05,
+  "both_reconstruction_cap_m": 1e-10,
+  "prior_rigid_manifold_cap_m": 1e-07,
+  "phases": {
+    "precontact": [
+      0,
+      0.04
+    ],
+    "landing": [
+      0.04,
+      0.3
+    ],
+    "standing": [
+      0.3,
+      1.0
+    ],
+    "forward": [
+      1.0,
+      3.0
+    ],
+    "left": [
+      3.0,
+      6.0
+    ],
+    "reverse": [
+      6.0,
+      9.0
+    ]
+  },
+  "modes": [
+    "rigid",
+    "translation",
+    "swing",
+    "both"
+  ],
+  "source_sha256": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/analyze.py": "8fe74cd1750845c3473c5266fdfbda151475f1064bf0e008fc62839d8080843f",
+    "src/sim2sim/research/joint_residuals.py": "7accdcac389a063dde3d6c911d0892be7d1853e1395ba354f3a72a2211449f01"
+  }
+}

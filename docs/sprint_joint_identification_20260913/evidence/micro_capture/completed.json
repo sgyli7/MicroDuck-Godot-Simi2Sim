@@ -1,0 +1,53 @@
+{
+  "completed": true,
+  "results": [
+    {
+      "seed": 927000,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/micro_capture/927000",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "command": 0.0,
+        "last_action": 0.0,
+        "ctrl": 0.0
+      },
+      "samples": 401
+    },
+    {
+      "seed": 927001,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/micro_capture/927001",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "command": 0.0,
+        "last_action": 0.0,
+        "ctrl": 0.0
+      },
+      "samples": 401
+    },
+    {
+      "seed": 927008,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/micro_capture/927008",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "command": 0.0,
+        "last_action": 0.0,
+        "ctrl": 0.0
+      },
+      "samples": 401
+    },
+    {
+      "seed": 927009,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/micro_capture/927009",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "command": 0.0,
+        "last_action": 0.0,
+        "ctrl": 0.0
+      },
+      "samples": 401
+    }
+  ]
+}

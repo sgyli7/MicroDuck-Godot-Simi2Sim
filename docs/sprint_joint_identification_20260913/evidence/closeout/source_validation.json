@@ -1,0 +1,135 @@
+{
+  "passed": true,
+  "protected_files": 15,
+  "protocol_source_checks": [
+    {
+      "protocol": "results/sprint_joint_identification_20260913/fitted_physics/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/fitted_probe.py",
+      "sha256": "17f8be823bbf1906de1d3c8c826b0e732743ba60cc0715c7a1f503a93cc47a62",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/fitted_physics/protocol.json",
+      "source": "scripts/sprint_gpu_world.py",
+      "sha256": "8398f39d59646798564a7872d2c0634f5e1c62f4e4820cd0142c332be00462f5",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/fitted_physics/protocol.json",
+      "source": "src/sim2sim/research/joint_compliance.py",
+      "sha256": "96ddced13bb57bd6a9e3b6e6402b17045860d24995106766da225c90bb1ed999",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/split_physics_attempt_01/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/split_probe.py",
+      "sha256": "89b6a20d9b1dab75250d69c9897509d3e06e2c635b628b70b7c71aa1cba09895",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/split_physics_attempt_01/protocol.json",
+      "source": "results/sprint_joint_identification_20260913/split_proxy.py",
+      "sha256": "e9f56a58fffa287026d470485933fc61114d7cdae21b4c235cca2e0daac6d9e7",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/split_physics_attempt_01/protocol.json",
+      "source": "scripts/sprint_gpu_world.py",
+      "sha256": "8398f39d59646798564a7872d2c0634f5e1c62f4e4820cd0142c332be00462f5",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/split_physics_attempt_01/protocol.json",
+      "source": "src/sim2sim/research/joint_compliance.py",
+      "sha256": "96ddced13bb57bd6a9e3b6e6402b17045860d24995106766da225c90bb1ed999",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/yaw_probe_attempt_01/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_probe.py",
+      "sha256": "4cd2102165f7c9f7b6bc153220472b006c85bf83d87538d4cf3bb89244124f56",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/yaw_probe_attempt_01/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_reversal.py",
+      "sha256": "ccca426943d186f8f19b198a0a8afec91810f76afcb5d3b3d029707f90585426",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/yaw_probe_attempt_01/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_reversal.gd",
+      "sha256": "e34c3c6707a61d61a76b1e6b2e393cdff330595dbdbaaec08be2f27773db0558",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/momentum_split_physics/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/momentum_split_probe.py",
+      "sha256": "d730a0a0571c92e821a1a450b58e9e5a98d046a54133664ee51497f0f0959ab7",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/momentum_split_physics/protocol.json",
+      "source": "results/sprint_joint_identification_20260913/split_proxy.py",
+      "sha256": "b5148b6714a960849ed1847a7e8b0f04e683958b81fba595d7ff49628fe706be",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/momentum_split_physics/protocol.json",
+      "source": "scripts/sprint_gpu_world.py",
+      "sha256": "8398f39d59646798564a7872d2c0634f5e1c62f4e4820cd0142c332be00462f5",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/momentum_split_physics/protocol.json",
+      "source": "src/sim2sim/research/joint_compliance.py",
+      "sha256": "96ddced13bb57bd6a9e3b6e6402b17045860d24995106766da225c90bb1ed999",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/split_physics/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/split_probe.py",
+      "sha256": "774e42d1848c1b22ea77db2419613b80509063de87e1bd062d4fa020d04b80e6",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/split_physics/protocol.json",
+      "source": "results/sprint_joint_identification_20260913/split_proxy.py",
+      "sha256": "cd086ded778e0a76fd7370d767d78282a774280cf673c1bfe1e485dbe24b1ad7",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/split_physics/protocol.json",
+      "source": "scripts/sprint_gpu_world.py",
+      "sha256": "8398f39d59646798564a7872d2c0634f5e1c62f4e4820cd0142c332be00462f5",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/split_physics/protocol.json",
+      "source": "src/sim2sim/research/joint_compliance.py",
+      "sha256": "96ddced13bb57bd6a9e3b6e6402b17045860d24995106766da225c90bb1ed999",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/yaw_probe/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_probe.py",
+      "sha256": "8dbef82cada375339f2da29d669e510b3ca9e150f8af30d40109411ba84e966c",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/yaw_probe/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_reversal.py",
+      "sha256": "432199ede891b2004a8a7b71bd1dd345f9b973e2b6f6f9ce24a0a996bede0bfd",
+      "verified": true
+    },
+    {
+      "protocol": "results/sprint_joint_identification_20260913/yaw_probe/protocol.json",
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_reversal.gd",
+      "sha256": "6a6253e5cd7bc93c0eb31e671bf33a569380bb9efaf111a8d74f7bfc155a2df6",
+      "verified": true
+    }
+  ],
+  "missing": [],
+  "local_artifact_count": 1360,
+  "local_artifact_bytes": 8557566179
+}

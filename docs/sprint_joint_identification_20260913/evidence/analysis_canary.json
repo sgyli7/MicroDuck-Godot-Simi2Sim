@@ -1,0 +1,8 @@
+{
+  "q_max_abs_rad": 4.628064620426642e-07,
+  "q_passed": true,
+  "both_reconstruction_max_m": 4.0699141548619265e-16,
+  "both_passed": true,
+  "prior_manifold_max_m": 1.9517121141454652e-08,
+  "prior_manifold_passed": true
+}

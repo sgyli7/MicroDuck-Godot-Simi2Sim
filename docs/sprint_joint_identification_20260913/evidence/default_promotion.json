@@ -1,0 +1,36 @@
+{
+  "profile": "microduck-sprint-v1",
+  "before": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990"
+  },
+  "after": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770"
+  },
+  "unchanged_skills": [
+    "standing",
+    "sitstand",
+    "ground_pick",
+    "kick_left",
+    "kick_right",
+    "roulade",
+    "roller",
+    "roller_crouch"
+  ]
+}

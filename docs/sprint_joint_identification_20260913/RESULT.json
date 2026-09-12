@@ -1,0 +1,418 @@
+{
+  "status": "sprint_flat_acceptance_passed_default_installed",
+  "goal_scope": "Walking-only left Shift + W, native inference, ordinary walking retained, flat terrain; obstacle traversal and avoidance excluded.",
+  "new_policy_training": false,
+  "trained_sprint_sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+  "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+  "dev": {
+    "candidate_pass": 128,
+    "candidate_count": 128,
+    "ordinary_pass": 128,
+    "ordinary_count": 128,
+    "regression_pass": 7,
+    "falls": 0
+  },
+  "final": {
+    "candidate_pass": 400,
+    "candidate_count": 400,
+    "ordinary_pass": 400,
+    "ordinary_count": 400,
+    "regression_pass": 7,
+    "falls": 0,
+    "comparisons": [
+      {
+        "case": "sprint_alternate",
+        "count": 50,
+        "candidate_vx": 0.2157394764157599,
+        "ordinary_vx": 0.16802867639434463,
+        "ratio": 1.2839443900006886,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_left",
+        "count": 50,
+        "candidate_vx": 0.20352067550702732,
+        "ordinary_vx": 0.15358939191551138,
+        "ratio": 1.3250959129975777,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_long",
+        "count": 50,
+        "candidate_vx": 0.23244392267948832,
+        "ordinary_vx": 0.19313480987297202,
+        "ratio": 1.2035319931832618,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_repeat",
+        "count": 50,
+        "candidate_vx": 0.23462363373377942,
+        "ordinary_vx": 0.19442406866637252,
+        "ratio": 1.206762286907947,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_right",
+        "count": 50,
+        "candidate_vx": 0.22553411285393715,
+        "ordinary_vx": 0.16779047341348854,
+        "ratio": 1.3441413464407488,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_shift_first",
+        "count": 50,
+        "candidate_vx": 0.2328326627785276,
+        "ordinary_vx": 0.19341674369478618,
+        "ratio": 1.203787522893779,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_turn_release",
+        "count": 50,
+        "candidate_vx": 0.20137135118958352,
+        "ordinary_vx": 0.15173332985974258,
+        "ratio": 1.3271398668685694,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_w_first",
+        "count": 50,
+        "candidate_vx": 0.23268149348481887,
+        "ordinary_vx": 0.1927545687510305,
+        "ratio": 1.2071386685799368,
+        "speed_pass": true
+      }
+    ]
+  },
+  "main_game": {
+    "passed": true,
+    "checks": {
+      "no_native_falls": true,
+      "left_shift_sprint": true,
+      "left_turn": true,
+      "right_turn": true,
+      "release_returns_walking": true,
+      "stopped": true,
+      "switch_and_reset": true,
+      "single_process": true,
+      "accepted_default_profile": true,
+      "no_cabinet_or_stair_contact": true
+    },
+    "rows": 452,
+    "stop_max_speed": 0.001732477085580795,
+    "stop_average_speed": 0.00023838803198491498,
+    "first_fall": null,
+    "ui_frame": "results/sprint_joint_identification_20260913/main_game_bay/sprint_ui.jpg",
+    "plan_sha256": "e989ee78962925ceeefbf0ac5421028232b3073b2dca598febf4fa037bb38033",
+    "scope": "Actual published-main workshop source, embedded MD inference, InputEventKey delivery with explicit left-key location. Full flat quality gates separately covered by frozen final 807 cases. Two obstacle collisions preserved in separate failed tapes."
+  },
+  "default_regression": {
+    "count": 69,
+    "before_pass": 30,
+    "after_pass": 42,
+    "losses": [],
+    "brake_losses": []
+  },
+  "endurance": {
+    "completed": true,
+    "physical_passed": true,
+    "arena_valid": true,
+    "falls": false,
+    "performance_completed": true,
+    "simulation_speed": 11.8952998702996,
+    "peak_rss_kib": 191712,
+    "elapsed_s": 151.99215421301778
+  },
+  "keyboard": {
+    "check": "x11_synthetic_host_keyboard",
+    "checks": {
+      "right_shift_ignored": true,
+      "left_shift_sprint": true,
+      "ordinary_forward": true,
+      "left_turn": true,
+      "right_turn": true,
+      "roller_modifier_ignored": true,
+      "no_roller_sprint": true,
+      "resets": true,
+      "switches": true,
+      "pause_resume": true,
+      "clean_exit": true
+    },
+    "passed": true,
+    "rows": 399,
+    "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/host_keyboard/trace.json",
+    "window_pid": 1552989,
+    "command": [
+      "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260913-sprint-reversal-trial/MicroDuck.arm64",
+      "--rendering-method",
+      "gl_compatibility",
+      "--resolution",
+      "1280x800",
+      "--",
+      "--render-fps=60",
+      "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/host_keyboard/trace.json",
+      "--seconds=40"
+    ],
+    "runtime": "exported_binary"
+  },
+  "tests": {
+    "unique_total": 310,
+    "passed": 308,
+    "skipped": 2,
+    "merged_core": {
+      "tests": 306,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "successful": true
+    },
+    "focused": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "successful": true
+    }
+  },
+  "proxy_adopted": false,
+  "policy_control_change": "0.2 second input-layer yaw reversal; same a402 policy weights as prior round",
+  "main_obstacle_failures": [
+    "main_game: cabinet contact 10.4s, fall 12.46s",
+    "main_game_open_floor: stair course_2 contact 5.84s, fall 8.34s"
+  ],
+  "final_seeds_consumed": "928000-928049",
+  "github_status": "pending final push",
+  "package": {
+    "completed": true,
+    "directory": "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260913-sprint-reversal-trial",
+    "executable": "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260913-sprint-reversal-trial/MicroDuck.arm64",
+    "models": {
+      "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+      "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+      "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+      "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+      "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+      "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+      "sprint": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770"
+    },
+    "size_bytes": 285589029,
+    "archive": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260913-sprint-reversal-trial.tar.gz",
+      "size_bytes": 180563483,
+      "sha256": "a24c4fe0503fd246d6e68249ab6fe7a367097660fa0a540a43fac02dd10ce167",
+      "directory_checksums_verified": true
+    }
+  },
+  "wheel_assets": {
+    "wheel_sha256": "3320688c3f38ae01443ca8b673af0406b045b15c66f213430a79e8cb8377cb86",
+    "assets": [
+      "sim2sim/assets/microduck_sprint_v1/README.md",
+      "sim2sim/assets/microduck_sprint_v1/Sprint_Godot.manifest.json",
+      "sim2sim/assets/microduck_sprint_v1/Sprint_Godot.onnx",
+      "sim2sim/assets/microduck_sprint_v1/Walk_Godot.manifest.json",
+      "sim2sim/assets/microduck_sprint_v1/Walk_Godot.onnx",
+      "sim2sim/assets/microduck_sprint_v1/profile.json",
+      "sim2sim/assets/microduck_sprint_v1/self_test.json"
+    ],
+    "missing": [],
+    "passed": true,
+    "hashes_match": true
+  },
+  "resources": {
+    "unix": 1789239948.6805356,
+    "started": 27,
+    "finished": 27,
+    "missing_terminal": [],
+    "cleanup_remaining": {},
+    "live_owned_pids": [],
+    "live_owned_groups": [],
+    "live_session_marker_processes": [],
+    "all_godot_processes": [
+      {
+        "pid": 1679586,
+        "state": "S",
+        "ppid": 1679440,
+        "pgrp": 1679434,
+        "session": 1679434,
+        "start_ticks": 26704290,
+        "comm": "godot",
+        "args": "/home/ethan/.local/bin/godot --path /home/ethan/Projects/MicroDuck/sim2sim/results/workshop-hub/runtime res://hub/main.tscn --disable-vsync --max-fps 30 -- --port=53029 "
+      }
+    ],
+    "docker": {
+      "command": [
+        "docker",
+        "ps",
+        "--format",
+        "{{.ID}}\t{{.Names}}\t{{.Image}}"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "gpu": {
+      "command": [
+        "nvidia-smi",
+        "--query-gpu=name,utilization.gpu,memory.used",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "stdout": "NVIDIA GB10, 5 %, [N/A]",
+      "stderr": ""
+    },
+    "gpu_apps": {
+      "command": [
+        "nvidia-smi",
+        "--query-compute-apps=pid,process_name,used_gpu_memory",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 192 MiB\n1679586, /home/ethan/.local/bin/godot, 828 MiB",
+      "stderr": ""
+    },
+    "job_results": [
+      {
+        "actor": "native_joint_poses:ed67685140",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "joint_geometry_decomposition:3e906e342e",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "compliance_fit:fdbe584caa",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "fitted_gpu_physics:31a039fa17",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_micro_pose_velocity:566f7e6fc1",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "split_gpu_physics:e34307cd73",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "projection_canary_diagnosis:fc0296b155",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "split_gpu_physics_after_canary:5fc979f470",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "momentum_split_gpu:a602a594ab",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_yaw_reversal:5a47fcd227",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_yaw_input_layer:dae38e07e4",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "integrated_native_development:0c8439c553",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "regression_checks:502a111f96",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "integrated_native_development_inventory_fix:ac8eedba77",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "frozen_candidate_export:30a718d0bd",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "exported_host_keyboard:7d37b55570",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "exported_clean_engineering:071923ff5f",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "exported_turn_demo:a3be4d2d78",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "frozen_final_native:7383b88e76",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "frozen_endurance_performance:377f899711",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "merged_source_checks:5d6b92c79c",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "main_default_regression:d6c31dc92e",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "main_game_sprint_controls:5791095b4f",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "merged_source_original_assets:d21e078e68",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "main_game_open_floor_controls:0834a391c1",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "main_game_bay_controls:bf567124ec",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "archive_evidence:743cfe6c68",
+        "returncode": 0,
+        "reason": "completed"
+      }
+    ],
+    "passed": true,
+    "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "parent_commit": "05ab6475bde33cbf34b44b5271968f8f26abaa47",
+  "surfaces": {
+    "before_all": 231,
+    "before_exposed": 213,
+    "after_exposed": 0,
+    "scope": "Different-pigment, same-facing axial planar triangles; buried downward floor faces excluded"
+  },
+  "shimmer": {
+    "before": {
+      "sample_points": 112,
+      "frames": 16,
+      "mean_temporal_rgb_std": 5.261488312385426,
+      "mean_rgb": [
+        63.14732142857143,
+        58.1171875,
+        66.50167410714286
+      ]
+    },
+    "after": {
+      "sample_points": 112,
+      "frames": 16,
+      "mean_temporal_rgb_std": 0.04025922307524192,
+      "mean_rgb": [
+        59.33314732142857,
+        57.0,
+        59.0
+      ]
+    }
+  },
+  "jolt": {
+    "dynamic_contacts": 6,
+    "engine": "Jolt Physics",
+    "failures": [],
+    "specimens": [
+      {
+        "expected": 0.00499999988824129,
+        "height": 0.00499990582466125,
+        "normal": [
+          0.00277793616987765,
+          0.999980568885803,
+          0.00558666791766882
+        ],
+        "specimen": "Step_05mm"
+      },
+      {
+        "expected": 0.00999999977648258,
+        "height": 0.00999987125396729,
+        "normal": [
+          0.00277793756686151,
+          0.999980568885803,
+          0.00558667071163654
+        ],
+        "specimen": "Step_10mm"
+      },
+      {
+        "expected": 0.0149999996647239,
+        "height": 0.0149998664855957,
+        "normal": [
+          0.00278065516613424,
+          0.999980509281158,
+          0.00559213617816567
+        ],
+        "specimen": "Step_15mm"
+      },
+      {
+        "expected": 0.015,
+        "height": 0.0150000154972076,
+        "normal": [
+          0.0,
+          0.997785210609436,
+          -0.066519021987915
+        ],
+        "specimen": "Ramp_30mm"
+      },
+      {
+        "expected": 0.00999999977648258,
+        "height": 0.0100000202655792,
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "specimen": "Threshold_10mm"
+      },
+      {
+        "expected": 0.0199999995529652,
+        "height": 0.0199999809265137,
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "specimen": "Threshold_20mm"
+      },
+      {
+        "expected": 0.0399999991059303,
+        "height": 0.0400000512599945,
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "specimen": "Stop_40mm"
+      }
+    ],
+    "workshop_shapes": 131
+  },
+  "spawn_isolation": {
+    "main": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "atelier": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "flat": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "headless_solid_nodes": {
+      "atelier": 146,
+      "flat": 0
+    }
+  },
+  "policy_probe": {
+    "seconds": 8,
+    "seed": 61000,
+    "model_sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+    "initial_godot_xz": [
+      0.02,
+      1.04
+    ],
+    "initial_yaw": -1.5707963267948966,
+    "command_mps": 0.12,
+    "fell": false,
+    "max_tilt": 4.907252321416517,
+    "final_mujoco_xy": [
+      0.2713108533480032,
+      -1.4588823717452335
+    ],
+    "contact_counts": [
+      {
+        "robot_body": "ankle_right",
+        "obstacle": "Step_05mm",
+        "events": 100
+      },
+      {
+        "robot_body": "ankle_left",
+        "obstacle": "Step_05mm",
+        "events": 38
+      },
+      {
+        "robot_body": "ankle_right",
+        "obstacle": "Step_10mm",
+        "events": 7
+      }
+    ],
+    "limitation": "Drifted sideways off the steps; no complete-course or general terrain success claim."
+  },
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "frames": 239,
+    "seconds": 8.0,
+    "monotonic": true
+  },
+  "interactive_smoke": {
+    "seconds": 10,
+    "policy_hz": 50,
+    "intentional_sigint": true
+  },
+  "source_sha256": {
+    "godot/atelier/workshop.gd": "d55457390ad4f8a5d31cf4ad3b87ad5e744893c160c130acd46c2cbfebda7f87",
+    "godot/atelier/workshop_details.gd": "1be1734536019c691b399a2469ec9f16572931a635aedb9dbfc973ebdb1d84a3",
+    "godot/atelier/atelier_server.gd": "90023945005f358cdc72ff399f7473ed374315658953eac8b5c7e6d1525e2199",
+    "godot/atelier/contact_course.gd": "b407124c673eacd9d96c54fbf21997b39bb742a60099f441b637fcd68e1b11dd",
+    "godot/atelier/floor.gdshader": "e9f065fb25df2368f57ee4ba60f449738d9b62555861cd0bde52b225d05f49f9",
+    "godot/tests/workshop_contacts.gd": "4b5a5291aacf921bbf65b4b70d7a4c96d6e83a871227cf1c48be277c0ac60f98",
+    "godot/tests/workshop_surface_probe.gd": "1082df70a2886704613cf612b992ba81faa2011dd6960e7e1809567b00933560"
+  },
+  "unchanged_shared_sha256": {
+    "godot/physics_server.gd": "2163e2b7e696f3611c563bb8148ef89317db51d46cecc0c9de2554d6b5f6b120",
+    "godot/main.tscn": "3848afad86c25ed690eded5dfab9721c45e39f821fdbf998d48aa205a3978ff1",
+    "godot/project.godot": "17bc203516a4edb25f6a74aa645b7918d984592386dec329f2e3bb66600ef5f2"
+  },
+  "media_sha256": {
+    "docs/media/workshop-z-after.png": "3bd2966429e259806bbbdc43caf7318c4ddd5b5e1fd94257796913abe4de4382",
+    "docs/media/workshop-contacts.jpg": "7eb8581f89cb47703ca68424bd37a35355e5db463d07e3a21f23fc5bf7736350",
+    "docs/media/workshop-contacts.mp4": "219faa45648102d7ec1da35df7c3b6d47f34b385024ead06f3614aa424613c2e",
+    "docs/media/workshop-z-before.png": "019500253a9ced95cdfaaa39188835601ac0daeb3189e621286f8a37e39fa487"
+  },
+  "resource_limits": {
+    "cpus": 2,
+    "nice": 10,
+    "preview_fps": 30,
+    "training_processes_during_checks": 0
+  },
+  "runtime_limitations": [
+    "Two texture-release errors on visible OpenGL exit also present in the pre-change capture; no warnings or errors in final headless regression.",
+    "Static collision adds physics work; no 60 FPS or zero-overhead claim."
+  ],
+  "keyboard_tests_passed": 38
+}

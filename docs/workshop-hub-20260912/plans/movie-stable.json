@@ -1,0 +1,37 @@
+{
+  "seconds": 75,
+  "finish_on_task": true,
+  "cinematic": true,
+  "fixed_shots": [
+    {
+      "id": "grasp_and_cargo",
+      "at": 0,
+      "position": [
+        0.6,
+        0.85,
+        2.15
+      ],
+      "target": [
+        -0.35,
+        0.28,
+        0.85
+      ],
+      "fov": 50
+    },
+    {
+      "id": "transport",
+      "at": 49.34,
+      "position": [
+        1.3,
+        1.08,
+        3.1
+      ],
+      "target": [
+        0.95,
+        0.23,
+        0.85
+      ],
+      "fov": 50
+    }
+  ]
+}

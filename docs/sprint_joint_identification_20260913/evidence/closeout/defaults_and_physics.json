@@ -1,0 +1,110 @@
+{
+  "passed": true,
+  "files": [
+    {
+      "path": "godot/runtime_assets/policies/Stand_Godot.onnx",
+      "expected": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+      "actual": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "godot/runtime_assets/policies/Walk_Godot.onnx",
+      "expected": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+      "actual": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+      "unchanged": false,
+      "accepted_default_update": true
+    },
+    {
+      "path": "godot/runtime_assets/policies/Sitstand_Godot.onnx",
+      "expected": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+      "actual": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "godot/runtime_assets/policies/GroundPick_Godot.onnx",
+      "expected": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "actual": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "godot/runtime_assets/policies/KickLeft_Godot.onnx",
+      "expected": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "actual": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "godot/runtime_assets/policies/KickRight_Godot.onnx",
+      "expected": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "actual": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "godot/runtime_assets/policies/Roulade_Godot.onnx",
+      "expected": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+      "actual": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "godot/runtime_assets/policies/Roller_Godot.onnx",
+      "expected": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+      "actual": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "godot/runtime_assets/policies/RollerCrouch_Godot.onnx",
+      "expected": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+      "actual": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "policies/Walk_Godot.onnx",
+      "expected": "63edd66c12854f5b78faad5555ec8749c613a547393c1cb84785fe880f30b7e6",
+      "actual": "63edd66c12854f5b78faad5555ec8749c613a547393c1cb84785fe880f30b7e6",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_ball_stand_fix.json",
+      "expected": "3c21e73c6324bc51e6741c906a617c56f119bba09fbd17db587c6a19808844c7",
+      "actual": "3c21e73c6324bc51e6741c906a617c56f119bba09fbd17db587c6a19808844c7",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_ball.xml",
+      "expected": "3d59c82db5c3ac5cb35b1f5d4dfa550832be2eddffa9249ba0bfef3b6452e2bd",
+      "actual": "3d59c82db5c3ac5cb35b1f5d4dfa550832be2eddffa9249ba0bfef3b6452e2bd",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd",
+      "expected": "4ee85783d70e33c474987c19509e29d7180f324d521f907f748a40b388a385ad",
+      "actual": "4ee85783d70e33c474987c19509e29d7180f324d521f907f748a40b388a385ad",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_ball_stand_fix/robot_spec.json",
+      "expected": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+      "actual": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+      "unchanged": true,
+      "accepted_default_update": false
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_ball_stand_fix/robot.tscn",
+      "expected": "d21abf70e85ae9919c7ccba084f61b6c9ebd611cbae1de4a8296d92c1925a7b8",
+      "actual": "d21abf70e85ae9919c7ccba084f61b6c9ebd611cbae1de4a8296d92c1925a7b8",
+      "unchanged": true,
+      "accepted_default_update": false
+    }
+  ]
+}

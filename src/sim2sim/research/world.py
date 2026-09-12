@@ -32,7 +32,7 @@ def roller_support_groups(model,names):
     return groups
 
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False,state_input='',task_input='',motion_settings=None):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False,state_input='',task_input='',motion_settings=None,scene_override=None):
         self.task, self.backend_name = task, backend
         from sim2sim.motion_control import MotionControl
         if motion_settings is not None and task.name!='walking':raise ValueError('Training motion feedback is currently walking only')
@@ -93,6 +93,10 @@ class World:
         self.site_id = mujoco.mj_name2id(self.mj.model,mujoco.mjtObj.mjOBJ_SITE,"mouth_tip")
         if task.name == "ground_pick" and self.site_id < 0:
             raise RuntimeError("ground_pick requires the real mouth_tip site")
+        if scene_override is not None:
+            if reference_profile != "xml":
+                raise ValueError("Presentation scene override requires the unchanged XML physics profile")
+            godot_scene = str(scene_override)
         self.backend = self.mj if backend == "mujoco" else GodotBackend(Path(self.cfg["godot_spec"]),headless=headless,scene=godot_scene,current_limit_a=1.75,recv_timeout=15)
         if backend == "mujoco":
             limit = 1.75*XL330_M6_KT

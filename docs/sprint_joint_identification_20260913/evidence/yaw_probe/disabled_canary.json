@@ -1,0 +1,79 @@
+{
+  "seed": 927001,
+  "duration": 0.0,
+  "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_probe/927001_0.0",
+  "prefix_max_abs": {
+    "obs": 0.0,
+    "action": 0.0,
+    "command": 0.0,
+    "ctrl": 0.0,
+    "last_action": 0.0
+  },
+  "intervention_max_abs": 0.0,
+  "task": {
+    "success": false,
+    "fell": false,
+    "first_fall_s": null,
+    "score": 0.0,
+    "sustained_mean_vx": 0.19922939608647672,
+    "sustained_p10_vx": 0.0989514216361292,
+    "max_tilt": 8.020882209238302,
+    "min_z": 0.11243602700513167,
+    "straight": [
+      {
+        "at": 1,
+        "heading_error_deg": 4.699398956330493,
+        "lateral_path_m": 0.026952730271803716,
+        "lateral_limit_m": 0.05,
+        "passed": true
+      },
+      {
+        "at": 9,
+        "heading_error_deg": 2.9953676504052833,
+        "lateral_path_m": 0.022254308640134113,
+        "lateral_limit_m": 0.11394439454078303,
+        "passed": true
+      }
+    ],
+    "turns": [
+      {
+        "at": 3,
+        "requested": 0.800000011920929,
+        "signed_yaw_rate": 0.8430695502892434,
+        "sustained_reverse": false,
+        "passed": true
+      },
+      {
+        "at": 6,
+        "requested": 0.800000011920929,
+        "signed_yaw_rate": 0.37672609036694155,
+        "sustained_reverse": false,
+        "passed": false
+      }
+    ],
+    "stops": [
+      {
+        "at": 14,
+        "onset_s": 0.6199999999999992,
+        "passed": true
+      }
+    ],
+    "actor_selection_passed": true,
+    "speed_gain_gate": "requires paired ordinary result"
+  },
+  "shadow": {
+    "check": "native_shadow",
+    "rows": 900,
+    "max_abs": {
+      "command": 4.996003610813204e-16,
+      "obs": 5.329070518200751e-15,
+      "action": 5.551115123125783e-16,
+      "ctrl": 4.884981308350689e-15,
+      "last_action": 5.551115123125783e-16,
+      "body_pos": 9.547918011776346e-15,
+      "body_quat": 1.5543122344752192e-15
+    },
+    "skill_mismatches": [],
+    "passed": true
+  }
+}

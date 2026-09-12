@@ -1,0 +1,15 @@
+{
+  "affinity": [
+    16,
+    17,
+    18,
+    19
+  ],
+  "load": [
+    5.03955078125,
+    7.39990234375,
+    7.5732421875
+  ],
+  "unix": 1789238360.574521,
+  "scope": "No concurrent jobs owned by this session. Other applications remain running; not an exclusive-host performance claim."
+}

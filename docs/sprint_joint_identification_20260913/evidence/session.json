@@ -1,0 +1,7 @@
+{
+  "base_commit": "d357400b56df25d5f7a7482efeccafe9245d6249",
+  "previous_turn": "progress",
+  "limit_minutes": 90,
+  "reserve_minutes": 20,
+  "objective": "Identify native joint constraint residuals without changing game physics or control; only advance a GPU proxy whose matched response improves."
+}

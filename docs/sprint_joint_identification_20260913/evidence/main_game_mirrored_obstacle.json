@@ -1,0 +1,228 @@
+{
+  "passed": false,
+  "first_fall_s": 8.34,
+  "first_obstacle_contacts": [
+    {
+      "t": 5.84,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 1.1955037562033
+    },
+    {
+      "t": 5.88,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.000159574032295495,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 2.28909817146159
+    },
+    {
+      "t": 5.9,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 3.28628476767776
+    },
+    {
+      "t": 5.92,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 3.9827565773744
+    },
+    {
+      "t": 5.94,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 4.73040709039196e-05,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 4.32630885702611
+    },
+    {
+      "t": 5.98,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.000916545162908733,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 4.34951605422682
+    },
+    {
+      "t": 5.98,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 4.34951605422682
+    },
+    {
+      "t": 6.0,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 4.37130113748797
+    },
+    {
+      "t": 6.0,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.00023341944324784,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 4.37130113748797
+    },
+    {
+      "t": 6.0,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 4.37130113748797
+    },
+    {
+      "t": 6.02,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 4.38427565608386
+    },
+    {
+      "t": 6.02,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 4.38427565608386
+    },
+    {
+      "t": 6.04,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 4.04689816856236
+    },
+    {
+      "t": 6.06,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 3.47034402257048
+    },
+    {
+      "t": 6.08,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 3.07561670901159
+    },
+    {
+      "t": 6.08,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 3.07561670901159
+    },
+    {
+      "t": 6.1,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 3.06937262879554
+    },
+    {
+      "t": 6.1,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 3.5992812627228e-05,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 3.06937262879554
+    },
+    {
+      "t": 6.12,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 6.51214431854896e-05,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 3.31002877075112
+    },
+    {
+      "t": 6.12,
+      "robot_body": "ankle_right",
+      "contact": {
+        "body": "course_2",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_right_foot_collision_79_0"
+      },
+      "tilt": 3.31002877075112
+    }
+  ],
+  "visual_evidence": "results/sprint_joint_identification_20260913/main_game_open_floor/frames/00163.jpg",
+  "interpretation": "Mirrored tape reaches the existing stair-course obstacle. Preserve this failure; neither path was open flat terrain."
+}

@@ -1,0 +1,1162 @@
+{
+  "parent_commit": "193611da7885193ab9c46e15963bf10ca2beacdd",
+  "source": {
+    "godot/atelier/workshop.gd": "ee6e28c9f717ef7ab97d06a9cf20e17191b114db16fa7af7e48cd296a1b42249",
+    "godot/atelier/workshop_yard.gd": "d4243394068cd8362ccc00d5944cd13b2f1baaedb33a4294a9c307fa461a759e",
+    "godot/atelier/floor.gdshader": "5f9523871cda5cc33e741824c51a758d57bb44a0044374d9709f95a7be31bd9f",
+    "godot/tests/workshop_yard.gd": "4f9ea81ea31edaf9c4c7517bf264c734140a15cf5fd032af4b0f1e426cf29a65",
+    "scripts/verify_yard_policy.py": "c4d8bf1e7eb4ed9bf6e19d6bb5a3bd281d5c07988ce6747c24265e277d490686",
+    "scripts/capture_workshop_atmosphere.py": "779b5bf83dc9c4ab8556c3133bcf7b9386f17e82ef73468447aa7dd0bf43bd3f"
+  },
+  "unchanged_shared": {
+    "godot/physics_server.gd": "2163e2b7e696f3611c563bb8148ef89317db51d46cecc0c9de2554d6b5f6b120",
+    "godot/project.godot": "17bc203516a4edb25f6a74aa645b7918d984592386dec329f2e3bb66600ef5f2",
+    "godot/main.tscn": "3848afad86c25ed690eded5dfab9721c45e39f821fdbf998d48aa205a3978ff1"
+  },
+  "collisions": {
+    "boundary_hits": {
+      "annex": [
+        -0.699999988079071,
+        0.5,
+        -1.90291357040405
+      ],
+      "barrel": [
+        -2.60999989509583,
+        0.150000005960464,
+        -0.490000039339066
+      ],
+      "fence": [
+        -2.9449999332428,
+        0.200000002980232,
+        -1.0
+      ],
+      "motor": [
+        3.20000004768372,
+        0.180000007152557,
+        0.254995852708817
+      ],
+      "shed_back": [
+        1.79999995231628,
+        0.300000011920929,
+        -2.66999983787537
+      ],
+      "shed_side": [
+        2.65000009536743,
+        0.200000002980232,
+        -2.25
+      ],
+      "spool": [
+        3.0,
+        0.159999996423721,
+        0.546500027179718
+      ],
+      "tank": [
+        -2.38000011444092,
+        0.550000011920929,
+        -1.13999998569489
+      ],
+      "wheel": [
+        2.9300000667572,
+        0.540000021457672,
+        -0.712499976158142
+      ]
+    },
+    "door_contact": false,
+    "door_proxy_z": -2.03000402450562,
+    "engine": "Jolt Physics",
+    "errors": [],
+    "shapes": 273,
+    "wall_contact": true,
+    "wall_proxy_x": 2.68979907035828
+  },
+  "loose_props": {
+    "bodies": {
+      "Ball10g": {
+        "angular_speed": 7.85361003875732,
+        "impulse_velocity": 0.149940013885498,
+        "mass": 0.00999999977648258,
+        "rest_displacement": 0.0011085340520367,
+        "rest_speed": 2.08869699314107e-09
+      },
+      "Ball15g": {
+        "angular_speed": 5.23573923110962,
+        "impulse_velocity": 0.099960021674633,
+        "mass": 0.0149999996647239,
+        "rest_displacement": 0.00110732042230666,
+        "rest_speed": 3.73640851591972e-09
+      },
+      "Bin10g": {
+        "angular_speed": 0.706907033920288,
+        "impulse_velocity": 0.149940013885498,
+        "mass": 0.00999999977648258,
+        "rest_displacement": 0.00251758005470037,
+        "rest_speed": 3.40495021067255e-10
+      },
+      "Bin12g": {
+        "angular_speed": 0.589088916778564,
+        "impulse_velocity": 0.124950014054775,
+        "mass": 0.0120000001043081,
+        "rest_displacement": 0.00251758494414389,
+        "rest_speed": 1.64401914304335e-09
+      },
+      "Bottle6g": {
+        "angular_speed": 2.61493825912476,
+        "impulse_velocity": 0.24990002810955,
+        "mass": 0.00600000005215406,
+        "rest_displacement": 0.00219996622763574,
+        "rest_speed": 1.44925405010099e-09
+      },
+      "Bottle8g": {
+        "angular_speed": 1.96120321750641,
+        "impulse_velocity": 0.187425002455711,
+        "mass": 0.00800000037997961,
+        "rest_displacement": 0.00219996436499059,
+        "rest_speed": 9.62328439158e-10
+      }
+    },
+    "engine": "Jolt Physics",
+    "errors": []
+  },
+  "isolation": {
+    "main": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "atelier": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "flat": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "headless_solid_nodes": {
+      "atelier": 274,
+      "flat": 0
+    },
+    "headless_dynamic_bodies": {
+      "atelier": 6,
+      "flat": 0
+    }
+  },
+  "surfaces": {
+    "exposed_axial_overlap_pairs": 0,
+    "log": "results/atmosphere/validation-retained.log"
+  },
+  "policy": {
+    "wall": {
+      "initial_mujoco_xy": [
+        2.97,
+        2.22
+      ],
+      "initial_yaw": 3.141592653589793,
+      "final_xy": [
+        2.7288091665320455,
+        2.120673754038656
+      ],
+      "min_x": 2.71276278361188,
+      "max_y": 2.235199666455953,
+      "max_tilt": 3.6661186062647095,
+      "fell": false,
+      "contacts": [
+        {
+          "time": 3.5400000000000027,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0105366036295891,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.5600000000000027,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.000943926337640733,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.5800000000000027,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.00177925569005311,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.6000000000000028,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.00186386739369482,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.6200000000000028,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.760000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0111240204423666,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.780000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.800000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.820000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.840000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.860000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.880000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.880000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0022653175983578,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 3.900000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.900000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.00297622615471482,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 3.900000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.000795880274381489,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 3.920000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.920000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 3.920000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 3.940000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.940000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 3.940000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 3.960000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.960000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 3.960000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 3.980000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 3.980000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 3.980000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.000000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.000000000000003,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.020000000000002,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.040000000000002,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.060000000000001,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.080000000000001,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.259999999999997,
+          "body": "ankle_right",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.00645174644887447,
+            "shape": "col_right_foot_collision_79_0"
+          }
+        },
+        {
+          "time": 4.279999999999997,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0309108644723892,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.279999999999997,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0295097585767508,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.279999999999997,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0308032091706991,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 4.279999999999997,
+          "body": "ankle_right",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 3.32247727783397e-05,
+            "shape": "col_right_foot_collision_79_0"
+          }
+        },
+        {
+          "time": 4.299999999999996,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.299999999999996,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.299999999999996,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 4.299999999999996,
+          "body": "ankle_right",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.000278022605925798,
+            "shape": "col_right_foot_collision_79_0"
+          }
+        },
+        {
+          "time": 4.319999999999996,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.319999999999996,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.319999999999996,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 4.319999999999996,
+          "body": "ankle_right",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_right_foot_collision_79_0"
+          }
+        },
+        {
+          "time": 4.339999999999995,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.339999999999995,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.339999999999995,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 4.359999999999995,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.359999999999995,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.359999999999995,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 4.379999999999995,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.379999999999995,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.379999999999995,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 4.399999999999994,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.399999999999994,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.419999999999994,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.439999999999993,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.459999999999993,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.479999999999992,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.499999999999992,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.519999999999992,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.7599999999999865,
+          "body": "ankle_right",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.00238854135386646,
+            "shape": "col_right_foot_collision_79_0"
+          }
+        },
+        {
+          "time": 4.779999999999986,
+          "body": "ankle_right",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 7.15564283382264e-06,
+            "shape": "col_right_foot_collision_79_0"
+          }
+        },
+        {
+          "time": 4.799999999999986,
+          "body": "ankle_right",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_right_foot_collision_79_0"
+          }
+        },
+        {
+          "time": 4.819999999999985,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0248704422265291,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.819999999999985,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0254868231713772,
+            "shape": "col_unnamed_49_49"
+          }
+        },
+        {
+          "time": 4.819999999999985,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.819999999999985,
+          "body": "ankle_right",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 1.28771478102863e-06,
+            "shape": "col_right_foot_collision_79_0"
+          }
+        },
+        {
+          "time": 4.839999999999985,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.839999999999985,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        },
+        {
+          "time": 4.859999999999984,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_58_58"
+          }
+        },
+        {
+          "time": 4.859999999999984,
+          "body": "jaw_soft",
+          "contact": {
+            "body": "WorkshopCollisions",
+            "ground": true,
+            "impulse": 0.0,
+            "shape": "col_unnamed_56_56"
+          }
+        }
+      ],
+      "model_sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+      "seconds": 6.0,
+      "steering": "none"
+    },
+    "doorway": {
+      "initial_mujoco_xy": [
+        2.18,
+        1.4
+      ],
+      "initial_yaw": 1.5707963267948966,
+      "final_xy": [
+        2.0380556018861964,
+        2.131039173204991
+      ],
+      "min_x": 2.0337750413076128,
+      "max_y": 2.131039173204991,
+      "max_tilt": 3.304982009922587,
+      "fell": false,
+      "contacts": [],
+      "model_sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+      "seconds": 11.0,
+      "steering": "test-only yaw command toward initial heading"
+    }
+  },
+  "straight_drift": {
+    "evidence": "results/atmosphere/policy-straight-drift/report.json",
+    "note": "Unsteered forward command drifted into the doorway edge; not counted as autonomous traversal success."
+  },
+  "visual": {
+    "views": {
+      "overview": [
+        [
+          3.7,
+          2.55,
+          4.3
+        ],
+        [
+          0,
+          0.52,
+          -1.0
+        ],
+        49
+      ],
+      "follow": [
+        [
+          0.65,
+          0.43,
+          0.91
+        ],
+        [
+          0,
+          0.21,
+          -0.2
+        ],
+        49
+      ],
+      "courtyard": [
+        [
+          1.8,
+          0.92,
+          2.2
+        ],
+        [
+          -0.25,
+          0.63,
+          -1.35
+        ],
+        58
+      ],
+      "workbench": [
+        [
+          0.22,
+          0.78,
+          -0.24
+        ],
+        [
+          -0.7,
+          0.68,
+          -1.45
+        ],
+        58
+      ],
+      "lane": [
+        [
+          2.65,
+          0.45,
+          0.48
+        ],
+        [
+          1.5,
+          0.66,
+          -2.3
+        ],
+        59
+      ],
+      "roofline": [
+        [
+          1.65,
+          1.5,
+          0.95
+        ],
+        [
+          -0.3,
+          1.04,
+          -2.2
+        ],
+        58
+      ]
+    },
+    "images": [
+      {
+        "view": "overview",
+        "version": "before",
+        "path": "docs/media/yard-before-overview.png",
+        "sha256": "747aee19b0fee845f7de771fe5745932a30ce7a49deaf064c0e798bfbb18a825"
+      },
+      {
+        "view": "overview",
+        "version": "after",
+        "path": "docs/media/yard-after-overview.png",
+        "sha256": "7fc020e7d9b6aa46863578e7a0218d6083037c68cf35dbc4947a548f5bd752f0"
+      },
+      {
+        "view": "follow",
+        "version": "before",
+        "path": "docs/media/yard-before-follow.png",
+        "sha256": "00f1b09f603bbf63e3782659e3dba631edb665ea6051379cd94ef37f3ceb4f24"
+      },
+      {
+        "view": "follow",
+        "version": "after",
+        "path": "docs/media/yard-after-follow.png",
+        "sha256": "8f347d2ff23cc7cff2b0b9e4a9b437686a5dc73647649e360558044e23da4a90"
+      },
+      {
+        "view": "courtyard",
+        "version": "before",
+        "path": "docs/media/yard-before-courtyard.png",
+        "sha256": "83fca9861d88746107063b80092c5f4a595c3c1e6e432d77a1e41cbd4ba7528c"
+      },
+      {
+        "view": "courtyard",
+        "version": "after",
+        "path": "docs/media/yard-after-courtyard.png",
+        "sha256": "4a36ee1b9cb34268193c47daeb8e8ff0b92d3e14d9c512cebbb6cd8a919265e8"
+      },
+      {
+        "view": "workbench",
+        "version": "before",
+        "path": "docs/media/yard-before-workbench.png",
+        "sha256": "58e082c9bbacae05629fe1f881e79eee85a4df8f2b1788ece3d88fcf6b9bd9b7"
+      },
+      {
+        "view": "workbench",
+        "version": "after",
+        "path": "docs/media/yard-after-workbench.png",
+        "sha256": "17cb2f00ca3483f9babdb87194d5068be43fa974c862ecceb2a3d309e6ac4bf3"
+      },
+      {
+        "view": "lane",
+        "version": "before",
+        "path": "docs/media/yard-before-lane.png",
+        "sha256": "1cbea14453d35fd62ba6c622b0ab654fb1a82afdc038ff4783a9fcb6bc2d2075"
+      },
+      {
+        "view": "lane",
+        "version": "after",
+        "path": "docs/media/yard-after-lane.png",
+        "sha256": "5ce9bab40233f248431c1faa4a3fdfe9eba1669dfca867a845bd3bbe2d1aad5a"
+      },
+      {
+        "view": "roofline",
+        "version": "before",
+        "path": "docs/media/yard-before-roofline.png",
+        "sha256": "67fc981b49968df0e4eaff2e6c233a086fcfcf87a001bf0ec14e5a7709c2eb0d"
+      },
+      {
+        "view": "roofline",
+        "version": "after",
+        "path": "docs/media/yard-after-roofline.png",
+        "sha256": "f11ffcf935094df7e53eb432f831813c0e94a23b42f3f4e22d95ff2a922e5966"
+      }
+    ],
+    "model_sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "resource": {
+      "time": 1789062487.333838,
+      "processes": [],
+      "samples": {},
+      "pressure": {
+        "available_memory_fraction": 0.8291282926833247,
+        "memory_some_avg10": 0.0,
+        "memory_full_avg10": 0.0,
+        "cpu_some_avg10": 0.14,
+        "cpu_full_avg10": 0.0,
+        "io_some_avg10": 0.0,
+        "io_full_avg10": 0.0
+      },
+      "render_fps": 30,
+      "session_reference": {}
+    },
+    "pauses": [],
+    "observations": "Reviewed all six fixed views and sampled camera-motion frames. No broad coplanar flashes seen; this is not an exhaustive motion-angle test.",
+    "before": {
+      "draw_calls": 468,
+      "video_memory_bytes": 230456113,
+      "median_force_draw_ms": 0.939
+    },
+    "after": {
+      "draw_calls": 480,
+      "video_memory_bytes": 243613783,
+      "median_force_draw_ms": 1.042
+    },
+    "note": "30 FPS capture. force_draw call time is not GPU frame time or a 60 FPS benchmark."
+  },
+  "video": {
+    "path": "docs/media/yard-atmosphere.mp4",
+    "sha256": "741749a71ebe461c1a07058ea639436d82645ea9f7c8cf6fefc5d7ae4b032337",
+    "raw_source": "results/atmosphere/retained/raw.mp4",
+    "capture_frames": 178,
+    "recording_dropped": 2,
+    "speed": 1,
+    "note": "Uncut camera orbit with real standing policy; no pose animation or video acceleration.",
+    "seconds": 6.0,
+    "width": 1920,
+    "height": 1080,
+    "decoded_frames": 178,
+    "unique_decoded_frames": 178,
+    "timestamps_monotonic": true
+  },
+  "limitations": [
+    "Straight-command yaw drift retained; doorway passage uses ordinary test-harness steering commands, not autonomous navigation.",
+    "Existing GL exit logs report two texture allocations not released, also present in the before capture; no shared-renderer cleanup changed."
+  ],
+  "controls": {
+    "b_key_cycle": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      0
+    ],
+    "reset_transforms_exact": true,
+    "reset_velocities_zero": true,
+    "selection_preserved": true
+  },
+  "date": "2026-09-11"
+}

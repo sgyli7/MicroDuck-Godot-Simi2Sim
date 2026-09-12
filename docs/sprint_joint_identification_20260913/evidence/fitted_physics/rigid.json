@@ -1,0 +1,70 @@
+{
+  "metrics": {
+    "train": {
+      "landing": {
+        "components": {
+          "velocity": 0.030796784650747446,
+          "joint": 0.021566878645297587,
+          "position": 0.1275704643530309
+        },
+        "objective": 0.059978042549691975,
+        "manifold_mse_m2": 7.236610700919442e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.00011419405538713211,
+          "joint": 0.08356064770285476,
+          "position": 0.07668316705882762
+        },
+        "objective": 0.05345266960568984,
+        "manifold_mse_m2": 2.2372418101378913e-07
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.08240046092009727,
+          "joint": 0.18532383580291414,
+          "position": 0.2565436128224506
+        },
+        "objective": 0.17475596984848732,
+        "manifold_mse_m2": 3.166212887588577e-07
+      }
+    },
+    "validation": {
+      "landing": {
+        "components": {
+          "velocity": 0.03170203605038721,
+          "joint": 0.02103563202981396,
+          "position": 0.10945437810395721
+        },
+        "objective": 0.054064015394719465,
+        "manifold_mse_m2": 6.702087517528239e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 9.833777846758472e-05,
+          "joint": 0.07185767312838322,
+          "position": 0.06245105492701405
+        },
+        "objective": 0.04480235527795495,
+        "manifold_mse_m2": 2.0794559086410534e-07
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.09423172477140657,
+          "joint": 0.18074377993640217,
+          "position": 0.26198887980385516
+        },
+        "objective": 0.17898812817055462,
+        "manifold_mse_m2": 2.9582245712431445e-07
+      }
+    }
+  },
+  "elapsed_physics_s": 0.5643362239934504,
+  "nq": 28,
+  "nv": 26,
+  "neq": 0,
+  "nu": 14,
+  "compliance": null,
+  "precontact_joint_rms": 2.180523385134386e-05,
+  "minimum_body_height": 0.0682918056845665
+}

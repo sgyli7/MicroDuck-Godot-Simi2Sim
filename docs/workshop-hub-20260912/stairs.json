@@ -1,0 +1,184 @@
+{
+  "suite": "godot-continuous-stairs-v1",
+  "engine": "4.7.2-stable (official)",
+  "physics_hz": 2000,
+  "controller_hz": 50,
+  "sensor": "Ground-only raycasts, not camera-based VLA",
+  "cases": [
+    {
+      "riser": 0.02,
+      "descending": true,
+      "duration": 12.3,
+      "final_xyz": [
+        1.20455801486969,
+        0.0274097919464111,
+        0.219427675008774
+      ],
+      "min_upright": 0.966288268566132,
+      "stair_profile": "stairs-dev40",
+      "effective_crouch": 0.0,
+      "tread": 0.18,
+      "initial_yaw": 0.0,
+      "maximum_lateral_m": 0.0291926860809326,
+      "checks": {
+        "all_wheels_cleared": true,
+        "three_second_stop": true,
+        "upright_on_final_level": true,
+        "remained_in_lane": true,
+        "height_on_final_level": true,
+        "four_wheels_supported": true,
+        "no_fall": true,
+        "real_forward_key": true,
+        "terrain_triggered_stair_policy": true,
+        "full_articulation": true
+      },
+      "passed": true
+    },
+    {
+      "riser": 0.04,
+      "descending": true,
+      "duration": 11.56,
+      "final_xyz": [
+        1.24324560165405,
+        -0.288513660430908,
+        0.219372168183327
+      ],
+      "min_upright": 0.88727343082428,
+      "stair_profile": "stairs-dev40",
+      "effective_crouch": 0.0,
+      "tread": 0.18,
+      "initial_yaw": 0.0,
+      "maximum_lateral_m": 0.292954444885254,
+      "checks": {
+        "all_wheels_cleared": true,
+        "three_second_stop": true,
+        "upright_on_final_level": true,
+        "remained_in_lane": true,
+        "height_on_final_level": true,
+        "four_wheels_supported": true,
+        "no_fall": true,
+        "real_forward_key": true,
+        "terrain_triggered_stair_policy": true,
+        "full_articulation": true
+      },
+      "passed": true
+    },
+    {
+      "riser": 0.06,
+      "descending": true,
+      "duration": 16.22,
+      "final_xyz": [
+        1.19537949562073,
+        0.0287175178527832,
+        0.201758295297623
+      ],
+      "min_upright": 0.903302729129791,
+      "stair_profile": "experimental-descent60-trial011",
+      "effective_crouch": 0.5,
+      "tread": 0.18,
+      "initial_yaw": 0.0,
+      "maximum_lateral_m": 0.0649123191833496,
+      "checks": {
+        "all_wheels_cleared": true,
+        "three_second_stop": true,
+        "upright_on_final_level": true,
+        "remained_in_lane": true,
+        "height_on_final_level": true,
+        "four_wheels_supported": true,
+        "no_fall": true,
+        "real_forward_key": true,
+        "terrain_triggered_stair_policy": true,
+        "full_articulation": true
+      },
+      "passed": true
+    },
+    {
+      "riser": 0.02,
+      "descending": false,
+      "duration": 13.28,
+      "final_xyz": [
+        1.24465930461884,
+        0.0414235591888428,
+        0.299377113580704
+      ],
+      "min_upright": 0.928049206733704,
+      "stair_profile": "stairs-dev40",
+      "effective_crouch": 0.0,
+      "tread": 0.18,
+      "initial_yaw": 0.0,
+      "maximum_lateral_m": 0.0704996585845947,
+      "checks": {
+        "all_wheels_cleared": true,
+        "three_second_stop": true,
+        "upright_on_final_level": true,
+        "remained_in_lane": true,
+        "height_on_final_level": true,
+        "four_wheels_supported": true,
+        "no_fall": true,
+        "real_forward_key": true,
+        "terrain_triggered_stair_policy": true,
+        "full_articulation": true
+      },
+      "passed": true
+    },
+    {
+      "riser": 0.04,
+      "descending": false,
+      "duration": 19.54,
+      "final_xyz": [
+        1.23160707950592,
+        -0.22956657409668,
+        0.379977196455002
+      ],
+      "min_upright": 0.848517596721649,
+      "stair_profile": "stairs-dev40",
+      "effective_crouch": 0.0,
+      "tread": 0.18,
+      "initial_yaw": 0.0,
+      "maximum_lateral_m": 0.232181549072266,
+      "checks": {
+        "all_wheels_cleared": true,
+        "three_second_stop": true,
+        "upright_on_final_level": true,
+        "remained_in_lane": true,
+        "height_on_final_level": true,
+        "four_wheels_supported": true,
+        "no_fall": true,
+        "real_forward_key": true,
+        "terrain_triggered_stair_policy": true,
+        "full_articulation": true
+      },
+      "passed": true
+    },
+    {
+      "riser": 0.06,
+      "descending": false,
+      "duration": 27.34,
+      "final_xyz": [
+        1.27625036239624,
+        -0.084458589553833,
+        0.459577590227127
+      ],
+      "min_upright": 0.85986602306366,
+      "stair_profile": "experimental-ascent60",
+      "effective_crouch": 0.0,
+      "tread": 0.18,
+      "initial_yaw": 0.0,
+      "maximum_lateral_m": 0.123923540115356,
+      "checks": {
+        "all_wheels_cleared": true,
+        "three_second_stop": true,
+        "upright_on_final_level": true,
+        "remained_in_lane": true,
+        "height_on_final_level": true,
+        "four_wheels_supported": true,
+        "no_fall": true,
+        "real_forward_key": true,
+        "terrain_triggered_stair_policy": true,
+        "full_articulation": true
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

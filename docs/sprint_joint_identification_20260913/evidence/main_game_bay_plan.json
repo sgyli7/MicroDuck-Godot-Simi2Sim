@@ -1,0 +1,87 @@
+{
+  "seconds": 14,
+  "events": [
+    {
+      "at": 0.5,
+      "key": "Shift",
+      "pressed": true,
+      "location": 1
+    },
+    {
+      "at": 1,
+      "key": "W",
+      "pressed": true
+    },
+    {
+      "at": 2,
+      "key": "A",
+      "pressed": true
+    },
+    {
+      "at": 3,
+      "key": "A",
+      "pressed": false
+    },
+    {
+      "at": 3,
+      "key": "D",
+      "pressed": true
+    },
+    {
+      "at": 4,
+      "key": "D",
+      "pressed": false
+    },
+    {
+      "at": 5,
+      "key": "Shift",
+      "pressed": false,
+      "location": 1
+    },
+    {
+      "at": 6,
+      "key": "W",
+      "pressed": false
+    },
+    {
+      "at": 9,
+      "key": "0",
+      "pressed": true
+    },
+    {
+      "at": 9.05,
+      "key": "0",
+      "pressed": false
+    },
+    {
+      "at": 10,
+      "key": "F6",
+      "pressed": true
+    },
+    {
+      "at": 10.05,
+      "key": "F6",
+      "pressed": false
+    },
+    {
+      "at": 11,
+      "key": "F7",
+      "pressed": true
+    },
+    {
+      "at": 11.05,
+      "key": "F7",
+      "pressed": false
+    },
+    {
+      "at": 12,
+      "key": "F5",
+      "pressed": true
+    },
+    {
+      "at": 12.05,
+      "key": "F5",
+      "pressed": false
+    }
+  ]
+}

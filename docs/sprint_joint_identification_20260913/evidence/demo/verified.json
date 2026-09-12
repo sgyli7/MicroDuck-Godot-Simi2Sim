@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "duration_s": 18.03,
+  "metadata_source": "ffmpeg decoder",
+  "frame_at_s": 7,
+  "task": {
+    "success": true,
+    "fell": false,
+    "first_fall_s": null,
+    "score": 0.22038268740604502,
+    "sustained_mean_vx": 0.22038268740604502,
+    "sustained_p10_vx": 0.11706223128807554,
+    "max_tilt": 8.020882209238302,
+    "min_z": 0.11250160474945023,
+    "straight": [
+      {
+        "at": 1,
+        "heading_error_deg": 4.699398956330493,
+        "lateral_path_m": 0.026952730271803716,
+        "lateral_limit_m": 0.05,
+        "passed": true
+      },
+      {
+        "at": 9,
+        "heading_error_deg": 3.313463732632884,
+        "lateral_path_m": 0.0217254891585969,
+        "lateral_limit_m": 0.11638673579148284,
+        "passed": true
+      }
+    ],
+    "turns": [
+      {
+        "at": 3,
+        "requested": 0.800000011920929,
+        "signed_yaw_rate": 0.8430695502892434,
+        "sustained_reverse": false,
+        "passed": true
+      },
+      {
+        "at": 6,
+        "requested": 0.800000011920929,
+        "signed_yaw_rate": 0.6876919729693699,
+        "sustained_reverse": false,
+        "passed": true
+      }
+    ],
+    "stops": [
+      {
+        "at": 14,
+        "onset_s": 0.6199999999999992,
+        "passed": true
+      }
+    ],
+    "actor_selection_passed": true,
+    "speed_gain_gate": "requires paired ordinary result"
+  },
+  "input_source": "exported declared replay; OS key check separate"
+}

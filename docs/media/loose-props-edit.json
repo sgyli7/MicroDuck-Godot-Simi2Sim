@@ -1,0 +1,32 @@
+{
+  "seconds": 12.033333333333333,
+  "width": 1920,
+  "height": 1080,
+  "frames": 361,
+  "unique_frames": 361,
+  "speed": 1,
+  "edits": [
+    {
+      "source": "results/loose_props/20260910-233603_kick_left_box/raw.mp4",
+      "sha256": "11df5ea43309313691c6b5220206d3cb2e6f46dbc24efd040d6d16511b1d1377",
+      "start": 0.8995409999999999,
+      "duration": 4,
+      "speed": 1
+    },
+    {
+      "source": "results/loose_props/20260910-233623_kick_right_bottle/raw.mp4",
+      "sha256": "5cd0f068893bc658a279d9531bc6ca21cbf89d8ec122d8c82ef6561978526978",
+      "start": 0.900218,
+      "duration": 4,
+      "speed": 1
+    },
+    {
+      "source": "results/loose_props/20260910-233348_kick_left_ball/raw.mp4",
+      "sha256": "0ded961cee61d35427461eb6946deec1beac1407d5372f0ec2781deaed31bd17",
+      "start": 0.866917,
+      "duration": 4,
+      "speed": 1
+    }
+  ],
+  "sha256": "05fdc0bf6ea52e41829effdf03e1fc4e47cf5d9c423a6b61d17f646403b02ebe"
+}

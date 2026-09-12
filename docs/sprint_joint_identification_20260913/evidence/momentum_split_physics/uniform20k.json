@@ -1,0 +1,131 @@
+{
+  "metrics": {
+    "train": {
+      "landing": {
+        "components": {
+          "velocity": 0.02368724670997535,
+          "joint": 0.03179664424759104,
+          "position": 0.03510030055546514
+        },
+        "objective": 0.030194730504343844,
+        "manifold_mse_m2": 1.2249037271015884e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.00022885190894286032,
+          "joint": 0.23580021923627262,
+          "position": 0.05117725139709673
+        },
+        "objective": 0.0957354408474374,
+        "manifold_mse_m2": 2.366084900816041e-08
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.1119155710298904,
+          "joint": 0.17033908079043136,
+          "position": 0.831549442783065
+        },
+        "objective": 0.37126803153446225,
+        "manifold_mse_m2": 7.129259482790433e-08
+      }
+    },
+    "validation": {
+      "landing": {
+        "components": {
+          "velocity": 0.025497745124540092,
+          "joint": 0.030650937747227876,
+          "position": 0.020889013610980688
+        },
+        "objective": 0.02567923216091622,
+        "manifold_mse_m2": 1.0037517041931191e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.0001996324128604632,
+          "joint": 0.20701201334325547,
+          "position": 0.03449081616954614
+        },
+        "objective": 0.08056748730855402,
+        "manifold_mse_m2": 2.1039362959009704e-08
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.08713809530355035,
+          "joint": 0.19205063248462517,
+          "position": 0.5022375832366065
+        },
+        "objective": 0.26047543700826065,
+        "manifold_mse_m2": 7.279823986415673e-08
+      }
+    }
+  },
+  "elapsed_physics_s": 0.754816948028747,
+  "nq": 70,
+  "nv": 68,
+  "neq": 42,
+  "nu": 14,
+  "compliance": {
+    "mode": "passive_translation_equalities_v1",
+    "solref": [
+      -20000.0,
+      -200.0
+    ],
+    "solimp": [
+      0.99,
+      0.99,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "joint_names": [
+      "proxy_compliance_left_hip_yaw_0",
+      "proxy_compliance_left_hip_yaw_1",
+      "proxy_compliance_left_hip_yaw_2",
+      "proxy_compliance_left_hip_roll_0",
+      "proxy_compliance_left_hip_roll_1",
+      "proxy_compliance_left_hip_roll_2",
+      "proxy_compliance_left_hip_pitch_0",
+      "proxy_compliance_left_hip_pitch_1",
+      "proxy_compliance_left_hip_pitch_2",
+      "proxy_compliance_left_knee_0",
+      "proxy_compliance_left_knee_1",
+      "proxy_compliance_left_knee_2",
+      "proxy_compliance_left_ankle_0",
+      "proxy_compliance_left_ankle_1",
+      "proxy_compliance_left_ankle_2",
+      "proxy_compliance_neck_pitch_0",
+      "proxy_compliance_neck_pitch_1",
+      "proxy_compliance_neck_pitch_2",
+      "proxy_compliance_head_pitch_0",
+      "proxy_compliance_head_pitch_1",
+      "proxy_compliance_head_pitch_2",
+      "proxy_compliance_head_yaw_0",
+      "proxy_compliance_head_yaw_1",
+      "proxy_compliance_head_yaw_2",
+      "proxy_compliance_head_roll_0",
+      "proxy_compliance_head_roll_1",
+      "proxy_compliance_head_roll_2",
+      "proxy_compliance_right_hip_yaw_0",
+      "proxy_compliance_right_hip_yaw_1",
+      "proxy_compliance_right_hip_yaw_2",
+      "proxy_compliance_right_hip_roll_0",
+      "proxy_compliance_right_hip_roll_1",
+      "proxy_compliance_right_hip_roll_2",
+      "proxy_compliance_right_hip_pitch_0",
+      "proxy_compliance_right_hip_pitch_1",
+      "proxy_compliance_right_hip_pitch_2",
+      "proxy_compliance_right_knee_0",
+      "proxy_compliance_right_knee_1",
+      "proxy_compliance_right_knee_2",
+      "proxy_compliance_right_ankle_0",
+      "proxy_compliance_right_ankle_1",
+      "proxy_compliance_right_ankle_2"
+    ],
+    "scope": "Training proxy only; extra passive coordinates, no added mass or actuator",
+    "stiffness": 20000.0,
+    "damping": 200.0,
+    "solref_format": "direct"
+  },
+  "precontact_joint_rms": 2.213025303322576e-05,
+  "minimum_body_height": 0.05779290571808815
+}

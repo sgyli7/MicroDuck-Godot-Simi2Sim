@@ -1,0 +1,590 @@
+{
+  "passed": true,
+  "baseline": "results/sprint_joint_20260912/final_engineering/nine_new/summary.json",
+  "baseline_sha256": "731495b27cab289cc74ec554a41bedfe9ce5fd12e459483c9260c99ae6f87dac",
+  "count": 69,
+  "old_pass": 42,
+  "new_pass": 42,
+  "lost_successes": [],
+  "brake_losses": [],
+  "pairs": [
+    {
+      "case": "ground_pick",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "ground_pick",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "ground_pick",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "kick_left",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "kick_left",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "kick_left",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "kick_right",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "kick_right",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "kick_right",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "roller_brake_1s",
+      "seed": 921000,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_brake_1s",
+      "seed": 921001,
+      "before": false,
+      "after": false,
+      "old_brake": false,
+      "new_brake": false
+    },
+    {
+      "case": "roller_brake_1s",
+      "seed": null,
+      "before": false,
+      "after": false,
+      "old_brake": false,
+      "new_brake": false
+    },
+    {
+      "case": "roller_brake_2s",
+      "seed": 921000,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_brake_2s",
+      "seed": 921001,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_brake_2s",
+      "seed": null,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_brake_3s",
+      "seed": 921000,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_brake_3s",
+      "seed": 921001,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_brake_3s",
+      "seed": null,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_brake_5s",
+      "seed": 921000,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_brake_5s",
+      "seed": 921001,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_brake_5s",
+      "seed": null,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_crouch",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "roller_crouch",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "roller_crouch",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "roller_crouch_brake",
+      "seed": 921000,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_crouch_brake",
+      "seed": 921001,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_crouch_brake",
+      "seed": null,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_release_3s",
+      "seed": 921000,
+      "before": false,
+      "after": false,
+      "old_brake": false,
+      "new_brake": false
+    },
+    {
+      "case": "roller_release_3s",
+      "seed": 921001,
+      "before": false,
+      "after": false,
+      "old_brake": false,
+      "new_brake": false
+    },
+    {
+      "case": "roller_release_3s",
+      "seed": null,
+      "before": false,
+      "after": false,
+      "old_brake": false,
+      "new_brake": false
+    },
+    {
+      "case": "roller_repeated_brake",
+      "seed": 921000,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_repeated_brake",
+      "seed": 921001,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_repeated_brake",
+      "seed": null,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_space_3s",
+      "seed": 921000,
+      "before": false,
+      "after": false,
+      "old_brake": false,
+      "new_brake": false
+    },
+    {
+      "case": "roller_space_3s",
+      "seed": 921001,
+      "before": false,
+      "after": false,
+      "old_brake": false,
+      "new_brake": false
+    },
+    {
+      "case": "roller_space_3s",
+      "seed": null,
+      "before": false,
+      "after": false,
+      "old_brake": false,
+      "new_brake": false
+    },
+    {
+      "case": "roller_turn_brake",
+      "seed": 921000,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_turn_brake",
+      "seed": 921001,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roller_turn_brake",
+      "seed": null,
+      "before": false,
+      "after": false,
+      "old_brake": true,
+      "new_brake": true
+    },
+    {
+      "case": "roulade",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "roulade",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "roulade",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "sitstand",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "sitstand",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "sitstand",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "standing",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "standing",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "standing",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_back",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_back",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_back",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_forward_long",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_forward_long",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_forward_long",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_repeated_start",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_repeated_start",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_repeated_start",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_strafe",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_strafe",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_strafe",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_straight",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_straight",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_straight",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_turn_left",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_turn_left",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_turn_left",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_turn_right",
+      "seed": 921000,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_turn_right",
+      "seed": 921001,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    },
+    {
+      "case": "walking_turn_right",
+      "seed": null,
+      "before": true,
+      "after": true,
+      "old_brake": null,
+      "new_brake": null
+    }
+  ],
+  "export_equivalence": [
+    {
+      "case": "sprint_alternate",
+      "seed": 927001,
+      "max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0,
+        "last_action": 0.0
+      },
+      "success": true
+    },
+    {
+      "case": "sprint_long_ordinary",
+      "seed": 927001,
+      "max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0,
+        "last_action": 0.0
+      },
+      "success": true
+    }
+  ]
+}

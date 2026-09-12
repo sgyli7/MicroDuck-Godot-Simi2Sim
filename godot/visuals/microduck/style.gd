@@ -80,6 +80,9 @@ func _tone_environment(server: Node) -> void:
 	if sun != null:
 		sun.light_color = Color("fff9ed")
 		sun.light_energy = 0.52
+		# Metre-scale default bias detaches shadows from this 25 cm robot,
+		# especially in Forward+. Keep normal bias for self-shadow acne.
+		sun.shadow_bias = 0.005
 	var fill := server.get_node_or_null("World/FillLight") as DirectionalLight3D
 	if fill != null:
 		fill.light_color = Color("c9c4ce")

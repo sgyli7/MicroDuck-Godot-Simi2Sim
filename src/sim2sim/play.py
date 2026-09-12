@@ -212,6 +212,18 @@ def random_push() -> np.ndarray:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Sai has active wheels, cargo sliders and a distinct 82D contract. Route it
+    # to its pinned articulated adapter before the MicroDuck-specific loader.
+    raw_argv = list(sys.argv[1:] if argv is None else argv)
+    profile_parser = argparse.ArgumentParser(add_help=False)
+    profile_parser.add_argument("--robot")
+    profile, remaining = profile_parser.parse_known_args(raw_argv)
+    if profile.robot == "Sai_Agent_001":
+        try:
+            from sai_agent.cli import main as sai_main
+        except ImportError as exc:
+            raise SystemExit("Install the Sai profile first: uv sync --extra sai") from exc
+        return sai_main(["godot", *remaining])
     p = argparse.ArgumentParser(description="Keyboard/HUD play loop on Godot/Jolt")
     p.add_argument("--robot", type=Path, default=ROOT / "robots/microduck.json")
     p.add_argument("--local-ppo", action="store_true", help="shortcut: local_ppo walking ONNX")

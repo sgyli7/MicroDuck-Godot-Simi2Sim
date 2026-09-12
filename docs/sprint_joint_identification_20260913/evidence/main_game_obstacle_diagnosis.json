@@ -1,0 +1,229 @@
+{
+  "original_scenario_passed": false,
+  "first_fall_s": 12.46,
+  "first_obstacle_contacts": [
+    {
+      "t": 10.4,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 4.38945474627775
+    },
+    {
+      "t": 10.4,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 4.38945474627775
+    },
+    {
+      "t": 10.4,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 4.38945474627775
+    },
+    {
+      "t": 10.42,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 4.26769395362097
+    },
+    {
+      "t": 10.42,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.00186707486864179,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 4.26769395362097
+    },
+    {
+      "t": 10.44,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 3.87565458377865
+    },
+    {
+      "t": 10.44,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 3.87565458377865
+    },
+    {
+      "t": 10.44,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.00132415303960443,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 3.87565458377865
+    },
+    {
+      "t": 10.46,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 3.52331181869855
+    },
+    {
+      "t": 10.46,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 3.52331181869855
+    },
+    {
+      "t": 10.46,
+      "robot_body": "jaw_soft",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.000934560259338468,
+        "shape": "col_unnamed_49_49"
+      },
+      "tilt": 3.52331181869855
+    },
+    {
+      "t": 10.48,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0072266673669219,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 3.01940941744285
+    },
+    {
+      "t": 10.48,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.00241234921850264,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 3.01940941744285
+    },
+    {
+      "t": 10.48,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 3.01940941744285
+    },
+    {
+      "t": 10.48,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 3.01940941744285
+    },
+    {
+      "t": 10.5,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 2.40712786495771
+    },
+    {
+      "t": 10.5,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 2.40712786495771
+    },
+    {
+      "t": 10.5,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 2.40712786495771
+    },
+    {
+      "t": 10.5,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 2.40712786495771
+    },
+    {
+      "t": 10.52,
+      "robot_body": "ankle_left",
+      "contact": {
+        "body": "WorkshopCollisions",
+        "ground": true,
+        "impulse": 0.0,
+        "shape": "col_left_foot_collision_29_0"
+      },
+      "tilt": 1.89020531725873
+    }
+  ],
+  "visual_evidence": "results/sprint_joint_identification_20260913/main_game/frames/00235.jpg",
+  "interpretation": "Original keyboard tape drives into the workshop charging cabinet. Keep this failure; validate the same turning/stop input lengths in the mirrored open-floor direction. No physics, model, control, scoring or scene modification.",
+  "remote_ball_excluded": true
+}

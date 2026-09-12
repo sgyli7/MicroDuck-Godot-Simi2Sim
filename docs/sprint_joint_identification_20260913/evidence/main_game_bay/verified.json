@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "checks": {
+    "no_native_falls": true,
+    "left_shift_sprint": true,
+    "left_turn": true,
+    "right_turn": true,
+    "release_returns_walking": true,
+    "stopped": true,
+    "switch_and_reset": true,
+    "single_process": true,
+    "accepted_default_profile": true,
+    "no_cabinet_or_stair_contact": true
+  },
+  "rows": 452,
+  "stop_max_speed": 0.001732477085580795,
+  "stop_average_speed": 0.00023838803198491498,
+  "first_fall": null,
+  "ui_frame": "results/sprint_joint_identification_20260913/main_game_bay/sprint_ui.jpg",
+  "plan_sha256": "e989ee78962925ceeefbf0ac5421028232b3073b2dca598febf4fa037bb38033",
+  "scope": "Actual published-main workshop source, embedded MD inference, InputEventKey delivery with explicit left-key location. Full flat quality gates separately covered by frozen final 807 cases. Two obstacle collisions preserved in separate failed tapes."
+}

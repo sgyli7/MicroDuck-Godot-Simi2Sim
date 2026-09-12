@@ -1,0 +1,183 @@
+{
+  "metrics": {
+    "train": {
+      "landing": {
+        "components": {
+          "velocity": 0.02680287225818292,
+          "joint": 0.0320277662936839,
+          "position": 0.028019418360926068
+        },
+        "objective": 0.028950018970930965,
+        "manifold_mse_m2": 8.573837488591331e-08
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.00034311854163516267,
+          "joint": 0.24095697408679026,
+          "position": 0.06303719678906838
+        },
+        "objective": 0.1014457631391646,
+        "manifold_mse_m2": 2.4309191655849932e-08
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.1282910634164863,
+          "joint": 0.1736659116360278,
+          "position": 0.98130081468463
+        },
+        "objective": 0.427752596579048,
+        "manifold_mse_m2": 1.082486088998243e-07
+      }
+    },
+    "validation": {
+      "landing": {
+        "components": {
+          "velocity": 0.02940661325564767,
+          "joint": 0.03311213313909164,
+          "position": 0.01729908349049657
+        },
+        "objective": 0.026605943295078625,
+        "manifold_mse_m2": 7.1223739738299e-08
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.00016994258160044952,
+          "joint": 0.21214790476392187,
+          "position": 0.035633517006053904
+        },
+        "objective": 0.08265045478385874,
+        "manifold_mse_m2": 2.6469036406337946e-08
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.09807058809153538,
+          "joint": 0.17997197673887644,
+          "position": 0.5068606256669865
+        },
+        "objective": 0.2616343968324661,
+        "manifold_mse_m2": 1.1400349917814155e-07
+      }
+    }
+  },
+  "elapsed_physics_s": 0.7433404680341482,
+  "nq": 70,
+  "nv": 68,
+  "neq": 42,
+  "nu": 14,
+  "compliance": {
+    "mode": "passive_translation_equalities_v1",
+    "solimp": [
+      0.99,
+      0.99,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "joint_names": [
+      "proxy_compliance_left_hip_yaw_0",
+      "proxy_compliance_left_hip_yaw_1",
+      "proxy_compliance_left_hip_yaw_2",
+      "proxy_compliance_left_hip_roll_0",
+      "proxy_compliance_left_hip_roll_1",
+      "proxy_compliance_left_hip_roll_2",
+      "proxy_compliance_left_hip_pitch_0",
+      "proxy_compliance_left_hip_pitch_1",
+      "proxy_compliance_left_hip_pitch_2",
+      "proxy_compliance_left_knee_0",
+      "proxy_compliance_left_knee_1",
+      "proxy_compliance_left_knee_2",
+      "proxy_compliance_left_ankle_0",
+      "proxy_compliance_left_ankle_1",
+      "proxy_compliance_left_ankle_2",
+      "proxy_compliance_neck_pitch_0",
+      "proxy_compliance_neck_pitch_1",
+      "proxy_compliance_neck_pitch_2",
+      "proxy_compliance_head_pitch_0",
+      "proxy_compliance_head_pitch_1",
+      "proxy_compliance_head_pitch_2",
+      "proxy_compliance_head_yaw_0",
+      "proxy_compliance_head_yaw_1",
+      "proxy_compliance_head_yaw_2",
+      "proxy_compliance_head_roll_0",
+      "proxy_compliance_head_roll_1",
+      "proxy_compliance_head_roll_2",
+      "proxy_compliance_right_hip_yaw_0",
+      "proxy_compliance_right_hip_yaw_1",
+      "proxy_compliance_right_hip_yaw_2",
+      "proxy_compliance_right_hip_roll_0",
+      "proxy_compliance_right_hip_roll_1",
+      "proxy_compliance_right_hip_roll_2",
+      "proxy_compliance_right_hip_pitch_0",
+      "proxy_compliance_right_hip_pitch_1",
+      "proxy_compliance_right_hip_pitch_2",
+      "proxy_compliance_right_knee_0",
+      "proxy_compliance_right_knee_1",
+      "proxy_compliance_right_knee_2",
+      "proxy_compliance_right_ankle_0",
+      "proxy_compliance_right_ankle_1",
+      "proxy_compliance_right_ankle_2"
+    ],
+    "scope": "Training proxy only; extra passive coordinates, no added mass or actuator",
+    "solref_format": "per_hinge_direct",
+    "profile": {
+      "left_hip_yaw": [
+        12326.92143599025,
+        200.0
+      ],
+      "left_hip_roll": [
+        15027.877477102451,
+        200.0
+      ],
+      "left_hip_pitch": [
+        21548.998996069513,
+        200.0
+      ],
+      "left_knee": [
+        12740.684916760692,
+        200.0
+      ],
+      "left_ankle": [
+        15669.884680187834,
+        200.0
+      ],
+      "neck_pitch": [
+        12208.373661927806,
+        200.0
+      ],
+      "head_pitch": [
+        25308.222590083722,
+        200.0
+      ],
+      "head_yaw": [
+        16831.82920099417,
+        200.0
+      ],
+      "head_roll": [
+        19012.557401111615,
+        200.0
+      ],
+      "right_hip_yaw": [
+        17217.92005086541,
+        200.0
+      ],
+      "right_hip_roll": [
+        27730.068158137427,
+        200.0
+      ],
+      "right_hip_pitch": [
+        18136.017386096864,
+        200.0
+      ],
+      "right_knee": [
+        17732.671264938122,
+        200.0
+      ],
+      "right_ankle": [
+        19738.991942677785,
+        200.0
+      ]
+    }
+  },
+  "precontact_joint_rms": 2.1982956165027638e-05,
+  "minimum_body_height": 0.0621815100312233
+}

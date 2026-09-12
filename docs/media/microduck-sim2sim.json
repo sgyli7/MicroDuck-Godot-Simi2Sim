@@ -1,0 +1,41 @@
+{
+  "cuts": [
+    {
+      "source": "distant-scenery-preview.mp4",
+      "source_sha256": "4b00cbd7a79d6b3fa0a2df5085f46a114cf6de0600e4e48564cb6141ee0181fa",
+      "start": 0.0,
+      "duration": 5.0,
+      "action": "walking",
+      "speed": 1
+    },
+    {
+      "source": "loose-props.mp4",
+      "source_sha256": "05fdc0bf6ea52e41829effdf03e1fc4e47cf5d9c423a6b61d17f646403b02ebe",
+      "start": 4.0,
+      "duration": 3.0,
+      "action": "bottle_contact",
+      "speed": 1
+    },
+    {
+      "source": "microduck-service-bay-pv.mp4",
+      "source_sha256": "8ec76110d33beef9b5375f11fda81b93b87e0bae80a42994e74072bbe86a1375",
+      "start": 0.0,
+      "duration": 3.5,
+      "action": "forward_roll",
+      "speed": 1
+    },
+    {
+      "source": "microduck-service-bay-pv.mp4",
+      "source_sha256": "8ec76110d33beef9b5375f11fda81b93b87e0bae80a42994e74072bbe86a1375",
+      "start": 16.4,
+      "duration": 3.0,
+      "action": "roller_crouch",
+      "speed": 1
+    }
+  ],
+  "seconds": 14.5,
+  "frames": 174,
+  "unique_frames": 174,
+  "bytes": 8350752,
+  "sha256": "0a825aa0b86697cf1a1fa58147f17ce34bb080954d308ae81742d3f5f754079a"
+}

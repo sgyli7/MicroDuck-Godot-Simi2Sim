@@ -1,0 +1,31 @@
+{
+  "source": "Previous frozen direct20k_hard_contact prediction",
+  "training_seeds": [
+    927000,
+    927001,
+    927002,
+    927003,
+    927004,
+    927005,
+    927006,
+    927007
+  ],
+  "validation_seeds": [
+    927008,
+    927009,
+    927010,
+    927011,
+    927012,
+    927013,
+    927014,
+    927015
+  ],
+  "fit_window_s": [
+    0.04,
+    1.0
+  ],
+  "rule": "Per hinge nonnegative scalar least squares of native anchor translation against proxy translation; stiffness=20000/scale, bounded [5000,80000], damping stays 200. All three parent axes pooled. No validation-based scale or subset choice.",
+  "preflight_gate": "At least 20% reduction in train aggregate anchor-vector MSE against unchanged profile; otherwise no new physics run. Per-hinge negative alignment is a model limitation, not repaired with a signed spring.",
+  "physical_gate": "Existing whole response/manifold gate unchanged in a single fitted-profile experiment; a geometric fit is not itself eligibility.",
+  "code_sha256": "7ae2bf585b2477bba7c56b09d6fcb8986003c4aa2e2925c52f9f51b4ca813152"
+}

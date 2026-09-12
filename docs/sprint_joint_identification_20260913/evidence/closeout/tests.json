@@ -1,0 +1,9 @@
+{
+  "tests": 306,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 2,
+  "successful": true,
+  "source_log": "supervisors/regression_checks-b6b87f887d.log",
+  "note": "Original summary reconstructed from its retained runner log after the separate merge attempt reused this output filename; failed merge setup and successful retest preserved separately."
+}

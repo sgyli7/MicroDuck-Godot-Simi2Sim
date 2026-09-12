@@ -1,0 +1,31 @@
+{
+  "seeds": [
+    927000,
+    927001,
+    927002,
+    927003,
+    927004,
+    927005,
+    927006,
+    927007,
+    927008,
+    927009,
+    927010,
+    927011,
+    927012,
+    927013,
+    927014,
+    927015
+  ],
+  "seconds": 9.0,
+  "diagnostic_hz": 50,
+  "physics_hz": 200,
+  "game_physics_changes": false,
+  "gate": "All 450 original rows must be bit-identical for obs/action/last_action/command/ctrl; enabled+disabled canaries preserve original 927001 failure",
+  "source_sha256": "92891bffa501944ebda749d7118b8481c9f4ecfde5cf0778fc319fd6cd6169bb",
+  "hypotheses": [
+    "Translation at joint anchors dominates end-foot representation residual",
+    "Constrained-axis rotation also matters",
+    "Frame conversion error would disagree with independently reported hinge angles"
+  ]
+}

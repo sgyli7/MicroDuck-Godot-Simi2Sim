@@ -1,0 +1,122 @@
+{
+  "capture": "movie-stable-final",
+  "physics": "Godot/Jolt 2000 Hz; policy motor targets 50 Hz",
+  "revision": "v2-fixed-camera",
+  "camera_audit": [
+    {
+      "shot": "grasp_and_cargo",
+      "frames": 1095,
+      "unique_camera_transforms": 1,
+      "position": [
+        0.600000023841858,
+        0.850000023841858,
+        2.15000009536743
+      ],
+      "basis": [
+        [
+          0.807391107082367,
+          0.0,
+          -0.590016603469849
+        ],
+        [
+          -0.196897938847542,
+          0.942673742771149,
+          -0.269439280033112
+        ],
+        [
+          0.556193113327026,
+          0.333715915679932,
+          0.761106371879578
+        ]
+      ],
+      "fov": 50.0
+    },
+    {
+      "shot": "transport",
+      "frames": 496,
+      "unique_camera_transforms": 1,
+      "position": [
+        1.29999995231628,
+        1.08000004291534,
+        3.09999990463257
+      ],
+      "basis": [
+        [
+          0.988116502761841,
+          0.0,
+          -0.15370699763298
+        ],
+        [
+          -0.0537539906799793,
+          0.936855316162109,
+          -0.345561385154724
+        ],
+        [
+          0.144001200795174,
+          0.349717259407043,
+          0.925722181797028
+        ]
+      ],
+      "fov": 50.0
+    }
+  ],
+  "raw_timestamp_quantization_s": 0.03333333333333333,
+  "raw_timestamp_max_error_s": 0.01666500000000326,
+  "cargo_success": true,
+  "frame_count": 1591,
+  "source_wall_seconds": 74.129662,
+  "native_sim_seconds": 71.3405000001586,
+  "cuts": [
+    {
+      "sim_start": 5.894,
+      "sim_end": 13.827,
+      "source_start": 6.589293,
+      "source_end": 14.701651,
+      "output_seconds": 3.5,
+      "source_speed": 2.3178165714285717,
+      "caption": "01   抓取零件 · 100 g",
+      "shot": "grasp_and_cargo"
+    },
+    {
+      "sim_start": 13.827,
+      "sim_end": 34.0435,
+      "source_start": 14.701651,
+      "source_end": 35.497818,
+      "output_seconds": 4.0,
+      "source_speed": 5.199041750000001,
+      "caption": "02   SO101 · 放入蓝色货仓",
+      "shot": "grasp_and_cargo"
+    },
+    {
+      "sim_start": 34.0435,
+      "sim_end": 49.198,
+      "source_start": 35.497818,
+      "source_end": 50.989862,
+      "output_seconds": 2.5,
+      "source_speed": 6.1968176,
+      "caption": "03   收回机械臂 · 货仓夹紧",
+      "shot": "grasp_and_cargo"
+    },
+    {
+      "sim_start": 49.519,
+      "sim_end": 69.3245,
+      "source_start": 51.323736,
+      "source_end": 72.005357,
+      "output_seconds": 5.0,
+      "source_speed": 4.136324200000002,
+      "caption": "04   夹紧运输 · 越过 18 mm 障碍",
+      "shot": "transport"
+    }
+  ],
+  "seconds": 15.0,
+  "frames": 180,
+  "unique_frames": 180,
+  "gif_bytes": 1135974,
+  "gif_sha256": "63921e26a1fa5ea70acc9cfa98cc46e8eda66e74cb452d34e662305ae651cd78",
+  "mp4_sha256": "80dbeaaf99db2e2d2446b706603322237506465771b779d8b2f1992a39b0b689",
+  "raw_mp4_sha256": "522b01cdcac32e81eb6602d942e4dcb9fb99551347230d7a231cab46bd7872e7",
+  "hub_sha256": "70cb38887a4bce4329d807a5a0bff524a969ea2965dde4370eb03a5be4145f69",
+  "task_sha256": "5f6fb5aafbd13f4948a96569d92118beda418d278f865736681d875b693a7991",
+  "trace_sha256": "59697c471f7911d83b7b9634334f4a3a95a055bb40a23b7d191b7a9f8a0cb21f",
+  "note": "Raw MP4 PTS follow recorded wall timestamps. PV cuts use the explicit original-footage speed above. No pose animation or physics time-scale changes."
+}

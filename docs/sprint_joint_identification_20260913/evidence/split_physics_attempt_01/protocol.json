@@ -1,0 +1,72 @@
+{
+  "profiles": [
+    [
+      "rigid",
+      "source",
+      null
+    ],
+    [
+      "uniform20k",
+      "two_tick",
+      [
+        20000.0,
+        200.0
+      ]
+    ],
+    [
+      "velocity_only",
+      "two_tick",
+      [
+        1.0,
+        200.0
+      ]
+    ],
+    [
+      "split_projection",
+      "two_tick",
+      [
+        1.0,
+        200.0
+      ]
+    ]
+  ],
+  "seeds": [
+    927000,
+    927001,
+    927002,
+    927003,
+    927004,
+    927005,
+    927006,
+    927007,
+    927008,
+    927009,
+    927010,
+    927011,
+    927012,
+    927013,
+    927014,
+    927015
+  ],
+  "train_seed_count": 8,
+  "validation_seed_count": 8,
+  "physics_hz": 200,
+  "decision_hz": 50,
+  "horizon_seconds": 2,
+  "gate": "Same 20% landing/moving response improvement, no component/standing >10% regression, both splits; also >=20% reduction of actual foot-vs-rigid-manifold vector error on landing and moving. Pre-contact joint RMS <=baseline+1e-5 rad.",
+  "response_normalization": {
+    "velocity": 0.05,
+    "joint": 0.02,
+    "position": 0.002
+  },
+  "source": "Frozen a402 native recorded actions; no policy inference, training or game physics edits",
+  "assumptions": "Extra equalities are an experimental approximation of translation compliance, not an identified Jolt solver.",
+  "rationale": "A bounded architecture test: remove equality positional acceleration (k=0,b=200), with/without generalized mass-weighted pose-only correction alpha=1-(1-.35)^2=.5775. Uses start-of-step mass, simultaneous linear projection, no contact position correction; not a full Jolt port. All original physical/manifold gates unchanged.",
+  "reference": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/thirdparty/jolt_physics/Jolt/Physics/Constraints/ConstraintPart/PointConstraintPart.h",
+  "code_sha256": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/split_probe.py": "89b6a20d9b1dab75250d69c9897509d3e06e2c635b628b70b7c71aa1cba09895",
+    "results/sprint_joint_identification_20260913/split_proxy.py": "e9f56a58fffa287026d470485933fc61114d7cdae21b4c235cca2e0daac6d9e7",
+    "scripts/sprint_gpu_world.py": "8398f39d59646798564a7872d2c0634f5e1c62f4e4820cd0142c332be00462f5",
+    "src/sim2sim/research/joint_compliance.py": "96ddced13bb57bd6a9e3b6e6402b17045860d24995106766da225c90bb1ed999"
+  }
+}

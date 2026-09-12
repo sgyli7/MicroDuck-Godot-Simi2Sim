@@ -1,0 +1,16 @@
+[
+  {
+    "experiment": "split_physics",
+    "attempt": 1,
+    "status": "three_profiles_complete_projection_canary_failed",
+    "reason": "GPU integration vs CPU double reference max 1.1011337e-7 exceeded initial 1e-7; investigate float32 rounding before accepting projection",
+    "directory": "results/sprint_joint_identification_20260913/split_physics_attempt_01"
+  },
+  {
+    "experiment": "yaw_reversal",
+    "attempt": 1,
+    "status": "no_intervention_not_a_hypothesis_test",
+    "reason": "Existing input layer ramps through zero in ~80ms; post-brain sign-flip detector reset at zero and never changed the command. All 16 runs preserved old results. Reference implementation patched per thread; replacement uses one process-wide factory binding and asserts parity.",
+    "directory": "results/sprint_joint_identification_20260913/yaw_probe_attempt_01"
+  }
+]

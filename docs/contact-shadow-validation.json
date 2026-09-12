@@ -1,0 +1,106 @@
+{
+  "static": [
+    {
+      "renderer": "vulkan",
+      "scene": "main",
+      "current_contact_contrast": 52.333333333333336,
+      "historical_contact_contrast": 0.0,
+      "sole_min_y": {
+        "left": -0.000135745853185654,
+        "right": -0.000137013383209705
+      },
+      "same_pose": true
+    },
+    {
+      "renderer": "vulkan",
+      "scene": "workshop",
+      "current_contact_contrast": 49.0,
+      "historical_contact_contrast": 0.0,
+      "sole_min_y": {
+        "left": -0.000135745853185654,
+        "right": -0.000137013383209705
+      },
+      "same_pose": true
+    },
+    {
+      "renderer": "opengl3",
+      "scene": "main",
+      "current_contact_contrast": 123.0,
+      "historical_contact_contrast": 123.0,
+      "sole_min_y": {
+        "left": -0.000135745853185654,
+        "right": -0.000137013383209705
+      },
+      "same_pose": true
+    },
+    {
+      "renderer": "opengl3",
+      "scene": "workshop",
+      "current_contact_contrast": 115.66666666666666,
+      "historical_contact_contrast": 115.66666666666666,
+      "sole_min_y": {
+        "left": -0.000135745853185654,
+        "right": -0.000137013383209705
+      },
+      "same_pose": true
+    }
+  ],
+  "physics": {
+    "main": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "atelier": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "flat": {
+      "steps": 100,
+      "max_abs": 0.0
+    },
+    "headless_solid_nodes": {
+      "atelier": 647,
+      "flat": 0
+    },
+    "headless_dynamic_bodies": {
+      "atelier": 6,
+      "flat": 0
+    }
+  },
+  "motion": {
+    "vulkan": {
+      "frames": 327,
+      "seconds": 11.837039,
+      "view": "follow",
+      "rendering_method": "forward_plus",
+      "model_sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+      "pauses": []
+    },
+    "opengl": {
+      "frames": 323,
+      "seconds": 11.862696,
+      "view": "follow",
+      "rendering_method": "gl_compatibility",
+      "model_sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+      "pauses": []
+    }
+  },
+  "media": {
+    "docs/media/contact-shadows-comparison.jpg": {
+      "bytes": 147103,
+      "sha256": "58843c4a83db1fac9ab01e780b1a066364e226f293c90dc1cfd44e4cc6f04fe8"
+    },
+    "docs/media/contact-shadows-walk.gif": {
+      "bytes": 8129917,
+      "sha256": "2208adfdfca4bde24791795957aba05bd31a5cbf989f5b838c8a641718a18f32",
+      "seconds": 11.91,
+      "frames": 143,
+      "unique_frames": 143
+    }
+  },
+  "staged_workshop_vulkan": {
+    "current_contact_contrast": 51.0,
+    "historical_contact_contrast": 0.0,
+    "scope": "Staged workshop source without the unpublished district changes"
+  }
+}

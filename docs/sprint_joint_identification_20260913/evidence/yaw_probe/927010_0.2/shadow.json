@@ -1,0 +1,15 @@
+{
+  "check": "native_shadow",
+  "rows": 900,
+  "max_abs": {
+    "command": 4.996003610813204e-16,
+    "obs": 5.329070518200751e-15,
+    "action": 5.551115123125783e-16,
+    "ctrl": 4.6629367034256575e-15,
+    "last_action": 5.551115123125783e-16,
+    "body_pos": 9.547918011776346e-15,
+    "body_quat": 1.1657341758564144e-15
+  },
+  "skill_mismatches": [],
+  "passed": true
+}

@@ -2,6 +2,8 @@
 
 独立入口在 Godot 进程内完成九技能选择、观测生成和 ONNX 推理。发布目录包含 Godot ARM64 可执行文件、PCK、C++ GDExtension 和 ONNX Runtime 1.29.0；运行时不需要 Python、训练仓库、TCP 服务或网络。验收与模型去留见 [本轮结果](docs/overnight_20260911/RESULT.md)，开发过程见 [执行记录](docs/overnight_20260911/PROGRESS.md)。冻结轮滑候选的最终主动制动为 180/210、零跌倒，尚未通过全部硬门槛。
 
+2026-09-13 行走加速已通过最终平地验收并接入主游戏默认操作，见 [加速结果](docs/sprint_joint_identification_20260913/RESULT.md)。最新独立包为 `dist/MicroDuck-ARM64-20260913-sprint-reversal-trial.tar.gz`，最终加速 400/400、普通 400/400、零跌倒，长直行快 20.4%；宿主 OS 键盘已通过。该包与主游戏默认资源的其他八技能来源分别记录，旧轮滑限制仍存在。
+
 ## 使用发布包
 
 解压后保留目录内全部文件，在 Ubuntu 24.04 ARM64 上执行：
@@ -14,7 +16,7 @@ sha256sum -c SHA256SUMS
 | 输入 | 操作 |
 |---|---|
 | W / A / S / D | 移动与转向；轮滑 S 为主动制动 |
-| 左 Shift + W | 含独立 sprint 模型的实验包启用行走加速，可同时 A/D；右 Shift 和轮滑不启用 |
+| 左 Shift + W | 当前默认行走加速，可同时 A/D；松 Shift 恢复普通行走，右 Shift 和轮滑不启用 |
 | 空格 | 中性命令 |
 | 6 | 切换步行／轮滑机器人 |
 | 7 | 步行机器人显式站立 |
@@ -30,7 +32,7 @@ sha256sum -c SHA256SUMS
 
 ## 构建与导出
 
-构建需要 Linux ARM64、C++17 编译器、CMake、Git、Godot 4.7.2 stable、Ubuntu 的 `fonts-noto-cjk` 和项目 Python 环境。版本与下载校验固定在 [native/dependencies.json](native/dependencies.json)。模型权重、生成资源和发布包不提交 Git，须使用相应研究交付目录中的完整九模型及 sidecar。
+构建需要 Linux ARM64、C++17 编译器、CMake、Git、Godot 4.7.2 stable、Ubuntu 的 `fonts-noto-cjk` 和项目 Python 环境。版本与下载校验固定在 [native/dependencies.json](native/dependencies.json)。已晋级的普通行走 / 加速模型对随源码提交于 `src/sim2sim/assets/microduck_sprint_v1/`；其余八技能、生成资源和发布包不提交 Git，须按复现说明另行准备完整资源及 sidecar。
 
 在仓库根目录运行：
 

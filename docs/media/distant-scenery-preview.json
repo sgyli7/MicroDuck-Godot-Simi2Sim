@@ -1,0 +1,19 @@
+{
+  "seconds": 10.8,
+  "width": 1280,
+  "height": 720,
+  "frames": 324,
+  "unique_frames": 324,
+  "bytes": 2743996,
+  "source": "gameplay-v2/frames",
+  "timing": "Saved frame sequence at 30 fps; preview edit, not a frame-time benchmark.",
+  "note": "Native walking and unchanged follow camera. Captured orbit was partial; full-field acceptance remains pending.",
+  "media_sha256": {
+    "distant-scenery-01s.jpg": "a9ac129ddd9a180181b8ec193bf605b0862a29d7dcb1ddc9156bd5efa5c09d09",
+    "distant-scenery-04s.jpg": "d4d87770cf3d38036dc01d3b49624b588d9cefc7fa422ccd51a3035943d6e1e9",
+    "distant-scenery-07s.jpg": "d0e0ad54b81fec23a6dfc1251481345978ca7d9cd84c2548efd3db44e06d08aa",
+    "distant-scenery-10s.jpg": "420e8a834547955c2d2e3ac90fcb7ebfcd8ea9461d06974228451ccc9a87ce6f",
+    "distant-scenery-preview.mp4": "4b00cbd7a79d6b3fa0a2df5085f46a114cf6de0600e4e48564cb6141ee0181fa"
+  },
+  "status": "Work-in-progress scenery preview; full-circle and boundary acceptance pending; scene code not yet merged into main."
+}

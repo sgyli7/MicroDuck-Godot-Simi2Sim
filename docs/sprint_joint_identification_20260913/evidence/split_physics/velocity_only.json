@@ -1,0 +1,131 @@
+{
+  "metrics": {
+    "train": {
+      "landing": {
+        "components": {
+          "velocity": 1.045234260342417,
+          "joint": 0.09585255502724571,
+          "position": 12.978914364087832
+        },
+        "objective": 4.706667059819165,
+        "manifold_mse_m2": 5.001985024885883e-05
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.8339036508675312,
+          "joint": 0.4761347694038524,
+          "position": 228.1758724862116
+        },
+        "objective": 76.49530363549432,
+        "manifold_mse_m2": 0.0009072148402376303
+      },
+      "moving": {
+        "components": {
+          "velocity": 2.3062599189357202,
+          "joint": 3.2166219942679346,
+          "position": 555.0490309405628
+        },
+        "objective": 186.85730428458882,
+        "manifold_mse_m2": 0.002106636918509847
+      }
+    },
+    "validation": {
+      "landing": {
+        "components": {
+          "velocity": 1.0509244961663085,
+          "joint": 0.09834711290009962,
+          "position": 13.025852543293354
+        },
+        "objective": 4.725041384119921,
+        "manifold_mse_m2": 5.0360608576952456e-05
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.8288540724795487,
+          "joint": 0.44999450345087494,
+          "position": 228.47172053199523
+        },
+        "objective": 76.58352303597522,
+        "manifold_mse_m2": 0.0009082950081116907
+      },
+      "moving": {
+        "components": {
+          "velocity": 2.3050381762991115,
+          "joint": 3.169391300342113,
+          "position": 555.8635629892931
+        },
+        "objective": 187.11266415531145,
+        "manifold_mse_m2": 0.0021119213775480403
+      }
+    }
+  },
+  "elapsed_physics_s": 1.3176310560083948,
+  "nq": 70,
+  "nv": 68,
+  "neq": 42,
+  "nu": 14,
+  "compliance": {
+    "mode": "passive_translation_equalities_v1",
+    "solref": [
+      0.0,
+      -200.0
+    ],
+    "solimp": [
+      0.99,
+      0.99,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "joint_names": [
+      "proxy_compliance_left_hip_yaw_0",
+      "proxy_compliance_left_hip_yaw_1",
+      "proxy_compliance_left_hip_yaw_2",
+      "proxy_compliance_left_hip_roll_0",
+      "proxy_compliance_left_hip_roll_1",
+      "proxy_compliance_left_hip_roll_2",
+      "proxy_compliance_left_hip_pitch_0",
+      "proxy_compliance_left_hip_pitch_1",
+      "proxy_compliance_left_hip_pitch_2",
+      "proxy_compliance_left_knee_0",
+      "proxy_compliance_left_knee_1",
+      "proxy_compliance_left_knee_2",
+      "proxy_compliance_left_ankle_0",
+      "proxy_compliance_left_ankle_1",
+      "proxy_compliance_left_ankle_2",
+      "proxy_compliance_neck_pitch_0",
+      "proxy_compliance_neck_pitch_1",
+      "proxy_compliance_neck_pitch_2",
+      "proxy_compliance_head_pitch_0",
+      "proxy_compliance_head_pitch_1",
+      "proxy_compliance_head_pitch_2",
+      "proxy_compliance_head_yaw_0",
+      "proxy_compliance_head_yaw_1",
+      "proxy_compliance_head_yaw_2",
+      "proxy_compliance_head_roll_0",
+      "proxy_compliance_head_roll_1",
+      "proxy_compliance_head_roll_2",
+      "proxy_compliance_right_hip_yaw_0",
+      "proxy_compliance_right_hip_yaw_1",
+      "proxy_compliance_right_hip_yaw_2",
+      "proxy_compliance_right_hip_roll_0",
+      "proxy_compliance_right_hip_roll_1",
+      "proxy_compliance_right_hip_roll_2",
+      "proxy_compliance_right_hip_pitch_0",
+      "proxy_compliance_right_hip_pitch_1",
+      "proxy_compliance_right_hip_pitch_2",
+      "proxy_compliance_right_knee_0",
+      "proxy_compliance_right_knee_1",
+      "proxy_compliance_right_knee_2",
+      "proxy_compliance_right_ankle_0",
+      "proxy_compliance_right_ankle_1",
+      "proxy_compliance_right_ankle_2"
+    ],
+    "scope": "Prototype velocity damping only; pose projection separately applied",
+    "stiffness": 0.0,
+    "damping": 200.0,
+    "solref_format": "direct"
+  },
+  "precontact_joint_rms": 4.104241601495341e-05,
+  "minimum_body_height": 0.014981938526034355
+}

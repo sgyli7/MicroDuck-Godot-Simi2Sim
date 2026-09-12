@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "checks": {
+    "expected_switches_and_reset": true,
+    "one_process": true,
+    "persistent_hub_and_workshop": true,
+    "loose_body_ids_and_positions_preserved": true,
+    "separate_jolt_spaces": true,
+    "published_sai_settings": true,
+    "original_md_settings": true,
+    "all_body_counts": true,
+    "microduck_walks_without_fall": true,
+    "microduck_roll_and_recover": true,
+    "roller_motion_and_crouch": true,
+    "sai_forward": true,
+    "sai_reverse": true,
+    "sai_left_turn": true,
+    "sai_right_turn": true,
+    "shift_hold_and_release": true,
+    "sai_reset_returns_to_start": true
+  },
+  "pid": 346567,
+  "switches": 6,
+  "height_m": {
+    "standing": 0.22250638087280095,
+    "crouched": 0.18374288401433397,
+    "recovered": 0.2193297512225203
+  },
+  "note": "In-process InputEventKey replay. OS-level physical keyboard delivery is a separate check."
+}
