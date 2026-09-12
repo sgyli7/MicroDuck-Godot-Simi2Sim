@@ -1,0 +1,8 @@
+test_constant_motion_has_the_games_filter_lag (test_kinematic_observer.KinematicObserverTest.test_constant_motion_has_the_games_filter_lag) ... ok
+test_joint_wrap_uses_shortest_angle (test_kinematic_observer.KinematicObserverTest.test_joint_wrap_uses_shortest_angle) ... ok
+test_reset_does_not_invent_velocity_at_a_teleport (test_kinematic_observer.KinematicObserverTest.test_reset_does_not_invent_velocity_at_a_teleport) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+OK

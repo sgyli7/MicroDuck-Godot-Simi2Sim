@@ -86,6 +86,8 @@ class TraceWorld:
 
 def score(trace_path,case_path):
     trace=json.loads(Path(trace_path).read_text());case=json.loads(Path(case_path).read_text())
+    if 'training_exploration' in trace['summary'] or 'training_exploration' in case:
+        raise ValueError('Exploratory training rollouts cannot be used as acceptance evidence')
     if trace['summary'].get('error'):raise RuntimeError(trace['summary']['error'])
     if trace['summary'].get('resets') or trace['summary'].get('switches'):
         raise ValueError('Task acceptance cases cannot mask outcomes with resets or robot replacement')

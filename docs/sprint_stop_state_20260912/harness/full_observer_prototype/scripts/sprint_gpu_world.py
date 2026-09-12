@@ -69,7 +69,7 @@ class GpuWorld:
             raise RuntimeError('CUDA physics required; CPU fallback is disabled')
         if contact not in ('source', 'two_tick'):
             raise ValueError('Unknown contact proxy')
-        if velocity_observer not in ('solver', 'joint_fd'):
+        if velocity_observer not in ('solver', 'jolt_fd'):
             raise ValueError('Unknown velocity observer')
         self.velocity_observer = velocity_observer
         self.observer = None
@@ -161,9 +161,9 @@ class GpuWorld:
                     gc.enable()
         self.last = torch.zeros((count, 14), device='cuda')
         self.control = WalkingControl(count, settings, 'cuda')
-        if velocity_observer == 'joint_fd':
+        if velocity_observer == 'jolt_fd':
             from sim2sim.research.kinematic_observer import KinematicObserver
-            self.observer = KinematicObserver(count, 'cuda', track_angular=False)
+            self.observer = KinematicObserver(count, 'cuda')
         self.reset(torch.arange(count, device='cuda'))
 
     def reset(self, ids, perturbation=None):
@@ -202,8 +202,9 @@ class GpuWorld:
         command = self.control.command(requested, pos, quat, velocity, sprint)
         gravity = torch.zeros_like(pos)
         gravity[:, 2] = -1.
+        angular_obs = angular if self.observer is None else self.observer.angular_local(quat)
         joint_obs = self.qvel[:, self.vi] if self.observer is None else self.observer.qd
-        obs = torch.cat((angular, inverse_rotate(quat, gravity), self.qpos[:, self.qi] - self.home,
+        obs = torch.cat((angular_obs, inverse_rotate(quat, gravity), self.qpos[:, self.qi] - self.home,
                          joint_obs, self.last, command), dim=1)
         return obs, command
 

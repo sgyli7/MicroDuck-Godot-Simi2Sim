@@ -1,0 +1,138 @@
+[0;93m2026-09-12 22:19:54.754665501 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+/home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:283: UserWarning: 
+    Found GPU0 NVIDIA GB10 which is of cuda capability 12.1.
+    Minimum and Maximum cuda capability supported by this version of PyTorch is
+    (8.0) - (12.0)
+    
+  warnings.warn(
+[mdp] Patches 1-2 active: NaN-safe reward/advantage
+[mdp] Patch 4 active: ONNX export filters passive_* joints
+Warp 1.12.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "aarch64"
+     "cuda:0"   : "NVIDIA GB10" (122 GiB, sm_121, mempool enabled)
+   Kernel cache:
+     /home/ethan/.cache/warp/1.12.0
+Module mujoco_warp._src.smooth 95a0b8b load on device 'cuda:0' took 10.57 ms  (cached)
+Module mujoco_warp._src.collision_driver 88f7770 load on device 'cuda:0' took 0.36 ms  (cached)
+Module _nxn_broadphase__locals__kernel_e73b1315 e73b131 load on device 'cuda:0' took 0.28 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_8d4be50e 8d4be50 load on device 'cuda:0' took 1.34 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_b88ab72b b88ab72 load on device 'cuda:0' took 1.46 ms  (cached)
+Module _primitive_narrowphase__locals__primitive_narrowphase_02484c54 02484c5 load on device 'cuda:0' took 0.59 ms  (cached)
+Module mujoco_warp._src.constraint 27c5750 load on device 'cuda:0' took 1.23 ms  (cached)
+Module _efc_contact_init__locals__kernel_fda71e14 fda71e1 load on device 'cuda:0' took 0.33 ms  (cached)
+Module _efc_contact_jac_dense__locals__kernel_7974b597 cc0fc30 load on device 'cuda:0' took 0.32 ms  (cached)
+Module _efc_contact_update__locals__kernel_90315d53 90315d5 load on device 'cuda:0' took 0.30 ms  (cached)
+Module mujoco_warp._src.sensor 7fc0378 load on device 'cuda:0' took 1.62 ms  (cached)
+Module mujoco_warp._src.forward f60f76d load on device 'cuda:0' took 1.13 ms  (cached)
+Module mujoco_warp._src.passive 1a5e55c load on device 'cuda:0' took 0.66 ms  (cached)
+Module mujoco_warp._src.forward 8ebfcb1 load on device 'cuda:0' took 1.35 ms  (cached)
+Module mujoco_warp._src.support dd3f924 load on device 'cuda:0' took 0.28 ms  (cached)
+Module _tile_cholesky_factorize_solve__locals__cholesky_factorize_solve_37ca3f47 b319ac8 load on device 'cuda:0' took 27.30 ms  (cached)
+Module _tile_cholesky_factorize_solve__locals__cholesky_factorize_solve_b16bf393 b7e5d5f load on device 'cuda:0' took 26.83 ms  (cached)
+Module mujoco_warp._src.solver b116efb load on device 'cuda:0' took 1.25 ms  (cached)
+Module solve_init_jaref__locals__kernel_af106063 af10606 load on device 'cuda:0' took 0.38 ms  (cached)
+Module mul_m_dense__locals___mul_m_dense_19197cab 19197ca load on device 'cuda:0' took 0.28 ms  (cached)
+Module update_constraint_efc__locals__kernel_32935e9d 32935e9 load on device 'cuda:0' took 0.28 ms  (cached)
+Module update_constraint_gauss_cost__locals__kernel_f02e74ab f02e74a load on device 'cuda:0' took 0.29 ms  (cached)
+Module update_gradient_JTDAJ_dense_tiled__locals__kernel_72bc3597 a6ca993 load on device 'cuda:0' took 0.50 ms  (cached)
+Module update_gradient_cholesky__locals__kernel_a458a9b8 e47f115 load on device 'cuda:0' took 27.08 ms  (cached)
+Module linesearch_iterative__locals__kernel_c0167fd2 d3f31a4 load on device 'cuda:0' took 0.51 ms  (cached)
+Module update_constraint_efc__locals__kernel_3c1a9816 3c1a981 load on device 'cuda:0' took 0.70 ms  (cached)
+Module _tile_euler_dense__locals__euler_dense_3af92912 e0e9e42 load on device 'cuda:0' took 27.85 ms  (cached)
+Module _tile_euler_dense__locals__euler_dense_162f47da 4d6e4c0 load on device 'cuda:0' took 28.34 ms  (cached)
+results/sprint_stop_state_20260912/gpu_new_observer pass 135 / 135 falls 0
+new_observer 135 128
+[0;93m2026-09-12 22:20:20.740519997 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+/home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:283: UserWarning: 
+    Found GPU0 NVIDIA GB10 which is of cuda capability 12.1.
+    Minimum and Maximum cuda capability supported by this version of PyTorch is
+    (8.0) - (12.0)
+    
+  warnings.warn(
+[mdp] Patches 1-2 active: NaN-safe reward/advantage
+[mdp] Patch 4 active: ONNX export filters passive_* joints
+Warp 1.12.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "aarch64"
+     "cuda:0"   : "NVIDIA GB10" (122 GiB, sm_121, mempool enabled)
+   Kernel cache:
+     /home/ethan/.cache/warp/1.12.0
+Module mujoco_warp._src.smooth 95a0b8b load on device 'cuda:0' took 10.47 ms  (cached)
+Module mujoco_warp._src.collision_driver 88f7770 load on device 'cuda:0' took 0.35 ms  (cached)
+Module _nxn_broadphase__locals__kernel_e73b1315 e73b131 load on device 'cuda:0' took 0.27 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_8d4be50e 8d4be50 load on device 'cuda:0' took 1.43 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_b88ab72b b88ab72 load on device 'cuda:0' took 1.40 ms  (cached)
+Module _primitive_narrowphase__locals__primitive_narrowphase_02484c54 02484c5 load on device 'cuda:0' took 0.58 ms  (cached)
+Module mujoco_warp._src.constraint 27c5750 load on device 'cuda:0' took 1.19 ms  (cached)
+Module _efc_contact_init__locals__kernel_fda71e14 fda71e1 load on device 'cuda:0' took 0.30 ms  (cached)
+Module _efc_contact_jac_dense__locals__kernel_7974b597 cc0fc30 load on device 'cuda:0' took 0.47 ms  (cached)
+Module _efc_contact_update__locals__kernel_90315d53 90315d5 load on device 'cuda:0' took 0.28 ms  (cached)
+Module mujoco_warp._src.sensor 7fc0378 load on device 'cuda:0' took 1.62 ms  (cached)
+Module mujoco_warp._src.forward f60f76d load on device 'cuda:0' took 1.07 ms  (cached)
+Module mujoco_warp._src.passive 1a5e55c load on device 'cuda:0' took 0.63 ms  (cached)
+Module mujoco_warp._src.forward 8ebfcb1 load on device 'cuda:0' took 1.33 ms  (cached)
+Module mujoco_warp._src.support dd3f924 load on device 'cuda:0' took 0.27 ms  (cached)
+Module _tile_cholesky_factorize_solve__locals__cholesky_factorize_solve_37ca3f47 b319ac8 load on device 'cuda:0' took 27.54 ms  (cached)
+Module _tile_cholesky_factorize_solve__locals__cholesky_factorize_solve_b16bf393 b7e5d5f load on device 'cuda:0' took 27.63 ms  (cached)
+Module mujoco_warp._src.solver b116efb load on device 'cuda:0' took 1.23 ms  (cached)
+Module solve_init_jaref__locals__kernel_af106063 af10606 load on device 'cuda:0' took 0.27 ms  (cached)
+Module mul_m_dense__locals___mul_m_dense_19197cab 19197ca load on device 'cuda:0' took 0.26 ms  (cached)
+Module update_constraint_efc__locals__kernel_32935e9d 32935e9 load on device 'cuda:0' took 0.28 ms  (cached)
+Module update_constraint_gauss_cost__locals__kernel_f02e74ab f02e74a load on device 'cuda:0' took 0.28 ms  (cached)
+Module update_gradient_JTDAJ_dense_tiled__locals__kernel_72bc3597 a6ca993 load on device 'cuda:0' took 0.49 ms  (cached)
+Module update_gradient_cholesky__locals__kernel_a458a9b8 e47f115 load on device 'cuda:0' took 28.53 ms  (cached)
+Module linesearch_iterative__locals__kernel_c0167fd2 d3f31a4 load on device 'cuda:0' took 0.49 ms  (cached)
+Module update_constraint_efc__locals__kernel_3c1a9816 3c1a981 load on device 'cuda:0' took 0.32 ms  (cached)
+Module _tile_euler_dense__locals__euler_dense_3af92912 e0e9e42 load on device 'cuda:0' took 26.75 ms  (cached)
+Module _tile_euler_dense__locals__euler_dense_162f47da 4d6e4c0 load on device 'cuda:0' took 27.54 ms  (cached)
+results/sprint_stop_state_20260912/gpu_new_actor_old_observer pass 135 / 135 falls 0
+new_actor_old_observer 135 128
+[0;93m2026-09-12 22:20:46.796669920 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+/home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:283: UserWarning: 
+    Found GPU0 NVIDIA GB10 which is of cuda capability 12.1.
+    Minimum and Maximum cuda capability supported by this version of PyTorch is
+    (8.0) - (12.0)
+    
+  warnings.warn(
+[mdp] Patches 1-2 active: NaN-safe reward/advantage
+[mdp] Patch 4 active: ONNX export filters passive_* joints
+Warp 1.12.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "aarch64"
+     "cuda:0"   : "NVIDIA GB10" (122 GiB, sm_121, mempool enabled)
+   Kernel cache:
+     /home/ethan/.cache/warp/1.12.0
+Module mujoco_warp._src.smooth 95a0b8b load on device 'cuda:0' took 10.65 ms  (cached)
+Module mujoco_warp._src.collision_driver 88f7770 load on device 'cuda:0' took 0.36 ms  (cached)
+Module _nxn_broadphase__locals__kernel_e73b1315 e73b131 load on device 'cuda:0' took 0.27 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_8d4be50e 8d4be50 load on device 'cuda:0' took 1.68 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_b88ab72b b88ab72 load on device 'cuda:0' took 1.41 ms  (cached)
+Module _primitive_narrowphase__locals__primitive_narrowphase_02484c54 02484c5 load on device 'cuda:0' took 0.52 ms  (cached)
+Module mujoco_warp._src.constraint 27c5750 load on device 'cuda:0' took 1.17 ms  (cached)
+Module _efc_contact_init__locals__kernel_fda71e14 fda71e1 load on device 'cuda:0' took 0.29 ms  (cached)
+Module _efc_contact_jac_dense__locals__kernel_7974b597 cc0fc30 load on device 'cuda:0' took 0.38 ms  (cached)
+Module _efc_contact_update__locals__kernel_90315d53 90315d5 load on device 'cuda:0' took 0.28 ms  (cached)
+Module mujoco_warp._src.sensor 7fc0378 load on device 'cuda:0' took 1.55 ms  (cached)
+Module mujoco_warp._src.forward f60f76d load on device 'cuda:0' took 1.06 ms  (cached)
+Module mujoco_warp._src.passive 1a5e55c load on device 'cuda:0' took 0.64 ms  (cached)
+Module mujoco_warp._src.forward 8ebfcb1 load on device 'cuda:0' took 1.31 ms  (cached)
+Module mujoco_warp._src.support dd3f924 load on device 'cuda:0' took 0.27 ms  (cached)
+Module _tile_cholesky_factorize_solve__locals__cholesky_factorize_solve_37ca3f47 b319ac8 load on device 'cuda:0' took 27.48 ms  (cached)
+Module _tile_cholesky_factorize_solve__locals__cholesky_factorize_solve_b16bf393 b7e5d5f load on device 'cuda:0' took 27.28 ms  (cached)
+Module mujoco_warp._src.solver b116efb load on device 'cuda:0' took 1.49 ms  (cached)
+Module solve_init_jaref__locals__kernel_af106063 af10606 load on device 'cuda:0' took 0.28 ms  (cached)
+Module mul_m_dense__locals___mul_m_dense_19197cab 19197ca load on device 'cuda:0' took 0.25 ms  (cached)
+Module update_constraint_efc__locals__kernel_32935e9d 32935e9 load on device 'cuda:0' took 0.27 ms  (cached)
+Module update_constraint_gauss_cost__locals__kernel_f02e74ab f02e74a load on device 'cuda:0' took 0.28 ms  (cached)
+Module update_gradient_JTDAJ_dense_tiled__locals__kernel_72bc3597 a6ca993 load on device 'cuda:0' took 0.50 ms  (cached)
+Module update_gradient_cholesky__locals__kernel_a458a9b8 e47f115 load on device 'cuda:0' took 28.40 ms  (cached)
+Module linesearch_iterative__locals__kernel_c0167fd2 d3f31a4 load on device 'cuda:0' took 0.49 ms  (cached)
+Module update_constraint_efc__locals__kernel_3c1a9816 3c1a981 load on device 'cuda:0' took 0.30 ms  (cached)
+Module _tile_euler_dense__locals__euler_dense_3af92912 e0e9e42 load on device 'cuda:0' took 27.64 ms  (cached)
+Module _tile_euler_dense__locals__euler_dense_162f47da 4d6e4c0 load on device 'cuda:0' took 28.18 ms  (cached)
+results/sprint_stop_state_20260912/gpu_old_actor_new_observer pass 135 / 135 falls 0
+old_actor_new_observer 135 128

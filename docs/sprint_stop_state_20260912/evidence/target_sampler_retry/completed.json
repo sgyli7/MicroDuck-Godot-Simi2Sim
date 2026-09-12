@@ -1,0 +1,177 @@
+{
+  "completed": true,
+  "rows": [
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_shift_first_954100.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_16/trace.json",
+      "steps": 600,
+      "seconds": 1.9937236350087915,
+      "sigma": 0.0,
+      "noise_seed": 9541016,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_shift_first_954100.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_00/trace.json",
+      "steps": 600,
+      "seconds": 2.0402320840221364,
+      "sigma": 0.02,
+      "noise_seed": 9541000,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_shift_first_954101.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_01/trace.json",
+      "steps": 600,
+      "seconds": 1.9915792389947455,
+      "sigma": 0.02,
+      "noise_seed": 9541001,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_w_first_954100.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_02/trace.json",
+      "steps": 800,
+      "seconds": 2.3987320059968624,
+      "sigma": 0.02,
+      "noise_seed": 9541002,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_w_first_954101.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_03/trace.json",
+      "steps": 800,
+      "seconds": 2.3700061539711896,
+      "sigma": 0.02,
+      "noise_seed": 9541003,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_long_954100.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_04/trace.json",
+      "steps": 1250,
+      "seconds": 3.065740622987505,
+      "sigma": 0.02,
+      "noise_seed": 9541004,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_long_954101.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_05/trace.json",
+      "steps": 1250,
+      "seconds": 2.92495333799161,
+      "sigma": 0.02,
+      "noise_seed": 9541005,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_left_954100.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_06/trace.json",
+      "steps": 700,
+      "seconds": 2.049496238003485,
+      "sigma": 0.02,
+      "noise_seed": 9541006,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_left_954101.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_07/trace.json",
+      "steps": 700,
+      "seconds": 2.090612348023569,
+      "sigma": 0.02,
+      "noise_seed": 9541007,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_right_954100.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_08/trace.json",
+      "steps": 700,
+      "seconds": 2.114046549977502,
+      "sigma": 0.02,
+      "noise_seed": 9541008,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_right_954101.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_09/trace.json",
+      "steps": 700,
+      "seconds": 2.0405833820113912,
+      "sigma": 0.02,
+      "noise_seed": 9541009,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_alternate_954100.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_10/trace.json",
+      "steps": 900,
+      "seconds": 2.4328364899847656,
+      "sigma": 0.02,
+      "noise_seed": 9541010,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_alternate_954101.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_11/trace.json",
+      "steps": 900,
+      "seconds": 2.309322778979549,
+      "sigma": 0.02,
+      "noise_seed": 9541011,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_turn_release_954100.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_12/trace.json",
+      "steps": 800,
+      "seconds": 2.169534532004036,
+      "sigma": 0.02,
+      "noise_seed": 9541012,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_turn_release_954101.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_13/trace.json",
+      "steps": 800,
+      "seconds": 2.187468321004417,
+      "sigma": 0.02,
+      "noise_seed": 9541013,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_repeat_954100.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_14/trace.json",
+      "steps": 850,
+      "seconds": 2.108205224998528,
+      "sigma": 0.02,
+      "noise_seed": 9541014,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_repeat_954101.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_15/trace.json",
+      "steps": 850,
+      "seconds": 2.2002261810121126,
+      "sigma": 0.02,
+      "noise_seed": 9541015,
+      "first_fall": null
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/cases/sprint_shift_first_954101.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_retry/rollout_17/trace.json",
+      "steps": 600,
+      "seconds": 1.7687065649952274,
+      "sigma": 0.0,
+      "noise_seed": 9541017,
+      "first_fall": null
+    }
+  ],
+  "elapsed_s": 12.555710126005579,
+  "policy_steps_per_wall_second": 1146.8885356133303,
+  "workers": 4,
+  "training_updates": 0,
+  "accepted": false,
+  "scope": "Exploratory target-engine data, not gameplay acceptance; all episodes replay complete history from reset, no state transplantation",
+  "instrumentation_sha256": "239644959fa1db60395e6f3737123ce195264f8b39a398500aa74da1db6fe038",
+  "policy_steps": 14400,
+  "physics_steps": 57600,
+  "count_note": "Original helper mislabeled decision count as physical_steps; corrected from recorded 200Hz/50Hz contract before sealing."
+}

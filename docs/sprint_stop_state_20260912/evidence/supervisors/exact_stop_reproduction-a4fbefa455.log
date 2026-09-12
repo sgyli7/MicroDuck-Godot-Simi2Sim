@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/reproduce.py", line 9, in <module>
+    assert e['completed'],e
+           ~^^^^^^^^^^^^^
+AssertionError: {'case': 'reproduce_0', 'completed': False, 'error': 'RuntimeError: Player exit 1', 'case_sha256': 'b03a1cf85a9b65fcfadcee0b9334d0553d82b9af8707691e89c6072b97ccf34f', 'elapsed_s': 0.8669048580050003, 'attempt': 'results/sprint_stop_state_20260912/reproduce/reproduce_0/attempt_01'}

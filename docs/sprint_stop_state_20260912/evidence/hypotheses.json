@@ -1,0 +1,20 @@
+{
+  "reproduction": "3/3 original native stop failures",
+  "hypotheses": [
+    {
+      "id": "cache",
+      "prediction": "Cold Jolt restart changes outcome despite identical initial visible observation and physical link states"
+    },
+    {
+      "id": "projection",
+      "prediction": "Observed FD/EMA velocities differ from solver velocities; projecting visible velocities is not full dynamical state equivalence"
+    },
+    {
+      "id": "domain",
+      "prediction": "Cold Jolt still fails while GPU projected restart passes; contact/constraint or sensor dynamics remain"
+    }
+  ],
+  "project": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/diagnostic/runtime",
+  "instrumentation_sha256": "7fcc67f8d364a6f6a29eecd550329f9d05b6837bab7d3573e3e091f77617012a",
+  "production_modified": false
+}
