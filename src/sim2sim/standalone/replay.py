@@ -55,7 +55,7 @@ def control(brain,bank,state,held,taps,order,last,home,heading,mode):
             yaw=np.arctan2(rotation[1,0],rotation[0,0]);heading[:]=[np.cos(yaw),np.sin(yaw)]
         cmd=time_command(actor.time_input_s-brain.behavior_t,actor.time_input_s,
                          rotation if actor.heading_input else None,heading)
-    cmd=brain.motion_control.command(cmd,state,'walking' if skill=='sprint' else skill)
+    cmd=brain.motion_control.command(cmd,state,skill)
     obs=build_obs(state,last,cmd,home)
     from sim2sim.policy_state import inject_state
     obs=inject_state(obs,state,actor.state_input)

@@ -11,15 +11,23 @@ from .tasks import DT
 
 
 class SprintEntryBank:
+    @staticmethod
+    def fingerprint(path):
+        payload=Path(path).read_bytes();config=json.loads(payload)
+        if config['version']!='sprint_entry_v1':raise ValueError('Unknown sprint entry version')
+        return {**{k:hashlib.sha256(Path(config[k]).read_bytes()).hexdigest() for k in ['walking','sprint']},
+                'config':hashlib.sha256(payload).hexdigest()}
+
     def __init__(self,path):
         config=json.loads(Path(path).read_text())
         if config['version']!='sprint_entry_v1':raise ValueError('Unknown sprint entry version')
         self.actors={k:NativeAnchor(config[k]) for k in ['walking','sprint']}
-        if any(a.time_input_s or a.heading_input or a.yaw_memory_input or a.state_input or a.task_input
+        if any(a.obs_dim!=61 or a.time_input_s or a.heading_input or a.yaw_memory_input or a.state_input or a.task_input
                for a in self.actors.values()):
             raise ValueError('Sprint prefixes require the ordinary 61D walking contract')
-        self.hashes={k:a.sha256 for k,a in self.actors.items()}
-        self.hashes['config']=hashlib.sha256(Path(path).read_bytes()).hexdigest()
+        self.hashes=self.fingerprint(path)
+        if any(a.sha256!=self.hashes[k] for k,a in self.actors.items()):
+            raise ValueError('Sprint prefix models changed during loading')
         limits=TwistLimits(**config['twist_limits'])
         self.tapes={}
         programs={

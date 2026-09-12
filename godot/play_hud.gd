@@ -42,7 +42,7 @@ func configure_standalone(font: Font = null, sprint_available: bool = false) -> 
 	_tap_btn(box,"暂停 F8","pause")
 	_tap_btns.stand.disabled = not _strafe_btns[0].visible
 	_help.text += " · 7站立 F8暂停"
-	if sprint_available: _help.text += " · 左Shift+W 加速"
+	if sprint_available: _help.text = _help.text.replace("W/↑ 前进","W/↑ 前进 · 左Shift+W 加速")
 	# Two rows fit next to the direction controls without hiding the exit button.
 	var old_skills: Control = _tap_btns.idle.get_parent()
 	var skills := GridContainer.new()

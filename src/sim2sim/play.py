@@ -253,6 +253,10 @@ def main(argv: list[str] | None = None) -> int:
         if not args.sprint.is_file():raise SystemExit(f'sprint ONNX missing: {args.sprint}')
         paths['sprint']=args.sprint
     bank = load_bank(paths, home_len=int(home.size))
+    if 'sprint' in bank:
+        actor=bank['sprint']
+        if actor.obs_dim!=61 or actor.time_input_s or actor.heading_input or actor.yaw_memory_input or actor.state_input or actor.task_input:
+            raise PolicyShapeError('Sprint requires the ordinary 61D walking contract')
     task_contacts = None
     if any(actor.task_state is not None for actor in bank.values()):
         if not args.roller:
@@ -392,7 +396,7 @@ def main(argv: list[str] | None = None) -> int:
                     maneuver_heading = np.array([np.cos(yaw),np.sin(yaw)])
                 cmd = time_command(duration - brain.behavior_t, sess.time_input_s,
                                    rotation if sess.heading_input else None,maneuver_heading)
-            skill='roller' if args.roller and out.policy=='walking' else out.policy
+            skill='roller' if args.roller and out.policy=='walking' else selected_policy
             cmd=motion.command(cmd,st,skill,dt_ctrl)
             obs = build_obs(st, last_action, cmd, home=home)
             from sim2sim.policy_state import inject_state

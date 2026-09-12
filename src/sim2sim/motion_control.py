@@ -30,6 +30,8 @@ class MotionControl:
         out=np.asarray(command,np.float32).copy()
         rotation=quat_wxyz_to_mat(state.base_quat_wxyz)
         yaw=math.atan2(rotation[1,0],rotation[0,0])
+        ordinary=skill=='walking'
+        if skill=='sprint':skill='walking'
         if not self.started or skill not in ('walking','roller'):
             self.target_yaw=yaw;self.started=True
         if skill not in ('walking','roller'):
@@ -57,7 +59,7 @@ class MotionControl:
                     out[2]=np.clip(float(self.settings['walk_heading_gain'])*error,-limit,limit)
                 self.walk_idle_elapsed+=dt
         if skill=='walking':
-            path_gain=float(self.settings.get('walk_path_gain',0.))
+            path_gain=float(self.settings.get('walk_ordinary_path_gain',self.settings.get('walk_path_gain',0.)) if ordinary else self.settings.get('walk_path_gain',0.))
             straight=float(command[0])>.01 and abs(float(command[1]))<.01 and abs(float(command[2]))<.05
             if path_gain>0. and straight:
                 if not self.walk_path_started:

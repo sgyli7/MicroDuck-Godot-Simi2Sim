@@ -41,7 +41,7 @@ def prepare(models, *, fixtures=None, fixture_count=128, real_traces=(), control
         manifest = json.loads(manifest_path.read_text())
         policy = OnnxPolicy(source)
         policy.check_dims(14)
-        if skill=='sprint' and (policy.time_input_s or policy.heading_input or policy.state_input or policy.task_input):
+        if skill=='sprint' and (policy.obs_dim!=61 or policy.time_input_s or policy.heading_input or policy.yaw_memory_input or policy.state_input or policy.task_input):
             raise ValueError('Sprint requires the walking observation contract')
         if policy.state_input and (skill!='roller' or policy.time_input_s or policy.heading_input or policy.yaw_memory_input):
             raise ValueError('State input requires the native roller actor only')

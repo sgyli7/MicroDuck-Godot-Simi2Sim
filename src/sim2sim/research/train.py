@@ -184,6 +184,14 @@ def run(args):
         recorded_command_gate=resume_checkpoint['config'].get('command_gate','')
         if not args.command_gate:args.command_gate=recorded_command_gate
         if args.command_gate!=recorded_command_gate:raise ValueError('Resume cannot change the command gate')
+        if args.skill=='walking':
+            # Check prefix provenance before creating any simulator processes.
+            from .sprint_entry import SprintEntryBank
+            fingerprints=SprintEntryBank.fingerprint(args.entry_bank) if args.entry_bank else None
+            if fingerprints!=resume_checkpoint['config'].get('entry_bank_sha256'):
+                raise ValueError('Resume cannot change the walking entry bank or its models')
+            if args.entry!=resume_checkpoint['config'].get('entry','reset'):
+                raise ValueError('Resume cannot change the walking entry distribution')
     task=TASKS[args.skill];session=read_session()
     evaluate_skill=run_suite;protocol=PROTOCOL_VERSION
     evaluation_kwargs={} if args.eval_scene_robot is None else {'scene_robot':args.eval_scene_robot}

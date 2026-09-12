@@ -9,6 +9,29 @@ from types import SimpleNamespace
 
 
 class SprintLearning(unittest.TestCase):
+    def test_ordinary_feedback_override_preserves_sprint_and_legacy_defaults(self):
+        state=SimpleNamespace(base_pos=np.zeros(3),base_quat_wxyz=np.array([1.,0,0,0]))
+        cmd=np.zeros(13,np.float32);cmd[0]=.3
+        controls=[MotionControl({'walk_path_gain':4.,'walk_ordinary_path_gain':6.}),MotionControl({'walk_path_gain':4.})]
+        for c in controls:c.command(cmd,state,'walking')
+        state.base_pos[1]=.02
+        self.assertAlmostEqual(float(controls[0].command(cmd,state,'walking')[1]),-.12,places=6)
+        self.assertAlmostEqual(float(controls[0].command(cmd,state,'sprint')[1]),-.08,places=6)
+        np.testing.assert_array_equal(controls[1].command(cmd,state,'walking'),controls[1].command(cmd,state,'sprint'))
+
+    def test_entry_fingerprint_detects_models_and_control_changes(self):
+        import json,tempfile
+        from pathlib import Path
+        from sim2sim.research.sprint_entry import SprintEntryBank
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);actor=root/'actor.onnx';actor.write_bytes(b'original')
+            bank=root/'bank.json';config=dict(version='sprint_entry_v1',walking=str(actor),sprint=str(actor),twist_limits={})
+            bank.write_text(json.dumps(config));before=SprintEntryBank.fingerprint(bank)
+            actor.write_bytes(b'candidate');changed=SprintEntryBank.fingerprint(bank)
+            self.assertNotEqual(before['walking'],changed['walking']);self.assertEqual(before['config'],changed['config'])
+            config['twist_limits']['vmax_ang']=.8;bank.write_text(json.dumps(config))
+            self.assertNotEqual(changed['config'],SprintEntryBank.fingerprint(bank)['config'])
+
     def test_restart_can_capture_current_heading_without_resetting_actor_history(self):
         control=MotionControl({'walk_heading_gain':6.,'walk_reanchor_on_start':True})
         state=SimpleNamespace(base_pos=np.zeros(3),base_quat_wxyz=np.array([1.,0,0,0]))

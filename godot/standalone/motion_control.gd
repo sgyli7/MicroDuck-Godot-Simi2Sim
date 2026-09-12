@@ -35,6 +35,8 @@ func command(input: PackedFloat32Array, body: Dictionary, skill: String, dt: flo
 	var out := input.duplicate()
 	var rotation := Contract.quat_matrix(body.base_quat)
 	var yaw := atan2(rotation[1][0],rotation[0][0])
+	var ordinary := skill=="walking"
+	if skill=="sprint": skill="walking"
 	if not started or skill not in ["walking","roller"]:
 		target_yaw=yaw
 		started=true
@@ -70,7 +72,7 @@ func command(input: PackedFloat32Array, body: Dictionary, skill: String, dt: flo
 				out[2]=clampf(float(settings.walk_heading_gain)*error,-limit,limit)
 			walk_idle_elapsed+=dt
 	if skill == "walking":
-		var path_gain := float(settings.get("walk_path_gain",0.0))
+		var path_gain := float(settings.get("walk_ordinary_path_gain",settings.get("walk_path_gain",0.0)) if ordinary else settings.get("walk_path_gain",0.0))
 		var straight: bool = input[0]>0.01 and absf(input[1])<0.01 and absf(input[2])<0.05
 		if path_gain>0.0 and straight:
 			if not walk_path_started:

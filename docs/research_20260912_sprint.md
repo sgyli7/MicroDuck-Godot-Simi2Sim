@@ -199,3 +199,84 @@ finally:
 资源快照（本次只读查询）：GB10 单卡、GPU 约 7%、47°C；统一内存 121 GiB 总量，约 29 GiB free、104 GiB available，nvidia-smi 显存数值 N/A。它只是当时余量，不能保证后续分配。先 64 环境编译，再选 256／512；设置 PyTorch／OMP 线程不超过四核，禁视频和网络 logger。与主线程训练串行；正式 Jolt 性能测量时必须停掉 GPU 代理。不要清全机 cache，也不要动其他项目进程。
 
 成功标准不是代理 reward：候选回到冻结 Jolt，配对原 2999、保留 walking，在相同 W／左Shift+W／A/D、起步／退出和长直行新开发回放中，必须无跌倒、方向合格且比保留模型实际更快。若 BAM 与代理在源域都变快、目标域仍跌或走歪，则不再扩大这个分支；它只能说明当前代理未解决迁移。若代理明显改善，才值得进入多种子与更完整目标域适配，仍不能直接发布。该筛查本身不能证明解决了 PPO 遗忘，普通策略继续隔离，任何旧成功损失都须列出。
+
+## 补查：GPU 代理能否复制游戏的 body inertia（2026-09-12）
+
+**结论：正常 MjSpec 编译无法精确表达目前这份映射；编译后、上传 Warp 前修改 MjModel 是可验证的实验路径。** 本次只读源代码及短 CPU 数值检查，没有启动 GPU、训练或修改游戏物理。以下惯量分支取代上文 `jolt_torque` 示例的真正 joint armature `.0018`，两者必须分别命名和记录。
+
+### 游戏映射与 MjSpec 编译限制
+
+[physics_server.gd:359](</home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd:359>) 对每个有效 hinge（包含无 actuator 的被动关节）按 JSON 顺序执行：从 `axis_child_body` 取得归一化轴，用 `iquat_wxyz` 所代表旋转的转置转入原始惯性主轴坐标；令 `n = R(iquat)^T axis`，累加 `I += armature * n**2`，随后逐轴执行 `I = max(I, max(I)/10)`。这是只加对角的映射，没有加入完整 `armature * outer(n,n)` 的非对角元素，也没有旋转新的主轴。质量、COM 和 iquat 保持原值。多个 hinge 共享一个 child body 时必须逐项累加、逐项 floor，不能最后才 floor。非 hinge、缺场景关节节点或缺 child 的项目按游戏规则跳过；不能只遍历有 actuator 的关节。
+
+本轮 [robot_spec.json](</home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_ball_stand_fix/robot_spec.json>) 有 14 个 hinge，全部 armature 为 `.0018`；没有被动 hinge，也没有多 hinge 共用 child。这两个边界目前是实现规则核查，未做含被动或多关节模型的数值验证。场景 RigidBody 的局部坐标是原始惯性主轴坐标；不能再套一遍世界坐标轴转换。JSON 是双精度导出、场景惯量文本有舍入、Godot 向量使用其构建精度，所以 JSON 的 float64 解析式是语义对齐，不可直接声称与运行时逐位一致；严格对照应导出游戏初始化后的 `child.inertia` 和惯性帧。
+
+**CPU 已验证：14 个 hinge child 的目标惯量全部违反 MuJoCo 的三角不等式 `2*max(I) <= sum(I)`。** 例如 `yaw2roll` 的目标是 `[0.00017984346131252638, 0.00017984346131252638, 0.0017984346131252637]`。正常 `MjSpec.compile()` 报 `inertia must satisfy A + B >= C`；`compiler.balanceinertia=True` 虽能编译，却把它变成约 `[0.00071937384525]*3`，不能称为复制游戏惯量。官方明确说明这个选项会用三轴平均值替换不合格惯量。[MuJoCo compiler.balanceinertia](https://mujoco.readthedocs.io/en/stable/XMLreference.html#compiler-balanceinertia)
+
+若测试合法的主轴惯量，Python `MjsBody` 使用 `body.inertia`、`body.iquat`、`body.ipos`、`body.explicitinertial=True`；需将旧 XML 的 `body.fullinertia` 清为 `np.full(6, np.nan)`，避免原 full tensor 与新主轴参数冲突。原文件多处使用 fullinertia，而 JSON 来自编译后的主轴分解。`fullinertia` 的排列是 `xx, yy, zz, xy, xz, yz`；写入 `R @ diag(I) @ R.T` 会触发编译器重新特征分解，不能绕过三角不等式，因为特征值不变。[MuJoCo inertial 定义](https://mujoco.readthedocs.io/en/stable/XMLreference.html#body-inertial)
+
+### 最小实验接入点：先正常 compile，再 patch，再上传
+
+本机 mjlab 1.3.0 的 `SceneCfg.spec_fn` 在编译前调用，不适合这个非物理惯量。`Scene.compile(self)` 直接返回 `self._spec.compile()`；环境构造把其结果传给 `Simulation`。后者先创建 CPU `MjData` 并 `mj_forward`，再 `mjwarp.put_model`、`put_data`，最后捕获 CUDA graph。因此在专用训练包装器里临时包装 `Scene.compile`，原编译成功后写 CPU model、调用 `mj_setConst`、返回模型，是最小改法，无需修改源仓库。[Scene.compile 与 spec_fn](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mjlab/scene/scene.py:46>)、[环境构造顺序](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mjlab/envs/manager_based_rl_env.py:195>)、[Simulation 上传顺序](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mjlab/sim/sim.py:180>)
+
+名称必须按 scene entity 的实际命名空间匹配：mjlab attach 使用 `prefix=f"{ent_name}/"`；此处 `robot` entity 的 `yaw2roll` 对应 `robot/yaw2roll`，`left_hip_yaw` 对应 `robot/left_hip_yaw`。单独编译 `scene_ball.xml` 的 CPU 审计没有此前缀。不要复用 JSON 的 body/joint 数字 ID 到组合场景；通过 `mj_name2id` 查找并对缺失项报错。训练 robot 不包含 ball 时，只允许显式排除该道具；14 个映射 child 和 14 个 hinge 必须全匹配。[实体 attach](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mjlab/scene/scene.py:225>)
+
+建议包装形态如下；`target` 必须从未修改的 JSON/场景快照重新计算，不能从上次已 patch 的模型累加，否则会重复加惯量。
+
+```python
+from unittest.mock import patch
+import mujoco
+from mjlab.scene.scene import Scene
+
+original_compile = Scene.compile
+patch_calls = 0
+
+def compile_with_jolt_inertia(scene):
+    global patch_calls
+    model = original_compile(scene)  # 保持合法 MjSpec，不启用 balanceinertia。
+    # target: {未加 namespace 的 child 名: 从固定快照计算的 inertia[3]}
+    # body_source: {body 名: JSON body 项}; hinge_source: 全部有效 hinge 项。
+    for name, inertia in target.items():
+        bid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "robot/" + name)
+        assert bid > 0, name
+        b = body_source[name]
+        model.body_mass[bid] = b["mass"]
+        model.body_ipos[bid] = b["ipos"]
+        model.body_iquat[bid] = b["iquat_wxyz"]
+        model.body_inertia[bid] = inertia
+    for j in hinge_source:  # 包括 passive，不按 actuator 列表筛选。
+        jid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT,
+                              "robot/" + j["name"])
+        assert jid >= 0, j["name"]
+        assert model.jnt_type[jid] == mujoco.mjtJoint.mjJNT_HINGE
+        model.dof_armature[model.jnt_dofadr[jid]] = 0.
+    mujoco.mj_setConst(model, mujoco.MjData(model))
+    patch_calls += 1
+    return model
+
+# 仅在单训练进程的环境构造范围内替换，退出时自动恢复类方法。
+with patch.object(Scene, "compile", compile_with_jolt_inertia):
+    env = ManagerBasedRlEnv(cfg=ec, device="cuda:0")
+assert patch_calls == 1
+```
+
+代理 actuator 配置同步使用 `armature=0.0`，避免误把这条实验记录成双重惯量。对当前模型，将 robot 自由关节的零 armature 也一并断言；未来若出现其它非零类型，必须明确处理，不能仅因代码遍历 hinge 而遗漏。基础躯干和非 robot 道具不累加 hinge 惯量。此示例仅给接入接口，CPU 验证脚本含完整目标计算；主线程应补入固定数量、source hash、实值误差、名称和实际 namespace 检查。
+
+`mjwarp.put_model` 从 CPU model 直接取得字段，再创建 Warp arrays，已检查的代码没有重新执行惯量三角约束；`body_inertia`、`body_iquat`、`dof_armature` 均有可广播的 world 维。`Simulation.get_default_field` 的惰性缓存也来自 CPU model，因此上传前修改能同时对齐 GPU 初值与后续默认值。[Warp put_model](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mujoco_warp/_src/io.py:216>)、[字段上传](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mujoco_warp/_src/io.py:695>)、[world 维字段](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mujoco_warp/_src/types.py:1324>)、[默认缓存](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mjlab/sim/sim.py:315>)
+
+不建议环境创建后才补丁：届时必须同步 CPU model、GPU 所有 world、已缓存 defaults，按修改字段重算常量；替换数组还须重新捕获 CUDA graph。现成接口包括 `expand_model_fields`、`recompute_constants(RecomputeLevel.set_const)`；只有 inertia/armature 时可用较窄的 `set_const_0`，但这里含 iquat/ipos/mass，完整 `set_const` 更明确。只更新 CPU 或只更新 GPU 都不足以保证 reset/DR 后仍保持目标值。[常量重算](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mjlab/sim/sim.py:334>)、[图捕获指针约束](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mjlab/sim/sim.py:228>)
+
+**本惯量分支首轮必须关闭质量、COM、惯量及 armature DR，替代上文旧代理可保留质量 DR 的建议。** 特别是 `pseudo_inertia` 用物理一致的 4×4 伪惯量 Cholesky；违反三角不等式时矩阵不正定，当前显式 `sqrt` 分解会产生 NaN，不能把它当作围绕这个目标的小扰动。contact、push、encoder 等其余冻结设置单独保持记录。首次 GPU smoke 应在初始化、reset 及事件触发后核对 CPU/GPU 的 body inertia、iquat、armature；查看 shared/world 扩展后的每个 world，而非只查 world 0。[pseudo_inertia 与默认值](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mjlab/envs/mdp/dr/body.py:503>)、[显式 Cholesky](</home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/mjlab/envs/mdp/dr/body.py:49>)
+
+### 验证证据和结论边界
+
+可复现 CPU 审计：[cpu_audit.py](</home/ethan/Projects/MicroDuck/sim2sim/results/research_20260912_sprint_inertia/cpu_audit.py>)；机器可读产物：[cpu_audit.json](</home/ethan/Projects/MicroDuck/sim2sim/results/research_20260912_sprint_inertia/cpu_audit.json>)。`results/` 按仓库规则不进入 Git，交接包须另带这两个文件。调用命令：
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 timeout 30s taskset -c 16-19 \
+  /home/ethan/Projects/microduck_rl/.venv/bin/python \
+  /home/ethan/Projects/MicroDuck/sim2sim/results/research_20260912_sprint_inertia/cpu_audit.py
+```
+
+MuJoCo 3.10.0 实测：正常 MjSpec 对映射惯量拒绝编译；balanceinertia 模式改成上述平均值。对原始合法 CPU MjModel 编译后写入目标字段并置零 armature，再 `mj_setConst`，目标 inertia 最大变化为 **0**。随机种子 123、32 个限位内关节配置，逐配置 `mj_forward`/`mj_fullM` 的质量矩阵最小特征值均为正，最小值 **1.225e-5**；全部 `qacc` 有限。报告保留模型源 hash、目标惯量、32 组 qpos、每组最小特征值和最后一组 MuJoCo warning 计数。测试耗时约 0.43 秒，无积分步、无接触轨迹验证、无 GPU 运算。
+
+**这只证明当前 CPU 实现接受写入且这些配置的广义质量矩阵正常。** 官方对运行时 body inertia 修改仍要求三角不等式，并要求重算常量；因此该绕过编译检查的方式属于训练代理的实验兼容路径，不是受官方保证的物理模型，也不证明 GPU 长时间稳定或 Jolt 等价。接触求解、关节约束、积分器和 Godot 实际惯量处理仍需独立轨迹与 GPU smoke 验证。若 GPU 拒绝、产生 NaN 或明显不稳定，应将该分支判为不适用，不能以 `balanceinertia=True` 偷换验收对象。[MuJoCo 运行时模型修改约束](https://mujoco.readthedocs.io/en/stable/programming/simulation.html#model-changes)

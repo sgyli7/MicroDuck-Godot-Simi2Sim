@@ -314,7 +314,7 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 		command = Contract.time_command(float(item.time_input_s)-brain.behavior_t,
 			item.time_input_s,body,item.heading_input,heading)
 	var requested_command := command.duplicate()
-	command = motion.command(command,body,"walking" if skill == "sprint" else skill,CONTROL_DT)
+	command = motion.command(command,body,skill,CONTROL_DT)
 	var obs := Contract.observation(raw,body,last_action,command,home)
 	if item.get("state_input", "") == "planar_com_velocity_height_v1":
 		obs = Contract.brake_state_observation(obs,body)
