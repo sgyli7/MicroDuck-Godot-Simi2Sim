@@ -1,0 +1,14 @@
+{
+  "completed": true,
+  "iterations": 12,
+  "samples": 316800,
+  "collection_device": "cpu_native_jolt",
+  "learner_device": "cuda",
+  "elapsed_s": 316.49678631298593,
+  "collection_s": 278.1522022430727,
+  "reconstruction_s": 36.43620833198656,
+  "learning_s": 1.4581607170111965,
+  "max_parity": 2.1457672119140625e-06,
+  "final_sha256": "cbbae52ebde314c6c08e3f338d0e844a8d27b61cc02569d72127c2bcdfe70e1e",
+  "accepted": false
+}

@@ -1,0 +1,29 @@
+{
+  "iteration": 3,
+  "samples": 79200,
+  "data": {
+    "episodes": 32,
+    "rows": 26400,
+    "actor_rows": 16000,
+    "discarded_after_fall": 0,
+    "falls": 0,
+    "command_max_abs": 1.862645149230957e-09,
+    "last_action_max_abs": 0.0,
+    "final_time_max_abs": 1.1013412404281553e-12,
+    "post_action_reward": true,
+    "padding_excluded": true
+  },
+  "collection_s": 23.182659287995193,
+  "reconstruction_s": 2.942743135994533,
+  "learning_s": 0.16532635598559864,
+  "actor_updates": 28,
+  "kl": 0.0075690858066082,
+  "rejected": false,
+  "actor_lr": 0.0001,
+  "parity_max_abs": 1.1920928955078125e-06,
+  "reward": 1.3218601942062378,
+  "critic_loss": 8.314288565090724,
+  "teacher_kl": 1.7140469295637948,
+  "constraint_probability": 9.364552533952519e-05,
+  "elapsed_s": 80.51105544599704
+}

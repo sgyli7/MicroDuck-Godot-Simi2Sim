@@ -1,0 +1,29 @@
+{
+  "hypothesis": "Small target-engine PPO correction repairs transfer failures without changing game physics or commands",
+  "source": "results/sprint_stop_state_20260912/train_joint_fd/latest.pt",
+  "iterations": 12,
+  "seeds_per_batch": 4,
+  "endpoints": [
+    6,
+    12
+  ],
+  "learner": "CUDA",
+  "collector": "Native Jolt CPU 4 cores; full episodes, no Python/TCP steps",
+  "actor_learning": "only sprint; ordinary frozen S05",
+  "acceptance": "Unmodified native 263-case development suite; no falls or regressions, ordinary speed >=95%, sprint speed gain retained",
+  "final_seeds_reserved": "928000\u2013928049",
+  "source_code_sha256": {
+    "scripts/sprint_native_correct.py": "20acb5bc39d4825d5544da92f055646fe086ec3b696f675380cbf9e25c8a5ab6",
+    "src/sim2sim/research/native_sprint.py": "5ac1510dc447948f46eb8af9ff5cd689312451c495da981a2f10797b05bd401f",
+    "src/sim2sim/research/models.py": "d6462530b72da2940e2728b6fc87ba9def0ebf4a3c725a9f56ecdf62c6e9fa06",
+    "src/sim2sim/research/constraint_returns.py": "668419df0b2c90f49411241db5645982d5ed688b45b9cd9589f7457ddf756305",
+    "src/sim2sim/research/sprint_constraints.py": "0eab28e69d21c70436aa877d35313ca2d238b235614ebc2de3d899252eba45ad",
+    "src/sim2sim/research/torch_walking.py": "2c7c6f5dbc85ad21e2b58d6ccda60ff0c715757b8ed8582ba8e8d4410b3825ad",
+    "src/sim2sim/research/torch_anchor.py": "d31fe272609b9f2d0d64f6671add5ea3cdd9fa6ebc67397039b8b38bb96dd21a",
+    "src/sim2sim/research/walking_retention.py": "72a179b023ebbf858fb90bfa222e5c358ce5118b0fdce27c996462c6056f5079",
+    "src/sim2sim/research/locomotion_objectives.py": "e500d1ad192240fa761de9479db0e82d7e5ba703ba1b208b7fccb6d1140ec995",
+    "src/sim2sim/standalone/sprint.py": "a2aa95a28961744a4fb5e4278df48089101c9c87ee0631a49cd85707349c5157",
+    "src/sim2sim/standalone/replay.py": "cbc9c69878a51b7ba4ee57c9a7ed0d357aaab400ce11bbf9080e7a449f99bb63",
+    "tests/test_native_sprint.py": "985e37f367e17043da85d15194220a30012b002c4c51fc3880bdba150ce06229"
+  }
+}

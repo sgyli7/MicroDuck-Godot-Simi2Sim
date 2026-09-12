@@ -1,0 +1,9 @@
+{
+  "base_commit": "b20a33de2ceb92f5de4590c7dae64a0ce5e944af",
+  "limit_minutes": 90,
+  "reserve_minutes": 20,
+  "objective": "Small native Jolt corrective PPO on CUDA; same frozen game contract, full-history episodes; no final-seed tuning",
+  "prior_round": "results/sprint_stop_state_20260912",
+  "previous_turn": "progress",
+  "created_unix": 1789224517.0595129
+}

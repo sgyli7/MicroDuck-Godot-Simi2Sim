@@ -1,0 +1,391 @@
+{
+  "completed": true,
+  "scope": "Frozen initial actor, noise-state-distribution diagnostic only; no policy updates or acceptance",
+  "actor_sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+  "rows": [
+    {
+      "seed": 927001,
+      "sigma": 0.0,
+      "noise_seed": 95600000,
+      "signed_yaw_rate": 0.37696996310714026,
+      "below_turn_threshold": true,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_000/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.0,
+      "noise_seed": 95600001,
+      "signed_yaw_rate": 0.37696996310714026,
+      "below_turn_threshold": true,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_001/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.005,
+      "noise_seed": 95600000,
+      "signed_yaw_rate": 0.7702006477488976,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_002/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.005,
+      "noise_seed": 95600001,
+      "signed_yaw_rate": 0.65680245892582,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_003/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.005,
+      "noise_seed": 95600002,
+      "signed_yaw_rate": 0.7903011073520431,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_004/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.005,
+      "noise_seed": 95600003,
+      "signed_yaw_rate": 0.6125387656393352,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_005/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.02,
+      "noise_seed": 95600000,
+      "signed_yaw_rate": 0.7412101437018569,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_006/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.02,
+      "noise_seed": 95600001,
+      "signed_yaw_rate": 0.7352614750042374,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_007/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.02,
+      "noise_seed": 95600002,
+      "signed_yaw_rate": 0.643791187633123,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_008/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.02,
+      "noise_seed": 95600003,
+      "signed_yaw_rate": 0.7489773227975456,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_009/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927001.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.0,
+      "noise_seed": 95600000,
+      "signed_yaw_rate": 0.6801279051996878,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_010/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.0,
+      "noise_seed": 95600001,
+      "signed_yaw_rate": 0.6801279051996878,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_011/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.005,
+      "noise_seed": 95600000,
+      "signed_yaw_rate": 0.7186413507258536,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_012/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.005,
+      "noise_seed": 95600001,
+      "signed_yaw_rate": 0.7612643630729274,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_013/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.005,
+      "noise_seed": 95600002,
+      "signed_yaw_rate": 0.6932276353092849,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_014/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.005,
+      "noise_seed": 95600003,
+      "signed_yaw_rate": 0.7392253553231442,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_015/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.02,
+      "noise_seed": 95600000,
+      "signed_yaw_rate": 0.7557578118898864,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_016/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.02,
+      "noise_seed": 95600001,
+      "signed_yaw_rate": 0.7017986953768794,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_017/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.02,
+      "noise_seed": 95600002,
+      "signed_yaw_rate": 0.6177478737847054,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_018/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.02,
+      "noise_seed": 95600003,
+      "signed_yaw_rate": 0.722157139985651,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_019/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927007.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.0,
+      "noise_seed": 95600000,
+      "signed_yaw_rate": 0.7370013616892359,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_020/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.0,
+      "noise_seed": 95600001,
+      "signed_yaw_rate": 0.7370013616892359,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_021/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.005,
+      "noise_seed": 95600000,
+      "signed_yaw_rate": 0.7489342773349117,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_022/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.005,
+      "noise_seed": 95600001,
+      "signed_yaw_rate": 0.7172760136661069,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_023/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.005,
+      "noise_seed": 95600002,
+      "signed_yaw_rate": 0.7404985238630768,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_024/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.005,
+      "noise_seed": 95600003,
+      "signed_yaw_rate": 0.7529653226603996,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_025/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.02,
+      "noise_seed": 95600000,
+      "signed_yaw_rate": 0.7674404462512032,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_026/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.02,
+      "noise_seed": 95600001,
+      "signed_yaw_rate": 0.7210363026618317,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_027/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.02,
+      "noise_seed": 95600002,
+      "signed_yaw_rate": 0.7898376319720802,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_028/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.02,
+      "noise_seed": 95600003,
+      "signed_yaw_rate": 0.6593487069424793,
+      "below_turn_threshold": false,
+      "first_fall": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/episode_029/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/noise_probe/cases/sprint_alternate_927008.json"
+    }
+  ],
+  "summary": [
+    {
+      "seed": 927001,
+      "sigma": 0.0,
+      "count": 2,
+      "below_threshold": 2,
+      "mean": 0.37696996310714026,
+      "minimum": 0.37696996310714026,
+      "maximum": 0.37696996310714026
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.005,
+      "count": 4,
+      "below_threshold": 0,
+      "mean": 0.707460744916524,
+      "minimum": 0.6125387656393352,
+      "maximum": 0.7903011073520431
+    },
+    {
+      "seed": 927001,
+      "sigma": 0.02,
+      "count": 4,
+      "below_threshold": 0,
+      "mean": 0.7173100322841908,
+      "minimum": 0.643791187633123,
+      "maximum": 0.7489773227975456
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.0,
+      "count": 2,
+      "below_threshold": 0,
+      "mean": 0.6801279051996878,
+      "minimum": 0.6801279051996878,
+      "maximum": 0.6801279051996878
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.005,
+      "count": 4,
+      "below_threshold": 0,
+      "mean": 0.7280896761078025,
+      "minimum": 0.6932276353092849,
+      "maximum": 0.7612643630729274
+    },
+    {
+      "seed": 927007,
+      "sigma": 0.02,
+      "count": 4,
+      "below_threshold": 0,
+      "mean": 0.6993653802592805,
+      "minimum": 0.6177478737847054,
+      "maximum": 0.7557578118898864
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.0,
+      "count": 2,
+      "below_threshold": 0,
+      "mean": 0.7370013616892359,
+      "minimum": 0.7370013616892359,
+      "maximum": 0.7370013616892359
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.005,
+      "count": 4,
+      "below_threshold": 0,
+      "mean": 0.7399185343811236,
+      "minimum": 0.7172760136661069,
+      "maximum": 0.7529653226603996
+    },
+    {
+      "seed": 927008,
+      "sigma": 0.02,
+      "count": 4,
+      "below_threshold": 0,
+      "mean": 0.7344157719568987,
+      "minimum": 0.6593487069424793,
+      "maximum": 0.7898376319720802
+    }
+  ],
+  "elapsed_s": 20.372404085996095
+}

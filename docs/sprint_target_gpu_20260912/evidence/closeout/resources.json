@@ -1,0 +1,101 @@
+{
+  "unix": 1789228273.9607024,
+  "started": 11,
+  "finished": 11,
+  "missing_terminal": [],
+  "cleanup_remaining": {},
+  "live_owned_pids": [],
+  "live_owned_groups": [],
+  "live_session_marker_processes": [],
+  "all_godot_processes": [],
+  "docker": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.ID}}\t{{.Names}}\t{{.Image}}"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "gpu": {
+    "command": [
+      "nvidia-smi",
+      "--query-gpu=name,utilization.gpu,memory.used",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "NVIDIA GB10, 4 %, [N/A]",
+    "stderr": ""
+  },
+  "gpu_apps": {
+    "command": [
+      "nvidia-smi",
+      "--query-compute-apps=pid,process_name,used_gpu_memory",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 242 MiB",
+    "stderr": ""
+  },
+  "job_results": [
+    {
+      "actor": "native_dataset_audit:797d76ab05",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_cuda_correction:91faa99d20",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_fixed_endpoints:615f5f0ce1",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "exploration_distribution_audit:d59ab8f188",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "deterministic_prefix_audit:e5ee32357a",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_warm_prefix_learning:f8f5fccfdd",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_warm_endpoints:5860db6e14",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_initial_teacher_learning:145d59b22c",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_initial_teacher_endpoints:2ee9e0edec",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "archive_and_runtime_cleanup:a213c337a8",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "final_regression_tests:473c8849fe",
+      "returncode": 0,
+      "reason": "completed"
+    }
+  ],
+  "passed": true,
+  "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+}

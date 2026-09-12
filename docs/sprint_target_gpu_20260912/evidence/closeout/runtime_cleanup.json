@@ -1,0 +1,177 @@
+[
+  {
+    "path": "results/sprint_target_gpu_20260912/native_006/prepared",
+    "canonical": "results/sprint_target_gpu_20260912/native_006/suite/runtime",
+    "changed_files": [],
+    "restore": [],
+    "logical_bytes": 1282128456,
+    "deleted": true,
+    "canonical_tree_sha256": "f2cc7ee99e20bd67a9ef9acdcf8b2285afaafea421198e3de77e1c703c334517"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/native_012/prepared",
+    "canonical": "results/sprint_target_gpu_20260912/native_012/suite/runtime",
+    "changed_files": [],
+    "restore": [],
+    "logical_bytes": 1282128456,
+    "deleted": true,
+    "canonical_tree_sha256": "45bc753fa16dde4ecba53a6cf232d68e91445d9d2959a4c561b4cef39a94256f"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/native_warm_006/prepared",
+    "canonical": "results/sprint_target_gpu_20260912/native_warm_006/suite/runtime",
+    "changed_files": [],
+    "restore": [],
+    "logical_bytes": 1282128434,
+    "deleted": true,
+    "canonical_tree_sha256": "ea78ab2a0e22aa1aba0147656f9df31010bb2ffec2309b70c5e6d7cf2277e8e3"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/native_warm_012/prepared",
+    "canonical": "results/sprint_target_gpu_20260912/native_warm_012/suite/runtime",
+    "changed_files": [],
+    "restore": [],
+    "logical_bytes": 1282128489,
+    "deleted": true,
+    "canonical_tree_sha256": "43cccc15e9c75e8a8ca8461b10c10e4086ce766aa33cb0fadd781434d4dc8aa0"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/native_initial_teacher_006/prepared",
+    "canonical": "results/sprint_target_gpu_20260912/native_initial_teacher_006/suite/runtime",
+    "changed_files": [],
+    "restore": [],
+    "logical_bytes": 1282128465,
+    "deleted": true,
+    "canonical_tree_sha256": "0ab460d8c307a0081ea10020b9e02b02c2b396bddfa81722049e72a39dd3b9de"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/native_initial_teacher_012/prepared",
+    "canonical": "results/sprint_target_gpu_20260912/native_initial_teacher_012/suite/runtime",
+    "changed_files": [],
+    "restore": [],
+    "logical_bytes": 1282128463,
+    "deleted": true,
+    "canonical_tree_sha256": "5cf20fce53f506be2652e12ba19ac2987aeff2ee6d7e58477417d2fa7c1b17a5"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/train/runtime",
+    "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+    "changed_files": [
+      "runtime_assets/deployment.json",
+      "runtime_assets/policies/Sprint_Godot.onnx",
+      "standalone/driver.gd"
+    ],
+    "restore": [
+      {
+        "path": "runtime_assets/deployment.json",
+        "source": "results/sprint_target_gpu_20260912/runtime_patches/train/runtime/runtime_assets/deployment.json",
+        "sha256": "20784626a38ec59bff90d37b1a24a28b82a6b7e7952c3be4cd901f585fc7d473"
+      },
+      {
+        "path": "runtime_assets/policies/Sprint_Godot.onnx",
+        "source": "results/sprint_target_gpu_20260912/train/iteration_011/actor.onnx",
+        "sha256": "8fea1eaf6507889ca9645c75c6304f71bb4fbfbc989d0c823f39216228672d82"
+      },
+      {
+        "path": "standalone/driver.gd",
+        "source": "results/sprint_target_gpu_20260912/runtime_patches/train/runtime/standalone/driver.gd",
+        "sha256": "239644959fa1db60395e6f3737123ce195264f8b39a398500aa74da1db6fe038"
+      }
+    ],
+    "logical_bytes": 1282129309,
+    "deleted": true,
+    "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/train_warm/runtime",
+    "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+    "changed_files": [
+      "runtime_assets/deployment.json",
+      "runtime_assets/policies/Sprint_Godot.onnx",
+      "standalone/driver.gd"
+    ],
+    "restore": [
+      {
+        "path": "runtime_assets/deployment.json",
+        "source": "results/sprint_target_gpu_20260912/runtime_patches/train_warm/runtime/runtime_assets/deployment.json",
+        "sha256": "6af3da75ac561f7a58ab7ac1c19fe53ea1eb1c02b242d93aba0e144b836a83a8"
+      },
+      {
+        "path": "runtime_assets/policies/Sprint_Godot.onnx",
+        "source": "results/sprint_target_gpu_20260912/train_warm/iteration_011/actor.onnx",
+        "sha256": "f5ba4894157ef6376232b8a59ad403df2594335dd2e020833cfa9bfb92eed8e1"
+      },
+      {
+        "path": "standalone/driver.gd",
+        "source": "results/sprint_target_gpu_20260912/runtime_patches/train_warm/runtime/standalone/driver.gd",
+        "sha256": "9a6b5b90f40e0d9dc4dd731eb30fa6fe53404f73c878bb4fb94f477453e57f82"
+      }
+    ],
+    "logical_bytes": 1282129686,
+    "deleted": true,
+    "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/train_initial_teacher/runtime",
+    "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+    "changed_files": [
+      "runtime_assets/deployment.json",
+      "runtime_assets/policies/Sprint_Godot.onnx",
+      "standalone/driver.gd"
+    ],
+    "restore": [
+      {
+        "path": "runtime_assets/deployment.json",
+        "source": "results/sprint_target_gpu_20260912/runtime_patches/train_initial_teacher/runtime/runtime_assets/deployment.json",
+        "sha256": "4ce925400347f3413cd2830f730b5c7ef9e687858a9cd7d84dff7d03384a99d0"
+      },
+      {
+        "path": "runtime_assets/policies/Sprint_Godot.onnx",
+        "source": "results/sprint_target_gpu_20260912/train_initial_teacher/iteration_011/actor.onnx",
+        "sha256": "b272d093be360b965420dddec8f795f66b4846c02ebaa6934ef975bb3dd7dbdc"
+      },
+      {
+        "path": "standalone/driver.gd",
+        "source": "results/sprint_target_gpu_20260912/runtime_patches/train_initial_teacher/runtime/standalone/driver.gd",
+        "sha256": "9a6b5b90f40e0d9dc4dd731eb30fa6fe53404f73c878bb4fb94f477453e57f82"
+      }
+    ],
+    "logical_bytes": 1282129686,
+    "deleted": true,
+    "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/noise_probe/runtime",
+    "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+    "changed_files": [
+      "standalone/driver.gd"
+    ],
+    "restore": [
+      {
+        "path": "standalone/driver.gd",
+        "source": "results/sprint_target_gpu_20260912/runtime_patches/noise_probe/runtime/standalone/driver.gd",
+        "sha256": "96930a2edc97e6086888a026509a8e1ab152cdcea8aada5d4aa03922e24635c5"
+      }
+    ],
+    "logical_bytes": 1282129315,
+    "deleted": true,
+    "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+  },
+  {
+    "path": "results/sprint_target_gpu_20260912/prefix_probe/runtime",
+    "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+    "changed_files": [
+      "standalone/driver.gd"
+    ],
+    "restore": [
+      {
+        "path": "standalone/driver.gd",
+        "source": "results/sprint_target_gpu_20260912/runtime_patches/prefix_probe/runtime/standalone/driver.gd",
+        "sha256": "9a6b5b90f40e0d9dc4dd731eb30fa6fe53404f73c878bb4fb94f477453e57f82"
+      }
+    ],
+    "logical_bytes": 1282129686,
+    "deleted": true,
+    "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+  }
+]

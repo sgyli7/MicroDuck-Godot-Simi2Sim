@@ -1,0 +1,8 @@
+[0;93m2026-09-12 22:53:20.748819435 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+/home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:283: UserWarning: 
+    Found GPU0 NVIDIA GB10 which is of cuda capability 12.1.
+    Minimum and Maximum cuda capability supported by this version of PyTorch is
+    (8.0) - (12.0)
+    
+  warnings.warn(
+{'episodes': 16, 'rows': 13200, 'actor_rows': 8000, 'discarded_after_fall': 0, 'falls': 0, 'command_max_abs': 0.0, 'last_action_max_abs': 0.0, 'final_time_max_abs': np.float64(1.1013412404281553e-12), 'post_action_reward': True, 'padding_excluded': True} {'policy_export_max_abs': 0.0, 'ordinary_max_abs': 5.960464477539062e-07, 'noise_mean': [-9.568843961460516e-05, 3.668087083497085e-05, -0.0002540693385526538, -2.4269254936371e-05, -5.351858271751553e-05, -0.00014565027959179133, 9.870392386801541e-05, 7.7175980550237e-05, -4.928133057546802e-05, -0.000147512269904837, 0.00016723689623177052, -0.00036607153015211225, 0.00013645581202581525, -0.00040972026181407273], 'noise_std': [0.019900254905223846, 0.020012561231851578, 0.02029934525489807, 0.020176200196146965, 0.019786406308412552, 0.019923416897654533, 0.020067604258656502, 0.019866667687892914, 0.020070910453796387, 0.020070524886250496, 0.019971881061792374, 0.019689250737428665, 0.019852759316563606, 0.020109886303544044]}

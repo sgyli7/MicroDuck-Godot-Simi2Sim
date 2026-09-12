@@ -1,0 +1,10 @@
+{
+  "action_scale": 1.0,
+  "sim2sim": {
+    "use_stand_policy": false
+  },
+  "research": {
+    "skill": "walking",
+    "source_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+  }
+}
