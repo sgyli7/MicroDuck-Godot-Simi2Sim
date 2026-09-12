@@ -139,35 +139,4 @@ static func outcrop(station:Node3D,p:Vector3,size:Vector3,seed:float,mesa:bool=f
 				station._line(mid+outward,mid.lerp(levels[j+1][n],.30)+outward,width*.7,"strata")
 
 func _observatory(p:Vector3) -> void:
-	# An asymmetric instrument house perched in the rock, with visible load paths.
-	w._box(p+Vector3(0,.13,0),Vector3(5.4,.26,3.6),"metal",.04)
-	for x in [-2.,1.5]:
-		for z in [-1.1,1.1]:w._beam(p+Vector3(x,-1.7,z*.7),p+Vector3(x,.02,z),.23,.29,"graphite")
-	w._box(p+Vector3(-.7,1.1,0),Vector3(3.1,1.85,2.6),"paper",.20)
-	w._box(p+Vector3(-.6,2.09,0),Vector3(3.6,.16,2.9),"paper",.06)
-	# Shaded ribbon windows with thick external sun visors.
-	for i in range(4):
-		var q:=p+Vector3(-1.73+i*.64,1.3,1.315)
-		w._box(q,Vector3(.49,.53,.035),"graphite",.06)
-		w._box(q+Vector3(0,.02,.022),Vector3(.40,.41,.008),"blue",.02)
-		w._box(q+Vector3(0,.32,.10),Vector3(.57,.04,.30),"paper",.012)
-	w._box(p+Vector3(1.75,.7,0),Vector3(1.2,1.1,1.9),"blue",.15)
-	for i in range(5):w._box(p+Vector3(1.75,.44+i*.10,1.),Vector3(.86,.035,.10),"graphite",.005)
-	# The flat, wide sensor canopy gives this station its own skyline.
-	w._cylinder(p+Vector3(-.7,2.32,0),.58,.42,"graphite")
-	w._frustum(p+Vector3(-.7,2.61,0),1.43,1.72,.18,"metal")
-	w._dome(p+Vector3(-.7,2.72,0),1.76,.38,"paper")
-	w._ring(p+Vector3(-.7,2.71,0),1.78,.025,"graphite")
-	for i in range(16):
-		var a:float=i*TAU/16.
-		w._line(p+Vector3(-.7+cos(a)*.64,2.37,sin(a)*.64),p+Vector3(-.7+cos(a)*1.60,2.58,sin(a)*1.60),.014,"graphite")
-	w._line(p+Vector3(-.7,3.0,0),p+Vector3(-.7,4.9,0),.020,"graphite")
-	for z in [-1.53,1.53]:
-		for x in [-2.5,-1.,.5,2.5]:w._line(p+Vector3(x,.3,z),p+Vector3(x,.90,z),.020,"graphite")
-		w._line(p+Vector3(-2.5,.91,z),p+Vector3(2.5,.91,z),.022,"metal")
-	# Two offset stores and exposed piping make the back elevation intentional.
-	for x in [1.3,2.2]:
-		w._cylinder(p+Vector3(x,1.1,-1.1),.30,1.8,"paper")
-		for y in [.45,1.6]:w._ring(p+Vector3(x,y,-1.1),.315,.018,"metal")
-		w._line(p+Vector3(x,.2,-1.1),p+Vector3(x,-.8,-1.8),.055,"blue")
-	w._label("W / 07",p+Vector3(-1.2,.65,1.324),64,.005,"blue")
+	load("res://science_station/ridge_observatory.gd").new().build(w,p)

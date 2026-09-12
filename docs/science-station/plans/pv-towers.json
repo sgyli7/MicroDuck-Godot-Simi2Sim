@@ -1,0 +1,37 @@
+{
+  "initial_position": [
+    4,
+    -17
+  ],
+  "seconds": 29,
+  "fixed_shots": [
+    {
+      "id": "towers",
+      "at": 0,
+      "position": [
+        10.5,
+        2.0,
+        -7.5
+      ],
+      "target": [
+        10.8,
+        3.5,
+        -18.5
+      ],
+      "fov": 64
+    }
+  ],
+  "events": [
+    {
+      "at": 2,
+      "key": "W"
+    },
+    {
+      "at": 26,
+      "key": "W",
+      "pressed": false
+    }
+  ],
+  "cinematic": true,
+  "capture_interval": 0.06666666666666667
+}

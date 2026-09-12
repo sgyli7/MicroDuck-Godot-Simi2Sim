@@ -1,0 +1,32 @@
+{
+  "seconds": 18,
+  "events": [
+    {
+      "at": 2,
+      "key": "W"
+    },
+    {
+      "at": 8,
+      "key": "W",
+      "pressed": false
+    },
+    {
+      "at": 9,
+      "key": "A"
+    },
+    {
+      "at": 10.5,
+      "key": "A",
+      "pressed": false
+    },
+    {
+      "at": 11,
+      "key": "W"
+    },
+    {
+      "at": 14,
+      "key": "W",
+      "pressed": false
+    }
+  ]
+}

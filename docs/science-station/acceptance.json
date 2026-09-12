@@ -5,58 +5,58 @@
       "case": "loop-microduck",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/loop-microduck",
+      "source": "results/science-station/acceptance-release/loop-microduck",
       "route": {
-        "minimum_upright": 0.987230622409074,
+        "minimum_upright": 0.993613591587189,
         "passed": true,
         "reached": [
           {
             "position": [
-              -1.78631067276001,
-              0.128367021679878,
-              3.90860295295715
+              -1.85482442378998,
+              0.122994683682919,
+              3.99059867858887
             ],
             "target": [
               -2.0,
               3.8
             ],
-            "time": 32.144999999998
+            "time": 25.4149999999992
           },
           {
             "position": [
-              -4.77011632919312,
-              0.121985889971256,
-              0.932148516178131
+              -4.77831125259399,
+              0.122497536242008,
+              1.09170651435852
             ],
             "target": [
               -5.0,
               1.0
             ],
-            "time": 68.2050000000105
+            "time": 48.2450000000062
           },
           {
             "position": [
-              4.82777786254883,
-              0.131631761789322,
-              5.16547679901123
+              4.78819370269775,
+              0.123478777706623,
+              4.88754320144653
             ],
             "target": [
               5.0,
               5.0
             ],
-            "time": 152.959999999933
+            "time": 108.754999999974
           },
           {
             "position": [
-              0.0885614156723022,
-              0.123839773237705,
-              6.77751445770264
+              0.239024266600609,
+              0.122845664620399,
+              6.99863481521606
             ],
             "target": [
               0.0,
               7.0
             ],
-            "time": 196.149999999894
+            "time": 141.754999999944
           }
         ]
       },
@@ -65,13 +65,13 @@
         "route": true,
         "no_native_fall": true
       },
-      "simulation_seconds": 196.149999999894
+      "simulation_seconds": 141.754999999944
     },
     {
       "case": "loop-roller",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/loop-roller",
+      "source": "results/science-station/acceptance-release/loop-roller",
       "route": {
         "minimum_upright": 0.916976150773882,
         "passed": true,
@@ -137,7 +137,7 @@
       "case": "loop-sai",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/loop-sai",
+      "source": "results/science-station/acceptance-release/loop-sai",
       "route": {
         "minimum_upright": 0.999505221843719,
         "passed": true,
@@ -203,58 +203,58 @@
       "case": "slope-microduck",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/slope-microduck",
+      "source": "results/science-station/acceptance-release/slope-microduck",
       "route": {
-        "minimum_upright": 0.985080088606632,
+        "minimum_upright": 0.991720681368093,
         "passed": true,
         "reached": [
           {
             "position": [
-              -18.2069606781006,
-              0.263819575309753,
-              -2.87860488891602
+              -18.2379150390625,
+              0.260583907365799,
+              -3.02806115150452
             ],
             "target": [
               -18.0,
               -3.0
             ],
-            "time": 42.8850000000035
+            "time": 27.8499999999987
           },
           {
             "position": [
-              -14.1666774749756,
-              0.12553396821022,
-              -2.8282585144043
+              -14.2389793395996,
+              0.175555139780045,
+              -3.00936889648438
             ],
             "target": [
               -14.0,
               -3.0
             ],
-            "time": 67.9750000000107
+            "time": 45.6000000000049
           },
           {
             "position": [
-              -17.8158493041992,
-              0.263720124959946,
-              -3.15267062187195
+              -17.7755870819092,
+              0.260439842939377,
+              -2.91611003875732
             ],
             "target": [
               -18.0,
               -3.0
             ],
-            "time": 114.799999999968
+            "time": 78.1350000000014
           },
           {
             "position": [
-              -21.9042701721191,
-              0.118525698781013,
-              -3.21985554695129
+              -21.7613430023193,
+              0.169434368610382,
+              -3.02170467376709
             ],
             "target": [
               -22.0,
               -3.0
             ],
-            "time": 142.704999999943
+            "time": 98.8799999999826
           }
         ]
       },
@@ -263,64 +263,64 @@
         "route": true,
         "no_native_fall": true
       },
-      "simulation_seconds": 142.704999999943
+      "simulation_seconds": 98.8799999999826
     },
     {
       "case": "slope-roller",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/slope-roller",
+      "source": "results/science-station/acceptance-release/slope-roller",
       "route": {
-        "minimum_upright": 0.950195506284433,
+        "minimum_upright": 0.957241856480837,
         "passed": true,
         "reached": [
           {
             "position": [
-              -18.2177639007568,
-              0.256862074136734,
-              -2.90421056747437
+              -18.2116088867188,
+              0.261048227548599,
+              -2.89291024208069
             ],
             "target": [
               -18.0,
               -3.0
             ],
-            "time": 7.89499999999985
+            "time": 8.3049999999999
           },
           {
             "position": [
-              -14.2051572799683,
-              0.118675343692303,
-              -2.87782382965088
+              -14.1902284622192,
+              0.166097447276115,
+              -2.85824203491211
             ],
             "target": [
               -14.0,
               -3.0
             ],
-            "time": 14.0100000000008
+            "time": 14.5000000000009
           },
           {
             "position": [
-              -17.7697944641113,
-              0.256783455610275,
-              -3.0669469833374
+              -17.7947998046875,
+              0.265632659196854,
+              -3.11999821662903
             ],
             "target": [
               -18.0,
               -3.0
             ],
-            "time": 21.1400000000001
+            "time": 21.68
           },
           {
             "position": [
-              -21.7762260437012,
-              0.126256749033928,
-              -3.08320236206055
+              -21.7812900543213,
+              0.176494538784027,
+              -3.09290719032288
             ],
             "target": [
               -22.0,
               -3.0
             ],
-            "time": 27.3649999999988
+            "time": 27.8699999999987
           }
         ]
       },
@@ -329,64 +329,64 @@
         "route": true,
         "no_native_fall": true
       },
-      "simulation_seconds": 27.3649999999988
+      "simulation_seconds": 27.8699999999987
     },
     {
       "case": "slope-sai",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/slope-sai",
+      "source": "results/science-station/acceptance-release/slope-sai",
       "route": {
-        "minimum_upright": 0.958078742027283,
+        "minimum_upright": 0.96122407913208,
         "passed": true,
         "reached": [
           {
             "position": [
-              -18.2326107025146,
-              0.356351912021637,
-              -3.05907726287842
+              -18.22340965271,
+              0.362895339727402,
+              -2.9125964641571
             ],
             "target": [
               -18.0,
               -3.0
             ],
-            "time": 27.7259999999807
+            "time": 30.4784999999743
           },
           {
             "position": [
-              -14.2109756469727,
-              0.224422574043274,
-              -3.11428260803223
+              -14.2066955566406,
+              0.268833070993423,
+              -3.12186312675476
             ],
             "target": [
               -14.0,
               -3.0
             ],
-            "time": 57.5840000000929
+            "time": 61.3985000001111
           },
           {
             "position": [
-              -17.7716503143311,
-              0.357555031776428,
-              -2.92617464065552
+              -17.7869873046875,
+              0.356247872114182,
+              -2.8894579410553
             ],
             "target": [
               -18.0,
               -3.0
             ],
-            "time": 92.1200000002578
+            "time": 97.2425000002823
           },
           {
             "position": [
-              -21.7777080535889,
-              0.216699212789536,
-              -3.09035587310791
+              -21.7939434051514,
+              0.269324839115143,
+              -3.12301135063171
             ],
             "target": [
               -22.0,
               -3.0
             ],
-            "time": 122.111000000401
+            "time": 128.468000000418
           }
         ]
       },
@@ -395,40 +395,40 @@
         "route": true,
         "no_native_fall": true
       },
-      "simulation_seconds": 122.111000000401
+      "simulation_seconds": 128.468000000418
     },
     {
       "case": "tower-microduck",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/tower-microduck",
+      "source": "results/science-station/acceptance-release/tower-microduck",
       "route": {
-        "minimum_upright": 0.987496992584567,
+        "minimum_upright": 0.994377557818185,
         "passed": true,
         "reached": [
           {
             "position": [
-              6.79169368743896,
-              0.118415385484695,
-              -16.8812446594238
+              6.76077890396118,
+              0.121416494250298,
+              -17.0024032592773
             ],
             "target": [
               7.0,
               -17.0
             ],
-            "time": 24.5899999999994
+            "time": 17.0000000000009
           },
           {
             "position": [
-              9.78226947784424,
-              0.116297230124474,
-              -16.9007225036621
+              9.76132678985596,
+              0.122703149914742,
+              -17.0204620361328
             ],
             "target": [
               10.0,
               -17.0
             ],
-            "time": 47.5150000000059
+            "time": 32.6949999999983
           }
         ]
       },
@@ -437,13 +437,13 @@
         "route": true,
         "no_native_fall": true
       },
-      "simulation_seconds": 47.5150000000059
+      "simulation_seconds": 32.6949999999983
     },
     {
       "case": "tower-roller",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/tower-roller",
+      "source": "results/science-station/acceptance-release/tower-roller",
       "route": {
         "minimum_upright": 0.958395170293067,
         "passed": true,
@@ -485,7 +485,7 @@
       "case": "tower-sai",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/tower-sai",
+      "source": "results/science-station/acceptance-release/tower-sai",
       "route": {
         "minimum_upright": 0.95486444234848,
         "passed": true,
@@ -527,7 +527,7 @@
       "case": "switches",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/switches",
+      "source": "results/science-station/acceptance-release/switches",
       "checks": {
         "scene": true,
         "switch_order": true,
@@ -542,7 +542,7 @@
       "case": "grab",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/grab",
+      "source": "results/science-station/acceptance-release/grab",
       "grab": [
         {
           "deliveries": [
@@ -561,7 +561,7 @@
                 ]
               ],
               "event": "complete",
-              "id": 91955924642,
+              "id": 99857993460,
               "lift_m": 0.315341487526894,
               "object": "Bin12g",
               "released": true,
@@ -573,7 +573,7 @@
           "history": [
             {
               "event": "start",
-              "id": 91955924642,
+              "id": 99857993460,
               "object": "Bin12g",
               "time": 2.0055
             },
@@ -602,7 +602,7 @@
                 ]
               ],
               "event": "complete",
-              "id": 91955924642,
+              "id": 99857993460,
               "lift_m": 0.315341487526894,
               "object": "Bin12g",
               "released": true,
@@ -631,7 +631,7 @@
       "case": "cancel",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/cancel",
+      "source": "results/science-station/acceptance-release/cancel",
       "checks": {
         "scene": true,
         "cancelled": true,
@@ -643,8 +643,8 @@
       "case": "play",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/play",
-      "kicked_bin_peak_speed_m_s": 0.7900604185518924,
+      "source": "results/science-station/acceptance-release/play",
+      "kicked_bin_peak_speed_m_s": 0.7661749024481316,
       "checks": {
         "scene": true,
         "kick_command": true,
@@ -657,7 +657,7 @@
       "case": "workshop",
       "exit": 0,
       "passed": true,
-      "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/acceptance/workshop",
+      "source": "results/science-station/acceptance-release/workshop",
       "checks": {
         "scene": true,
         "existing_regression": true

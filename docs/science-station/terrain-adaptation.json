@@ -1,0 +1,57 @@
+{
+  "problem": "The accepted mainline walking policy exceeded the conservative 60-degree route balance limit on the original downhill grade. Native 70-degree fall flag had not yet fired.",
+  "diagnosis": "A minimized single-destination straight replay produced the exact same failure as the full route, ruling out waypoint transitions. Only the mound half-width changed: 4 m to 6 m; height stayed 0.14 m. The same minimized replay then passed at 7.38 degrees maximum tilt.",
+  "unchanged": [
+    "walking and sprint ONNX bytes",
+    "controller observations and gains",
+    "Jolt solver and timestep",
+    "60-degree route balance gate",
+    "robot collision geometry"
+  ],
+  "peak_longitudinal_grade_degrees": [
+    3.084458671194399,
+    2.057409794184694
+  ],
+  "runs": [
+    {
+      "case": "descent-before",
+      "source": "results/science-station/diagnostics/descent-before",
+      "route": {
+        "minimum_upright": 0.489048078855518,
+        "passed": false,
+        "reached": [],
+        "reason": "robot fell"
+      },
+      "native_fall": null,
+      "maximum_tilt_degrees": 60.7219652885465,
+      "height_metres": 0.14,
+      "half_width_metres": 4
+    },
+    {
+      "case": "descent-wide",
+      "source": "results/science-station/diagnostics/descent-wide",
+      "route": {
+        "minimum_upright": 0.991720681368093,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -14.2389793395996,
+              0.175555139780045,
+              -3.00936889648438
+            ],
+            "target": [
+              -14.0,
+              -3.0
+            ],
+            "time": 45.6000000000049
+          }
+        ]
+      },
+      "native_fall": null,
+      "maximum_tilt_degrees": 7.37794057572826,
+      "height_metres": 0.14,
+      "half_width_metres": 6
+    }
+  ]
+}

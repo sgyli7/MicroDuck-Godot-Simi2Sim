@@ -36,6 +36,20 @@ func sample_room(w:Node3D,p:Vector3) -> void:
 	w._box(p+Vector3(-1.58,.68,-.10),Vector3(.09,.50,.36),"paper",.025)
 	for i in range(5):w._box(p+Vector3(-1.637,.52+i*.08,-.1),Vector3(.018,.022,.27),"graphite",.003)
 
+	# Side-wall hatches and two visor windows break up the large enclosure.
+	# The door-facing three panels remain open, as in the collider layout.
+	for i in [3,5,9,14,18]:
+		var a:float=i*TAU/24.
+		var q:=p+Vector3(sin(a)*1.587,.65,cos(a)*1.587)
+		w._box(q,Vector3(.27,.46,.035),"graphite",.042,a)
+		w._box(q+Vector3(sin(a)*.023,0,cos(a)*.023),Vector3(.22,.40,.016),"blue" if i in [3,5] else "paper",.028,a)
+		w._box(q+Vector3(0,.255,0),Vector3(.34,.035,.18),"paper",.009,a)
+		if i not in [3,5]:
+			w._box(q+Vector3(sin(a)*.037,-.12,cos(a)*.037),Vector3(.09,.018,.016),"metal",.003,a)
+	for i in range(2,23):
+		var a:float=i*TAU/24.;var b:float=(i+1)*TAU/24.
+		w._line(p+Vector3(sin(a)*1.585,.26,cos(a)*1.585),p+Vector3(sin(b)*1.585,.26,cos(b)*1.585),.009,"metal")
+
 func relay(w:Node3D,p:Vector3) -> void:
 	# Same small building, but all visible elevations describe a useful instrument.
 	for x in [-.45,.1]:

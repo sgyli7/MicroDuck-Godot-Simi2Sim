@@ -18,6 +18,8 @@ func _build_details() -> void:
 
 func _environment() -> void:
 	super._environment()
+	RenderingServer.directional_shadow_atlas_set_size(8192,true)
+	RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_HIGH)
 	var env:Environment=server.get_node("WorldEnvironment").environment
 	var sky:=Sky.new();var sky_mat:=ShaderMaterial.new()
 	sky_mat.shader=load("res://science_station/sky.gdshader");sky.sky_material=sky_mat
@@ -26,7 +28,7 @@ func _environment() -> void:
 	env.fog_light_color=Color("bdcbd0");env.fog_density=.0025;env.fog_sky_affect=0.
 	var sun:DirectionalLight3D=server.get_node("World/Sun")
 	sun.rotation_degrees=Vector3(-48,-36,0);sun.light_energy=.96
-	sun.shadow_bias=.005;sun.shadow_normal_bias=1.
+	sun.shadow_bias=.02;sun.shadow_normal_bias=1.
 	sun.directional_shadow_mode=DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
 	sun.directional_shadow_max_distance=55.
 	sun.directional_shadow_split_1=.035;sun.directional_shadow_split_2=.12;sun.directional_shadow_split_3=.4

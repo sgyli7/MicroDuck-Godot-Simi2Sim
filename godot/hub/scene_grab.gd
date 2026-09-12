@@ -224,7 +224,7 @@ func _process(_delta: float) -> void:
 	if marker != null:
 		marker.global_position = _center(_body())+Vector3(0,.14,0)
 		marker.text = "▼ " + _name(_body())
-		marker.visible = not scene.hub.is_science_station() or _center(_body()).distance_to(scene.robot.bodies.chassis.global_position)<=1.6
+		marker.visible = not scene.hub.options.plan.get("cinematic",false) and (not scene.hub.is_science_station() or _center(_body()).distance_to(scene.robot.bodies.chassis.global_position)<=1.6)
 
 func _physics_process(_delta: float) -> void:
 	if grip == null or str(target.name).begins_with("Ball"): return
