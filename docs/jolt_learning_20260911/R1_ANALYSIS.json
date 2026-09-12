@@ -1,0 +1,458 @@
+[
+  {
+    "name": "r1_masked_s71",
+    "seed": 71,
+    "completed": true,
+    "passes": 34,
+    "regressions": 17,
+    "eligible": false,
+    "elapsed_s": 312.70717883110046,
+    "new_samples": 262144,
+    "cumulative_samples": 262144,
+    "model_sha256": "8f966b5e8502c68005ba028ba981752fd0bef74f04648f093bd8cf8ef5b5c6f8",
+    "falls": 0,
+    "late_or_unconfirmed": 23,
+    "reversing_brakes": 2,
+    "brake_events": 72,
+    "median_stop_confirmed_s": 1.9400000000000006,
+    "max_stop_confirmed_s": 3.3199999999999994,
+    "cases": {
+      "roller_brake_1s": {
+        "passes": 2,
+        "baseline": 5,
+        "moving_speed_ratio": 1.040831259458562
+      },
+      "roller_brake_2s": {
+        "passes": 6,
+        "baseline": 7,
+        "moving_speed_ratio": 0.9989431681223213
+      },
+      "roller_brake_3s": {
+        "passes": 8,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0029798026980974
+      },
+      "roller_brake_5s": {
+        "passes": 5,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0045163770633831
+      },
+      "roller_crouch_brake": {
+        "passes": 3,
+        "baseline": 7,
+        "moving_speed_ratio": 1.0137391563566776
+      },
+      "roller_release_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_repeated_brake": {
+        "passes": 4,
+        "baseline": 8,
+        "moving_speed_ratio": 0.9917738692204829
+      },
+      "roller_space_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_turn_brake": {
+        "passes": 6,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0052830033100537
+      }
+    },
+    "raw_comparison": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/candidate_evaluations/r1_masked_s71/comparison.json",
+    "export_parity": {
+      "random_max_abs": 0.0,
+      "random_batch_max_abs": 0.0,
+      "realistic_max_abs": 0.0,
+      "realistic_batch_max_abs": 0.0,
+      "threshold": 1e-05,
+      "passed": true
+    },
+    "roller_cruise_retained": true,
+    "eligible_improvement": false
+  },
+  {
+    "name": "r1_full_s71",
+    "seed": 71,
+    "completed": true,
+    "passes": 37,
+    "regressions": 14,
+    "eligible": false,
+    "elapsed_s": 305.3665385246277,
+    "new_samples": 262144,
+    "cumulative_samples": 262144,
+    "model_sha256": "2b68fb13e07dc007e7e89c532fd9c6a2690fd3f6b2d3202d2f07d7c260d0fe67",
+    "falls": 0,
+    "late_or_unconfirmed": 19,
+    "reversing_brakes": 5,
+    "brake_events": 72,
+    "median_stop_confirmed_s": 1.7699999999999996,
+    "max_stop_confirmed_s": 3.7399999999999993,
+    "cases": {
+      "roller_brake_1s": {
+        "passes": 2,
+        "baseline": 5,
+        "moving_speed_ratio": 1.0453771867566015
+      },
+      "roller_brake_2s": {
+        "passes": 7,
+        "baseline": 7,
+        "moving_speed_ratio": 0.9983773842107241
+      },
+      "roller_brake_3s": {
+        "passes": 8,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0024071352101684
+      },
+      "roller_brake_5s": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0021330726873254
+      },
+      "roller_crouch_brake": {
+        "passes": 3,
+        "baseline": 7,
+        "moving_speed_ratio": 1.012506059396417
+      },
+      "roller_release_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_repeated_brake": {
+        "passes": 5,
+        "baseline": 8,
+        "moving_speed_ratio": 0.9865253534099011
+      },
+      "roller_space_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_turn_brake": {
+        "passes": 5,
+        "baseline": 8,
+        "moving_speed_ratio": 1.004576097739283
+      }
+    },
+    "raw_comparison": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/candidate_evaluations/r1_full_s71/comparison.json",
+    "export_parity": {
+      "random_max_abs": 0.0,
+      "random_batch_max_abs": 0.0,
+      "realistic_max_abs": 0.0,
+      "realistic_batch_max_abs": 0.0,
+      "threshold": 1e-05,
+      "passed": true
+    },
+    "roller_cruise_retained": true,
+    "eligible_improvement": false
+  },
+  {
+    "name": "r1_masked_s72",
+    "seed": 72,
+    "completed": true,
+    "passes": 47,
+    "regressions": 5,
+    "eligible": false,
+    "elapsed_s": 306.7277464866638,
+    "new_samples": 262144,
+    "cumulative_samples": 262144,
+    "model_sha256": "f4226c9ed0369e281b280780453771a3bb4ff4edf479b4b09d21ce7ac492e93f",
+    "falls": 0,
+    "late_or_unconfirmed": 10,
+    "reversing_brakes": 4,
+    "brake_events": 72,
+    "median_stop_confirmed_s": 1.7799999999999994,
+    "max_stop_confirmed_s": 3.8199999999999994,
+    "cases": {
+      "roller_brake_1s": {
+        "passes": 3,
+        "baseline": 5,
+        "moving_speed_ratio": 1.059008805477857
+      },
+      "roller_brake_2s": {
+        "passes": 8,
+        "baseline": 7,
+        "moving_speed_ratio": 0.9987036784096607
+      },
+      "roller_brake_3s": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 1.002402897106611
+      },
+      "roller_brake_5s": {
+        "passes": 8,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0003678700671796
+      },
+      "roller_crouch_brake": {
+        "passes": 6,
+        "baseline": 7,
+        "moving_speed_ratio": 1.00880801778666
+      },
+      "roller_release_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_repeated_brake": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 0.984907221725469
+      },
+      "roller_space_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_turn_brake": {
+        "passes": 8,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0035467748477989
+      }
+    },
+    "raw_comparison": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/candidate_evaluations/r1_masked_s72/comparison.json",
+    "export_parity": {
+      "random_max_abs": 0.0,
+      "random_batch_max_abs": 0.0,
+      "realistic_max_abs": 0.0,
+      "realistic_batch_max_abs": 0.0,
+      "threshold": 1e-05,
+      "passed": true
+    },
+    "roller_cruise_retained": true,
+    "eligible_improvement": false
+  },
+  {
+    "name": "r1_full_s72",
+    "seed": 72,
+    "completed": true,
+    "passes": 46,
+    "regressions": 5,
+    "eligible": false,
+    "elapsed_s": 327.2495300769806,
+    "new_samples": 262144,
+    "cumulative_samples": 262144,
+    "model_sha256": "8b41dc8fed204d8b802c95a1ac68f38a17ff9a8724194c3f665ce72f20f4c3f8",
+    "falls": 0,
+    "late_or_unconfirmed": 11,
+    "reversing_brakes": 2,
+    "brake_events": 72,
+    "median_stop_confirmed_s": 1.7599999999999998,
+    "max_stop_confirmed_s": 3.3,
+    "cases": {
+      "roller_brake_1s": {
+        "passes": 3,
+        "baseline": 5,
+        "moving_speed_ratio": 1.0439634705960987
+      },
+      "roller_brake_2s": {
+        "passes": 7,
+        "baseline": 7,
+        "moving_speed_ratio": 1.0001228565335594
+      },
+      "roller_brake_3s": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0008336519015544
+      },
+      "roller_brake_5s": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0005387967843584
+      },
+      "roller_crouch_brake": {
+        "passes": 7,
+        "baseline": 7,
+        "moving_speed_ratio": 1.0091493521885186
+      },
+      "roller_release_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_repeated_brake": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 0.9849446521423073
+      },
+      "roller_space_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_turn_brake": {
+        "passes": 8,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0030964092045973
+      }
+    },
+    "raw_comparison": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/candidate_evaluations/r1_full_s72/comparison.json",
+    "export_parity": {
+      "random_max_abs": 0.0,
+      "random_batch_max_abs": 0.0,
+      "realistic_max_abs": 0.0,
+      "realistic_batch_max_abs": 0.0,
+      "threshold": 1e-05,
+      "passed": true
+    },
+    "roller_cruise_retained": true,
+    "eligible_improvement": false
+  },
+  {
+    "name": "r1_masked_s73",
+    "seed": 73,
+    "completed": true,
+    "passes": 38,
+    "regressions": 13,
+    "eligible": false,
+    "elapsed_s": 300.868350982666,
+    "new_samples": 262144,
+    "cumulative_samples": 262144,
+    "model_sha256": "7b3d3f6be849625e2d5221439e00b1a2a62e422778561ddc7cfb7232195ddd47",
+    "falls": 0,
+    "late_or_unconfirmed": 19,
+    "reversing_brakes": 1,
+    "brake_events": 72,
+    "median_stop_confirmed_s": 1.8899999999999997,
+    "max_stop_confirmed_s": 3.2799999999999994,
+    "cases": {
+      "roller_brake_1s": {
+        "passes": 3,
+        "baseline": 5,
+        "moving_speed_ratio": 1.0290715343176788
+      },
+      "roller_brake_2s": {
+        "passes": 6,
+        "baseline": 7,
+        "moving_speed_ratio": 0.9979551579419734
+      },
+      "roller_brake_3s": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 1.002799997695298
+      },
+      "roller_brake_5s": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 1.003292895115852
+      },
+      "roller_crouch_brake": {
+        "passes": 2,
+        "baseline": 7,
+        "moving_speed_ratio": 1.0092778365445407
+      },
+      "roller_release_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_repeated_brake": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 0.9832659520005679
+      },
+      "roller_space_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_turn_brake": {
+        "passes": 6,
+        "baseline": 8,
+        "moving_speed_ratio": 1.004124464215305
+      }
+    },
+    "raw_comparison": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/candidate_evaluations/r1_masked_s73/comparison.json",
+    "export_parity": {
+      "random_max_abs": 0.0,
+      "random_batch_max_abs": 0.0,
+      "realistic_max_abs": 0.0,
+      "realistic_batch_max_abs": 0.0,
+      "threshold": 1e-05,
+      "passed": true
+    },
+    "roller_cruise_retained": true,
+    "eligible_improvement": false
+  },
+  {
+    "name": "r1_full_s73",
+    "seed": 73,
+    "completed": true,
+    "passes": 37,
+    "regressions": 15,
+    "eligible": false,
+    "elapsed_s": 313.1040766239166,
+    "new_samples": 262144,
+    "cumulative_samples": 262144,
+    "model_sha256": "181df5921609662e51c37f90770eb4d82ce82b79db0d648f72d57baa6f4cf870",
+    "falls": 0,
+    "late_or_unconfirmed": 19,
+    "reversing_brakes": 1,
+    "brake_events": 72,
+    "median_stop_confirmed_s": 1.88,
+    "max_stop_confirmed_s": 3.3,
+    "cases": {
+      "roller_brake_1s": {
+        "passes": 3,
+        "baseline": 5,
+        "moving_speed_ratio": 1.0339084994628862
+      },
+      "roller_brake_2s": {
+        "passes": 8,
+        "baseline": 7,
+        "moving_speed_ratio": 0.9982778355214753
+      },
+      "roller_brake_3s": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0027751851085753
+      },
+      "roller_brake_5s": {
+        "passes": 4,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0023345665218362
+      },
+      "roller_crouch_brake": {
+        "passes": 3,
+        "baseline": 7,
+        "moving_speed_ratio": 1.0067289381768558
+      },
+      "roller_release_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_repeated_brake": {
+        "passes": 5,
+        "baseline": 8,
+        "moving_speed_ratio": 0.9900649828910135
+      },
+      "roller_space_3s": {
+        "passes": 0,
+        "baseline": 0,
+        "moving_speed_ratio": 1.0
+      },
+      "roller_turn_brake": {
+        "passes": 7,
+        "baseline": 8,
+        "moving_speed_ratio": 1.0030631662334488
+      }
+    },
+    "raw_comparison": "/home/ethan/Projects/MicroDuck/sim2sim/results/jolt_learning_20260911/candidate_evaluations/r1_full_s73/comparison.json",
+    "export_parity": {
+      "random_max_abs": 0.0,
+      "random_batch_max_abs": 0.0,
+      "realistic_max_abs": 0.0,
+      "realistic_batch_max_abs": 0.0,
+      "threshold": 1e-05,
+      "passed": true
+    },
+    "roller_cruise_retained": true,
+    "eligible_improvement": false
+  }
+]

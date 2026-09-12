@@ -99,6 +99,11 @@ class PolicyBundle:
         self.heading_input = has_heading_input(meta)
         from sim2sim.policy_memory import has_yaw_memory,YawDriftMemory
         self.yaw_memory_input = has_yaw_memory(meta)
+        from sim2sim.policy_state import state_input
+        self.state_input=state_input(meta)
+        from sim2sim.policy_task_state import task_input,BrakeTaskState
+        self.task_input=task_input(meta)
+        self.task_state=BrakeTaskState() if self.task_input else None
         self._yaw_memory = YawDriftMemory() if self.yaw_memory_input else None
         self.manifest = _load_sidecar(self.path)
         src: dict[str, Any] = dict(meta)
@@ -112,7 +117,7 @@ class PolicyBundle:
 
     def check_dims(self, home_len: int) -> None:
         want_act = int(home_len)
-        want_obs = expected_obs_dim(home_len)
+        want_obs = expected_obs_dim(home_len)+(7 if self.task_input else 0)
         errs: list[str] = []
         if self.act_dim != want_act:
             errs.append(f"act_dim={self.act_dim} want={want_act}")
@@ -123,6 +128,7 @@ class PolicyBundle:
 
     def reset_context(self) -> None:
         if self._yaw_memory is not None:self._yaw_memory.reset()
+        if self.task_state is not None:self.task_state.reset()
 
     def infer(self, obs: np.ndarray) -> np.ndarray:
         x = np.asarray(obs, dtype=np.float32)

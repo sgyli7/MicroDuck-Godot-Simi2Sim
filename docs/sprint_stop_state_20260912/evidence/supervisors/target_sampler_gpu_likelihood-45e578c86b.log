@@ -1,0 +1,12 @@
+[0;93m2026-09-12 22:29:23.512300248 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+Traceback (most recent call last):
+  File "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/validate_target_samples.py", line 8, in <module>
+    r=Path('results/sprint_stop_state_20260912');out=r/'target_sampler';x=json.loads((out/'completed.json').read_text());assert x['completed'];torch.set_num_threads(4);torch.backends.cuda.matmul.allow_tf32=False
+                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'results/sprint_stop_state_20260912/target_sampler/completed.json'

@@ -1,0 +1,186 @@
+{
+  "source": {
+    "checkpoint": {
+      "random_max_abs": 2.384185791015625e-07,
+      "random_batch_max_abs": 2.384185791015625e-07,
+      "realistic_max_abs": 2.384185791015625e-07,
+      "realistic_batch_max_abs": 2.384185791015625e-07,
+      "threshold": 1e-05,
+      "passed": true,
+      "samples_per_distribution": 256,
+      "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/train_source_graph/latest.pt",
+      "checkpoint_sha256": "470f2133f9952d412a6bd887e0ebba91d57f4749a0db5b9549aecf65f7a16caf",
+      "iteration": 128
+    },
+    "native_shadow": {
+      "remove_forward_prefix": {
+        "check": "native_shadow",
+        "rows": 400,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 4.6629367034256575e-15,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 4.6629367034256575e-15,
+          "body_pos": 9.769962616701378e-15,
+          "body_quat": 1.4432899320127035e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      },
+      "sprint_repeat": {
+        "check": "native_shadow",
+        "rows": 850,
+        "max_abs": {
+          "command": 5.551115123125783e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 4.6629367034256575e-15,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 4.6629367034256575e-15,
+          "body_pos": 9.769962616701378e-15,
+          "body_quat": 1.3322676295501878e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    }
+  },
+  "jolt": {
+    "checkpoint": {
+      "random_max_abs": 2.384185791015625e-07,
+      "random_batch_max_abs": 2.384185791015625e-07,
+      "realistic_max_abs": 2.384185791015625e-07,
+      "realistic_batch_max_abs": 2.384185791015625e-07,
+      "threshold": 1e-05,
+      "passed": true,
+      "samples_per_distribution": 256,
+      "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/train_jolt_graph/latest.pt",
+      "checkpoint_sha256": "b20455822c233bfdeb58d3989439647e38ab2f189476e11950830d0e572d8759",
+      "iteration": 128
+    },
+    "native_shadow": {
+      "remove_forward_prefix": {
+        "check": "native_shadow",
+        "rows": 400,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 4.884981308350689e-15,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 4.884981308350689e-15,
+          "body_pos": 9.103828801926284e-15,
+          "body_quat": 1.3322676295501878e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      },
+      "sprint_repeat": {
+        "check": "native_shadow",
+        "rows": 850,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 4.6629367034256575e-15,
+          "ctrl": 5.10702591327572e-15,
+          "last_action": 4.6629367034256575e-15,
+          "body_pos": 9.769962616701378e-15,
+          "body_quat": 1.5543122344752192e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    }
+  },
+  "positive": {
+    "checkpoint": {
+      "random_max_abs": 2.384185791015625e-07,
+      "random_batch_max_abs": 2.384185791015625e-07,
+      "realistic_max_abs": 2.384185791015625e-07,
+      "realistic_batch_max_abs": 2.384185791015625e-07,
+      "threshold": 1e-05,
+      "passed": true,
+      "samples_per_distribution": 256,
+      "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/train_positive/latest.pt",
+      "checkpoint_sha256": "ea1da6fc49530821a5a6448548bb253d467dda82e18e2aabdd6d1971926449d3",
+      "iteration": 128
+    },
+    "native_shadow": {
+      "remove_forward_prefix": {
+        "check": "native_shadow",
+        "rows": 400,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 4.6629367034256575e-15,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 4.6629367034256575e-15,
+          "body_pos": 9.325873406851315e-15,
+          "body_quat": 1.3322676295501878e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      },
+      "sprint_repeat": {
+        "check": "native_shadow",
+        "rows": 850,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 4.884981308350689e-15,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 4.884981308350689e-15,
+          "body_pos": 9.769962616701378e-15,
+          "body_quat": 1.4432899320127035e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    }
+  },
+  "cat": {
+    "checkpoint": {
+      "random_max_abs": 2.384185791015625e-07,
+      "random_batch_max_abs": 2.384185791015625e-07,
+      "realistic_max_abs": 1.1920928955078125e-07,
+      "realistic_batch_max_abs": 1.1920928955078125e-07,
+      "threshold": 1e-05,
+      "passed": true,
+      "samples_per_distribution": 256,
+      "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/train_cat/latest.pt",
+      "checkpoint_sha256": "911888ccf28f6cdbad580870ad1f70f66c9afb9c131494c1af015611cab9bb70",
+      "iteration": 128
+    },
+    "native_shadow": {
+      "remove_forward_prefix": {
+        "check": "native_shadow",
+        "rows": 400,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 4.996003610813204e-16,
+          "ctrl": 5.10702591327572e-15,
+          "last_action": 4.996003610813204e-16,
+          "body_pos": 5.995204332975845e-15,
+          "body_quat": 1.4432899320127035e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      },
+      "sprint_repeat": {
+        "check": "native_shadow",
+        "rows": 850,
+        "max_abs": {
+          "command": 1.8626451665781918e-09,
+          "obs": 1.8626451665781918e-09,
+          "action": 2.980232283178452e-08,
+          "ctrl": 2.980232283178452e-08,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.992007221626409e-15,
+          "body_quat": 1.4988010832439613e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    }
+  }
+}

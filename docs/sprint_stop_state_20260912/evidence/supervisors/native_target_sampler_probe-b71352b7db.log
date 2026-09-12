@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_probe.py", line 44, in <module>
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:rows=list(pool.map(run,items))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler_probe.py", line 38, in run
+    with (folder/'player.log').open('w') as log:subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=40)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/subprocess.py", line 2141, in _communicate
+    self.wait(timeout=self._remaining_time(endtime))
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/lib/python3.12/subprocess.py", line 2045, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['godot', '--headless', '--fixed-fps', '200', '--path', '/tmp/godot-s2s-ov-3v269q0k', 'res://standalone/main.tscn', '--', '--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler/cases/sprint_shift_first_954100.json', '--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/target_sampler/rollout_00/trace.json', '--sample-std=0.02', '--seed=9541000']' timed out after 39.99998771198443 seconds

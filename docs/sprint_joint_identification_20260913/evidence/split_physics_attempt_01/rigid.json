@@ -1,0 +1,70 @@
+{
+  "metrics": {
+    "train": {
+      "landing": {
+        "components": {
+          "velocity": 0.030796704872893398,
+          "joint": 0.021566736336280482,
+          "position": 0.12757059693044515
+        },
+        "objective": 0.059978012713206345,
+        "manifold_mse_m2": 7.236610700919442e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.00011405013385600784,
+          "joint": 0.0835572056368594,
+          "position": 0.07667612697969386
+        },
+        "objective": 0.05344912758346976,
+        "manifold_mse_m2": 2.2372418101378913e-07
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.08328848905249762,
+          "joint": 0.18547526061223138,
+          "position": 0.25853782481078397
+        },
+        "objective": 0.17576719149183764,
+        "manifold_mse_m2": 3.166212887588577e-07
+      }
+    },
+    "validation": {
+      "landing": {
+        "components": {
+          "velocity": 0.031701957092406974,
+          "joint": 0.02103606232476155,
+          "position": 0.10945458107136637
+        },
+        "objective": 0.054064200162844966,
+        "manifold_mse_m2": 6.702087517528239e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 9.813438087796508e-05,
+          "joint": 0.07186618438735268,
+          "position": 0.06244149308737941
+        },
+        "objective": 0.044801937285203354,
+        "manifold_mse_m2": 2.0794559086410534e-07
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.09459902879826283,
+          "joint": 0.18029896958476038,
+          "position": 0.2611732705950004
+        },
+        "objective": 0.17869042299267454,
+        "manifold_mse_m2": 2.9582245712431445e-07
+      }
+    }
+  },
+  "elapsed_physics_s": 0.5489879599772394,
+  "nq": 28,
+  "nv": 26,
+  "neq": 0,
+  "nu": 14,
+  "compliance": null,
+  "precontact_joint_rms": 2.1805238188075792e-05,
+  "minimum_body_height": 0.06873561441898346
+}

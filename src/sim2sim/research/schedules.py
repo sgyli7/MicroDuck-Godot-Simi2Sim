@@ -2,6 +2,7 @@
 import numpy as np
 
 KEYBOARD_TAPES = {
+    'forward_long': [('idle', 1., set()), ('forward', 6., {'fwd'}), ('brake', 3., set())],
     'forward': [('idle', 1., set()), ('forward', 2., {'fwd'}), ('brake', 2., set())],
     'turn': [('idle', 1., set()), ('turn', 2., {'left'}), ('brake', 2., set())],
     'mixed': [('idle', 1., set()), ('forward', 2., {'fwd'}),
@@ -17,6 +18,27 @@ def keyboard_commands(condition, dt=.02):
     for _, seconds, held in KEYBOARD_TAPES[condition]:
         for _ in range(round(seconds / dt)):
             commands.append(brain.tick(held, [], dt).command.copy())
+    return np.stack(commands)
+
+
+def roller_keyboard_commands(condition,dt=.02):
+    """The same command transitions used by the standalone flat-ground replay.
+
+    Training retains real physics from reset to push to braking; no fabricated
+    moving pose or newly reset hidden action history substitutes for the prefix.
+    """
+    from sim2sim.standalone.cases import standard_cases
+    from sim2sim.play import ROLLER_LIMITS
+    from sim2sim.play_input import PlayBrain
+    case=standard_cases()[condition]
+    if case['skill']!='roller' or 'crouch' in condition:raise ValueError('Roller keyboard curriculum requires one locomotion actor')
+    brain=PlayBrain(has_standing=False,has_sitstand=False,has_pick=False,has_kick_left=False,
+                    has_kick_right=False,has_roulade=False,lim=ROLLER_LIMITS)
+    commands=[]
+    for i in range(round(case['seconds']/dt)):
+        t=i*dt;segment=next(s for s in reversed(case['segments']) if s.get('at',0)<=t+1e-9)
+        held=segment.get('held',[])
+        commands.append(brain.tick(set(held),[],dt,press_order=segment.get('order',held)).command.copy())
     return np.stack(commands)
 
 

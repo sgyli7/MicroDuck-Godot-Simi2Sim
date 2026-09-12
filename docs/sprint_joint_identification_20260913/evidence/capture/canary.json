@@ -1,0 +1,106 @@
+{
+  "disabled": {
+    "seed": 927001,
+    "enabled": false,
+    "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927001_disabled",
+    "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927001/attempt_01/trace.json",
+    "source_sha256": "4ca77b82342197479d953bff63063e3b5b26063160065ae3d2019ce097a4985f",
+    "prefix_max_abs": {
+      "obs": 0.0,
+      "action": 0.0,
+      "last_action": 0.0,
+      "command": 0.0,
+      "ctrl": 0.0
+    },
+    "task": {
+      "success": false,
+      "fell": false,
+      "first_fall_s": null,
+      "score": 0.0,
+      "sustained_mean_vx": 0.16785152209145832,
+      "sustained_p10_vx": 0.08460276694812847,
+      "max_tilt": 8.020882209238302,
+      "min_z": 0.11243602700513167,
+      "straight": [
+        {
+          "at": 1,
+          "heading_error_deg": 4.699398956330493,
+          "lateral_path_m": 0.026952730271803716,
+          "lateral_limit_m": 0.05,
+          "passed": true
+        }
+      ],
+      "turns": [
+        {
+          "at": 3,
+          "requested": 0.800000011920929,
+          "signed_yaw_rate": 0.8430695502892434,
+          "sustained_reverse": false,
+          "passed": true
+        },
+        {
+          "at": 6,
+          "requested": 0.800000011920929,
+          "signed_yaw_rate": 0.37672609036694155,
+          "sustained_reverse": false,
+          "passed": false
+        }
+      ],
+      "stops": [],
+      "actor_selection_passed": true,
+      "speed_gain_gate": "requires paired ordinary result"
+    }
+  },
+  "enabled": {
+    "seed": 927001,
+    "enabled": true,
+    "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927001",
+    "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927001/attempt_01/trace.json",
+    "source_sha256": "4ca77b82342197479d953bff63063e3b5b26063160065ae3d2019ce097a4985f",
+    "prefix_max_abs": {
+      "obs": 0.0,
+      "action": 0.0,
+      "last_action": 0.0,
+      "command": 0.0,
+      "ctrl": 0.0
+    },
+    "task": {
+      "success": false,
+      "fell": false,
+      "first_fall_s": null,
+      "score": 0.0,
+      "sustained_mean_vx": 0.16785152209145832,
+      "sustained_p10_vx": 0.08460276694812847,
+      "max_tilt": 8.020882209238302,
+      "min_z": 0.11243602700513167,
+      "straight": [
+        {
+          "at": 1,
+          "heading_error_deg": 4.699398956330493,
+          "lateral_path_m": 0.026952730271803716,
+          "lateral_limit_m": 0.05,
+          "passed": true
+        }
+      ],
+      "turns": [
+        {
+          "at": 3,
+          "requested": 0.800000011920929,
+          "signed_yaw_rate": 0.8430695502892434,
+          "sustained_reverse": false,
+          "passed": true
+        },
+        {
+          "at": 6,
+          "requested": 0.800000011920929,
+          "signed_yaw_rate": 0.37672609036694155,
+          "sustained_reverse": false,
+          "passed": false
+        }
+      ],
+      "stops": [],
+      "actor_selection_passed": true,
+      "speed_gain_gate": "requires paired ordinary result"
+    }
+  }
+}

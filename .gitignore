@@ -47,6 +47,7 @@ godot/atelier/robot_normals_soft/
 /tmp_*.py
 /shots/
 
+# Native inference dependencies, build products, and generated release inputs
 .venv-sai/
 .venv-native/
 native/.deps/
@@ -56,9 +57,16 @@ godot/native/bin/
 godot/runtime_assets/
 dist/
 
+# Local planning scratch; durable findings belong in docs/ and CONTEXT.md.
+.scratch/
+
 # Match local asset links as well as directories.
 godot/generated
 godot/native/bin
 godot/runtime_assets
 godot/atelier/robot_normals
 godot/atelier/robot_normals_soft
+
+# Accepted default walking/sprint assets are shipped with the Python package.
+!src/sim2sim/assets/microduck_sprint_v1/Walk_Godot.onnx
+!src/sim2sim/assets/microduck_sprint_v1/Sprint_Godot.onnx

@@ -1,0 +1,156 @@
+{
+  "regression_count": 7,
+  "regression_pass": 6,
+  "regression_failures": [
+    {
+      "case": "remove_forward_prefix",
+      "seed": 923000,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.20361781848272897,
+        "sustained_p10_vx": 0.10302854004826546,
+        "max_tilt": 6.617071566638713,
+        "min_z": 0.11333160272672248,
+        "straight": [
+          {
+            "at": 6,
+            "heading_error_deg": 9.29884341050189,
+            "lateral_path_m": 0.05054982829635578,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 1,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6863847270252466,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    }
+  ],
+  "ordinary_pass": 127,
+  "errors": 0,
+  "candidate_count": 128,
+  "candidate_pass": 121,
+  "candidate_falls": 0,
+  "accepted": false,
+  "mini": {
+    "success": false,
+    "fell": false,
+    "first_fall_s": null,
+    "score": 0.0,
+    "sustained_mean_vx": 0.20361781848272897,
+    "sustained_p10_vx": 0.10302854004826546,
+    "max_tilt": 6.617071566638713,
+    "min_z": 0.11333160272672248,
+    "straight": [
+      {
+        "at": 6,
+        "heading_error_deg": 9.29884341050189,
+        "lateral_path_m": 0.05054982829635578,
+        "lateral_limit_m": 0.05,
+        "passed": false
+      }
+    ],
+    "turns": [
+      {
+        "at": 1,
+        "requested": 0.800000011920929,
+        "signed_yaw_rate": 0.6863847270252466,
+        "sustained_reverse": false,
+        "passed": true
+      }
+    ],
+    "stops": [],
+    "actor_selection_passed": true,
+    "speed_gain_gate": "requires paired ordinary result"
+  },
+  "models": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "0e6ce5c81e618dbad675a4cce6c0b00d4e3d0b8ebfc158976f85a4b496e61bbe",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "0e6ce5c81e618dbad675a4cce6c0b00d4e3d0b8ebfc158976f85a4b496e61bbe"
+  },
+  "comparisons": [
+    {
+      "case": "sprint_alternate",
+      "count": 16,
+      "candidate_vx": 0.2087215234494534,
+      "ordinary_vx": 0.154949951100777,
+      "ratio": 1.3470254231555339,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_left",
+      "count": 16,
+      "candidate_vx": 0.20121584051295446,
+      "ordinary_vx": 0.14847146980567008,
+      "ratio": 1.3552491988953832,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_long",
+      "count": 16,
+      "candidate_vx": 0.23041249499186162,
+      "ordinary_vx": 0.1925824238070685,
+      "ratio": 1.1964357413150628,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_repeat",
+      "count": 16,
+      "candidate_vx": 0.2321258193372126,
+      "ordinary_vx": 0.19241866457468015,
+      "ratio": 1.2063581246148893,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_right",
+      "count": 16,
+      "candidate_vx": 0.20978951060929862,
+      "ordinary_vx": 0.16250586397989827,
+      "ratio": 1.2909657871499902,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_shift_first",
+      "count": 16,
+      "candidate_vx": 0.23021458705986847,
+      "ordinary_vx": 0.19203351002166652,
+      "ratio": 1.1988250750293223,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_turn_release",
+      "count": 16,
+      "candidate_vx": 0.19575564816655452,
+      "ordinary_vx": 0.14632346228129378,
+      "ratio": 1.3378281590291499,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_w_first",
+      "count": 16,
+      "candidate_vx": 0.23091121533190648,
+      "ordinary_vx": 0.19143723337255275,
+      "ratio": 1.2061980381973765,
+      "speed_pass": true
+    }
+  ]
+}

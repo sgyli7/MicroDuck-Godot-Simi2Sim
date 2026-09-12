@@ -1,0 +1,106 @@
+{
+  "unix": 1789231511.3045769,
+  "started": 12,
+  "finished": 12,
+  "missing_terminal": [],
+  "cleanup_remaining": {},
+  "live_owned_pids": [],
+  "live_owned_groups": [],
+  "live_session_marker_processes": [],
+  "all_godot_processes": [],
+  "docker": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.ID}}\t{{.Names}}\t{{.Image}}"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "gpu": {
+    "command": [
+      "nvidia-smi",
+      "--query-gpu=name,utilization.gpu,memory.used",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "NVIDIA GB10, 29 %, [N/A]",
+    "stderr": ""
+  },
+  "gpu_apps": {
+    "command": [
+      "nvidia-smi",
+      "--query-compute-apps=pid,process_name,used_gpu_memory",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 580 MiB",
+    "stderr": ""
+  },
+  "job_results": [
+    {
+      "actor": "short_turn_reproduction:0c6e4f484a",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "extract_existing_trajectories:10e2c92626",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_information_ablation:f0f7c2d852",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "information_test_analysis:c816bf68cb",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_extended_information_control:8f432409c5",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "extended_test_analysis:01c218fa10",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "failure_window_analysis:df281c24a0",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "information_plots:697e05fb2b",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "regression_checks:0ee6c016f0",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_recorded_action_tapes:450b2c025e",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "regression_checks_clean_fixture_env:cacccf1c8b",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "archive_evidence:22e4cbf8a8",
+      "returncode": 0,
+      "reason": "completed"
+    }
+  ],
+  "passed": true,
+  "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+}

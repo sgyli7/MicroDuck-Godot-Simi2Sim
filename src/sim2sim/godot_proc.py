@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ctypes
+import fcntl
 import itertools
 import os
 import shutil
@@ -10,6 +11,7 @@ import signal
 import socket
 import subprocess
 import tempfile
+import time
 from pathlib import Path
 
 from sim2sim.paths import sim2sim_root
@@ -18,6 +20,14 @@ from sim2sim.protocol import JsonLineClient, wait_connect
 
 GODOT_PROJECT = sim2sim_root() / "godot"
 _CORE_SEQ = itertools.count()
+
+
+def _headless_core() -> int:
+    # A supervisor/taskset restriction must survive spawning physics workers.
+    # On unrestricted hosts retain the original two-core reservation.
+    allowed=sorted(os.sched_getaffinity(0))
+    pool=allowed[:-2] if len(allowed)>4 else allowed
+    return pool[next(_CORE_SEQ)%len(pool)]
 
 
 def godot_bin() -> str:
@@ -115,6 +125,25 @@ def spawn_godot(
     cwd: Path | None = None,
     recv_timeout: float = 120.0,
 ) -> tuple[subprocess.Popen, int, JsonLineClient]:
+    # Choosing an unused port and releasing its probe socket is not a
+    # reservation. Concurrent trials could select the same port before either
+    # Godot process listened, then connect to each other's simulation.
+    lock_path=Path(tempfile.gettempdir())/f'godot-sim2sim-spawn-{os.getuid()}.lock'
+    with lock_path.open('a') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        return _spawn_godot_locked(scene,port=port,headless=headless,
+            extra_args=extra_args,cwd=cwd,recv_timeout=recv_timeout)
+
+
+def _spawn_godot_locked(
+    scene: str,
+    *,
+    port: int | None = None,
+    headless: bool = True,
+    extra_args: list[str] | None = None,
+    cwd: Path | None = None,
+    recv_timeout: float = 120.0,
+) -> tuple[subprocess.Popen, int, JsonLineClient]:
     port = port or free_port()
     bin_ = godot_bin()
     project = Path(cwd or GODOT_PROJECT)
@@ -168,13 +197,12 @@ def spawn_godot(
             if cand.is_file():
                 env["XAUTHORITY"] = str(cand)
                 break
-    log_path = Path(tempfile.gettempdir()) / f"godot-sim2sim-{port}.log"
-    log_file = open(log_path, "w", encoding="utf-8")
+    log_file=tempfile.NamedTemporaryFile(mode='w',encoding='utf-8',
+        prefix=f'godot-sim2sim-{port}-',suffix='.log',delete=False)
+    log_path=Path(log_file.name)
     core: int | None = None
     if headless:
-        nproc = os.cpu_count() or 1
-        n_godot = max(1, int(nproc) - 2)
-        core = next(_CORE_SEQ) % n_godot
+        core = _headless_core()
     proc = subprocess.Popen(
         cmd,
         stdout=log_file,
@@ -187,6 +215,15 @@ def spawn_godot(
     proc._sim2sim_log_file = log_file  # type: ignore[attr-defined]
     proc._sim2sim_overlay = overlay  # type: ignore[attr-defined]
     try:
+        # Only connect after this exact child reports ownership of its socket.
+        # A foreign listener on an explicitly occupied port must not receive a
+        # research command or be closed during cleanup.
+        deadline=time.monotonic()+25.
+        marker=f'sim2sim_physics_server listening 127.0.0.1:{port}'
+        while marker not in log_path.read_text(encoding='utf-8',errors='replace'):
+            if proc.poll() is not None or time.monotonic()>=deadline:
+                raise RuntimeError('The spawned Godot process did not acquire its listener')
+            time.sleep(.01)
         client = wait_connect("127.0.0.1", port, timeout=25.0, recv_timeout=recv_timeout)
     except Exception:
         try:

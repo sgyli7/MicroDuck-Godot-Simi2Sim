@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "id": "microduck-sprint-v1",
+  "policies": {
+    "walking": {
+      "path": "res://runtime_assets/policies/Walk_Godot.onnx",
+      "sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+      "manifest": {
+        "action_scale": 1.0,
+        "sim2sim": {
+          "use_stand_policy": false,
+          "skill": "walking"
+        },
+        "research": {
+          "skill": "walking",
+          "source_sha256": "cf87e7d5a8bb33fcfcead9be269d76078b1117e3c6515b24363dc131d5a2901e"
+        },
+        "sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+        "status": "experimental_gpu_sprint_not_promoted"
+      },
+      "time_input_s": 0.0,
+      "heading_input": false,
+      "state_input": "",
+      "task_input": "",
+      "obs_dim": 61
+    },
+    "sprint": {
+      "path": "res://runtime_assets/policies/Sprint_Godot.onnx",
+      "sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+      "manifest": {
+        "action_scale": 1.0,
+        "sim2sim": {
+          "use_stand_policy": false,
+          "skill": "sprint"
+        },
+        "research": {
+          "skill": "walking",
+          "source_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+        },
+        "sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+        "status": "experimental_gpu_sprint_not_promoted"
+      },
+      "time_input_s": 0.0,
+      "heading_input": false,
+      "state_input": "",
+      "task_input": "",
+      "obs_dim": 61
+    }
+  },
+  "walk_control": {
+    "walk_heading_gain": 6.0,
+    "walk_heading_scope": "all",
+    "walk_idle_delay_s": 0.5,
+    "walk_path_gain": 4.0,
+    "walk_heading_limit": 0.6,
+    "walk_reanchor_on_start": true,
+    "twist_limits": {
+      "vmax_ang": 0.8,
+      "sprint_vmax_x": 0.3,
+      "sprint_vmax_ang": 0.8,
+      "vmax_x": 0.25,
+      "sprint_yaw_reversal_s": 0.2
+    },
+    "walk_path_lookahead": 0.2
+  },
+  "robot_spec_sha256": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+  "physics_hz": 200,
+  "decimation": 4,
+  "provenance": {
+    "sprint": "sprint_stop_state_20260912/train_joint_fd",
+    "ordinary": "sprint_20260912/runs/s05_native_handoff",
+    "control": "sprint_joint_identification_20260913",
+    "final_seeds": "928000-928049",
+    "final_sprint_pass": 400,
+    "final_ordinary_pass": 400,
+    "regression_pass": 7,
+    "falls": 0
+  }
+}

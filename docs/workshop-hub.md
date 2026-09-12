@@ -24,6 +24,7 @@ python3 scripts/install_workshop_desktop.py
 |---|---|
 | F5 / F6 / F7 | MicroDuck / 轮滑版 / Sai，游戏内加载 |
 | W / S、A / D | Sai 前后、转向；MicroDuck 原有移动；轮滑 S 为制动命令 |
+| 左 Shift + W（MD） | 默认行走加速，可同时 A/D 转向；松 Shift 恢复普通行走，轮滑不启用 |
 | 按住 Shift / 松开 | Sai 下蹲 / 恢复 |
 | R | Sai 复位；MicroDuck 保留前滚技能 |
 | 0 | 当前机器人与松散场景物件复位 |
@@ -58,6 +59,8 @@ uv run --no-sync python -m sim2sim.workshop_assets --models /absolute/path/to/ni
 uv run --no-sync python scripts/refine_robot_normals.py
 ./run-workshop.sh
 ```
+
+MD 默认安装随源码固定的 S05 普通行走 + a402 加速模型对，自动校验机器人资产、模型和控制配置；不替换其他八技能或 Sai。平地最终加速 400/400、普通 400/400、零跌倒，长直行快 20.4%；接入前后九技能配对 30/69→42/69，无旧成功丢失。柜体碰撞与台阶仍可能跌倒，旧轮滑限制保留；完整证据见 [加速报告](sprint_joint_identification_20260913/RESULT.md)。
 
 启动器用独立 `.venv-sai` 安装锁定的 Sai 包。已有训练环境不会被启动器重新同步。原生 MicroDuck 的九个模型在 Godot 进程中由 ONNX Runtime 1.29.0 推理；Sai 使用发布版 Python 控制器计算目标。Python 中的 MuJoCo 仅用于模型状态 / 机械臂 FK、IK 等计算，Godot/Jolt 负责游戏中的刚体、接触和电机受力积分。
 

@@ -1,0 +1,11 @@
+{
+  "completed": true,
+  "frames": 11488,
+  "phase_counts": {
+    "idle": 345,
+    "forward": 5986,
+    "backward": 0,
+    "lateral": 4116,
+    "turn": 4912
+  }
+}

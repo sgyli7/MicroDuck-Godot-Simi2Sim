@@ -1,0 +1,10 @@
+{
+  "limit_seconds": 5400.0,
+  "used_seconds": 2781.067812586989,
+  "remaining_seconds": 2618.932187413011,
+  "actors": [],
+  "unconfirmed_gaps": 0,
+  "used_minutes": 46.35113020978315,
+  "preledger_estimate_seconds": 120,
+  "excluded_after_seal": "Final evidence copying, checksums and Git bookkeeping"
+}

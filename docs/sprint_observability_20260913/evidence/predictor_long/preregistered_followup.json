@@ -1,0 +1,11 @@
+{
+  "created_unix": 1789230403.821959,
+  "hypothesis": "The 40-epoch state/history advantage may be optimization rather than new information, because duplicate-current control matches it.",
+  "fixed_epochs": 640,
+  "arms": 5,
+  "seeds": 2,
+  "comparator": "Require improvement over both immediate and no-new-information duplicate-current control.",
+  "data": "Same development test set, already inspected in first experiment; this is follow-up diagnosis, not untouched confirmation or policy final acceptance.",
+  "early_stop": false,
+  "policy_changes_authorized_by_this_result": false
+}

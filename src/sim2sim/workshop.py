@@ -52,6 +52,8 @@ def prepare(runtime: Path, godot: str) -> Path:
     (runtime / "hub/physics_profiles.json").write_text(json.dumps(profiles, indent=2))
     if not (runtime / "runtime_assets/deployment.json").is_file():
         raise SystemExit("Prepare MicroDuck's native model bundle first; see docs/workshop-hub.md.")
+    from sim2sim.default_sprint import apply_default_sprint
+    apply_default_sprint(runtime)
     subprocess.run([godot, "--headless", "--editor", "--path", str(runtime), "--import", "--quit"], check=True)
     return bundle
 

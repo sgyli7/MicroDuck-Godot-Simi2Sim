@@ -1,0 +1,664 @@
+{
+  "vs_s05": {
+    "arm": "native_initial_teacher_006",
+    "errors": [],
+    "counts": {
+      "sprint_pass": 125,
+      "sprint_count": 128,
+      "ordinary_pass": 128,
+      "ordinary_count": 128,
+      "regression_pass": 7,
+      "regression_count": 7
+    },
+    "falls": 0,
+    "lost_baseline_successes": [
+      [
+        "sprint_alternate",
+        927003
+      ],
+      [
+        "sprint_alternate",
+        927005
+      ],
+      [
+        "sprint_alternate",
+        927009
+      ]
+    ],
+    "fixed_baseline_failures": [
+      [
+        "remove_forward_prefix",
+        923000
+      ],
+      [
+        "sprint_right",
+        927001
+      ],
+      [
+        "sprint_right",
+        927002
+      ],
+      [
+        "sprint_right",
+        927003
+      ],
+      [
+        "sprint_right",
+        927004
+      ],
+      [
+        "sprint_right",
+        927015
+      ]
+    ],
+    "failed": [
+      {
+        "case": [
+          "sprint_alternate",
+          927003
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 2.0799999999999983,
+            "passed": false
+          }
+        ]
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927005
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.25304030173113917,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927009
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4051605166436519,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      }
+    ],
+    "paired_speed": [
+      {
+        "case": "sprint_alternate",
+        "count": 16,
+        "candidate_vx": 0.2149349895152323,
+        "ordinary_vx": 0.168142226109605,
+        "ratio": 1.2782927554148416,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_left",
+        "count": 16,
+        "candidate_vx": 0.2044678335210967,
+        "ordinary_vx": 0.15286355478148964,
+        "ratio": 1.337583924522576,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_long",
+        "count": 16,
+        "candidate_vx": 0.23328257936849442,
+        "ordinary_vx": 0.19321023067664278,
+        "ratio": 1.20740283033416,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_repeat",
+        "count": 16,
+        "candidate_vx": 0.2352566717395043,
+        "ordinary_vx": 0.19399565845638242,
+        "ratio": 1.2126903952976809,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_right",
+        "count": 16,
+        "candidate_vx": 0.22942870633434426,
+        "ordinary_vx": 0.16720928897140488,
+        "ratio": 1.3721050292461907,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_shift_first",
+        "count": 16,
+        "candidate_vx": 0.23345088045106044,
+        "ordinary_vx": 0.19315020143297829,
+        "ratio": 1.2086494278498912,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_turn_release",
+        "count": 16,
+        "candidate_vx": 0.20190356514953994,
+        "ordinary_vx": 0.15062002910411837,
+        "ratio": 1.340482845146518,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_w_first",
+        "count": 16,
+        "candidate_vx": 0.23330271337766628,
+        "ordinary_vx": 0.19348123410403567,
+        "ratio": 1.2058157188113574,
+        "speed_pass": true
+      }
+    ],
+    "ordinary_retention": [
+      {
+        "case": "sprint_alternate",
+        "baseline_vx": 0.168142226109605,
+        "candidate_vx": 0.168142226109605,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_left",
+        "baseline_vx": 0.15286355478148964,
+        "candidate_vx": 0.15286355478148964,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_long",
+        "baseline_vx": 0.19321023067664278,
+        "candidate_vx": 0.19321023067664278,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_repeat",
+        "baseline_vx": 0.19399565845638242,
+        "candidate_vx": 0.19399565845638242,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_right",
+        "baseline_vx": 0.16720928897140488,
+        "candidate_vx": 0.16720928897140488,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_shift_first",
+        "baseline_vx": 0.19315020143297829,
+        "candidate_vx": 0.19315020143297829,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_turn_release",
+        "baseline_vx": 0.15062002910411837,
+        "candidate_vx": 0.15062002910411837,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_w_first",
+        "baseline_vx": 0.19348123410403567,
+        "candidate_vx": 0.19348123410403567,
+        "ratio": 1.0,
+        "passed": true
+      }
+    ],
+    "all_physical_pass": false,
+    "development_eligible": false,
+    "final_seeds_used": false
+  },
+  "vs_prior_best": {
+    "arm": "native_initial_teacher_006",
+    "errors": [],
+    "counts": {
+      "sprint_pass": 125,
+      "sprint_count": 128,
+      "ordinary_pass": 128,
+      "ordinary_count": 128,
+      "regression_pass": 7,
+      "regression_count": 7
+    },
+    "falls": 0,
+    "lost_baseline_successes": [
+      [
+        "sprint_alternate",
+        927003
+      ],
+      [
+        "sprint_alternate",
+        927005
+      ],
+      [
+        "sprint_alternate",
+        927009
+      ]
+    ],
+    "fixed_baseline_failures": [
+      [
+        "sprint_shift_first",
+        927008
+      ]
+    ],
+    "failed": [
+      {
+        "case": [
+          "sprint_alternate",
+          927003
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 2.0799999999999983,
+            "passed": false
+          }
+        ]
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927005
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.25304030173113917,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927009
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4051605166436519,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      }
+    ],
+    "paired_speed": [
+      {
+        "case": "sprint_alternate",
+        "count": 16,
+        "candidate_vx": 0.2149349895152323,
+        "ordinary_vx": 0.168142226109605,
+        "ratio": 1.2782927554148416,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_left",
+        "count": 16,
+        "candidate_vx": 0.2044678335210967,
+        "ordinary_vx": 0.15286355478148964,
+        "ratio": 1.337583924522576,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_long",
+        "count": 16,
+        "candidate_vx": 0.23328257936849442,
+        "ordinary_vx": 0.19321023067664278,
+        "ratio": 1.20740283033416,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_repeat",
+        "count": 16,
+        "candidate_vx": 0.2352566717395043,
+        "ordinary_vx": 0.19399565845638242,
+        "ratio": 1.2126903952976809,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_right",
+        "count": 16,
+        "candidate_vx": 0.22942870633434426,
+        "ordinary_vx": 0.16720928897140488,
+        "ratio": 1.3721050292461907,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_shift_first",
+        "count": 16,
+        "candidate_vx": 0.23345088045106044,
+        "ordinary_vx": 0.19315020143297829,
+        "ratio": 1.2086494278498912,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_turn_release",
+        "count": 16,
+        "candidate_vx": 0.20190356514953994,
+        "ordinary_vx": 0.15062002910411837,
+        "ratio": 1.340482845146518,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_w_first",
+        "count": 16,
+        "candidate_vx": 0.23330271337766628,
+        "ordinary_vx": 0.19348123410403567,
+        "ratio": 1.2058157188113574,
+        "speed_pass": true
+      }
+    ],
+    "ordinary_retention": [
+      {
+        "case": "sprint_alternate",
+        "baseline_vx": 0.168142226109605,
+        "candidate_vx": 0.168142226109605,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_left",
+        "baseline_vx": 0.15286355478148964,
+        "candidate_vx": 0.15286355478148964,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_long",
+        "baseline_vx": 0.19321023067664278,
+        "candidate_vx": 0.19321023067664278,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_repeat",
+        "baseline_vx": 0.19399565845638242,
+        "candidate_vx": 0.19399565845638242,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_right",
+        "baseline_vx": 0.16720928897140488,
+        "candidate_vx": 0.16720928897140488,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_shift_first",
+        "baseline_vx": 0.19315020143297829,
+        "candidate_vx": 0.19315020143297829,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_turn_release",
+        "baseline_vx": 0.15062002910411837,
+        "candidate_vx": 0.15062002910411837,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_w_first",
+        "baseline_vx": 0.19348123410403567,
+        "candidate_vx": 0.19348123410403567,
+        "ratio": 1.0,
+        "passed": true
+      }
+    ],
+    "all_physical_pass": false,
+    "development_eligible": false,
+    "final_seeds_used": false
+  },
+  "vs_initial": {
+    "arm": "native_initial_teacher_006",
+    "errors": [],
+    "counts": {
+      "sprint_pass": 125,
+      "sprint_count": 128,
+      "ordinary_pass": 128,
+      "ordinary_count": 128,
+      "regression_pass": 7,
+      "regression_count": 7
+    },
+    "falls": 0,
+    "lost_baseline_successes": [
+      [
+        "sprint_alternate",
+        927003
+      ],
+      [
+        "sprint_alternate",
+        927005
+      ],
+      [
+        "sprint_alternate",
+        927009
+      ]
+    ],
+    "fixed_baseline_failures": [
+      [
+        "sprint_alternate",
+        927001
+      ]
+    ],
+    "failed": [
+      {
+        "case": [
+          "sprint_alternate",
+          927003
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 2.0799999999999983,
+            "passed": false
+          }
+        ]
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927005
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.25304030173113917,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927009
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4051605166436519,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      }
+    ],
+    "paired_speed": [
+      {
+        "case": "sprint_alternate",
+        "count": 16,
+        "candidate_vx": 0.2149349895152323,
+        "ordinary_vx": 0.168142226109605,
+        "ratio": 1.2782927554148416,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_left",
+        "count": 16,
+        "candidate_vx": 0.2044678335210967,
+        "ordinary_vx": 0.15286355478148964,
+        "ratio": 1.337583924522576,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_long",
+        "count": 16,
+        "candidate_vx": 0.23328257936849442,
+        "ordinary_vx": 0.19321023067664278,
+        "ratio": 1.20740283033416,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_repeat",
+        "count": 16,
+        "candidate_vx": 0.2352566717395043,
+        "ordinary_vx": 0.19399565845638242,
+        "ratio": 1.2126903952976809,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_right",
+        "count": 16,
+        "candidate_vx": 0.22942870633434426,
+        "ordinary_vx": 0.16720928897140488,
+        "ratio": 1.3721050292461907,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_shift_first",
+        "count": 16,
+        "candidate_vx": 0.23345088045106044,
+        "ordinary_vx": 0.19315020143297829,
+        "ratio": 1.2086494278498912,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_turn_release",
+        "count": 16,
+        "candidate_vx": 0.20190356514953994,
+        "ordinary_vx": 0.15062002910411837,
+        "ratio": 1.340482845146518,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_w_first",
+        "count": 16,
+        "candidate_vx": 0.23330271337766628,
+        "ordinary_vx": 0.19348123410403567,
+        "ratio": 1.2058157188113574,
+        "speed_pass": true
+      }
+    ],
+    "ordinary_retention": [
+      {
+        "case": "sprint_alternate",
+        "baseline_vx": 0.168142226109605,
+        "candidate_vx": 0.168142226109605,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_left",
+        "baseline_vx": 0.15286355478148964,
+        "candidate_vx": 0.15286355478148964,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_long",
+        "baseline_vx": 0.19321023067664278,
+        "candidate_vx": 0.19321023067664278,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_repeat",
+        "baseline_vx": 0.19399565845638242,
+        "candidate_vx": 0.19399565845638242,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_right",
+        "baseline_vx": 0.16720928897140488,
+        "candidate_vx": 0.16720928897140488,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_shift_first",
+        "baseline_vx": 0.19315020143297829,
+        "candidate_vx": 0.19315020143297829,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_turn_release",
+        "baseline_vx": 0.15062002910411837,
+        "candidate_vx": 0.15062002910411837,
+        "ratio": 1.0,
+        "passed": true
+      },
+      {
+        "case": "sprint_w_first",
+        "baseline_vx": 0.19348123410403567,
+        "candidate_vx": 0.19348123410403567,
+        "ratio": 1.0,
+        "passed": true
+      }
+    ],
+    "all_physical_pass": false,
+    "development_eligible": false,
+    "final_seeds_used": false
+  }
+}

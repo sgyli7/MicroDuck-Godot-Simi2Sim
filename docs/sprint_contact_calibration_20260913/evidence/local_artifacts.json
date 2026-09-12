@@ -1,0 +1,97 @@
+{
+  "files": [
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_direct_probe/direct20k.npz",
+      "bytes": 625107,
+      "sha256": "999a4a190238959795856b4c654851bd1d5c8df196dea55b36185b1acae4db2d"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_direct_probe/direct20k_hard_contact.npz",
+      "bytes": 624819,
+      "sha256": "949fadd457e671adbfcbbe9d719a926ec1999942fc302529983a92f13728555e"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_direct_probe/direct30k.npz",
+      "bytes": 625211,
+      "sha256": "340ba89bd21069184c91c393bb670997a99ddb92921e8271bcc389458395317d"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_direct_probe/direct30k_hard_contact.npz",
+      "bytes": 624838,
+      "sha256": "4073d8648c2017408877b6ee99acbcb160d17569a40d3a0309d53ec96e27a045"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_direct_probe/rigid.npz",
+      "bytes": 308294,
+      "sha256": "a82a4acff693bc2144f2393f749a4a0f7e97ad45eabbc6bbf26cc173f1090ff2"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_probe/rigid.npz",
+      "bytes": 308391,
+      "sha256": "7d3b0fcf7e41a7375bb31c2de349b05e8d71e706498e1c9ba5de78176a8d1441"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_probe/translation10.npz",
+      "bytes": 625473,
+      "sha256": "986c58de1363a15b7c78bc76760ba08e43f66a89351200c1930ae318dd478db9"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_probe/translation10_hard_contact.npz",
+      "bytes": 625325,
+      "sha256": "69bc667c0e929f4ec209b297b0f2b1fea6b720189c2a831f6978c548b6f36d79"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_probe/translation20.npz",
+      "bytes": 625834,
+      "sha256": "9b1ca5ec72f6a2d9fb4377e281ec4a023b1af457519e21521a48b04ee6609af9"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/compliance_probe/translation20_hard_contact.npz",
+      "bytes": 625486,
+      "sha256": "ade55e9fa8e9853bd686ecf1836eb01600ea75f1586fbe3c6b3b93fecbbf1478"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/contact_probe/imp99.npz",
+      "bytes": 920286,
+      "sha256": "2d3a754ea48515c1299c616c596345f3205a0b9a03b89476f4dcb750592516bb"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/contact_probe/source.npz",
+      "bytes": 920656,
+      "sha256": "932224b176d504706a3807b49d9424cef36f397e4111b37a0ea65efacd48c0f8"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/contact_probe/two_tick.npz",
+      "bytes": 920488,
+      "sha256": "b2addbd724e50f1c84fd3ac7912616d9ca1626732c21c1ebff572c067744907a"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/contact_probe/two_tick_imp99.npz",
+      "bytes": 919954,
+      "sha256": "83ea3acf8bd74e4bdc79b8dba6e13db66e2d996349a989823ded9eb4b4f8968e"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/contact_probe_attempt_02/imp99.npz",
+      "bytes": 920137,
+      "sha256": "467e870759caf793fb9c6123f8eb4713a998d4904d13d3fd025a4a793ce5e908"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/contact_probe_attempt_02/source.npz",
+      "bytes": 920553,
+      "sha256": "5fb485d1535e30b45adea9449e0212856efa5b5eb34ad51de0f8b18fe4943503"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/contact_probe_attempt_02/two_tick.npz",
+      "bytes": 920529,
+      "sha256": "263e22d85a05cbfe360a433e303bc090d3f2f0c007e5d98a09b1c7c4be451d02"
+    },
+    {
+      "path": "results/sprint_contact_calibration_20260913/manifold_residuals.npz",
+      "bytes": 534188,
+      "sha256": "c71b32482dbd137e719ecdabd8611a25836bc0314d802d2a305f4cdb8ac3a62f"
+    }
+  ],
+  "count": 18,
+  "total_bytes": 12595569,
+  "scope": "New diagnostic arrays only; old native traces referenced by manifold_probe.json, never duplicated."
+}

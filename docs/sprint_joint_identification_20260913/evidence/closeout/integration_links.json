@@ -1,0 +1,37 @@
+{
+  "removed_links": [
+    {
+      "path": "/home/ethan/Projects/MicroDuck-Sprint-Default/godot/generated",
+      "target": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck-Sprint-Default/godot/runtime_assets",
+      "target": "/home/ethan/Projects/MicroDuck/sim2sim/godot/runtime_assets"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck-Sprint-Default/godot/native/bin",
+      "target": "/home/ethan/Projects/MicroDuck/sim2sim/godot/native/bin"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck-Sprint-Default/godot/.godot",
+      "target": "/home/ethan/Projects/MicroDuck/sim2sim/godot/.godot"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck-Sprint-Default/godot/atelier/robot_normals",
+      "target": "/home/ethan/Projects/MicroDuck/sim2sim/godot/atelier/robot_normals"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck-Sprint-Default/godot/atelier/robot_normals_soft",
+      "target": "/home/ethan/Projects/MicroDuck/sim2sim/godot/atelier/robot_normals_soft"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck-Sprint-Default/.venv-sai",
+      "target": "/home/ethan/Projects/MicroDuck/sim2sim/.venv-sai"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck-Sprint-Default/results",
+      "target": "/home/ethan/Projects/MicroDuck/sim2sim/results"
+    }
+  ],
+  "target_directories_untouched": true
+}

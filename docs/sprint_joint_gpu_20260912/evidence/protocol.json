@@ -1,0 +1,22 @@
+{
+  "hypotheses": [
+    {
+      "id": "J1",
+      "claim": "Frozen ordinary S05 cannot reliably recover the faster candidate state distribution",
+      "prediction": "A shared actor trained through ordinary and stopped phases removes handoff failures while retaining normal behavior"
+    },
+    {
+      "id": "J2",
+      "claim": "Merely selecting the existing CaT actor in both slots suffices",
+      "prediction": "Frozen joint deployment improves known handoffs before new training"
+    },
+    {
+      "id": "J3",
+      "claim": "Remaining GPU/Jolt differences dominate even a shared controller",
+      "prediction": "Shared GPU actor passes GPU but corresponding same-start Jolt failures persist"
+    }
+  ],
+  "selection": "All native zero-fall/direction/turn/stop, paired speed >=1.15, ordinary speed >=95% and no lost baseline successes; fixed endpoints only",
+  "resources": "GPU physics and learning; native Jolt only evaluation, max4 CPU cores/nice10/supervised timeouts",
+  "final_seeds": "928000-928049 untouched; old924/926 also untouched"
+}

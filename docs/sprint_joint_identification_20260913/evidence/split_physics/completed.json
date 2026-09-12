@@ -1,0 +1,633 @@
+{
+  "results": {
+    "rigid": {
+      "metrics": {
+        "train": {
+          "landing": {
+            "components": {
+              "velocity": 0.03079667961902466,
+              "joint": 0.021566258407920605,
+              "position": 0.1275697279840125
+            },
+            "objective": 0.05997755533698592,
+            "manifold_mse_m2": 7.236610700919442e-07
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.00011406828350953278,
+              "joint": 0.08355790286760216,
+              "position": 0.0766746567896935
+            },
+            "objective": 0.053448875980268394,
+            "manifold_mse_m2": 2.2372418101378913e-07
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.08325874576087709,
+              "joint": 0.185289688131531,
+              "position": 0.2584467303559507
+            },
+            "objective": 0.17566505474945293,
+            "manifold_mse_m2": 3.166212887588577e-07
+          }
+        },
+        "validation": {
+          "landing": {
+            "components": {
+              "velocity": 0.03169177117645939,
+              "joint": 0.021041979191936504,
+              "position": 0.10947804134003279
+            },
+            "objective": 0.0540705972361429,
+            "manifold_mse_m2": 6.702087517528239e-07
+          },
+          "standing": {
+            "components": {
+              "velocity": 9.8217398190664e-05,
+              "joint": 0.07188711822624809,
+              "position": 0.06244282663416888
+            },
+            "objective": 0.04480938741953588,
+            "manifold_mse_m2": 2.0794559086410534e-07
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.09359309721495841,
+              "joint": 0.1805337136528762,
+              "position": 0.2602515360928231
+            },
+            "objective": 0.1781261156535526,
+            "manifold_mse_m2": 2.9582245712431445e-07
+          }
+        }
+      },
+      "elapsed_physics_s": 0.5233251839526929,
+      "nq": 28,
+      "nv": 26,
+      "neq": 0,
+      "nu": 14,
+      "compliance": null,
+      "precontact_joint_rms": 2.1805244459629916e-05,
+      "minimum_body_height": 0.06764911860227585
+    },
+    "uniform20k": {
+      "metrics": {
+        "train": {
+          "landing": {
+            "components": {
+              "velocity": 0.023686591649659413,
+              "joint": 0.03179637025808532,
+              "position": 0.03509987761714502
+            },
+            "objective": 0.03019427984162992,
+            "manifold_mse_m2": 1.224900456810275e-07
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.00022884751359226205,
+              "joint": 0.23579670911936837,
+              "position": 0.05117942556350308
+            },
+            "objective": 0.09573499406548791,
+            "manifold_mse_m2": 2.366277986259989e-08
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.11194347166656314,
+              "joint": 0.17114184316499798,
+              "position": 0.8363821639295786
+            },
+            "objective": 0.3731558262537133,
+            "manifold_mse_m2": 7.136488996594314e-08
+          }
+        },
+        "validation": {
+          "landing": {
+            "components": {
+              "velocity": 0.025483977499544525,
+              "joint": 0.030656855404390823,
+              "position": 0.020893519422624632
+            },
+            "objective": 0.02567811744218666,
+            "manifold_mse_m2": 1.0036842629438062e-07
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.00019979291898452356,
+              "joint": 0.20702261567730856,
+              "position": 0.0345222348615488
+            },
+            "objective": 0.08058154781928063,
+            "manifold_mse_m2": 2.1041317359738752e-08
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.0875121914229087,
+              "joint": 0.19100446478660416,
+              "position": 0.5039129085809754
+            },
+            "objective": 0.26080985493016273,
+            "manifold_mse_m2": 7.294535967497238e-08
+          }
+        }
+      },
+      "elapsed_physics_s": 0.7043499069986865,
+      "nq": 70,
+      "nv": 68,
+      "neq": 42,
+      "nu": 14,
+      "compliance": {
+        "mode": "passive_translation_equalities_v1",
+        "solref": [
+          -20000.0,
+          -200.0
+        ],
+        "solimp": [
+          0.99,
+          0.99,
+          0.001,
+          0.5,
+          2.0
+        ],
+        "joint_names": [
+          "proxy_compliance_left_hip_yaw_0",
+          "proxy_compliance_left_hip_yaw_1",
+          "proxy_compliance_left_hip_yaw_2",
+          "proxy_compliance_left_hip_roll_0",
+          "proxy_compliance_left_hip_roll_1",
+          "proxy_compliance_left_hip_roll_2",
+          "proxy_compliance_left_hip_pitch_0",
+          "proxy_compliance_left_hip_pitch_1",
+          "proxy_compliance_left_hip_pitch_2",
+          "proxy_compliance_left_knee_0",
+          "proxy_compliance_left_knee_1",
+          "proxy_compliance_left_knee_2",
+          "proxy_compliance_left_ankle_0",
+          "proxy_compliance_left_ankle_1",
+          "proxy_compliance_left_ankle_2",
+          "proxy_compliance_neck_pitch_0",
+          "proxy_compliance_neck_pitch_1",
+          "proxy_compliance_neck_pitch_2",
+          "proxy_compliance_head_pitch_0",
+          "proxy_compliance_head_pitch_1",
+          "proxy_compliance_head_pitch_2",
+          "proxy_compliance_head_yaw_0",
+          "proxy_compliance_head_yaw_1",
+          "proxy_compliance_head_yaw_2",
+          "proxy_compliance_head_roll_0",
+          "proxy_compliance_head_roll_1",
+          "proxy_compliance_head_roll_2",
+          "proxy_compliance_right_hip_yaw_0",
+          "proxy_compliance_right_hip_yaw_1",
+          "proxy_compliance_right_hip_yaw_2",
+          "proxy_compliance_right_hip_roll_0",
+          "proxy_compliance_right_hip_roll_1",
+          "proxy_compliance_right_hip_roll_2",
+          "proxy_compliance_right_hip_pitch_0",
+          "proxy_compliance_right_hip_pitch_1",
+          "proxy_compliance_right_hip_pitch_2",
+          "proxy_compliance_right_knee_0",
+          "proxy_compliance_right_knee_1",
+          "proxy_compliance_right_knee_2",
+          "proxy_compliance_right_ankle_0",
+          "proxy_compliance_right_ankle_1",
+          "proxy_compliance_right_ankle_2"
+        ],
+        "scope": "Training proxy only; extra passive coordinates, no added mass or actuator",
+        "stiffness": 20000.0,
+        "damping": 200.0,
+        "solref_format": "direct"
+      },
+      "precontact_joint_rms": 2.2129957877762194e-05,
+      "minimum_body_height": 0.05779247358441353
+    },
+    "velocity_only": {
+      "metrics": {
+        "train": {
+          "landing": {
+            "components": {
+              "velocity": 1.045234260342417,
+              "joint": 0.09585255502724571,
+              "position": 12.978914364087832
+            },
+            "objective": 4.706667059819165,
+            "manifold_mse_m2": 5.001985024885883e-05
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.8339036508675312,
+              "joint": 0.4761347694038524,
+              "position": 228.1758724862116
+            },
+            "objective": 76.49530363549432,
+            "manifold_mse_m2": 0.0009072148402376303
+          },
+          "moving": {
+            "components": {
+              "velocity": 2.3062599189357202,
+              "joint": 3.2166219942679346,
+              "position": 555.0490309405628
+            },
+            "objective": 186.85730428458882,
+            "manifold_mse_m2": 0.002106636918509847
+          }
+        },
+        "validation": {
+          "landing": {
+            "components": {
+              "velocity": 1.0509244961663085,
+              "joint": 0.09834711290009962,
+              "position": 13.025852543293354
+            },
+            "objective": 4.725041384119921,
+            "manifold_mse_m2": 5.0360608576952456e-05
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.8288540724795487,
+              "joint": 0.44999450345087494,
+              "position": 228.47172053199523
+            },
+            "objective": 76.58352303597522,
+            "manifold_mse_m2": 0.0009082950081116907
+          },
+          "moving": {
+            "components": {
+              "velocity": 2.3050381762991115,
+              "joint": 3.169391300342113,
+              "position": 555.8635629892931
+            },
+            "objective": 187.11266415531145,
+            "manifold_mse_m2": 0.0021119213775480403
+          }
+        }
+      },
+      "elapsed_physics_s": 1.3176310560083948,
+      "nq": 70,
+      "nv": 68,
+      "neq": 42,
+      "nu": 14,
+      "compliance": {
+        "mode": "passive_translation_equalities_v1",
+        "solref": [
+          0.0,
+          -200.0
+        ],
+        "solimp": [
+          0.99,
+          0.99,
+          0.001,
+          0.5,
+          2.0
+        ],
+        "joint_names": [
+          "proxy_compliance_left_hip_yaw_0",
+          "proxy_compliance_left_hip_yaw_1",
+          "proxy_compliance_left_hip_yaw_2",
+          "proxy_compliance_left_hip_roll_0",
+          "proxy_compliance_left_hip_roll_1",
+          "proxy_compliance_left_hip_roll_2",
+          "proxy_compliance_left_hip_pitch_0",
+          "proxy_compliance_left_hip_pitch_1",
+          "proxy_compliance_left_hip_pitch_2",
+          "proxy_compliance_left_knee_0",
+          "proxy_compliance_left_knee_1",
+          "proxy_compliance_left_knee_2",
+          "proxy_compliance_left_ankle_0",
+          "proxy_compliance_left_ankle_1",
+          "proxy_compliance_left_ankle_2",
+          "proxy_compliance_neck_pitch_0",
+          "proxy_compliance_neck_pitch_1",
+          "proxy_compliance_neck_pitch_2",
+          "proxy_compliance_head_pitch_0",
+          "proxy_compliance_head_pitch_1",
+          "proxy_compliance_head_pitch_2",
+          "proxy_compliance_head_yaw_0",
+          "proxy_compliance_head_yaw_1",
+          "proxy_compliance_head_yaw_2",
+          "proxy_compliance_head_roll_0",
+          "proxy_compliance_head_roll_1",
+          "proxy_compliance_head_roll_2",
+          "proxy_compliance_right_hip_yaw_0",
+          "proxy_compliance_right_hip_yaw_1",
+          "proxy_compliance_right_hip_yaw_2",
+          "proxy_compliance_right_hip_roll_0",
+          "proxy_compliance_right_hip_roll_1",
+          "proxy_compliance_right_hip_roll_2",
+          "proxy_compliance_right_hip_pitch_0",
+          "proxy_compliance_right_hip_pitch_1",
+          "proxy_compliance_right_hip_pitch_2",
+          "proxy_compliance_right_knee_0",
+          "proxy_compliance_right_knee_1",
+          "proxy_compliance_right_knee_2",
+          "proxy_compliance_right_ankle_0",
+          "proxy_compliance_right_ankle_1",
+          "proxy_compliance_right_ankle_2"
+        ],
+        "scope": "Prototype velocity damping only; pose projection separately applied",
+        "stiffness": 0.0,
+        "damping": 200.0,
+        "solref_format": "direct"
+      },
+      "precontact_joint_rms": 4.104241601495341e-05,
+      "minimum_body_height": 0.014981938526034355
+    },
+    "split_projection": {
+      "metrics": {
+        "train": {
+          "landing": {
+            "components": {
+              "velocity": 0.12090848513724789,
+              "joint": 0.1713093713759307,
+              "position": 0.16405719302852248
+            },
+            "objective": 0.152091683180567,
+            "manifold_mse_m2": 4.5011811045299214e-07
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.0069024604235212025,
+              "joint": 0.9797149116163418,
+              "position": 1.2781196988442187
+            },
+            "objective": 0.7549123569613606,
+            "manifold_mse_m2": 1.1107462291338416e-07
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.6240434287459785,
+              "joint": 1.0044779360179459,
+              "position": 8.93778780667695
+            },
+            "objective": 3.5221030571469583,
+            "manifold_mse_m2": 1.315025439980188e-07
+          }
+        },
+        "validation": {
+          "landing": {
+            "components": {
+              "velocity": 0.12636335649990155,
+              "joint": 0.16523057850825854,
+              "position": 0.13878379453271314
+            },
+            "objective": 0.1434592431802911,
+            "manifold_mse_m2": 4.0731860458342607e-07
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.0061994078146455,
+              "joint": 0.9569803214393805,
+              "position": 1.105319294560138
+            },
+            "objective": 0.6894996746047214,
+            "manifold_mse_m2": 9.825268517801482e-08
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.5522774943470877,
+              "joint": 1.105495648398119,
+              "position": 7.486182944793492
+            },
+            "objective": 3.0479853625129,
+            "manifold_mse_m2": 1.1967590031920762e-07
+          }
+        }
+      },
+      "elapsed_physics_s": 0.9943762560142204,
+      "nq": 70,
+      "nv": 68,
+      "neq": 42,
+      "nu": 14,
+      "compliance": {
+        "mode": "passive_translation_equalities_v1",
+        "solref": [
+          0.0,
+          -200.0
+        ],
+        "solimp": [
+          0.99,
+          0.99,
+          0.001,
+          0.5,
+          2.0
+        ],
+        "joint_names": [
+          "proxy_compliance_left_hip_yaw_0",
+          "proxy_compliance_left_hip_yaw_1",
+          "proxy_compliance_left_hip_yaw_2",
+          "proxy_compliance_left_hip_roll_0",
+          "proxy_compliance_left_hip_roll_1",
+          "proxy_compliance_left_hip_roll_2",
+          "proxy_compliance_left_hip_pitch_0",
+          "proxy_compliance_left_hip_pitch_1",
+          "proxy_compliance_left_hip_pitch_2",
+          "proxy_compliance_left_knee_0",
+          "proxy_compliance_left_knee_1",
+          "proxy_compliance_left_knee_2",
+          "proxy_compliance_left_ankle_0",
+          "proxy_compliance_left_ankle_1",
+          "proxy_compliance_left_ankle_2",
+          "proxy_compliance_neck_pitch_0",
+          "proxy_compliance_neck_pitch_1",
+          "proxy_compliance_neck_pitch_2",
+          "proxy_compliance_head_pitch_0",
+          "proxy_compliance_head_pitch_1",
+          "proxy_compliance_head_pitch_2",
+          "proxy_compliance_head_yaw_0",
+          "proxy_compliance_head_yaw_1",
+          "proxy_compliance_head_yaw_2",
+          "proxy_compliance_head_roll_0",
+          "proxy_compliance_head_roll_1",
+          "proxy_compliance_head_roll_2",
+          "proxy_compliance_right_hip_yaw_0",
+          "proxy_compliance_right_hip_yaw_1",
+          "proxy_compliance_right_hip_yaw_2",
+          "proxy_compliance_right_hip_roll_0",
+          "proxy_compliance_right_hip_roll_1",
+          "proxy_compliance_right_hip_roll_2",
+          "proxy_compliance_right_hip_pitch_0",
+          "proxy_compliance_right_hip_pitch_1",
+          "proxy_compliance_right_hip_pitch_2",
+          "proxy_compliance_right_knee_0",
+          "proxy_compliance_right_knee_1",
+          "proxy_compliance_right_knee_2",
+          "proxy_compliance_right_ankle_0",
+          "proxy_compliance_right_ankle_1",
+          "proxy_compliance_right_ankle_2"
+        ],
+        "scope": "Prototype velocity damping only; pose projection separately applied",
+        "stiffness": 0.0,
+        "damping": 200.0,
+        "solref_format": "direct"
+      },
+      "precontact_joint_rms": 1.4388856746371818e-05,
+      "minimum_body_height": 0.035178352147340775
+    }
+  },
+  "decisions": {
+    "uniform20k": {
+      "checks": [
+        {
+          "split": "train",
+          "phase": "landing",
+          "objective_ratio": 0.5034263179281373,
+          "manifold_ratio": 0.16926438459024004,
+          "max_component_ratio": 1.4743572879757167,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "moving",
+          "objective_ratio": 2.124246206998523,
+          "manifold_ratio": 0.22539510923504397,
+          "max_component_ratio": 3.236187831734823,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "standing",
+          "objective_ratio": 1.7911507456364506,
+          "manifold_ratio": 0.10576764547924056,
+          "max_component_ratio": 2.821955805819938,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "landing",
+          "objective_ratio": 0.4748998301247244,
+          "manifold_ratio": 0.14975696159126994,
+          "max_component_ratio": 1.4569378253229541,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "moving",
+          "objective_ratio": 1.4641865061349362,
+          "manifold_ratio": 0.2465849292987189,
+          "max_component_ratio": 1.9362533499177748,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "standing",
+          "objective_ratio": 1.7983184430713486,
+          "manifold_ratio": 0.10118664825882015,
+          "max_component_ratio": 2.87982910965707,
+          "passed": false
+        }
+      ],
+      "precontact_passed": true,
+      "passed": false
+    },
+    "velocity_only": {
+      "checks": [
+        {
+          "split": "train",
+          "phase": "landing",
+          "objective_ratio": 78.47380629928308,
+          "manifold_ratio": 69.12054871557979,
+          "max_component_ratio": 101.73976670793243,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "moving",
+          "objective_ratio": 1063.713580091949,
+          "manifold_ratio": 6653.49107372968,
+          "max_component_ratio": 2147.6341765907073,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "standing",
+          "objective_ratio": 1431.1863857293076,
+          "manifold_ratio": 4055.0593866369522,
+          "max_component_ratio": 7310.565436866955,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "landing",
+          "objective_ratio": 87.38652106031331,
+          "manifold_ratio": 75.14167555294128,
+          "max_component_ratio": 118.98141749573114,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "moving",
+          "objective_ratio": 1050.45048261894,
+          "manifold_ratio": 7139.151631955178,
+          "max_component_ratio": 2135.8704403229153,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "standing",
+          "objective_ratio": 1709.0955142713362,
+          "manifold_ratio": 4367.945501211762,
+          "max_component_ratio": 8438.97402851723,
+          "passed": false
+        }
+      ],
+      "precontact_passed": false,
+      "passed": false
+    },
+    "split_projection": {
+      "checks": [
+        {
+          "split": "train",
+          "phase": "landing",
+          "objective_ratio": 2.5358099763492317,
+          "manifold_ratio": 0.6220012780234299,
+          "max_component_ratio": 7.943397882732137,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "moving",
+          "objective_ratio": 20.050106506216924,
+          "manifold_ratio": 0.41533070790502846,
+          "max_component_ratio": 34.5827079892526,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "standing",
+          "objective_ratio": 14.124008094015858,
+          "manifold_ratio": 0.496480185602012,
+          "max_component_ratio": 60.51165329356743,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "landing",
+          "objective_ratio": 2.6531839948754503,
+          "manifold_ratio": 0.6077488596174689,
+          "max_component_ratio": 7.8524257153327355,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "moving",
+          "objective_ratio": 17.111389597924518,
+          "manifold_ratio": 0.4045531278543732,
+          "max_component_ratio": 28.76518255063601,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "standing",
+          "objective_ratio": 15.387393452830716,
+          "manifold_ratio": 0.47249227439606545,
+          "max_component_ratio": 63.119242912655174,
+          "passed": false
+        }
+      ],
+      "precontact_passed": true,
+      "passed": false
+    }
+  },
+  "eligible": [],
+  "completed": true
+}

@@ -1,0 +1,195 @@
+{
+  "unix": 1789149991.508099,
+  "owned_process_groups": [
+    {
+      "pgid": 818888,
+      "expected_start_ticks": 16740356,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 3824787,
+      "expected_start_ticks": 16238491,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 323419,
+      "expected_start_ticks": 16303487,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 2029228,
+      "expected_start_ticks": 16326934,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 3944806,
+      "expected_start_ticks": 16502616,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 505830,
+      "expected_start_ticks": 16523934,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1413228,
+      "expected_start_ticks": 16543449,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1308097,
+      "expected_start_ticks": 16746551,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 2648833,
+      "expected_start_ticks": 16763629,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 2990562,
+      "expected_start_ticks": 17495270,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 9485,
+      "expected_start_ticks": 17536485,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1424175,
+      "expected_start_ticks": 17584926,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1430922,
+      "expected_start_ticks": 17601636,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1532908,
+      "expected_start_ticks": 17620187,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1534473,
+      "expected_start_ticks": 17625493,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1535837,
+      "expected_start_ticks": 17634139,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1537426,
+      "expected_start_ticks": 17636313,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1621509,
+      "expected_start_ticks": 17654043,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1674526,
+      "expected_start_ticks": 17718017,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1678667,
+      "expected_start_ticks": 17723605,
+      "found": [],
+      "remaining": []
+    },
+    {
+      "pgid": 1695952,
+      "expected_start_ticks": 17776286,
+      "found": [],
+      "remaining": []
+    }
+  ],
+  "owned_remaining": [],
+  "live_godot_or_microduck_inventory": [],
+  "owned_container_count": 24,
+  "owned_containers_remaining": [],
+  "old_archives": {
+    "dist/MicroDuck-ARM64-20260911-candidate.tar.gz": {
+      "expected": "b175c0d59786e1da7fa05605c38767efd0050c49d6cbdd336695f8588943da9b",
+      "actual": "b175c0d59786e1da7fa05605c38767efd0050c49d6cbdd336695f8588943da9b",
+      "unchanged": true
+    },
+    "dist/MicroDuck-ARM64-20260911-incumbent.tar.gz": {
+      "expected": "d4a9cad342ba3c40f510c455bd14e0a0c446da2b02e7e26124ef080002ae5f07",
+      "actual": "d4a9cad342ba3c40f510c455bd14e0a0c446da2b02e7e26124ef080002ae5f07",
+      "unchanged": true
+    }
+  },
+  "old_models": {
+    "standing": {
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/delivery/candidate_models/Stand_Godot.onnx",
+      "sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+      "unchanged": true
+    },
+    "walking": {
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/delivery/candidate_models/Walk_Godot.onnx",
+      "sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+      "unchanged": true
+    },
+    "sitstand": {
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/delivery/candidate_models/Sitstand_Godot.onnx",
+      "sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+      "unchanged": true
+    },
+    "ground_pick": {
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/delivery/candidate_models/GroundPick_Godot.onnx",
+      "sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "unchanged": true
+    },
+    "kick_left": {
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/delivery/candidate_models/KickLeft_Godot.onnx",
+      "sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "unchanged": true
+    },
+    "kick_right": {
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/delivery/candidate_models/KickRight_Godot.onnx",
+      "sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "unchanged": true
+    },
+    "roulade": {
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/delivery/candidate_models/Roulade_Godot.onnx",
+      "sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+      "unchanged": true
+    },
+    "roller": {
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/delivery/candidate_models/Roller_Godot.onnx",
+      "sha256": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+      "unchanged": true
+    },
+    "roller_crouch": {
+      "source": "/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/delivery/candidate_models/RollerCrouch_Godot.onnx",
+      "sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+      "unchanged": true
+    }
+  },
+  "unrelated_applications_not_signaled": true
+}

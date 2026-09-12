@@ -1,0 +1,192 @@
+{
+  "unix": 1789240164.432365,
+  "started": 27,
+  "finished": 27,
+  "missing_terminal": [],
+  "cleanup_remaining": {},
+  "live_owned_pids": [],
+  "live_owned_groups": [],
+  "live_session_marker_processes": [],
+  "all_godot_processes": [
+    {
+      "pid": 1679586,
+      "state": "R",
+      "ppid": 1679440,
+      "pgrp": 1679434,
+      "session": 1679434,
+      "start_ticks": 26704290,
+      "comm": "godot",
+      "args": "/home/ethan/.local/bin/godot --path /home/ethan/Projects/MicroDuck/sim2sim/results/workshop-hub/runtime res://hub/main.tscn --disable-vsync --max-fps 30 -- --port=53029 "
+    }
+  ],
+  "docker": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.ID}}\t{{.Names}}\t{{.Image}}"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "gpu": {
+    "command": [
+      "nvidia-smi",
+      "--query-gpu=name,utilization.gpu,memory.used",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "NVIDIA GB10, 6 %, [N/A]",
+    "stderr": ""
+  },
+  "gpu_apps": {
+    "command": [
+      "nvidia-smi",
+      "--query-compute-apps=pid,process_name,used_gpu_memory",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 192 MiB\n1679586, /home/ethan/.local/bin/godot, 828 MiB",
+    "stderr": ""
+  },
+  "job_results": [
+    {
+      "actor": "native_joint_poses:ed67685140",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "joint_geometry_decomposition:3e906e342e",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "compliance_fit:fdbe584caa",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "fitted_gpu_physics:31a039fa17",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_micro_pose_velocity:566f7e6fc1",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "split_gpu_physics:e34307cd73",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "projection_canary_diagnosis:fc0296b155",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "split_gpu_physics_after_canary:5fc979f470",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "momentum_split_gpu:a602a594ab",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_yaw_reversal:5a47fcd227",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_yaw_input_layer:dae38e07e4",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "integrated_native_development:0c8439c553",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "regression_checks:502a111f96",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "integrated_native_development_inventory_fix:ac8eedba77",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "frozen_candidate_export:30a718d0bd",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "exported_host_keyboard:7d37b55570",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "exported_clean_engineering:071923ff5f",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "exported_turn_demo:a3be4d2d78",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "frozen_final_native:7383b88e76",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "frozen_endurance_performance:377f899711",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "merged_source_checks:5d6b92c79c",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "main_default_regression:d6c31dc92e",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "main_game_sprint_controls:5791095b4f",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "merged_source_original_assets:d21e078e68",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "main_game_open_floor_controls:0834a391c1",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "main_game_bay_controls:bf567124ec",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "archive_evidence:743cfe6c68",
+      "returncode": 0,
+      "reason": "completed"
+    }
+  ],
+  "passed": true,
+  "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+}

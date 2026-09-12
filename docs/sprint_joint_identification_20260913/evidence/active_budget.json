@@ -1,0 +1,1659 @@
+{
+  "schema_version": 1,
+  "limit_seconds": 5400.0,
+  "initial_seconds": 180.0,
+  "credit_note": "Explicit 180-second preledger audit/telemetry design estimate; subsequent work measured by heartbeat and jobs.",
+  "created_unix": 1789234682.9305499,
+  "intervals": {
+    "3b388277-2a59-4f02-b6ad-c6507ba4a8e9": [
+      [
+        262629.848714436,
+        268158.47343957
+      ]
+    ]
+  },
+  "actors": {},
+  "gaps": [],
+  "events": [
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789234769.9666367,
+      "supervisor_pid": 1402584,
+      "process_start_ticks": 26271688,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/native_joint_poses-e29822352a.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/capture.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789234770.0014188,
+      "actor": "native_joint_poses:ed67685140",
+      "pid": 1402601,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/capture.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26271691,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1402584
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789234788.18752,
+      "actor": "native_joint_poses:ed67685140",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789234952.6788528,
+      "supervisor_pid": 1442221,
+      "process_start_ticks": 26289959,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/joint_geometry_decomposition-3bc2f51302.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/analyze.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789234952.7128239,
+      "actor": "joint_geometry_decomposition:3e906e342e",
+      "pid": 1442222,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/analyze.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26289963,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1442221
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789234959.8651462,
+      "actor": "joint_geometry_decomposition:3e906e342e",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789235131.015797,
+      "supervisor_pid": 1445999,
+      "process_start_ticks": 26307793,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/compliance_fit-e927697c8a.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/fit_compliance.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789235131.0536842,
+      "actor": "compliance_fit:fdbe584caa",
+      "pid": 1446016,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/fit_compliance.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26307797,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1445999
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789235133.1452484,
+      "actor": "compliance_fit:fdbe584caa",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789235226.9889863,
+      "supervisor_pid": 1448421,
+      "process_start_ticks": 26317390,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/fitted_gpu_physics-b47fb98d9d.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/fitted_probe.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789235227.0240128,
+      "actor": "fitted_gpu_physics:31a039fa17",
+      "pid": 1448438,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/fitted_probe.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26317394,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1448421
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789235242.2174482,
+      "actor": "fitted_gpu_physics:31a039fa17",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789235580.7957084,
+      "supervisor_pid": 1456674,
+      "process_start_ticks": 26352771,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/native_micro_pose_velocity-3366c6ff61.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/capture_micro.py"
+      ],
+      "timeout": 150.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789235580.8293364,
+      "actor": "native_micro_pose_velocity:566f7e6fc1",
+      "pid": 1456675,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/capture_micro.py"
+      ],
+      "timeout": 150.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26352774,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1456674
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789235586.9377553,
+      "actor": "native_micro_pose_velocity:566f7e6fc1",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789235832.4052532,
+      "supervisor_pid": 1461071,
+      "process_start_ticks": 26377932,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/split_gpu_physics-b41a5d5c73.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/split_probe.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789235832.4407287,
+      "actor": "split_gpu_physics:e34307cd73",
+      "pid": 1461072,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/split_probe.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26377935,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1461071
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789235844.5622246,
+      "actor": "split_gpu_physics:e34307cd73",
+      "returncode": 1,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789235935.6914124,
+      "supervisor_pid": 1463020,
+      "process_start_ticks": 26388260,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/projection_canary_diagnosis-d4153e8455.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/projection_canary.py"
+      ],
+      "timeout": 60.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789235935.7257931,
+      "actor": "projection_canary_diagnosis:fc0296b155",
+      "pid": 1463021,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/projection_canary.py"
+      ],
+      "timeout": 60.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26388264,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1463020
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789235943.8408258,
+      "actor": "projection_canary_diagnosis:fc0296b155",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789235999.3831801,
+      "supervisor_pid": 1464134,
+      "process_start_ticks": 26394630,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/split_gpu_physics_after_canary-e09284ad11.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/split_probe.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789235999.4168534,
+      "actor": "split_gpu_physics_after_canary:5fc979f470",
+      "pid": 1464151,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/split_probe.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26394633,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1464134
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789236012.5391588,
+      "actor": "split_gpu_physics_after_canary:5fc979f470",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789236176.8852377,
+      "supervisor_pid": 1467723,
+      "process_start_ticks": 26412380,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/momentum_split_gpu-28a9a23a80.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/momentum_split_probe.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789236176.9069583,
+      "actor": "momentum_split_gpu:a602a594ab",
+      "pid": 1467724,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "results/sprint_joint_identification_20260913/momentum_split_probe.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26412382,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1467723
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789236190.0720077,
+      "actor": "momentum_split_gpu:a602a594ab",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "scope_addition_control_probe",
+      "unix": 1789236529.301724,
+      "reason": "All spring and split-constraint proxies rejected; bounded direct test of abrupt sprint turn reversal, with frozen trained a402 actor. Control improvement will be reported separately from learning; no extra tuning sweep.",
+      "duration_seconds": 0.2
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789236529.3320036,
+      "supervisor_pid": 1475485,
+      "process_start_ticks": 26447624,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/native_yaw_reversal-f29a217f0e.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/yaw_probe.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789236529.3532562,
+      "actor": "native_yaw_reversal:5a47fcd227",
+      "pid": 1475486,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/yaw_probe.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26447627,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1475485
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789236556.595736,
+      "actor": "native_yaw_reversal:5a47fcd227",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789236741.7697446,
+      "supervisor_pid": 1483607,
+      "process_start_ticks": 26468868,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/native_yaw_input_layer-96686824a3.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/yaw_probe.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789236741.7891595,
+      "actor": "native_yaw_input_layer:dae38e07e4",
+      "pid": 1483608,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/yaw_probe.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26468870,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1483607
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789236767.9859793,
+      "actor": "native_yaw_input_layer:dae38e07e4",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789237272.971227,
+      "supervisor_pid": 1497138,
+      "process_start_ticks": 26521988,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/integrated_native_development-7c128df266.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/integrated_eval.py",
+        "--stage",
+        "dev"
+      ],
+      "timeout": 480.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789237273.006413,
+      "actor": "integrated_native_development:0c8439c553",
+      "pid": 1497155,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/integrated_eval.py",
+        "--stage",
+        "dev"
+      ],
+      "timeout": 480.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26521992,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1497138
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789237285.1393483,
+      "actor": "integrated_native_development:0c8439c553",
+      "returncode": 1,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789237304.8564806,
+      "supervisor_pid": 1499253,
+      "process_start_ticks": 26525177,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/integrated_native_development_inventory_fix-126ec95798.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/integrated_eval.py",
+        "--stage",
+        "dev"
+      ],
+      "timeout": 480.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789237304.891457,
+      "actor": "integrated_native_development_inventory_fix:ac8eedba77",
+      "pid": 1499254,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/integrated_eval.py",
+        "--stage",
+        "dev"
+      ],
+      "timeout": 480.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26525180,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1499253
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789237358.1847653,
+      "supervisor_pid": 1503462,
+      "process_start_ticks": 26530510,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/regression_checks-b6b87f887d.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/run_checks.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789237358.2066126,
+      "actor": "regression_checks:502a111f96",
+      "pid": 1503463,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/run_checks.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26530512,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1503462
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789237452.5878184,
+      "actor": "regression_checks:502a111f96",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789237506.7313168,
+      "actor": "integrated_native_development_inventory_fix:ac8eedba77",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789237529.6050136,
+      "supervisor_pid": 1545105,
+      "process_start_ticks": 26547652,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/frozen_final_native-cf0c5cda5d.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/integrated_eval.py",
+        "--stage",
+        "final"
+      ],
+      "timeout": 780.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789237529.6446137,
+      "actor": "frozen_final_native:7383b88e76",
+      "pid": 1545107,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/integrated_eval.py",
+        "--stage",
+        "final"
+      ],
+      "timeout": 780.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26547656,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1545105
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789237557.7610834,
+      "supervisor_pid": 1549644,
+      "process_start_ticks": 26550467,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/frozen_candidate_export-41ebfcbacc.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/build_candidate.py"
+      ],
+      "timeout": 420.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789237557.8070734,
+      "actor": "frozen_candidate_export:30a718d0bd",
+      "pid": 1549659,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/build_candidate.py"
+      ],
+      "timeout": 420.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26550472,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1549644
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789237565.921473,
+      "actor": "frozen_candidate_export:30a718d0bd",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789237602.3105931,
+      "supervisor_pid": 1552962,
+      "process_start_ticks": 26554922,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/exported_host_keyboard-f922065b88.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "scripts/sprint_keyboard_check.py",
+        "--executable",
+        "dist/MicroDuck-ARM64-20260913-sprint-reversal-trial/MicroDuck.arm64",
+        "--out",
+        "results/sprint_joint_identification_20260913/host_keyboard"
+      ],
+      "timeout": 90.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789237602.3507392,
+      "actor": "exported_host_keyboard:7d37b55570",
+      "pid": 1552963,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "scripts/sprint_keyboard_check.py",
+        "--executable",
+        "dist/MicroDuck-ARM64-20260913-sprint-reversal-trial/MicroDuck.arm64",
+        "--out",
+        "results/sprint_joint_identification_20260913/host_keyboard"
+      ],
+      "timeout": 90.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26554926,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1552962
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789237617.5380924,
+      "actor": "exported_host_keyboard:7d37b55570",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789237673.6630187,
+      "supervisor_pid": 1557331,
+      "process_start_ticks": 26562058,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/exported_clean_engineering-854e57a8f2.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/package_engineering.py"
+      ],
+      "timeout": 360.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789237673.702716,
+      "actor": "exported_clean_engineering:071923ff5f",
+      "pid": 1557353,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/package_engineering.py"
+      ],
+      "timeout": 360.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26562061,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1557331
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789237780.2491007,
+      "actor": "exported_clean_engineering:071923ff5f",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789237851.412899,
+      "supervisor_pid": 1576363,
+      "process_start_ticks": 26579833,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/exported_turn_demo-de19c53d5e.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "-m",
+        "sim2sim.standalone.demo",
+        "dist/MicroDuck-ARM64-20260913-sprint-reversal-trial/MicroDuck.arm64",
+        "results/sprint_joint_identification_20260913/integrated_dev/cases/sprint_alternate_927001.json",
+        "--out",
+        "results/sprint_joint_identification_20260913/demo",
+        "--fps",
+        "30",
+        "--timeout",
+        "150"
+      ],
+      "timeout": 210.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789237851.4502826,
+      "actor": "exported_turn_demo:a3be4d2d78",
+      "pid": 1576364,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "-m",
+        "sim2sim.standalone.demo",
+        "dist/MicroDuck-ARM64-20260913-sprint-reversal-trial/MicroDuck.arm64",
+        "results/sprint_joint_identification_20260913/integrated_dev/cases/sprint_alternate_927001.json",
+        "--out",
+        "results/sprint_joint_identification_20260913/demo",
+        "--fps",
+        "30",
+        "--timeout",
+        "150"
+      ],
+      "timeout": 210.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26579836,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1576363
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789237868.6628199,
+      "actor": "exported_turn_demo:a3be4d2d78",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789238137.3442423,
+      "actor": "frozen_final_native:7383b88e76",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789238160.5291417,
+      "supervisor_pid": 1592776,
+      "process_start_ticks": 26610744,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/frozen_endurance_performance-cf838d8b3a.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/endurance_performance.py"
+      ],
+      "timeout": 480.0,
+      "reserve": 1200.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789238160.5484958,
+      "actor": "frozen_endurance_performance:377f899711",
+      "pid": 1592777,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/endurance_performance.py"
+      ],
+      "timeout": 480.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26610746,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1592776
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789238513.1985807,
+      "actor": "frozen_endurance_performance:377f899711",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789238934.1231685,
+      "supervisor_pid": 1643003,
+      "process_start_ticks": 26688104,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/main_default_regression-b5e61b0e96.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/default_regression.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 300.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789238934.1421006,
+      "actor": "main_default_regression:d6c31dc92e",
+      "pid": 1643004,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/default_regression.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 300.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26688105,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1643003
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789238934.2896433,
+      "supervisor_pid": 1643032,
+      "process_start_ticks": 26688120,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/merged_source_checks-07472cf0a4.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/run_checks.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 300.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789238934.3241577,
+      "actor": "merged_source_checks:5d6b92c79c",
+      "pid": 1643033,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/run_checks.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 300.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26688124,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1643032
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789239002.6410928,
+      "actor": "merged_source_checks:5d6b92c79c",
+      "returncode": 1,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789239014.5111449,
+      "supervisor_pid": 1677849,
+      "process_start_ticks": 26696142,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/main_game_sprint_controls-756f228a98.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv-sai/bin/python",
+        "-m",
+        "sim2sim.workshop",
+        "--robot",
+        "microduck",
+        "--runtime-dir",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_runtime",
+        "--plan",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_plan.json",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game",
+        "--record"
+      ],
+      "timeout": 180.0,
+      "reserve": 300.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789239014.5302691,
+      "actor": "main_game_sprint_controls:5791095b4f",
+      "pid": 1677850,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv-sai/bin/python",
+        "-m",
+        "sim2sim.workshop",
+        "--robot",
+        "microduck",
+        "--runtime-dir",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_runtime",
+        "--plan",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_plan.json",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game",
+        "--record"
+      ],
+      "timeout": 180.0,
+      "reserve": 300.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26696144,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1677849
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789239018.5988314,
+      "actor": "main_default_regression:d6c31dc92e",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789239067.818012,
+      "actor": "main_game_sprint_controls:5791095b4f",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789239145.3036933,
+      "supervisor_pid": 1680278,
+      "process_start_ticks": 26709222,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/merged_source_original_assets-3cccd235b7.log",
+      "command": [
+        "env",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/run_merged_checks.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 300.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789239145.3227077,
+      "actor": "merged_source_original_assets:d21e078e68",
+      "pid": 1680279,
+      "command": [
+        "env",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/run_merged_checks.py"
+      ],
+      "timeout": 180.0,
+      "reserve": 300.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26709224,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1680278
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789239207.6845875,
+      "actor": "merged_source_original_assets:d21e078e68",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789239246.9780855,
+      "supervisor_pid": 1715088,
+      "process_start_ticks": 26719389,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/main_game_open_floor_controls-dde8a666dd.log",
+      "command": [
+        "env",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck-Sprint-Default",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv-sai/bin/python",
+        "-m",
+        "sim2sim.workshop",
+        "--robot",
+        "microduck",
+        "--runtime-dir",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_runtime",
+        "--plan",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_open_floor_plan.json",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_open_floor",
+        "--record"
+      ],
+      "timeout": 180.0,
+      "reserve": 300.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789239246.9970481,
+      "actor": "main_game_open_floor_controls:0834a391c1",
+      "pid": 1715089,
+      "command": [
+        "env",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck-Sprint-Default",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv-sai/bin/python",
+        "-m",
+        "sim2sim.workshop",
+        "--robot",
+        "microduck",
+        "--runtime-dir",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_runtime",
+        "--plan",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_open_floor_plan.json",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_open_floor",
+        "--record"
+      ],
+      "timeout": 180.0,
+      "reserve": 300.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26719391,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1715088
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789239276.190353,
+      "actor": "main_game_open_floor_controls:0834a391c1",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789239399.6227334,
+      "supervisor_pid": 1717541,
+      "process_start_ticks": 26734654,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/main_game_bay_controls-4ccb7ecabf.log",
+      "command": [
+        "env",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck-Sprint-Default",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv-sai/bin/python",
+        "-m",
+        "sim2sim.workshop",
+        "--robot",
+        "microduck",
+        "--runtime-dir",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_runtime",
+        "--plan",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_bay_plan.json",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_bay",
+        "--record"
+      ],
+      "timeout": 150.0,
+      "reserve": 240.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789239399.6570587,
+      "actor": "main_game_bay_controls:bf567124ec",
+      "pid": 1717542,
+      "command": [
+        "env",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck-Sprint-Default",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-Sprint-Default/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv-sai/bin/python",
+        "-m",
+        "sim2sim.workshop",
+        "--robot",
+        "microduck",
+        "--runtime-dir",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_runtime",
+        "--plan",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_bay_plan.json",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/main_game_bay",
+        "--record"
+      ],
+      "timeout": 150.0,
+      "reserve": 240.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26734657,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1717541
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789239423.8321955,
+      "actor": "main_game_bay_controls:bf567124ec",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789239524.7209904,
+      "supervisor_pid": 1719698,
+      "process_start_ticks": 26747163,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/supervisors/archive_evidence-64dfd4d4a3.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/archive.py"
+      ],
+      "timeout": 150.0,
+      "reserve": 180.0,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789239524.7400663,
+      "actor": "archive_evidence:743cfe6c68",
+      "pid": 1719699,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+        "OMP_NUM_THREADS=4",
+        "OPENBLAS_NUM_THREADS=4",
+        ".venv/bin/python",
+        "results/sprint_joint_identification_20260913/archive.py"
+      ],
+      "timeout": 150.0,
+      "reserve": 180.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 26747165,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 1719698
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789239534.8466513,
+      "actor": "archive_evidence:743cfe6c68",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "closeout_scope_extension",
+      "unix": 1789239948.477338,
+      "note": "The self-selected 90 minute research budget is exhausted; all experiments are frozen and all supervised jobs have terminated. Continue only documentation, merge, package archive and GitHub publication explicitly requested by user. Original limit remains unchanged; actual overrun will be reported, not excluded from working time."
+    },
+    {
+      "kind": "published",
+      "unix": 1789240211.5521152,
+      "commit": "a9281148df9630e0aec91392f88fe5536c8bf429",
+      "remote": "https://github.com/sgyli7/Robot_Godot_Sim2Sim.git",
+      "branch": "main",
+      "verification": "git ls-remote returned the exact commit after successful fast-forward push"
+    },
+    {
+      "kind": "sealed",
+      "unix": 1789240211.5540955,
+      "note": "All 27 supervised jobs have terminal records; no owned Godot/training/container remains. Subsequent work is only committing/pushing this sealing record. The original 90 minute limit was not changed; final minutes over it are recorded."
+    }
+  ]
+}

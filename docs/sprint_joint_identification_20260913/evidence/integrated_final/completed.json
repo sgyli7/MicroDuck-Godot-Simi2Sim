@@ -1,0 +1,133 @@
+{
+  "completed": true,
+  "stage": "final",
+  "candidate_count": 400,
+  "candidate_pass": 400,
+  "ordinary_count": 400,
+  "ordinary_pass": 400,
+  "regression_count": 7,
+  "regression_pass": 7,
+  "falls": 0,
+  "failed": [],
+  "comparisons": [
+    {
+      "case": "sprint_alternate",
+      "count": 50,
+      "candidate_vx": 0.2157394764157599,
+      "ordinary_vx": 0.16802867639434463,
+      "ratio": 1.2839443900006886,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_left",
+      "count": 50,
+      "candidate_vx": 0.20352067550702732,
+      "ordinary_vx": 0.15358939191551138,
+      "ratio": 1.3250959129975777,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_long",
+      "count": 50,
+      "candidate_vx": 0.23244392267948832,
+      "ordinary_vx": 0.19313480987297202,
+      "ratio": 1.2035319931832618,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_repeat",
+      "count": 50,
+      "candidate_vx": 0.23462363373377942,
+      "ordinary_vx": 0.19442406866637252,
+      "ratio": 1.206762286907947,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_right",
+      "count": 50,
+      "candidate_vx": 0.22553411285393715,
+      "ordinary_vx": 0.16779047341348854,
+      "ratio": 1.3441413464407488,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_shift_first",
+      "count": 50,
+      "candidate_vx": 0.2328326627785276,
+      "ordinary_vx": 0.19341674369478618,
+      "ratio": 1.203787522893779,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_turn_release",
+      "count": 50,
+      "candidate_vx": 0.20137135118958352,
+      "ordinary_vx": 0.15173332985974258,
+      "ratio": 1.3271398668685694,
+      "speed_pass": true
+    },
+    {
+      "case": "sprint_w_first",
+      "count": 50,
+      "candidate_vx": 0.23268149348481887,
+      "ordinary_vx": 0.1927545687510305,
+      "ratio": 1.2071386685799368,
+      "speed_pass": true
+    }
+  ],
+  "ordinary_retention": [
+    {
+      "case": "sprint_alternate",
+      "ratio": 0.9993246805523656,
+      "passed": true
+    },
+    {
+      "case": "sprint_left",
+      "ratio": 1.004748268055517,
+      "passed": true
+    },
+    {
+      "case": "sprint_long",
+      "ratio": 0.999609643840253,
+      "passed": true
+    },
+    {
+      "case": "sprint_repeat",
+      "ratio": 1.0022083494723488,
+      "passed": true
+    },
+    {
+      "case": "sprint_right",
+      "ratio": 1.0034757904041027,
+      "passed": true
+    },
+    {
+      "case": "sprint_shift_first",
+      "ratio": 1.0013799740296951,
+      "passed": true
+    },
+    {
+      "case": "sprint_turn_release",
+      "ratio": 1.0073914522673117,
+      "passed": true
+    },
+    {
+      "case": "sprint_w_first",
+      "ratio": 0.9962442592617823,
+      "passed": true
+    }
+  ],
+  "accepted": true,
+  "models": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770"
+  }
+}

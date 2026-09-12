@@ -19,7 +19,9 @@ def verify_checkpoint(checkpoint, exported, n=10000):
     cfg = state['config']
     gate = tuple(map(float, cfg['time_gate'].split(','))) if cfg.get('time_gate') else None
     actor = Policy(cfg['source'], cfg['variant'], cfg['std'], cfg['bound'],
-                   template=cfg.get('template') or cfg['source'], time_gate=gate)
+                   template=cfg.get('template') or cfg['source'], time_gate=gate,
+                   command_gate=cfg.get('command_gate',''),mask_task_state=cfg.get('mask_task_state',False),
+                   mask_motion_state=cfg.get('mask_motion_state',False),action_basis=cfg.get('action_basis',''))
     actor.load_state_dict(state['policy'])
     if actor.anchor.sha256 != state['factory_sha256']:
         raise ValueError('Checkpoint source has changed')

@@ -1,0 +1,1059 @@
+{
+  "passed": true,
+  "max_abs": {
+    "obs": 0.0,
+    "action": 0.0,
+    "command": 0.0,
+    "ctrl": 0.0,
+    "last_action": 0.0
+  },
+  "runs": [
+    {
+      "fps": 30,
+      "summary": {
+        "control_config": {
+          "version": "joint_walking_v1",
+          "walk": {
+            "twist_limits": {
+              "sprint_vmax_ang": 0.8,
+              "sprint_vmax_x": 0.3,
+              "sprint_yaw_reversal_s": 0.2,
+              "vmax_ang": 0.8,
+              "vmax_x": 0.25
+            },
+            "walk_heading_gain": 6.0,
+            "walk_heading_limit": 0.6,
+            "walk_heading_scope": "all",
+            "walk_idle_delay_s": 0.5,
+            "walk_path_gain": 4.0,
+            "walk_path_lookahead": 0.2,
+            "walk_reanchor_on_start": true
+          }
+        },
+        "error": "",
+        "events": [
+          {
+            "kind": "reset",
+            "mode": "walk",
+            "time": 2.5
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 3.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 4.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 5.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 6.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 7.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 8.0
+          }
+        ],
+        "final_raw": {
+          "base_angvel_local": [
+            -7.77285022195429e-05,
+            6.95187845849432e-05,
+            -0.000120987882837653
+          ],
+          "base_linvel": [
+            2.82458859146573e-06,
+            6.81251503920066e-06,
+            3.79315201826103e-06
+          ],
+          "base_pos": [
+            0.0780481919646263,
+            0.000252411904511973,
+            0.117584265768528
+          ],
+          "base_quat": [
+            0.664683103561401,
+            0.246655210852623,
+            0.233294978737831,
+            0.665530681610107
+          ],
+          "bodies": [
+            {
+              "contact": false,
+              "contacts": [],
+              "ground_contact": false,
+              "impulse": 0.0,
+              "linvel": [
+                -2.42099176830379e-05,
+                1.76790326804621e-05,
+                1.8981654648087e-05
+              ],
+              "n_contacts": 0,
+              "name": "jaw_soft",
+              "pos": [
+                0.12774983048439,
+                -0.00233389856293797,
+                0.23199075460434
+              ],
+              "quat": [
+                0.699337244033813,
+                -0.0340143665671349,
+                -0.712759852409363,
+                -0.0417600683867931
+              ]
+            }
+          ],
+          "body_states": [
+            {
+              "contact": false,
+              "contact_events": [],
+              "contacts": [],
+              "ground_contact": false,
+              "impulse": 0.0,
+              "linvel": [
+                2.82458859146573e-06,
+                6.81251503920066e-06,
+                3.79315201826103e-06
+              ],
+              "n_contacts": 0,
+              "name": "trunk_base",
+              "pos": [
+                0.0780481919646263,
+                0.000252411904511973,
+                0.117584265768528
+              ],
+              "quat": [
+                0.664683103561401,
+                0.246655210852623,
+                0.233294978737831,
+                0.665530681610107
+              ]
+            },
+            {
+              "contact": true,
+              "contact_events": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000918576726689935,
+                  "shape": "col_left_foot_collision_29_0"
+                }
+              ],
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000918173114769161,
+                  "shape": "col_left_foot_collision_29_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000602799176704139,
+                  "shape": "col_left_foot_collision_29_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_left_foot_collision_29_0"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.0015209722914733,
+              "linvel": [
+                -2.09598994160842e-07,
+                5.90783940879192e-07,
+                -4.46984699919994e-07
+              ],
+              "n_contacts": 3,
+              "name": "ankle_left",
+              "pos": [
+                0.107486590743065,
+                0.0474061891436577,
+                0.0109394202008843
+              ],
+              "quat": [
+                0.724255800247192,
+                -0.0129112787544727,
+                -0.689324676990509,
+                0.0108789671212435
+              ]
+            },
+            {
+              "contact": false,
+              "contact_events": [],
+              "contacts": [],
+              "ground_contact": false,
+              "impulse": 0.0,
+              "linvel": [
+                -2.42099176830379e-05,
+                1.76790326804621e-05,
+                1.8981654648087e-05
+              ],
+              "n_contacts": 0,
+              "name": "jaw_soft",
+              "pos": [
+                0.12774983048439,
+                -0.00233389856293797,
+                0.23199075460434
+              ],
+              "quat": [
+                0.699337244033813,
+                -0.0340143665671349,
+                -0.712759852409363,
+                -0.0417600683867931
+              ]
+            },
+            {
+              "contact": true,
+              "contact_events": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.00123373221140355,
+                  "shape": "col_right_foot_collision_79_0"
+                }
+              ],
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.00123378436546773,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000344528612913564,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_right_foot_collision_79_0"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.00157831297838129,
+              "linvel": [
+                -8.29640214305982e-08,
+                2.37852376017145e-07,
+                3.57965802777471e-07
+              ],
+              "n_contacts": 4,
+              "name": "ankle_right",
+              "pos": [
+                0.101611092686653,
+                -0.0421245992183685,
+                0.0102219069376588
+              ],
+              "quat": [
+                -0.0173841342329979,
+                0.721005320549011,
+                -0.0459871143102646,
+                0.69118320941925
+              ]
+            },
+            {
+              "contact": true,
+              "contact_events": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000735673005692661,
+                  "shape": "col_ball_geom_82"
+                }
+              ],
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000735667767003179,
+                  "shape": "col_ball_geom_82"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.000735667767003179,
+              "linvel": [
+                -4.84119527754956e-06,
+                -0.200478628277779,
+                -2.73839941655751e-06
+              ],
+              "n_contacts": 1,
+              "name": "ball",
+              "pos": [
+                5.0,
+                4.59370994567871,
+                0.034786731004715
+              ],
+              "quat": [
+                0.896602272987366,
+                -0.442836761474609,
+                3.34031064994633e-05,
+                3.59479759026726e-06
+              ]
+            }
+          ],
+          "cmd": "step",
+          "feet": [
+            {
+              "contact": true,
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000918173114769161,
+                  "shape": "col_left_foot_collision_29_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000602799176704139,
+                  "shape": "col_left_foot_collision_29_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_left_foot_collision_29_0"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.0015209722914733,
+              "linvel": [
+                -2.09598994160842e-07,
+                5.90783940879192e-07,
+                -4.46984699919994e-07
+              ],
+              "n_contacts": 3,
+              "name": "ankle_left",
+              "pos": [
+                0.107486590743065,
+                0.0474061891436577,
+                0.0109394202008843
+              ],
+              "quat": [
+                0.724255800247192,
+                -0.0129112787544727,
+                -0.689324676990509,
+                0.0108789671212435
+              ]
+            },
+            {
+              "contact": true,
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.00123378436546773,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000344528612913564,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_right_foot_collision_79_0"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.00157831297838129,
+              "linvel": [
+                -8.29640214305982e-08,
+                2.37852376017145e-07,
+                3.57965802777471e-07
+              ],
+              "n_contacts": 4,
+              "name": "ankle_right",
+              "pos": [
+                0.101611092686653,
+                -0.0421245992183685,
+                0.0102219069376588
+              ],
+              "quat": [
+                -0.0173841342329979,
+                0.721005320549011,
+                -0.0459871143102646,
+                0.69118320941925
+              ]
+            }
+          ],
+          "ok": true,
+          "q": [
+            0.041517838468563,
+            -0.032169227437127,
+            -0.426662048623085,
+            0.0592812807721979,
+            0.484399035639855,
+            0.304524901215461,
+            0.313310496360708,
+            -0.140021360666961,
+            0.00399596474545851,
+            -0.0124895563881088,
+            0.0624644676452397,
+            0.347736696181351,
+            -0.0912164660166712,
+            -0.430241425279768
+          ],
+          "qd": [
+            -0.000108144048674078,
+            -5.85110693022148e-05,
+            8.94905392678732e-05,
+            0.000265067378442257,
+            0.000262591211600123,
+            0.000305377611053947,
+            -0.000171563866081668,
+            1.52665438447714e-05,
+            -9.67945439311761e-05,
+            -0.000120066231239641,
+            4.71505559322536e-06,
+            -9.18859461669822e-05,
+            -0.000147660047176147,
+            0.000330061471249199
+          ],
+          "t": 3.99999999999994,
+          "tau": [
+            -0.0122810655469866,
+            -0.0665049138157977,
+            -0.000778141815544233,
+            -0.0463452514234225,
+            -0.020181420528562,
+            -0.00896316186790773,
+            -0.0282670323808957,
+            0.000244803728696898,
+            -0.00217317314047452,
+            0.0240358513417341,
+            0.0637569127187659,
+            0.000846384879237121,
+            0.0928323400892789,
+            -0.0445699805382715
+          ]
+        },
+        "first_fall": null,
+        "inference": {
+          "roller": {
+            "count": 150,
+            "histogram_cap_usec": 20000,
+            "max_usec": 1221,
+            "mean_usec": 146.686666666667,
+            "p50_usec": 141,
+            "p95_usec": 196,
+            "p99_usec": 857
+          },
+          "sprint": {
+            "count": 150,
+            "histogram_cap_usec": 20000,
+            "max_usec": 1012,
+            "mean_usec": 151.033333333333,
+            "p50_usec": 145,
+            "p95_usec": 177,
+            "p99_usec": 738
+          },
+          "walking": {
+            "count": 300,
+            "histogram_cap_usec": 20000,
+            "max_usec": 3414,
+            "mean_usec": 159.473333333333,
+            "p50_usec": 132,
+            "p95_usec": 436,
+            "p99_usec": 717
+          }
+        },
+        "mode": "walk",
+        "models": {
+          "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+          "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+          "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+          "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+          "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+          "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+          "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+          "sprint": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+          "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+          "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+        },
+        "physics_hz": 200,
+        "policy_hz": 50,
+        "resets": 1,
+        "runtime_version": "1.29.0",
+        "schema_version": 1,
+        "sim_seconds": 12.0,
+        "steps": 600,
+        "switches": 6,
+        "tcp": false,
+        "wall_seconds": 15.971413
+      },
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 600,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.71445146547012e-16,
+          "body_quat": 8.465450562766819e-16
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    },
+    {
+      "fps": 144,
+      "summary": {
+        "control_config": {
+          "version": "joint_walking_v1",
+          "walk": {
+            "twist_limits": {
+              "sprint_vmax_ang": 0.8,
+              "sprint_vmax_x": 0.3,
+              "sprint_yaw_reversal_s": 0.2,
+              "vmax_ang": 0.8,
+              "vmax_x": 0.25
+            },
+            "walk_heading_gain": 6.0,
+            "walk_heading_limit": 0.6,
+            "walk_heading_scope": "all",
+            "walk_idle_delay_s": 0.5,
+            "walk_path_gain": 4.0,
+            "walk_path_lookahead": 0.2,
+            "walk_reanchor_on_start": true
+          }
+        },
+        "error": "",
+        "events": [
+          {
+            "kind": "reset",
+            "mode": "walk",
+            "time": 2.5
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 3.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 4.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 5.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 6.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 7.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 8.0
+          }
+        ],
+        "final_raw": {
+          "base_angvel_local": [
+            -7.77285022195429e-05,
+            6.95187845849432e-05,
+            -0.000120987882837653
+          ],
+          "base_linvel": [
+            2.82458859146573e-06,
+            6.81251503920066e-06,
+            3.79315201826103e-06
+          ],
+          "base_pos": [
+            0.0780481919646263,
+            0.000252411904511973,
+            0.117584265768528
+          ],
+          "base_quat": [
+            0.664683103561401,
+            0.246655210852623,
+            0.233294978737831,
+            0.665530681610107
+          ],
+          "bodies": [
+            {
+              "contact": false,
+              "contacts": [],
+              "ground_contact": false,
+              "impulse": 0.0,
+              "linvel": [
+                -2.42099176830379e-05,
+                1.76790326804621e-05,
+                1.8981654648087e-05
+              ],
+              "n_contacts": 0,
+              "name": "jaw_soft",
+              "pos": [
+                0.12774983048439,
+                -0.00233389856293797,
+                0.23199075460434
+              ],
+              "quat": [
+                0.699337244033813,
+                -0.0340143665671349,
+                -0.712759852409363,
+                -0.0417600683867931
+              ]
+            }
+          ],
+          "body_states": [
+            {
+              "contact": false,
+              "contact_events": [],
+              "contacts": [],
+              "ground_contact": false,
+              "impulse": 0.0,
+              "linvel": [
+                2.82458859146573e-06,
+                6.81251503920066e-06,
+                3.79315201826103e-06
+              ],
+              "n_contacts": 0,
+              "name": "trunk_base",
+              "pos": [
+                0.0780481919646263,
+                0.000252411904511973,
+                0.117584265768528
+              ],
+              "quat": [
+                0.664683103561401,
+                0.246655210852623,
+                0.233294978737831,
+                0.665530681610107
+              ]
+            },
+            {
+              "contact": true,
+              "contact_events": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000918576726689935,
+                  "shape": "col_left_foot_collision_29_0"
+                }
+              ],
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000918173114769161,
+                  "shape": "col_left_foot_collision_29_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000602799176704139,
+                  "shape": "col_left_foot_collision_29_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_left_foot_collision_29_0"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.0015209722914733,
+              "linvel": [
+                -2.09598994160842e-07,
+                5.90783940879192e-07,
+                -4.46984699919994e-07
+              ],
+              "n_contacts": 3,
+              "name": "ankle_left",
+              "pos": [
+                0.107486590743065,
+                0.0474061891436577,
+                0.0109394202008843
+              ],
+              "quat": [
+                0.724255800247192,
+                -0.0129112787544727,
+                -0.689324676990509,
+                0.0108789671212435
+              ]
+            },
+            {
+              "contact": false,
+              "contact_events": [],
+              "contacts": [],
+              "ground_contact": false,
+              "impulse": 0.0,
+              "linvel": [
+                -2.42099176830379e-05,
+                1.76790326804621e-05,
+                1.8981654648087e-05
+              ],
+              "n_contacts": 0,
+              "name": "jaw_soft",
+              "pos": [
+                0.12774983048439,
+                -0.00233389856293797,
+                0.23199075460434
+              ],
+              "quat": [
+                0.699337244033813,
+                -0.0340143665671349,
+                -0.712759852409363,
+                -0.0417600683867931
+              ]
+            },
+            {
+              "contact": true,
+              "contact_events": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.00123373221140355,
+                  "shape": "col_right_foot_collision_79_0"
+                }
+              ],
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.00123378436546773,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000344528612913564,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_right_foot_collision_79_0"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.00157831297838129,
+              "linvel": [
+                -8.29640214305982e-08,
+                2.37852376017145e-07,
+                3.57965802777471e-07
+              ],
+              "n_contacts": 4,
+              "name": "ankle_right",
+              "pos": [
+                0.101611092686653,
+                -0.0421245992183685,
+                0.0102219069376588
+              ],
+              "quat": [
+                -0.0173841342329979,
+                0.721005320549011,
+                -0.0459871143102646,
+                0.69118320941925
+              ]
+            },
+            {
+              "contact": true,
+              "contact_events": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000735673005692661,
+                  "shape": "col_ball_geom_82"
+                }
+              ],
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000735667767003179,
+                  "shape": "col_ball_geom_82"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.000735667767003179,
+              "linvel": [
+                -4.84119527754956e-06,
+                -0.200478628277779,
+                -2.73839941655751e-06
+              ],
+              "n_contacts": 1,
+              "name": "ball",
+              "pos": [
+                5.0,
+                4.59370994567871,
+                0.034786731004715
+              ],
+              "quat": [
+                0.896602272987366,
+                -0.442836761474609,
+                3.34031064994633e-05,
+                3.59479759026726e-06
+              ]
+            }
+          ],
+          "cmd": "step",
+          "feet": [
+            {
+              "contact": true,
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000918173114769161,
+                  "shape": "col_left_foot_collision_29_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000602799176704139,
+                  "shape": "col_left_foot_collision_29_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_left_foot_collision_29_0"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.0015209722914733,
+              "linvel": [
+                -2.09598994160842e-07,
+                5.90783940879192e-07,
+                -4.46984699919994e-07
+              ],
+              "n_contacts": 3,
+              "name": "ankle_left",
+              "pos": [
+                0.107486590743065,
+                0.0474061891436577,
+                0.0109394202008843
+              ],
+              "quat": [
+                0.724255800247192,
+                -0.0129112787544727,
+                -0.689324676990509,
+                0.0108789671212435
+              ]
+            },
+            {
+              "contact": true,
+              "contacts": [
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.00123378436546773,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.000344528612913564,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_right_foot_collision_79_0"
+                },
+                {
+                  "body": "Floor",
+                  "ground": true,
+                  "impulse": 0.0,
+                  "shape": "col_right_foot_collision_79_0"
+                }
+              ],
+              "ground_contact": true,
+              "impulse": 0.00157831297838129,
+              "linvel": [
+                -8.29640214305982e-08,
+                2.37852376017145e-07,
+                3.57965802777471e-07
+              ],
+              "n_contacts": 4,
+              "name": "ankle_right",
+              "pos": [
+                0.101611092686653,
+                -0.0421245992183685,
+                0.0102219069376588
+              ],
+              "quat": [
+                -0.0173841342329979,
+                0.721005320549011,
+                -0.0459871143102646,
+                0.69118320941925
+              ]
+            }
+          ],
+          "ok": true,
+          "q": [
+            0.041517838468563,
+            -0.032169227437127,
+            -0.426662048623085,
+            0.0592812807721979,
+            0.484399035639855,
+            0.304524901215461,
+            0.313310496360708,
+            -0.140021360666961,
+            0.00399596474545851,
+            -0.0124895563881088,
+            0.0624644676452397,
+            0.347736696181351,
+            -0.0912164660166712,
+            -0.430241425279768
+          ],
+          "qd": [
+            -0.000108144048674078,
+            -5.85110693022148e-05,
+            8.94905392678732e-05,
+            0.000265067378442257,
+            0.000262591211600123,
+            0.000305377611053947,
+            -0.000171563866081668,
+            1.52665438447714e-05,
+            -9.67945439311761e-05,
+            -0.000120066231239641,
+            4.71505559322536e-06,
+            -9.18859461669822e-05,
+            -0.000147660047176147,
+            0.000330061471249199
+          ],
+          "t": 3.99999999999994,
+          "tau": [
+            -0.0122810655469866,
+            -0.0665049138157977,
+            -0.000778141815544233,
+            -0.0463452514234225,
+            -0.020181420528562,
+            -0.00896316186790773,
+            -0.0282670323808957,
+            0.000244803728696898,
+            -0.00217317314047452,
+            0.0240358513417341,
+            0.0637569127187659,
+            0.000846384879237121,
+            0.0928323400892789,
+            -0.0445699805382715
+          ]
+        },
+        "first_fall": null,
+        "inference": {
+          "roller": {
+            "count": 150,
+            "histogram_cap_usec": 20000,
+            "max_usec": 1273,
+            "mean_usec": 185.6,
+            "p50_usec": 146,
+            "p95_usec": 399,
+            "p99_usec": 1222
+          },
+          "sprint": {
+            "count": 150,
+            "histogram_cap_usec": 20000,
+            "max_usec": 1219,
+            "mean_usec": 180.033333333333,
+            "p50_usec": 144,
+            "p95_usec": 417,
+            "p99_usec": 566
+          },
+          "walking": {
+            "count": 300,
+            "histogram_cap_usec": 20000,
+            "max_usec": 1475,
+            "mean_usec": 148.856666666667,
+            "p50_usec": 134,
+            "p95_usec": 283,
+            "p99_usec": 492
+          }
+        },
+        "mode": "walk",
+        "models": {
+          "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+          "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+          "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+          "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+          "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+          "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+          "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+          "sprint": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+          "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+          "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+        },
+        "physics_hz": 200,
+        "policy_hz": 50,
+        "resets": 1,
+        "runtime_version": "1.29.0",
+        "schema_version": 1,
+        "sim_seconds": 12.0,
+        "steps": 600,
+        "switches": 6,
+        "tcp": false,
+        "wall_seconds": 16.036937
+      },
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 600,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.71445146547012e-16,
+          "body_quat": 8.465450562766819e-16
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    }
+  ],
+  "input_source": "exported replay, not OS keyboard"
+}

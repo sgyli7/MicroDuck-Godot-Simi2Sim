@@ -1,0 +1,969 @@
+{
+  "package_manifest_sha256": "b0a6e72034da46b3fc8672aa7191779ba15994654bf1869d76e0132aae91c786",
+  "runs": {
+    "final_performance_headless": {
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260911-candidate/MicroDuck.arm64",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--",
+        "--seconds=1800"
+      ],
+      "returncode": 0,
+      "reason": "completed",
+      "elapsed_s": 210.34477485201205,
+      "player": {
+        "control_config": {
+          "version": "walk_idle_settle_v2",
+          "walk": {
+            "walk_heading_gain": 6.0,
+            "walk_heading_scope": "idle_after_motion",
+            "walk_idle_delay_s": 0.5
+          }
+        },
+        "error": "",
+        "events": [],
+        "first_fall": null,
+        "inference": {
+          "walking": {
+            "count": 90000,
+            "histogram_cap_usec": 20000,
+            "max_usec": 4810,
+            "mean_usec": 264.1129,
+            "p50_usec": 249,
+            "p95_usec": 376,
+            "p99_usec": 447
+          }
+        },
+        "mode": "walk",
+        "models": {
+          "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+          "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+          "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+          "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+          "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+          "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+          "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+          "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+          "walking": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f"
+        },
+        "physics_hz": 200,
+        "policy_hz": 50,
+        "resets": 0,
+        "runtime_version": "1.29.0",
+        "schema_version": 1,
+        "sim_seconds": 1800.0,
+        "steps": 90000,
+        "switches": 0,
+        "tcp": false,
+        "wall_seconds": 209.377107
+      },
+      "load_average_start": [
+        15.7607421875,
+        16.22216796875,
+        11.78564453125
+      ],
+      "load_average_end": [
+        3.708984375,
+        10.171875,
+        10.28369140625
+      ],
+      "peak_rss_kib": 201836,
+      "final_rss_kib": 170912,
+      "tail_rss_slope_kib_per_s": 0.6702075564199501,
+      "steady_rss_min_kib": 199120,
+      "steady_rss_max_kib": 201836,
+      "memory_window": "STANDALONE_READY through before STANDALONE_RESULT; tail is the latter half",
+      "simulation_speed": 8.596928412044589,
+      "completed": true
+    },
+    "final_performance_fps_30": {
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260911-candidate/MicroDuck.arm64",
+        "--",
+        "--seconds=8",
+        "--render-fps=30"
+      ],
+      "returncode": 0,
+      "reason": "completed",
+      "elapsed_s": 10.219787640991854,
+      "player": {
+        "control_config": {
+          "version": "walk_idle_settle_v2",
+          "walk": {
+            "walk_heading_gain": 6.0,
+            "walk_heading_scope": "idle_after_motion",
+            "walk_idle_delay_s": 0.5
+          }
+        },
+        "error": "",
+        "events": [],
+        "first_fall": null,
+        "inference": {
+          "walking": {
+            "count": 400,
+            "histogram_cap_usec": 20000,
+            "max_usec": 866,
+            "mean_usec": 449.605,
+            "p50_usec": 441,
+            "p95_usec": 701,
+            "p99_usec": 770
+          }
+        },
+        "mode": "walk",
+        "models": {
+          "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+          "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+          "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+          "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+          "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+          "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+          "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+          "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+          "walking": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f"
+        },
+        "physics_hz": 200,
+        "policy_hz": 50,
+        "resets": 0,
+        "runtime_version": "1.29.0",
+        "schema_version": 1,
+        "sim_seconds": 8.0,
+        "steps": 400,
+        "switches": 0,
+        "tcp": false,
+        "wall_seconds": 8.246945
+      },
+      "load_average_start": [
+        3.708984375,
+        10.171875,
+        10.28369140625
+      ],
+      "load_average_end": [
+        3.2919921875,
+        9.86962890625,
+        10.18359375
+      ],
+      "peak_rss_kib": 703020,
+      "final_rss_kib": 420460,
+      "tail_rss_slope_kib_per_s": 17.765564614681768,
+      "steady_rss_min_kib": 694656,
+      "steady_rss_max_kib": 703020,
+      "memory_window": "STANDALONE_READY through before STANDALONE_RESULT; tail is the latter half",
+      "simulation_speed": 0.9700561844416326,
+      "completed": true
+    },
+    "final_performance_fps_144": {
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260911-candidate/MicroDuck.arm64",
+        "--",
+        "--seconds=8",
+        "--render-fps=144"
+      ],
+      "returncode": 0,
+      "reason": "completed",
+      "elapsed_s": 10.021215143002337,
+      "player": {
+        "control_config": {
+          "version": "walk_idle_settle_v2",
+          "walk": {
+            "walk_heading_gain": 6.0,
+            "walk_heading_scope": "idle_after_motion",
+            "walk_idle_delay_s": 0.5
+          }
+        },
+        "error": "",
+        "events": [],
+        "first_fall": null,
+        "inference": {
+          "walking": {
+            "count": 400,
+            "histogram_cap_usec": 20000,
+            "max_usec": 848,
+            "mean_usec": 512.19,
+            "p50_usec": 506,
+            "p95_usec": 706,
+            "p99_usec": 800
+          }
+        },
+        "mode": "walk",
+        "models": {
+          "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+          "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+          "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+          "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+          "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+          "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+          "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+          "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+          "walking": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f"
+        },
+        "physics_hz": 200,
+        "policy_hz": 50,
+        "resets": 0,
+        "runtime_version": "1.29.0",
+        "schema_version": 1,
+        "sim_seconds": 8.0,
+        "steps": 400,
+        "switches": 0,
+        "tcp": false,
+        "wall_seconds": 8.235702
+      },
+      "load_average_start": [
+        3.2919921875,
+        9.86962890625,
+        10.18359375
+      ],
+      "load_average_end": [
+        3.08642578125,
+        9.60986328125,
+        10.09521484375
+      ],
+      "peak_rss_kib": 703244,
+      "final_rss_kib": 661212,
+      "tail_rss_slope_kib_per_s": 22.382292530783772,
+      "steady_rss_min_kib": 696648,
+      "steady_rss_max_kib": 703244,
+      "memory_window": "STANDALONE_READY through before STANDALONE_RESULT; tail is the latter half",
+      "simulation_speed": 0.971380460342057,
+      "completed": true
+    },
+    "final_realtime_soak": {
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260911-candidate/MicroDuck.arm64",
+        "--",
+        "--seconds=2700",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/research_20260911/final_soak_replay.json",
+        "--render-fps=60"
+      ],
+      "returncode": 0,
+      "reason": "completed",
+      "elapsed_s": 2720.3329877910146,
+      "player": {
+        "control_config": {
+          "version": "walk_idle_settle_v2",
+          "walk": {
+            "walk_heading_gain": 6.0,
+            "walk_heading_scope": "idle_after_motion",
+            "walk_idle_delay_s": 0.5
+          }
+        },
+        "error": "",
+        "events": [
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 48.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 61.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 63.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 116.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 129.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 131.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 184.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 197.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 199.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 252.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 265.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 267.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 320.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 333.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 335.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 388.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 401.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 403.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 456.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 469.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 471.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 524.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 537.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 539.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 592.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 605.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 607.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 660.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 673.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 675.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 728.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 741.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 743.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 796.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 809.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 811.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 864.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 877.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 879.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 932.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 945.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 947.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1000.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1013.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1015.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1068.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1081.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1083.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1136.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1149.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1151.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1204.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1217.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1219.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1272.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1285.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1287.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1340.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1353.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1355.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1408.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1421.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1423.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1476.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1489.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1491.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1544.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1557.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1559.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1612.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1625.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1627.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1680.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1693.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1695.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1748.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1761.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1763.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1816.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1829.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1831.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1884.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1897.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1899.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 1952.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 1965.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 1967.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2020.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2033.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2035.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2088.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2101.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2103.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2156.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2169.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2171.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2224.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2237.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2239.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2292.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2305.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2307.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2360.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2373.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2375.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2428.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2441.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2443.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2496.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2509.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2511.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2564.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2577.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2579.0
+          },
+          {
+            "from": "walk",
+            "kind": "switch_robot",
+            "time": 2632.0
+          },
+          {
+            "kind": "reset",
+            "mode": "roller",
+            "time": 2645.0
+          },
+          {
+            "from": "roller",
+            "kind": "switch_robot",
+            "time": 2647.0
+          }
+        ],
+        "first_fall": 20.28,
+        "inference": {
+          "ground_pick": {
+            "count": 8000,
+            "histogram_cap_usec": 20000,
+            "max_usec": 244,
+            "mean_usec": 63.81075,
+            "p50_usec": 61,
+            "p95_usec": 97,
+            "p99_usec": 129
+          },
+          "kick_left": {
+            "count": 10000,
+            "histogram_cap_usec": 20000,
+            "max_usec": 368,
+            "mean_usec": 104.9579,
+            "p50_usec": 100,
+            "p95_usec": 164,
+            "p99_usec": 207
+          },
+          "kick_right": {
+            "count": 10000,
+            "histogram_cap_usec": 20000,
+            "max_usec": 1386,
+            "mean_usec": 135.7479,
+            "p50_usec": 129,
+            "p95_usec": 213,
+            "p99_usec": 255
+          },
+          "roller": {
+            "count": 19500,
+            "histogram_cap_usec": 20000,
+            "max_usec": 1882,
+            "mean_usec": 112.096615384615,
+            "p50_usec": 108,
+            "p95_usec": 171,
+            "p99_usec": 201
+          },
+          "roller_crouch": {
+            "count": 9750,
+            "histogram_cap_usec": 20000,
+            "max_usec": 192,
+            "mean_usec": 63.1077948717949,
+            "p50_usec": 61,
+            "p95_usec": 95,
+            "p99_usec": 115
+          },
+          "roulade": {
+            "count": 10000,
+            "histogram_cap_usec": 20000,
+            "max_usec": 1435,
+            "mean_usec": 336.1568,
+            "p50_usec": 323,
+            "p95_usec": 502,
+            "p99_usec": 575
+          },
+          "sitstand": {
+            "count": 18000,
+            "histogram_cap_usec": 20000,
+            "max_usec": 2989,
+            "mean_usec": 63.2704444444444,
+            "p50_usec": 60,
+            "p95_usec": 97,
+            "p99_usec": 130
+          },
+          "standing": {
+            "count": 11800,
+            "histogram_cap_usec": 20000,
+            "max_usec": 1171,
+            "mean_usec": 64.5407627118644,
+            "p50_usec": 62,
+            "p95_usec": 97,
+            "p99_usec": 129
+          },
+          "walking": {
+            "count": 37950,
+            "histogram_cap_usec": 20000,
+            "max_usec": 4502,
+            "mean_usec": 537.947694334651,
+            "p50_usec": 514,
+            "p95_usec": 784,
+            "p99_usec": 899
+          }
+        },
+        "mode": "walk",
+        "models": {
+          "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+          "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+          "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+          "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+          "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+          "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+          "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+          "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+          "walking": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f"
+        },
+        "physics_hz": 200,
+        "policy_hz": 50,
+        "resets": 39,
+        "runtime_version": "1.29.0",
+        "schema_version": 1,
+        "sim_seconds": 2700.0,
+        "steps": 135000,
+        "switches": 78,
+        "tcp": false,
+        "wall_seconds": 2718.535495
+      },
+      "load_average_start": [
+        3.08642578125,
+        9.60986328125,
+        10.09521484375
+      ],
+      "load_average_end": [
+        1.501953125,
+        1.6494140625,
+        1.9140625
+      ],
+      "peak_rss_kib": 769772,
+      "final_rss_kib": 667840,
+      "tail_rss_slope_kib_per_s": 1.2093179313437992,
+      "steady_rss_min_kib": 695092,
+      "steady_rss_max_kib": 769772,
+      "memory_window": "STANDALONE_READY through before STANDALONE_RESULT; tail is the latter half",
+      "simulation_speed": 0.9931818087223466,
+      "completed": true
+    }
+  },
+  "soak_purpose": "Runtime, inference, resource lifecycle and memory only; explicit reset cycles do not establish task quality",
+  "host_desktop_locked": true,
+  "all_own_training_and_quality_suites_finished_before_formal_measurement": true
+}

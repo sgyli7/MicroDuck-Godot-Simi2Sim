@@ -112,10 +112,13 @@ func _ready() -> void:
 	limits = limits.duplicate()
 	var overrides: Dictionary = control_config.get(session.mode,{}).get("twist_limits",{})
 	for key in overrides:
-		if not key in ["vmax_x","vmin_x","vmax_y","vmin_y","vmax_ang","accel","decel","switch_on","switch_off","switch_threshold","sprint_vmax_x","sprint_vmax_ang"] or not is_finite(float(overrides[key])):
+		if not key in ["vmax_x","vmin_x","vmax_y","vmin_y","vmax_ang","accel","decel","switch_on","switch_off","switch_threshold","sprint_vmax_x","sprint_vmax_ang","sprint_yaw_reversal_s"] or not is_finite(float(overrides[key])):
 			_fatal("Invalid control limit: "+str(key))
 			return
 		limits[key]=overrides[key]
+	if float(limits.get("sprint_yaw_reversal_s",0.0)) < 0.0:
+		_fatal("Sprint yaw reversal duration must be nonnegative")
+		return
 	brain.configure(flags,limits)
 	super._ready()
 	Engine.max_fps = render_fps

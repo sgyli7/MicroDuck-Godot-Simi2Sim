@@ -11,7 +11,7 @@ from .roller_tasks import CONDITIONS,PROTOCOL,initial_speed,summarize
 
 
 def episode(source,condition,seed,backend='godot',reference_profile='xml',trace=None):
-    actor=NativeAnchor(source);w=World(TASKS['roller'],backend,reference_profile=reference_profile,roller_contract=True)
+    actor=NativeAnchor(source);w=World(TASKS['roller'],backend,reference_profile=reference_profile,roller_contract=True,state_input=actor.state_input,task_input=actor.task_input)
     try:
         obs=w.reset(seed,condition);rows=[]
         for _ in range(round(w.task.seconds/DT)):

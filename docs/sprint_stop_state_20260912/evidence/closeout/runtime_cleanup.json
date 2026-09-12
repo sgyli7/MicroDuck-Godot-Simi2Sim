@@ -1,0 +1,45 @@
+[
+  {
+    "path": "results/sprint_stop_state_20260912/native_joint_fd/prepared",
+    "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+    "changed_files": [],
+    "source_patch": "results/sprint_stop_state_20260912/runtime_patches/native_joint_fd/prepared",
+    "canonical_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd",
+    "logical_bytes": 1282128436,
+    "deleted": true
+  },
+  {
+    "path": "results/sprint_stop_state_20260912/diagnostic/runtime",
+    "canonical": "results/sprint_joint_gpu_20260912/native_trained_tracking_split/suite/runtime",
+    "changed_files": [
+      "standalone/main.tscn",
+      "standalone/stop_state_probe.gd"
+    ],
+    "source_patch": "results/sprint_stop_state_20260912/runtime_patches/diagnostic/runtime",
+    "canonical_sha256": "dcdaa70175579415f4ad9b361176e868748f783877a560c05f36f35c3fa3fcf9",
+    "logical_bytes": 1282133755,
+    "deleted": true
+  },
+  {
+    "path": "results/sprint_stop_state_20260912/target_sampler/runtime",
+    "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+    "changed_files": [
+      "standalone/driver.gd"
+    ],
+    "source_patch": "results/sprint_stop_state_20260912/runtime_patches/target_sampler/runtime",
+    "canonical_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd",
+    "logical_bytes": 1282129309,
+    "deleted": true
+  },
+  {
+    "path": "results/sprint_stop_state_20260912/target_sampler_retry/runtime",
+    "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+    "changed_files": [
+      "standalone/driver.gd"
+    ],
+    "source_patch": "results/sprint_stop_state_20260912/runtime_patches/target_sampler_retry/runtime",
+    "canonical_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd",
+    "logical_bytes": 1282129309,
+    "deleted": true
+  }
+]

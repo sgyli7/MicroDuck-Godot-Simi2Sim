@@ -1,0 +1,1418 @@
+[
+  {
+    "experiment": "split_baseline",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 51,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.2137814048207612,
+          "ordinary_vx": 0.15966458985478219,
+          "ratio": 1.3389406193019957,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.19819814488601045,
+          "ordinary_vx": 0.1411261442862816,
+          "ratio": 1.404404165424908,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.21879228282447,
+          "ordinary_vx": 0.1682301521963134,
+          "ratio": 1.3005533191764218,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.21568670051644243,
+          "ordinary_vx": 0.1650707801241403,
+          "ratio": 1.3066316179897906,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.226191827492084,
+          "ordinary_vx": 0.16995996406641609,
+          "ratio": 1.3308535850460284,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.21666724902489193,
+          "ordinary_vx": 0.16856645148157917,
+          "ratio": 1.2853521392930858,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.19758880458760736,
+          "ordinary_vx": 0.1370731269562014,
+          "ratio": 1.4414846219328048,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.22367106537673676,
+          "ordinary_vx": 0.1698208912819576,
+          "ratio": 1.3170998202180582,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "cbd7c74b73d117b95133d60d33c6f10e9e17898d287116c1854b19620f525dd1",
+    "summary": "results/sprint_joint_20260912/split_baseline/suite/summary.json",
+    "summary_sha256": "8911fdb6aaf117a37701cda199efc187a96c7c5cecacc3d4eb0a86b302fe31c9",
+    "control": {
+      "version": "split_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.3
+        }
+      }
+    }
+  },
+  {
+    "experiment": "j01_untrained_joint",
+    "result": {
+      "errors": 0,
+      "candidate_count": 16,
+      "candidate_pass": 11,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 2,
+          "candidate_vx": 0.21474733326599438,
+          "ordinary_vx": 0.1319729713090478,
+          "ratio": 1.6272069283270862,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 2,
+          "candidate_vx": 0.19856226226438634,
+          "ordinary_vx": 0.12477533814032069,
+          "ratio": 1.5913582381246354,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 2,
+          "candidate_vx": 0.21790159038125517,
+          "ordinary_vx": 0.14754517144434942,
+          "ratio": 1.4768466378680685,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 2,
+          "candidate_vx": 0.2159612021727836,
+          "ordinary_vx": 0.14667628597910737,
+          "ratio": 1.4723661751535297,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 2,
+          "candidate_vx": 0.22256264703261003,
+          "ordinary_vx": 0.12819950109580397,
+          "ratio": 1.7360648452624485,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 2,
+          "candidate_vx": 0.21189057066878741,
+          "ordinary_vx": 0.1467352649887058,
+          "ratio": 1.4440330392635787,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 2,
+          "candidate_vx": 0.2020489678761766,
+          "ordinary_vx": 0.11997981749119624,
+          "ratio": 1.6840246309843099,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 2,
+          "candidate_vx": 0.2238045955275407,
+          "ordinary_vx": 0.14630361020850102,
+          "ratio": 1.5297270874491138,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "878aef32376b88cf0f558e218f61b75bd5f4ba727294b7cb616ef7e14d1564fe",
+    "summary": "results/sprint_joint_20260912/j01_untrained_joint/suite/summary.json",
+    "summary_sha256": "c44299f7eecfee11e79cb854b54bb870c1d4a4aa37fe7cb6a726c198bb6f729f",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.22
+        }
+      }
+    }
+  },
+  {
+    "experiment": "j01b_calibrated_joint",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 47,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.21457281264286437,
+          "ordinary_vx": 0.16530982544802755,
+          "ratio": 1.2980039877322647,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.19892907085619507,
+          "ordinary_vx": 0.1488849896000185,
+          "ratio": 1.3361257665438313,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.21861469707368547,
+          "ordinary_vx": 0.18317028275294847,
+          "ratio": 1.1935052661819754,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.21217759289366644,
+          "ordinary_vx": 0.17997612071638425,
+          "ratio": 1.1789208037661116,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.2241738526207739,
+          "ordinary_vx": 0.16404505460083055,
+          "ratio": 1.366538315746575,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.21315652613091152,
+          "ordinary_vx": 0.18026480257105812,
+          "ratio": 1.1824633710559658,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.1998800142527126,
+          "ordinary_vx": 0.1473808174241794,
+          "ratio": 1.3562145857654886,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.22078057576060162,
+          "ordinary_vx": 0.18079421143231938,
+          "ratio": 1.221170600604385,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "d4427a48d5c55ea1bdc88d1cff104c4ae8476eb5b01ba92372a2ce5bd17ce0f0",
+    "summary": "results/sprint_joint_20260912/j01b_calibrated_joint/suite/summary.json",
+    "summary_sha256": "b42163312188015d82aa22ee4b9172a4e2c2cb56f0209c81952fe405c67f8370",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        }
+      }
+    }
+  },
+  {
+    "experiment": "j01c_lookahead",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 62,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.21626580926609626,
+          "ordinary_vx": 0.16798482171366436,
+          "ratio": 1.2874127975367229,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.1987185479710251,
+          "ordinary_vx": 0.1516263841251291,
+          "ratio": 1.310580273463709,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.2256678204780951,
+          "ordinary_vx": 0.19010621340085077,
+          "ratio": 1.1870617821536453,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.22948984612542134,
+          "ordinary_vx": 0.18966917140446848,
+          "ratio": 1.2099480607527697,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.22968193161743222,
+          "ordinary_vx": 0.16618360006715407,
+          "ratio": 1.3820974604270142,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.22720428502050063,
+          "ordinary_vx": 0.1899623330019588,
+          "ratio": 1.1960491400058653,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.19974603470934432,
+          "ordinary_vx": 0.14950472455560868,
+          "ratio": 1.3360516552441677,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.2285762017980597,
+          "ordinary_vx": 0.18978276626682025,
+          "ratio": 1.2044096853172581,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "2fb7eae15174dae18f9fd5b5a95a66fa2832c90590be687e06fbef639579ca41",
+    "summary": "results/sprint_joint_20260912/j01c_lookahead/suite/summary.json",
+    "summary_sha256": "cd827e82aaa7896b9f320dd4f351dd71f11370416ec58f38e8d9b5249e81fa08",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.3
+      }
+    }
+  },
+  {
+    "experiment": "j01d_lookahead02",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 63,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.2169999749378448,
+          "ordinary_vx": 0.16918585909371117,
+          "ratio": 1.28261295654532,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.19679134157226544,
+          "ordinary_vx": 0.15390212089629496,
+          "ratio": 1.278678555085481,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.2249014781934064,
+          "ordinary_vx": 0.1931101450861607,
+          "ratio": 1.1646279800217707,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.2284477176125682,
+          "ordinary_vx": 0.1936865826064456,
+          "ratio": 1.179471053380885,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.22755246818409597,
+          "ordinary_vx": 0.16693178721132862,
+          "ratio": 1.3631464203760313,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.22673023033871778,
+          "ordinary_vx": 0.19311458833164935,
+          "ratio": 1.1740709611711877,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.1984752784717243,
+          "ordinary_vx": 0.1520790434005958,
+          "ratio": 1.305079740335523,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.22971903350734288,
+          "ordinary_vx": 0.1927630017311335,
+          "ratio": 1.191717453268111,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "a0d6b4f8c7bfb553e44885527a48921e9726affe655e0e177a12071a0b60a64a",
+    "summary": "results/sprint_joint_20260912/j01d_lookahead02/suite/summary.json",
+    "summary_sha256": "91cdb61c34367893cd8980b70c681bb8a155075ade884b1e53710f09eabc16bf",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.2
+      }
+    }
+  },
+  {
+    "experiment": "j01e_lookahead015",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 59,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.21495731854165573,
+          "ordinary_vx": 0.16814332038670257,
+          "ratio": 1.2784172338650652,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.1973622425008341,
+          "ordinary_vx": 0.1532798216583092,
+          "ratio": 1.2875944163139312,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.22555976705861783,
+          "ordinary_vx": 0.19371476369282903,
+          "ratio": 1.1643912046697948,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.2277736335997011,
+          "ordinary_vx": 0.19665583340920947,
+          "ratio": 1.1582348189272393,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.22536668663704973,
+          "ordinary_vx": 0.16815528808785274,
+          "ratio": 1.3402295532883086,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.2269119308131316,
+          "ordinary_vx": 0.19469982031895944,
+          "ratio": 1.1654449934334912,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.19875788766007174,
+          "ordinary_vx": 0.1506526654888786,
+          "ratio": 1.3193121211303382,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.22698702468728027,
+          "ordinary_vx": 0.1933739311309007,
+          "ratio": 1.173824327611284,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "27f8285b36726a35fe94a32622b7284e04fbd519e37856814cdc0e51942538ba",
+    "summary": "results/sprint_joint_20260912/j01e_lookahead015/suite/summary.json",
+    "summary_sha256": "c2b199853aa1d5476bd098cd36ffc6fdb9e0af76fb120db1d97a8d98256725c6",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.15
+      }
+    }
+  },
+  {
+    "experiment": "j01f_lookahead01",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 56,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.2149357533212053,
+          "ordinary_vx": 0.16575368430039666,
+          "ratio": 1.2967178028554442,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.19644052737793968,
+          "ordinary_vx": 0.1507730097059068,
+          "ratio": 1.3028892091569344,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.22458698853492817,
+          "ordinary_vx": 0.19410069625059728,
+          "ratio": 1.1570643118403399,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.22937715564919947,
+          "ordinary_vx": 0.19655120011041288,
+          "ratio": 1.1670096927434,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.22660717306132555,
+          "ordinary_vx": 0.1677924405927235,
+          "ratio": 1.3505207520722635,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.22558415628809417,
+          "ordinary_vx": 0.1950159467659238,
+          "ratio": 1.1567472303116892,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.19948612914790073,
+          "ordinary_vx": 0.14705840176072335,
+          "ratio": 1.356509568711904,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.22381375883578197,
+          "ordinary_vx": 0.1936275823270654,
+          "ratio": 1.1558981222919351,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "8a5395d0cd09d3276283a643ba47ce86f22db2f6069fbc731c59cfd84bd4d6c2",
+    "summary": "results/sprint_joint_20260912/j01f_lookahead01/suite/summary.json",
+    "summary_sha256": "bb89f8ed982333681640584bfc956517b646e0bb68a2a915ea5d41c82ec5a39a",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.1
+      }
+    }
+  },
+  {
+    "experiment": "j01g_authority",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 63,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.21607136602734398,
+          "ordinary_vx": 0.16902405155509145,
+          "ratio": 1.2783468627062107,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.19603566498844463,
+          "ordinary_vx": 0.15390212089629496,
+          "ratio": 1.273768443519637,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.22466466525195466,
+          "ordinary_vx": 0.1931101450861607,
+          "ratio": 1.1634016698175809,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.22840474132786262,
+          "ordinary_vx": 0.1936865826064456,
+          "ratio": 1.1792491676718841,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.227626946036793,
+          "ordinary_vx": 0.16693178721132862,
+          "ratio": 1.363592577779251,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.2271240434409826,
+          "ordinary_vx": 0.19311458833164935,
+          "ratio": 1.1761102328060602,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.1984752784717243,
+          "ordinary_vx": 0.1520790434005958,
+          "ratio": 1.305079740335523,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.2297287178960923,
+          "ordinary_vx": 0.1927630017311335,
+          "ratio": 1.1917676931412322,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "ab4b1a507abb3a6f83954db873f241b9515ef80caa80d31ba52cd5372aa8013a",
+    "summary": "results/sprint_joint_20260912/j01g_authority/suite/summary.json",
+    "summary_sha256": "1ed839219fff80000bc0b7201d5ae553e4463052ca4c67ebbcfbd0cfbc4b4639",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.2,
+        "walk_path_limit": 0.2
+      }
+    }
+  },
+  {
+    "experiment": "j02_native_lookahead",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 59,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "6e202e8624cc13a8333662e2c68d44d33ca1b90efd58e182eb5e0be37b0df548",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "6e202e8624cc13a8333662e2c68d44d33ca1b90efd58e182eb5e0be37b0df548"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.1672198879036275,
+          "ordinary_vx": 0.14256290411570413,
+          "ratio": 1.1729551171875099,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.15909179412610502,
+          "ordinary_vx": 0.1346030239113796,
+          "ratio": 1.1819332842837798,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.18329603695452912,
+          "ordinary_vx": 0.15821863723031784,
+          "ratio": 1.1584983928771062,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.18625964510871826,
+          "ordinary_vx": 0.15742080450925464,
+          "ratio": 1.1831958659426633,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.1686979276083512,
+          "ordinary_vx": 0.13907569284441124,
+          "ratio": 1.2129936163401276,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.18576218390076604,
+          "ordinary_vx": 0.15950095179031626,
+          "ratio": 1.1646462407633367,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.16322527259274477,
+          "ordinary_vx": 0.13374361664599083,
+          "ratio": 1.220434116304703,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.1854195709610717,
+          "ordinary_vx": 0.15911799965574724,
+          "ratio": 1.165296015298257,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "d12817568ebffc808dcd08a1a12017db421f429f05e98c15c20583cc78af42ac",
+    "summary": "results/sprint_joint_20260912/j02_native_lookahead/suite/summary.json",
+    "summary_sha256": "fcb9c7e589792f1d0d7c7843efe70c9bf710a0327e57f01d8279eaabd4c7cefd",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.3
+      }
+    }
+  },
+  {
+    "experiment": "j03_replay_teacher_native",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 63,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "f9f7e63fcce10c89b22355f6163643077a1aba858c2e062a56f31f30762041ad",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "f9f7e63fcce10c89b22355f6163643077a1aba858c2e062a56f31f30762041ad"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.2019456929674792,
+          "ordinary_vx": 0.15472939417485246,
+          "ratio": 1.305154033882339,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.1897866616632793,
+          "ordinary_vx": 0.14601822167636425,
+          "ratio": 1.2997464253737023,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.21909559370251308,
+          "ordinary_vx": 0.1856849503656965,
+          "ratio": 1.1799318860845542,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.2232846266207342,
+          "ordinary_vx": 0.18758497261463306,
+          "ratio": 1.1903119077637474,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.2125861131794115,
+          "ordinary_vx": 0.1557026119610532,
+          "ratio": 1.365334277324692,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.22109916861600645,
+          "ordinary_vx": 0.18616912027966886,
+          "ratio": 1.1876253606605898,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.19224319842745646,
+          "ordinary_vx": 0.1448856953831385,
+          "ratio": 1.326861136422646,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.21887271120627255,
+          "ordinary_vx": 0.18549030095845614,
+          "ratio": 1.1799684947154891,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "20e116218e7c2b498059c1d9d020a4f932388a3890fb1cad572c45f02988c7ce",
+    "summary": "results/sprint_joint_20260912/j03_replay_teacher_native/suite/summary.json",
+    "summary_sha256": "fe05dc416d0535352a6b2a9bd8a5191cda247a2af5c61723784e9d67318e2249",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.2
+      }
+    }
+  },
+  {
+    "experiment": "j04_online_teacher_native",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 63,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "1d5f79ee0cf0617959068a8673ff72ef7f3f3071fc0cce85642f284b2316f373",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "1d5f79ee0cf0617959068a8673ff72ef7f3f3071fc0cce85642f284b2316f373"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.21555897792753628,
+          "ordinary_vx": 0.16676988824523462,
+          "ratio": 1.2925533511814642,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.2019113815913817,
+          "ordinary_vx": 0.15493254103976928,
+          "ratio": 1.303221261565403,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.2225596052444794,
+          "ordinary_vx": 0.19495036557070508,
+          "ratio": 1.1416218922849926,
+          "speed_pass": false
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.2328373495136537,
+          "ordinary_vx": 0.196515889736678,
+          "ratio": 1.1848270886677141,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.2313670581713535,
+          "ordinary_vx": 0.1664697021873342,
+          "ratio": 1.3898448494308473,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.22709501953953007,
+          "ordinary_vx": 0.19473326463350277,
+          "ratio": 1.1661850376048164,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.2019408259973731,
+          "ordinary_vx": 0.1538953507061016,
+          "ratio": 1.312195755562657,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.22402315005679674,
+          "ordinary_vx": 0.19360952727433792,
+          "ratio": 1.157087428550785,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "39ba6daad4df7b6c651ff176a3f6fe587aa025306f2db15f86decd79ff80bfba",
+    "summary": "results/sprint_joint_20260912/j04_online_teacher_native/suite/summary.json",
+    "summary_sha256": "75d6697c1ca4e6700898d2404b8d42f0bf027fa5e993a8be55cae8704e7fa207",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.2
+      }
+    }
+  },
+  {
+    "experiment": "j05_native",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 63,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "be74f39c267e3947ca8782573f5d37d108d74bda4f1a5ece7a0a434a44360b4d",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "be74f39c267e3947ca8782573f5d37d108d74bda4f1a5ece7a0a434a44360b4d"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.19841873099733576,
+          "ordinary_vx": 0.15682650772556342,
+          "ratio": 1.265211690772048,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.18591007641687712,
+          "ordinary_vx": 0.14745782582697703,
+          "ratio": 1.260767784783555,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.2152882567680668,
+          "ordinary_vx": 0.1824617273713913,
+          "ratio": 1.1799091232423708,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.21440282384638762,
+          "ordinary_vx": 0.1837345030369415,
+          "ratio": 1.166916503446715,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.19872768586609155,
+          "ordinary_vx": 0.15321818216964964,
+          "ratio": 1.2970241720140752,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.21521403922045204,
+          "ordinary_vx": 0.18246521566970486,
+          "ratio": 1.1794798171835035,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.18924279804340005,
+          "ordinary_vx": 0.14832984094601967,
+          "ratio": 1.2758241823522851,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.21447755203321053,
+          "ordinary_vx": 0.18155791566340312,
+          "ratio": 1.1813175495517272,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "8fd52063374ac807f4f037c9d00ebf4f3d10ed628ff44ceeb2b7d2505a2f756a",
+    "summary": "results/sprint_joint_20260912/j05_native/suite/summary.json",
+    "summary_sha256": "5b797a6ed9b56ea191d8f4aa7708fc8433f948ce054f6710c9adc7c3f3e0163a",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.2
+      }
+    }
+  },
+  {
+    "experiment": "j06_path_damping",
+    "result": {
+      "errors": 0,
+      "candidate_count": 64,
+      "candidate_pass": 58,
+      "candidate_falls": 0,
+      "accepted": false,
+      "models": {
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "comparisons": [
+        {
+          "case": "sprint_alternate",
+          "count": 8,
+          "candidate_vx": 0.2171703630819959,
+          "ordinary_vx": 0.16965242070183534,
+          "ratio": 1.2800899756312554,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_left",
+          "count": 8,
+          "candidate_vx": 0.1989483627499632,
+          "ordinary_vx": 0.15355306653237716,
+          "ratio": 1.2956326255328434,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_long",
+          "count": 8,
+          "candidate_vx": 0.22733613034110187,
+          "ordinary_vx": 0.1962800356874338,
+          "ratio": 1.1582234002806244,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_repeat",
+          "count": 8,
+          "candidate_vx": 0.23294377321533044,
+          "ordinary_vx": 0.19774367796523806,
+          "ratio": 1.178008701022949,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_right",
+          "count": 8,
+          "candidate_vx": 0.22699916179556712,
+          "ordinary_vx": 0.1689441161175214,
+          "ratio": 1.343634611327105,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_shift_first",
+          "count": 8,
+          "candidate_vx": 0.230609892011728,
+          "ordinary_vx": 0.1963868704853181,
+          "ratio": 1.1742632867555594,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_turn_release",
+          "count": 8,
+          "candidate_vx": 0.20042241515575304,
+          "ordinary_vx": 0.15084561738200358,
+          "ratio": 1.3286591856904961,
+          "speed_pass": true
+        },
+        {
+          "case": "sprint_w_first",
+          "count": 8,
+          "candidate_vx": 0.22955465429331798,
+          "ordinary_vx": 0.19565828837723742,
+          "ratio": 1.1732426783307381,
+          "speed_pass": true
+        }
+      ]
+    },
+    "result_sha256": "f1a11f374cf678d0b8de77c7e9b233437bcb8f6e65363b2cbfe9b99fc57bc138",
+    "summary": "results/sprint_joint_20260912/j06_path_damping/suite/summary.json",
+    "summary_sha256": "1ba8482537f971153e64884446b15551aa4883042d48c4293af7d2b5ec69fb47",
+    "control": {
+      "version": "joint_walking_v1",
+      "walk": {
+        "walk_heading_gain": 6.0,
+        "walk_heading_scope": "all",
+        "walk_idle_delay_s": 0.5,
+        "walk_path_gain": 4.0,
+        "walk_heading_limit": 0.6,
+        "walk_reanchor_on_start": true,
+        "twist_limits": {
+          "vmax_ang": 0.8,
+          "sprint_vmax_x": 0.3,
+          "sprint_vmax_ang": 0.8,
+          "vmax_x": 0.25
+        },
+        "walk_path_lookahead": 0.2,
+        "walk_path_damping": 0.5
+      }
+    }
+  }
+]

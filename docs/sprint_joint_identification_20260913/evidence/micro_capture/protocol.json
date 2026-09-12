@@ -1,0 +1,14 @@
+{
+  "seeds": [
+    927000,
+    927001,
+    927008,
+    927009
+  ],
+  "seconds": 2,
+  "physics_hz": 200,
+  "control_hz": 50,
+  "gate": "Every20ms obs/action/command/last_action/ctrl must be identical to frozen native prefix, 401 snapshots at exact 5ms increments",
+  "hypothesis": "Split position stabilization yields a measurable COM displacement minus post-step solver velocity*dt; quantify this without claiming spring elasticity or policy improvement.",
+  "source_sha256": "5fa3ec9bd93a38fac11764ac4de753fddc19542a5853be814e7475ac79e0ab32"
+}

@@ -1,0 +1,890 @@
+{
+  "completed": true,
+  "results": [
+    {
+      "seed": 927000,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927000",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927000/attempt_01/trace.json",
+      "source_sha256": "983b33ba1cf4e10d6fa319c205564fd83e170adb33b67cbaac5fc514446b9af3",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.2016065487669201,
+        "sustained_mean_vx": 0.2016065487669201,
+        "sustained_p10_vx": 0.10573491003233262,
+        "max_tilt": 7.824625949290981,
+        "min_z": 0.11247572896720358,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 3.115108865534006,
+            "lateral_path_m": 0.021388104752992167,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8438106220922803,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7735546656976656,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927001,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927001",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927001/attempt_01/trace.json",
+      "source_sha256": "4ca77b82342197479d953bff63063e3b5b26063160065ae3d2019ce097a4985f",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.16785152209145832,
+        "sustained_p10_vx": 0.08460276694812847,
+        "max_tilt": 8.020882209238302,
+        "min_z": 0.11243602700513167,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.699398956330493,
+            "lateral_path_m": 0.026952730271803716,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8430695502892434,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.37672609036694155,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927002,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927002",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927002/attempt_01/trace.json",
+      "source_sha256": "8f6069ca0dfc7dcbb5e0b100792f7a7445298493bea379a5ca63abe854d58f37",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.19058679413602614,
+        "sustained_mean_vx": 0.19058679413602614,
+        "sustained_p10_vx": 0.09586917254719511,
+        "max_tilt": 7.764513959076209,
+        "min_z": 0.11255991977255579,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 3.270949701977953,
+            "lateral_path_m": 0.02108403085193854,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8310740569236921,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7306995640326626,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927003,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927003",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927003/attempt_01/trace.json",
+      "source_sha256": "038ada5003a210cb96305faae899bc3fa1e7bd8c8ccd1543ecb5e8df5581803d",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.1961729384756033,
+        "sustained_mean_vx": 0.1961729384756033,
+        "sustained_p10_vx": 0.10478032768199678,
+        "max_tilt": 8.09797922085508,
+        "min_z": 0.11270196589932578,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 3.2351433432781906,
+            "lateral_path_m": 0.0232157680777142,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.804076737490658,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7353180223566438,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927004,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927004",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927004/attempt_01/trace.json",
+      "source_sha256": "6fcdc9b5b9896a4c3d4a46bd40af9797c2a42c134fa7b9f993acb2344d3d0eb1",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.19241682049010225,
+        "sustained_mean_vx": 0.19241682049010225,
+        "sustained_p10_vx": 0.10381554849098067,
+        "max_tilt": 8.296708327076464,
+        "min_z": 0.11257363093663733,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.582392016380414,
+            "lateral_path_m": 0.02349749210909889,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8408262085672735,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7035296387086296,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927005,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927005",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927005/attempt_01/trace.json",
+      "source_sha256": "7dde1486d9960b3de303f22e7ec7def84d469535624ea0c2a29f2e211ac759fa",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.20004242941748315,
+        "sustained_mean_vx": 0.20004242941748315,
+        "sustained_p10_vx": 0.11038756031949451,
+        "max_tilt": 8.22438533167554,
+        "min_z": 0.1131483101184111,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.6141705760666625,
+            "lateral_path_m": 0.030116135610248812,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8389876660232254,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7024319783794625,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927006,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927006",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927006/attempt_01/trace.json",
+      "source_sha256": "0a5823e421433182e3c52533d5b27c37c008edb59c5c751dc922626306a5d5b0",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.1949768685908561,
+        "sustained_mean_vx": 0.1949768685908561,
+        "sustained_p10_vx": 0.10431594193946907,
+        "max_tilt": 7.741521564094903,
+        "min_z": 0.11262173561016978,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 3.200322786836155,
+            "lateral_path_m": 0.020726920260304326,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8534666371919606,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7442220318603483,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927007,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927007",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927007/attempt_01/trace.json",
+      "source_sha256": "440459c56189d41f6bfad31dd44ce7ea46bf56965c7aa99dbe2333c8c07c95f7",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.188312431831313,
+        "sustained_mean_vx": 0.188312431831313,
+        "sustained_p10_vx": 0.09639392217384242,
+        "max_tilt": 8.426165808105514,
+        "min_z": 0.11257619853786102,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.5640827452294435,
+            "lateral_path_m": 0.023094990278835048,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8295583792675969,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6887838429392106,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927008,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927008",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927008/attempt_01/trace.json",
+      "source_sha256": "ceae7feddd6825bfc9b00629e4ff43a611a48cc925945891ba94bc7601b8092b",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.20539372559835417,
+        "sustained_mean_vx": 0.20539372559835417,
+        "sustained_p10_vx": 0.10441179343041798,
+        "max_tilt": 7.962554903898678,
+        "min_z": 0.11258238915015545,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.9899752940519186,
+            "lateral_path_m": 0.021885007754312368,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8606835684789963,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7366649144800407,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927009,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927009",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927009/attempt_01/trace.json",
+      "source_sha256": "e8457e015ff61a52beb95fe3d005a769df8f3b21b2e71daa9448383345991ce1",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.20170233228861661,
+        "sustained_mean_vx": 0.20170233228861661,
+        "sustained_p10_vx": 0.10839716450890392,
+        "max_tilt": 8.166821684892778,
+        "min_z": 0.11318392402781412,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.124141872406031,
+            "lateral_path_m": 0.02236524936873285,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8453039890125694,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.770130424379896,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927010,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927010",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927010/attempt_01/trace.json",
+      "source_sha256": "5795c164210efc3e2bb26d1af1a4d405b95fffbd592b8820d61e8335b7c74bb3",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.204499098861779,
+        "sustained_mean_vx": 0.204499098861779,
+        "sustained_p10_vx": 0.10753159138716249,
+        "max_tilt": 8.33502895729918,
+        "min_z": 0.11303907423408056,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.632738263260148,
+            "lateral_path_m": 0.023915486783736124,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8110961316681097,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7138532919745803,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927011,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927011",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927011/attempt_01/trace.json",
+      "source_sha256": "fb53a815b2a30758308c6b19ab36966c37f82a19a6fc4389a5ef6d7ee5b0b74a",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.1907603655863679,
+        "sustained_mean_vx": 0.1907603655863679,
+        "sustained_p10_vx": 0.09941816186366241,
+        "max_tilt": 7.79397731103935,
+        "min_z": 0.11291126695565445,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.3116955703100657,
+            "lateral_path_m": 0.022231348449689964,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8487271919909279,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.696909258247496,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927012,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927012",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927012/attempt_01/trace.json",
+      "source_sha256": "e6c6766975a34131d7525d7439e6dc2e3c9eb3a2efd197059cf1847fcc693161",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.20713650375015227,
+        "sustained_mean_vx": 0.20713650375015227,
+        "sustained_p10_vx": 0.11476178048490226,
+        "max_tilt": 8.182656893161068,
+        "min_z": 0.11238903910733553,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 3.3741275045868857,
+            "lateral_path_m": 0.026055164798592767,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8463304948412702,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7421611463789926,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927013,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927013",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927013/attempt_01/trace.json",
+      "source_sha256": "589fef704fcd41d549fd93ac3654d2e314707a3604b74825ba8bf14d61928dcb",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.18421169700963025,
+        "sustained_mean_vx": 0.18421169700963025,
+        "sustained_p10_vx": 0.09472546576635683,
+        "max_tilt": 8.181236822055043,
+        "min_z": 0.11281286202669301,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.8501289715304883,
+            "lateral_path_m": 0.022224918286892603,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8495812696481868,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.623653179235741,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927014,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927014",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927014/attempt_01/trace.json",
+      "source_sha256": "f1fddba051c45a488d66583fd78dcdc20ae258f33e15ef5e15fd50a3377f994f",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.1957324375881078,
+        "sustained_mean_vx": 0.1957324375881078,
+        "sustained_p10_vx": 0.10598729377894407,
+        "max_tilt": 8.40461166993611,
+        "min_z": 0.11290476831004609,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.3805126372611456,
+            "lateral_path_m": 0.023367150580053342,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8392381110017904,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7960941296993934,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    },
+    {
+      "seed": 927015,
+      "enabled": true,
+      "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927015",
+      "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927015/attempt_01/trace.json",
+      "source_sha256": "ffa2c275d8e708b0210bec9ffe7b714149e90a7b48528fbb159ec0018502e29b",
+      "prefix_max_abs": {
+        "obs": 0.0,
+        "action": 0.0,
+        "last_action": 0.0,
+        "command": 0.0,
+        "ctrl": 0.0
+      },
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.19166430209812405,
+        "sustained_mean_vx": 0.19166430209812405,
+        "sustained_p10_vx": 0.10252915616182029,
+        "max_tilt": 8.168510366457907,
+        "min_z": 0.11240094847646452,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 3.010551015146444,
+            "lateral_path_m": 0.02343241007600096,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8279149394943608,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7685914910801804,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      }
+    }
+  ],
+  "canary": {
+    "seed": 927001,
+    "enabled": false,
+    "directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/capture/927001_disabled",
+    "source_trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927001/attempt_01/trace.json",
+    "source_sha256": "4ca77b82342197479d953bff63063e3b5b26063160065ae3d2019ce097a4985f",
+    "prefix_max_abs": {
+      "obs": 0.0,
+      "action": 0.0,
+      "last_action": 0.0,
+      "command": 0.0,
+      "ctrl": 0.0
+    },
+    "task": {
+      "success": false,
+      "fell": false,
+      "first_fall_s": null,
+      "score": 0.0,
+      "sustained_mean_vx": 0.16785152209145832,
+      "sustained_p10_vx": 0.08460276694812847,
+      "max_tilt": 8.020882209238302,
+      "min_z": 0.11243602700513167,
+      "straight": [
+        {
+          "at": 1,
+          "heading_error_deg": 4.699398956330493,
+          "lateral_path_m": 0.026952730271803716,
+          "lateral_limit_m": 0.05,
+          "passed": true
+        }
+      ],
+      "turns": [
+        {
+          "at": 3,
+          "requested": 0.800000011920929,
+          "signed_yaw_rate": 0.8430695502892434,
+          "sustained_reverse": false,
+          "passed": true
+        },
+        {
+          "at": 6,
+          "requested": 0.800000011920929,
+          "signed_yaw_rate": 0.37672609036694155,
+          "sustained_reverse": false,
+          "passed": false
+        }
+      ],
+      "stops": [],
+      "actor_selection_passed": true,
+      "speed_gain_gate": "requires paired ordinary result"
+    }
+  },
+  "scope": "Diagnostic replay on existing development seeds; no new final evaluation or policy candidate"
+}

@@ -1,0 +1,6 @@
+{
+  "mass_max_abs": 4.735851319437323e-08,
+  "integration_max_abs": 1.1011336864541477e-07,
+  "slide_residual_max_abs": 5.184119800105691e-10,
+  "qvel_max_abs": 0.0
+}

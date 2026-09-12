@@ -1,0 +1,71 @@
+[0;93m2026-09-12 23:14:37.202453915 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+/home/ethan/Projects/microduck_rl/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:283: UserWarning: 
+    Found GPU0 NVIDIA GB10 which is of cuda capability 12.1.
+    Minimum and Maximum cuda capability supported by this version of PyTorch is
+    (8.0) - (12.0)
+    
+  warnings.warn(
+{
+  "passed": true,
+  "prefix_max_abs": {
+    "obs": 0.0,
+    "action": 0.0,
+    "last_action": 0.0,
+    "ctrl": 0.0,
+    "command": 0.0
+  },
+  "exploration_entry_obs_max_abs": 0.0,
+  "data": {
+    "episodes": 4,
+    "rows": 3600,
+    "actor_rows": 1400,
+    "discarded_after_fall": 0,
+    "falls": 0,
+    "deterministic_prefix_sprint_rows": 1200,
+    "command_max_abs": 0.0,
+    "last_action_max_abs": 0.0,
+    "final_time_max_abs": 6.998845947236987e-13,
+    "post_action_reward": true,
+    "padding_excluded": true
+  },
+  "behavior": {
+    "policy_export_max_abs": 0.0,
+    "ordinary_max_abs": 5.364418029785156e-07,
+    "deterministic_prefix_max_abs": 4.76837158203125e-07,
+    "noise_mean": [
+      -7.214239303721115e-05,
+      0.0001119544540415518,
+      0.0002870246535167098,
+      0.00018124723283108324,
+      -0.0008293691789731383,
+      -1.2307252291066106e-05,
+      -0.00037031760439276695,
+      -0.0001858734613051638,
+      0.0006419553537853062,
+      0.0011459513334557414,
+      0.00011415246990509331,
+      -5.187786155147478e-05,
+      0.0009795340010896325,
+      -0.00012374338984955102
+    ],
+    "noise_std": [
+      0.020107369869947433,
+      0.020736422389745712,
+      0.01950138248503208,
+      0.020453734323382378,
+      0.02018202841281891,
+      0.01973320171236992,
+      0.019633544608950615,
+      0.020004665479063988,
+      0.019754162058234215,
+      0.020112698897719383,
+      0.02022732049226761,
+      0.02026994153857231,
+      0.019755739718675613,
+      0.020599622279405594
+    ]
+  },
+  "training_updates": 0,
+  "scope": "Live deterministic history through7s, then stochastic actions; no cold-state restore"
+}
+

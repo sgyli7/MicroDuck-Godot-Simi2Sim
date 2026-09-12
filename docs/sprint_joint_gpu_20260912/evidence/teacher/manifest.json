@@ -1,0 +1,148 @@
+{
+  "version": "walking_teacher_replay_v1",
+  "data": "observations.npz",
+  "sha256": "aaf3bef6d7e05afed2a2bd261be1e8acf1d86745480922470f40bf5d0d5041ba",
+  "anchor_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+  "frames": 11488,
+  "phase_counts": {
+    "idle": 345,
+    "forward": 5986,
+    "backward": 0,
+    "lateral": 4116,
+    "turn": 4912
+  },
+  "sources": [
+    {
+      "path": "results/sprint_joint_20260912/teacher/manifest.json",
+      "sha256": "73eea72e87f1faceb055a031b382506f488cc164138640d14b3db258a6f56ed8",
+      "selection": "Existing successful S05 teacher trajectories; only ordinary-speed/idle rows retained"
+    },
+    {
+      "case": "walking_back",
+      "seed": 921000,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_back_921000/attempt_01/trace.json",
+      "sha256": "cab7ddd922b08b9b8e4ca1b8ce63cc5154ab8ae5ca760eb91dc94d36597fd644"
+    },
+    {
+      "case": "walking_back",
+      "seed": 921001,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_back_921001/attempt_01/trace.json",
+      "sha256": "680239df3621f5d767f0a60eb20bb960cf10604c69d67770560b0368c26cee40"
+    },
+    {
+      "case": "walking_back",
+      "seed": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_back_nominal/attempt_01/trace.json",
+      "sha256": "57f5ae4c1c30c4e2f424ee460abf3d9a839432a9b497ca02b3910b1e53f933e3"
+    },
+    {
+      "case": "walking_forward_long",
+      "seed": 921000,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_forward_long_921000/attempt_01/trace.json",
+      "sha256": "07d818aeab14aa93c356e6d208b6589e268fd3f669e4edaf28731e9aef36a5f0"
+    },
+    {
+      "case": "walking_forward_long",
+      "seed": 921001,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_forward_long_921001/attempt_01/trace.json",
+      "sha256": "01813b0442906086c713c4cfd227bffe1eec424b698c2a7d6eb30bfe578fea46"
+    },
+    {
+      "case": "walking_forward_long",
+      "seed": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_forward_long_nominal/attempt_01/trace.json",
+      "sha256": "39059a410c4b7105661b2522673df326c0f9d853a80364b45e45613918a76c43"
+    },
+    {
+      "case": "walking_repeated_start",
+      "seed": 921000,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_repeated_start_921000/attempt_01/trace.json",
+      "sha256": "fd2892be4a7ad4bac6006cd2461c486c0fe36d9b056f786f1261a0d71ac6d33c"
+    },
+    {
+      "case": "walking_repeated_start",
+      "seed": 921001,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_repeated_start_921001/attempt_01/trace.json",
+      "sha256": "dce8209384770a4bb235b69ec2514bf4b51579705efbec9c2a144340832505d8"
+    },
+    {
+      "case": "walking_repeated_start",
+      "seed": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_repeated_start_nominal/attempt_01/trace.json",
+      "sha256": "9fb7e34a1ad98b1d9346d622681bf098b6285ea1cf32666a91543914b90fc1ac"
+    },
+    {
+      "case": "walking_strafe",
+      "seed": 921000,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_strafe_921000/attempt_01/trace.json",
+      "sha256": "b2ac0b7f4a774864242d0312ab40ee77b4c9f447394e9999c044c763165f178c"
+    },
+    {
+      "case": "walking_strafe",
+      "seed": 921001,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_strafe_921001/attempt_01/trace.json",
+      "sha256": "0d9876de2f37ccbce76237e8803b29682c8831ec1310fdce31e3f9b507f6be67"
+    },
+    {
+      "case": "walking_strafe",
+      "seed": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_strafe_nominal/attempt_01/trace.json",
+      "sha256": "56f94dbb5e74d83e9490aaf381112f5b078273ebdcffff045dd2236cca54984e"
+    },
+    {
+      "case": "walking_straight",
+      "seed": 921000,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_straight_921000/attempt_01/trace.json",
+      "sha256": "4cb4a05d98090a868ec858f4ac54240584d4b03faa96d0aad670950cb00d4c62"
+    },
+    {
+      "case": "walking_straight",
+      "seed": 921001,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_straight_921001/attempt_01/trace.json",
+      "sha256": "e7019a55f67f0eebc00749e53ffdd4053418eeb121ad956a978760bc700811d4"
+    },
+    {
+      "case": "walking_straight",
+      "seed": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_straight_nominal/attempt_01/trace.json",
+      "sha256": "6851de105ab45cfc7386f839dd798e6576459efb640d7ace325edc6925410fbb"
+    },
+    {
+      "case": "walking_turn_left",
+      "seed": 921000,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_turn_left_921000/attempt_01/trace.json",
+      "sha256": "ed3c0aa9ea3765a137d8cd57dbb0ad50fac437373bb5bccee9098afc580d4de2"
+    },
+    {
+      "case": "walking_turn_left",
+      "seed": 921001,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_turn_left_921001/attempt_01/trace.json",
+      "sha256": "9b99cb8bd521b9043fb9cc5c4aa7439c70a323c015f3f619e44e1c522690b800"
+    },
+    {
+      "case": "walking_turn_left",
+      "seed": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_turn_left_nominal/attempt_01/trace.json",
+      "sha256": "2d647237debbde339fc7ab49cb17ecd8c3532bd74c6adf4fe85a13cd7ba2a737"
+    },
+    {
+      "case": "walking_turn_right",
+      "seed": 921000,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_turn_right_921000/attempt_01/trace.json",
+      "sha256": "bb155bd60225a334c2effbc0691180bcb0ab1c3b8c8b33ce134a0879b0e737e7"
+    },
+    {
+      "case": "walking_turn_right",
+      "seed": 921001,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_turn_right_921001/attempt_01/trace.json",
+      "sha256": "5a82087aad1b3d19f6fa6048b6335e8986b898da2563d96289bbf0959ddfdb61"
+    },
+    {
+      "case": "walking_turn_right",
+      "seed": null,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/j01d_ordinary_regression/new/walking_turn_right_nominal/attempt_01/trace.json",
+      "sha256": "7e2865c82e227c36eae9ab18ec9f9f4dd8ee57aab45523f3487df74ff3c927f0"
+    }
+  ],
+  "selection": "Only successful frozen S05 reference occupancy at ordinary commands; candidate on-policy recovery states are not teacher constrained"
+}

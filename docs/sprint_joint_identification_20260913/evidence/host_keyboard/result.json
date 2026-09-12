@@ -1,0 +1,32 @@
+{
+  "check": "x11_synthetic_host_keyboard",
+  "checks": {
+    "right_shift_ignored": true,
+    "left_shift_sprint": true,
+    "ordinary_forward": true,
+    "left_turn": true,
+    "right_turn": true,
+    "roller_modifier_ignored": true,
+    "no_roller_sprint": true,
+    "resets": true,
+    "switches": true,
+    "pause_resume": true,
+    "clean_exit": true
+  },
+  "passed": true,
+  "rows": 399,
+  "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/host_keyboard/trace.json",
+  "window_pid": 1552989,
+  "command": [
+    "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260913-sprint-reversal-trial/MicroDuck.arm64",
+    "--rendering-method",
+    "gl_compatibility",
+    "--resolution",
+    "1280x800",
+    "--",
+    "--render-fps=60",
+    "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/host_keyboard/trace.json",
+    "--seconds=40"
+  ],
+  "runtime": "exported_binary"
+}

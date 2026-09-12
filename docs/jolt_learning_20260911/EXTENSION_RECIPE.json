@@ -1,0 +1,26 @@
+{
+  "registered_unix": 1789137292.4078283,
+  "hypothesis": "Longer fixed-budget comparison of full task-state PPO versus action-response-based restricted joints; do not judge learning only at 262k.",
+  "training_seeds": [
+    71,
+    72,
+    73
+  ],
+  "families": [
+    "r1_full",
+    "r2_sagittal"
+  ],
+  "parent_samples": 262144,
+  "additional_samples": 786432,
+  "cumulative_samples": 1048576,
+  "unchanged": "anchor, objective, observations, optimizer state, hyperparameters, physical parameters, training conditions, acceptance cases",
+  "resume": "latest complete update, preserved generators, new physical episodes",
+  "candidate_rule": "Only fixed terminal 262k/1M candidates; require no loss of old successes, no new falls, retained cruise, and an explicit gain before considering promotion.",
+  "final_holdout": "918000\u2013918029 remain unused until selection is frozen",
+  "concurrency": 2,
+  "scheduling": "Each seed pair trains concurrently; both finish before native paired acceptance. Internal generic training smoke evaluation is not a performance benchmark.",
+  "timeout_per_training_s": 2250,
+  "job_minutes": 35,
+  "scheduling_registered_unix": 1789137487.538324,
+  "prior_waiter": "Terminated before any extension started; no training candidate or checkpoint discarded."
+}

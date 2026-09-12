@@ -1,0 +1,11 @@
+{
+  "created_unix": 1789214038.9769359,
+  "owned_live_processes": [],
+  "owned_live_supervisors": [],
+  "owned_running_containers": [],
+  "jobs_started": 36,
+  "jobs_finished": 36,
+  "actors": [],
+  "passed": true,
+  "note": "Read-only audit using recorded process groups/start ticks and container bind-mount ownership. Unrelated workloads were not stopped."
+}

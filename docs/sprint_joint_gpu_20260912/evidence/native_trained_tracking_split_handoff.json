@@ -1,0 +1,44 @@
+{
+  "arm": "native_trained_tracking_split",
+  "records": [
+    {
+      "case": "sprint_shift_first",
+      "seed": 927008,
+      "baseline_success": true,
+      "segments": [
+        {
+          "kind": "stops",
+          "start": 9,
+          "end": 12,
+          "held": [],
+          "skills": [
+            "walking"
+          ],
+          "previous_skill": "sprint",
+          "action_jump_l2": 0.6142618151605734,
+          "metrics": {
+            "at": 9,
+            "onset_s": null,
+            "passed": false
+          }
+        }
+      ],
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 600,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.547918011776346e-15,
+          "body_quat": 1.1934897514720433e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      }
+    }
+  ],
+  "all_failures_after_sprint_to_walking": true
+}

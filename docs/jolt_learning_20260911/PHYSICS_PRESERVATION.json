@@ -1,0 +1,92 @@
+{
+  "config_groups": {
+    "30806df1310855c5de30527ba574ff60e4f8b8844e28b2a8b2554d81651b44a1": [
+      "r0_command_heading_v1_s71",
+      "r0_command_heading_v1_s72",
+      "r0_command_heading_v1_s73",
+      "r0_legacy_s71",
+      "r0_legacy_s72",
+      "r0_legacy_s73",
+      "r1_full_s71",
+      "r1_full_s71_1m",
+      "r1_full_s72",
+      "r1_full_s72_1m",
+      "r1_full_s73",
+      "r1_full_s73_1m",
+      "r1_masked_s71",
+      "r1_masked_s72",
+      "r1_masked_s73",
+      "r2_sagittal_s71",
+      "r2_sagittal_s71_1m",
+      "r2_sagittal_s72",
+      "r2_sagittal_s72_1m",
+      "r2_sagittal_s73",
+      "r2_sagittal_s73_1m",
+      "teacher_integration_smoke",
+      "teacher_resume_smoke"
+    ]
+  },
+  "current_files": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_roller.json": {
+      "expected": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd",
+      "actual": "2d5c8072ac5647d031aea0428c13c9b99cac59e2f50ec6364d7a58d1778ed7cd",
+      "match": true
+    },
+    "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_rollers.xml": {
+      "expected": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d",
+      "actual": "b22987450ae4d8e4656d6f236390ef0d01ad316560f645a557a2d18c4b45dc2d",
+      "match": true
+    },
+    "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd": {
+      "expected": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e",
+      "actual": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e",
+      "match": true
+    },
+    "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot_spec.json": {
+      "expected": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7",
+      "actual": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7",
+      "match": true
+    },
+    "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_roller/robot.tscn": {
+      "expected": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8",
+      "actual": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8",
+      "match": true
+    }
+  },
+  "game_physics_snapshots": {
+    "physics_server.gd": {
+      "sha256": {
+        "godot": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e",
+        "results/jolt_learning_20260911/runtime_r0": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e",
+        "results/jolt_learning_20260911/runtime_r1": "14728cca6c3bca91db12c09eb8082214105f4c38eafd757489c0235f6beccf1e"
+      },
+      "equal": true
+    },
+    "project.godot": {
+      "sha256": {
+        "godot": "17055f101299bcd499cd1e694d4f0e94c1981690da5869a436475d5698196df0",
+        "results/jolt_learning_20260911/runtime_r0": "17055f101299bcd499cd1e694d4f0e94c1981690da5869a436475d5698196df0",
+        "results/jolt_learning_20260911/runtime_r1": "17055f101299bcd499cd1e694d4f0e94c1981690da5869a436475d5698196df0"
+      },
+      "equal": true
+    },
+    "generated/microduck_roller/robot_spec.json": {
+      "sha256": {
+        "godot": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7",
+        "results/jolt_learning_20260911/runtime_r0": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7",
+        "results/jolt_learning_20260911/runtime_r1": "20a594fba704f08e082d52c725c0956861199cab1c90db7de652170ef31e81f7"
+      },
+      "equal": true
+    },
+    "generated/microduck_roller/robot.tscn": {
+      "sha256": {
+        "godot": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8",
+        "results/jolt_learning_20260911/runtime_r0": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8",
+        "results/jolt_learning_20260911/runtime_r1": "bc6c8e9727e5619135a2d9e2a694dde19301793b5d0813af910efbecfa1d4eb8"
+      },
+      "equal": true
+    }
+  },
+  "all_current_match": true,
+  "all_snapshots_match": true
+}

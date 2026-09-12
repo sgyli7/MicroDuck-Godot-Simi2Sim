@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "models": {
+    "motion_state": {
+      "sha256": "2dc9d02e466d4c9eceeab98a6485a31e33c57da11889b64a5101808ccb95a27b",
+      "rows": 606,
+      "cuda_max_abs": 1.9073486328125e-06,
+      "cpu_max_abs": 1.6689300537109375e-06,
+      "batch_vs_single": 3.5762786865234375e-07,
+      "passed": true,
+      "dtypes": [
+        "torch.float32"
+      ],
+      "device": "NVIDIA GB10"
+    }
+  }
+}

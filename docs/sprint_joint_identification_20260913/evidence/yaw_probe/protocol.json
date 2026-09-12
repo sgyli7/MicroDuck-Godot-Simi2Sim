@@ -1,0 +1,28 @@
+{
+  "seeds": [
+    927000,
+    927001,
+    927002,
+    927003,
+    927004,
+    927005,
+    927006,
+    927007,
+    927008,
+    927009,
+    927010,
+    927011,
+    927012,
+    927013,
+    927014,
+    927015
+  ],
+  "duration_seconds": 0.2,
+  "scope": "Input-layer control change only; a402 policy and game physics frozen. Existing angular ramp is ~80ms. During sprint reversal only, rate becomes 2*sprint_vmax_ang/.2; zero targets, ordinary behavior, translational ramps and cruise target remain original. No second motion filter.",
+  "gate": "Both direction phases and stop/straight/fall gates in original full 18s case, all 16 dev seeds; disabled canary is bit-identical, active prefix before first reversal is bit-identical. Actual command change >.1 in first reversal window is mandatory. Python/native shadow must pass existing 1e-5 maximum error gate. No parameter sweep.",
+  "code_sha256": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_probe.py": "8dbef82cada375339f2da29d669e510b3ca9e150f8af30d40109411ba84e966c",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_reversal.py": "432199ede891b2004a8a7b71bd1dd345f9b973e2b6f6f9ce24a0a996bede0bfd",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/yaw_reversal.gd": "6a6253e5cd7bc93c0eb31e671bf33a569380bb9efaf111a8d74f7bfc155a2df6"
+  }
+}

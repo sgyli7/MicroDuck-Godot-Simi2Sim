@@ -1,0 +1,596 @@
+{
+  "results": {
+    "source": {
+      "microstep_parity_max_abs": 6.705522537231445e-08,
+      "microstep_parity_components": {
+        "qpos": 1.1641532182693481e-09,
+        "qvel": 6.705522537231445e-08,
+        "observer_qd": 5.960464477539063e-08
+      },
+      "whole_world_parity": {
+        "qpos": 1.1641532182693481e-09,
+        "qvel": 6.705522537231445e-08
+      },
+      "metrics": {
+        "train": {
+          "landing": {
+            "components": {
+              "velocity": 0.030796704016117296,
+              "joint": 0.021565972039973073,
+              "position": 0.12756998246261986
+            },
+            "objective": 0.05997755283957007
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.00011403621732747541,
+              "joint": 0.0835577139355492,
+              "position": 0.07667264096551538
+            },
+            "objective": 0.05344813037279735
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.08369529166347295,
+              "joint": 0.1857070900721169,
+              "position": 0.2580158056566588
+            },
+            "objective": 0.1758060624640829
+          }
+        },
+        "validation": {
+          "landing": {
+            "components": {
+              "velocity": 0.03169134353612878,
+              "joint": 0.02104634065750405,
+              "position": 0.1094733756456879
+            },
+            "objective": 0.054070353279773574
+          },
+          "standing": {
+            "components": {
+              "velocity": 9.824626818502557e-05,
+              "joint": 0.0718900147831774,
+              "position": 0.06244281560103655
+            },
+            "objective": 0.04481035888413299
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.0946380509607114,
+              "joint": 0.18028473683441681,
+              "position": 0.2606348637032167
+            },
+            "objective": 0.17851921716611496
+          }
+        }
+      },
+      "lag_probe_velocity_rmse": {
+        "-0.01": 0.024319004819685977,
+        "-0.005": 0.013323340736487782,
+        "0.0": 0.008517678245293333,
+        "0.005": 0.03027748466819538,
+        "0.01": 0.046699525638208186
+      },
+      "first_contact_gpu_s": [
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045
+      ],
+      "first_contact_native_s": [
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06
+      ],
+      "precontact_joint_rms": 2.1805237903453616e-05,
+      "elapsed_s": 0.5006939520244487
+    },
+    "two_tick": {
+      "microstep_parity_max_abs": 5.960464477539062e-07,
+      "microstep_parity_components": {
+        "qpos": 3.259629011154175e-09,
+        "qvel": 1.9371509552001953e-07,
+        "observer_qd": 5.960464477539062e-07
+      },
+      "whole_world_parity": {
+        "qpos": 3.259629011154175e-09,
+        "qvel": 1.9371509552001953e-07
+      },
+      "metrics": {
+        "train": {
+          "landing": {
+            "components": {
+              "velocity": 0.03758182609914273,
+              "joint": 0.030131330290907952,
+              "position": 0.23228618205859128
+            },
+            "objective": 0.09999977948288065
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.00015759672000966813,
+              "joint": 0.06794393558468492,
+              "position": 0.10371345788730045
+            },
+            "objective": 0.057271663397331675
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.11468687685578069,
+              "joint": 0.20756293765134856,
+              "position": 0.48035953472786763
+            },
+            "objective": 0.26753644974499896
+          }
+        },
+        "validation": {
+          "landing": {
+            "components": {
+              "velocity": 0.03570935706202915,
+              "joint": 0.031843550046440454,
+              "position": 0.2062479752037255
+            },
+            "objective": 0.09126696077073171
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.0002372983110279379,
+              "joint": 0.06222996321504042,
+              "position": 0.10339758166199964
+            },
+            "objective": 0.05528828106268933
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.11817174651619092,
+              "joint": 0.19445127687720065,
+              "position": 0.5964899653165361
+            },
+            "objective": 0.3030376629033092
+          }
+        }
+      },
+      "lag_probe_velocity_rmse": {
+        "-0.01": 0.017294258043507187,
+        "-0.005": 0.011576802302133279,
+        "0.0": 0.009224489042103351,
+        "0.005": 0.06352961098812376,
+        "0.01": 0.06188366088934243
+      },
+      "first_contact_gpu_s": [
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045
+      ],
+      "first_contact_native_s": [
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06
+      ],
+      "precontact_joint_rms": 2.180525270962348e-05,
+      "elapsed_s": 0.5179480130027514
+    },
+    "imp99": {
+      "microstep_parity_max_abs": 5.960464477539062e-07,
+      "microstep_parity_components": {
+        "qpos": 2.7939677238464355e-09,
+        "qvel": 2.2351741790771484e-07,
+        "observer_qd": 5.960464477539062e-07
+      },
+      "whole_world_parity": {
+        "qpos": 2.7939677238464355e-09,
+        "qvel": 2.2351741790771484e-07
+      },
+      "metrics": {
+        "train": {
+          "landing": {
+            "components": {
+              "velocity": 0.03184334564051496,
+              "joint": 0.02331968065626085,
+              "position": 0.15753882938382446
+            },
+            "objective": 0.0709006185602001
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.00017034607267041673,
+              "joint": 0.03354860238113047,
+              "position": 0.13065838366200788
+            },
+            "objective": 0.05479244403860292
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.11531834578436083,
+              "joint": 0.19909811192058738,
+              "position": 0.5244484291744613
+            },
+            "objective": 0.2796216289598032
+          }
+        },
+        "validation": {
+          "landing": {
+            "components": {
+              "velocity": 0.032602281689762286,
+              "joint": 0.027706017523487645,
+              "position": 0.13628098951660858
+            },
+            "objective": 0.06552976290995284
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.0002033433010519326,
+              "joint": 0.03688717716319881,
+              "position": 0.11727402025936412
+            },
+            "objective": 0.05145484690787162
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.1320035289204231,
+              "joint": 0.19404834443579747,
+              "position": 0.491018071226675
+            },
+            "objective": 0.2723566481942985
+          }
+        }
+      },
+      "lag_probe_velocity_rmse": {
+        "-0.01": 0.024783242473156834,
+        "-0.005": 0.013564700693004797,
+        "0.0": 0.008650114742453677,
+        "0.005": 0.029730221578203868,
+        "0.01": 0.04622295514742265
+      },
+      "first_contact_gpu_s": [
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045
+      ],
+      "first_contact_native_s": [
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06
+      ],
+      "precontact_joint_rms": 2.180520847063039e-05,
+      "elapsed_s": 0.5118525869911537
+    },
+    "two_tick_imp99": {
+      "microstep_parity_max_abs": 5.960464477539062e-07,
+      "microstep_parity_components": {
+        "qpos": 3.8853613659739494e-09,
+        "qvel": 2.5331974029541016e-07,
+        "observer_qd": 5.960464477539062e-07
+      },
+      "whole_world_parity": {
+        "qpos": 3.8853613659739494e-09,
+        "qvel": 2.5331974029541016e-07
+      },
+      "metrics": {
+        "train": {
+          "landing": {
+            "components": {
+              "velocity": 0.03638173735130559,
+              "joint": 0.02990157959610503,
+              "position": 0.25655709678022437
+            },
+            "objective": 0.107613471242545
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.00022975079260423393,
+              "joint": 0.04492451001975457,
+              "position": 0.15276664439992202
+            },
+            "objective": 0.06597363507076028
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.1474650874642494,
+              "joint": 0.22487914380792617,
+              "position": 0.8037057538767816
+            },
+            "objective": 0.39201666171631905
+          }
+        },
+        "validation": {
+          "landing": {
+            "components": {
+              "velocity": 0.03522670214178987,
+              "joint": 0.03492548449127307,
+              "position": 0.22413006506460656
+            },
+            "objective": 0.09809408389922318
+          },
+          "standing": {
+            "components": {
+              "velocity": 0.0003090195655962098,
+              "joint": 0.04584819573281741,
+              "position": 0.13867983832622746
+            },
+            "objective": 0.0616123512082137
+          },
+          "moving": {
+            "components": {
+              "velocity": 0.13884671447967964,
+              "joint": 0.2117666035617624,
+              "position": 0.8290034337739639
+            },
+            "objective": 0.39320558393846866
+          }
+        }
+      },
+      "lag_probe_velocity_rmse": {
+        "-0.01": 0.01705121423340555,
+        "-0.005": 0.011356690698187942,
+        "0.0": 0.009118065029702312,
+        "0.005": 0.06219301260397583,
+        "0.01": 0.06232396639193467
+      },
+      "first_contact_gpu_s": [
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045,
+        0.045
+      ],
+      "first_contact_native_s": [
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.06
+      ],
+      "precontact_joint_rms": 2.18052251546796e-05,
+      "elapsed_s": 0.5300473459938075
+    }
+  },
+  "decisions": {
+    "two_tick": {
+      "checks": [
+        {
+          "split": "train",
+          "phase": "landing",
+          "objective_ratio": 1.6672867556027726,
+          "max_component_ratio": 1.8208529747713575,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "moving",
+          "objective_ratio": 1.5217703303016443,
+          "max_component_ratio": 1.861744607100083,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "standing",
+          "objective_ratio": 1.0715372642198224,
+          "max_component_ratio": 1.38198831654597,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "landing",
+          "objective_ratio": 1.6879298032046055,
+          "max_component_ratio": 1.884001237627402,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "moving",
+          "objective_ratio": 1.6975072359931302,
+          "max_component_ratio": 2.2886038991151834,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "standing",
+          "objective_ratio": 1.2338281245559604,
+          "max_component_ratio": 2.415341726578743,
+          "passed": false
+        }
+      ],
+      "precontact_passed": true,
+      "passed": false
+    },
+    "imp99": {
+      "checks": [
+        {
+          "split": "train",
+          "phase": "landing",
+          "objective_ratio": 1.18211922966993,
+          "max_component_ratio": 1.2349208359418407,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "moving",
+          "objective_ratio": 1.5905118688209616,
+          "max_component_ratio": 2.0326213265878135,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "standing",
+          "objective_ratio": 1.0251517435021407,
+          "max_component_ratio": 1.7041069932725204,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "landing",
+          "objective_ratio": 1.211935172142956,
+          "max_component_ratio": 1.3164292061199292,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "moving",
+          "objective_ratio": 1.5256433033809818,
+          "max_component_ratio": 1.8839308918617819,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "standing",
+          "objective_ratio": 1.148280178717591,
+          "max_component_ratio": 2.069730533367227,
+          "passed": false
+        }
+      ],
+      "precontact_passed": true,
+      "passed": false
+    },
+    "two_tick_imp99": {
+      "checks": [
+        {
+          "split": "train",
+          "phase": "landing",
+          "objective_ratio": 1.7942291098536989,
+          "max_component_ratio": 2.0111086623014933,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "moving",
+          "objective_ratio": 2.2298244794397113,
+          "max_component_ratio": 3.1149477522561986,
+          "passed": false
+        },
+        {
+          "split": "train",
+          "phase": "standing",
+          "objective_ratio": 1.2343487903243446,
+          "max_component_ratio": 2.0147177623795027,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "landing",
+          "objective_ratio": 1.8141935080701208,
+          "max_component_ratio": 2.047347711191501,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "moving",
+          "objective_ratio": 2.2025952733849636,
+          "max_component_ratio": 3.1807081447014123,
+          "passed": false
+        },
+        {
+          "split": "validation",
+          "phase": "standing",
+          "objective_ratio": 1.3749577718742656,
+          "max_component_ratio": 3.1453567784807697,
+          "passed": false
+        }
+      ],
+      "precontact_passed": true,
+      "passed": false
+    }
+  },
+  "eligible": [],
+  "completed": true
+}

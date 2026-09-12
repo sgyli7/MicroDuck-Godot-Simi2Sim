@@ -1,0 +1,222 @@
+{
+  "completed": true,
+  "arms": {
+    "new_observer": {
+      "status": "completed",
+      "velocity_observer": "joint_fd",
+      "actor_sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+      "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+      "feet": "jolt",
+      "worlds": 263,
+      "elapsed_rollout_s": 6.192233082983876,
+      "parity_max_abs": 9.5367431640625e-07,
+      "passes": 135,
+      "falls": 0,
+      "candidate_count": 135,
+      "sampling": "post_action_with_final_state_v2",
+      "scope": "Projected native zero-velocity reset and identical input tapes; different contact solver, no native acceptance substitution",
+      "ordinary_pass": 128,
+      "native_failure_case": {
+        "case": "sprint_alternate",
+        "seed": 927001,
+        "ordinary": false,
+        "metrics": {
+          "success": true,
+          "fell": false,
+          "first_fall_s": null,
+          "score": 0.22591528308354897,
+          "sustained_mean_vx": 0.22591528308354897,
+          "sustained_p10_vx": 0.14176025409428425,
+          "max_tilt": 7.644004877125227,
+          "min_z": 0.11397136747837067,
+          "straight": [
+            {
+              "at": 1,
+              "heading_error_deg": 2.4269315992727156,
+              "lateral_path_m": 0.017319082429107874,
+              "lateral_limit_m": 0.05,
+              "passed": true
+            },
+            {
+              "at": 9,
+              "heading_error_deg": 6.994062588000079,
+              "lateral_path_m": 0.02960030923552533,
+              "lateral_limit_m": 0.11848281784832296,
+              "passed": true
+            }
+          ],
+          "turns": [
+            {
+              "at": 3,
+              "requested": 0.8000002503395081,
+              "signed_yaw_rate": 0.8752205911315468,
+              "sustained_reverse": false,
+              "passed": true
+            },
+            {
+              "at": 6,
+              "requested": 0.8000002503395081,
+              "signed_yaw_rate": 0.7449427996092988,
+              "sustained_reverse": false,
+              "passed": true
+            }
+          ],
+          "stops": [
+            {
+              "at": 14,
+              "onset_s": 0.7400000000000002,
+              "passed": true
+            }
+          ],
+          "actor_selection_passed": true,
+          "speed_gain_gate": "requires paired ordinary result"
+        }
+      }
+    },
+    "new_actor_old_observer": {
+      "status": "completed",
+      "velocity_observer": "solver",
+      "actor_sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+      "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+      "feet": "jolt",
+      "worlds": 263,
+      "elapsed_rollout_s": 6.148439962009434,
+      "parity_max_abs": 9.5367431640625e-07,
+      "passes": 135,
+      "falls": 0,
+      "candidate_count": 135,
+      "sampling": "post_action_with_final_state_v2",
+      "scope": "Projected native zero-velocity reset and identical input tapes; different contact solver, no native acceptance substitution",
+      "ordinary_pass": 128,
+      "native_failure_case": {
+        "case": "sprint_alternate",
+        "seed": 927001,
+        "ordinary": false,
+        "metrics": {
+          "success": true,
+          "fell": false,
+          "first_fall_s": null,
+          "score": 0.2186884005175361,
+          "sustained_mean_vx": 0.2186884005175361,
+          "sustained_p10_vx": 0.1360114399647484,
+          "max_tilt": 7.631455110714315,
+          "min_z": 0.1138811782002449,
+          "straight": [
+            {
+              "at": 1,
+              "heading_error_deg": 2.2616414613142615,
+              "lateral_path_m": 0.01630443805656953,
+              "lateral_limit_m": 0.05,
+              "passed": true
+            },
+            {
+              "at": 9,
+              "heading_error_deg": 6.295669403857287,
+              "lateral_path_m": 0.02727167421885737,
+              "lateral_limit_m": 0.11502738067943773,
+              "passed": true
+            }
+          ],
+          "turns": [
+            {
+              "at": 3,
+              "requested": 0.8000002503395081,
+              "signed_yaw_rate": 0.8626377190761114,
+              "sustained_reverse": false,
+              "passed": true
+            },
+            {
+              "at": 6,
+              "requested": 0.8000002503395081,
+              "signed_yaw_rate": 0.7480361024757065,
+              "sustained_reverse": false,
+              "passed": true
+            }
+          ],
+          "stops": [
+            {
+              "at": 14,
+              "onset_s": 1.08,
+              "passed": true
+            }
+          ],
+          "actor_selection_passed": true,
+          "speed_gain_gate": "requires paired ordinary result"
+        }
+      }
+    },
+    "old_actor_new_observer": {
+      "status": "completed",
+      "velocity_observer": "joint_fd",
+      "actor_sha256": "1d2b330a588ae67a11d84e74fedf9ea48b3fadd684f81a552af62078b37c406b",
+      "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+      "feet": "jolt",
+      "worlds": 263,
+      "elapsed_rollout_s": 6.211709108989453,
+      "parity_max_abs": 9.5367431640625e-07,
+      "passes": 135,
+      "falls": 0,
+      "candidate_count": 135,
+      "sampling": "post_action_with_final_state_v2",
+      "scope": "Projected native zero-velocity reset and identical input tapes; different contact solver, no native acceptance substitution",
+      "ordinary_pass": 128,
+      "native_failure_case": {
+        "case": "sprint_alternate",
+        "seed": 927001,
+        "ordinary": false,
+        "metrics": {
+          "success": true,
+          "fell": false,
+          "first_fall_s": null,
+          "score": 0.23423204701113365,
+          "sustained_mean_vx": 0.23423204701113365,
+          "sustained_p10_vx": 0.15918000055094306,
+          "max_tilt": 7.835889440392118,
+          "min_z": 0.1139756441116333,
+          "straight": [
+            {
+              "at": 1,
+              "heading_error_deg": 3.207211901179854,
+              "lateral_path_m": 0.017650747033707767,
+              "lateral_limit_m": 0.05,
+              "passed": true
+            },
+            {
+              "at": 9,
+              "heading_error_deg": 4.770588795192898,
+              "lateral_path_m": 0.024847270638619703,
+              "lateral_limit_m": 0.12059569671223075,
+              "passed": true
+            }
+          ],
+          "turns": [
+            {
+              "at": 3,
+              "requested": 0.8000002503395081,
+              "signed_yaw_rate": 0.8700474005607118,
+              "sustained_reverse": false,
+              "passed": true
+            },
+            {
+              "at": 6,
+              "requested": 0.8000002503395081,
+              "signed_yaw_rate": 0.6740814487793574,
+              "sustained_reverse": false,
+              "passed": true
+            }
+          ],
+          "stops": [
+            {
+              "at": 14,
+              "onset_s": 0.4800000000000004,
+              "passed": true
+            }
+          ],
+          "actor_selection_passed": true,
+          "speed_gain_gate": "requires paired ordinary result"
+        }
+      }
+    }
+  },
+  "final_seeds_used": false
+}

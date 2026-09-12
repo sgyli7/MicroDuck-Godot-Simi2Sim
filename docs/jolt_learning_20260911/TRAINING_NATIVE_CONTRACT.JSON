@@ -1,0 +1,24 @@
+[
+  {
+    "case": "roller_brake_1s",
+    "steps": 400,
+    "max_abs": {
+      "obs": 5.329070518200751e-15,
+      "action": 5.10702591327572e-15,
+      "command": 4.440892098500626e-16
+    },
+    "first_difference": null,
+    "passed": true
+  },
+  {
+    "case": "roller_turn_brake",
+    "steps": 550,
+    "max_abs": {
+      "obs": 5.329070518200751e-15,
+      "action": 4.884981308350689e-15,
+      "command": 4.440892098500626e-16
+    },
+    "first_difference": null,
+    "passed": true
+  }
+]

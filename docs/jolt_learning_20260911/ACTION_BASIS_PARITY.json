@@ -1,0 +1,14 @@
+{
+  "parity": {
+    "random_max_abs": 0.0,
+    "random_batch_max_abs": 0.0,
+    "realistic_max_abs": 0.0,
+    "realistic_batch_max_abs": 0.0,
+    "threshold": 1e-05,
+    "passed": true
+  },
+  "retained_joints_exact": true,
+  "push_and_coast_exact": true,
+  "exploration_unselected_std": 9.999999747378752e-06,
+  "legacy_checkpoint_max_abs": 0.0
+}

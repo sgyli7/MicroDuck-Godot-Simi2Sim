@@ -1,0 +1,55 @@
+{
+  "commands": [
+    [
+      "env",
+      "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+      "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+      "results/sprint_gpu_match_20260912/gpu_native_starts.py",
+      "--actor",
+      "results/sprint_20260912/runs/s05_native_handoff/final.onnx",
+      "--feet",
+      "source",
+      "--out",
+      "results/sprint_gpu_match_20260912/matched_start_s05_source"
+    ],
+    [
+      "env",
+      "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+      "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+      "results/sprint_gpu_match_20260912/gpu_native_starts.py",
+      "--actor",
+      "results/sprint_20260912/runs/s05_native_handoff/final.onnx",
+      "--feet",
+      "jolt",
+      "--out",
+      "results/sprint_gpu_match_20260912/matched_start_s05_jolt"
+    ],
+    [
+      "env",
+      "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+      "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+      "results/sprint_gpu_match_20260912/gpu_native_starts.py",
+      "--actor",
+      "results/sprint_gpu_match_20260912/train_source_graph/final.onnx",
+      "--feet",
+      "source",
+      "--out",
+      "results/sprint_gpu_match_20260912/matched_start_source_candidate"
+    ],
+    [
+      "env",
+      "PYTHONPATH=/home/ethan/Projects/MicroDuck/sim2sim/src",
+      "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+      "results/sprint_gpu_match_20260912/gpu_native_starts.py",
+      "--actor",
+      "results/sprint_gpu_match_20260912/train_jolt_graph/final.onnx",
+      "--feet",
+      "jolt",
+      "--out",
+      "results/sprint_gpu_match_20260912/matched_start_jolt_candidate"
+    ]
+  ],
+  "purpose": "Same native reset and tapes diagnose proxy-to-Jolt gap, no tuning or candidate selection from GPU reward",
+  "heldout": false,
+  "per_arm_timeout_s": 180
+}

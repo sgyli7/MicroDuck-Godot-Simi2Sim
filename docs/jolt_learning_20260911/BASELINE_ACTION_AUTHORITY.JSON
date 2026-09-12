@@ -1,0 +1,117 @@
+{
+  "braking_frames": 19144,
+  "joints": [
+    {
+      "joint": "left_hip_yaw",
+      "low": -0.4363323129985824,
+      "high": 0.5235987755982988,
+      "outside_fraction": 0.9899185123276222,
+      "mean_abs_error": 1.2761877229162781,
+      "max_abs_tau": 0.650666788200853
+    },
+    {
+      "joint": "left_hip_roll",
+      "low": -0.3839724354387525,
+      "high": 0.3839724354387525,
+      "outside_fraction": 0.08864396155453405,
+      "mean_abs_error": 0.2796124379030169,
+      "max_abs_tau": 0.526160620192198
+    },
+    {
+      "joint": "left_hip_pitch",
+      "low": -1.570796326795005,
+      "high": 1.5707963267947882,
+      "outside_fraction": 0.0,
+      "mean_abs_error": 0.17208698684686768,
+      "max_abs_tau": 0.312251517908104
+    },
+    {
+      "joint": "left_knee",
+      "low": -1.570796326795012,
+      "high": 1.570796326794781,
+      "outside_fraction": 0.0,
+      "mean_abs_error": 0.241552832082426,
+      "max_abs_tau": 0.372322957118916
+    },
+    {
+      "joint": "left_ankle",
+      "low": -1.5707963267949054,
+      "high": 1.5707963267948877,
+      "outside_fraction": 0.9810384454659423,
+      "mean_abs_error": 0.5933491264714547,
+      "max_abs_tau": 0.601046254001626
+    },
+    {
+      "joint": "neck_pitch",
+      "low": -1.5707963267948966,
+      "high": 1.0471975511965976,
+      "outside_fraction": 0.0,
+      "mean_abs_error": 0.061500841039327,
+      "max_abs_tau": 0.229148491801467
+    },
+    {
+      "joint": "head_pitch",
+      "low": -1.5707963267948974,
+      "high": 1.5707963267948957,
+      "outside_fraction": 0.0,
+      "mean_abs_error": 0.08426944043392698,
+      "max_abs_tau": 0.150545265991624
+    },
+    {
+      "joint": "head_yaw",
+      "low": -2.967059728390373,
+      "high": 2.967059728390348,
+      "outside_fraction": 0.0,
+      "mean_abs_error": 0.004912649143041941,
+      "max_abs_tau": 0.226230651321405
+    },
+    {
+      "joint": "head_roll",
+      "low": -0.43633231299859127,
+      "high": 0.4363323129985735,
+      "outside_fraction": 0.0,
+      "mean_abs_error": 0.007363257939527987,
+      "max_abs_tau": 0.135301468824927
+    },
+    {
+      "joint": "right_hip_yaw",
+      "low": -0.5235987755982988,
+      "high": 0.4363323129985824,
+      "outside_fraction": 0.9890827413288759,
+      "mean_abs_error": 0.9207410685550992,
+      "max_abs_tau": 0.646581871299072
+    },
+    {
+      "joint": "right_hip_roll",
+      "low": -0.3839724354387525,
+      "high": 0.3839724354387525,
+      "outside_fraction": 0.0857709987463435,
+      "mean_abs_error": 0.28960222573656313,
+      "max_abs_tau": 0.565105627797748
+    },
+    {
+      "joint": "right_hip_pitch",
+      "low": -1.5707963267949268,
+      "high": 1.5707963267948664,
+      "outside_fraction": 0.0,
+      "mean_abs_error": 0.16707326045003382,
+      "max_abs_tau": 0.324044867847983
+    },
+    {
+      "joint": "right_knee",
+      "low": -1.570796326794932,
+      "high": 1.570796326794861,
+      "outside_fraction": 0.0,
+      "mean_abs_error": 0.23471735524872167,
+      "max_abs_tau": 0.389318488586461
+    },
+    {
+      "joint": "right_ankle",
+      "low": -1.5707963267949063,
+      "high": 1.5707963267948868,
+      "outside_fraction": 0.9815085666527371,
+      "mean_abs_error": 0.5854922008722829,
+      "max_abs_tau": 0.640614623657728
+    }
+  ]
+}

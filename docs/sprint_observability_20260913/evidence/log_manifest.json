@@ -1,0 +1,77 @@
+{
+  "scope": "Exact raw supervisor logs compressed after report sealing; no whitespace or ANSI normalization",
+  "files": [
+    {
+      "file": "archive_evidence-6e25da3207.log.gz",
+      "original_bytes": 42,
+      "original_sha256": "4c444b2353e241f6789536ef6dfc0277f1a315566a47e8c2d4737a5ddb415b05",
+      "gzip_sha256": "84fe716ed729be24ee44a108db74c20de995cfed52fc3c01cbbfc242afd8cc04"
+    },
+    {
+      "file": "extended_test_analysis-480b9d07a2.log.gz",
+      "original_bytes": 6213,
+      "original_sha256": "62d2d40240bb17c5333348f75235b395328e29a9fffc059986f7f599311bfec0",
+      "gzip_sha256": "e20d281d4cc1cdf48cf36bed7eb081afb154cc514ad451a74bbc7d8f797ab3bd"
+    },
+    {
+      "file": "extract_existing_trajectories-307d3465a6.log.gz",
+      "original_bytes": 1984,
+      "original_sha256": "fdca963ec70521b8a0b32c51a33246b265e80333f5a239e4ae1423ad5ec36138",
+      "gzip_sha256": "b6b7686771e2a0eb966fd9a44e187f8320036abfaa8d8410eb98ad0508e5ce73"
+    },
+    {
+      "file": "failure_window_analysis-12f0a30bbf.log.gz",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip_sha256": "a6900cfe84ebb37567bcb3daf9222e4ac58d180b4c9bf9d16807a9bf75f7185e"
+    },
+    {
+      "file": "gpu_extended_information_control-00fd0023aa.log.gz",
+      "original_bytes": 80493,
+      "original_sha256": "e581cedb23b91b17911a1a36c765eb37f574c449568ae8e582411d9690827344",
+      "gzip_sha256": "fdb0bcb8ca45a764092f3b0bd7617fae42667c2c1bbf14e84f3549bd521987c4"
+    },
+    {
+      "file": "gpu_information_ablation-a4f45995fc.log.gz",
+      "original_bytes": 5243,
+      "original_sha256": "8c849addf070f64bc58a9908c702d473345594cf1d36d9107687da0c4e512265",
+      "gzip_sha256": "e1a760772fe7a1b6f1001fb707b05375db5e491bc2f3d42c05b8da5c3b5732b6"
+    },
+    {
+      "file": "gpu_recorded_action_tapes-1e07614714.log.gz",
+      "original_bytes": 11842,
+      "original_sha256": "f0a3ea1bf2ad8a968332bc36a72d7657bdf94e2470d6229da908fd65d92687e3",
+      "gzip_sha256": "2b7d61679e4d70ed0e9485533b6c74f3764c688c7c11e3f372891cb5975e533d"
+    },
+    {
+      "file": "information_plots-fe4f038e4e.log.gz",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip_sha256": "e51c4cf8a55d4c491c10bbf0488d66e7f5e06e122c304963f90651e1f253a041"
+    },
+    {
+      "file": "information_test_analysis-2a015ccb36.log.gz",
+      "original_bytes": 4200,
+      "original_sha256": "cc9fedd20e98c446d1cf2171354e9996a73aedf38ab8927484c75810e01e444a",
+      "gzip_sha256": "87d26637d84540063ee1a7724ce70b4187f3b4c838a0fd0f059317a855f80fc5"
+    },
+    {
+      "file": "regression_checks-fdbd2d2ef4.log.gz",
+      "original_bytes": 49411,
+      "original_sha256": "d6af0b73d6b9c13e39f8bf103570f5fa446fa3e5ad65289cb6097ec3d1e9dd9c",
+      "gzip_sha256": "444615da3a7060001018f14bbd95fa42994b1e1b1a229ab2d48c56dfcc7fd2bc"
+    },
+    {
+      "file": "regression_checks_clean_fixture_env-81b42b0466.log.gz",
+      "original_bytes": 18384,
+      "original_sha256": "c257991e629520796d4097fb54d554221814b161178ae788a3a38615ca7ed464",
+      "gzip_sha256": "31f0d2d1d7aa4d0921b4af5277f01ba7736495b5cebfcbfb17cea09742e61927"
+    },
+    {
+      "file": "short_turn_reproduction-2b0e9e1e41.log.gz",
+      "original_bytes": 1240,
+      "original_sha256": "845d0425f2a4f22949c047f4913a6dd92c561a4bb21b36f083a8f19aa64dd19d",
+      "gzip_sha256": "83062d621ede0a2d572a5b701bb6f7f8d32467985adc30a7eeaebe3ed7bd9a15"
+    }
+  ]
+}

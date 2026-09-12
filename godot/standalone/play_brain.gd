@@ -1,6 +1,7 @@
 extends RefCounted
 ## Native counterpart of PlayBrain's external-input path. Network-free state.
 
+var yaw_reversing := false
 const SKILL_TAPS := ["pick", "sit", "kick_left", "kick_right", "roulade", "stand"]
 var available: Dictionary = {}
 var limits: Dictionary = {}
@@ -25,7 +26,7 @@ func configure(flags: Dictionary, config: Dictionary) -> void:
 	available = flags.duplicate()
 	limits = {"vmax_x":0.3,"vmin_x":-0.3,"vmax_y":0.2,"vmin_y":-0.2,
 		"vmax_ang":1.5,"switch_on":0.10,"switch_off":0.03,"accel":12.0,"decel":20.0,
-		"sprint_vmax_x":0.5,"sprint_vmax_ang":0.8}
+		"sprint_vmax_x":0.5,"sprint_vmax_ang":0.8,"sprint_yaw_reversal_s":0.0}
 	limits.merge(config, true)
 	reset_motion()
 
@@ -33,6 +34,7 @@ func has_policy(name: String) -> bool:
 	return bool(available.get(name, false))
 
 func reset_motion() -> void:
+	yaw_reversing=false
 	vel.fill(0.0)
 	sit = false
 	stand_hold = false
@@ -157,7 +159,16 @@ func set_locomotion(held: Array, dt: float) -> void:
 		var next: float = target[i]
 		var away := (current == 0.0 and next != 0.0) or (signf(next) == signf(current) and absf(next) > absf(current))
 		var max_delta: float = (float(limits.accel) if away else float(limits.decel)) * dt
+		if i==2:
+			var reversal_seconds := float(limits.sprint_yaw_reversal_s)
+			if not sprinting or reversal_seconds<=0.0 or absf(next)<=0.05:
+				yaw_reversing=false
+			elif current*next<0.0 and absf(current)>0.05:
+				yaw_reversing=true
+			# Keep the reversal active through zero; ordinary turns retain the existing ramp.
+			if yaw_reversing: max_delta=2.0*float(limits.sprint_vmax_ang)*dt/reversal_seconds
 		vel[i] = next if absf(next-current) <= max_delta else current + signf(next-current)*max_delta
+		if i==2 and absf(float(vel[2])-next)<1e-7: yaw_reversing=false
 	if has_policy("walking") and has_policy("standing"):
 		var linear := sqrt(float(vel[0])*vel[0] + float(vel[1])*vel[1])
 		var angular := absf(vel[2])

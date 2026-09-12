@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "controlled_config_differences": {
+    "controller": [
+      "split",
+      "shared"
+    ],
+    "ordinary_controller": [
+      "frozen S05",
+      "shared learned actor"
+    ],
+    "actor_mask": [
+      "actual sprint selection only",
+      "all phases"
+    ],
+    "started_unix": [
+      1789215140.5879946,
+      1789215299.2059367
+    ]
+  },
+  "arms": {
+    "train_split": {
+      "completed": {
+        "status": "completed",
+        "iterations": 256,
+        "samples": 8388608,
+        "collection_device": "cuda",
+        "learner_device": "cuda",
+        "collection_s": 119.6880737899628,
+        "learning_s": 32.71251891212887,
+        "elapsed_s": 152.96952056899318,
+        "falls": 0,
+        "completed_tasks": 9903,
+        "parity_max_abs": 1.430511474609375e-06,
+        "final_sha256": "3c09f71e9dccb8ca8ccc8b767853e32403ed4b1a040adb9b46f5cfb0e390b7a8",
+        "accepted": false,
+        "acceptance": "Requires independent native Jolt evaluation"
+      },
+      "actor_samples": 5113270,
+      "teacher_kl_last": 0.7361866906285286,
+      "teacher_data_sha256": "aaf3bef6d7e05afed2a2bd261be1e8acf1d86745480922470f40bf5d0d5041ba",
+      "rejected_updates": 0,
+      "checkpoint_sha256": "c7a3986b394cb013285a772be7c7684b5935d4d4f0495a118599c0736753b3d7"
+    },
+    "train_shared": {
+      "completed": {
+        "status": "completed",
+        "iterations": 256,
+        "samples": 8388608,
+        "collection_device": "cuda",
+        "learner_device": "cuda",
+        "collection_s": 120.28515881302883,
+        "learning_s": 32.81002299426473,
+        "elapsed_s": 153.6593880240107,
+        "falls": 0,
+        "completed_tasks": 9903,
+        "parity_max_abs": 1.430511474609375e-06,
+        "final_sha256": "80ed4a0a8e20dbbbf281cc67586cccf3b957ff44960b8d34ea73aef20bb90c29",
+        "accepted": false,
+        "acceptance": "Requires independent native Jolt evaluation"
+      },
+      "actor_samples": 8388608,
+      "teacher_kl_last": 0.6059604231268167,
+      "teacher_data_sha256": "aaf3bef6d7e05afed2a2bd261be1e8acf1d86745480922470f40bf5d0d5041ba",
+      "rejected_updates": 0,
+      "checkpoint_sha256": "c4c5c80497785a39cfac9b21ca01dff38ce0bd7a84354dc46cb4245e796f0c08"
+    }
+  }
+}

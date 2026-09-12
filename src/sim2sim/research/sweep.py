@@ -1,11 +1,12 @@
 """Run a reviewable, editable experiment queue within the session deadline."""
+from .budget import legacy_deadline
 import argparse,json,os,subprocess,sys,time
 from pathlib import Path
 from .tasks import SESSION
 
 def main():
     p=argparse.ArgumentParser();p.add_argument("queue",type=Path);p.add_argument("--wait-for")
-    args=p.parse_args();deadline=json.loads((SESSION/"session.json").read_text())["deadline_unix"]-180
+    args=p.parse_args();deadline=legacy_deadline(SESSION)-180
     if args.wait_for:
         pending=SESSION/"runs"/args.wait_for
         while not (pending/"completed.json").exists() and not (pending/"error.txt").exists():

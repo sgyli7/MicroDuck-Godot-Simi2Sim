@@ -60,17 +60,21 @@ class GodotBackend:
         self._proc, self._port, self._client = spawn_godot(
             scene, headless=headless, extra_args=extra, recv_timeout=recv_timeout
         )
-        hello = self._client.call({"cmd": "hello"})
-        if not hello.get("ok"):
-            raise RuntimeError(f"Godot hello failed: {hello}")
-        self._hello = hello
-        if current_limit_a and current_limit_a > 0:
-            from sim2sim.backends.mujoco_backend import XL330_M6_KT
+        try:
+            hello = self._client.call({"cmd": "hello"})
+            if not hello.get("ok"):
+                raise RuntimeError(f"Godot hello failed: {hello}")
+            self._hello = hello
+            if current_limit_a and current_limit_a > 0:
+                from sim2sim.backends.mujoco_backend import XL330_M6_KT
 
-            lim = XL330_M6_KT * float(current_limit_a)
-            ack = self._client.call({"cmd": "set_tau_limit", "limit": lim})
-            if not ack.get("ok"):
-                raise RuntimeError(f"set_tau_limit failed: {ack}")
+                lim = XL330_M6_KT * float(current_limit_a)
+                ack = self._client.call({"cmd": "set_tau_limit", "limit": lim})
+                if not ack.get("ok"):
+                    raise RuntimeError(f"set_tau_limit failed: {ack}")
+        except Exception as error:
+            log=stop_godot(self._proc,self._client)
+            raise RuntimeError(f'Godot startup handshake failed: {error}\n{log}') from error
 
     def is_alive(self) -> bool:
         return self._proc.poll() is None

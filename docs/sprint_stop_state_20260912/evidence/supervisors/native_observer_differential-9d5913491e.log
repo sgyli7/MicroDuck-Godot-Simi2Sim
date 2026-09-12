@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/validate_native_observer.py", line 41, in <module>
+    assert max(metrics['torch.float64'].values())<1e-7,metrics
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'torch.float64': {'joint_velocity_max_abs': 1.212363542890671e-13, 'body_angular_velocity_max_abs': 6.945843829481158e-05}, 'torch.float32': {'joint_velocity_max_abs': 6.771321940379771e-06, 'body_angular_velocity_max_abs': 7.024407386774234e-05}}

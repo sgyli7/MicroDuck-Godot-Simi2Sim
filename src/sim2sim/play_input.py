@@ -12,7 +12,7 @@ Locomotion shaping (see docs/research_3c_camera.md):
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 import numpy as np
 
@@ -29,6 +29,7 @@ KEY_TO_HOLD: dict[str, str] = {
     "Q": "strafe_l",
     "E": "strafe_r",
     "SPACE": "idle",
+    "SHIFT_LEFT": "sprint",
 }
 
 # One-shot taps (keyboard or HUD). Multiple aliases collapse to one action.
@@ -44,13 +45,14 @@ KEY_TO_TAP: dict[str, str] = {
     "R": "roulade",
     "KEY_5": "roulade",
     "KEY_6": "switch_robot",
+    "KEY_7": "stand",
     "KEY_0": "reset",
     "BACKSPACE": "reset",
     "P": "push",
     "ESCAPE": "quit",
 }
 
-SKILL_TAPS = ("pick", "sit", "kick_left", "kick_right", "roulade")
+SKILL_TAPS = ("pick", "sit", "kick_left", "kick_right", "roulade", "stand")
 LOCO_HOLDS = ("fwd", "back", "left", "right", "strafe_l", "strafe_r", "idle")
 
 TIME_SCALE_MIN = 0.25
@@ -88,6 +90,13 @@ class TwistLimits:
     # ramp slew rates in command-units per second of wall sim time.
     accel: float = 12.0
     decel: float = 20.0
+    sprint_vmax_x: float = 0.5
+    sprint_vmax_ang: float = 0.8
+    sprint_yaw_reversal_s: float = 0.0
+
+    def __post_init__(self) -> None:
+        if not np.isfinite(self.sprint_yaw_reversal_s) or self.sprint_yaw_reversal_s < 0:
+            raise ValueError('Sprint yaw reversal duration must be finite and nonnegative')
 
 
 def keys_to_held(keys: set[str]) -> set[str]:
@@ -204,8 +213,11 @@ class TwistRamp:
     vel: np.ndarray = field(default_factory=lambda: np.zeros(3, dtype=np.float32))
     accel: float = 12.0
     decel: float = 20.0
+    yaw_reversing: bool = field(default=False, init=False)
 
-    def step(self, target: tuple[float, float, float], dt: float) -> np.ndarray:
+    def step(self, target: tuple[float, float, float], dt: float, *,
+             sprint: bool = False, turn_limit: float = 0.8,
+             reversal_seconds: float = 0.0) -> np.ndarray:
         tgt = np.asarray(target, dtype=np.float32)
         out = self.vel.copy()
         for i in range(3):
@@ -216,16 +228,27 @@ class TwistRamp:
             )
             rate = self.accel if away else self.decel
             max_d = rate * dt
+            if i == 2:
+                if not sprint or reversal_seconds <= 0 or abs(t) <= .05:
+                    self.yaw_reversing = False
+                elif cur * t < 0 and abs(cur) > .05:
+                    self.yaw_reversing = True
+                # Carry the reversal through zero rather than restarting acceleration there.
+                if self.yaw_reversing:
+                    max_d = 2. * turn_limit * dt / reversal_seconds
             d = t - cur
             if abs(d) <= max_d:
                 out[i] = t
             else:
                 out[i] = cur + np.sign(d) * max_d
+            if i == 2 and abs(float(out[i]) - t) < 1e-7:
+                self.yaw_reversing = False
         self.vel = out.astype(np.float32)
         return self.vel
 
     def reset(self) -> None:
         self.vel[:] = 0.0
+        self.yaw_reversing = False
 
 
 @dataclass
@@ -264,6 +287,7 @@ class BrainOut:
     switch_robot: bool = False
     status: str = ""
     started_skill: str | None = None
+    sprint: bool = False
 
 
 @dataclass
@@ -278,6 +302,9 @@ class PlayBrain:
     has_kick_right: bool = True
     has_roulade: bool = True
     has_roller_crouch: bool = False
+    # Explicit standing access is independent of the walk model's idle partner.
+    has_stand_hold: bool = False
+    has_sprint: bool = False
     lim: TwistLimits = field(default_factory=TwistLimits)
     pick_period: float = 4.0
     kick_duration: float = 5.0
@@ -288,6 +315,8 @@ class PlayBrain:
     policy: str = "standing"
     vel: np.ndarray = field(default_factory=lambda: np.zeros(3, dtype=np.float32))
     sit: bool = False
+    stand_hold: bool = False
+    sprinting: bool = False
     pick_phase: float = 0.0
     behavior_t: float = 0.0
     rise_t: float = 0.0
@@ -318,6 +347,8 @@ class PlayBrain:
     def reset_motion(self) -> None:
         self.vel[:] = 0.0
         self.sit = False
+        self.stand_hold = False
+        self.sprinting = False
         self.pick_phase = 0.0
         self.behavior_t = 0.0
         self.rise_t = 0.0
@@ -341,8 +372,17 @@ class PlayBrain:
         return pressed_now
 
     def _set_loco(self, held: set[str], dt: float) -> None:
+        requested_sprint = 'sprint' in held
+        held = held - {'sprint'}
+        self.press_order = [bit for bit in self.press_order if bit != 'sprint']
+        self.sprinting = False
         if self._busy() or self.sit:
             return
+        if self.stand_hold:
+            if not (held - {"idle"}):
+                self.policy = "standing"
+                return
+            self.stand_hold = False
         if self._ext_order_active:
             # Godot-side sampler owns press order + edges (play.py echoes
             # held_order every tick): newest press == last entry of the
@@ -356,7 +396,10 @@ class PlayBrain:
         # deadlocks the duck at zero forever).
         if "idle" in held and last_pressed_bit(held, self.press_order) == "idle":
             held = {"idle"}
-        target = held_twist(held, self.lim, press_order=self.press_order)
+        self.sprinting = self.has_sprint and requested_sprint and 'fwd' in resolve_held(held, self.press_order)
+        limits = replace(self.lim, vmax_x=self.lim.sprint_vmax_x,
+                         vmax_ang=self.lim.sprint_vmax_ang) if self.sprinting else self.lim
+        target = held_twist(held, limits, press_order=self.press_order)
         # Local-mode idle stop (see the newest-wins block below): skip the
         # ramp step so a stale alphabetical fwd/back resolve can't re-drive
         # the duck after a tap stop.
@@ -370,7 +413,11 @@ class PlayBrain:
                 self.press_order = [b for b in self.press_order if b != "idle"] + ["idle"]
                 skip_ramp = True
         if not skip_ramp:
-            self.vel[:] = self.ramp.step(target, dt)
+            self.vel[:] = self.ramp.step(
+                target, dt, sprint=self.sprinting,
+                turn_limit=self.lim.sprint_vmax_ang,
+                reversal_seconds=self.lim.sprint_yaw_reversal_s,
+            )
         if self.has_walking and self.has_standing:
             self.policy = "walking" if self.gait.settled(
                 float(np.hypot(self.vel[0], self.vel[1])),
@@ -383,6 +430,15 @@ class PlayBrain:
             self.policy = "standing"
 
     def _tap(self, action: str) -> None:
+        if action == "stand":
+            if not self.has_stand_hold or self._busy() or self.sit:
+                return
+            self.reset_motion()
+            self.stand_hold = True
+            self.policy = "standing"
+            return
+        if action in SKILL_TAPS and not self._busy():
+            self.stand_hold = False
         if action == "sit":
             if self.has_roller_crouch and not self._busy():
                 self.policy = "roller_crouch"
@@ -515,7 +571,7 @@ class PlayBrain:
         if self.policy == "sitstand":
             status = "sit" if self.sit else ("rising" if self.rise_t > 0 else "sitstand-stand")
         elif self.policy == "walking":
-            status = f"walk vx={self.vel[0]:+.2f} vy={self.vel[1]:+.2f} w={self.vel[2]:+.2f}"
+            status = f"{'sprint' if self.sprinting else 'walk'} vx={self.vel[0]:+.2f} vy={self.vel[1]:+.2f} w={self.vel[2]:+.2f}"
         return BrainOut(
             policy=self.policy,
             command=self.command_13(),
@@ -525,4 +581,5 @@ class PlayBrain:
             switch_robot=switch_robot,
             status=status,
             started_skill=started_skill,
+            sprint=self.sprinting,
         )

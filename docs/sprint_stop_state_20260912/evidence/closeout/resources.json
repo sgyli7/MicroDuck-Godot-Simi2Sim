@@ -1,0 +1,126 @@
+{
+  "unix": 1789224285.7846406,
+  "started": 16,
+  "finished": 16,
+  "missing_terminal": [],
+  "cleanup_remaining": {},
+  "live_owned_pids": [],
+  "live_owned_groups": [],
+  "live_session_marker_processes": [],
+  "all_godot_processes": [],
+  "docker": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.ID}}\t{{.Names}}\t{{.Image}}"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "gpu": {
+    "command": [
+      "nvidia-smi",
+      "--query-gpu=name,utilization.gpu,memory.used",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "NVIDIA GB10, 4 %, [N/A]",
+    "stderr": ""
+  },
+  "gpu_apps": {
+    "command": [
+      "nvidia-smi",
+      "--query-compute-apps=pid,process_name,used_gpu_memory",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 242 MiB",
+    "stderr": ""
+  },
+  "job_results": [
+    {
+      "actor": "exact_stop_reproduction:556285487b",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "exact_stop_reproduction_retry:9d9398498f",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_cold_state_probe:aeda9921db",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "same_process_state_roundtrip:332eaf96d6",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "velocity_observer_tests:d0a29f94a5",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_observer_differential:dd10850605",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "observer_projection_action_audit:b3b19550fd",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "joint_observer_motor_contract:9ebb7125b3",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "joint_observer_cuda_training:bc8f869b3a",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_joint_observer_candidate:261008941f",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "observer_gpu_counterfactuals:d7731f5c6e",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "target_sampler_gpu_likelihood:88a39c06db",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_target_sampler_probe:58e17b52ce",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "target_sampler_bounded_retry:62cc6ee69a",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "final_regression_tests:8b04c43bdf",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "archive_and_runtime_cleanup:63f3477082",
+      "returncode": 0,
+      "reason": "completed"
+    }
+  ],
+  "passed": true,
+  "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+}

@@ -1,0 +1,299 @@
+{
+  "completed": true,
+  "rows": [
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_shift_first_955208.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_000/trace.json",
+      "steps": 600,
+      "sigma": 0.02,
+      "noise_seed": 95520100,
+      "first_fall": null,
+      "seconds": 1.9925640379951801
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_shift_first_955209.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_001/trace.json",
+      "steps": 600,
+      "sigma": 0.02,
+      "noise_seed": 95520101,
+      "first_fall": null,
+      "seconds": 2.0578394970216323
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_shift_first_955210.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_002/trace.json",
+      "steps": 600,
+      "sigma": 0.02,
+      "noise_seed": 95520102,
+      "first_fall": null,
+      "seconds": 1.9908839609997813
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_shift_first_955211.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_003/trace.json",
+      "steps": 600,
+      "sigma": 0.02,
+      "noise_seed": 95520103,
+      "first_fall": null,
+      "seconds": 2.0161575880192686
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_w_first_955208.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_004/trace.json",
+      "steps": 800,
+      "sigma": 0.02,
+      "noise_seed": 95520104,
+      "first_fall": null,
+      "seconds": 2.2665218290057965
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_w_first_955209.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_005/trace.json",
+      "steps": 800,
+      "sigma": 0.02,
+      "noise_seed": 95520105,
+      "first_fall": null,
+      "seconds": 2.2832689799834043
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_w_first_955210.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_006/trace.json",
+      "steps": 800,
+      "sigma": 0.02,
+      "noise_seed": 95520106,
+      "first_fall": null,
+      "seconds": 2.3366402899846435
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_w_first_955211.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_007/trace.json",
+      "steps": 800,
+      "sigma": 0.02,
+      "noise_seed": 95520107,
+      "first_fall": null,
+      "seconds": 2.33193996900809
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_long_955208.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_008/trace.json",
+      "steps": 1250,
+      "sigma": 0.02,
+      "noise_seed": 95520108,
+      "first_fall": null,
+      "seconds": 2.905444229982095
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_long_955209.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_009/trace.json",
+      "steps": 1250,
+      "sigma": 0.02,
+      "noise_seed": 95520109,
+      "first_fall": null,
+      "seconds": 2.8727216260158457
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_long_955210.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_010/trace.json",
+      "steps": 1250,
+      "sigma": 0.02,
+      "noise_seed": 95520110,
+      "first_fall": null,
+      "seconds": 2.9065826069854666
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_long_955211.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_011/trace.json",
+      "steps": 1250,
+      "sigma": 0.02,
+      "noise_seed": 95520111,
+      "first_fall": null,
+      "seconds": 2.9588506479922216
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_left_955208.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_012/trace.json",
+      "steps": 700,
+      "sigma": 0.02,
+      "noise_seed": 95520112,
+      "first_fall": null,
+      "seconds": 2.0205411670031026
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_left_955209.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_013/trace.json",
+      "steps": 700,
+      "sigma": 0.02,
+      "noise_seed": 95520113,
+      "first_fall": null,
+      "seconds": 2.340516924014082
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_left_955210.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_014/trace.json",
+      "steps": 700,
+      "sigma": 0.02,
+      "noise_seed": 95520114,
+      "first_fall": null,
+      "seconds": 2.334806680009933
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_left_955211.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_015/trace.json",
+      "steps": 700,
+      "sigma": 0.02,
+      "noise_seed": 95520115,
+      "first_fall": null,
+      "seconds": 2.301092576002702
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_right_955208.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_016/trace.json",
+      "steps": 700,
+      "sigma": 0.02,
+      "noise_seed": 95520116,
+      "first_fall": null,
+      "seconds": 2.248147300997516
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_right_955209.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_017/trace.json",
+      "steps": 700,
+      "sigma": 0.02,
+      "noise_seed": 95520117,
+      "first_fall": null,
+      "seconds": 2.2445542640052736
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_right_955210.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_018/trace.json",
+      "steps": 700,
+      "sigma": 0.02,
+      "noise_seed": 95520118,
+      "first_fall": null,
+      "seconds": 2.308486296009505
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_right_955211.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_019/trace.json",
+      "steps": 700,
+      "sigma": 0.02,
+      "noise_seed": 95520119,
+      "first_fall": null,
+      "seconds": 2.300249994994374
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_alternate_955208.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_020/trace.json",
+      "steps": 900,
+      "sigma": 0.02,
+      "noise_seed": 95520120,
+      "first_fall": null,
+      "seconds": 2.5827355240180623
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_alternate_955209.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_021/trace.json",
+      "steps": 900,
+      "sigma": 0.02,
+      "noise_seed": 95520121,
+      "first_fall": null,
+      "seconds": 2.331509747018572
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_alternate_955210.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_022/trace.json",
+      "steps": 900,
+      "sigma": 0.02,
+      "noise_seed": 95520122,
+      "first_fall": null,
+      "seconds": 2.410948422009824
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_alternate_955211.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_023/trace.json",
+      "steps": 900,
+      "sigma": 0.02,
+      "noise_seed": 95520123,
+      "first_fall": null,
+      "seconds": 2.2525616660132073
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_turn_release_955208.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_024/trace.json",
+      "steps": 800,
+      "sigma": 0.02,
+      "noise_seed": 95520124,
+      "first_fall": null,
+      "seconds": 2.1680262469744775
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_turn_release_955209.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_025/trace.json",
+      "steps": 800,
+      "sigma": 0.02,
+      "noise_seed": 95520125,
+      "first_fall": null,
+      "seconds": 2.367971072002547
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_turn_release_955210.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_026/trace.json",
+      "steps": 800,
+      "sigma": 0.02,
+      "noise_seed": 95520126,
+      "first_fall": null,
+      "seconds": 2.3196438160084654
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_turn_release_955211.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_027/trace.json",
+      "steps": 800,
+      "sigma": 0.02,
+      "noise_seed": 95520127,
+      "first_fall": null,
+      "seconds": 2.2581949300074484
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_repeat_955208.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_028/trace.json",
+      "steps": 850,
+      "sigma": 0.02,
+      "noise_seed": 95520128,
+      "first_fall": null,
+      "seconds": 2.453302531008376
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_repeat_955209.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_029/trace.json",
+      "steps": 850,
+      "sigma": 0.02,
+      "noise_seed": 95520129,
+      "first_fall": null,
+      "seconds": 2.3650417939934414
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_repeat_955210.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_030/trace.json",
+      "steps": 850,
+      "sigma": 0.02,
+      "noise_seed": 95520130,
+      "first_fall": null,
+      "seconds": 2.358697468007449
+    },
+    {
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/cases/sprint_repeat_955211.json",
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_target_gpu_20260912/train/iteration_001/rollouts/episode_031/trace.json",
+      "steps": 850,
+      "sigma": 0.02,
+      "noise_seed": 95520131,
+      "first_fall": null,
+      "seconds": 2.3530701039999258
+    }
+  ],
+  "elapsed_s": 21.014731984003447,
+  "policy_steps": 26400,
+  "collection_device": "cpu_native_jolt",
+  "model_sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+  "workers": 4,
+  "accepted": false
+}

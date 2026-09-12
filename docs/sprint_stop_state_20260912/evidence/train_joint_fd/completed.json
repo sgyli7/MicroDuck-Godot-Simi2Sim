@@ -1,0 +1,16 @@
+{
+  "status": "completed",
+  "iterations": 256,
+  "samples": 8388608,
+  "collection_device": "cuda",
+  "learner_device": "cuda",
+  "collection_s": 124.79354600500665,
+  "learning_s": 34.071699171036016,
+  "elapsed_s": 159.46942562400363,
+  "falls": 0,
+  "completed_tasks": 9903,
+  "parity_max_abs": 1.5497207641601562e-06,
+  "final_sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+  "accepted": false,
+  "acceptance": "Requires independent native Jolt evaluation"
+}

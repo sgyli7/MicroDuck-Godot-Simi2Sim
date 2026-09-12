@@ -506,6 +506,7 @@ func _physics_process(delta: float) -> void:
 			var event := InputEventKey.new()
 			event.physical_keycode = OS.find_keycode_from_string(action.key)
 			event.keycode = event.physical_keycode
+			event.location = int(action.get("location",0))
 			event.pressed = action.get("pressed",true)
 			Input.parse_input_event(event)
 		if action.has("mouse_button"):
@@ -522,7 +523,7 @@ func _process(delta: float) -> void:
 		atelier.update_camera(delta)
 		_update_recording_camera()
 		atelier.update_printed_labels()
-		label.text = "%s / %s\n%s" % [scene_title(),active_robot.to_upper(),_stage_label(str(actor.command.get("stage","就绪"))) if active_robot=="sai" else actor.SKILL_LABELS.get(actor.brain.policy,actor.brain.policy)]
+		label.text = "%s / %s\n%s" % [scene_title(),active_robot.to_upper(),_stage_label(str(actor.command.get("stage","就绪"))) if active_robot=="sai" else actor.SKILL_LABELS.get("sprint" if actor.brain.sprinting else actor.brain.policy,actor.brain.policy)]
 		if is_science_station():label.text+=" · "+StationLayout.CHECKPOINTS[checkpoint].title
 		_refresh_controls()
 		task_menu.visible = active_robot == "sai" and not is_science_station()

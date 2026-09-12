@@ -1,0 +1,122 @@
+{
+  "profiles": [
+    [
+      "rigid",
+      "source",
+      null
+    ],
+    [
+      "uniform20k",
+      "two_tick",
+      [
+        20000.0,
+        200.0
+      ]
+    ],
+    [
+      "fitted",
+      "two_tick",
+      [
+        20000.0,
+        200.0
+      ]
+    ]
+  ],
+  "seeds": [
+    927000,
+    927001,
+    927002,
+    927003,
+    927004,
+    927005,
+    927006,
+    927007,
+    927008,
+    927009,
+    927010,
+    927011,
+    927012,
+    927013,
+    927014,
+    927015
+  ],
+  "train_seed_count": 8,
+  "validation_seed_count": 8,
+  "physics_hz": 200,
+  "decision_hz": 50,
+  "horizon_seconds": 2,
+  "gate": "Same 20% landing/moving response improvement, no component/standing >10% regression, both splits; also >=20% reduction of actual foot-vs-rigid-manifold vector error on landing and moving. Pre-contact joint RMS <=baseline+1e-5 rad.",
+  "response_normalization": {
+    "velocity": 0.05,
+    "joint": 0.02,
+    "position": 0.002
+  },
+  "source": "Frozen a402 native recorded actions; no policy inference, training or game physics edits",
+  "assumptions": "Extra equalities are an experimental approximation of translation compliance, not an identified Jolt solver.",
+  "rationale": "Single fitted per-hinge profile from first eight seeds landing/standing translation vectors; damping stays 200, contact stays two_tick. Re-run rigid and uniform controls. No selection based on final seeds or weakening the earlier physical/manifold gate.",
+  "fitted_profile": {
+    "left_hip_yaw": [
+      12326.92143599025,
+      200.0
+    ],
+    "left_hip_roll": [
+      15027.877477102451,
+      200.0
+    ],
+    "left_hip_pitch": [
+      21548.998996069513,
+      200.0
+    ],
+    "left_knee": [
+      12740.684916760692,
+      200.0
+    ],
+    "left_ankle": [
+      15669.884680187834,
+      200.0
+    ],
+    "neck_pitch": [
+      12208.373661927806,
+      200.0
+    ],
+    "head_pitch": [
+      25308.222590083722,
+      200.0
+    ],
+    "head_yaw": [
+      16831.82920099417,
+      200.0
+    ],
+    "head_roll": [
+      19012.557401111615,
+      200.0
+    ],
+    "right_hip_yaw": [
+      17217.92005086541,
+      200.0
+    ],
+    "right_hip_roll": [
+      27730.068158137427,
+      200.0
+    ],
+    "right_hip_pitch": [
+      18136.017386096864,
+      200.0
+    ],
+    "right_knee": [
+      17732.671264938122,
+      200.0
+    ],
+    "right_ankle": [
+      19738.991942677785,
+      200.0
+    ]
+  },
+  "fit_sha256": "cbb381b549634cd5c19bf04d9e27e5cb19a610dc7eca1335d9a894fe22787748",
+  "reference": "https://mujoco.readthedocs.io/en/stable/modeling.html#solver-parameters",
+  "code_sha256": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_identification_20260913/fitted_probe.py": "17f8be823bbf1906de1d3c8c826b0e732743ba60cc0715c7a1f503a93cc47a62",
+    "scripts/sprint_gpu_world.py": "8398f39d59646798564a7872d2c0634f5e1c62f4e4820cd0142c332be00462f5",
+    "src/sim2sim/research/joint_compliance.py": "96ddced13bb57bd6a9e3b6e6402b17045860d24995106766da225c90bb1ed999"
+  }
+}

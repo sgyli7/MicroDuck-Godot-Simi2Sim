@@ -7,7 +7,7 @@ import math
 import numpy as np
 
 CONDITIONS=('push','coast','brake','heading_l','heading_r','push_coast_brake')
-PROTOCOL='roller_throttle_heading_v1'
+PROTOCOL='roller_throttle_heading_v2'
 
 
 def initial_speed(condition):return .3 if condition in ('coast','brake') else 0.

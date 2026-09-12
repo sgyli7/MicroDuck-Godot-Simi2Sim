@@ -1,0 +1,9 @@
+{
+  "started_unix": 1789220959.0534012,
+  "predecessor": "66608b3",
+  "previous_turn": "progress",
+  "scope": "Stop-state diagnosis before further training; frozen Godot/Jolt and deployed models",
+  "limit_s": 3600,
+  "reserve_s": 900,
+  "final_seeds_used": false
+}

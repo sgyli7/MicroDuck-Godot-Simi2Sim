@@ -1,0 +1,70 @@
+{
+  "metrics": {
+    "train": {
+      "landing": {
+        "components": {
+          "velocity": 0.030796725969941176,
+          "joint": 0.021566048631546295,
+          "position": 0.12756983485287254
+        },
+        "objective": 0.059977536484786674,
+        "manifold_mse_m2": 7.236614890526465e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.00011404609214510602,
+          "joint": 0.08355653031249106,
+          "position": 0.07667356899476889
+        },
+        "objective": 0.053448048466468355,
+        "manifold_mse_m2": 2.2372439306825166e-07
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.08301594276236364,
+          "joint": 0.18548529345302195,
+          "position": 0.2583965173920143
+        },
+        "objective": 0.17563258453579997,
+        "manifold_mse_m2": 3.166214237750862e-07
+      }
+    },
+    "validation": {
+      "landing": {
+        "components": {
+          "velocity": 0.03170193511792681,
+          "joint": 0.021035906391737982,
+          "position": 0.10945559168314888
+        },
+        "objective": 0.054064477730937886,
+        "manifold_mse_m2": 6.702090306518064e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 9.835592857521657e-05,
+          "joint": 0.07186429679935273,
+          "position": 0.06243539001988861
+        },
+        "objective": 0.044799347582605516,
+        "manifold_mse_m2": 2.0794577637821303e-07
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.09404928315750392,
+          "joint": 0.18073633560213678,
+          "position": 0.2620128362937113
+        },
+        "objective": 0.17893281835111732,
+        "manifold_mse_m2": 2.958226425385711e-07
+      }
+    }
+  },
+  "elapsed_physics_s": 0.5634766499861144,
+  "nq": 28,
+  "nv": 26,
+  "neq": 0,
+  "nu": 14,
+  "compliance": null,
+  "precontact_joint_rms": 2.180524242674088e-05,
+  "minimum_body_height": 0.06752409785985947
+}

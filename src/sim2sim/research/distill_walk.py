@@ -4,6 +4,7 @@ Expert switching is used only to collect training demonstrations. Deployment
 and physical evaluation use the single exported MLP increment plus its native
 anchor, with no command gate or auxiliary standing controller.
 """
+from .budget import legacy_deadline
 import json,time,hashlib
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
@@ -36,7 +37,7 @@ def demonstration(job):
 def main():
     torch.set_num_threads(2);torch.manual_seed(734)
     out=SESSION/"distillation_walk_v1";out.mkdir(exist_ok=True)
-    start=time.time();deadline=min(start+20*60,json.loads((SESSION/"session.json").read_text())["deadline_unix"]-3600)
+    start=time.time();deadline=min(start+20*60,legacy_deadline(SESSION)-3600)
     source=BASELINE/"Walk_Godot.onnx";dataset=out/"demonstrations.npz"
     if not dataset.exists():
         jobs=[(c,60000+s) for c in conditions(TASKS["walking"]) for s in range(3)]

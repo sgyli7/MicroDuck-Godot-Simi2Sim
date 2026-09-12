@@ -1,4 +1,5 @@
 """Bounded command-conditioning search with unchanged physical evaluation."""
+from .budget import legacy_deadline
 import json,time
 import numpy as np
 from .tasks import TASKS,BASELINE,SESSION
@@ -8,7 +9,7 @@ from .evaluate import run_suite
 
 def main():
     root=SESSION/"conditioning_probe_v2";root.mkdir(exist_ok=True)
-    deadline=min(time.time()+15*60,json.loads((SESSION/"session.json").read_text())["deadline_unix"]-3600)
+    deadline=min(time.time()+15*60,legacy_deadline(SESSION)-3600)
     records=[]
     for label,source in [("factory",TASKS["walking"].source),("previous",BASELINE/"Walk_Godot.onnx")]:
         best={}

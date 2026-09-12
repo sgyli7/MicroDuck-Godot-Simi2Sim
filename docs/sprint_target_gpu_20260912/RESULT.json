@@ -1,0 +1,687 @@
+{
+  "status": "closed_not_promoted",
+  "goal_complete": false,
+  "base_commit": "b20a33de2ceb92f5de4590c7dae64a0ce5e944af",
+  "candidate_endpoints": [
+    {
+      "arm": "native_006",
+      "counts": {
+        "sprint_pass": 125,
+        "sprint_count": 128,
+        "ordinary_pass": 128,
+        "ordinary_count": 128,
+        "regression_pass": 7,
+        "regression_count": 7
+      },
+      "falls": 0,
+      "speed": 0.23264560618509575,
+      "ratio": 1.2041060422646672,
+      "failed": [
+        {
+          "case": [
+            "sprint_alternate",
+            927001
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.4239232928809242,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": []
+        },
+        {
+          "case": [
+            "sprint_alternate",
+            927007
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.40604095943880397,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": []
+        },
+        {
+          "case": [
+            "sprint_alternate",
+            927008
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.4675018640964012,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": []
+        }
+      ]
+    },
+    {
+      "arm": "native_012",
+      "counts": {
+        "sprint_pass": 125,
+        "sprint_count": 128,
+        "ordinary_pass": 128,
+        "ordinary_count": 128,
+        "regression_pass": 7,
+        "regression_count": 7
+      },
+      "falls": 0,
+      "speed": 0.23252753226159026,
+      "ratio": 1.2034949259532175,
+      "failed": [
+        {
+          "case": [
+            "sprint_alternate",
+            927003
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.3988364354974369,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": []
+        },
+        {
+          "case": [
+            "sprint_alternate",
+            927008
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [],
+          "stops": [
+            {
+              "at": 14,
+              "onset_s": 2.0199999999999996,
+              "passed": false
+            }
+          ]
+        },
+        {
+          "case": [
+            "sprint_left",
+            927001
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [],
+          "stops": [
+            {
+              "at": 10,
+              "onset_s": 2.4000000000000004,
+              "passed": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "native_warm_006",
+      "counts": {
+        "sprint_pass": 127,
+        "sprint_count": 128,
+        "ordinary_pass": 128,
+        "ordinary_count": 128,
+        "regression_pass": 7,
+        "regression_count": 7
+      },
+      "falls": 0,
+      "speed": 0.23333566144334586,
+      "ratio": 1.2076775677259923,
+      "failed": [
+        {
+          "case": [
+            "sprint_right",
+            927004
+          ],
+          "fell": false,
+          "straight": [
+            {
+              "at": 8,
+              "heading_error_deg": 6.5890196574079924,
+              "lateral_path_m": 0.05437380102671201,
+              "lateral_limit_m": 0.05,
+              "passed": false
+            }
+          ],
+          "turns": [],
+          "stops": []
+        }
+      ]
+    },
+    {
+      "arm": "native_warm_012",
+      "counts": {
+        "sprint_pass": 126,
+        "sprint_count": 128,
+        "ordinary_pass": 128,
+        "ordinary_count": 128,
+        "regression_pass": 7,
+        "regression_count": 7
+      },
+      "falls": 0,
+      "speed": 0.2336360787136703,
+      "ratio": 1.20923244020491,
+      "failed": [
+        {
+          "case": [
+            "sprint_alternate",
+            927009
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.4199296338313793,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": []
+        },
+        {
+          "case": [
+            "sprint_alternate",
+            927015
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.33351246922949,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": []
+        }
+      ]
+    },
+    {
+      "arm": "native_initial_teacher_006",
+      "counts": {
+        "sprint_pass": 125,
+        "sprint_count": 128,
+        "ordinary_pass": 128,
+        "ordinary_count": 128,
+        "regression_pass": 7,
+        "regression_count": 7
+      },
+      "falls": 0,
+      "speed": 0.23328257936849442,
+      "ratio": 1.20740283033416,
+      "failed": [
+        {
+          "case": [
+            "sprint_alternate",
+            927003
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [],
+          "stops": [
+            {
+              "at": 14,
+              "onset_s": 2.0799999999999983,
+              "passed": false
+            }
+          ]
+        },
+        {
+          "case": [
+            "sprint_alternate",
+            927005
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.25304030173113917,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": []
+        },
+        {
+          "case": [
+            "sprint_alternate",
+            927009
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.4051605166436519,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": []
+        }
+      ]
+    },
+    {
+      "arm": "native_initial_teacher_012",
+      "counts": {
+        "sprint_pass": 127,
+        "sprint_count": 128,
+        "ordinary_pass": 128,
+        "ordinary_count": 128,
+        "regression_pass": 7,
+        "regression_count": 7
+      },
+      "falls": 0,
+      "speed": 0.23158217089975125,
+      "ratio": 1.1986020103010377,
+      "failed": [
+        {
+          "case": [
+            "sprint_alternate",
+            927013
+          ],
+          "fell": false,
+          "straight": [],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.32057531353723273,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": []
+        }
+      ]
+    }
+  ],
+  "training": {
+    "train": {
+      "completed": true,
+      "iterations": 12,
+      "samples": 316800,
+      "collection_device": "cpu_native_jolt",
+      "learner_device": "cuda",
+      "elapsed_s": 316.49678631298593,
+      "collection_s": 278.1522022430727,
+      "reconstruction_s": 36.43620833198656,
+      "learning_s": 1.4581607170111965,
+      "max_parity": 2.1457672119140625e-06,
+      "final_sha256": "cbbae52ebde314c6c08e3f338d0e844a8d27b61cc02569d72127c2bcdfe70e1e",
+      "accepted": false
+    },
+    "train_warm": {
+      "completed": true,
+      "iterations": 12,
+      "samples": 316800,
+      "collection_device": "cpu_native_jolt",
+      "learner_device": "cuda",
+      "elapsed_s": 317.94545690898667,
+      "collection_s": 279.3074375229771,
+      "reconstruction_s": 36.72401172705577,
+      "learning_s": 1.4401001849619206,
+      "max_parity": 2.1457672119140625e-06,
+      "final_sha256": "65f1b7d41c33abe4e0f074748377809bca6a6f0695bd6a01804efc71d847fcb4",
+      "accepted": false
+    },
+    "train_initial_teacher": {
+      "completed": true,
+      "iterations": 12,
+      "samples": 316800,
+      "collection_device": "cpu_native_jolt",
+      "learner_device": "cuda",
+      "elapsed_s": 317.2785212970048,
+      "collection_s": 278.7639739589649,
+      "reconstruction_s": 36.66495155301527,
+      "learning_s": 1.4061100510007236,
+      "max_parity": 2.1457672119140625e-06,
+      "final_sha256": "8b7a2b63aae4e6af3b7427f0ffcb62c59454d2f184960e77170b77910ffff039",
+      "accepted": false
+    }
+  },
+  "total_target_transitions": 950400,
+  "total_training_episodes": 1152,
+  "total_native_evaluations": 1578,
+  "training_falls": 0,
+  "all_native_falls": 0,
+  "collection_device": "cpu_native_jolt",
+  "learner_device": "cuda",
+  "source_snapshot_hashes_verified": true,
+  "final_source_matches_last_experiment": true,
+  "final_seeds_used": false,
+  "final_seed_range": "928000–928049",
+  "package_updated": false,
+  "default_models_changed": false,
+  "physics_changed": false,
+  "os_keyboard_verified": false,
+  "resume_continuity_verified": false,
+  "tests": {
+    "tests": 292,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "successful": true
+  },
+  "cleanup": [
+    {
+      "path": "results/sprint_target_gpu_20260912/native_006/prepared",
+      "canonical": "results/sprint_target_gpu_20260912/native_006/suite/runtime",
+      "changed_files": [],
+      "restore": [],
+      "logical_bytes": 1282128456,
+      "deleted": true,
+      "canonical_tree_sha256": "f2cc7ee99e20bd67a9ef9acdcf8b2285afaafea421198e3de77e1c703c334517"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/native_012/prepared",
+      "canonical": "results/sprint_target_gpu_20260912/native_012/suite/runtime",
+      "changed_files": [],
+      "restore": [],
+      "logical_bytes": 1282128456,
+      "deleted": true,
+      "canonical_tree_sha256": "45bc753fa16dde4ecba53a6cf232d68e91445d9d2959a4c561b4cef39a94256f"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/native_warm_006/prepared",
+      "canonical": "results/sprint_target_gpu_20260912/native_warm_006/suite/runtime",
+      "changed_files": [],
+      "restore": [],
+      "logical_bytes": 1282128434,
+      "deleted": true,
+      "canonical_tree_sha256": "ea78ab2a0e22aa1aba0147656f9df31010bb2ffec2309b70c5e6d7cf2277e8e3"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/native_warm_012/prepared",
+      "canonical": "results/sprint_target_gpu_20260912/native_warm_012/suite/runtime",
+      "changed_files": [],
+      "restore": [],
+      "logical_bytes": 1282128489,
+      "deleted": true,
+      "canonical_tree_sha256": "43cccc15e9c75e8a8ca8461b10c10e4086ce766aa33cb0fadd781434d4dc8aa0"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/native_initial_teacher_006/prepared",
+      "canonical": "results/sprint_target_gpu_20260912/native_initial_teacher_006/suite/runtime",
+      "changed_files": [],
+      "restore": [],
+      "logical_bytes": 1282128465,
+      "deleted": true,
+      "canonical_tree_sha256": "0ab460d8c307a0081ea10020b9e02b02c2b396bddfa81722049e72a39dd3b9de"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/native_initial_teacher_012/prepared",
+      "canonical": "results/sprint_target_gpu_20260912/native_initial_teacher_012/suite/runtime",
+      "changed_files": [],
+      "restore": [],
+      "logical_bytes": 1282128463,
+      "deleted": true,
+      "canonical_tree_sha256": "5cf20fce53f506be2652e12ba19ac2987aeff2ee6d7e58477417d2fa7c1b17a5"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/train/runtime",
+      "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+      "changed_files": [
+        "runtime_assets/deployment.json",
+        "runtime_assets/policies/Sprint_Godot.onnx",
+        "standalone/driver.gd"
+      ],
+      "restore": [
+        {
+          "path": "runtime_assets/deployment.json",
+          "source": "results/sprint_target_gpu_20260912/runtime_patches/train/runtime/runtime_assets/deployment.json",
+          "sha256": "20784626a38ec59bff90d37b1a24a28b82a6b7e7952c3be4cd901f585fc7d473"
+        },
+        {
+          "path": "runtime_assets/policies/Sprint_Godot.onnx",
+          "source": "results/sprint_target_gpu_20260912/train/iteration_011/actor.onnx",
+          "sha256": "8fea1eaf6507889ca9645c75c6304f71bb4fbfbc989d0c823f39216228672d82"
+        },
+        {
+          "path": "standalone/driver.gd",
+          "source": "results/sprint_target_gpu_20260912/runtime_patches/train/runtime/standalone/driver.gd",
+          "sha256": "239644959fa1db60395e6f3737123ce195264f8b39a398500aa74da1db6fe038"
+        }
+      ],
+      "logical_bytes": 1282129309,
+      "deleted": true,
+      "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/train_warm/runtime",
+      "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+      "changed_files": [
+        "runtime_assets/deployment.json",
+        "runtime_assets/policies/Sprint_Godot.onnx",
+        "standalone/driver.gd"
+      ],
+      "restore": [
+        {
+          "path": "runtime_assets/deployment.json",
+          "source": "results/sprint_target_gpu_20260912/runtime_patches/train_warm/runtime/runtime_assets/deployment.json",
+          "sha256": "6af3da75ac561f7a58ab7ac1c19fe53ea1eb1c02b242d93aba0e144b836a83a8"
+        },
+        {
+          "path": "runtime_assets/policies/Sprint_Godot.onnx",
+          "source": "results/sprint_target_gpu_20260912/train_warm/iteration_011/actor.onnx",
+          "sha256": "f5ba4894157ef6376232b8a59ad403df2594335dd2e020833cfa9bfb92eed8e1"
+        },
+        {
+          "path": "standalone/driver.gd",
+          "source": "results/sprint_target_gpu_20260912/runtime_patches/train_warm/runtime/standalone/driver.gd",
+          "sha256": "9a6b5b90f40e0d9dc4dd731eb30fa6fe53404f73c878bb4fb94f477453e57f82"
+        }
+      ],
+      "logical_bytes": 1282129686,
+      "deleted": true,
+      "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/train_initial_teacher/runtime",
+      "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+      "changed_files": [
+        "runtime_assets/deployment.json",
+        "runtime_assets/policies/Sprint_Godot.onnx",
+        "standalone/driver.gd"
+      ],
+      "restore": [
+        {
+          "path": "runtime_assets/deployment.json",
+          "source": "results/sprint_target_gpu_20260912/runtime_patches/train_initial_teacher/runtime/runtime_assets/deployment.json",
+          "sha256": "4ce925400347f3413cd2830f730b5c7ef9e687858a9cd7d84dff7d03384a99d0"
+        },
+        {
+          "path": "runtime_assets/policies/Sprint_Godot.onnx",
+          "source": "results/sprint_target_gpu_20260912/train_initial_teacher/iteration_011/actor.onnx",
+          "sha256": "b272d093be360b965420dddec8f795f66b4846c02ebaa6934ef975bb3dd7dbdc"
+        },
+        {
+          "path": "standalone/driver.gd",
+          "source": "results/sprint_target_gpu_20260912/runtime_patches/train_initial_teacher/runtime/standalone/driver.gd",
+          "sha256": "9a6b5b90f40e0d9dc4dd731eb30fa6fe53404f73c878bb4fb94f477453e57f82"
+        }
+      ],
+      "logical_bytes": 1282129686,
+      "deleted": true,
+      "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/noise_probe/runtime",
+      "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+      "changed_files": [
+        "standalone/driver.gd"
+      ],
+      "restore": [
+        {
+          "path": "standalone/driver.gd",
+          "source": "results/sprint_target_gpu_20260912/runtime_patches/noise_probe/runtime/standalone/driver.gd",
+          "sha256": "96930a2edc97e6086888a026509a8e1ab152cdcea8aada5d4aa03922e24635c5"
+        }
+      ],
+      "logical_bytes": 1282129315,
+      "deleted": true,
+      "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+    },
+    {
+      "path": "results/sprint_target_gpu_20260912/prefix_probe/runtime",
+      "canonical": "results/sprint_stop_state_20260912/native_joint_fd/suite/runtime",
+      "changed_files": [
+        "standalone/driver.gd"
+      ],
+      "restore": [
+        {
+          "path": "standalone/driver.gd",
+          "source": "results/sprint_target_gpu_20260912/runtime_patches/prefix_probe/runtime/standalone/driver.gd",
+          "sha256": "9a6b5b90f40e0d9dc4dd731eb30fa6fe53404f73c878bb4fb94f477453e57f82"
+        }
+      ],
+      "logical_bytes": 1282129686,
+      "deleted": true,
+      "canonical_tree_sha256": "68602237035cc45c499698af4bfc6b624db90054b1cbd331179c3cc0e7e13dfd"
+    }
+  ],
+  "resources": {
+    "unix": 1789228273.9607024,
+    "started": 11,
+    "finished": 11,
+    "missing_terminal": [],
+    "cleanup_remaining": {},
+    "live_owned_pids": [],
+    "live_owned_groups": [],
+    "live_session_marker_processes": [],
+    "all_godot_processes": [],
+    "docker": {
+      "command": [
+        "docker",
+        "ps",
+        "--format",
+        "{{.ID}}\t{{.Names}}\t{{.Image}}"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "gpu": {
+      "command": [
+        "nvidia-smi",
+        "--query-gpu=name,utilization.gpu,memory.used",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "stdout": "NVIDIA GB10, 4 %, [N/A]",
+      "stderr": ""
+    },
+    "gpu_apps": {
+      "command": [
+        "nvidia-smi",
+        "--query-compute-apps=pid,process_name,used_gpu_memory",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 242 MiB",
+      "stderr": ""
+    },
+    "job_results": [
+      {
+        "actor": "native_dataset_audit:797d76ab05",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_cuda_correction:91faa99d20",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_fixed_endpoints:615f5f0ce1",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "exploration_distribution_audit:d59ab8f188",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "deterministic_prefix_audit:e5ee32357a",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_warm_prefix_learning:f8f5fccfdd",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_warm_endpoints:5860db6e14",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_initial_teacher_learning:145d59b22c",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_initial_teacher_endpoints:2ee9e0edec",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "archive_and_runtime_cleanup:a213c337a8",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "final_regression_tests:473c8849fe",
+        "returncode": 0,
+        "reason": "completed"
+      }
+    ],
+    "passed": true,
+    "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+  },
+  "diagnostic_scope": "Noise and prefix measurements are not acceptance evidence",
+  "conditional_freeze_script_executed": false,
+  "budget": {
+    "limit_seconds": 5400.0,
+    "used_seconds": 4471.261417381,
+    "remaining_seconds": 928.7385826190002,
+    "actors": [],
+    "unconfirmed_gaps": 0
+  },
+  "preledger_estimate_seconds": 180,
+  "budget_note": "Report-cutoff union of active work intervals includes an explicit180s preledger estimate; final checksum and Git bookkeeping excluded. No unconfirmed gaps."
+}

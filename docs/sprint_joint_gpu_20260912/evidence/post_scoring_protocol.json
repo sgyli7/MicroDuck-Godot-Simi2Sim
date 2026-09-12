@@ -1,0 +1,44 @@
+{
+  "arms": [
+    {
+      "name": "baseline_s05",
+      "actor": "results/sprint_20260912/runs/s05_native_handoff/final.onnx",
+      "ordinary": "results/sprint_20260912/runs/s05_native_handoff/final.onnx"
+    },
+    {
+      "name": "baseline_cat_split",
+      "actor": "results/sprint_gpu_match_20260912/train_cat/final.onnx",
+      "ordinary": "results/sprint_20260912/runs/s05_native_handoff/final.onnx"
+    },
+    {
+      "name": "frozen_cat_joint",
+      "actor": "results/sprint_gpu_match_20260912/train_cat/final.onnx",
+      "ordinary": "results/sprint_gpu_match_20260912/train_cat/final.onnx"
+    },
+    {
+      "name": "native_split",
+      "actor": "results/sprint_joint_gpu_20260912/train_split/final.onnx",
+      "ordinary": "results/sprint_20260912/runs/s05_native_handoff/final.onnx"
+    },
+    {
+      "name": "native_shared",
+      "actor": "results/sprint_joint_gpu_20260912/train_shared/final.onnx",
+      "ordinary": "results/sprint_joint_gpu_20260912/train_shared/final.onnx"
+    },
+    {
+      "name": "native_tracking",
+      "actor": "results/sprint_joint_gpu_20260912/train_tracking/final.onnx",
+      "ordinary": "results/sprint_joint_gpu_20260912/train_tracking/final.onnx"
+    },
+    {
+      "name": "native_tracking_split",
+      "actor": "results/sprint_joint_gpu_20260912/train_tracking/final.onnx",
+      "ordinary": "results/sprint_20260912/runs/s05_native_handoff/final.onnx"
+    }
+  ],
+  "change": "Store the final state; score state[i+1] against action[i]. Native scoring and training unchanged.",
+  "validation": "Eight native trace differential cases, max discrepancy1.53e-13; missing final state rejected",
+  "previous_pre_step_diagnostics": "Retained but superseded for cross-engine comparison",
+  "helper_sha256": "8b493b49032568c40803ae44cd1466555236115fdca260de50159cbe2fa00e28",
+  "scorer_sha256": "6427f1b84f0320e4cc2d4e485c91c8e6512d03344af25349885c3fd3df2c7ea4"
+}

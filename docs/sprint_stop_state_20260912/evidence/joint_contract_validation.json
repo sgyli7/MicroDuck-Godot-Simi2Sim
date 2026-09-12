@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "physics_substeps": 2400,
+  "policy_steps": 600,
+  "max_joint_velocity_error": 1.212363542890671e-13,
+  "max_pd_torque_error": 1.587618925213974e-14,
+  "max_policy_action_error": 5.551115123125783e-16,
+  "angular_path": "unchanged solver velocity in GPU proxy; full angular projection remains rejected",
+  "scope": "Actual native input trace and motor outputs; no simulation or model changes"
+}

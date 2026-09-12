@@ -1,0 +1,140 @@
+{
+  "cuda_integration_smoke_retry": {
+    "completed": {
+      "status": "iteration_limit",
+      "iterations": 3,
+      "samples": 192,
+      "elapsed": 26.86772131919861,
+      "best_dev_score": 0.6752130156404379,
+      "best_dev_success": 1.0,
+      "final_parity": {
+        "random_max_abs": 0.0,
+        "random_batch_max_abs": 0.0,
+        "realistic_max_abs": 0.0,
+        "realistic_batch_max_abs": 0.0,
+        "threshold": 1e-05,
+        "passed": true
+      },
+      "entry_counts": {
+        "reset": 4,
+        "standing": 0
+      }
+    },
+    "device": "cuda",
+    "resume_from": null,
+    "files": {
+      "config.json": {
+        "path": "results/jolt_learning_20260911/runs/cuda_integration_smoke_retry/config.json",
+        "sha256": "d573ac3d9f14827b57ac3a7620ff820cb7fab6188e6953720f53c7e7a6cae1b8"
+      },
+      "latest.pt": {
+        "path": "results/jolt_learning_20260911/runs/cuda_integration_smoke_retry/latest.pt",
+        "sha256": "b85488cf5587ea4f34268176b07dcc9d8afcf6d4971a0d1003117fd5d6b5405b"
+      },
+      "final.onnx": {
+        "path": "results/jolt_learning_20260911/runs/cuda_integration_smoke_retry/final.onnx",
+        "sha256": "60116d4d261ea3b49eb5838e61f3ca1dcf7e841a6e9b6950fe5e79a095d1fdbb"
+      },
+      "completed.json": {
+        "path": "results/jolt_learning_20260911/runs/cuda_integration_smoke_retry/completed.json",
+        "sha256": "3c17c8484a18b5c40a6600356034447f2d7e69bc98a829ddd37cca167198b568"
+      }
+    }
+  },
+  "cuda_resume_smoke": {
+    "completed": {
+      "status": "iteration_limit",
+      "iterations": 5,
+      "samples": 128,
+      "elapsed": 17.540236473083496,
+      "best_dev_score": 0.6795053641561835,
+      "best_dev_success": 1.0,
+      "final_parity": {
+        "random_max_abs": 0.0,
+        "random_batch_max_abs": 0.0,
+        "realistic_max_abs": 7.450580596923828e-09,
+        "realistic_batch_max_abs": 7.450580596923828e-09,
+        "threshold": 1e-05,
+        "passed": true
+      },
+      "entry_counts": {
+        "reset": 2,
+        "standing": 0
+      }
+    },
+    "device": "cuda",
+    "resume_from": "cuda",
+    "files": {
+      "config.json": {
+        "path": "results/jolt_learning_20260911/runs/cuda_resume_smoke/config.json",
+        "sha256": "095b7d39114c728be5393dbe74d450491bab17871189b5d7aff79d23d74cf59b"
+      },
+      "latest.pt": {
+        "path": "results/jolt_learning_20260911/runs/cuda_resume_smoke/latest.pt",
+        "sha256": "8f6296223be085a4ca952f92db9bfb0b4e16ea82f6967ecd72edbfa61d547622"
+      },
+      "final.onnx": {
+        "path": "results/jolt_learning_20260911/runs/cuda_resume_smoke/final.onnx",
+        "sha256": "b3e59a07f82ce384b4fae5e8e1aba4527cefe6ce5c7c27580419fdd22ab788c4"
+      },
+      "completed.json": {
+        "path": "results/jolt_learning_20260911/runs/cuda_resume_smoke/completed.json",
+        "sha256": "ddb07a64b93032c909c931d89ecc3e2e4d6b705c3f96d7b4ff52dd36ca070095"
+      }
+    }
+  },
+  "cpu_to_cuda_resume_smoke": {
+    "completed": {
+      "status": "iteration_limit",
+      "iterations": 7,
+      "samples": 4096,
+      "elapsed": 36.78379821777344,
+      "best_dev_score": 0.650270658295033,
+      "best_dev_success": 1.0,
+      "final_parity": {
+        "random_max_abs": 0.0,
+        "random_batch_max_abs": 0.0,
+        "realistic_max_abs": 0.0,
+        "realistic_batch_max_abs": 0.0,
+        "threshold": 1e-05,
+        "passed": true
+      },
+      "entry_counts": {
+        "reset": 12,
+        "standing": 0
+      }
+    },
+    "device": "cuda",
+    "resume_from": "cpu",
+    "files": {
+      "config.json": {
+        "path": "results/jolt_learning_20260911/runs/cpu_to_cuda_resume_smoke/config.json",
+        "sha256": "e0801c4fef6c303637a2e5edaac983a268d12066041beeb6509898cb13bd106a"
+      },
+      "latest.pt": {
+        "path": "results/jolt_learning_20260911/runs/cpu_to_cuda_resume_smoke/latest.pt",
+        "sha256": "858e78143394ac41efab1cf80bd77b692986e9abe478fbbe60e6c0d796d6a418"
+      },
+      "final.onnx": {
+        "path": "results/jolt_learning_20260911/runs/cpu_to_cuda_resume_smoke/final.onnx",
+        "sha256": "45f3a5d7a8fe582f6864b067a2bedd2d601745fb912d9c0247f366a83878c352"
+      },
+      "completed.json": {
+        "path": "results/jolt_learning_20260911/runs/cpu_to_cuda_resume_smoke/completed.json",
+        "sha256": "74f287a4e957a9ec94719a9b6145c4be6dc7630d3f38d450195c3c6d34d800bf"
+      }
+    }
+  },
+  "test_suite": {
+    "tests": 249,
+    "skipped": 2,
+    "failed": 0,
+    "seconds": 93.949,
+    "log": "results/jolt_learning_20260911/supervisors/final-tests-8ea26ae981.log",
+    "sha256": "c26ed6be5c317528a1054d0ee1c447a92c2bc8faf5a12691ea94aa0d791c4b66"
+  },
+  "failed_cuda_attempt_preserved": {
+    "log": "results/jolt_learning_20260911/cuda_integration_smoke.log",
+    "reason": "CUDA allocation failure before Jolt workers were created"
+  }
+}

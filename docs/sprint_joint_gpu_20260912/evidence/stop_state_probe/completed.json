@@ -1,0 +1,128 @@
+{
+  "completed": true,
+  "cut_t": 9.0,
+  "native_case": "sprint_shift_first",
+  "seed": 927008,
+  "history_command_max_abs": 0.0,
+  "initial_obs_max_abs": [
+    3.7252903400952775e-09,
+    0.0
+  ],
+  "native_original": {
+    "success": false,
+    "fell": false,
+    "first_fall_s": null,
+    "score": 0.0,
+    "sustained_mean_vx": 0.23239636080022677,
+    "sustained_p10_vx": 0.122360530436403,
+    "max_tilt": 8.138511150335049,
+    "min_z": 0.11263572698333692,
+    "straight": [
+      {
+        "at": 1,
+        "heading_error_deg": 6.324592992978271,
+        "lateral_path_m": 0.03389628561248274,
+        "lateral_limit_m": 0.18081182987343342,
+        "passed": true
+      }
+    ],
+    "turns": [],
+    "stops": [
+      {
+        "at": 9,
+        "onset_s": null,
+        "passed": false
+      }
+    ],
+    "actor_selection_passed": true,
+    "speed_gain_gate": "requires paired ordinary result"
+  },
+  "gpu_original": {
+    "success": true,
+    "fell": false,
+    "first_fall_s": null,
+    "score": 0.23777505458408124,
+    "sustained_mean_vx": 0.23777505458408124,
+    "sustained_p10_vx": 0.1522416524537612,
+    "max_tilt": 7.387278821461332,
+    "min_z": 0.11418234556913376,
+    "straight": [
+      {
+        "at": 1,
+        "heading_error_deg": 3.3765086209192305,
+        "lateral_path_m": 0.021437179944000045,
+        "lateral_limit_m": 0.18542360631219731,
+        "passed": true
+      }
+    ],
+    "turns": [],
+    "stops": [
+      {
+        "at": 9,
+        "onset_s": 0.4399999999999995,
+        "passed": true
+      }
+    ],
+    "actor_selection_passed": true,
+    "speed_gain_gate": "requires paired ordinary result"
+  },
+  "jolt_projected_restart": {
+    "success": true,
+    "fell": false,
+    "first_fall_s": null,
+    "score": 0.23239636080022677,
+    "sustained_mean_vx": 0.23239636080022677,
+    "sustained_p10_vx": 0.12236053043640288,
+    "max_tilt": 8.138511150335049,
+    "min_z": 0.112635726983336,
+    "straight": [
+      {
+        "at": 1,
+        "heading_error_deg": 6.324592992978239,
+        "lateral_path_m": 0.033896285612482924,
+        "lateral_limit_m": 0.18081182987343314,
+        "passed": true
+      }
+    ],
+    "turns": [],
+    "stops": [
+      {
+        "at": 9,
+        "onset_s": 0.5199999999999996,
+        "passed": true
+      }
+    ],
+    "actor_selection_passed": true,
+    "speed_gain_gate": "requires paired ordinary result"
+  },
+  "gpu_own_cold_restart": {
+    "success": true,
+    "fell": false,
+    "first_fall_s": null,
+    "score": 0.23777505458408124,
+    "sustained_mean_vx": 0.23777505458408124,
+    "sustained_p10_vx": 0.1522416524537612,
+    "max_tilt": 7.387278821461332,
+    "min_z": 0.11418234556913376,
+    "straight": [
+      {
+        "at": 1,
+        "heading_error_deg": 3.3765086209192305,
+        "lateral_path_m": 0.021437179944000045,
+        "lateral_limit_m": 0.18542360631219731,
+        "passed": true
+      }
+    ],
+    "turns": [],
+    "stops": [
+      {
+        "at": 9,
+        "onset_s": 0.4399999999999995,
+        "passed": true
+      }
+    ],
+    "actor_selection_passed": true,
+    "speed_gain_gate": "requires paired ordinary result"
+  },
+  "scope": "Observation/controller history preserved; generalized pose and velocity projected, contact caches and non-FK native joint compliance not transferred. No model update or deployment selection."
+}

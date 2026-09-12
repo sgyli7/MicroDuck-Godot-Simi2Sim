@@ -1,0 +1,326 @@
+[
+  {
+    "arm": "native_006",
+    "counts": {
+      "sprint_pass": 125,
+      "sprint_count": 128,
+      "ordinary_pass": 128,
+      "ordinary_count": 128,
+      "regression_pass": 7,
+      "regression_count": 7
+    },
+    "falls": 0,
+    "speed": 0.23264560618509575,
+    "ratio": 1.2041060422646672,
+    "failed": [
+      {
+        "case": [
+          "sprint_alternate",
+          927001
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4239232928809242,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927007
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.40604095943880397,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927008
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4675018640964012,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      }
+    ]
+  },
+  {
+    "arm": "native_012",
+    "counts": {
+      "sprint_pass": 125,
+      "sprint_count": 128,
+      "ordinary_pass": 128,
+      "ordinary_count": 128,
+      "regression_pass": 7,
+      "regression_count": 7
+    },
+    "falls": 0,
+    "speed": 0.23252753226159026,
+    "ratio": 1.2034949259532175,
+    "failed": [
+      {
+        "case": [
+          "sprint_alternate",
+          927003
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.3988364354974369,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927008
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 2.0199999999999996,
+            "passed": false
+          }
+        ]
+      },
+      {
+        "case": [
+          "sprint_left",
+          927001
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 2.4000000000000004,
+            "passed": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "arm": "native_warm_006",
+    "counts": {
+      "sprint_pass": 127,
+      "sprint_count": 128,
+      "ordinary_pass": 128,
+      "ordinary_count": 128,
+      "regression_pass": 7,
+      "regression_count": 7
+    },
+    "falls": 0,
+    "speed": 0.23333566144334586,
+    "ratio": 1.2076775677259923,
+    "failed": [
+      {
+        "case": [
+          "sprint_right",
+          927004
+        ],
+        "fell": false,
+        "straight": [
+          {
+            "at": 8,
+            "heading_error_deg": 6.5890196574079924,
+            "lateral_path_m": 0.05437380102671201,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": []
+      }
+    ]
+  },
+  {
+    "arm": "native_warm_012",
+    "counts": {
+      "sprint_pass": 126,
+      "sprint_count": 128,
+      "ordinary_pass": 128,
+      "ordinary_count": 128,
+      "regression_pass": 7,
+      "regression_count": 7
+    },
+    "falls": 0,
+    "speed": 0.2336360787136703,
+    "ratio": 1.20923244020491,
+    "failed": [
+      {
+        "case": [
+          "sprint_alternate",
+          927009
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4199296338313793,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927015
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.33351246922949,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      }
+    ]
+  },
+  {
+    "arm": "native_initial_teacher_006",
+    "counts": {
+      "sprint_pass": 125,
+      "sprint_count": 128,
+      "ordinary_pass": 128,
+      "ordinary_count": 128,
+      "regression_pass": 7,
+      "regression_count": 7
+    },
+    "falls": 0,
+    "speed": 0.23328257936849442,
+    "ratio": 1.20740283033416,
+    "failed": [
+      {
+        "case": [
+          "sprint_alternate",
+          927003
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 2.0799999999999983,
+            "passed": false
+          }
+        ]
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927005
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.25304030173113917,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      },
+      {
+        "case": [
+          "sprint_alternate",
+          927009
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4051605166436519,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      }
+    ]
+  },
+  {
+    "arm": "native_initial_teacher_012",
+    "counts": {
+      "sprint_pass": 127,
+      "sprint_count": 128,
+      "ordinary_pass": 128,
+      "ordinary_count": 128,
+      "regression_pass": 7,
+      "regression_count": 7
+    },
+    "falls": 0,
+    "speed": 0.23158217089975125,
+    "ratio": 1.1986020103010377,
+    "failed": [
+      {
+        "case": [
+          "sprint_alternate",
+          927013
+        ],
+        "fell": false,
+        "straight": [],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.32057531353723273,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": []
+      }
+    ]
+  }
+]

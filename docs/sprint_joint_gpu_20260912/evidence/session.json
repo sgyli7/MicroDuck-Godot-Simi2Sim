@@ -1,0 +1,17 @@
+{
+  "predecessor": "1c80048",
+  "previous_goal_turn": "progress",
+  "objective": "Shared ordinary/sprint/stop GPU policy with reference teacher retention, frozen Jolt",
+  "started_unix": 1789214198.963478,
+  "dev_seeds": [
+    927000,
+    927015
+  ],
+  "final_seeds": [
+    928000,
+    928049
+  ],
+  "final_seeds_used": false,
+  "physics_frozen": true,
+  "phase": "frozen_actor_handoff_counterfactual"
+}

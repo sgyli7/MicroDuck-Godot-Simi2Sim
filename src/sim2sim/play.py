@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import subprocess
 import sys
@@ -227,6 +228,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--robot", type=Path, default=ROOT / "robots/microduck.json")
     p.add_argument("--local-ppo", action="store_true", help="shortcut: local_ppo walking ONNX")
     p.add_argument("--walking", type=Path, default=None, help="override walking ONNX path")
+    p.add_argument("--sprint", type=Path, help="optional walking sprint actor selected by left Shift+W")
+    p.add_argument("--control-config",type=Path,help="Explicit versioned controller configuration used by standalone replay")
     p.add_argument(
         "--roller",
         action="store_true",
@@ -258,7 +261,26 @@ def main(argv: list[str] | None = None) -> int:
     if args.walking is not None and not args.walking.is_file():
         raise SystemExit(f"walking ONNX missing: {args.walking}")
     paths = policy_paths(local_ppo=args.local_ppo, roller=args.roller, walking=args.walking)
+    if args.sprint is not None and not args.roller:
+        if not args.sprint.is_file():raise SystemExit(f'sprint ONNX missing: {args.sprint}')
+        paths['sprint']=args.sprint
     bank = load_bank(paths, home_len=int(home.size))
+    if 'sprint' in bank:
+        actor=bank['sprint']
+        if actor.obs_dim!=61 or actor.time_input_s or actor.heading_input or actor.yaw_memory_input or actor.task_input:
+            raise PolicyShapeError('Sprint requires the 61D walking contract')
+    task_contacts = None
+    if any(actor.task_state is not None for actor in bank.values()):
+        if not args.roller:
+            raise PolicyShapeError('Roller task-state policies require the roller robot')
+        from sim2sim.train.reset_poses import HomePoseSampler
+        from sim2sim.research.world import roller_support_groups
+        sampler = HomePoseSampler(cfg)
+        try:
+            task_contacts = roller_support_groups(sampler.mj.model,
+                [body['name'] for body in json.loads(spec.read_text())['bodies']])
+        finally:
+            sampler.mj.close()
     if args.roller:
         lim = ROLLER_LIMITS
         use_stand = True
@@ -266,7 +288,14 @@ def main(argv: list[str] | None = None) -> int:
         walk = bank.get("walking")
         lim = walk.twist_limits if walk is not None else TwistLimits()
         use_stand = True if walk is None else walk.has_standing_partner
+    from dataclasses import replace
+    from sim2sim.motion_control import MotionControl
+    controls={} if args.control_config is None else json.loads(args.control_config.read_text())
+    motion_settings=controls.get('roller' if args.roller else 'walk',{})
+    lim=replace(lim,**motion_settings.get('twist_limits',{}))
+    motion=MotionControl(motion_settings)
     brain = PlayBrain(
+        has_sprint=not args.roller and 'sprint' in bank,
         has_walking="walking" in bank,
         has_standing="standing" in bank and use_stand,
         has_sitstand="sitstand" in bank,
@@ -275,6 +304,7 @@ def main(argv: list[str] | None = None) -> int:
         has_kick_right="kick_right" in bank,
         has_roulade="roulade" in bank,
         has_roller_crouch="roller_crouch" in bank,
+        has_stand_hold="standing" in bank,
         lim=lim,
     )
     poses = capture_home_poses(cfg)
@@ -305,7 +335,8 @@ def main(argv: list[str] | None = None) -> int:
     press_order: list[str] = []
     taps: list[str] = []
     fall_acc = 0.0
-    st = backend.reset(ctrl=home, bodies=poses)
+    report_bodies = None if task_contacts is None else sum(task_contacts, [])
+    st = backend.reset(ctrl=home, bodies=poses, report_bodies=report_bodies)
     next_t = time.perf_counter()
     hz_n = 0
     hz_t0 = time.perf_counter()
@@ -351,18 +382,20 @@ def main(argv: list[str] | None = None) -> int:
                     do_reset = True
             if do_reset:
                 brain.reset_motion()
+                motion.reset()
                 active_policy = None
                 last_action[:] = 0.0
                 fall_acc = 0.0
-                st = backend.reset(ctrl=home, bodies=poses)
+                st = backend.reset(ctrl=home, bodies=poses, report_bodies=report_bodies)
                 held, taps = set(), []
                 next_t = time.perf_counter()
                 continue
             if out.push:
                 backend.nudge(random_push())
-            sess = pick_session(bank, out.policy)
-            if active_policy != out.policy:
-                sess.reset_context(); active_policy = out.policy
+            selected_policy = 'sprint' if out.sprint else out.policy
+            sess = pick_session(bank, selected_policy)
+            if active_policy != selected_policy:
+                sess.reset_context(); active_policy = selected_policy
             cmd = out.command
             if sess.time_input_s:
                 duration = brain.roulade_duration if out.policy == 'roulade' else (
@@ -375,17 +408,26 @@ def main(argv: list[str] | None = None) -> int:
                     maneuver_heading = np.array([np.cos(yaw),np.sin(yaw)])
                 cmd = time_command(duration - brain.behavior_t, sess.time_input_s,
                                    rotation if sess.heading_input else None,maneuver_heading)
+            skill='roller' if args.roller and out.policy=='walking' else selected_policy
+            cmd=motion.command(cmd,st,skill,dt_ctrl)
             obs = build_obs(st, last_action, cmd, home=home)
+            from sim2sim.policy_state import inject_state
+            obs=inject_state(obs,st,sess.state_input)
+            if sess.task_state is not None:
+                from sim2sim.policy_task_state import contacts_from_raw
+                obs = sess.task_state.observe(obs,
+                    contacts_from_raw(st.extra['raw'], task_contacts), st.t)
             t_inf = time.perf_counter()
             try:
                 action = sess.infer(obs)
             except PolicyNumericError as e:
                 print(f"policy numeric error: {e}")
                 brain.reset_motion()
+                motion.reset()
                 active_policy = None
                 last_action[:] = 0.0
                 fall_acc = 0.0
-                st = backend.reset(ctrl=home, bodies=poses)
+                st = backend.reset(ctrl=home, bodies=poses, report_bodies=report_bodies)
                 held, taps = set(), []
                 next_t = time.perf_counter()
                 continue
@@ -394,7 +436,8 @@ def main(argv: list[str] | None = None) -> int:
             ctrl = home + last_action * scale
             t_step = time.perf_counter()
             ball = kick_ball_position(st, out.started_skill) if out.started_skill in ("kick_left", "kick_right") else None
-            st = backend.step(ctrl, n_substeps=decimation, hud=out.status, place_ball=ball)
+            st = backend.step(ctrl, n_substeps=decimation, hud=out.status, place_ball=ball,
+                report='research' if task_contacts is not None else None)
             step_ms += (time.perf_counter() - t_step) * 1000.0
             raw = st.extra.get("raw") or {}
             held = {str(x) for x in (raw.get("held") or [])}

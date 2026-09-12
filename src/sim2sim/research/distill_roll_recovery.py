@@ -1,4 +1,5 @@
 """Training-only native roll/stand demonstrations for a single timed student."""
+from .budget import legacy_deadline
 import argparse,json,time
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
@@ -44,7 +45,7 @@ def main():
     p.add_argument('--probe',action='store_true');p.add_argument('--seeds',type=int,default=12)
     p.add_argument('--time-gate',default='');p.add_argument('--demonstrations',type=Path)
     args=p.parse_args();root=SESSION/args.name;root.mkdir(exist_ok=False);torch.set_num_threads(2);torch.manual_seed(929)
-    start=time.time();deadline=min(start+25*60,json.loads((SESSION/'session.json').read_text())['deadline_unix']-3600)
+    start=time.time();deadline=min(start+25*60,legacy_deadline(SESSION)-3600)
     if args.demonstrations:
         reports=json.loads(args.demonstrations.read_text());parent_hash=NativeAnchor(args.source).sha256
         if any(r['roll_teacher_sha256']!=parent_hash for r in reports):raise ValueError('Demonstration parent mismatch')

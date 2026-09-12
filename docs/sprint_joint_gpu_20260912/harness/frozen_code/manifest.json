@@ -1,0 +1,11 @@
+{
+  "/home/ethan/Projects/MicroDuck/sim2sim/scripts/sprint_gpu_train.py": "ad9be4ca0d0118a4ea3fef69eb8fba5d0eba626fc629756ade4ab6cdae315fea",
+  "scripts/sprint_gpu_world.py": "d8d4edbb0b4b638eade57f0795b7043d2c16f44c760e330cdd5d067d3141b4d9",
+  "scripts/sprint_gpu_proxy.py": "b267e971c49f18b54ab73b9172648a37c207cd54c54e85bf5a885a7e5f9333eb",
+  "src/sim2sim/research/torch_anchor.py": "d31fe272609b9f2d0d64f6671add5ea3cdd9fa6ebc67397039b8b38bb96dd21a",
+  "src/sim2sim/research/torch_walking.py": "2c7c6f5dbc85ad21e2b58d6ccda60ff0c715757b8ed8582ba8e8d4410b3825ad",
+  "src/sim2sim/research/models.py": "d6462530b72da2940e2728b6fc87ba9def0ebf4a3c725a9f56ecdf62c6e9fa06",
+  "src/sim2sim/research/constraint_returns.py": "668419df0b2c90f49411241db5645982d5ed688b45b9cd9589f7457ddf756305",
+  "src/sim2sim/research/sprint_constraints.py": "0eab28e69d21c70436aa877d35313ca2d238b235614ebc2de3d899252eba45ad",
+  "src/sim2sim/research/walking_retention.py": "72a179b023ebbf858fb90bfa222e5c358ce5118b0fdce27c996462c6056f5079"
+}

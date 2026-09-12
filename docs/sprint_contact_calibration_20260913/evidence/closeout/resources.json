@@ -1,0 +1,112 @@
+{
+  "unix": 1789234493.624653,
+  "started": 9,
+  "finished": 9,
+  "missing_terminal": [],
+  "cleanup_remaining": {},
+  "live_owned_pids": [],
+  "live_owned_groups": [],
+  "live_session_marker_processes": [],
+  "all_godot_processes": [
+    {
+      "pid": 1395944,
+      "state": "S",
+      "ppid": 1395942,
+      "pgrp": 1395938,
+      "session": 1395938,
+      "start_ticks": 26241276,
+      "comm": "godot",
+      "args": "/home/ethan/.local/bin/godot --path /home/ethan/Projects/MicroDuck/sim2sim/results/workshop-grab-check/runtime res://hub/main.tscn --disable-vsync --max-fps 30 --headless -- --port=58001 "
+    },
+    {
+      "pid": 1396502,
+      "state": "S",
+      "ppid": 1396332,
+      "pgrp": 1396327,
+      "session": 1396327,
+      "start_ticks": 26243880,
+      "comm": "godot",
+      "args": "/home/ethan/.local/bin/godot --path /home/ethan/Projects/MicroDuck/sim2sim/results/sai-jitter/workshop-runtime res://hub/main.tscn --disable-vsync --max-fps 30 -- --port=56201 "
+    }
+  ],
+  "docker": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.ID}}\t{{.Names}}\t{{.Image}}"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "gpu": {
+    "command": [
+      "nvidia-smi",
+      "--query-gpu=name,utilization.gpu,memory.used",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "NVIDIA GB10, 43 %, [N/A]",
+    "stderr": ""
+  },
+  "gpu_apps": {
+    "command": [
+      "nvidia-smi",
+      "--query-compute-apps=pid,process_name,used_gpu_memory",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 580 MiB\n1396502, /home/ethan/.local/bin/godot, 368 MiB",
+    "stderr": ""
+  },
+  "job_results": [
+    {
+      "actor": "gpu_contact_response:a6df541faf",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "microstep_reset_diagnosis:3f660ec943",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_contact_response_after_canary:7373bd4f09",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "strong_contact_canary:0520e5d3a2",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_contact_response_final_canary:99a7b19151",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_articulation_residual:e3d585e9e6",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_joint_compliance:20c47afd0c",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_compliance_stiffness:c6ff35e70b",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "regression_checks:6b15b1d33c",
+      "returncode": 0,
+      "reason": "completed"
+    }
+  ],
+  "passed": true,
+  "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+}

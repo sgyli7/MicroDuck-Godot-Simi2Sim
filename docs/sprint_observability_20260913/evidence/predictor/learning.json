@@ -1,0 +1,329 @@
+{
+  "completed": true,
+  "records": [
+    {
+      "arm": "immediate",
+      "seed": 997101,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "f25ae394c0c8b5622887109be3bb2967e51f63b1c8a00b426c68cbb7debf9a29",
+      "learning_s": 2.277374453988159,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.07047151202976558,
+          "validation_mse": 0.06665019690990448
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.050674499962315066,
+          "validation_mse": 0.04961634799838066
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.043590285686251805,
+          "validation_mse": 0.04347210377454758
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.03960483126571737,
+          "validation_mse": 0.0381857194006443
+        }
+      ],
+      "prediction_sha256": "db58fe828a2429348da897d2341fbc2db06fd67bf7f583073050a9175ea5a4db",
+      "model_sha256": "60c65e86f71f334fa4f4946ef5a3d76c3fe88c475b006475f2d24458d7d5d3f0"
+    },
+    {
+      "arm": "state",
+      "seed": 997101,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "f25ae394c0c8b5622887109be3bb2967e51f63b1c8a00b426c68cbb7debf9a29",
+      "learning_s": 1.6549913880007807,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.05746426839415314,
+          "validation_mse": 0.05429123714566231
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.037496898604784334,
+          "validation_mse": 0.03717878833413124
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.03087401237904056,
+          "validation_mse": 0.03093619830906391
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.027724615191462434,
+          "validation_mse": 0.02790355309844017
+        }
+      ],
+      "prediction_sha256": "c8248d60bb31dcae647dbd249f865e56ca0961a62361fa096632905b8922c9c1",
+      "model_sha256": "5ff96e29af8f39fd51a71efa93a5cb9af85a1d1c830d7796699118503de2d349"
+    },
+    {
+      "arm": "contacts",
+      "seed": 997101,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "f25ae394c0c8b5622887109be3bb2967e51f63b1c8a00b426c68cbb7debf9a29",
+      "learning_s": 1.6646066379908007,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.06673077988047442,
+          "validation_mse": 0.06336764991283417
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.04862787353350466,
+          "validation_mse": 0.04767771437764168
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.04194370620850062,
+          "validation_mse": 0.04171166196465492
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.03798996586986014,
+          "validation_mse": 0.036706820130348206
+        }
+      ],
+      "prediction_sha256": "86f2dd904cb3affab4a2b25fd7ea94915e3252a0675dd2be928a6d85290239db",
+      "model_sha256": "21ac70ef175b9eaaf9a516bceea5329bb9278802acf7fe9ab7d431293acae2d8"
+    },
+    {
+      "arm": "history",
+      "seed": 997101,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "f25ae394c0c8b5622887109be3bb2967e51f63b1c8a00b426c68cbb7debf9a29",
+      "learning_s": 1.7038543749949895,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.048583575068384365,
+          "validation_mse": 0.04675828665494919
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.03608064385855099,
+          "validation_mse": 0.03724231943488121
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.03159283737550185,
+          "validation_mse": 0.032394297420978546
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.02911078590144655,
+          "validation_mse": 0.02946789562702179
+        }
+      ],
+      "prediction_sha256": "190bb01e7fe74aa26065c9909a7d699551b61b5f82d59436ef62be1081e72434",
+      "model_sha256": "c50aeff32788862f82169bbbb9c88924774c40ed69b2750a218ce4d5cc167b94"
+    },
+    {
+      "arm": "duplicate_current",
+      "seed": 997101,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "f25ae394c0c8b5622887109be3bb2967e51f63b1c8a00b426c68cbb7debf9a29",
+      "learning_s": 1.611714133003261,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.04679411526809612,
+          "validation_mse": 0.04430081695318222
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.03586057692528641,
+          "validation_mse": 0.035810794681310654
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.03188218842948506,
+          "validation_mse": 0.033684637397527695
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.028700759408824526,
+          "validation_mse": 0.028036294505000114
+        }
+      ],
+      "prediction_sha256": "d7c41a2df60d91acf7a6f8d4f76936df932c1887ef98c763e63c689d3c8e23df",
+      "model_sha256": "934c92530eeb458dc9c15381b94ed19bee61296ed0b766bcba1294b979cdb412"
+    },
+    {
+      "arm": "immediate",
+      "seed": 997102,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "b234705f25f2b2cb55fa042df05eb160e315fe8c22e0ecd4651e8c57fe1fb798",
+      "learning_s": 1.6022125740128104,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.06805501603677681,
+          "validation_mse": 0.06434299796819687
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.04940255093095569,
+          "validation_mse": 0.047244589775800705
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.04231580900702043,
+          "validation_mse": 0.04093823954463005
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.03933828289871577,
+          "validation_mse": 0.038590822368860245
+        }
+      ],
+      "prediction_sha256": "2b98877c57e21b4e8afe3a00dd2c09df0f34896c473c1346caedded3d034f45e",
+      "model_sha256": "2d77055c3e9d170e231c394cf457e5bab7d3482451f3ec34b46c810701c3f915"
+    },
+    {
+      "arm": "state",
+      "seed": 997102,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "b234705f25f2b2cb55fa042df05eb160e315fe8c22e0ecd4651e8c57fe1fb798",
+      "learning_s": 1.629511884006206,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.0554584505530034,
+          "validation_mse": 0.05271739140152931
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.036798065005128826,
+          "validation_mse": 0.03547028824687004
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.03055887859868121,
+          "validation_mse": 0.02984553389251232
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.027626189516833214,
+          "validation_mse": 0.027713056653738022
+        }
+      ],
+      "prediction_sha256": "568a4f7cf84f3c7ce9e8eff8809beea01d891ad8c47e848dbc5fbd4288712e48",
+      "model_sha256": "a221c54137e946795587ec9a7c3d4e4e1ec58afa020278c0f5fac0490e6a9706"
+    },
+    {
+      "arm": "contacts",
+      "seed": 997102,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "b234705f25f2b2cb55fa042df05eb160e315fe8c22e0ecd4651e8c57fe1fb798",
+      "learning_s": 1.5781559250026476,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.06499490334274538,
+          "validation_mse": 0.061795514076948166
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.048062621097311686,
+          "validation_mse": 0.04564078524708748
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.04129879696025067,
+          "validation_mse": 0.03991115093231201
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.0379515772178042,
+          "validation_mse": 0.03726844862103462
+        }
+      ],
+      "prediction_sha256": "dbe7af60bbdd58575284e75fa7df737443b445297efb900da2a17252f5618494",
+      "model_sha256": "606285459268887655d53b8dd4077bf4fb94c4bb0307d4f07e4de3c3f077d16e"
+    },
+    {
+      "arm": "history",
+      "seed": 997102,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "b234705f25f2b2cb55fa042df05eb160e315fe8c22e0ecd4651e8c57fe1fb798",
+      "learning_s": 1.6181280860037077,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.0504448753605345,
+          "validation_mse": 0.047305379062891006
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.036805529465250814,
+          "validation_mse": 0.03617977723479271
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.031811066019404984,
+          "validation_mse": 0.0330706425011158
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.030967883619968602,
+          "validation_mse": 0.03093884140253067
+        }
+      ],
+      "prediction_sha256": "24187f7ae5f0a9ca57dc274485039afcc827f1cd7ef216f76ddb634469f1e5d1",
+      "model_sha256": "0a2da31d8f8e96ccf2125e2b9ac9b860ced0f004cd92163e6e0f77d63d2b8cbd"
+    },
+    {
+      "arm": "duplicate_current",
+      "seed": 997102,
+      "device": "cuda:0",
+      "gpu_name": "NVIDIA GB10",
+      "initial_state_sha256": "b234705f25f2b2cb55fa042df05eb160e315fe8c22e0ecd4651e8c57fe1fb798",
+      "learning_s": 1.6082528659899253,
+      "curves": [
+        {
+          "epoch": 10,
+          "train_mse": 0.04804968485401225,
+          "validation_mse": 0.04452401399612427
+        },
+        {
+          "epoch": 20,
+          "train_mse": 0.036427147041549014,
+          "validation_mse": 0.03485403209924698
+        },
+        {
+          "epoch": 30,
+          "train_mse": 0.031423815285697744,
+          "validation_mse": 0.029753929004073143
+        },
+        {
+          "epoch": 40,
+          "train_mse": 0.029104768376114924,
+          "validation_mse": 0.029219338670372963
+        }
+      ],
+      "prediction_sha256": "fe6bf26712f8fd11caf846dff27f12d5dda6aacd607e6e17a0e60a8dfe8fdb4e",
+      "model_sha256": "38e539421decf2df9ff2e754385e48d326b61e606bab3cf132b0ddef335430aa"
+    }
+  ],
+  "elapsed_s": 18.83721099299146,
+  "torch_version": "2.9.1+cu129",
+  "cuda_version": "12.9",
+  "normalizers_sha256": "de775f936db90b58eacd67b770ed4fa105f55f0ed0e1bd1957dc08c2ccbe954b"
+}

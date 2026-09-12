@@ -26,7 +26,7 @@ static func describe(kind: String, task: String, finished: bool, available: Dict
 		var skills: Array[String] = []
 		for entry in [["sitstand","Y / 2 坐起"],["ground_pick","G / 1 捡地"],
 			["kick_left","K / 3 左踢"],["kick_right","L / 4 右踢"],["roulade","R / 5 前滚"],
-			["stand_hold","7 站定"],["sprint","左 Shift 加速"]]:
+			["stand_hold","7 站定"],["sprint","左 Shift + W 加速（A / D 转向，松开恢复步行）"]]:
 			if available.get(entry[0], false): skills.append(entry[1])
 		lines.append(" · ".join(skills))
 		lines.append("B 选择踢击目标 · 0 归位")

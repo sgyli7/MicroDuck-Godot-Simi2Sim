@@ -1,0 +1,237 @@
+{
+  "completed": true,
+  "profile": {
+    "left_hip_yaw": [
+      12326.92143599025,
+      200.0
+    ],
+    "left_hip_roll": [
+      15027.877477102451,
+      200.0
+    ],
+    "left_hip_pitch": [
+      21548.998996069513,
+      200.0
+    ],
+    "left_knee": [
+      12740.684916760692,
+      200.0
+    ],
+    "left_ankle": [
+      15669.884680187834,
+      200.0
+    ],
+    "neck_pitch": [
+      12208.373661927806,
+      200.0
+    ],
+    "head_pitch": [
+      25308.222590083722,
+      200.0
+    ],
+    "head_yaw": [
+      16831.82920099417,
+      200.0
+    ],
+    "head_roll": [
+      19012.557401111615,
+      200.0
+    ],
+    "right_hip_yaw": [
+      17217.92005086541,
+      200.0
+    ],
+    "right_hip_roll": [
+      27730.068158137427,
+      200.0
+    ],
+    "right_hip_pitch": [
+      18136.017386096864,
+      200.0
+    ],
+    "right_knee": [
+      17732.671264938122,
+      200.0
+    ],
+    "right_ankle": [
+      19738.991942677785,
+      200.0
+    ]
+  },
+  "metrics": {
+    "train": {
+      "landing": {
+        "mse_original": 5.702357093881398e-09,
+        "mse_scaled": 3.956481636276746e-09,
+        "ratio": 0.6938326679895287
+      },
+      "standing": {
+        "mse_original": 1.289771364594453e-09,
+        "mse_scaled": 9.51255250148408e-10,
+        "ratio": 0.7375378894750965
+      },
+      "moving": {
+        "mse_original": 3.853137316780596e-09,
+        "mse_scaled": 4.2334427737066624e-09,
+        "ratio": 1.0987002085988002
+      },
+      "fit_window": {
+        "mse_original": 2.484846666276334e-09,
+        "mse_scaled": 1.7651707297248327e-09,
+        "ratio": 0.7103741062501971
+      }
+    },
+    "validation": {
+      "landing": {
+        "mse_original": 4.906371515005457e-09,
+        "mse_scaled": 3.4373845711687664e-09,
+        "ratio": 0.7005960638439226
+      },
+      "standing": {
+        "mse_original": 1.1709799979111008e-09,
+        "mse_scaled": 1.0157245015980983e-09,
+        "ratio": 0.8674140492664596
+      },
+      "moving": {
+        "mse_original": 3.829903740350271e-09,
+        "mse_scaled": 4.373477371653452e-09,
+        "ratio": 1.1419287972113545
+      },
+      "fit_window": {
+        "mse_original": 2.1826485337908223e-09,
+        "mse_scaled": 1.6715907704401541e-09,
+        "ratio": 0.765854302495939
+      }
+    }
+  },
+  "per_joint": [
+    {
+      "name": "left_hip_yaw",
+      "scale_raw": 1.6224651145749234,
+      "scale_bounded": 1.6224651145749234,
+      "stiffness": 12326.92143599025,
+      "cosine": 0.9574172192813181,
+      "proxy_rms_m": 3.902199791869835e-05,
+      "native_rms_m": 6.612773308132917e-05
+    },
+    {
+      "name": "left_hip_roll",
+      "scale_raw": 1.3308599321809371,
+      "scale_bounded": 1.3308599321809371,
+      "stiffness": 15027.877477102451,
+      "cosine": 0.9589768696684466,
+      "proxy_rms_m": 0.00017657395827708875,
+      "native_rms_m": 0.0002450478354277849
+    },
+    {
+      "name": "left_hip_pitch",
+      "scale_raw": 0.928117357267869,
+      "scale_bounded": 0.928117357267869,
+      "stiffness": 21548.998996069513,
+      "cosine": 0.9606739655437706,
+      "proxy_rms_m": 0.0001607605681033998,
+      "native_rms_m": 0.0001553124982798453
+    },
+    {
+      "name": "left_knee",
+      "scale_raw": 1.569774319878949,
+      "scale_bounded": 1.569774319878949,
+      "stiffness": 12740.684916760692,
+      "cosine": 0.9238526779978344,
+      "proxy_rms_m": 6.836731547907154e-05,
+      "native_rms_m": 0.00011616706723272685
+    },
+    {
+      "name": "left_ankle",
+      "scale_raw": 1.2763335792309265,
+      "scale_bounded": 1.2763335792309265,
+      "stiffness": 15669.884680187834,
+      "cosine": 0.8996180665977233,
+      "proxy_rms_m": 8.566280678276342e-05,
+      "native_rms_m": 0.00012153414971033707
+    },
+    {
+      "name": "neck_pitch",
+      "scale_raw": 1.638219844332798,
+      "scale_bounded": 1.638219844332798,
+      "stiffness": 12208.373661927806,
+      "cosine": 0.9633199682676324,
+      "proxy_rms_m": 2.7870845929587042e-05,
+      "native_rms_m": 4.739710001267871e-05
+    },
+    {
+      "name": "head_pitch",
+      "scale_raw": 0.7902569976540513,
+      "scale_bounded": 0.7902569976540513,
+      "stiffness": 25308.222590083722,
+      "cosine": 0.9820041394077622,
+      "proxy_rms_m": 0.00014753961407566808,
+      "native_rms_m": 0.00011873087676065383
+    },
+    {
+      "name": "head_yaw",
+      "scale_raw": 1.1882249850074942,
+      "scale_bounded": 1.1882249850074942,
+      "stiffness": 16831.82920099417,
+      "cosine": 0.9794482917524634,
+      "proxy_rms_m": 0.00013944570645816161,
+      "native_rms_m": 0.00016916959666052908
+    },
+    {
+      "name": "head_roll",
+      "scale_raw": 1.0519363375508153,
+      "scale_bounded": 1.0519363375508153,
+      "stiffness": 19012.557401111615,
+      "cosine": 0.9831032277974548,
+      "proxy_rms_m": 1.475455216769979e-05,
+      "native_rms_m": 1.5787609205866898e-05
+    },
+    {
+      "name": "right_hip_yaw",
+      "scale_raw": 1.1615804894502781,
+      "scale_bounded": 1.1615804894502781,
+      "stiffness": 17217.92005086541,
+      "cosine": 0.9081501240151411,
+      "proxy_rms_m": 3.144012134728217e-05,
+      "native_rms_m": 4.021387056744295e-05
+    },
+    {
+      "name": "right_hip_roll",
+      "scale_raw": 0.721238760970408,
+      "scale_bounded": 0.721238760970408,
+      "stiffness": 27730.068158137427,
+      "cosine": 0.9128372002911018,
+      "proxy_rms_m": 0.00014486098021235374,
+      "native_rms_m": 0.00011445562675140604
+    },
+    {
+      "name": "right_hip_pitch",
+      "scale_raw": 1.102777945908459,
+      "scale_bounded": 1.102777945908459,
+      "stiffness": 18136.017386096864,
+      "cosine": 0.9105793475002986,
+      "proxy_rms_m": 0.000132459205875184,
+      "native_rms_m": 0.00016041775093263172
+    },
+    {
+      "name": "right_knee",
+      "scale_raw": 1.1278616572306817,
+      "scale_bounded": 1.1278616572306817,
+      "stiffness": 17732.671264938122,
+      "cosine": 0.8490749339119401,
+      "proxy_rms_m": 5.792463120431172e-05,
+      "native_rms_m": 7.694370418353054e-05
+    },
+    {
+      "name": "right_ankle",
+      "scale_raw": 1.0132229679246125,
+      "scale_bounded": 1.0132229679246125,
+      "stiffness": 19738.991942677785,
+      "cosine": 0.828724900139222,
+      "proxy_rms_m": 7.329609403279025e-05,
+      "native_rms_m": 8.961391882964907e-05
+    }
+  ],
+  "eligible_for_single_physical_probe": true,
+  "scope": "Linear prediction scaling is only a fit preflight; new physics and unchanged full gates still required"
+}

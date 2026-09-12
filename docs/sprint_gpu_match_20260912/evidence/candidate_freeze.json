@@ -1,0 +1,39 @@
+{
+  "models": {
+    "train_source_graph": {
+      "path": "results/sprint_gpu_match_20260912/train_source_graph/final.onnx",
+      "sha256": "edf8f1ca0e1bb7bb754e4cf7770b3ab38856f239eac89b121e5a8d356c03bc2a",
+      "status": "fixed endpoint, native acceptance required",
+      "samples": 4194304
+    },
+    "train_jolt_graph": {
+      "path": "results/sprint_gpu_match_20260912/train_jolt_graph/final.onnx",
+      "sha256": "0ac2603f63823860ec6c2dee6f52cf6a46e51ddcb2452ae07591083de21ea36d",
+      "status": "fixed endpoint, native acceptance required",
+      "samples": 4194304
+    },
+    "train_positive": {
+      "path": "results/sprint_gpu_match_20260912/train_positive/final.onnx",
+      "sha256": "e4d16b7b6e17683c1e31024ac90f0ee09b0d54279525716f95ccf494d51a8988",
+      "status": "fixed endpoint, native acceptance required",
+      "samples": 4194304
+    },
+    "train_cat": {
+      "path": "results/sprint_gpu_match_20260912/train_cat/final.onnx",
+      "sha256": "0f60afe70ff036cf6cd4178a7c5dab3d9ba60dc518106f44739069e6e1bc1b57",
+      "status": "fixed endpoint, native acceptance required",
+      "samples": 4194304
+    }
+  },
+  "holdouts_used": false,
+  "dev_seeds": [
+    925000,
+    925015
+  ],
+  "final_seeds": [
+    926000,
+    926049
+  ],
+  "normal_actor": "frozen S05",
+  "control_sha256": "e53bccafe0877681429d0babe4dcb103fab5aedd9f9472117ea4aee26081be4c"
+}

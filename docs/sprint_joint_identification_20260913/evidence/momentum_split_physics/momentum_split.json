@@ -1,0 +1,131 @@
+{
+  "metrics": {
+    "train": {
+      "landing": {
+        "components": {
+          "velocity": 0.03194370561283711,
+          "joint": 0.09737324985284718,
+          "position": 0.05173875861538954
+        },
+        "objective": 0.060351904693691276,
+        "manifold_mse_m2": 7.236609413294846e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.0010093654687452615,
+          "joint": 0.5143055812106866,
+          "position": 0.31938242401593653
+        },
+        "objective": 0.27823245689845616,
+        "manifold_mse_m2": 2.2372422842136173e-07
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.29937610587316615,
+          "joint": 0.39177893382052864,
+          "position": 3.626874387180928
+        },
+        "objective": 1.439343142291541,
+        "manifold_mse_m2": 3.166213029129576e-07
+      }
+    },
+    "validation": {
+      "landing": {
+        "components": {
+          "velocity": 0.03396200157902458,
+          "joint": 0.09229898801920207,
+          "position": 0.03088634024070364
+        },
+        "objective": 0.05238244327964343,
+        "manifold_mse_m2": 6.702086786114712e-07
+      },
+      "standing": {
+        "components": {
+          "velocity": 0.0006731074390053755,
+          "joint": 0.48103897851988975,
+          "position": 0.24063688213380857
+        },
+        "objective": 0.2407829893642346,
+        "manifold_mse_m2": 2.0794562430374958e-07
+      },
+      "moving": {
+        "components": {
+          "velocity": 0.24342536073219231,
+          "joint": 0.4218658270555787,
+          "position": 2.617481720957298
+        },
+        "objective": 1.0942576362483563,
+        "manifold_mse_m2": 2.9582249207224243e-07
+      }
+    }
+  },
+  "elapsed_physics_s": 1.3903140559559688,
+  "nq": 70,
+  "nv": 68,
+  "neq": 42,
+  "nu": 14,
+  "compliance": {
+    "mode": "passive_translation_equalities_v1",
+    "solref": [
+      0.0,
+      -200.0
+    ],
+    "solimp": [
+      0.99,
+      0.99,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "joint_names": [
+      "proxy_compliance_left_hip_yaw_0",
+      "proxy_compliance_left_hip_yaw_1",
+      "proxy_compliance_left_hip_yaw_2",
+      "proxy_compliance_left_hip_roll_0",
+      "proxy_compliance_left_hip_roll_1",
+      "proxy_compliance_left_hip_roll_2",
+      "proxy_compliance_left_hip_pitch_0",
+      "proxy_compliance_left_hip_pitch_1",
+      "proxy_compliance_left_hip_pitch_2",
+      "proxy_compliance_left_knee_0",
+      "proxy_compliance_left_knee_1",
+      "proxy_compliance_left_knee_2",
+      "proxy_compliance_left_ankle_0",
+      "proxy_compliance_left_ankle_1",
+      "proxy_compliance_left_ankle_2",
+      "proxy_compliance_neck_pitch_0",
+      "proxy_compliance_neck_pitch_1",
+      "proxy_compliance_neck_pitch_2",
+      "proxy_compliance_head_pitch_0",
+      "proxy_compliance_head_pitch_1",
+      "proxy_compliance_head_pitch_2",
+      "proxy_compliance_head_yaw_0",
+      "proxy_compliance_head_yaw_1",
+      "proxy_compliance_head_yaw_2",
+      "proxy_compliance_head_roll_0",
+      "proxy_compliance_head_roll_1",
+      "proxy_compliance_head_roll_2",
+      "proxy_compliance_right_hip_yaw_0",
+      "proxy_compliance_right_hip_yaw_1",
+      "proxy_compliance_right_hip_yaw_2",
+      "proxy_compliance_right_hip_roll_0",
+      "proxy_compliance_right_hip_roll_1",
+      "proxy_compliance_right_hip_roll_2",
+      "proxy_compliance_right_hip_pitch_0",
+      "proxy_compliance_right_hip_pitch_1",
+      "proxy_compliance_right_hip_pitch_2",
+      "proxy_compliance_right_knee_0",
+      "proxy_compliance_right_knee_1",
+      "proxy_compliance_right_knee_2",
+      "proxy_compliance_right_ankle_0",
+      "proxy_compliance_right_ankle_1",
+      "proxy_compliance_right_ankle_2"
+    ],
+    "scope": "Prototype velocity damping only; pose projection separately applied",
+    "stiffness": 0.0,
+    "damping": 200.0,
+    "solref_format": "direct"
+  },
+  "precontact_joint_rms": 2.180480740965948e-05,
+  "minimum_body_height": 0.05925627425312996
+}

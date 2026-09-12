@@ -140,6 +140,11 @@ def main():
     p.add_argument('--control-config',type=Path)
     p.add_argument('--project',type=Path,help='Prepare an isolated copy of the Godot project')
     a=p.parse_args();r=prepare(a.models,fixtures=a.fixtures,fixture_count=a.fixture_count,real_traces=a.real_traces,control_config=a.control_config,project=a.project,sprint=a.sprint)
+    if a.sprint is None and a.control_config is None:
+        from sim2sim.default_sprint import apply_default_sprint
+        project = a.project or sim2sim_root()/"godot"
+        apply_default_sprint(project)
+        r = json.loads((project/"runtime_assets/deployment.json").read_text())
     print(json.dumps(dict(policies=len(r['policies']),robots=list(r['robots']))))
 
 

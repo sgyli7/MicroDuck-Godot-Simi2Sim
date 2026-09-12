@@ -1,0 +1,921 @@
+{
+  "objective_complete": false,
+  "status": "frozen development results; no promotion",
+  "native": [
+    {
+      "name": "native_s05",
+      "label": "S05 \u57fa\u51c6",
+      "passes": 120,
+      "count": 128,
+      "falls": 0,
+      "minimal_success": false,
+      "long_speed_mps": 0.22523172213054574,
+      "ordinary_long_mps": 0.1926523285747773,
+      "paired_speed_ratio": 1.169109783394717,
+      "lost_old_successes": 0,
+      "gained_old_failures": 0,
+      "ordinary_identical": 128,
+      "eligible": false
+    },
+    {
+      "name": "native_source_graph",
+      "label": "\u539f\u811a\u5e95 GPU \u8bad\u7ec3",
+      "passes": 51,
+      "count": 128,
+      "falls": 0,
+      "minimal_success": true,
+      "long_speed_mps": 0.29825396428618034,
+      "ordinary_long_mps": 0.1926523285747773,
+      "paired_speed_ratio": 1.5481461682432462,
+      "lost_old_successes": 70,
+      "gained_old_failures": 2,
+      "ordinary_identical": 128,
+      "eligible": false
+    },
+    {
+      "name": "native_jolt_graph",
+      "label": "\u6e38\u620f\u811a\u5e95 GPU \u8bad\u7ec3",
+      "passes": 53,
+      "count": 128,
+      "falls": 0,
+      "minimal_success": false,
+      "long_speed_mps": 0.2873255948319637,
+      "ordinary_long_mps": 0.1926523285747773,
+      "paired_speed_ratio": 1.4914203059862798,
+      "lost_old_successes": 67,
+      "gained_old_failures": 0,
+      "ordinary_identical": 128,
+      "eligible": false
+    },
+    {
+      "name": "native_positive",
+      "label": "\u540c\u4ee3\u7801\u6b63\u503c\u5956\u52b1\u5bf9\u7167",
+      "passes": 48,
+      "count": 128,
+      "falls": 0,
+      "minimal_success": false,
+      "long_speed_mps": 0.2877290593676343,
+      "ordinary_long_mps": 0.1926523285747773,
+      "paired_speed_ratio": 1.4935145684260616,
+      "lost_old_successes": 72,
+      "gained_old_failures": 0,
+      "ordinary_identical": 128,
+      "eligible": false
+    },
+    {
+      "name": "native_cat",
+      "label": "CaT \u7ea6\u675f\u5b66\u4e60",
+      "passes": 122,
+      "count": 128,
+      "falls": 0,
+      "minimal_success": true,
+      "long_speed_mps": 0.2584934966241767,
+      "ordinary_long_mps": 0.1926523285747773,
+      "paired_speed_ratio": 1.3417615999582553,
+      "lost_old_successes": 6,
+      "gained_old_failures": 9,
+      "ordinary_identical": 128,
+      "eligible": false
+    }
+  ],
+  "training": {
+    "train_source_graph": {
+      "status": "completed",
+      "iterations": 128,
+      "samples": 4194304,
+      "collection_device": "cuda",
+      "learner_device": "cuda",
+      "collection_s": 74.80912787312991,
+      "learning_s": 14.62468948381138,
+      "elapsed_s": 89.9231505820062,
+      "falls": 0,
+      "completed_tasks": 4837,
+      "parity_max_abs": 1.1920928955078125e-06,
+      "final_sha256": "edf8f1ca0e1bb7bb754e4cf7770b3ab38856f239eac89b121e5a8d356c03bc2a",
+      "accepted": false,
+      "acceptance": "Requires independent native Jolt evaluation"
+    },
+    "train_jolt_graph": {
+      "status": "completed",
+      "iterations": 128,
+      "samples": 4194304,
+      "collection_device": "cuda",
+      "learner_device": "cuda",
+      "collection_s": 58.11387007214944,
+      "learning_s": 14.72707570012426,
+      "elapsed_s": 73.26969862502301,
+      "falls": 0,
+      "completed_tasks": 4837,
+      "parity_max_abs": 1.1920928955078125e-06,
+      "final_sha256": "0ac2603f63823860ec6c2dee6f52cf6a46e51ddcb2452ae07591083de21ea36d",
+      "accepted": false,
+      "acceptance": "Requires independent native Jolt evaluation"
+    },
+    "train_positive": {
+      "status": "completed",
+      "iterations": 128,
+      "samples": 4194304,
+      "collection_device": "cuda",
+      "learner_device": "cuda",
+      "collection_s": 59.109888597915415,
+      "learning_s": 13.510136548022274,
+      "elapsed_s": 73.06625250101206,
+      "falls": 0,
+      "completed_tasks": 4837,
+      "parity_max_abs": 1.1920928955078125e-06,
+      "final_sha256": "e4d16b7b6e17683c1e31024ac90f0ee09b0d54279525716f95ccf494d51a8988",
+      "accepted": false,
+      "acceptance": "Requires independent native Jolt evaluation"
+    },
+    "train_cat": {
+      "status": "completed",
+      "iterations": 128,
+      "samples": 4194304,
+      "collection_device": "cuda",
+      "learner_device": "cuda",
+      "collection_s": 59.533104943984654,
+      "learning_s": 13.639311844832264,
+      "elapsed_s": 73.63041034102207,
+      "falls": 0,
+      "completed_tasks": 4837,
+      "parity_max_abs": 1.1920928955078125e-06,
+      "final_sha256": "0f60afe70ff036cf6cd4178a7c5dab3d9ba60dc518106f44739069e6e1bc1b57",
+      "accepted": false,
+      "acceptance": "Requires independent native Jolt evaluation"
+    }
+  },
+  "matched_starts": {
+    "s05_source": {
+      "passes": 121,
+      "count": 129,
+      "falls": 0,
+      "failed_segments": {
+        "turns": 1,
+        "stops": 0,
+        "straight": 7
+      },
+      "parity": 1.1920928955078125e-06
+    },
+    "s05_jolt": {
+      "passes": 129,
+      "count": 129,
+      "falls": 0,
+      "failed_segments": {
+        "turns": 0,
+        "stops": 0,
+        "straight": 0
+      },
+      "parity": 1.1920928955078125e-06
+    },
+    "source_candidate": {
+      "passes": 58,
+      "count": 129,
+      "falls": 0,
+      "failed_segments": {
+        "turns": 67,
+        "stops": 12,
+        "straight": 25
+      },
+      "parity": 1.1920928955078125e-06
+    },
+    "jolt_candidate": {
+      "passes": 66,
+      "count": 129,
+      "falls": 0,
+      "failed_segments": {
+        "turns": 63,
+        "stops": 1,
+        "straight": 13
+      },
+      "parity": 1.1920928955078125e-06
+    },
+    "cat_candidate": {
+      "passes": 129,
+      "count": 129,
+      "falls": 0,
+      "failed_segments": {
+        "turns": 0,
+        "stops": 0,
+        "straight": 0
+      },
+      "parity": 1.1920928955078125e-06
+    }
+  },
+  "dev_seeds": [
+    925000,
+    925015
+  ],
+  "final_seeds": [
+    926000,
+    926049
+  ],
+  "final_seeds_used": false,
+  "old_unused_final_seeds": [
+    924000,
+    924049
+  ],
+  "game_physics_changed": false,
+  "default_models_replaced": false,
+  "os_keyboard": "not reverified, previous lockscreen acceptance outstanding",
+  "formal_samples": 16777216,
+  "formal_training_seconds": 309.88951204906334,
+  "candidate_numerical_verification": {
+    "source": {
+      "checkpoint": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 2.384185791015625e-07,
+        "realistic_batch_max_abs": 2.384185791015625e-07,
+        "threshold": 1e-05,
+        "passed": true,
+        "samples_per_distribution": 256,
+        "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/train_source_graph/latest.pt",
+        "checkpoint_sha256": "470f2133f9952d412a6bd887e0ebba91d57f4749a0db5b9549aecf65f7a16caf",
+        "iteration": 128
+      },
+      "native_shadow": {
+        "remove_forward_prefix": {
+          "check": "native_shadow",
+          "rows": 400,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 4.6629367034256575e-15,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 4.6629367034256575e-15,
+            "body_pos": 9.769962616701378e-15,
+            "body_quat": 1.4432899320127035e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        },
+        "sprint_repeat": {
+          "check": "native_shadow",
+          "rows": 850,
+          "max_abs": {
+            "command": 5.551115123125783e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 4.6629367034256575e-15,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 4.6629367034256575e-15,
+            "body_pos": 9.769962616701378e-15,
+            "body_quat": 1.3322676295501878e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      }
+    },
+    "jolt": {
+      "checkpoint": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 2.384185791015625e-07,
+        "realistic_batch_max_abs": 2.384185791015625e-07,
+        "threshold": 1e-05,
+        "passed": true,
+        "samples_per_distribution": 256,
+        "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/train_jolt_graph/latest.pt",
+        "checkpoint_sha256": "b20455822c233bfdeb58d3989439647e38ab2f189476e11950830d0e572d8759",
+        "iteration": 128
+      },
+      "native_shadow": {
+        "remove_forward_prefix": {
+          "check": "native_shadow",
+          "rows": 400,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 4.884981308350689e-15,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 4.884981308350689e-15,
+            "body_pos": 9.103828801926284e-15,
+            "body_quat": 1.3322676295501878e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        },
+        "sprint_repeat": {
+          "check": "native_shadow",
+          "rows": 850,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 4.6629367034256575e-15,
+            "ctrl": 5.10702591327572e-15,
+            "last_action": 4.6629367034256575e-15,
+            "body_pos": 9.769962616701378e-15,
+            "body_quat": 1.5543122344752192e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      }
+    },
+    "positive": {
+      "checkpoint": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 2.384185791015625e-07,
+        "realistic_batch_max_abs": 2.384185791015625e-07,
+        "threshold": 1e-05,
+        "passed": true,
+        "samples_per_distribution": 256,
+        "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/train_positive/latest.pt",
+        "checkpoint_sha256": "ea1da6fc49530821a5a6448548bb253d467dda82e18e2aabdd6d1971926449d3",
+        "iteration": 128
+      },
+      "native_shadow": {
+        "remove_forward_prefix": {
+          "check": "native_shadow",
+          "rows": 400,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 4.6629367034256575e-15,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 4.6629367034256575e-15,
+            "body_pos": 9.325873406851315e-15,
+            "body_quat": 1.3322676295501878e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        },
+        "sprint_repeat": {
+          "check": "native_shadow",
+          "rows": 850,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 4.884981308350689e-15,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 4.884981308350689e-15,
+            "body_pos": 9.769962616701378e-15,
+            "body_quat": 1.4432899320127035e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      }
+    },
+    "cat": {
+      "checkpoint": {
+        "random_max_abs": 2.384185791015625e-07,
+        "random_batch_max_abs": 2.384185791015625e-07,
+        "realistic_max_abs": 1.1920928955078125e-07,
+        "realistic_batch_max_abs": 1.1920928955078125e-07,
+        "threshold": 1e-05,
+        "passed": true,
+        "samples_per_distribution": 256,
+        "checkpoint": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/train_cat/latest.pt",
+        "checkpoint_sha256": "911888ccf28f6cdbad580870ad1f70f66c9afb9c131494c1af015611cab9bb70",
+        "iteration": 128
+      },
+      "native_shadow": {
+        "remove_forward_prefix": {
+          "check": "native_shadow",
+          "rows": 400,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 4.996003610813204e-16,
+            "ctrl": 5.10702591327572e-15,
+            "last_action": 4.996003610813204e-16,
+            "body_pos": 5.995204332975845e-15,
+            "body_quat": 1.4432899320127035e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        },
+        "sprint_repeat": {
+          "check": "native_shadow",
+          "rows": 850,
+          "max_abs": {
+            "command": 1.8626451665781918e-09,
+            "obs": 1.8626451665781918e-09,
+            "action": 2.980232283178452e-08,
+            "ctrl": 2.980232283178452e-08,
+            "last_action": 5.551115123125783e-16,
+            "body_pos": 9.992007221626409e-15,
+            "body_quat": 1.4988010832439613e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      }
+    }
+  },
+  "candidate_freeze": {
+    "models": {
+      "train_source_graph": {
+        "path": "results/sprint_gpu_match_20260912/train_source_graph/final.onnx",
+        "sha256": "edf8f1ca0e1bb7bb754e4cf7770b3ab38856f239eac89b121e5a8d356c03bc2a",
+        "status": "fixed endpoint, native acceptance required",
+        "samples": 4194304
+      },
+      "train_jolt_graph": {
+        "path": "results/sprint_gpu_match_20260912/train_jolt_graph/final.onnx",
+        "sha256": "0ac2603f63823860ec6c2dee6f52cf6a46e51ddcb2452ae07591083de21ea36d",
+        "status": "fixed endpoint, native acceptance required",
+        "samples": 4194304
+      },
+      "train_positive": {
+        "path": "results/sprint_gpu_match_20260912/train_positive/final.onnx",
+        "sha256": "e4d16b7b6e17683c1e31024ac90f0ee09b0d54279525716f95ccf494d51a8988",
+        "status": "fixed endpoint, native acceptance required",
+        "samples": 4194304
+      },
+      "train_cat": {
+        "path": "results/sprint_gpu_match_20260912/train_cat/final.onnx",
+        "sha256": "0f60afe70ff036cf6cd4178a7c5dab3d9ba60dc518106f44739069e6e1bc1b57",
+        "status": "fixed endpoint, native acceptance required",
+        "samples": 4194304
+      }
+    },
+    "holdouts_used": false,
+    "dev_seeds": [
+      925000,
+      925015
+    ],
+    "final_seeds": [
+      926000,
+      926049
+    ],
+    "normal_actor": "frozen S05",
+    "control_sha256": "e53bccafe0877681429d0babe4dcb103fab5aedd9f9472117ea4aee26081be4c"
+  },
+  "cat_pair_audit": {
+    "config_differences": [
+      "constraints",
+      "constraint_probability_schedule",
+      "started_unix"
+    ],
+    "equal_budget": true,
+    "equal_source": true,
+    "equal_control": true,
+    "equal_code": true,
+    "equal_geometry": true
+  },
+  "environment": {
+    "torch": "2.9.1+cu129",
+    "onnx": "1.22.0",
+    "onnxruntime": "1.24.4",
+    "mujoco": "3.10.0",
+    "mujoco-warp": "3.8.1",
+    "warp-lang": "1.12.0",
+    "mjlab": "1.3.0",
+    "numpy": "2.4.1",
+    "python": "3.12.14",
+    "machine": "aarch64",
+    "platform": "Linux-6.17.0-1029-nvidia-aarch64-with-glibc2.39"
+  },
+  "handoff_audit": {
+    "records": [
+      {
+        "case": "sprint_repeat",
+        "seed": 925002,
+        "baseline_success": true,
+        "segments": [
+          {
+            "kind": "straight",
+            "start": 4,
+            "end": 6,
+            "held": [
+              "fwd"
+            ],
+            "skills": [
+              "walking"
+            ],
+            "previous_skill": "sprint",
+            "action_jump_l2": 0.3373363919098595,
+            "metrics": {
+              "at": 4,
+              "heading_error_deg": 9.313645728760385,
+              "lateral_path_m": 0.0519459595049446,
+              "lateral_limit_m": 0.05,
+              "passed": false
+            }
+          }
+        ],
+        "shadow": {
+          "check": "native_shadow",
+          "rows": 850,
+          "max_abs": {
+            "command": 5.551115123125783e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 5.551115123125783e-16,
+            "ctrl": 5.10702591327572e-15,
+            "last_action": 5.551115123125783e-16,
+            "body_pos": 1.021405182655144e-14,
+            "body_quat": 1.304512053934559e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      },
+      {
+        "case": "sprint_shift_first",
+        "seed": 925012,
+        "baseline_success": true,
+        "segments": [
+          {
+            "kind": "stops",
+            "start": 9,
+            "end": 12,
+            "held": [],
+            "skills": [
+              "walking"
+            ],
+            "previous_skill": "sprint",
+            "action_jump_l2": 0.5161541051037603,
+            "metrics": {
+              "at": 9,
+              "onset_s": null,
+              "passed": false
+            }
+          }
+        ],
+        "shadow": {
+          "check": "native_shadow",
+          "rows": 600,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 5.551115123125783e-16,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 5.551115123125783e-16,
+            "body_pos": 9.325873406851315e-15,
+            "body_quat": 8.743006318923108e-16
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      },
+      {
+        "case": "sprint_turn_release",
+        "seed": 925005,
+        "baseline_success": true,
+        "segments": [
+          {
+            "kind": "turns",
+            "start": 7,
+            "end": 9,
+            "held": [
+              "fwd",
+              "left"
+            ],
+            "skills": [
+              "walking"
+            ],
+            "previous_skill": "sprint",
+            "action_jump_l2": 0.7770373313094008,
+            "metrics": {
+              "at": 7,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.4686446708631211,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          }
+        ],
+        "shadow": {
+          "check": "native_shadow",
+          "rows": 800,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 5.551115123125783e-16,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 5.551115123125783e-16,
+            "body_pos": 8.659739592076221e-15,
+            "body_quat": 1.6653345369377348e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      },
+      {
+        "case": "sprint_turn_release",
+        "seed": 925007,
+        "baseline_success": true,
+        "segments": [
+          {
+            "kind": "turns",
+            "start": 7,
+            "end": 9,
+            "held": [
+              "fwd",
+              "left"
+            ],
+            "skills": [
+              "walking"
+            ],
+            "previous_skill": "sprint",
+            "action_jump_l2": 0.7609212489486512,
+            "metrics": {
+              "at": 7,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.41448639806893145,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          }
+        ],
+        "shadow": {
+          "check": "native_shadow",
+          "rows": 800,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 5.551115123125783e-16,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 5.551115123125783e-16,
+            "body_pos": 9.325873406851315e-15,
+            "body_quat": 1.2212453270876722e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      },
+      {
+        "case": "sprint_w_first",
+        "seed": 925006,
+        "baseline_success": true,
+        "segments": [
+          {
+            "kind": "straight",
+            "start": 10,
+            "end": 12,
+            "held": [
+              "fwd"
+            ],
+            "skills": [
+              "walking"
+            ],
+            "previous_skill": "sprint",
+            "action_jump_l2": 0.24703716402696776,
+            "metrics": {
+              "at": 10,
+              "heading_error_deg": 8.916781488201199,
+              "lateral_path_m": 0.056272323532150156,
+              "lateral_limit_m": 0.05,
+              "passed": false
+            }
+          }
+        ],
+        "shadow": {
+          "check": "native_shadow",
+          "rows": 800,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 3.1086244689504383e-15,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 3.1086244689504383e-15,
+            "body_pos": 9.769962616701378e-15,
+            "body_quat": 1.27675647831893e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      },
+      {
+        "case": "sprint_w_first",
+        "seed": 925015,
+        "baseline_success": true,
+        "segments": [
+          {
+            "kind": "straight",
+            "start": 10,
+            "end": 12,
+            "held": [
+              "fwd"
+            ],
+            "skills": [
+              "walking"
+            ],
+            "previous_skill": "sprint",
+            "action_jump_l2": 0.31412391296129083,
+            "metrics": {
+              "at": 10,
+              "heading_error_deg": 6.730596914276706,
+              "lateral_path_m": 0.05148073558267337,
+              "lateral_limit_m": 0.05,
+              "passed": false
+            }
+          }
+        ],
+        "shadow": {
+          "check": "native_shadow",
+          "rows": 800,
+          "max_abs": {
+            "command": 4.996003610813204e-16,
+            "obs": 5.329070518200751e-15,
+            "action": 1.3322676295501878e-15,
+            "ctrl": 4.884981308350689e-15,
+            "last_action": 1.3322676295501878e-15,
+            "body_pos": 9.769962616701378e-15,
+            "body_quat": 1.27675647831893e-15
+          },
+          "skill_mismatches": [],
+          "passed": true
+        }
+      }
+    ],
+    "all_failures_after_sprint_to_walking": true,
+    "all_old_cases_pass": true,
+    "interpretation": "All six new failing segments run frozen ordinary S05 after sprint. This supports an off-distribution handoff hypothesis; not proof of a specific mechanical cause or a tested unified-policy remedy."
+  },
+  "tests": {
+    "tests": 280,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "successful": true
+  },
+  "defaults_and_physics": {
+    "passed": true,
+    "files": [
+      {
+        "path": "godot/runtime_assets/policies/Stand_Godot.onnx",
+        "expected": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "actual": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "unchanged": true
+      },
+      {
+        "path": "godot/runtime_assets/policies/Walk_Godot.onnx",
+        "expected": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+        "actual": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+        "unchanged": true
+      },
+      {
+        "path": "godot/runtime_assets/policies/Sitstand_Godot.onnx",
+        "expected": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "actual": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "unchanged": true
+      },
+      {
+        "path": "godot/runtime_assets/policies/GroundPick_Godot.onnx",
+        "expected": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "actual": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "unchanged": true
+      },
+      {
+        "path": "godot/runtime_assets/policies/KickLeft_Godot.onnx",
+        "expected": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "actual": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "unchanged": true
+      },
+      {
+        "path": "godot/runtime_assets/policies/KickRight_Godot.onnx",
+        "expected": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "actual": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "unchanged": true
+      },
+      {
+        "path": "godot/runtime_assets/policies/Roulade_Godot.onnx",
+        "expected": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "actual": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "unchanged": true
+      },
+      {
+        "path": "godot/runtime_assets/policies/Roller_Godot.onnx",
+        "expected": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "actual": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "unchanged": true
+      },
+      {
+        "path": "godot/runtime_assets/policies/RollerCrouch_Godot.onnx",
+        "expected": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "actual": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "unchanged": true
+      },
+      {
+        "path": "policies/Walk_Godot.onnx",
+        "expected": "63edd66c12854f5b78faad5555ec8749c613a547393c1cb84785fe880f30b7e6",
+        "actual": "63edd66c12854f5b78faad5555ec8749c613a547393c1cb84785fe880f30b7e6",
+        "unchanged": true
+      },
+      {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/robots/microduck_ball_stand_fix.json",
+        "expected": "3c21e73c6324bc51e6741c906a617c56f119bba09fbd17db587c6a19808844c7",
+        "actual": "3c21e73c6324bc51e6741c906a617c56f119bba09fbd17db587c6a19808844c7",
+        "unchanged": true
+      },
+      {
+        "path": "/home/ethan/Projects/microduck_rl/src/mjlab_microduck/robot/microduck/scene_ball.xml",
+        "expected": "3d59c82db5c3ac5cb35b1f5d4dfa550832be2eddffa9249ba0bfef3b6452e2bd",
+        "actual": "3d59c82db5c3ac5cb35b1f5d4dfa550832be2eddffa9249ba0bfef3b6452e2bd",
+        "unchanged": true
+      },
+      {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/physics_server.gd",
+        "expected": "4ee85783d70e33c474987c19509e29d7180f324d521f907f748a40b388a385ad",
+        "actual": "4ee85783d70e33c474987c19509e29d7180f324d521f907f748a40b388a385ad",
+        "unchanged": true
+      },
+      {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_ball_stand_fix/robot_spec.json",
+        "expected": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+        "actual": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+        "unchanged": true
+      },
+      {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/godot/generated/microduck_ball_stand_fix/robot.tscn",
+        "expected": "d21abf70e85ae9919c7ccba084f61b6c9ebd611cbae1de4a8296d92c1925a7b8",
+        "actual": "d21abf70e85ae9919c7ccba084f61b6c9ebd611cbae1de4a8296d92c1925a7b8",
+        "unchanged": true
+      }
+    ]
+  },
+  "resources": {
+    "created_unix": 1789214038.9769359,
+    "owned_live_processes": [],
+    "owned_live_supervisors": [],
+    "owned_running_containers": [],
+    "jobs_started": 36,
+    "jobs_finished": 36,
+    "actors": [],
+    "passed": true,
+    "note": "Read-only audit using recorded process groups/start ticks and container bind-mount ownership. Unrelated workloads were not stopped."
+  },
+  "prepared_cleanup": [
+    {
+      "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_s05/prepared",
+      "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_s05/suite/runtime",
+      "identical": true,
+      "bytes": 1282019210,
+      "deleted": true,
+      "restore": [
+        "cp",
+        "--reflink=auto",
+        "-a",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_s05/suite/runtime",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_s05/prepared"
+      ]
+    },
+    {
+      "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_source_graph/prepared",
+      "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_source_graph/suite/runtime",
+      "identical": true,
+      "bytes": 1282128536,
+      "deleted": true,
+      "restore": [
+        "cp",
+        "--reflink=auto",
+        "-a",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_source_graph/suite/runtime",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_source_graph/prepared"
+      ]
+    },
+    {
+      "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_jolt_graph/prepared",
+      "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_jolt_graph/suite/runtime",
+      "identical": true,
+      "bytes": 1282128492,
+      "deleted": true,
+      "restore": [
+        "cp",
+        "--reflink=auto",
+        "-a",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_jolt_graph/suite/runtime",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_jolt_graph/prepared"
+      ]
+    },
+    {
+      "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_positive/prepared",
+      "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_positive/suite/runtime",
+      "identical": true,
+      "bytes": 1282128487,
+      "deleted": true,
+      "restore": [
+        "cp",
+        "--reflink=auto",
+        "-a",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_positive/suite/runtime",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_positive/prepared"
+      ]
+    },
+    {
+      "prepared": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_cat/prepared",
+      "canonical": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_cat/suite/runtime",
+      "identical": true,
+      "bytes": 1282128487,
+      "deleted": true,
+      "restore": [
+        "cp",
+        "--reflink=auto",
+        "-a",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_cat/suite/runtime",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_gpu_match_20260912/native_cat/prepared"
+      ]
+    }
+  ],
+  "budget": {
+    "limit_seconds": 7200.0,
+    "used_seconds": 5840.383379384002,
+    "remaining_seconds": 1359.6166206159978,
+    "actors": [],
+    "unconfirmed_gaps": 0
+  }
+}

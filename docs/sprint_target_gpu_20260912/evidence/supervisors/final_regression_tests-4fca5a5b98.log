@@ -1,0 +1,305 @@
+.................................................PASS spawn: cam=[0.0, 0.69, 0.88] behind duck
+PASS teleport snap in 0.31s: cam=[2.0, 0.69, -0.62]
+PASS deadzone: duck 15° turn -> camera moved 0.0°
+PASS big turn: cam yaw -124.1° trails heading by 144°
+PASS held_order echoed
+PASS reset snap 0.33s
+PASS zoom clamp: dist=1.08
+capturing home poses (MuJoCo)…
+starting 1 Godot worker(s), 24 episodes
+eval 1/24 idle seed=0 label=alpha fell=False surv=1.00
+eval 2/24 idle seed=0 label=alpha_copy fell=False surv=1.00
+eval 3/24 walk_015 seed=0 label=alpha fell=False surv=1.00
+eval 4/24 walk_015 seed=0 label=alpha_copy fell=False surv=1.00
+eval 5/24 walk_025 seed=0 label=alpha fell=False surv=1.00
+eval 6/24 walk_025 seed=0 label=alpha_copy fell=False surv=1.00
+eval 7/24 run_040 seed=0 label=alpha fell=False surv=1.00
+eval 8/24 run_040 seed=0 label=alpha_copy fell=False surv=1.00
+eval 9/24 back_020 seed=0 label=alpha fell=False surv=1.00
+eval 10/24 back_020 seed=0 label=alpha_copy fell=False surv=1.00
+eval 11/24 strafe_l seed=0 label=alpha fell=False surv=1.00
+eval 12/24 strafe_l seed=0 label=alpha_copy fell=False surv=1.00
+eval 13/24 strafe_r seed=0 label=alpha fell=False surv=1.00
+eval 14/24 strafe_r seed=0 label=alpha_copy fell=False surv=1.00
+eval 15/24 turn_l seed=0 label=alpha fell=False surv=1.00
+eval 16/24 turn_l seed=0 label=alpha_copy fell=False surv=1.00
+eval 17/24 turn_r seed=0 label=alpha fell=False surv=1.00
+eval 18/24 turn_r seed=0 label=alpha_copy fell=False surv=1.00
+eval 19/24 walk_turn seed=0 label=alpha fell=False surv=1.00
+eval 20/24 walk_turn seed=0 label=alpha_copy fell=False surv=1.00
+eval 21/24 walk_push seed=0 label=alpha fell=False surv=1.00
+eval 22/24 walk_push seed=0 label=alpha_copy fell=False surv=1.00
+eval 23/24 game_seq seed=0 label=alpha fell=False surv=1.00
+eval 24/24 game_seq seed=0 label=alpha_copy fell=False surv=1.00
+condition    metric                      alpha     alpha_copy     Δ(B−A)     wins
+idle         yaw_drift_deg       0.4507±0.0000  0.4487±0.0000    -0.0019 0/1
+walk_015     vel_err_1s_rmse     0.1441±0.0000  0.1441±0.0000    -0.0000 0/1
+walk_025     vel_err_1s_rmse     0.1769±0.0000  0.1751±0.0000    -0.0018 0/1
+run_040      vel_err_1s_rmse     0.2195±0.0000  0.2117±0.0000    -0.0078 0/1
+back_020     vel_err_1s_rmse     0.1998±0.0000  0.1998±0.0000    -0.0000 0/1
+strafe_l     vel_err_1s_rmse     0.1976±0.0000  0.1976±0.0000    -0.0000 0/1
+strafe_r     vel_err_1s_rmse     0.1997±0.0000  0.1997±0.0000    -0.0000 0/1
+turn_l       yaw_err_1s_rmse     0.6713±0.0000  0.6707±0.0000    -0.0006 0/1
+turn_r       yaw_err_1s_rmse     0.6946±0.0000  0.6942±0.0000    -0.0004 0/1
+walk_turn    vel_err_1s_rmse     0.1253±0.0000  0.1282±0.0000    +0.0029 0/1
+walk_push    fell                0.0000±0.0000  0.0000±0.0000    +0.0000 0/1
+game_seq     vel_err_1s_rmse     0.1692±0.0000  0.1694±0.0000    +0.0002 0/1
+VERDICT: mixed
+alpha baseline (post-1s settle mean body vel / smoother errors):
+  condition     mean_vx  mean_vy  mean_wz  mean_vel_err  mean_yaw_err   vel_1s   yaw_1s
+  idle          +0.0003  -0.0001  +0.0078        0.0003        0.0078   0.0003   0.0078
+  walk_015      +0.0059  +0.0008  -0.0097        0.1441        0.0097   0.1441   0.0097
+  walk_025      +0.0732  -0.0037  +0.0376        0.1769        0.0376   0.1769   0.0376
+  run_040       +0.1806  +0.0042  -0.2743        0.2195        0.2743   0.2195   0.2743
+  back_020      -0.0002  +0.0004  +0.0057        0.1998        0.0057   0.1998   0.0057
+  strafe_l      +0.0038  +0.0024  -0.0225        0.1976        0.0225   0.1976   0.0225
+  strafe_r      +0.0025  -0.0003  +0.0178        0.1997        0.0178   0.1997   0.0178
+  turn_l        +0.0043  -0.0025  +0.1287        0.0050        0.6713   0.0050   0.6713
+  turn_r        +0.0034  +0.0030  -0.1054        0.0045        0.6946   0.0045   0.6946
+  walk_turn     +0.0747  +0.0019  +0.1864        0.1253        0.3136   0.1253   0.3136
+  walk_push     +0.0691  -0.0108  +0.0295        0.1812        0.0295   0.1812   0.0295
+  game_seq      +0.1319  +0.0186  +0.1034        0.1680        0.1034   0.1692   0.1034
+wrote /tmp/tmp6tgyxh39/eval/report.md
+............................./home/ethan/Projects/MicroDuck/sim2sim/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:283: UserWarning: 
+    Found GPU0 NVIDIA GB10 which is of cuda capability 12.1.
+    Minimum and Maximum cuda capability supported by this version of PyTorch is
+    (8.0) - (12.0)
+    
+  warnings.warn(
+....ss................................................................................................................................................................................wrote /tmp/tmprnead5lc/from_pt.onnx
+sidecar /tmp/tmprnead5lc/from_pt.manifest.json
+parity_max_abs_err=5.722046e-06
+wrote /tmp/tmprimlw9k_/rt.onnx
+sidecar /tmp/tmprimlw9k_/rt.manifest.json
+parity_max_abs_err=5.722046e-06
+wrote /tmp/tmpgpmf94wq/Walk_Godot.onnx
+sidecar /tmp/tmpgpmf94wq/Walk_Godot.manifest.json
+parity_max_abs_err=5.722046e-06
+{"case": "probe", "skill": null, "seed": 915000, "completed": true, "error": null, "brake_success": null, "task_success": null}
+{"case": "probe", "skill": null, "seed": 915000, "completed": true, "error": null, "brake_success": null, "task_success": null}
+.........start mode=onnx num_envs=2 steps/env=24 samples/iter~48 max_it=2 warmup=0 unfreeze_lr=3.000e-05 torch_threads=2 device=cpu log_dir=/tmp/walk_godot_runner_1zj1_zgd/logs/2026-09-12_23-49-18_unit2
+--------------------------------------------------------------------------------
+Resolved observation sets: 
+	 actor :  ['actor']
+	 critic :  ['critic']
+--------------------------------------------------------------------------------
+Actor Model: MLPModel(
+  (obs_normalizer): EmpiricalNormalization()
+  (distribution): GaussianDistribution()
+  (mlp): MLP(
+    (0): Linear(in_features=61, out_features=512, bias=True)
+    (1): ELU(alpha=1.0)
+    (2): Linear(in_features=512, out_features=256, bias=True)
+    (3): ELU(alpha=1.0)
+    (4): Linear(in_features=256, out_features=128, bias=True)
+    (5): ELU(alpha=1.0)
+    (6): Linear(in_features=128, out_features=14, bias=True)
+  )
+)
+Critic Model: MLPModel(
+  (obs_normalizer): EmpiricalNormalization()
+  (mlp): MLP(
+    (0): Linear(in_features=70, out_features=512, bias=True)
+    (1): ELU(alpha=1.0)
+    (2): Linear(in_features=512, out_features=256, bias=True)
+    (3): ELU(alpha=1.0)
+    (4): Linear(in_features=256, out_features=128, bias=True)
+    (5): ELU(alpha=1.0)
+    (6): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+init-onnx /home/ethan/Projects/_sandboxes/microduck-sim2sim-speculative/policies/alpha_walking.onnx init_std=0.18 actor-normalizer frozen
+init_check max_abs_err=5.722046e-06 threshold=0.0002 ok=True
+Storing git diff for 'sim2sim' in: /tmp/walk_godot_runner_1zj1_zgd/logs/2026-09-12_23-49-18_unit2/git/sim2sim.diff
+unfreeze iter=0 lr=3.000e-05 actor_std=0.17999999225139618
+iter=0 fps=223.4 step_rew=0.1413 ep_rew=nan ep_len=nan falls=0.0 faults=0 lr=3.000e-05 std=0.1800 kl=0.0020 kl_max=0.0061 early_stop=0 frozen=0 value=1.6269 surrogate=-0.0048 entropy=-4.1416 track_lin_vel=0.0311 track_ang_vel=0.0163 upright=0.0387 air_time=0.0050 pose_legs=0.0159 foot_clearance=-0.0001 foot_swing_height=-0.0009 action_rate_l2=-0.0025 foot_slip=-0.0000 body_ang_vel=-0.0014 head_pose_tracking=0.0393 head_pose_bias=0.0000 dof_pos_limits=0.0000 posture_pose=0.0000 posture_height=0.0000 mouth_proximity=0.0000 pick_return=0.0000 approach_height=0.0000 kick_swing=0.0000 roulade_progress=0.0000 roulade_land=0.0000 cur[standing_frac=0.02 action_rate_l2=-0.1 head_pose_bias=0]
+unfreeze_mb n=4 kl=['0.0000', '0.0000', '0.0019', '0.0061'] lr=['3.000e-05', '3.000e-05', '3.000e-05', '3.000e-05'] std_before=0.17999999225139618 std_after=0.1800161898136139
+################################################################################
+[1m                             Learning iteration 0/2                             [0m 
+
+                               Run name: unit2
+                            Total steps: 48 
+                       Steps per second: 223 
+                        Collection time: 0.203s 
+                          Learning time: 0.011s 
+                        Mean value loss: 1.6269
+                    Mean surrogate loss: -0.0048
+                      Mean entropy loss: -4.1416
+                           Mean kl loss: 0.0020
+                       Mean kl_max loss: 0.0061
+                Mean early_stop_mb loss: 0.0000
+                        Mean action std: 0.18
+           Episode_Reward/track_lin_vel: 0.0311
+           Episode_Reward/track_ang_vel: 0.0163
+                 Episode_Reward/upright: 0.0387
+                Episode_Reward/air_time: 0.0050
+               Episode_Reward/pose_legs: 0.0159
+          Episode_Reward/foot_clearance: -0.0001
+       Episode_Reward/foot_swing_height: -0.0009
+          Episode_Reward/action_rate_l2: -0.0025
+               Episode_Reward/foot_slip: -0.0000
+            Episode_Reward/body_ang_vel: -0.0014
+      Episode_Reward/head_pose_tracking: 0.0393
+          Episode_Reward/head_pose_bias: 0.0000
+          Episode_Reward/dof_pos_limits: 0.0000
+            Episode_Reward/posture_pose: 0.0000
+          Episode_Reward/posture_height: 0.0000
+         Episode_Reward/mouth_proximity: 0.0000
+             Episode_Reward/pick_return: 0.0000
+         Episode_Reward/approach_height: 0.0000
+              Episode_Reward/kick_swing: 0.0000
+        Episode_Reward/roulade_progress: 0.0000
+            Episode_Reward/roulade_land: 0.0000
+               Episode_Termination/fell: 0.0000
+          Episode_Termination/nan_state: 0.0000
+           Episode_Termination/time_out: 0.0000
+                    Mean episode faults: 0.0000
+               Mean episode step_reward: 0.1413
+--------------------------------------------------------------------------------
+                         Iteration time: 0.21s
+                           Time elapsed: 00:00:00
+                                    ETA: 00:00:00
+
+iter=1 fps=415.5 step_rew=0.1489 ep_rew=nan ep_len=nan falls=0.0 faults=0 lr=3.000e-05 std=0.1801 kl=0.0171 kl_max=0.0327 early_stop=3 frozen=0 value=1.7142 surrogate=-0.0983 entropy=-4.1379 track_lin_vel=0.0329 track_ang_vel=0.0196 upright=0.0385 air_time=0.0100 pose_legs=0.0142 foot_clearance=-0.0002 foot_swing_height=-0.0004 action_rate_l2=-0.0027 foot_slip=-0.0000 body_ang_vel=-0.0017 head_pose_tracking=0.0387 head_pose_bias=0.0000 dof_pos_limits=0.0000 posture_pose=0.0000 posture_height=0.0000 mouth_proximity=0.0000 pick_return=0.0000 approach_height=0.0000 kick_swing=0.0000 roulade_progress=0.0000 roulade_land=0.0000 cur[standing_frac=0.02023 action_rate_l2=-0.1009 head_pose_bias=0]
+################################################################################
+[1m                             Learning iteration 1/2                             [0m 
+
+                               Run name: unit2
+                            Total steps: 96 
+                       Steps per second: 415 
+                        Collection time: 0.070s 
+                          Learning time: 0.045s 
+                        Mean value loss: 1.7142
+                    Mean surrogate loss: -0.0983
+                      Mean entropy loss: -4.1379
+                           Mean kl loss: 0.0171
+                       Mean kl_max loss: 0.0327
+                Mean early_stop_mb loss: 3.0000
+                        Mean action std: 0.18
+           Episode_Reward/track_lin_vel: 0.0329
+           Episode_Reward/track_ang_vel: 0.0196
+                 Episode_Reward/upright: 0.0385
+                Episode_Reward/air_time: 0.0100
+               Episode_Reward/pose_legs: 0.0142
+          Episode_Reward/foot_clearance: -0.0002
+       Episode_Reward/foot_swing_height: -0.0004
+          Episode_Reward/action_rate_l2: -0.0027
+               Episode_Reward/foot_slip: -0.0000
+            Episode_Reward/body_ang_vel: -0.0017
+      Episode_Reward/head_pose_tracking: 0.0387
+          Episode_Reward/head_pose_bias: 0.0000
+          Episode_Reward/dof_pos_limits: 0.0000
+            Episode_Reward/posture_pose: 0.0000
+          Episode_Reward/posture_height: 0.0000
+         Episode_Reward/mouth_proximity: 0.0000
+             Episode_Reward/pick_return: 0.0000
+         Episode_Reward/approach_height: 0.0000
+              Episode_Reward/kick_swing: 0.0000
+        Episode_Reward/roulade_progress: 0.0000
+            Episode_Reward/roulade_land: 0.0000
+               Episode_Termination/fell: 0.0000
+          Episode_Termination/nan_state: 0.0000
+           Episode_Termination/time_out: 0.0000
+                    Mean episode faults: 0.0000
+               Mean episode step_reward: 0.1489
+--------------------------------------------------------------------------------
+                         Iteration time: 0.12s
+                           Time elapsed: 00:00:00
+                                    ETA: 00:00:00
+
+saved /tmp/walk_godot_runner_1zj1_zgd/logs/2026-09-12_23-49-18_unit2/model_1.pt
+wrote /tmp/walk_godot_runner_1zj1_zgd/test_walk.onnx
+sidecar /tmp/walk_godot_runner_1zj1_zgd/test_walk.manifest.json
+parity_max_abs_err=6.198883e-06
+start mode=resume num_envs=2 steps/env=24 samples/iter~48 max_it=1 warmup=0 unfreeze_lr=3.000e-05 torch_threads=2 device=cpu log_dir=/tmp/walk_godot_runner_1zj1_zgd/logs/2026-09-12_23-49-20_unit2_resume
+--------------------------------------------------------------------------------
+Resolved observation sets: .............../home/ethan/Projects/MicroDuck/sim2sim/tests/test_walking_retention.py:22: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  self.assertEqual(float(keeper.loss(policy,inputs)),0.)
+........
+----------------------------------------------------------------------
+Ran 292 tests in 64.379s
+
+OK (skipped=2)
+
+	 actor :  ['actor']
+	 critic :  ['critic']
+--------------------------------------------------------------------------------
+Actor Model: MLPModel(
+  (obs_normalizer): EmpiricalNormalization()
+  (distribution): GaussianDistribution()
+  (mlp): MLP(
+    (0): Linear(in_features=61, out_features=512, bias=True)
+    (1): ELU(alpha=1.0)
+    (2): Linear(in_features=512, out_features=256, bias=True)
+    (3): ELU(alpha=1.0)
+    (4): Linear(in_features=256, out_features=128, bias=True)
+    (5): ELU(alpha=1.0)
+    (6): Linear(in_features=128, out_features=14, bias=True)
+  )
+)
+Critic Model: MLPModel(
+  (obs_normalizer): EmpiricalNormalization()
+  (mlp): MLP(
+    (0): Linear(in_features=70, out_features=512, bias=True)
+    (1): ELU(alpha=1.0)
+    (2): Linear(in_features=512, out_features=256, bias=True)
+    (3): ELU(alpha=1.0)
+    (4): Linear(in_features=256, out_features=128, bias=True)
+    (5): ELU(alpha=1.0)
+    (6): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+resume /tmp/walk_godot_runner_1zj1_zgd/logs/2026-09-12_23-49-18_unit2/model_1.pt iter=1 infos={'iter': 1}
+Storing git diff for 'sim2sim' in: /tmp/walk_godot_runner_1zj1_zgd/logs/2026-09-12_23-49-20_unit2_resume/git/sim2sim.diff
+iter=2 fps=421.0 step_rew=0.1410 ep_rew=nan ep_len=nan falls=0.0 faults=0 lr=2.000e-04 std=0.1801 kl=0.0437 kl_max=0.0526 early_stop=18 frozen=0 value=1.5809 surrogate=-0.0472 entropy=-4.1337 track_lin_vel=0.0321 track_ang_vel=0.0168 upright=0.0383 air_time=0.0050 pose_legs=0.0146 foot_clearance=-0.0001 foot_swing_height=-0.0007 action_rate_l2=-0.0022 foot_slip=-0.0000 body_ang_vel=-0.0016 head_pose_tracking=0.0390 head_pose_bias=0.0000 dof_pos_limits=0.0000 posture_pose=0.0000 posture_height=0.0000 mouth_proximity=0.0000 pick_return=0.0000 approach_height=0.0000 kick_swing=0.0000 roulade_progress=0.0000 roulade_land=0.0000 cur[standing_frac=0.02046 action_rate_l2=-0.1018 head_pose_bias=0]
+################################################################################
+[1m                             Learning iteration 2/3                             [0m 
+
+                               Run name: unit2_resume
+                            Total steps: 48 
+                       Steps per second: 421 
+                        Collection time: 0.076s 
+                          Learning time: 0.038s 
+                        Mean value loss: 1.5809
+                    Mean surrogate loss: -0.0472
+                      Mean entropy loss: -4.1337
+                           Mean kl loss: 0.0437
+                       Mean kl_max loss: 0.0526
+                Mean early_stop_mb loss: 18.0000
+                        Mean action std: 0.18
+           Episode_Reward/track_lin_vel: 0.0321
+           Episode_Reward/track_ang_vel: 0.0168
+                 Episode_Reward/upright: 0.0383
+                Episode_Reward/air_time: 0.0050
+               Episode_Reward/pose_legs: 0.0146
+          Episode_Reward/foot_clearance: -0.0001
+       Episode_Reward/foot_swing_height: -0.0007
+          Episode_Reward/action_rate_l2: -0.0022
+               Episode_Reward/foot_slip: -0.0000
+            Episode_Reward/body_ang_vel: -0.0016
+      Episode_Reward/head_pose_tracking: 0.0390
+          Episode_Reward/head_pose_bias: 0.0000
+          Episode_Reward/dof_pos_limits: 0.0000
+            Episode_Reward/posture_pose: 0.0000
+          Episode_Reward/posture_height: 0.0000
+         Episode_Reward/mouth_proximity: 0.0000
+             Episode_Reward/pick_return: 0.0000
+         Episode_Reward/approach_height: 0.0000
+              Episode_Reward/kick_swing: 0.0000
+        Episode_Reward/roulade_progress: 0.0000
+            Episode_Reward/roulade_land: 0.0000
+               Episode_Termination/fell: 0.0000
+          Episode_Termination/nan_state: 0.0000
+           Episode_Termination/time_out: 0.0000
+                    Mean episode faults: 0.0000
+               Mean episode step_reward: 0.1410
+--------------------------------------------------------------------------------
+                         Iteration time: 0.11s
+                           Time elapsed: 00:00:00
+                                    ETA: 00:00:00
+
+saved /tmp/walk_godot_runner_1zj1_zgd/logs/2026-09-12_23-49-20_unit2_resume/model_2.pt
+wrote /tmp/walk_godot_runner_1zj1_zgd/test_walk.onnx
+sidecar /tmp/walk_godot_runner_1zj1_zgd/test_walk.manifest.json
+parity_max_abs_err=5.483627e-06

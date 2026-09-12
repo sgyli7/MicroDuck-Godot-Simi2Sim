@@ -13,15 +13,47 @@ from sim2sim.train.reset_poses import HomePoseSampler
 from sim2sim.train.rewards import sit_target_q
 from .tasks import DT, command
 
+
+def roller_support_groups(model,names):
+    """Wheel ownership follows the articulated ankle, including during a fall."""
+    groups=[[],[]]
+    for name in names:
+        if not name.startswith('tire'):continue
+        body=mujoco.mj_name2id(model,mujoco.mjtObj.mjOBJ_BODY,name)
+        side=None
+        while body>0:
+            ancestor=mujoco.mj_id2name(model,mujoco.mjtObj.mjOBJ_BODY,body)
+            if ancestor in ('ankle_l_v1','ankle_r_v1'):
+                side=0 if ancestor=='ankle_l_v1' else 1;break
+            body=int(model.body_parentid[body])
+        if side is None:raise RuntimeError('Wheel has no known ankle ancestor: '+name)
+        groups[side].append(name)
+    if not all(groups):raise RuntimeError('Both articulated roller support groups must be present')
+    return groups
+
 class World:
-    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False,scene_override=None):
+    def __init__(self, task, backend="godot", headless=True, reference_profile="xml",time_input_s=0.,heading_input=False,entry_source=None,roller_contract=False,yaw_memory_input=False,state_input='',task_input='',motion_settings=None,scene_override=None):
         self.task, self.backend_name = task, backend
+        from sim2sim.motion_control import MotionControl
+        if motion_settings is not None and task.name!='walking':raise ValueError('Training motion feedback is currently walking only')
+        self.motion=None if motion_settings is None else MotionControl(motion_settings)
+        self._command_stamp=None
         self.time_input_s=float(time_input_s);self.time_offset=0.
         self.heading_input=bool(heading_input)
         from sim2sim.policy_memory import YawDriftMemory
         if yaw_memory_input and task.name not in ('walking','kick_left','kick_right'):raise ValueError('Yaw memory requires walking or a kick')
         self.yaw_memory=YawDriftMemory() if yaw_memory_input else None
         self.entry_source=None if entry_source is None else Path(entry_source)
+        self.state_input=state_input
+        from sim2sim.policy_task_state import BrakeTaskState, task_input as validate_task_input, TASK_STATE_KEY
+        from sim2sim.policy_state import BRAKE_STATE_V1
+        validate_task_input({TASK_STATE_KEY:task_input})
+        if task_input and (task.name!='roller' or state_input!=BRAKE_STATE_V1):
+            raise ValueError('Brake task observation requires the roller velocity-state input')
+        self.task_state=BrakeTaskState() if task_input else None
+        if state_input and (state_input!=BRAKE_STATE_V1 or task.name not in ('walking','roller') or
+                            (task.name=='roller' and not roller_contract) or time_input_s or heading_input or yaw_memory_input):
+            raise ValueError('Residual state input requires walking or the native roller contract')
         self.roller_contract=bool(roller_contract)
         if self.roller_contract and task.name!='roller':raise ValueError('Native roller contract requires the roller task')
         if self.heading_input and not self.time_input_s:raise ValueError("Relative heading requires a timed maneuver")
@@ -76,7 +108,10 @@ class World:
         self.pending_ball=None
 
     def reset(self, seed, condition="default", randomize=True, entry_speed=None, phase_start=0., q_override=None):
+        if self.motion is not None:self.motion.reset()
+        self._command_stamp=None
         if self.yaw_memory is not None:self.yaw_memory.reset()
+        if self.task_state is not None:self.task_state.reset()
         self.pending_ball=None
         self.roll_start=None
         self.time_offset=0.
@@ -84,10 +119,18 @@ class World:
         self.condition = condition
         self.command_schedule=None
         self.command_tape=None
+        self.sprint_selection=None
+        if condition.startswith('sprint_'):
+            if self.task.name!='walking':raise ValueError('Sprint applies to walking only')
+            from .sprint_tasks import commands
+            limits={} if self.motion is None else self.motion.settings.get('twist_limits',{})
+            self.command_tape,self.sprint_selection=commands(condition,DT,self.task.seconds,include_selection=True,twist_limits=limits)
         if condition.startswith('keyboard_'):
-            if self.task.name!='walking':raise ValueError('Keyboard training tapes require walking')
-            from .schedules import keyboard_commands
-            self.command_tape=keyboard_commands(condition.removeprefix('keyboard_'),DT)
+            from .schedules import keyboard_commands,roller_keyboard_commands
+            if self.task.name=='walking':self.command_tape=keyboard_commands(condition.removeprefix('keyboard_'),DT)
+            elif self.task.name=='roller' and self.roller_contract:
+                self.command_tape=roller_keyboard_commands(condition.removeprefix('keyboard_'),DT)
+            else:raise ValueError('Keyboard training tapes require walking or native roller')
         if condition=="random_seq":
             if self.task.name not in ("walking","roller"):raise ValueError("Random twist schedule requires locomotion")
             from .schedules import random_schedule
@@ -146,9 +189,24 @@ class World:
 
     def obs(self):
         obs=build_obs(self.state,self.last,self.command(),self.home)
+        from sim2sim.policy_state import inject_state
+        obs=inject_state(obs,self.state,self.state_input)
+        if self.task_state is not None:obs=self.task_state.observe(obs,self.features['contact'],self.t)
         return obs if self.yaw_memory is None else self.yaw_memory.observe(obs,stamp=self.t)
 
     def command(self):
+        if self.motion is None:return self.requested_command()
+        if self._command_stamp!=self.t:
+            skill='sprint' if getattr(self,'sprint_composed',False) and self.sprint_active() else 'walking'
+            self._controlled_command=self.motion.command(self.requested_command(),self.state,skill,DT)
+            self._command_stamp=self.t
+        return self._controlled_command.copy()
+
+    def sprint_active(self):
+        if self.sprint_selection is None:raise ValueError('Composed training requires a sprint selection tape')
+        return bool(self.sprint_selection[min(int(round(self.t/DT)),len(self.sprint_selection)-1)])
+
+    def requested_command(self):
         if self.command_tape is not None:
             return self.command_tape[min(int(round(self.t/DT)),len(self.command_tape)-1)].copy()
         if self.roller_contract:
@@ -166,6 +224,11 @@ class World:
     def send(self, action, capture_path=None):
         if not np.isfinite(action).all(): raise FloatingPointError("nonfinite policy action")
         self.executed_command=self.command()
+        if self.motion is not None:self.executed_heading_target=self.motion.target_yaw
+        if self.roller_contract:
+            # The actor receives a relative heading error, including keyboard
+            # commands. Capture its world target before applying this action.
+            self.executed_heading_target=self.features['yaw']+float(self.executed_command[2])
         self.old_last=self.last.copy()
         self.last=np.asarray(action,np.float32).copy()
         ctrl=self.home+self.last
@@ -240,12 +303,12 @@ class World:
         vel=np.array([[cy,sy,0],[-sy,cy,0],[0,0,1]])@linear
         supports = [["ankle_left"],["ankle_right"]]
         if self.task.robot == "microduck_roller":
-            # Wheel groups resolved by their reset-side positions, not interleaved joint indices.
-            supports=[[],[]]
-            for name in b:
-                if name.startswith("tire"):
-                    local_y=float((rot.T@(b[name]["pos"]-s.base_pos))[1])
-                    supports[0 if local_y>=0 else 1].append(name)
+            # Current trunk-relative positions change when the duck tips over.
+            # Reclassifying each frame can empty a group and create NaN critic
+            # features precisely at a terminal transition. Ownership is fixed.
+            if not hasattr(self,'_roller_supports'):
+                self._roller_supports=roller_support_groups(self.mj.model,self.meta)
+            supports=self._roller_supports
         contact=np.array([any(b[n]["ground_contact"] for n in group) for group in supports],np.float32)
         foot_pos=np.stack([np.mean([b[n]["pos"] for n in group],axis=0) if group else np.full(3,np.nan) for group in supports])
         foot_vel=np.stack([np.mean([b[n]["linvel"] for n in group],axis=0) if group else np.full(3,np.nan) for group in supports])
@@ -294,9 +357,12 @@ class World:
         if "ball" in self.meta:self.pending_ball=[5.,5.,.035]
         return teacher,cmd
 
-    def finish_standing_entry(self):
+    def finish_standing_entry(self,reset_motion=True):
         self.t=0.;self.time_offset=0.
+        if reset_motion and self.motion is not None:self.motion.reset()
+        self._command_stamp=None
         if self.yaw_memory is not None:self.yaw_memory.reset()
+        if self.task_state is not None:self.task_state.reset()
         self.initial_xy=self.features["xy"].copy()
         yaw=self.features["yaw"];self.heading=np.array([math.cos(yaw),math.sin(yaw)])
         if self.roller_contract:

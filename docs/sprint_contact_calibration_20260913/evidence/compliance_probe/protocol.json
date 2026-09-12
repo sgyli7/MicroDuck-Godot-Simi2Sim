@@ -1,0 +1,65 @@
+{
+  "profiles": [
+    [
+      "rigid",
+      "source",
+      null
+    ],
+    [
+      "translation10",
+      "source",
+      0.01
+    ],
+    [
+      "translation10_hard_contact",
+      "two_tick",
+      0.01
+    ],
+    [
+      "translation20",
+      "source",
+      0.02
+    ],
+    [
+      "translation20_hard_contact",
+      "two_tick",
+      0.02
+    ]
+  ],
+  "seeds": [
+    927000,
+    927001,
+    927002,
+    927003,
+    927004,
+    927005,
+    927006,
+    927007,
+    927008,
+    927009,
+    927010,
+    927011,
+    927012,
+    927013,
+    927014,
+    927015
+  ],
+  "train_seed_count": 8,
+  "validation_seed_count": 8,
+  "physics_hz": 200,
+  "decision_hz": 50,
+  "horizon_seconds": 2,
+  "gate": "Same 20% landing/moving response improvement, no component/standing >10% regression, both splits; also >=20% reduction of actual foot-vs-rigid-manifold vector error on landing and moving. Pre-contact joint RMS <=baseline+1e-5 rad.",
+  "response_normalization": {
+    "velocity": 0.05,
+    "joint": 0.02,
+    "position": 0.002
+  },
+  "source": "Frozen a402 native recorded actions; no policy inference, training or game physics edits",
+  "assumptions": "Extra equalities are an experimental approximation of translation compliance, not an identified Jolt solver.",
+  "code_sha256": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_contact_calibration_20260913/compliance_probe.py": "d2450faa8c12ad14688351d6ae17b7a21417b6f8ed87bfc8ed9e92e01d03ff4e",
+    "scripts/sprint_gpu_world.py": "d37d19184856cb79b8a98a39811e476c92fd07a5652cf507b3a15664a4f3f7bb",
+    "src/sim2sim/research/joint_compliance.py": "e5cb2209bea55d9ddd11789cb916dcecac02114e0f98e836fffdf0486be1d7ca"
+  }
+}

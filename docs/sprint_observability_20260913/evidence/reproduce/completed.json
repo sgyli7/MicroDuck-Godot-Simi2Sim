@@ -1,0 +1,228 @@
+{
+  "reproduced": true,
+  "results": [
+    {
+      "name": "original_0",
+      "task": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.16785152209145832,
+        "sustained_p10_vx": 0.08460276694812847,
+        "max_tilt": 8.020882209238302,
+        "min_z": 0.11243602700513167,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.699398956330493,
+            "lateral_path_m": 0.026952730271803716,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8430695502892434,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.37672609036694155,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_0/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_0/case.json"
+    },
+    {
+      "name": "original_1",
+      "task": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.16785152209145832,
+        "sustained_p10_vx": 0.08460276694812847,
+        "max_tilt": 8.020882209238302,
+        "min_z": 0.11243602700513167,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.699398956330493,
+            "lateral_path_m": 0.026952730271803716,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8430695502892434,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.37672609036694155,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_1/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_1/case.json"
+    },
+    {
+      "name": "original_2",
+      "task": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.16785152209145832,
+        "sustained_p10_vx": 0.08460276694812847,
+        "max_tilt": 8.020882209238302,
+        "min_z": 0.11243602700513167,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.699398956330493,
+            "lateral_path_m": 0.026952730271803716,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8430695502892434,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.37672609036694155,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_2/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_2/case.json"
+    },
+    {
+      "name": "remove_idle",
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.20021586210895406,
+        "sustained_mean_vx": 0.20021586210895406,
+        "sustained_p10_vx": 0.10148447963225399,
+        "max_tilt": 8.678749089506137,
+        "min_z": 0.11278615625114145,
+        "straight": [
+          {
+            "at": 0.0,
+            "heading_error_deg": 3.4442434399086412,
+            "lateral_path_m": 0.02293624757350858,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 2.0,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8379737803835274,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 5.0,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7851557846523078,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/remove_idle/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/remove_idle/case.json"
+    },
+    {
+      "name": "remove_first_turn",
+      "task": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.22531129131092753,
+        "sustained_mean_vx": 0.22531129131092753,
+        "sustained_p10_vx": 0.12133375781778596,
+        "max_tilt": 8.507408995768852,
+        "min_z": 0.11250160474945023,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.699398956330493,
+            "lateral_path_m": 0.026952730271803716,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 4.706005635476569,
+            "lateral_path_m": 0.03782978927734986,
+            "lateral_limit_m": 0.06866542786165779,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7407525021199063,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/remove_first_turn/trace.json",
+      "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/remove_first_turn/case.json"
+    }
+  ],
+  "original_prefix_max_abs": {
+    "obs": 0.0,
+    "action": 0.0,
+    "command": 0.0,
+    "ctrl": 0.0,
+    "last_action": 0.0
+  },
+  "scope": "Frozen nine-second turn-reversal failure; ablations diagnose prefix dependence, not policy improvements"
+}

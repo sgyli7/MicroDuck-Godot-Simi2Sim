@@ -4,6 +4,7 @@ The student controls every collection rollout. Teachers only label its states:
 factory standing at zero command, the verified parent at moving commands.
 Every physical evaluation executes the single exported student throughout.
 """
+from .budget import legacy_deadline
 import hashlib,json,time
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
@@ -38,7 +39,7 @@ def collect(job):
 def main():
     torch.set_num_threads(2);torch.manual_seed(819)
     root=SESSION/"distillation_transitions_v1";root.mkdir(exist_ok=False)
-    start=time.time();deadline=min(start+25*60,json.loads((SESSION/"session.json").read_text())["deadline_unix"]-3600)
+    start=time.time();deadline=min(start+25*60,legacy_deadline(SESSION)-3600)
     parent=SESSION/"walking_heading_probe/coupling_0.9.onnx";student=parent
     actor=Policy(parent,"plain",template=BASELINE/"Walk_Godot.onnx");actor.task_name="walking"
     optimizer=torch.optim.Adam(actor.delta.net.parameters(),lr=5e-6)

@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "case": "sprint_alternate",
+      "seed": 927002,
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 900,
+        "max_abs": {
+          "command": 4.884981308350689e-15,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.547918011776346e-15,
+          "body_quat": 1.3322676295501878e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      },
+      "torch_control_max_abs": 0.0
+    },
+    {
+      "case": "sprint_right",
+      "seed": 927012,
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 700,
+        "max_abs": {
+          "command": 5.10702591327572e-15,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 1.0547118733938987e-15,
+          "body_quat": 1.1934897514720433e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      },
+      "torch_control_max_abs": 0.0
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 927000,
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 800,
+        "max_abs": {
+          "command": 4.884981308350689e-15,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 4.884981308350689e-15,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.992007221626409e-16,
+          "body_quat": 1.3322676295501878e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      },
+      "torch_control_max_abs": 0.0
+    },
+    {
+      "case": "sprint_alternate_ordinary",
+      "seed": 927002,
+      "shadow": {
+        "check": "native_shadow",
+        "rows": 900,
+        "max_abs": {
+          "command": 4.996003610813204e-16,
+          "obs": 5.329070518200751e-15,
+          "action": 5.551115123125783e-16,
+          "ctrl": 5.551115123125783e-16,
+          "last_action": 5.551115123125783e-16,
+          "body_pos": 9.992007221626409e-15,
+          "body_quat": 1.5543122344752192e-15
+        },
+        "skill_mismatches": [],
+        "passed": true
+      },
+      "torch_control_max_abs": 0.0
+    }
+  ]
+}

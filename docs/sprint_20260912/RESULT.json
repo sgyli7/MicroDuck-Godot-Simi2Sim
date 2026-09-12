@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "status": "bounded_round_finished_not_promoted",
+  "goal_complete": false,
+  "reason": [
+    "34 held-out physical failures",
+    "OS keyboard acceptance blocked by locked desktop"
+  ],
+  "package": {
+    "path": "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260912-sprint-trial.tar.gz",
+    "sha256": "8197f79dbadec0cd515fd92899419ad183232ca2f6d8eb22f63b5ce209e6ed8c",
+    "size_bytes": 182779645,
+    "verified_files": 30,
+    "verified": true,
+    "finished_unix": 1789196183.4551327
+  },
+  "models": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+  },
+  "default_nine_unchanged": true,
+  "baseline_definition": "Packaged nine models match the frozen 2026-09-11 candidate package, not every workspace default. Existing roller difference is preserved.",
+  "default_vs_package_difference": {
+    "roller": {
+      "default": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+      "frozen_previous_candidate": "c2f4229372921e188c09e1a68e56bdd7201dd99d52edef2dd16aa1f654a26e97"
+    }
+  },
+  "default_files": {
+    "godot/runtime_assets/deployment.json": {
+      "sha256": "35aa8f38cc6bdcdea33e875150a870cb1a79db0738ddd11ff08d1067cb561b81",
+      "mtime_unix": 1789103477.1501255
+    },
+    "godot/runtime_assets/policies/Stand_Godot.onnx": {
+      "sha256": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+      "mtime_unix": 1789103476.7660122
+    },
+    "godot/runtime_assets/policies/Walk_Godot.onnx": {
+      "sha256": "34704797dcb7096aeb46c784e46324504485b05de7097011d7fe349bfcf17f0f",
+      "mtime_unix": 1789103476.8040123
+    },
+    "godot/runtime_assets/policies/Sitstand_Godot.onnx": {
+      "sha256": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+      "mtime_unix": 1789103476.8238425
+    },
+    "godot/runtime_assets/policies/GroundPick_Godot.onnx": {
+      "sha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "mtime_unix": 1789103476.8365602
+    },
+    "godot/runtime_assets/policies/KickLeft_Godot.onnx": {
+      "sha256": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+      "mtime_unix": 1789103476.851444
+    },
+    "godot/runtime_assets/policies/KickRight_Godot.onnx": {
+      "sha256": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+      "mtime_unix": 1789103476.8713944
+    },
+    "godot/runtime_assets/policies/Roulade_Godot.onnx": {
+      "sha256": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+      "mtime_unix": 1789103476.893013
+    },
+    "godot/runtime_assets/policies/Roller_Godot.onnx": {
+      "sha256": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+      "mtime_unix": 1789103476.908088
+    },
+    "godot/runtime_assets/policies/RollerCrouch_Godot.onnx": {
+      "sha256": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+      "mtime_unix": 1789103476.9246163
+    }
+  },
+  "default_files_predate_session": true,
+  "final": {
+    "candidate_count": 240,
+    "candidate_passed": 206,
+    "candidate_falls": 0,
+    "all_480_falls": 0,
+    "runtime_errors": 0,
+    "expected_episodes": 480,
+    "accepted": false,
+    "seed_start": 920000,
+    "seed_stop_exclusive": 920030,
+    "final_seeds_consumed": true,
+    "comparisons": [
+      {
+        "case": "sprint_alternate",
+        "count": 30,
+        "candidate_vx": 0.2153158077307828,
+        "ordinary_vx": 0.1591866981276869,
+        "ratio": 1.3525992451836244,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_left",
+        "count": 30,
+        "candidate_vx": 0.19821325108393847,
+        "ordinary_vx": 0.13877680344336837,
+        "ratio": 1.428288057988198,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_long",
+        "count": 30,
+        "candidate_vx": 0.21961928358954413,
+        "ordinary_vx": 0.16694039537681504,
+        "ratio": 1.3155550703819958,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_repeat",
+        "count": 30,
+        "candidate_vx": 0.2161843672200869,
+        "ordinary_vx": 0.16134006335597303,
+        "ratio": 1.3399298520362424,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_right",
+        "count": 30,
+        "candidate_vx": 0.22617336170097674,
+        "ordinary_vx": 0.16740872255466022,
+        "ratio": 1.35102495407388,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_shift_first",
+        "count": 30,
+        "candidate_vx": 0.21743342508169244,
+        "ordinary_vx": 0.1663832398144976,
+        "ratio": 1.306822882666014,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_turn_release",
+        "count": 30,
+        "candidate_vx": 0.19739135257448107,
+        "ordinary_vx": 0.1352594256818893,
+        "ratio": 1.4593537683556124,
+        "speed_pass": true
+      },
+      {
+        "case": "sprint_w_first",
+        "count": 30,
+        "candidate_vx": 0.2234838824310284,
+        "ordinary_vx": 0.16876382653748748,
+        "ratio": 1.3242404312359317,
+        "speed_pass": true
+      }
+    ]
+  },
+  "self_test": {
+    "models": [
+      {
+        "boundary_count": 8.0,
+        "cases": 200,
+        "max_abs": 1.77635683940025e-15,
+        "real_count": 64.0,
+        "skill": "standing"
+      },
+      {
+        "boundary_count": 8.0,
+        "cases": 200,
+        "max_abs": 2.22044604925031e-16,
+        "real_count": 64.0,
+        "skill": "walking"
+      },
+      {
+        "boundary_count": 8.0,
+        "cases": 200,
+        "max_abs": 4.44089209850063e-16,
+        "real_count": 64.0,
+        "skill": "sitstand"
+      },
+      {
+        "boundary_count": 8.0,
+        "cases": 200,
+        "max_abs": 4.44089209850063e-16,
+        "real_count": 64.0,
+        "skill": "ground_pick"
+      },
+      {
+        "boundary_count": 8.0,
+        "cases": 200,
+        "max_abs": 8.88178419700125e-16,
+        "real_count": 64.0,
+        "skill": "kick_left"
+      },
+      {
+        "boundary_count": 35.0,
+        "cases": 227,
+        "max_abs": 4.44089209850063e-16,
+        "real_count": 64.0,
+        "skill": "kick_right"
+      },
+      {
+        "boundary_count": 5.0,
+        "cases": 197,
+        "max_abs": 4.44089209850063e-16,
+        "real_count": 64.0,
+        "skill": "roulade"
+      },
+      {
+        "boundary_count": 8.0,
+        "cases": 200,
+        "max_abs": 1.4210854715202e-14,
+        "real_count": 64.0,
+        "skill": "roller"
+      },
+      {
+        "boundary_count": 8.0,
+        "cases": 200,
+        "max_abs": 8.88178419700125e-16,
+        "real_count": 64.0,
+        "skill": "roller_crouch"
+      },
+      {
+        "boundary_count": 8.0,
+        "cases": 200,
+        "max_abs": 2.22044604925031e-16,
+        "real_count": 64.0,
+        "skill": "sprint"
+      }
+    ],
+    "passed": true,
+    "runtime": "1.29.0",
+    "tolerance": 1e-05,
+    "ui_font": {
+      "face_index": 2.0,
+      "family": "Noto Sans CJK SC",
+      "license": "res://runtime_assets/fonts/LICENSE.txt",
+      "path": "res://runtime_assets/fonts/ui-font.bin",
+      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+      "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+    }
+  },
+  "ordinary_regression": {
+    "models_unchanged": true,
+    "count": 69,
+    "old_errors": 0,
+    "new_errors": 0,
+    "old_pass": 29,
+    "new_pass": 34,
+    "losses": [],
+    "gains": [
+      {
+        "case": "walking_forward_long",
+        "seed": 919001,
+        "old_success": false,
+        "new_success": true,
+        "old_fell": false,
+        "new_fell": false
+      },
+      {
+        "case": "walking_repeated_start",
+        "seed": 919000,
+        "old_success": false,
+        "new_success": true,
+        "old_fell": false,
+        "new_fell": false
+      },
+      {
+        "case": "walking_repeated_start",
+        "seed": 919001,
+        "old_success": false,
+        "new_success": true,
+        "old_fell": false,
+        "new_fell": false
+      },
+      {
+        "case": "walking_repeated_start",
+        "seed": null,
+        "old_success": false,
+        "new_success": true,
+        "old_fell": false,
+        "new_fell": false
+      },
+      {
+        "case": "walking_straight",
+        "seed": 919001,
+        "old_success": false,
+        "new_success": true,
+        "old_fell": false,
+        "new_fell": false
+      }
+    ]
+  },
+  "brake_regression": {
+    "old_pass": 19,
+    "new_pass": 19,
+    "count": 27,
+    "paired_identical": true
+  },
+  "runtime": {
+    "fps_pass": true,
+    "cross_fps_max_abs": {
+      "obs": 0.0,
+      "action": 0.0,
+      "last_action": 0.0,
+      "command": 0.0,
+      "ctrl": 0.0
+    },
+    "shadow_max_abs": [
+      {
+        "command": 4.996003610813204e-16,
+        "obs": 5.10702591327572e-15,
+        "action": 2.6645352591003757e-15,
+        "ctrl": 4.884981308350689e-15,
+        "last_action": 2.6645352591003757e-15,
+        "body_pos": 9.575673587391975e-16,
+        "body_quat": 8.916478666520788e-16
+      },
+      {
+        "command": 4.996003610813204e-16,
+        "obs": 5.10702591327572e-15,
+        "action": 2.6645352591003757e-15,
+        "ctrl": 4.884981308350689e-15,
+        "last_action": 2.6645352591003757e-15,
+        "body_pos": 9.575673587391975e-16,
+        "body_quat": 8.916478666520788e-16
+      }
+    ],
+    "render_fps_observed": {
+      "30": [
+        30,
+        21,
+        23,
+        25,
+        28,
+        24,
+        23,
+        23,
+        30,
+        30,
+        30
+      ],
+      "144": [
+        144,
+        95,
+        135,
+        106,
+        103,
+        103,
+        102,
+        125,
+        123,
+        144,
+        144,
+        144
+      ]
+    },
+    "physics_hz": 200,
+    "policy_hz": 50,
+    "robot_resource_hashes_unchanged": true,
+    "preview_pause_evidence_runtime_source_identical": true,
+    "os_keyboard_passed": false,
+    "desktop_locked": true
+  },
+  "performance": {
+    "returncode": 0,
+    "reason": "completed",
+    "elapsed_s": 152.2114423290186,
+    "load_average_start": [
+      5.3203125,
+      6.96826171875,
+      5.69384765625
+    ],
+    "load_average_end": [
+      7.28759765625,
+      7.154296875,
+      5.96240234375
+    ],
+    "peak_rss_kib": 204612,
+    "final_rss_kib": 204612,
+    "tail_rss_slope_kib_per_s": 2.197278694571361,
+    "steady_rss_min_kib": 201656,
+    "steady_rss_max_kib": 204612,
+    "memory_window": "STANDALONE_READY through before STANDALONE_RESULT; tail is the latter half",
+    "simulation_speed": 11.905836815994544,
+    "completed": true
+  },
+  "inference": {
+    "sprint": {
+      "count": 27000,
+      "histogram_cap_usec": 20000,
+      "max_usec": 186,
+      "mean_usec": 37.6612592592593,
+      "p50_usec": 35,
+      "p95_usec": 57,
+      "p99_usec": 65
+    },
+    "walking": {
+      "count": 63000,
+      "histogram_cap_usec": 20000,
+      "max_usec": 673,
+      "mean_usec": 224.165587301587,
+      "p50_usec": 221,
+      "p95_usec": 263,
+      "p99_usec": 307
+    }
+  },
+  "continuous_stress": {
+    "command": [
+      "/home/ethan/Projects/MicroDuck/sim2sim/dist/MicroDuck-ARM64-20260912-sprint-trial/MicroDuck.arm64",
+      "--headless",
+      "--fixed-fps",
+      "200",
+      "--",
+      "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/closeout/continuous_failure_case.json",
+      "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/closeout/continuous_failure_trace.json"
+    ],
+    "first_fall_s": 222.48,
+    "first_long_run_fall_s": 222.48,
+    "reproduced": true,
+    "physical_success": false,
+    "steps": 12000,
+    "resets": 0,
+    "trace_sha256": "84204874a40e2c7c290f49814845cb5d4de5f3620afcddf6ecfaa617dd8ba248",
+    "note": "Post-freeze engineering stress failure. No further model/control selection.",
+    "diagnostic_correction": {
+      "cause": "left finite floor at x=20 m; not evidence of in-arena long-horizon instability",
+      "body_x_at_first_fall": 20.0791542208997,
+      "tilt_deg_at_first_fall": 3.6731181284717,
+      "evidence": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_20260912/boundary_probe/result.json",
+      "evidence_sha256": "f5b490067fa0d69df7efd6fad7dbbee02a7efea60f7311ba85dfe8d496ec20b0"
+    }
+  },
+  "tests": {
+    "total": 266,
+    "passed": 264,
+    "optional_skipped": 2,
+    "code_commit": "bdf69e1"
+  },
+  "resource_audit": {
+    "created_unix": 1789196451.0058334,
+    "recorded_pid_checks": 136,
+    "recorded_live": [],
+    "other_owned_processes": [],
+    "owned_overlays": [],
+    "active_containers": "",
+    "budget_actors": [
+      "agent"
+    ],
+    "desktop_locked": true,
+    "policy": "PID start time checked; unrelated workloads untouched; no training restarted",
+    "passed": true
+  },
+  "budget_before_final_commit": {
+    "limit_seconds": 14400.0,
+    "used_seconds": 11612.353978094994,
+    "remaining_seconds": 2787.646021905006,
+    "actors": [
+      "agent"
+    ],
+    "unconfirmed_gaps": 0
+  },
+  "evidence": {
+    "delivery/freeze.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/delivery/freeze.json",
+      "sha256": "a865a898a91be9a271c2ce5a51f24db44179920ed261b4786047486b326f7e9e"
+    },
+    "delivery/final_case_index.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/delivery/final_case_index.json",
+      "sha256": "42d11c0c361a4e0e7accc827a1899d48e105c526763635462e0b388b4e01784b"
+    },
+    "delivery/final_suite/summary.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/delivery/final_suite/summary.json",
+      "sha256": "889ca52f098c74ae087fecdd401783c5b0afa664c03300def72c7ce09d7ceebf"
+    },
+    "delivery/final_acceptance.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/delivery/final_acceptance.json",
+      "sha256": "b021e7b3d0b6105aca60c6645d08440e838ccf9f67f3b2f46d898c8f8a9e588b"
+    },
+    "delivery/failure_analysis.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/delivery/failure_analysis.json",
+      "sha256": "97e0f1033a5cb22350b7c356d1e1467582aed0fbefa97a2dbdde6a0d6069e185"
+    },
+    "delivery/completed.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/delivery/completed.json",
+      "sha256": "5b8f33a652e0f50e89097d7738da733439a03bce928f7e5f10b9ede2db8abfe3"
+    },
+    "delivery/final_suite/container_environment.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/delivery/final_suite/container_environment.json",
+      "sha256": "8a0c442ccb4507846f32b379b96903e8f1cda2121131bc31093bebe6c349a6cd"
+    },
+    "final_engineering/completed.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/final_engineering/completed.json",
+      "sha256": "81bb66c56634e759d19fea55f8e94edc5573cdc051b518333d0ba5e897003a99"
+    },
+    "final_engineering/nine_regression.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/final_engineering/nine_regression.json",
+      "sha256": "57902298f02dc5dbecd4e1b688cd1c9d5ffa1cc275112f34e581d4c95db67c71"
+    },
+    "final_engineering/fps_lifecycle.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/final_engineering/fps_lifecycle.json",
+      "sha256": "11ee4ff460e51e526bba8224ffc20fed46892cdb83146da32dd7f0467c1e5e75"
+    },
+    "final_engineering/performance/metrics.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/final_engineering/performance/metrics.json",
+      "sha256": "a5159def26612bbd2457185f5a3ba4780bb6dc26433f7d331a97323107cbbf8d"
+    },
+    "final_engineering/performance_host.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/final_engineering/performance_host.json",
+      "sha256": "5009ec2237d6a24c59c7b5054600cf571e74142e90e5b01a345f6ca6f39f57d7"
+    },
+    "preview_lifecycle_editor/result.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/preview_lifecycle_editor/result.json",
+      "sha256": "52e87c4221e5b136da099163bcfd5ed91d44c7d02f72764fe8563e3cb0dcfed8"
+    },
+    "preview_release_lifecycle/result.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/preview_release_lifecycle/result.json",
+      "sha256": "72c7a14fb381f4ae9a9b9930c757d2f05a47e4fd9a6d91c1f9c67953f2d52172"
+    },
+    "keyboard_lock_preflight/result.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/keyboard_lock_preflight/result.json",
+      "sha256": "440bcae9619ad918eb499d1cd46bb60c41d5856e721cc59a37fefc1e325a0138"
+    },
+    "composition_matched_audit.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/composition_matched_audit.json",
+      "sha256": "dd05cfe68f35dee319b1124c6d3f4a87ca8778d91e0e153a8d27951a94cc58be"
+    },
+    "composition_contract/result.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/composition_contract/result.json",
+      "sha256": "ad84c8ea04b6793b0839c0c781ed3bcdc515f7d186e1a6aa03095b34292b3a1c"
+    },
+    "prepared_duplicate_cleanup.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/prepared_duplicate_cleanup.json",
+      "sha256": "f839852aa28b23713213b4c690dfc2b331e71314579edab703e2c60566247eb0"
+    },
+    "closeout/continuous_failure.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/closeout/continuous_failure.json",
+      "sha256": "ce98a1f690b3cb4d27ee8b50cd648311fd58c4ade90604a0e000b1457bc84514"
+    },
+    "closeout/archive.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/closeout/archive.json",
+      "sha256": "2f9f8c07c4e62112ea57e757b33f1c3fb3e2ba7fa78b2c13949d98b9499b49f9"
+    },
+    "closeout/resource_audit.json": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/closeout/resource_audit.json",
+      "sha256": "3abc7ccaaaad287c055f37ca52c799cefbc86cae8cc7c919075532b4e578f54d"
+    },
+    "finalize_candidate.py": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/finalize_candidate.py",
+      "sha256": "ac0857d0f515ef4e21ba61b0436074d024113f511b2613668eb4ee975d325e62"
+    },
+    "final_engineering.py": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/final_engineering.py",
+      "sha256": "0f10d217f14645384e4f4c28d7495265a12c8d7ad4d0ace9da2daee909d229f3"
+    },
+    "final_archive.py": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/final_archive.py",
+      "sha256": "13634609d04338dec533d6ab8f6af86ff4f359487bfcaba400a6725d9f69c154"
+    },
+    "supervisors/composed_full_tests-1ec9c18d19.log": {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_20260912/supervisors/composed_full_tests-1ec9c18d19.log",
+      "sha256": "fcb95f0824b94718ab67aeb3854d263645bbc8ed82f6bb65f6f4b23f5be46a65"
+    }
+  }
+}

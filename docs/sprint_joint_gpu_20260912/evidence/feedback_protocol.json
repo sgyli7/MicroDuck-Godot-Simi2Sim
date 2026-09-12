@@ -1,0 +1,18 @@
+{
+  "hypothesis": "Manual sprint turns need feedback for native under-response; track requested heading trajectory with existing heading gain and correction limit",
+  "gain": 6.0,
+  "correction_limit": 0.6,
+  "command_limit": "requested yaw +/- existing0.6 correction, no new gain search",
+  "antiwindup": "Bound tracked heading lag to correction_limit/gain; release lag on turn sign, skill or reset transition",
+  "model": "Frozen tracking9c977fb plus ordinaryS05; no new training",
+  "validation": "23-case disabled-bit-parity then263 enabled cases and Python/Torch/native shadow",
+  "files": {
+    "src/sim2sim/motion_control.py": "61ad90cb223e20a2d55a50f27b1ac9f213cc568805b23f37976e04dec91d7279",
+    "src/sim2sim/research/torch_walking.py": "d69f9a6005995065d6aeec80eac6c9a272d44957c59886a9c76bfe1ca8ec3096",
+    "godot/standalone/motion_control.gd": "24edc4cd4b6a3c6d1596d6fef123932f875056040067e6eda680931047dcfa50"
+  },
+  "final_seeds_used": false,
+  "disposition": "Rejected: stronger turning reduced curve speed and still had4nativefailures; feature not retained in production",
+  "archived_code": "results/sprint_joint_gpu_20260912/feedback_code",
+  "production_restored": true
+}

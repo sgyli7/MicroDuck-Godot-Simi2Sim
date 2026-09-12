@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "rejected_control_matches_predecessor": [
+    "src/sim2sim/motion_control.py",
+    "src/sim2sim/research/torch_walking.py",
+    "godot/standalone/motion_control.gd"
+  ],
+  "all_five_training_source_snapshots_match": true,
+  "archived_python_compiles": true,
+  "all_native_case_inventories_complete": true,
+  "no_candidate_eligible": true
+}

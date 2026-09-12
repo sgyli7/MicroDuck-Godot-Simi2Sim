@@ -1,0 +1,7 @@
+[
+  {
+    "attempt": "results/sprint_joint_identification_20260913/integrated_dev_attempt_01",
+    "reason": "Harness excluded historical sprint regression cases by name; inventory assertion stopped before any new physics ran.",
+    "resolution": "Identify historical regressions by frozen development seed inventory; exact seven cases required."
+  }
+]
