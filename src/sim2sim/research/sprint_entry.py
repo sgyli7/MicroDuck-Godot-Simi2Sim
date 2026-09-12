@@ -50,7 +50,9 @@ class SprintEntryBank:
         if step==0:
             if w.motion is None:raise ValueError('Sprint entry requires deployment motion feedback')
             w._sprint_training_tape=w.command_tape.copy()
+            w._sprint_training_selection=w.sprint_selection.copy()
             w.command_tape=np.stack([command for _,command in self.tapes[name]])
+            w.sprint_selection=np.array([actor=='sprint' for actor,_ in self.tapes[name]],bool)
             w._command_stamp=None
         actor,_=self.tapes[name][step]
         w.send(self.actors[actor](w.obs()[None])[0])
@@ -60,4 +62,6 @@ class SprintEntryBank:
         # Skip reset-only initial idle so learning begins at the handoff itself.
         tape=w._sprint_training_tape
         w.command_tape=np.concatenate([tape[50:],np.repeat(tape[-1:],50,axis=0)])
+        selection=w._sprint_training_selection
+        w.sprint_selection=np.concatenate([selection[50:],np.repeat(selection[-1:],50)])
         w.finish_standing_entry(reset_motion=False)

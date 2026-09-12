@@ -51,8 +51,9 @@ def reference_observations(task):
     return torch.from_numpy(np.concatenate(selected))
 
 class Vector:
-    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None,roller_contract=False,yaw_memory_input=False,state_input='',roller_objective='legacy',task_input='',walking_objective='legacy',motion_settings=None):
+    def __init__(self,task,num_envs,seed,weights=None,training_conditions=None,entry="reset",roll_starts=0.,reward_params=None,random_commands=0.,time_input_s=0.,heading_input=False,environment_state=None,entry_source=None,entry_bank=None,roller_contract=False,yaw_memory_input=False,state_input='',roller_objective='legacy',task_input='',walking_objective='legacy',motion_settings=None,sprint_composition=None):
         self.task=task;self.worlds=[];self.objectives=[];self.seed=seed
+        self.sprint_composition=sprint_composition
         self.rng=np.random.default_rng(seed);self.count=0
         if environment_state is not None:
             self.seed=int(environment_state['seed']);self.count=int(environment_state['count'])
@@ -81,6 +82,7 @@ class Vector:
         try:
             for i in range(num_envs):
                 self.worlds.append(World(task,time_input_s=time_input_s,heading_input=heading_input,entry_source=entry_source,roller_contract=roller_contract,yaw_memory_input=yaw_memory_input,state_input=state_input,task_input=task_input,motion_settings=motion_settings))
+                self.worlds[-1].sprint_composed=sprint_composition is not None
             self.reset_worlds(range(num_envs))
             self.objectives=[Objective(w,weights,reward_params,roller_objective,walking_objective) for w in self.worlds]
         except BaseException:
@@ -130,9 +132,15 @@ class Vector:
     def observations(self):
         actor=np.stack([w.obs() for w in self.worlds])
         critic=np.concatenate([actor,np.stack([r.extra() for r in self.objectives])],axis=1)
+        if self.sprint_composition is not None:
+            critic[:,actor.shape[1]+20]=self.sprint_composition.mask(self.worlds).numpy() # unused walking touch channel
         return torch.from_numpy(actor),torch.from_numpy(critic)
 
+    def actor_mask(self):
+        return torch.ones(len(self.worlds),dtype=torch.bool) if self.sprint_composition is None or self.sprint_composition.learn_all else self.sprint_composition.mask(self.worlds)
+
     def step(self,actions):
+        if self.sprint_composition is not None:actions=self.sprint_composition.actions(self.worlds,actions)
         for w,a in zip(self.worlds,actions):w.send(a)
         reward=[];done=[];timeouts=[];terms=[]
         for w,obj in zip(self.worlds,self.objectives):
@@ -192,6 +200,12 @@ def run(args):
                 raise ValueError('Resume cannot change the walking entry bank or its models')
             if args.entry!=resume_checkpoint['config'].get('entry','reset'):
                 raise ValueError('Resume cannot change the walking entry distribution')
+            controller_path=getattr(args,'walking_controller',None)
+            controller_hash=hashlib.sha256(Path(controller_path).read_bytes()).hexdigest() if controller_path else None
+            if controller_hash!=resume_checkpoint['config'].get('walking_controller_sha256'):
+                raise ValueError('Resume cannot change the composed walking controller')
+            if getattr(args,'walking_controller_ablation','composed')!=resume_checkpoint['config'].get('walking_controller_ablation','composed'):
+                raise ValueError('Resume cannot change the walking controller ablation')
     task=TASKS[args.skill];session=read_session()
     evaluate_skill=run_suite;protocol=PROTOCOL_VERSION
     evaluation_kwargs={} if args.eval_scene_robot is None else {'scene_robot':args.eval_scene_robot}
@@ -288,7 +302,16 @@ def run(args):
         evaluation_kwargs['motion_settings']=motion_settings
     elif resume_checkpoint is not None and resume_checkpoint['config'].get('motion_config_sha256'):
         raise ValueError('Resume requires the original motion feedback contract')
-    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank,args.roller_contract,policy.anchor.yaw_memory_input,policy.anchor.state_input,getattr(args,'roller_objective','legacy'),policy.anchor.task_input,getattr(args,'walking_objective','legacy'),motion_settings)
+    composition=None
+    if getattr(args,'walking_controller',None):
+        if task.name!='walking' or args.walking_objective!='sprint_v2' or not training_conditions or any(not c.startswith('sprint_') for c in training_conditions) or args.random_commands or motion_settings is None:
+            raise ValueError('Composed walking requires explicit sprint_v2 feedback tapes')
+        from .sprint_composition import SprintComposition
+        composition=SprintComposition(args.walking_controller,learn_all=args.walking_controller_ablation=='learn_all')
+        config['walking_controller_sha256']=composition.actor.sha256
+        config['walking_training_contract']='native_composition_v1_'+args.walking_controller_ablation
+        config['training_evaluator_scope']='single actor diagnostic; promotion requires separate native composite suite'
+    env=Vector(task,args.envs,args.seed,weights,training_conditions,args.entry,args.roll_starts,json.loads(args.reward_params),args.random_commands,policy.anchor.time_input_s,policy.anchor.heading_input,environment_state,args.entry_source,args.entry_bank,args.roller_contract,policy.anchor.yaw_memory_input,policy.anchor.state_input,getattr(args,'roller_objective','legacy'),policy.anchor.task_input,getattr(args,'walking_objective','legacy'),motion_settings,composition)
     if env.entry_bank is not None:config['entry_bank_sha256']=env.entry_bank.hashes
     if args.entry_source:config['entry_source_sha256']=hashlib.sha256(Path(args.entry_source).read_bytes()).hexdigest()
     config["time_input_s"]=policy.anchor.time_input_s
@@ -313,7 +336,7 @@ def run(args):
         while time_left()>0 and (not args.iterations or iteration<initial_iteration+args.iterations):
             if (out/"STOP").exists():status="stopped_for_review";break
             iteration+=1;iteration_start=time.time()
-            buffers={k:[] for k in ["obs","critic_obs","anchor","action","logprob","mean","std","value","reward","physical_reward","done"]}
+            buffers={k:[] for k in ["obs","critic_obs","anchor","action","logprob","mean","std","value","reward","physical_reward","done","actor_mask"]}
             faults=0;all_terms={};term_count=0
             policy.train()
             collect_policy=learner.collect_policy;collect_critic=learner.collect_critic
@@ -323,6 +346,7 @@ def run(args):
                     if step%25==0 and time_left()<=0:break
                     obs,cobs=env.observations();anchor=collect_policy.anchor_values(obs)
                     dist=collect_policy.distribution(obs,anchor);action=dist.sample();value=collect_critic(cobs)
+                    actor_mask=env.actor_mask()
                     reward,done,timeouts,terminal_cobs,terms=env.step(action.numpy())
                     if hasattr(env,'nonfinite_terminal'):
                         torch.save(env.nonfinite_terminal,out/'nonfinite_terminal.pt')
@@ -330,7 +354,7 @@ def run(args):
                     physical_reward=reward.clone()
                     # Truncated time limits bootstrap terminal state, never the reset state.
                     reward=reward+args.gamma*collect_critic(terminal_cobs)*timeouts
-                    for k,v in [("obs",obs),("critic_obs",cobs),("anchor",anchor),("action",action),("logprob",dist.log_prob(action).sum(-1)),("mean",dist.mean),("std",dist.stddev),("value",value),("reward",reward),("physical_reward",physical_reward),("done",done)]:buffers[k].append(v)
+                    for k,v in [("obs",obs),("critic_obs",cobs),("anchor",anchor),("action",action),("logprob",dist.log_prob(action).sum(-1)),("mean",dist.mean),("std",dist.stddev),("value",value),("reward",reward),("physical_reward",physical_reward),("done",done),("actor_mask",actor_mask)]:buffers[k].append(v)
                     for entry in terms:
                         for k,v in entry.items():all_terms[k]=all_terms.get(k,0.)+v
                         term_count+=1
@@ -344,7 +368,12 @@ def run(args):
                     delta=b["reward"][s]+args.gamma*next_value*active-b["value"][s]
                     gae=delta+args.gamma*args.lam*active*gae;advantage[s]=gae;next_value=b["value"][s]
                 returns=advantage+b["value"]
-                advantage=(advantage-advantage.mean())/(advantage.std()+1e-8)
+                if composition is None:advantage=(advantage-advantage.mean())/(advantage.std()+1e-8)
+                else:
+                    selected_advantage=advantage[b['actor_mask']]
+                    if selected_advantage.numel()>1:
+                        advantage=(advantage-selected_advantage.mean())/(selected_advantage.std()+1e-8)
+                    else:advantage=torch.zeros_like(advantage)
                 flat={k:v.flatten(0,1) for k,v in b.items()};advantage=advantage.flatten();returns=returns.flatten()
                 if args.symmetry_weight:
                     flat["mirrored_obs"]=flat["obs"][:,OBS_PERM]*torch.from_numpy(obs_sign)
@@ -363,6 +392,8 @@ def run(args):
                         raise FloatingPointError("nonfinite critic loss; preserved nonfinite_batch.pt")
                     co.zero_grad();closs.backward();torch.nn.utils.clip_grad_norm_(critic.parameters(),1.);co.step()
                     if stop_actor or iteration-initial_iteration<=args.critic_warmup:continue
+                    ix=ix.to(learner.device);ix=ix[flat['actor_mask'][ix]]
+                    if not len(ix):continue
                     dist=policy.distribution(flat["obs"][ix],flat["anchor"][ix])
                     with torch.no_grad():
                         old=torch.distributions.Normal(flat["mean"][ix],flat["std"][ix])
@@ -392,13 +423,14 @@ def run(args):
                     losses.append(float(loss.detach()));update_count+=1
             with torch.no_grad():
                 ix=torch.arange(0,T*N,max(1,T*N//2048))
-                dist=policy.distribution(flat["obs"][ix],flat["anchor"][ix])
-                old=torch.distributions.Normal(flat["mean"][ix],flat["std"][ix])
-                actual_kl=float(torch.distributions.kl_divergence(old,dist).sum(-1).mean())
                 prediction=critic(flat["critic_obs"][ix]);truth=returns[ix]
                 value_loss=float((prediction-truth).square().mean())
                 explained_variance=float(1-(truth-prediction).var()/(truth.var()+1e-8))
-                delta_rms=float(policy.delta(flat["obs"][ix]).square().mean().sqrt())
+                ix=ix.to(learner.device);ix=ix[flat['actor_mask'][ix]]
+                dist=policy.distribution(flat["obs"][ix],flat["anchor"][ix])
+                old=torch.distributions.Normal(flat["mean"][ix],flat["std"][ix])
+                actual_kl=float(torch.distributions.kl_divergence(old,dist).sum(-1).mean()) if len(ix) else 0.
+                delta_rms=float(policy.delta(flat["obs"][ix]).square().mean().sqrt()) if len(ix) else 0.
             rejected=not math.isfinite(actual_kl) or actual_kl>.15
             if rejected:
                 policy.load_state_dict(before);ao.load_state_dict(optbefore)
@@ -414,6 +446,7 @@ def run(args):
             entry={"iteration":iteration,"elapsed":time.time()-start,"samples":total_samples,"reward":float(b["physical_reward"].mean()),"bootstrapped_reward":float(b["reward"].mean()),"reward_logging":"physical_v2","value_loss":value_loss,"explained_variance":explained_variance,"delta_rms":delta_rms,"kl":actual_kl,"actor_lr":ao.param_groups[0]["lr"],"std":float(policy.log_std.detach().exp().mean()),"rejected":rejected,"actor_updates":update_count,"fps":T*N/(time.time()-iteration_start),"done_fraction":float(b["done"].float().mean()),"terms":{k:v/term_count for k,v in all_terms.items()}}
             entry.update(learner_device=learner.device.type,collection_seconds=collection_seconds,
                          learner_seconds=learner_seconds,collector_sync_seconds=sync_seconds)
+            if composition is not None:entry.update(actor_samples=int(b['actor_mask'].sum()),controller_steps=dict(composition.counts))
             if retention is not None:entry['teacher_kl']=float(np.mean(teacher_losses)) if teacher_losses else 0.
             log.write(json.dumps(entry)+"\n")
             print(json.dumps({k:v for k,v in entry.items() if k!="terms"}),flush=True)
@@ -467,6 +500,8 @@ def main():
     p.add_argument('--reserve-seconds',type=float,default=5400.,help='Session closeout reserve; old eight-hour sessions retain 90 minutes by default')
     p.add_argument('--walking-objective',choices=['legacy','sprint_v1','sprint_v2'],default='legacy')
     p.add_argument('--motion-config',type=Path,help='Explicit game command feedback shared during sprint sampling and evaluation')
+    p.add_argument('--walking-controller',type=Path,help='Train only sprint actions; execute this frozen ordinary actor on all other tape steps')
+    p.add_argument('--walking-controller-ablation',choices=['composed','learn_all'],default='composed',help='Matched control: learn_all keeps the same phase observations/feedback but also learns ordinary actions')
     p.add_argument("--envs",type=int,default=16);p.add_argument("--steps",type=int,default=512)
     p.add_argument("--seed",type=int,default=42);p.add_argument("--threads",type=int,default=2)
     p.add_argument('--learner-device',choices=['auto','cpu','cuda'],default='auto',help='GPU batch updates when CUDA is available; Jolt collection and frozen ORT anchor stay on CPU')
@@ -502,6 +537,7 @@ def main():
     p.add_argument("--time-gate",default="",help="Optional start,end seconds for a learned increment on a declared time-input actor")
     p.add_argument('--command-gate',choices=['','negative_throttle'],default='',help='Only adapt negative roller throttle; preserve factory push/coast exactly')
     args=p.parse_args()
+    if args.walking_controller_ablation!='composed' and not args.walking_controller:p.error('--walking-controller-ablation requires --walking-controller')
     if args.teacher_replay and args.teacher_mode!='replay_kl':p.error('--teacher-replay requires --teacher-mode replay_kl')
     if args.teacher_mode and (not math.isfinite(args.teacher_weight) or args.teacher_weight<=0):p.error('--teacher-weight must be positive and finite')
     if not 0<=args.roll_starts<=1:p.error("--roll-starts must be in [0,1]")

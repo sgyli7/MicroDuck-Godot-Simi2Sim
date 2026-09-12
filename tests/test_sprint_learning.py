@@ -9,6 +9,33 @@ from types import SimpleNamespace
 
 
 class SprintLearning(unittest.TestCase):
+    def test_composed_controller_uses_actual_skill_selection_not_velocity_magnitude(self):
+        from sim2sim.research.sprint_composition import SprintComposition
+        tape,selected=commands('sprint_030_release',include_selection=True)
+        np.testing.assert_array_equal(tape[150],tape[250])
+        self.assertTrue(selected[150]);self.assertFalse(selected[250])
+        turn,phase=commands('sprint_030_turnrelease',include_selection=True,ordinary_turn_rate=.8)
+        self.assertFalse(phase[250]);self.assertGreater(turn[250,2],0.)
+        self.assertAlmostEqual(float(turn[250,2]),.8,places=6)
+        for name in ['wfirst','turnrelease','repeat']:
+            _,phase=commands('sprint_030_'+name,include_selection=True)
+            self.assertTrue(phase.any());self.assertTrue((~phase).any())
+        controller=object.__new__(SprintComposition)
+        controller.learn_all=False
+        controller.actor=lambda obs:np.full((len(obs),14),.75,np.float32)
+        controller.counts={'learned':0,'ordinary':0}
+        worlds=[SimpleNamespace(sprint_active=lambda:True,obs=lambda:np.zeros(61)),
+                SimpleNamespace(sprint_active=lambda:False,obs=lambda:np.zeros(61))]
+        proposed=np.full((2,14),-.1,np.float32)
+        actual=controller.actions(worlds,proposed)
+        np.testing.assert_array_equal(actual[0],proposed[0])
+        np.testing.assert_array_equal(actual[1],np.full(14,.75,np.float32))
+        np.testing.assert_array_equal(proposed,np.full((2,14),-.1,np.float32))
+        self.assertEqual(controller.mask(worlds).tolist(),[True,False])
+        self.assertEqual(controller.counts,{'learned':1,'ordinary':1})
+        controller.learn_all=True
+        np.testing.assert_array_equal(controller.actions(worlds,proposed),proposed)
+
     def test_ordinary_feedback_override_preserves_sprint_and_legacy_defaults(self):
         state=SimpleNamespace(base_pos=np.zeros(3),base_quat_wxyz=np.array([1.,0,0,0]))
         cmd=np.zeros(13,np.float32);cmd[0]=.3

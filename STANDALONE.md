@@ -14,6 +14,7 @@ sha256sum -c SHA256SUMS
 | 输入 | 操作 |
 |---|---|
 | W / A / S / D | 移动与转向；轮滑 S 为主动制动 |
+| 左 Shift + W | 含独立 sprint 模型的实验包启用行走加速，可同时 A/D；右 Shift 和轮滑不启用 |
 | 空格 | 中性命令 |
 | 6 | 切换步行／轮滑机器人 |
 | 7 | 步行机器人显式站立 |
@@ -47,6 +48,8 @@ uv sync --extra train
 导出目标目录必须不存在，避免覆盖旧验收产物。`prepare` 用 Python/MuJoCo 预生成机器人初始位姿和 Godot 资源，发布后由引擎读取。使用 `--control-config /absolute/control.json` 指定已经评测的控制候选；缺省保持原控制契约。正式打包应给 `prepare` 增加 `--real-traces`，用冻结模型的真实轨迹补充九技能数值夹具。真实输入只接收模型 SHA 与该技能相同的轨迹，并记录轨迹校验值；最终验收须确认每项都有真实观测覆盖。
 
 对已经冻结的工程目录导出时，给 `package` 增加 `--project /absolute/frozen-project`。它读取该目录中的模型、控制和机器人资源，并把源码与机器人资源校验记入 `build.json`。同一候选的自检、回放、性能测量和最终分发应使用同一个包目录。
+
+行走加速使用 `prepare --sprint /absolute/Sprint_Godot.onnx` 显式加入第十个策略，随附 manifest，保持普通 61 维观测 / 14 维动作。普通九技能仍从 `--models` 读取。仅加入模型不表示质量验收通过；实验来源与物理对照见 [行走加速记录](docs/sprint_20260912/EXPERIMENTS.md)。Python 开发入口对应 `sim2sim-play --sprint ...`。`sprint_vmax_x` / `sprint_vmax_ang` 属于 `control_config.walk.twist_limits`，必须使用与模型一起评测的控制配置，不能用未核验的默认速度运行实验模型。
 
 扩展分别链接 godot-cpp 的 `template_debug` 和 `template_release`，由 `.gdextension` 特征选择。不要把调试绑定库重命名后用于发布模板：两种构建的分配器布局不同。当前 bootstrap 校验 SDK 提交、ORT 下载和匹配模板，生成资源仍使用项目现有导入流程。
 

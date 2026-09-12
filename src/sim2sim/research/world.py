@@ -114,10 +114,12 @@ class World:
         self.condition = condition
         self.command_schedule=None
         self.command_tape=None
+        self.sprint_selection=None
         if condition.startswith('sprint_'):
             if self.task.name!='walking':raise ValueError('Sprint applies to walking only')
             from .sprint_tasks import commands
-            self.command_tape=commands(condition,DT,self.task.seconds)
+            normal_turn=1.5 if self.motion is None else self.motion.settings.get('twist_limits',{}).get('vmax_ang',1.5)
+            self.command_tape,self.sprint_selection=commands(condition,DT,self.task.seconds,include_selection=True,ordinary_turn_rate=normal_turn)
         if condition.startswith('keyboard_'):
             from .schedules import keyboard_commands,roller_keyboard_commands
             if self.task.name=='walking':self.command_tape=keyboard_commands(condition.removeprefix('keyboard_'),DT)
@@ -190,9 +192,14 @@ class World:
     def command(self):
         if self.motion is None:return self.requested_command()
         if self._command_stamp!=self.t:
-            self._controlled_command=self.motion.command(self.requested_command(),self.state,'walking',DT)
+            skill='sprint' if getattr(self,'sprint_composed',False) and self.sprint_active() else 'walking'
+            self._controlled_command=self.motion.command(self.requested_command(),self.state,skill,DT)
             self._command_stamp=self.t
         return self._controlled_command.copy()
+
+    def sprint_active(self):
+        if self.sprint_selection is None:raise ValueError('Composed training requires a sprint selection tape')
+        return bool(self.sprint_selection[min(int(round(self.t/DT)),len(self.sprint_selection)-1)])
 
     def requested_command(self):
         if self.command_tape is not None:
