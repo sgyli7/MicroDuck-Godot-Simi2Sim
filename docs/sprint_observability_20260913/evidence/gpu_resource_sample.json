@@ -1,0 +1,38 @@
+{
+  "captured_unix": 1789230524.3509521,
+  "commands": [
+    {
+      "command": [
+        "nvidia-smi",
+        "--query-gpu=name,utilization.gpu,power.draw",
+        "--format=csv"
+      ],
+      "returncode": 0,
+      "stdout": "name, utilization.gpu [%], power.draw [W]\nNVIDIA GB10, 44 %, 30.93 W\n"
+    },
+    {
+      "command": [
+        "nvidia-smi",
+        "--query-compute-apps=pid,process_name,used_memory",
+        "--format=csv"
+      ],
+      "returncode": 0,
+      "stdout": "pid, process_name, used_gpu_memory [MiB]\n49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 242 MiB\n1180227, /home/ethan/Projects/microduck_rl/.venv/bin/python, 933 MiB\n"
+    },
+    {
+      "command": [
+        "ps",
+        "-p",
+        "1180227",
+        "-o",
+        "pid,ppid,etime,pcpu,ni,args"
+      ],
+      "returncode": 0,
+      "stdout": "    PID    PPID     ELAPSED %CPU  NI COMMAND\n1180227 1180226       02:00 90.7  10 /home/ethan/Projects/microduck_rl/.venv/bin/python scripts/sprint_observability.py learn --output results/sprint_observability_20260913/predictor_long\n"
+    }
+  ],
+  "affinity": [
+    "Cpus_allowed_list:\t16-19"
+  ],
+  "scope": "One overall GPU utilization snapshot; learner CUDA device and process memory verified separately, not sustained utilization benchmark"
+}

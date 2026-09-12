@@ -1,0 +1,703 @@
+{
+  "windows": [
+    {
+      "source": "native_joint_fd",
+      "case": "sprint_alternate",
+      "seed": 927001,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    },
+    {
+      "source": "native_006",
+      "case": "sprint_alternate",
+      "seed": 927001,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    },
+    {
+      "source": "native_006",
+      "case": "sprint_alternate",
+      "seed": 927007,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    },
+    {
+      "source": "native_006",
+      "case": "sprint_alternate",
+      "seed": 927008,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    },
+    {
+      "source": "native_012",
+      "case": "sprint_alternate",
+      "seed": 927003,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    },
+    {
+      "source": "native_012",
+      "case": "sprint_alternate",
+      "seed": 927008,
+      "kind": "stops",
+      "start": 14,
+      "end": 17
+    },
+    {
+      "source": "native_012",
+      "case": "sprint_left",
+      "seed": 927001,
+      "kind": "stops",
+      "start": 10,
+      "end": 13
+    },
+    {
+      "source": "native_warm_006",
+      "case": "sprint_right",
+      "seed": 927004,
+      "kind": "straight",
+      "start": 8,
+      "end": 10
+    },
+    {
+      "source": "native_warm_012",
+      "case": "sprint_alternate",
+      "seed": 927009,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    },
+    {
+      "source": "native_warm_012",
+      "case": "sprint_alternate",
+      "seed": 927015,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    },
+    {
+      "source": "native_initial_teacher_006",
+      "case": "sprint_alternate",
+      "seed": 927003,
+      "kind": "stops",
+      "start": 14,
+      "end": 17
+    },
+    {
+      "source": "native_initial_teacher_006",
+      "case": "sprint_alternate",
+      "seed": 927005,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    },
+    {
+      "source": "native_initial_teacher_006",
+      "case": "sprint_alternate",
+      "seed": 927009,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    },
+    {
+      "source": "native_initial_teacher_012",
+      "case": "sprint_alternate",
+      "seed": 927013,
+      "kind": "turns",
+      "start": 7,
+      "end": 9
+    }
+  ],
+  "results": {
+    "predictor": {
+      "contacts_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.3839399218559265,
+          "component_rmse": [
+            0.014169258065521717,
+            0.01312282495200634,
+            0.129769966006279
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.31997036933898926,
+          "component_rmse": [
+            0.012660904787480831,
+            0.010883970186114311,
+            0.10219571739435196
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.21306422352790833,
+          "component_rmse": [
+            0.006995449308305979,
+            0.008052082732319832,
+            0.0676603615283966
+          ]
+        }
+      },
+      "contacts_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.3765927255153656,
+          "component_rmse": [
+            0.014135516248643398,
+            0.013009988702833652,
+            0.12373802065849304
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.33456483483314514,
+          "component_rmse": [
+            0.013743412680923939,
+            0.011455078609287739,
+            0.10146423429250717
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.21716973185539246,
+          "component_rmse": [
+            0.007476383354514837,
+            0.007998309098184109,
+            0.06956826150417328
+          ]
+        }
+      },
+      "duplicate_current_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.3310622572898865,
+          "component_rmse": [
+            0.013067810796201229,
+            0.01123944390565157,
+            0.106290802359581
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.26515430212020874,
+          "component_rmse": [
+            0.010346982628107071,
+            0.007711407728493214,
+            0.10049762576818466
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.175007626414299,
+          "component_rmse": [
+            0.005905077327042818,
+            0.0064942967146635056,
+            0.05621259659528732
+          ]
+        }
+      },
+      "duplicate_current_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.31164297461509705,
+          "component_rmse": [
+            0.013219273649156094,
+            0.010002178139984608,
+            0.09963283687829971
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.23336215317249298,
+          "component_rmse": [
+            0.008899370208382607,
+            0.00703050522133708,
+            0.08748027682304382
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.18355868756771088,
+          "component_rmse": [
+            0.006092403084039688,
+            0.006803374737501144,
+            0.05977703258395195
+          ]
+        }
+      },
+      "history_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.3023461103439331,
+          "component_rmse": [
+            0.011322089470922947,
+            0.01025160402059555,
+            0.10201884061098099
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.27306392788887024,
+          "component_rmse": [
+            0.010415920056402683,
+            0.008789841085672379,
+            0.09633743017911911
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.1873321384191513,
+          "component_rmse": [
+            0.00626730639487505,
+            0.006830509752035141,
+            0.062238775193691254
+          ]
+        }
+      },
+      "history_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.306209534406662,
+          "component_rmse": [
+            0.011800818145275116,
+            0.010256859473884106,
+            0.10236765444278717
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.2745121121406555,
+          "component_rmse": [
+            0.010532106272876263,
+            0.008963331580162048,
+            0.0949353352189064
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.19335126876831055,
+          "component_rmse": [
+            0.0065807378850877285,
+            0.006954775657504797,
+            0.06476805359125137
+          ]
+        }
+      },
+      "immediate_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.37352487444877625,
+          "component_rmse": [
+            0.013849053531885147,
+            0.012549875304102898,
+            0.12847045063972473
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.3196941912174225,
+          "component_rmse": [
+            0.012051357887685299,
+            0.010226709768176079,
+            0.11453143507242203
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.21679507195949554,
+          "component_rmse": [
+            0.007021036930382252,
+            0.00846615619957447,
+            0.06530378013849258
+          ]
+        }
+      },
+      "immediate_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.3675336539745331,
+          "component_rmse": [
+            0.014003876596689224,
+            0.012324483133852482,
+            0.12392380833625793
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.3341716527938843,
+          "component_rmse": [
+            0.012224378995597363,
+            0.011303115636110306,
+            0.11519932001829147
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.2167031317949295,
+          "component_rmse": [
+            0.007213491480797529,
+            0.008268558420240879,
+            0.06692793220281601
+          ]
+        }
+      },
+      "state_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.3320797383785248,
+          "component_rmse": [
+            0.011203368194401264,
+            0.011713912710547447,
+            0.11490625143051147
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.27417469024658203,
+          "component_rmse": [
+            0.010168200358748436,
+            0.00902849156409502,
+            0.09646445512771606
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.18281392753124237,
+          "component_rmse": [
+            0.005981942173093557,
+            0.0069473497569561005,
+            0.057620637118816376
+          ]
+        }
+      },
+      "state_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.32999521493911743,
+          "component_rmse": [
+            0.011498662643134594,
+            0.011936763301491737,
+            0.10777083039283752
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.2537614405155182,
+          "component_rmse": [
+            0.010333027690649033,
+            0.00794494803994894,
+            0.08711829781532288
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.18625782430171967,
+          "component_rmse": [
+            0.006028267089277506,
+            0.007043745834380388,
+            0.059672895818948746
+          ]
+        }
+      }
+    },
+    "predictor_long": {
+      "contacts_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.2679431438446045,
+          "component_rmse": [
+            0.01107060257345438,
+            0.0083754388615489,
+            0.09085448086261749
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.17140591144561768,
+          "component_rmse": [
+            0.006185395177453756,
+            0.005874797701835632,
+            0.058736879378557205
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.13945141434669495,
+          "component_rmse": [
+            0.00468144565820694,
+            0.004708085674792528,
+            0.05095023661851883
+          ]
+        }
+      },
+      "contacts_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.25783300399780273,
+          "component_rmse": [
+            0.009834717959165573,
+            0.00912164431065321,
+            0.08056548237800598
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.20824874937534332,
+          "component_rmse": [
+            0.007675182539969683,
+            0.007222052197903395,
+            0.06912770867347717
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.13947178423404694,
+          "component_rmse": [
+            0.004638895858079195,
+            0.004832524340599775,
+            0.04976494237780571
+          ]
+        }
+      },
+      "duplicate_current_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.23996081948280334,
+          "component_rmse": [
+            0.00915865320712328,
+            0.008395234122872353,
+            0.0762442797422409
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.15748171508312225,
+          "component_rmse": [
+            0.005032099783420563,
+            0.006029064301401377,
+            0.04979633167386055
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.13068260252475739,
+          "component_rmse": [
+            0.004288355354219675,
+            0.004555182531476021,
+            0.046659309417009354
+          ]
+        }
+      },
+      "duplicate_current_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.25606217980384827,
+          "component_rmse": [
+            0.010143200866878033,
+            0.008373484946787357,
+            0.0859646201133728
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.18578632175922394,
+          "component_rmse": [
+            0.007531069219112396,
+            0.005446898750960827,
+            0.06798076629638672
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.1410290002822876,
+          "component_rmse": [
+            0.004868087824434042,
+            0.004633745178580284,
+            0.052139151841402054
+          ]
+        }
+      },
+      "history_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.25786566734313965,
+          "component_rmse": [
+            0.01006269734352827,
+            0.007994072511792183,
+            0.09272202104330063
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.16503934562206268,
+          "component_rmse": [
+            0.007461888249963522,
+            0.005628538783639669,
+            0.04343598335981369
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.13488472998142242,
+          "component_rmse": [
+            0.004389598034322262,
+            0.004690767265856266,
+            0.04851480573415756
+          ]
+        }
+      },
+      "history_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.24220772087574005,
+          "component_rmse": [
+            0.00937336590141058,
+            0.008084806613624096,
+            0.08102137595415115
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.199242502450943,
+          "component_rmse": [
+            0.006086281500756741,
+            0.006853856611996889,
+            0.07482408732175827
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.12832216918468475,
+          "component_rmse": [
+            0.004200311843305826,
+            0.004585289862006903,
+            0.044478122144937515
+          ]
+        }
+      },
+      "immediate_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.2646767795085907,
+          "component_rmse": [
+            0.00991165079176426,
+            0.009101534262299538,
+            0.08768913894891739
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.17795370519161224,
+          "component_rmse": [
+            0.005816388875246048,
+            0.005698841530829668,
+            0.0692986324429512
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.14153927564620972,
+          "component_rmse": [
+            0.005000690463930368,
+            0.004692636430263519,
+            0.051119156181812286
+          ]
+        }
+      },
+      "immediate_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.27124255895614624,
+          "component_rmse": [
+            0.010117868892848492,
+            0.00912525039166212,
+            0.09270286560058594
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.1980428248643875,
+          "component_rmse": [
+            0.007559959776699543,
+            0.006821497809141874,
+            0.06435833126306534
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.14081993699073792,
+          "component_rmse": [
+            0.004780773539096117,
+            0.004858262836933136,
+            0.049886807799339294
+          ]
+        }
+      },
+      "state_997101": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.2237148880958557,
+          "component_rmse": [
+            0.007383704651147127,
+            0.008138656616210938,
+            0.07524675875902176
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.19336546957492828,
+          "component_rmse": [
+            0.005719752982258797,
+            0.007739368826150894,
+            0.05889686942100525
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.12337461113929749,
+          "component_rmse": [
+            0.003965076524764299,
+            0.004401503596454859,
+            0.043308090418577194
+          ]
+        }
+      },
+      "state_997102": {
+        "known_failed_windows": {
+          "samples": 389,
+          "normalized_rmse": 0.21262924373149872,
+          "component_rmse": [
+            0.007318226620554924,
+            0.0074011292308568954,
+            0.07387198507785797
+          ]
+        },
+        "original_failed_turn": {
+          "samples": 25,
+          "normalized_rmse": 0.17494510114192963,
+          "component_rmse": [
+            0.006189202424138784,
+            0.006454747635871172,
+            0.0546463206410408
+          ]
+        },
+        "same_case_seed_successful_model_windows": {
+          "samples": 1858,
+          "normalized_rmse": 0.12688429653644562,
+          "component_rmse": [
+            0.004142746329307556,
+            0.004355632234364748,
+            0.046232543885707855
+          ]
+        }
+      }
+    }
+  },
+  "scope": "Post-hoc development diagnostics on fixed endpoints; failed cases selected by existing scorer. Overlapping failure/success windows are unions. No independent causal or policy improvement claim."
+}

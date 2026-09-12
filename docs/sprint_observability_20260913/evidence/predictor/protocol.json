@@ -1,0 +1,73 @@
+{
+  "protocol": {
+    "version": 1,
+    "architecture": [
+      387,
+      128,
+      128,
+      3
+    ],
+    "activation": "SiLU",
+    "arms": [
+      "immediate",
+      "state",
+      "contacts",
+      "history",
+      "duplicate_current"
+    ],
+    "seeds": [
+      997101,
+      997102
+    ],
+    "epochs": 40,
+    "batch_size": 4096,
+    "adam_lr": 0.001,
+    "weight_decay": 0,
+    "early_stopping": false,
+    "precision": "CUDA float32, TF32 disabled",
+    "stride": 4,
+    "history_taps": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "targets": [
+      "delta_com_vx_current_yaw",
+      "delta_com_vy_current_yaw",
+      "delta_world_vertical_angular_velocity"
+    ],
+    "horizon_s": 0.02,
+    "target_units": [
+      "m/s",
+      "m/s",
+      "rad/s"
+    ],
+    "normalization": "Train-only mean and std, each std floored at 1e-6",
+    "split": "Whole reset seeds across all policy and noise copies; train fresh seeds except seed%8==2 (validation). Exclude 927001 entirely from train/validation. Test development seeds 927000..927015 only.",
+    "subsets": [
+      "all",
+      "moving",
+      "transition"
+    ],
+    "transition": "First second after semantic held-key set changes, excluding initial idle",
+    "gate": {
+      "required_subsets": [
+        "moving",
+        "transition"
+      ],
+      "min_rmse_reduction": 0.1,
+      "max_component_regression": 0.02,
+      "learner_seeds": "both",
+      "bootstrap": "2000 paired reset-seed clusters, 95% percentile interval lower improvement > 0"
+    },
+    "scope": "Information diagnostic in native target physics, not causal proof of policy improvement or final acceptance",
+    "validation": "Fixed epoch 10/20/30/40 learning curves only; never choose endpoint by validation/test"
+  },
+  "created_unix": 1789230124.1420898,
+  "sources": {
+    "scripts/sprint_observability.py": "0e1259c0c4bf323d77f79a63d4e2d5ee263735c8dc78f301bee4f6da6efcbfdd",
+    "src/sim2sim/research/observability.py": "121d99c960403f24dcec7836fdbb5952447faae93940d8f881fe12f04155b945"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "steps": 450,
+  "seconds": 9,
+  "worlds": 16,
+  "variants": [
+    "solver",
+    "joint_fd"
+  ],
+  "policy_evaluation": false,
+  "physics": "Frozen GPU proxy with actual Jolt feet and rotor mapping; no game edits",
+  "targets": "Exact recorded float32 action tapes; verify home+action against native ctrl",
+  "initial_state": "Project native zero-velocity articulated reset; no later state import, no cold restore",
+  "metrics_at_s": [
+    0.02,
+    0.1,
+    0.2,
+    0.5,
+    1,
+    3,
+    6,
+    9
+  ],
+  "limitation": "Initial visible-state agreement does not establish equality of solver/contact internal state. Later divergence includes accumulated open-loop error, not a local contact error estimate.",
+  "sources": [
+    {
+      "case": "sprint_alternate",
+      "seed": 927000,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927000/attempt_01/trace.json",
+      "sha256": "983b33ba1cf4e10d6fa319c205564fd83e170adb33b67cbaac5fc514446b9af3"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927001,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927001/attempt_01/trace.json",
+      "sha256": "4ca77b82342197479d953bff63063e3b5b26063160065ae3d2019ce097a4985f"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927002,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927002/attempt_01/trace.json",
+      "sha256": "8f6069ca0dfc7dcbb5e0b100792f7a7445298493bea379a5ca63abe854d58f37"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927003,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927003/attempt_01/trace.json",
+      "sha256": "038ada5003a210cb96305faae899bc3fa1e7bd8c8ccd1543ecb5e8df5581803d"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927004,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927004/attempt_01/trace.json",
+      "sha256": "6fcdc9b5b9896a4c3d4a46bd40af9797c2a42c134fa7b9f993acb2344d3d0eb1"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927005,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927005/attempt_01/trace.json",
+      "sha256": "7dde1486d9960b3de303f22e7ec7def84d469535624ea0c2a29f2e211ac759fa"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927006,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927006/attempt_01/trace.json",
+      "sha256": "0a5823e421433182e3c52533d5b27c37c008edb59c5c751dc922626306a5d5b0"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927007,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927007/attempt_01/trace.json",
+      "sha256": "440459c56189d41f6bfad31dd44ce7ea46bf56965c7aa99dbe2333c8c07c95f7"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927008,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927008/attempt_01/trace.json",
+      "sha256": "ceae7feddd6825bfc9b00629e4ff43a611a48cc925945891ba94bc7601b8092b"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927009,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927009/attempt_01/trace.json",
+      "sha256": "e8457e015ff61a52beb95fe3d005a769df8f3b21b2e71daa9448383345991ce1"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927010,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927010/attempt_01/trace.json",
+      "sha256": "5795c164210efc3e2bb26d1af1a4d405b95fffbd592b8820d61e8335b7c74bb3"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927011,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927011/attempt_01/trace.json",
+      "sha256": "fb53a815b2a30758308c6b19ab36966c37f82a19a6fc4389a5ef6d7ee5b0b74a"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927012,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927012/attempt_01/trace.json",
+      "sha256": "e6c6766975a34131d7525d7439e6dc2e3c9eb3a2efd197059cf1847fcc693161"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927013,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927013/attempt_01/trace.json",
+      "sha256": "589fef704fcd41d549fd93ac3654d2e314707a3604b74825ba8bf14d61928dcb"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927014,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927014/attempt_01/trace.json",
+      "sha256": "f1fddba051c45a488d66583fd78dcdc20ae258f33e15ef5e15fd50a3377f994f"
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 927015,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/native_joint_fd/suite/sprint_alternate_927015/attempt_01/trace.json",
+      "sha256": "ffa2c275d8e708b0210bec9ffe7b714149e90a7b48528fbb159ec0018502e29b"
+    }
+  ],
+  "code": {
+    "results/sprint_observability_20260913/action_tape_probe.py": "a6689e3041dd545d8be3e902096183d0a75947926eb370216bc83d26ff63a4df",
+    "scripts/sprint_gpu_world.py": "9c66773e26b583bb20abf2d0c84fd7615ab477bc570a033530b545ef9fabd65b",
+    "scripts/sprint_gpu_proxy.py": "b267e971c49f18b54ab73b9172648a37c207cd54c54e85bf5a885a7e5f9333eb",
+    "src/sim2sim/research/kinematic_observer.py": "c9ecf5579ed5b9bfa41d05873520d0960f34683f0c31f1b4e43c62b6d1f4abef"
+  }
+}

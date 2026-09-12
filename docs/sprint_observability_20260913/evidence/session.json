@@ -1,0 +1,9 @@
+{
+  "base_commit": "32097ebded91d0772308701bce14d4f8fb66f521",
+  "limit_minutes": 90,
+  "reserve_minutes": 20,
+  "previous_turn": "progress",
+  "preledger_estimate_seconds": 300,
+  "created_unix": 1789229208.3186393,
+  "objective": "Identify observable information that predicts true Jolt transition failures; implement only an evidence-supported sprint improvement"
+}

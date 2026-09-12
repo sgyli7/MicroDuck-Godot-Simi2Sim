@@ -1,0 +1,816 @@
+{
+  "sealed_unix": 1789231621.119853,
+  "session": "results/sprint_observability_20260913",
+  "base_commit": "32097ebded91d0772308701bce14d4f8fb66f521",
+  "status": "research_completed_goal_incomplete",
+  "goal_complete": false,
+  "policy_promoted": false,
+  "new_package": false,
+  "current_sprint_baseline": {
+    "sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+    "sprint_pass": 127,
+    "sprint_total": 128,
+    "ordinary_pass": 128,
+    "ordinary_total": 128,
+    "regression_pass": 7,
+    "falls": 0
+  },
+  "final_seeds_unused": "928000\u2013928049",
+  "keyboard_revalidated": false,
+  "reproduction": {
+    "reproduced": true,
+    "results": [
+      {
+        "name": "original_0",
+        "task": {
+          "success": false,
+          "fell": false,
+          "first_fall_s": null,
+          "score": 0.0,
+          "sustained_mean_vx": 0.16785152209145832,
+          "sustained_p10_vx": 0.08460276694812847,
+          "max_tilt": 8.020882209238302,
+          "min_z": 0.11243602700513167,
+          "straight": [
+            {
+              "at": 1,
+              "heading_error_deg": 4.699398956330493,
+              "lateral_path_m": 0.026952730271803716,
+              "lateral_limit_m": 0.05,
+              "passed": true
+            }
+          ],
+          "turns": [
+            {
+              "at": 3,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.8430695502892434,
+              "sustained_reverse": false,
+              "passed": true
+            },
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.37672609036694155,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": [],
+          "actor_selection_passed": true,
+          "speed_gain_gate": "requires paired ordinary result"
+        },
+        "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_0/trace.json",
+        "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_0/case.json"
+      },
+      {
+        "name": "original_1",
+        "task": {
+          "success": false,
+          "fell": false,
+          "first_fall_s": null,
+          "score": 0.0,
+          "sustained_mean_vx": 0.16785152209145832,
+          "sustained_p10_vx": 0.08460276694812847,
+          "max_tilt": 8.020882209238302,
+          "min_z": 0.11243602700513167,
+          "straight": [
+            {
+              "at": 1,
+              "heading_error_deg": 4.699398956330493,
+              "lateral_path_m": 0.026952730271803716,
+              "lateral_limit_m": 0.05,
+              "passed": true
+            }
+          ],
+          "turns": [
+            {
+              "at": 3,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.8430695502892434,
+              "sustained_reverse": false,
+              "passed": true
+            },
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.37672609036694155,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": [],
+          "actor_selection_passed": true,
+          "speed_gain_gate": "requires paired ordinary result"
+        },
+        "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_1/trace.json",
+        "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_1/case.json"
+      },
+      {
+        "name": "original_2",
+        "task": {
+          "success": false,
+          "fell": false,
+          "first_fall_s": null,
+          "score": 0.0,
+          "sustained_mean_vx": 0.16785152209145832,
+          "sustained_p10_vx": 0.08460276694812847,
+          "max_tilt": 8.020882209238302,
+          "min_z": 0.11243602700513167,
+          "straight": [
+            {
+              "at": 1,
+              "heading_error_deg": 4.699398956330493,
+              "lateral_path_m": 0.026952730271803716,
+              "lateral_limit_m": 0.05,
+              "passed": true
+            }
+          ],
+          "turns": [
+            {
+              "at": 3,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.8430695502892434,
+              "sustained_reverse": false,
+              "passed": true
+            },
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.37672609036694155,
+              "sustained_reverse": false,
+              "passed": false
+            }
+          ],
+          "stops": [],
+          "actor_selection_passed": true,
+          "speed_gain_gate": "requires paired ordinary result"
+        },
+        "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_2/trace.json",
+        "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/original_2/case.json"
+      },
+      {
+        "name": "remove_idle",
+        "task": {
+          "success": true,
+          "fell": false,
+          "first_fall_s": null,
+          "score": 0.20021586210895406,
+          "sustained_mean_vx": 0.20021586210895406,
+          "sustained_p10_vx": 0.10148447963225399,
+          "max_tilt": 8.678749089506137,
+          "min_z": 0.11278615625114145,
+          "straight": [
+            {
+              "at": 0.0,
+              "heading_error_deg": 3.4442434399086412,
+              "lateral_path_m": 0.02293624757350858,
+              "lateral_limit_m": 0.05,
+              "passed": true
+            }
+          ],
+          "turns": [
+            {
+              "at": 2.0,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.8379737803835274,
+              "sustained_reverse": false,
+              "passed": true
+            },
+            {
+              "at": 5.0,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.7851557846523078,
+              "sustained_reverse": false,
+              "passed": true
+            }
+          ],
+          "stops": [],
+          "actor_selection_passed": true,
+          "speed_gain_gate": "requires paired ordinary result"
+        },
+        "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/remove_idle/trace.json",
+        "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/remove_idle/case.json"
+      },
+      {
+        "name": "remove_first_turn",
+        "task": {
+          "success": true,
+          "fell": false,
+          "first_fall_s": null,
+          "score": 0.22531129131092753,
+          "sustained_mean_vx": 0.22531129131092753,
+          "sustained_p10_vx": 0.12133375781778596,
+          "max_tilt": 8.507408995768852,
+          "min_z": 0.11250160474945023,
+          "straight": [
+            {
+              "at": 1,
+              "heading_error_deg": 4.699398956330493,
+              "lateral_path_m": 0.026952730271803716,
+              "lateral_limit_m": 0.05,
+              "passed": true
+            },
+            {
+              "at": 3,
+              "heading_error_deg": 4.706005635476569,
+              "lateral_path_m": 0.03782978927734986,
+              "lateral_limit_m": 0.06866542786165779,
+              "passed": true
+            }
+          ],
+          "turns": [
+            {
+              "at": 6,
+              "requested": 0.800000011920929,
+              "signed_yaw_rate": 0.7407525021199063,
+              "sustained_reverse": false,
+              "passed": true
+            }
+          ],
+          "stops": [],
+          "actor_selection_passed": true,
+          "speed_gain_gate": "requires paired ordinary result"
+        },
+        "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/remove_first_turn/trace.json",
+        "case": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_observability_20260913/reproduce/remove_first_turn/case.json"
+      }
+    ],
+    "original_prefix_max_abs": {
+      "obs": 0.0,
+      "action": 0.0,
+      "command": 0.0,
+      "ctrl": 0.0,
+      "last_action": 0.0
+    },
+    "scope": "Frozen nine-second turn-reversal failure; ablations diagnose prefix dependence, not policy improvements"
+  },
+  "diagnostic": {
+    "gpu_predictors": 20,
+    "fixed_epochs": [
+      40,
+      640
+    ],
+    "learner_seeds": [
+      997101,
+      997102
+    ],
+    "corpus_splits": {
+      "train": {
+        "episodes": 672,
+        "samples": 135996,
+        "reset_seeds": [
+          955208,
+          955209,
+          955211,
+          955216,
+          955217,
+          955219,
+          955224,
+          955225,
+          955227,
+          955232,
+          955233,
+          955235,
+          955240,
+          955241,
+          955243,
+          955248,
+          955249,
+          955251,
+          955256,
+          955257,
+          955259,
+          955264,
+          955265,
+          955267,
+          955272,
+          955273,
+          955275,
+          955280,
+          955281,
+          955283,
+          955288,
+          955289,
+          955291,
+          955296,
+          955297,
+          955299
+        ]
+      },
+      "validation": {
+        "episodes": 288,
+        "samples": 58284,
+        "reset_seeds": [
+          955210,
+          955218,
+          955226,
+          955234,
+          955242,
+          955250,
+          955258,
+          955266,
+          955274,
+          955282,
+          955290,
+          955298
+        ]
+      },
+      "test": {
+        "episodes": 896,
+        "samples": 181328,
+        "reset_seeds": [
+          927000,
+          927001,
+          927002,
+          927003,
+          927004,
+          927005,
+          927006,
+          927007,
+          927008,
+          927009,
+          927010,
+          927011,
+          927012,
+          927013,
+          927014,
+          927015
+        ]
+      }
+    },
+    "complete_information_gate": [],
+    "conclusion": "No policy architecture promoted. State improves prediction but does not pass the complete preregistered comparator gate; history/contact not supported by these diagnostics."
+  },
+  "action_tape": {
+    "results": {
+      "solver": {
+        "initial_obs_max_abs": 3.5527137118877254e-15,
+        "last_action_max_abs": 0.0,
+        "control_target_max_abs": 0.0,
+        "elapsed_s": 1.6437894359987695,
+        "metrics": {
+          "0.02": {
+            "body_position_m": {
+              "median": 4.8828703091067796e-06,
+              "max": 9.83004037932118e-06,
+              "original_seed_927001": 5.114544311878681e-06
+            },
+            "com_velocity_mps": {
+              "median": 0.0014411616472888166,
+              "max": 0.002148044144916637,
+              "original_seed_927001": 0.0017514512109734705
+            },
+            "joint_rms_rad": {
+              "median": 0.000563563639234052,
+              "max": 0.0007492934251143103,
+              "original_seed_927001": 0.0005353720403483265
+            },
+            "heading_deg": {
+              "median": 0.025013457319336165,
+              "max": 0.03796976864033169,
+              "original_seed_927001": 0.023634278276694797
+            }
+          },
+          "0.1": {
+            "body_position_m": {
+              "median": 0.0007910086577566272,
+              "max": 0.0010050402489404596,
+              "original_seed_927001": 0.0007934358166949227
+            },
+            "com_velocity_mps": {
+              "median": 0.04425154112037054,
+              "max": 0.04827157315133626,
+              "original_seed_927001": 0.04085084960356234
+            },
+            "joint_rms_rad": {
+              "median": 0.0028873917758350286,
+              "max": 0.004213441702911554,
+              "original_seed_927001": 0.001961555117352016
+            },
+            "heading_deg": {
+              "median": 0.06927199581017134,
+              "max": 0.13113725531911277,
+              "original_seed_927001": 0.10477194605792778
+            }
+          },
+          "0.2": {
+            "body_position_m": {
+              "median": 0.0014482238682803467,
+              "max": 0.0016369649641122734,
+              "original_seed_927001": 0.0013915737161226663
+            },
+            "com_velocity_mps": {
+              "median": 0.002477366878704678,
+              "max": 0.003757100187232439,
+              "original_seed_927001": 0.0029616594541970872
+            },
+            "joint_rms_rad": {
+              "median": 0.0025867403584593474,
+              "max": 0.0035306922961848286,
+              "original_seed_927001": 0.0018871776659290184
+            },
+            "heading_deg": {
+              "median": 0.06388872984383025,
+              "max": 0.1143971571635986,
+              "original_seed_927001": 0.03775698894180539
+            }
+          },
+          "0.5": {
+            "body_position_m": {
+              "median": 0.0009347916658474451,
+              "max": 0.0012130613047418109,
+              "original_seed_927001": 0.0008836700961039021
+            },
+            "com_velocity_mps": {
+              "median": 0.002029004928204715,
+              "max": 0.0027540676145661218,
+              "original_seed_927001": 0.0019890015566867846
+            },
+            "joint_rms_rad": {
+              "median": 0.004648144419677791,
+              "max": 0.006399075472097932,
+              "original_seed_927001": 0.004005508026059211
+            },
+            "heading_deg": {
+              "median": 0.1953854058920415,
+              "max": 0.44782589591334726,
+              "original_seed_927001": 0.15529739773955273
+            }
+          },
+          "1": {
+            "body_position_m": {
+              "median": 0.0006541718347811674,
+              "max": 0.0016348017314188259,
+              "original_seed_927001": 0.0005001238179407694
+            },
+            "com_velocity_mps": {
+              "median": 0.00206418008003501,
+              "max": 0.003529450240275371,
+              "original_seed_927001": 0.0019127653754180125
+            },
+            "joint_rms_rad": {
+              "median": 0.007980661307287302,
+              "max": 0.010312573785340104,
+              "original_seed_927001": 0.006376716668318671
+            },
+            "heading_deg": {
+              "median": 0.38560801470259853,
+              "max": 0.7309720732798084,
+              "original_seed_927001": 0.250215044987745
+            }
+          },
+          "3": {
+            "body_position_m": {
+              "median": 0.24587018979316203,
+              "max": 0.38917338539928575,
+              "original_seed_927001": 0.12545826610648697
+            },
+            "com_velocity_mps": {
+              "median": 0.3880327001115844,
+              "max": 0.46193809637826877,
+              "original_seed_927001": 0.46193809637826877
+            },
+            "joint_rms_rad": {
+              "median": 0.10983434442465653,
+              "max": 0.14508592121703023,
+              "original_seed_927001": 0.0965585431126977
+            },
+            "heading_deg": {
+              "median": 63.68286572610042,
+              "max": 122.8807680371392,
+              "original_seed_927001": 2.6841309735287116
+            }
+          },
+          "6": {
+            "body_position_m": {
+              "median": 0.5776143165723651,
+              "max": 0.7532946927985323,
+              "original_seed_927001": 0.5594520703498733
+            },
+            "com_velocity_mps": {
+              "median": 0.2713954588379864,
+              "max": 0.3984255260346737,
+              "original_seed_927001": 0.27057670608589784
+            },
+            "joint_rms_rad": {
+              "median": 0.12900635827698595,
+              "max": 0.15402242476070532,
+              "original_seed_927001": 0.13558264380711205
+            },
+            "heading_deg": {
+              "median": 80.31345594854719,
+              "max": 100.09469465301142,
+              "original_seed_927001": 87.41572405457468
+            }
+          },
+          "9": {
+            "body_position_m": {
+              "median": 0.9198854927961975,
+              "max": 1.2064923104914116,
+              "original_seed_927001": 0.7461280738015967
+            },
+            "com_velocity_mps": {
+              "median": 0.23296129620855277,
+              "max": 0.36300794034718503,
+              "original_seed_927001": 0.18075663912285259
+            },
+            "joint_rms_rad": {
+              "median": 0.130822910121919,
+              "max": 0.14992118157294845,
+              "original_seed_927001": 0.08335053334757128
+            },
+            "heading_deg": {
+              "median": 39.97596977742131,
+              "max": 134.67566802422544,
+              "original_seed_927001": 45.36254927259998
+            }
+          }
+        },
+        "minimum_body_height": 0.030573781579732895,
+        "scope": "CUDA replay of identical recorded actions; not closed-loop policy quality or local contact identification"
+      },
+      "joint_fd": {
+        "initial_obs_max_abs": 3.5527137118877254e-15,
+        "last_action_max_abs": 0.0,
+        "control_target_max_abs": 0.0,
+        "elapsed_s": 1.5715559069940355,
+        "metrics": {
+          "0.02": {
+            "body_position_m": {
+              "median": 7.825129465060135e-07,
+              "max": 1.4759187832581642e-06,
+              "original_seed_927001": 4.593187353376024e-07
+            },
+            "com_velocity_mps": {
+              "median": 0.0003677804817492753,
+              "max": 0.0004074497705366865,
+              "original_seed_927001": 0.0003510186754607086
+            },
+            "joint_rms_rad": {
+              "median": 1.9277525611943115e-05,
+              "max": 3.0369099301628688e-05,
+              "original_seed_927001": 1.8538408174487798e-05
+            },
+            "heading_deg": {
+              "median": 0.0001452786240207026,
+              "max": 0.0007451850180252193,
+              "original_seed_927001": 0.0004161174102942654
+            }
+          },
+          "0.1": {
+            "body_position_m": {
+              "median": 0.0008092215155610294,
+              "max": 0.0010217679614736989,
+              "original_seed_927001": 0.0008202818272652016
+            },
+            "com_velocity_mps": {
+              "median": 0.04476951962922977,
+              "max": 0.04835246612793191,
+              "original_seed_927001": 0.04076519938942595
+            },
+            "joint_rms_rad": {
+              "median": 0.0027512060358265604,
+              "max": 0.00425852174349468,
+              "original_seed_927001": 0.002174598538193955
+            },
+            "heading_deg": {
+              "median": 0.07122687337276734,
+              "max": 0.12527695301124184,
+              "original_seed_927001": 0.11058038161678893
+            }
+          },
+          "0.2": {
+            "body_position_m": {
+              "median": 0.0014519295052868035,
+              "max": 0.0016341003908193741,
+              "original_seed_927001": 0.0013969435079193135
+            },
+            "com_velocity_mps": {
+              "median": 0.0023656174853951273,
+              "max": 0.0036199279966644565,
+              "original_seed_927001": 0.002954371739824093
+            },
+            "joint_rms_rad": {
+              "median": 0.002558440989955786,
+              "max": 0.0035717005974506433,
+              "original_seed_927001": 0.00191235224112312
+            },
+            "heading_deg": {
+              "median": 0.057933456593360244,
+              "max": 0.11513481759395999,
+              "original_seed_927001": 0.04822147908049961
+            }
+          },
+          "0.5": {
+            "body_position_m": {
+              "median": 0.0009402041122506134,
+              "max": 0.0012063318144784662,
+              "original_seed_927001": 0.0008908087345601368
+            },
+            "com_velocity_mps": {
+              "median": 0.0007791385228260092,
+              "max": 0.0015400590766483026,
+              "original_seed_927001": 0.0002978447498107487
+            },
+            "joint_rms_rad": {
+              "median": 0.004620464421254531,
+              "max": 0.006366509916158777,
+              "original_seed_927001": 0.003907396488126324
+            },
+            "heading_deg": {
+              "median": 0.19882599662248182,
+              "max": 0.44300719745390327,
+              "original_seed_927001": 0.14033458770217042
+            }
+          },
+          "1": {
+            "body_position_m": {
+              "median": 0.0006362494152496017,
+              "max": 0.001572439574861167,
+              "original_seed_927001": 0.0005083204214721584
+            },
+            "com_velocity_mps": {
+              "median": 0.0008583806392673018,
+              "max": 0.0029705314092571566,
+              "original_seed_927001": 0.00042226729046845315
+            },
+            "joint_rms_rad": {
+              "median": 0.00766983052032979,
+              "max": 0.009891042984978043,
+              "original_seed_927001": 0.006117019934720008
+            },
+            "heading_deg": {
+              "median": 0.3816681694902647,
+              "max": 0.7332670168409327,
+              "original_seed_927001": 0.24009569284554796
+            }
+          },
+          "3": {
+            "body_position_m": {
+              "median": 0.2529481672360231,
+              "max": 0.380581178265871,
+              "original_seed_927001": 0.11324938511237724
+            },
+            "com_velocity_mps": {
+              "median": 0.39757858281766423,
+              "max": 0.470429562397212,
+              "original_seed_927001": 0.470429562397212
+            },
+            "joint_rms_rad": {
+              "median": 0.11643952294665766,
+              "max": 0.15727514688483116,
+              "original_seed_927001": 0.11137313649238831
+            },
+            "heading_deg": {
+              "median": 95.53493406827448,
+              "max": 134.46825674388097,
+              "original_seed_927001": 2.162605049263218
+            }
+          },
+          "6": {
+            "body_position_m": {
+              "median": 0.5869956650823904,
+              "max": 0.7072938645544211,
+              "original_seed_927001": 0.5417849435352998
+            },
+            "com_velocity_mps": {
+              "median": 0.25251519787904925,
+              "max": 0.39233054101282255,
+              "original_seed_927001": 0.2824950593813959
+            },
+            "joint_rms_rad": {
+              "median": 0.130030134051699,
+              "max": 0.15173674340019924,
+              "original_seed_927001": 0.13575298358945428
+            },
+            "heading_deg": {
+              "median": 84.2730279718506,
+              "max": 126.53202145435138,
+              "original_seed_927001": 79.4804717485564
+            }
+          },
+          "9": {
+            "body_position_m": {
+              "median": 0.9249537936215446,
+              "max": 1.177992400671527,
+              "original_seed_927001": 0.7415013811271856
+            },
+            "com_velocity_mps": {
+              "median": 0.22008033917067088,
+              "max": 0.378179421696301,
+              "original_seed_927001": 0.1850702385947293
+            },
+            "joint_rms_rad": {
+              "median": 0.1296927165760821,
+              "max": 0.15058914939706888,
+              "original_seed_927001": 0.0822925732128138
+            },
+            "heading_deg": {
+              "median": 82.108564774906,
+              "max": 177.5132311829914,
+              "original_seed_927001": 45.21091224283652
+            }
+          }
+        },
+        "minimum_body_height": 0.03004436194896698,
+        "scope": "CUDA replay of identical recorded actions; not closed-loop policy quality or local contact identification"
+      }
+    },
+    "completed": true,
+    "game_physics_changed": false,
+    "new_native_sampling": false,
+    "policy_changes": false
+  },
+  "resources": {
+    "started": 12,
+    "finished": 12,
+    "passed": true,
+    "job_results": [
+      {
+        "actor": "short_turn_reproduction:0c6e4f484a",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "extract_existing_trajectories:10e2c92626",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "gpu_information_ablation:f0f7c2d852",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "information_test_analysis:c816bf68cb",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "gpu_extended_information_control:8f432409c5",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "extended_test_analysis:01c218fa10",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "failure_window_analysis:df281c24a0",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "information_plots:697e05fb2b",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "regression_checks:0ee6c016f0",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "gpu_recorded_action_tapes:450b2c025e",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "regression_checks_clean_fixture_env:cacccf1c8b",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "archive_evidence:22e4cbf8a8",
+        "returncode": 0,
+        "reason": "completed"
+      }
+    ],
+    "all_godot_processes": []
+  },
+  "tests": {
+    "tests": 295,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "successful": true
+  },
+  "failed_test_attempt_preserved": "evidence/closeout/tests_attempt_01.json",
+  "defaults_unchanged": true,
+  "active_budget": {
+    "limit_seconds": 5400.0,
+    "used_seconds": 2712.8010327009833,
+    "remaining_seconds": 2687.1989672990167,
+    "actors": [],
+    "unconfirmed_gaps": 0
+  },
+  "active_minutes": 45.21335054501639,
+  "accounting_note": "Includes explicit 300-second preledger preparation estimate; subsequent confirmed work/process union. Final checksum/Git bookkeeping after this seal excluded.",
+  "retained_artifacts": {
+    "count": 73,
+    "logical_bytes": 669834957
+  },
+  "next_step": "Use fixed action tapes to decompose short-horizon proxy errors by landing/support/foot switching before choosing a policy or memory change."
+}
