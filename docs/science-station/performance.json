@@ -78,5 +78,144 @@
     "simulation_to_wall_ratio": 0.9984475304813208,
     "recording": false,
     "simulation_seconds": 18.0000000000007
+  },
+  "release_capture": {
+    "service": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "median_fps": 30.0,
+      "min_fps": 30.0,
+      "simulation_to_wall_ratio": 0.9996908077043531,
+      "recording": true,
+      "capture_hz": 15,
+      "render_cap_hz": 30,
+      "shadow_atlas": 8192,
+      "shadow_filter": "high",
+      "saved_frames": 240,
+      "dropped_capture_frames": 0,
+      "source": "results/science-station/publication/service/hub.json",
+      "source_sha256": "92a1d3b7e9ae9a2e69e65177c6a9dd533422570ba8d237471c14c689c46cbcc7"
+    },
+    "samples": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "median_fps": 25.0,
+      "min_fps": 20.0,
+      "simulation_to_wall_ratio": 0.9942076850029031,
+      "recording": true,
+      "capture_hz": 15,
+      "render_cap_hz": 30,
+      "shadow_atlas": 8192,
+      "shadow_filter": "high",
+      "saved_frames": 714,
+      "dropped_capture_frames": 0,
+      "source": "results/science-station/publication/samples/hub.json",
+      "source_sha256": "b3701bd09bab9a3c6d0821fb573d81f83748a018dd13c1c0bcb232abb36a9841"
+    },
+    "towers": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "median_fps": 30.0,
+      "min_fps": 29.0,
+      "simulation_to_wall_ratio": 0.9998083455370897,
+      "recording": true,
+      "capture_hz": 15,
+      "render_cap_hz": 30,
+      "shadow_atlas": 8192,
+      "shadow_filter": "high",
+      "saved_frames": 434,
+      "dropped_capture_frames": 1,
+      "source": "results/science-station/publication/towers/hub.json",
+      "source_sha256": "1e2b6e04c73b164c5663b296cf4b96f467f4bdf7c4cd8d2683b89a48f0c2fb16"
+    },
+    "hills": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "median_fps": 30.0,
+      "min_fps": 30.0,
+      "simulation_to_wall_ratio": 1.0001625904826303,
+      "recording": true,
+      "capture_hz": 15,
+      "render_cap_hz": 30,
+      "shadow_atlas": 8192,
+      "shadow_filter": "high",
+      "saved_frames": 270,
+      "dropped_capture_frames": 0,
+      "source": "results/science-station/publication/hills/hub.json",
+      "source_sha256": "30c1e25a9c79c67c89e83924364d03d861d051155483336097bbeae04292e6bb"
+    }
+  },
+  "release_runtime": {
+    "microduck": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "median_fps": 30.0,
+      "min_fps": 30.0,
+      "simulation_to_wall_ratio": 0.9997887248369474,
+      "recording": false,
+      "render_cap_hz": 30,
+      "shadow_atlas": 8192,
+      "shadow_filter": "high",
+      "simulation_seconds": 23.0049999999997,
+      "source": "results/science-station/publication/performance-microduck/hub.json",
+      "source_sha256": "d74cca96c4e012d191d916e82ae683e815fb76bfd9e95be1e8f01fcdfdc5883b"
+    },
+    "roller": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "median_fps": 30.0,
+      "min_fps": 30.0,
+      "simulation_to_wall_ratio": 0.9995120639934663,
+      "recording": false,
+      "render_cap_hz": 30,
+      "shadow_atlas": 8192,
+      "shadow_filter": "high",
+      "simulation_seconds": 18.0000000000007,
+      "source": "results/science-station/publication/performance-roller/hub.json",
+      "source_sha256": "9e47c2ca8d7a4757426d2aba9a1638e2f7d5709ce43276f3a3a93e255aa98ff5"
+    },
+    "sai": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "median_fps": 30.0,
+      "min_fps": 29.0,
+      "simulation_to_wall_ratio": 1.000094874327793,
+      "recording": false,
+      "render_cap_hz": 30,
+      "shadow_atlas": 8192,
+      "shadow_filter": "high",
+      "simulation_seconds": 47.2410000000435,
+      "source": "results/science-station/publication/performance-sai/hub.json",
+      "source_sha256": "5601e0e6a05b141d7b7b21fcad48bf2ec84093386d45f3f9b1b2768691481d94",
+      "grab_complete": true
+    }
+  },
+  "world_source": {
+    "commit": "5e81df674c89aeb8bf3b0e15b8d169ea8a547791",
+    "files": {
+      "godot/science_station/ground.gdshader": "2f5b5918c8f9eabc07e0184b6795b3cda6d6f053eab427c727fcacf0752f29b6",
+      "godot/science_station/icon.svg": "b7eb7abfc685d087a947129fdd1c0afde7a78dfbe4036ee9dda8d2672d19a59e",
+      "godot/science_station/landscape.gd": "2aff6f28ade7d62eea02755e443d720821f1366fb95a7be596c09e7fee71b023",
+      "godot/science_station/layout.gd": "e5715860cd214b6880dffc2d8b54b6c82bbc2b2b5296d1510f2a660ab251e0c3",
+      "godot/science_station/ridge_observatory.gd": "eb4bdd2150fd20c24a4e296051aedc723ef27c4c99b0abb57950dff38350e17f",
+      "godot/science_station/sky.gdshader": "1c177ba043667d0399c24b74c1d032b7201ab517d780600c557b8c741880a42e",
+      "godot/science_station/station.gd": "de5510906817780a8e94434397d63f912340c9e2f94c072a5c7d9c4ac8e9d83f",
+      "godot/science_station/station_details.gd": "111928643d92c221b8e1d0873d7fb23a813db17d511cc56fbabcd3a820061129",
+      "godot/science_station/tower_details.gd": "da52d79b68ee04f0a32031e9a16e35536f9de5bb8a3782fd548740f5dc0151c0"
+    }
   }
 }

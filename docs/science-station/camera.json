@@ -6,5 +6,9 @@
     "native_no_fall": true,
     "full_orbit": true
   },
-  "method": "Replayed right mouse, wheel, seven Tab presses; native viewport captures inspected at tower base"
+  "orbit_radians": -6.289090916353802,
+  "source": "results/science-station/publication/camera-full-orbit",
+  "method": "Native right-mouse and wheel events, seven Tab presses; final six camera transforms and actual orbit arc checked. Motion fixture calibrated for the native window/viewport scale; pass is based on measured camera travel. Every camera inside the playable boundary remains above the entire terrain height bound (0.14 m) plus 0.015 m clearance.",
+  "playable_camera_min_y": 0.273783534765244,
+  "terrain_max_y": 0.14
 }

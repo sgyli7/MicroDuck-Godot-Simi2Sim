@@ -1,0 +1,54 @@
+{
+  "pv": [
+    {
+      "source": "results/science-station/publication/service",
+      "area": "service",
+      "start": 3.9549,
+      "duration": 4
+    },
+    {
+      "source": "results/science-station/publication/samples",
+      "area": "samples",
+      "start": 11.0353,
+      "duration": 4
+    },
+    {
+      "source": "results/science-station/publication/towers",
+      "area": "towers",
+      "start": 15.9471,
+      "duration": 4
+    },
+    {
+      "source": "results/science-station/publication/hills",
+      "area": "hills",
+      "start": 5.9485,
+      "duration": 3
+    }
+  ],
+  "film": [
+    {
+      "source": "results/science-station/publication/service",
+      "area": "service",
+      "start": 2.9551,
+      "duration": 10.0
+    },
+    {
+      "source": "results/science-station/publication/samples",
+      "area": "samples",
+      "start": 8.0125,
+      "duration": 38.26
+    },
+    {
+      "source": "results/science-station/publication/towers",
+      "area": "towers",
+      "start": 10.9494,
+      "duration": 12.999
+    },
+    {
+      "source": "results/science-station/publication/hills",
+      "area": "hills",
+      "start": 2.9534,
+      "duration": 9.995
+    }
+  ]
+}

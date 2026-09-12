@@ -1,6 +1,14 @@
 # Robot Godot Sim2Sim
 
-将 MuJoCo 训练的机器人控制策略迁移到 **Godot / Jolt**，在墨比斯风格的「小小维修站」中运行真实刚体物理。支持 MicroDuck、MD 轮滑版和 Sai Robot 001，三种机器人可在同一游戏窗口中动态切换。
+将 MuJoCo 训练的机器人控制策略迁移到 **Godot / Jolt**，在墨比斯风格的「小小维修站」和「风口科学站」中运行真实刚体物理。支持 MicroDuck、MD 轮滑版和 Sai Robot 001，三种机器人可在同一游戏窗口中动态切换。
+
+**风口科学站 · Sai Robot 001**
+
+![Sai 在风口科学站的服务小院、样本站、观测塔与岩丘步道活动；四个固定远机位，原速实录](docs/science-station/media/sai-windpass-15s.gif)
+
+[15 秒 1080p PV](docs/science-station/media/sai-windpass-15s.mp4) · [原速观赏短片](docs/science-station/media/sai-windpass-film.mp4) · [启动、六张实机截图与验收](docs/science-station.md)
+
+`./run-workshop.sh --scene science_station --robot sai` 进入新场景。48 × 40 米科学站、两座观测塔、三处物理互动区和起伏丘陵，保留 20 × 12 米大型设备泊位。桌面入口「风口科学站」提供新旧场景选择。
 
 ![MicroDuck：场景行走、刚体交互、前滚与轮足动作](docs/media/microduck-sim2sim.gif)
 
