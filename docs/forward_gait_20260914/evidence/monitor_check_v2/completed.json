@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "same_state_read_max_abs": 0.0,
+  "separate_run_max_abs": 10.21014404296875,
+  "repeatability_note": "Separate Warp worlds are not assumed bit deterministic. Both training arms use the same enabled monitor. This check establishes read purity on the same state, not cross-run trajectory equivalence.",
+  "rows": 250,
+  "worlds": 8,
+  "contact_fraction": 0.5957499742507935,
+  "air_time_max": 0.2899998724460602,
+  "clearance_range": [
+    -0.003123784437775612,
+    0.019528720527887344
+  ],
+  "lifted_floor_check": true
+}

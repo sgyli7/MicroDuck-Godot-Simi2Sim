@@ -1,0 +1,18 @@
+{
+  "walk": {
+    "walk_heading_gain": 6.0,
+    "walk_heading_scope": "all",
+    "walk_idle_delay_s": 0.5,
+    "walk_path_gain": 4.0,
+    "walk_heading_limit": 0.6,
+    "walk_reanchor_on_start": true,
+    "twist_limits": {
+      "vmax_ang": 0.8,
+      "sprint_vmax_x": 0.45,
+      "sprint_vmax_ang": 0.8,
+      "vmax_x": 0.25,
+      "sprint_yaw_reversal_s": 0.2
+    },
+    "walk_path_lookahead": 0.2
+  }
+}

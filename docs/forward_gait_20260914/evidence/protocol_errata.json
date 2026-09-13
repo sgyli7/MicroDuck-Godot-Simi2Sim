@@ -1,0 +1,8 @@
+{
+  "recorded_after_evaluation": true,
+  "original_protocol_retained": true,
+  "field": "ablation_signal",
+  "issue": "The retained text still names protected/all-replay from the withdrawn teacher-scope hypothesis. This wording was not updated when the primary hypothesis and single_changed_variable became support/off.",
+  "interpretation": "No retrospective significance or threshold claims. The explicit 32/32 native success/no-fall gate, fixed four endpoints, two seeds and matched off/support settings remained unchanged. Every endpoint failed that gate, so the wording defect cannot justify any promotion.",
+  "accepted": false
+}

@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "resume_iterations": [
+    6
+  ],
+  "initialization_preserved": true,
+  "empty_mask_handled": true,
+  "not_optimization_candidates": true
+}

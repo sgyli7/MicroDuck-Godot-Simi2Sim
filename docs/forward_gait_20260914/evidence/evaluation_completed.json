@@ -1,0 +1,115 @@
+[
+  {
+    "label": "a402",
+    "domain": "gpu",
+    "passes": 23,
+    "count": 32,
+    "falls": 0
+  },
+  {
+    "label": "off_952410",
+    "domain": "gpu",
+    "passes": 28,
+    "count": 32,
+    "falls": 0
+  },
+  {
+    "label": "support_952410",
+    "domain": "gpu",
+    "passes": 28,
+    "count": 32,
+    "falls": 0
+  },
+  {
+    "label": "off_952411",
+    "domain": "gpu",
+    "passes": 29,
+    "count": 32,
+    "falls": 0
+  },
+  {
+    "label": "support_952411",
+    "domain": "gpu",
+    "passes": 26,
+    "count": 32,
+    "falls": 0
+  },
+  {
+    "label": "default030",
+    "domain": "native",
+    "passes": 32,
+    "count": 32,
+    "falls": 0,
+    "long_speed": [
+      0.23120257379065773,
+      0.2327440349195618,
+      0.23112322984948808,
+      0.2319108918581232
+    ]
+  },
+  {
+    "label": "a402",
+    "domain": "native",
+    "passes": 10,
+    "count": 32,
+    "falls": 0,
+    "long_speed": [
+      0.33315617685321824,
+      0.337165287467134,
+      0.32778532524834897,
+      0.3286503525804276
+    ]
+  },
+  {
+    "label": "off_952410",
+    "domain": "native",
+    "passes": 11,
+    "count": 32,
+    "falls": 0,
+    "long_speed": [
+      0.326305062624318,
+      0.30904027707318615,
+      0.3240469054212632,
+      0.33181928050794496
+    ]
+  },
+  {
+    "label": "support_952410",
+    "domain": "native",
+    "passes": 1,
+    "count": 32,
+    "falls": 12,
+    "long_speed": [
+      0.34273673208582667,
+      0.031441105808722655,
+      0.34334064444012113,
+      0.3477124972943742
+    ]
+  },
+  {
+    "label": "off_952411",
+    "domain": "native",
+    "passes": 8,
+    "count": 32,
+    "falls": 0,
+    "long_speed": [
+      0.31590812453089767,
+      0.3122594024591331,
+      0.31062738632834375,
+      0.31956721548437356
+    ]
+  },
+  {
+    "label": "support_952411",
+    "domain": "native",
+    "passes": 0,
+    "count": 32,
+    "falls": 10,
+    "long_speed": [
+      0.34771502288789935,
+      0.3368846548139299,
+      0.02930761998033037,
+      0.3461048444069351
+    ]
+  }
+]

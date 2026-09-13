@@ -1,0 +1,35 @@
+{
+  "hypothesis": "Teacher KL to slow S05 on steady sprint inhibits useful forward gait discovery.",
+  "single_changed_variable": "all replay teacher frames vs temporally protected entry/exit/ordinary/idle frames",
+  "initial": "a402 trained residual and critic weights; fresh Adam/RNG/episodes",
+  "speed": 0.45,
+  "physical_changes": false,
+  "training_seeds": [
+    952410,
+    952411
+  ],
+  "samples_per_arm": 8388608,
+  "iterations": 256,
+  "envs": 512,
+  "steps": 64,
+  "teacher_weight": 0.02,
+  "residual_bound": 0.2,
+  "std": 0.02,
+  "learning_devices": [
+    "CUDA Warp physics",
+    "CUDA PPO"
+  ],
+  "ordinary": "frozen S05",
+  "candidate_selection": "Only fixed final endpoint, no checkpoint selection",
+  "native_development_seeds": [
+    929100,
+    929101,
+    929102,
+    929103
+  ],
+  "final_seeds_used": false,
+  "success_gate": "32/32 native courses, no falls, sustained long forward >=0.35 m/s; paired ordinary retains >=95%; geometric step metrics reported separately, no flight requirement",
+  "ablation_signal": "protected must improve >=5% sustained long speed without new failed cases, or strictly improve success without speed regression versus same-seed all-replay control",
+  "budget_seconds": 7200,
+  "reserve_seconds": 1200
+}

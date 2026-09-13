@@ -1,0 +1,40 @@
+{
+  "hypothesis": "Lack of a supported swing objective inhibits useful forward gait discovery",
+  "single_changed_variable": "weight of contact/airtime/clearance/progress objective: off vs fixed 1.5",
+  "initial": "a402 trained residual and critic weights; fresh Adam/RNG/episodes",
+  "speed": 0.45,
+  "physical_changes": false,
+  "training_seeds": [
+    952410,
+    952411
+  ],
+  "samples_per_arm": 8388608,
+  "iterations": 256,
+  "envs": 512,
+  "steps": 64,
+  "teacher_weight": 0.02,
+  "residual_bound": 0.2,
+  "std": 0.02,
+  "learning_devices": [
+    "CUDA Warp physics",
+    "CUDA PPO"
+  ],
+  "ordinary": "frozen S05",
+  "candidate_selection": "Only fixed final endpoint, no checkpoint selection",
+  "native_development_seeds": [
+    929100,
+    929101,
+    929102,
+    929103
+  ],
+  "final_seeds_used": false,
+  "success_gate": "32/32 native courses, no falls, sustained long forward >=0.35 m/s; paired ordinary retains >=95%; geometric step metrics reported separately, no flight requirement",
+  "ablation_signal": "protected must improve >=5% sustained long speed without new failed cases, or strictly improve success without speed regression versus same-seed all-replay control",
+  "budget_seconds": 7200,
+  "reserve_seconds": 1200,
+  "teacher_data": "actual ordinary-only a402 replay 11488 rows",
+  "teacher_data_sha256": "aaf3bef6d7e05afed2a2bd261be1e8acf1d86745480922470f40bf5d0d5041ba",
+  "swing_definition": "Single stance foot, other foot airborne 0.125<t<0.300s and lowest foot hull >5mm, tilt<.35rad and height>.08m, multiplied by clamp(actual_forward/requested_forward,0,1), sprint only. Both arms measure identical sensor data.",
+  "retracted_hypothesis": "Actual a402 teacher excludes all sprint commands; general sampler description was misleading. No full scope training was launched. 64env/5iter scope smoke used an older replay and is excluded.",
+  "swing_weight_rationale": "Upstream airtime/linear tracking weights 3/2; local linear maximum 1, so 1.5 preserves this nominal ratio only. Other rewards and gates differ; not full recipe equivalence."
+}

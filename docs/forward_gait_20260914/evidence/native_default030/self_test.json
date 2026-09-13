@@ -1,0 +1,85 @@
+{
+  "models": [
+    {
+      "boundary_count": 8.0,
+      "cases": 264,
+      "max_abs": 1.77635683940025e-15,
+      "real_count": 0.0,
+      "skill": "standing"
+    },
+    {
+      "boundary_count": 8.0,
+      "cases": 264,
+      "max_abs": 4.44089209850063e-16,
+      "real_count": 0.0,
+      "skill": "sitstand"
+    },
+    {
+      "boundary_count": 8.0,
+      "cases": 264,
+      "max_abs": 4.44089209850063e-16,
+      "real_count": 0.0,
+      "skill": "ground_pick"
+    },
+    {
+      "boundary_count": 8.0,
+      "cases": 264,
+      "max_abs": 4.44089209850063e-16,
+      "real_count": 0.0,
+      "skill": "kick_left"
+    },
+    {
+      "boundary_count": 35.0,
+      "cases": 291,
+      "max_abs": 1.77635683940025e-15,
+      "real_count": 0.0,
+      "skill": "kick_right"
+    },
+    {
+      "boundary_count": 5.0,
+      "cases": 261,
+      "max_abs": 4.44089209850063e-16,
+      "real_count": 0.0,
+      "skill": "roulade"
+    },
+    {
+      "boundary_count": 8.0,
+      "cases": 264,
+      "max_abs": 1.4210854715202e-14,
+      "real_count": 0.0,
+      "skill": "roller"
+    },
+    {
+      "boundary_count": 8.0,
+      "cases": 264,
+      "max_abs": 8.88178419700125e-16,
+      "real_count": 0.0,
+      "skill": "roller_crouch"
+    },
+    {
+      "boundary_count": 8.0,
+      "cases": 136,
+      "max_abs": 2.22044604925031e-16,
+      "real_count": 0.0,
+      "skill": "walking"
+    },
+    {
+      "boundary_count": 8.0,
+      "cases": 136,
+      "max_abs": 2.22044604925031e-16,
+      "real_count": 0.0,
+      "skill": "sprint"
+    }
+  ],
+  "passed": true,
+  "runtime": "1.29.0",
+  "tolerance": 1e-05,
+  "ui_font": {
+    "face_index": 2.0,
+    "family": "Noto Sans CJK SC",
+    "license": "res://runtime_assets/fonts/LICENSE.txt",
+    "path": "res://runtime_assets/fonts/ui-font.bin",
+    "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+    "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+  }
+}

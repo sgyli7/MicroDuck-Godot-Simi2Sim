@@ -1,0 +1,8 @@
+{
+  "failed_attempt": "archive_runtime.py",
+  "cause": "Preflight contains 135 script/scene/JSON paths; suite runtime_inputs contains 162 including binaries/assets. Exact dictionary equality was too strict.",
+  "changed_preflight_files": 0,
+  "additional_verified_suite_inputs": 27,
+  "no_files_removed_in_failed_attempt": true,
+  "retry": "archive_runtime_v2.py verifies every preflight path, then archives/checks the full suite input set"
+}

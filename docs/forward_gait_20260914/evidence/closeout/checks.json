@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "unittest": {
+    "patterns": [
+      "test_sprint*.py",
+      "test_walking_retention.py",
+      "test_support_swing.py",
+      "test_gait_landing_summary.py"
+    ],
+    "count": 34,
+    "failed": 0
+  },
+  "py_compile": [
+    "scripts/sprint_gpu_train.py",
+    "scripts/sprint_gpu_world.py",
+    "scripts/evaluate_sprint_gpu.py",
+    "scripts/evaluate_sprint_native.py",
+    "scripts/summarize_forward_gait.py",
+    "scripts/verify_sprint_swing_monitor.py"
+  ],
+  "real_native_action_audit": "outcome_audit.json",
+  "postcheck": "postchecks.json"
+}

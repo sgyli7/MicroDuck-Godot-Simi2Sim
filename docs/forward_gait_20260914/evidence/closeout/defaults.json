@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "files": {
+    "src/sim2sim/assets/microduck_sprint_v1/Sprint_Godot.onnx": {
+      "expected": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+      "actual": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+      "passed": true
+    },
+    "src/sim2sim/assets/microduck_sprint_v1/Sprint_Godot.manifest.json": {
+      "expected": "b8dd9e699fd0b3ddf3e406ded9f554b4a8b92c774605e0608a0a8015df142ccd",
+      "actual": "b8dd9e699fd0b3ddf3e406ded9f554b4a8b92c774605e0608a0a8015df142ccd",
+      "passed": true
+    },
+    "src/sim2sim/assets/microduck_sprint_v1/Walk_Godot.onnx": {
+      "expected": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+      "actual": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+      "passed": true
+    },
+    "src/sim2sim/assets/microduck_sprint_v1/README.md": {
+      "expected": "6e4111ac819a120cee9a4a8356a17f0b46cef38b32c4c91505c452e83b338ac4",
+      "actual": "6e4111ac819a120cee9a4a8356a17f0b46cef38b32c4c91505c452e83b338ac4",
+      "passed": true
+    },
+    "src/sim2sim/assets/microduck_sprint_v1/Walk_Godot.manifest.json": {
+      "expected": "432d0e12a703bfbd5acdecc3ef86c445149a77eb2862f2efcdf8496511139e60",
+      "actual": "432d0e12a703bfbd5acdecc3ef86c445149a77eb2862f2efcdf8496511139e60",
+      "passed": true
+    },
+    "src/sim2sim/assets/microduck_sprint_v1/profile.json": {
+      "expected": "b57a3d9b078f10d379c6acb2c873d5abee5199043fae6511925fd53b214ce205",
+      "actual": "b57a3d9b078f10d379c6acb2c873d5abee5199043fae6511925fd53b214ce205",
+      "passed": true
+    },
+    "src/sim2sim/assets/microduck_sprint_v1/self_test.json": {
+      "expected": "bf4953ed731c681eb8c83c0cadd27bdedc6dbb1b5d3bf22fbd22bbae497620d3",
+      "actual": "bf4953ed731c681eb8c83c0cadd27bdedc6dbb1b5d3bf22fbd22bbae497620d3",
+      "passed": true
+    },
+    "desktop/robot.gd": {
+      "expected": "b7bf52a819b7d510400a355fa28f9d6110acebb6ea620488d096adc8670d93d0",
+      "actual": "b7bf52a819b7d510400a355fa28f9d6110acebb6ea620488d096adc8670d93d0",
+      "passed": true
+    },
+    "desktop/physics_server.gd": {
+      "expected": "4ee85783d70e33c474987c19509e29d7180f324d521f907f748a40b388a385ad",
+      "actual": "4ee85783d70e33c474987c19509e29d7180f324d521f907f748a40b388a385ad",
+      "passed": true
+    },
+    "desktop/standalone/motion_control.gd": {
+      "expected": "ebcf63caf0182ad548b092f0deb750d38abcc3f7f6e02ae021aac70dbcce4034",
+      "actual": "ebcf63caf0182ad548b092f0deb750d38abcc3f7f6e02ae021aac70dbcce4034",
+      "passed": true
+    },
+    "desktop/standalone/policy_contract.gd": {
+      "expected": "1dde3f41f25a053cb1d4d9383ac2ea094ebd60becb3a91adc12728cc3251cc15",
+      "actual": "1dde3f41f25a053cb1d4d9383ac2ea094ebd60becb3a91adc12728cc3251cc15",
+      "passed": true
+    },
+    "desktop/standalone/play_brain.gd": {
+      "expected": "ba80a10bff8d6b36fe38d1b35067b2ee7443b5dbed1e3794b7e0a48c34c7e9c6",
+      "actual": "ba80a10bff8d6b36fe38d1b35067b2ee7443b5dbed1e3794b7e0a48c34c7e9c6",
+      "passed": true
+    },
+    "desktop/generated/microduck_ball_stand_fix/robot_spec.json": {
+      "expected": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+      "actual": "c0553f0fed271ced99c607b050d091bc9c26d17116b1cb3d0dca8721c04f3ecc",
+      "passed": true
+    },
+    "desktop/generated/microduck_ball_stand_fix/robot.tscn": {
+      "expected": "d21abf70e85ae9919c7ccba084f61b6c9ebd611cbae1de4a8296d92c1925a7b8",
+      "actual": "d21abf70e85ae9919c7ccba084f61b6c9ebd611cbae1de4a8296d92c1925a7b8",
+      "passed": true
+    }
+  },
+  "scope": "Tracked default sprint bundle equals HEAD; listed desktop physics/control core equals start-of-round frozen source. No assertion about unrelated agents' UI changes."
+}

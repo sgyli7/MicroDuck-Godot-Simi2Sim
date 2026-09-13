@@ -1,0 +1,102 @@
+{
+  "unix": 1789322294.3835144,
+  "started": 9,
+  "finished": 9,
+  "missing_terminal": [],
+  "cleanup_remaining": {},
+  "live_owned_pids": [],
+  "live_owned_groups": [],
+  "live_session_marker_processes": [],
+  "all_godot_processes": [
+    {
+      "pid": 4015891,
+      "state": "R",
+      "ppid": 4015771,
+      "pgrp": 4015771,
+      "session": 4015771,
+      "start_ticks": 35023890,
+      "comm": "godot",
+      "args": "/home/ethan/.local/bin/godot --path /home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/terrain-20260914/runtime res://hub/main.tscn --disable-vsync --max-fps 30 --headless --fixed-fps 30 -- --port=56933 "
+    }
+  ],
+  "docker": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.ID}}\t{{.Names}}\t{{.Image}}"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "gpu": {
+    "command": [
+      "nvidia-smi",
+      "--query-gpu=name,utilization.gpu,memory.used",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "NVIDIA GB10, 13 %, [N/A]",
+    "stderr": ""
+  },
+  "gpu_apps": {
+    "command": [
+      "nvidia-smi",
+      "--query-compute-apps=pid,process_name,used_gpu_memory",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 217 MiB",
+    "stderr": ""
+  },
+  "job_results": [
+    {
+      "actor": "smoke_protected:e3b32788ea",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "smoke_swing:604926c351",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "monitor_check:4ad022d7aa",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "monitor_check_v2:eb05c128e6",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "gpu_training_pair:5df406b04a",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "frozen_evaluation:bbd416fc7f",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "postchecks:a57cbd2a60",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "archive_runtime:be8cdf6a55",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "archive_runtime_v2:b82c3ae3c0",
+      "returncode": 0,
+      "reason": "completed"
+    }
+  ],
+  "passed": true,
+  "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+}

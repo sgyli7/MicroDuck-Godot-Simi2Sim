@@ -1,0 +1,12 @@
+{
+  "status": {
+    "limit_seconds": 7200.0,
+    "used_seconds": 3700.954231818032,
+    "remaining_seconds": 3499.045768181968,
+    "actors": [],
+    "unconfirmed_gaps": 0
+  },
+  "unix": 1789322294.4220726,
+  "budget_note": "Self-imposed two-hour bound for this research turn; not a claim that the earlier user eight-hour goal completed.",
+  "accounting_cutoff": "Before final Git commit/push transport; initial 600 seconds is explicitly estimated as noted in ledger."
+}

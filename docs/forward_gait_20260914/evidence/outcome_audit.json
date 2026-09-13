@@ -1,0 +1,302 @@
+{
+  "passed": true,
+  "results": {
+    "default030": {
+      "real_action_parity": {
+        "walking": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        },
+        "sprint": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        }
+      },
+      "initial_gpu_native_obs_max_abs": null,
+      "failed_cases": {},
+      "failure_types": {},
+      "falls": [],
+      "actor_sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+      "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+    },
+    "a402": {
+      "real_action_parity": {
+        "walking": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        },
+        "sprint": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        }
+      },
+      "initial_gpu_native_obs_max_abs": 3.552713678800501e-15,
+      "failed_cases": {
+        "sprint_alternate": 4,
+        "sprint_left": 4,
+        "sprint_long": 1,
+        "sprint_repeat": 4,
+        "sprint_right": 4,
+        "sprint_turn_release": 4,
+        "sprint_w_first": 1
+      },
+      "failure_types": {
+        "straight": 21,
+        "turns": 10,
+        "stops": 4
+      },
+      "falls": [],
+      "actor_sha256": "a402791e30e8ec9ffba5a288a2ebc377e43e7b6925b49986a3c523c686665770",
+      "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+    },
+    "off_952410": {
+      "real_action_parity": {
+        "walking": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        },
+        "sprint": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        }
+      },
+      "initial_gpu_native_obs_max_abs": 3.552713678800501e-15,
+      "failed_cases": {
+        "sprint_alternate": 4,
+        "sprint_left": 4,
+        "sprint_long": 1,
+        "sprint_repeat": 2,
+        "sprint_right": 4,
+        "sprint_shift_first": 1,
+        "sprint_turn_release": 4,
+        "sprint_w_first": 1
+      },
+      "failure_types": {
+        "turns": 12,
+        "straight": 10,
+        "stops": 2
+      },
+      "falls": [],
+      "actor_sha256": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+      "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+    },
+    "off_952411": {
+      "real_action_parity": {
+        "walking": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        },
+        "sprint": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        }
+      },
+      "initial_gpu_native_obs_max_abs": 3.552713678800501e-15,
+      "failed_cases": {
+        "sprint_alternate": 4,
+        "sprint_left": 4,
+        "sprint_long": 2,
+        "sprint_repeat": 4,
+        "sprint_right": 4,
+        "sprint_shift_first": 1,
+        "sprint_turn_release": 4,
+        "sprint_w_first": 1
+      },
+      "failure_types": {
+        "straight": 18,
+        "turns": 10,
+        "stops": 4
+      },
+      "falls": [],
+      "actor_sha256": "3513a641eb0784c9d5ef8bbfdd15cf0d3ddd1d5d07100c4b6068fb7b0b123f80",
+      "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+    },
+    "support_952410": {
+      "real_action_parity": {
+        "walking": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        },
+        "sprint": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        }
+      },
+      "initial_gpu_native_obs_max_abs": 3.552713678800501e-15,
+      "failed_cases": {
+        "sprint_alternate": 4,
+        "sprint_left": 4,
+        "sprint_long": 4,
+        "sprint_repeat": 3,
+        "sprint_right": 4,
+        "sprint_shift_first": 4,
+        "sprint_turn_release": 4,
+        "sprint_w_first": 4
+      },
+      "failure_types": {
+        "straight": 29,
+        "turns": 15,
+        "stops": 21
+      },
+      "falls": [
+        {
+          "case": "sprint_alternate",
+          "seed": 929101,
+          "first_fall_s": 4.44
+        },
+        {
+          "case": "sprint_alternate",
+          "seed": 929102,
+          "first_fall_s": 5.34
+        },
+        {
+          "case": "sprint_alternate",
+          "seed": 929103,
+          "first_fall_s": 4.9
+        },
+        {
+          "case": "sprint_left",
+          "seed": 929101,
+          "first_fall_s": 4.44
+        },
+        {
+          "case": "sprint_left",
+          "seed": 929102,
+          "first_fall_s": 5.34
+        },
+        {
+          "case": "sprint_left",
+          "seed": 929103,
+          "first_fall_s": 4.9
+        },
+        {
+          "case": "sprint_long",
+          "seed": 929101,
+          "first_fall_s": 4.02
+        },
+        {
+          "case": "sprint_repeat",
+          "seed": 929101,
+          "first_fall_s": 4.02
+        },
+        {
+          "case": "sprint_shift_first",
+          "seed": 929101,
+          "first_fall_s": 4.02
+        },
+        {
+          "case": "sprint_turn_release",
+          "seed": 929101,
+          "first_fall_s": 4.44
+        },
+        {
+          "case": "sprint_turn_release",
+          "seed": 929102,
+          "first_fall_s": 5.34
+        },
+        {
+          "case": "sprint_turn_release",
+          "seed": 929103,
+          "first_fall_s": 4.9
+        }
+      ],
+      "actor_sha256": "99e9f13e6a878b077bc439697b1aec78e3eefb17487a469732a5665e591bd71c",
+      "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+    },
+    "support_952411": {
+      "real_action_parity": {
+        "walking": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        },
+        "sprint": {
+          "rows": 512,
+          "max_abs": 0.0,
+          "passed": true
+        }
+      },
+      "initial_gpu_native_obs_max_abs": 3.552713678800501e-15,
+      "failed_cases": {
+        "sprint_alternate": 4,
+        "sprint_left": 4,
+        "sprint_long": 4,
+        "sprint_repeat": 4,
+        "sprint_right": 4,
+        "sprint_shift_first": 4,
+        "sprint_turn_release": 4,
+        "sprint_w_first": 4
+      },
+      "failure_types": {
+        "straight": 30,
+        "turns": 14,
+        "stops": 24
+      },
+      "falls": [
+        {
+          "case": "sprint_alternate",
+          "seed": 929101,
+          "first_fall_s": 4.82
+        },
+        {
+          "case": "sprint_alternate",
+          "seed": 929102,
+          "first_fall_s": 3.74
+        },
+        {
+          "case": "sprint_left",
+          "seed": 929101,
+          "first_fall_s": 4.82
+        },
+        {
+          "case": "sprint_left",
+          "seed": 929102,
+          "first_fall_s": 3.74
+        },
+        {
+          "case": "sprint_long",
+          "seed": 929102,
+          "first_fall_s": 3.74
+        },
+        {
+          "case": "sprint_repeat",
+          "seed": 929102,
+          "first_fall_s": 3.74
+        },
+        {
+          "case": "sprint_right",
+          "seed": 929102,
+          "first_fall_s": 3.68
+        },
+        {
+          "case": "sprint_shift_first",
+          "seed": 929102,
+          "first_fall_s": 3.74
+        },
+        {
+          "case": "sprint_turn_release",
+          "seed": 929101,
+          "first_fall_s": 4.82
+        },
+        {
+          "case": "sprint_turn_release",
+          "seed": 929102,
+          "first_fall_s": 3.74
+        }
+      ],
+      "actor_sha256": "73f39e4305bd77c5f8c779b2667c6fc6f27500e46d904ec487899567613e2da0",
+      "ordinary_sha256": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+    }
+  },
+  "scope": "Real native observation/action samples: at most 16 equally spaced rows per skill per episode, after casting both actions to float32. Gate failure counts overlap and include post-fall failures; repeated-prefix falls are not independent failure modes. Initial actor observation comparison does not establish full solver/contact-state equivalence."
+}

@@ -120,15 +120,10 @@ def main():
  files.append(Path(__file__).resolve().parents[1]/'src/sim2sim/research/support_swing.py')
  config=dict(velocity_observer=a.velocity_observer,course_names=[name for name,_ in courses],critic_program_divisor=course_count-1,source=str(source),template=str(template),template_sha256=hashlib.sha256(template.read_bytes()).hexdigest(),source_sha256=anchor.sha256,controller=a.controller,teacher_retention=retention.audit if retention else None,teacher_weight=a.teacher_weight if retention else 0.,constraints=a.constraints,constraint_probability_schedule='0.05 to0.25 over128 iterations, EMA .95' if a.constraints=='cat' else 'zero',variant='residual',std=.02,bound=.2,feet=a.feet,cuda_graphs=a.cuda_graphs,iterations=a.iterations,envs=a.envs,steps=a.steps,seed=a.seed,control=str(control),control_sha256=hashlib.sha256(control.read_bytes()).hexdigest(),code_sha256={str(f):hashlib.sha256(f.read_bytes()).hexdigest() for f in files},device=torch.cuda.get_device_name(),collection_device='cuda',learner_device='cuda',ordinary_controller='shared learned actor' if a.controller=='shared' else 'frozen S05',actor_mask='all phases' if a.controller=='shared' else 'actual sprint selection only',reward='command_tracking_cat_table1_v1' if a.objective=='tracking' else 'native_progress_v1',gamma=.99,lam=.95,epochs=4,minibatch=4096,actor_lr=1e-4,critic_lr=3e-4,target_kl=.008,critic_warmup=2,reset='uniform yaw and joint noise +/- .015 rad, clipped joint limits',task_termination='finite keyboard episode ends after final stop; no continuing-task bootstrap',game_physics_changed=False,foot_hulls=world.feet,inertia=world.inertia,torch=torch.__version__,cuda=torch.version.cuda,started_unix=time.time())
  config.update(initialization=initialization,gradient_audit=a.gradient_audit,swing_objective=a.swing_objective,monitor_swing=a.monitor_swing,swing_weight=1.5 if a.swing_objective=='support' else 0.)
- resumed=torch.load(a.resume,map_location='cuda',weights_only=False) if a.resume else None
- if resumed is not None:
-  # Warm-start provenance belongs to the experiment, not this invocation.
-  # --resume restores it without reapplying the older warm-start weights.
-  config['initialization']=resumed['config'].get('initialization')
  atomic_json(a.output/'config.json',config)
  initial_iteration=0
  if a.resume:
-  old=resumed
+  old=torch.load(a.resume,map_location='cuda',weights_only=False)
   for key in ['source_sha256','template_sha256','variant','std','bound','feet','cuda_graphs','envs','steps','seed','control_sha256','code_sha256','reward','constraints','controller','teacher_retention','teacher_weight','course_names','velocity_observer','initialization','gradient_audit','swing_objective','monitor_swing','swing_weight']:
    if config[key]!=old['config'][key]:raise ValueError('Resume changed '+key)
   policy.load_state_dict(old['policy']);critic.load_state_dict(old['critic']);ao.load_state_dict(old['actor_optimizer']);co.load_state_dict(old['critic_optimizer']);initial_iteration=old['iteration']
@@ -212,7 +207,7 @@ def main():
    if a.gradient_audit:
     with torch.no_grad():
      increment=policy.delta(flat['obs'][flat['mask']][::8]).abs().flatten()
-     rec['residual']=dict(abs_p95=float(torch.quantile(increment,.95)) if increment.numel() else None,bound_fraction=float((increment>=.19).float().mean()) if increment.numel() else None,sampled_actions=increment.numel())
+     rec['residual']=dict(abs_p95=float(torch.quantile(increment,.95)),bound_fraction=float((increment>=.19).float().mean()))
     rec['gradient_audit']=gradient_audit
    if retention:rec['teacher_kl']=sum(teacher_losses)/max(1,len(teacher_losses))
    if constraint_returns:rec.update(constraint_fraction=(cost>0).float().mean((0,1)).tolist(),constraint_probability=float(probability.mean()),constraint_scale=constraint_returns.scale.tolist())

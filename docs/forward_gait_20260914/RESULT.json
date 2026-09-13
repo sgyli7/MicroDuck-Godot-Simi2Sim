@@ -1,0 +1,1126 @@
+{
+  "status": "research_completed_candidates_rejected",
+  "forward_running_goal_complete": false,
+  "accepted": false,
+  "default_changed": false,
+  "game_physics_changed": false,
+  "base_commit": "b51298157fc6e06cc427f945ff4a7ba5f98ab9b2",
+  "session": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914",
+  "comparison": {
+    "a402": {
+      "passes": 10,
+      "count": 32,
+      "falls": 0,
+      "errors": 0,
+      "long_speed_mean": 0.3316892855372822,
+      "gait": [
+        {
+          "seed": 929100,
+          "net_forward_speed_mps": 0.3289920535045092,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08499442939075919,
+          "double_contact_fraction": 0.0851063829787234,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.1138894868595015,
+          "pitch_std_deg": 2.4710126505242744,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.5381727158948686,
+              "median_same_foot_stride": 0.16998885878151837,
+              "median_cycle_s": 0.5199999999999001
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5469336670838548,
+              "median_same_foot_stride": 0.16967416656584222,
+              "median_cycle_s": 0.5199999999999001
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461539937,
+          "landing_events_per_second": 3.884711779448534,
+          "individual_foot_landings_per_second": 3.884711779448534,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929101,
+          "net_forward_speed_mps": 0.3314051927672388,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08486152527160762,
+          "double_contact_fraction": 0.09261576971214018,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.086024951110633,
+          "pitch_std_deg": 2.4770791758897115,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.5444305381727159,
+              "median_same_foot_stride": 0.1703860493428082,
+              "median_cycle_s": 0.5199999999999849
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5481852315394243,
+              "median_same_foot_stride": 0.16898627462693083,
+              "median_cycle_s": 0.519999999999945
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461538494,
+          "landing_events_per_second": 3.884711779448534,
+          "individual_foot_landings_per_second": 3.884711779448534,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929102,
+          "net_forward_speed_mps": 0.3235400457391592,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08220274598247101,
+          "double_contact_fraction": 0.08635794743429287,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.081311328195413,
+          "pitch_std_deg": 2.415148204593452,
+          "feet": {
+            "ankle_left": {
+              "landings": 32,
+              "duty_factor": 0.5394242803504381,
+              "median_same_foot_stride": 0.1645225627269653,
+              "median_cycle_s": 0.5199999999999001
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5469336670838548,
+              "median_same_foot_stride": 0.16412678096066113,
+              "median_cycle_s": 0.5199999999999001
+            }
+          },
+          "alternating_landing_fraction": 0.9838709677419355,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461539937,
+          "landing_events_per_second": 3.9473684210525426,
+          "individual_foot_landings_per_second": 3.9473684210525426,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929103,
+          "net_forward_speed_mps": 0.3247891716691756,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08443808835182676,
+          "double_contact_fraction": 0.09386733416770963,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.02480897446639,
+          "pitch_std_deg": 2.4107886060062143,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.5406758448060075,
+              "median_same_foot_stride": 0.16792119961353358,
+              "median_cycle_s": 0.5199999999999001
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5531914893617021,
+              "median_same_foot_stride": 0.16961169698451184,
+              "median_cycle_s": 0.5199999999999001
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461539937,
+          "landing_events_per_second": 3.884711779448534,
+          "individual_foot_landings_per_second": 3.884711779448534,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        }
+      ],
+      "net_speed_mean": 0.3271816159200207,
+      "step_length_mean": 0.08412419724916614,
+      "valid_gait_windows": 4,
+      "max_negative_speed_fraction": 0.0,
+      "gpu": {
+        "passes": 23,
+        "count": 32,
+        "falls": 0,
+        "long_speed_mean": 0.36185112800070407
+      },
+      "input_parity": {
+        "frames": 26400,
+        "requested_max_abs": 4.996003610813204e-16,
+        "selection_errors": 0,
+        "passed": true
+      }
+    },
+    "default030": {
+      "passes": 32,
+      "count": 32,
+      "falls": 0,
+      "errors": 0,
+      "long_speed_mean": 0.2317451826044577,
+      "gait": [
+        {
+          "seed": 929100,
+          "net_forward_speed_mps": 0.2303571456411156,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.05514231346889531,
+          "double_contact_fraction": 0.12015018773466833,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 3.2641692331066854,
+          "pitch_std_deg": 1.4299184367656248,
+          "feet": {
+            "ankle_left": {
+              "landings": 34,
+              "duty_factor": 0.5757196495619524,
+              "median_same_foot_stride": 0.11022912595758871,
+              "median_cycle_s": 0.47999999999999066
+            },
+            "ankle_right": {
+              "landings": 33,
+              "duty_factor": 0.5444305381727159,
+              "median_same_foot_stride": 0.11036799822387433,
+              "median_cycle_s": 0.47999999999998977
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 4.166666666666663,
+          "landing_events_per_second": 4.197994987468577,
+          "individual_foot_landings_per_second": 4.197994987468577,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929101,
+          "net_forward_speed_mps": 0.23083550238771483,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.05547060925457892,
+          "double_contact_fraction": 0.1113892365456821,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 3.2441841954269943,
+          "pitch_std_deg": 1.425370166472914,
+          "feet": {
+            "ankle_left": {
+              "landings": 34,
+              "duty_factor": 0.5732165206508135,
+              "median_same_foot_stride": 0.11082546854200404,
+              "median_cycle_s": 0.4800000000000004
+            },
+            "ankle_right": {
+              "landings": 33,
+              "duty_factor": 0.5381727158948686,
+              "median_same_foot_stride": 0.11102764272490084,
+              "median_cycle_s": 0.4800000000000004
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 4.166666666666663,
+          "landing_events_per_second": 4.197994987468577,
+          "individual_foot_landings_per_second": 4.197994987468577,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929102,
+          "net_forward_speed_mps": 0.23098830632696649,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.05490056817687783,
+          "double_contact_fraction": 0.11764705882352941,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 3.243838055695952,
+          "pitch_std_deg": 1.460066785297895,
+          "feet": {
+            "ankle_left": {
+              "landings": 34,
+              "duty_factor": 0.5694618272841051,
+              "median_same_foot_stride": 0.11042084405248564,
+              "median_cycle_s": 0.47999999999999066
+            },
+            "ankle_right": {
+              "landings": 33,
+              "duty_factor": 0.5481852315394243,
+              "median_same_foot_stride": 0.10813494383825695,
+              "median_cycle_s": 0.47999999999999554
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 4.166666666666663,
+          "landing_events_per_second": 4.197994987468577,
+          "individual_foot_landings_per_second": 4.197994987468577,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929103,
+          "net_forward_speed_mps": 0.23043620426308473,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.05513380481097885,
+          "double_contact_fraction": 0.11514392991239049,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 3.2578623557415853,
+          "pitch_std_deg": 1.4183864632706527,
+          "feet": {
+            "ankle_left": {
+              "landings": 34,
+              "duty_factor": 0.5769712140175219,
+              "median_same_foot_stride": 0.11096329860018073,
+              "median_cycle_s": 0.47999999999999066
+            },
+            "ankle_right": {
+              "landings": 33,
+              "duty_factor": 0.5381727158948686,
+              "median_same_foot_stride": 0.11007136825644492,
+              "median_cycle_s": 0.4799999999999902
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 4.166666666666663,
+          "landing_events_per_second": 4.197994987468577,
+          "individual_foot_landings_per_second": 4.197994987468577,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        }
+      ],
+      "net_speed_mean": 0.2306542896547204,
+      "step_length_mean": 0.055161823927832726,
+      "valid_gait_windows": 4,
+      "max_negative_speed_fraction": 0.0
+    },
+    "off_952410": {
+      "passes": 11,
+      "count": 32,
+      "falls": 0,
+      "errors": 0,
+      "long_speed_mean": 0.32280288140667807,
+      "gait": [
+        {
+          "seed": 929100,
+          "net_forward_speed_mps": 0.3206766196037058,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.0833723264974352,
+          "double_contact_fraction": 0.08886107634543179,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.510674647864381,
+          "pitch_std_deg": 2.5612199109051623,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.5469336670838548,
+              "median_same_foot_stride": 0.16657731162420286,
+              "median_cycle_s": 0.5100000000000007
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.541927409261577,
+              "median_same_foot_stride": 0.1668496605834746,
+              "median_cycle_s": 0.5199999999999001
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461538494,
+          "landing_events_per_second": 3.884711779448534,
+          "individual_foot_landings_per_second": 3.884711779448534,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929101,
+          "net_forward_speed_mps": 0.2753431763999614,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.07413566907787256,
+          "double_contact_fraction": 0.09136420525657071,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.238971322678242,
+          "pitch_std_deg": 2.391937455202361,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.5444305381727159,
+              "median_same_foot_stride": 0.14937390449894794,
+              "median_cycle_s": 0.5199999999999947
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5469336670838548,
+              "median_same_foot_stride": 0.14526990590544364,
+              "median_cycle_s": 0.5199999999999947
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461538494,
+          "landing_events_per_second": 3.884711779448534,
+          "individual_foot_landings_per_second": 3.884711779448534,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929102,
+          "net_forward_speed_mps": 0.3196976156278497,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08166219144558651,
+          "double_contact_fraction": 0.08635794743429287,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.420180897313284,
+          "pitch_std_deg": 2.4923831398295158,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.5394242803504381,
+              "median_same_foot_stride": 0.1664368263937699,
+              "median_cycle_s": 0.5199999999999001
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5469336670838548,
+              "median_same_foot_stride": 0.16008074541153294,
+              "median_cycle_s": 0.5199999999999898
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461538494,
+          "landing_events_per_second": 3.884711779448534,
+          "individual_foot_landings_per_second": 3.884711779448534,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929103,
+          "net_forward_speed_mps": 0.32549625041147673,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08410158640184706,
+          "double_contact_fraction": 0.08760951188986232,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.594743055437629,
+          "pitch_std_deg": 2.584271469646321,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.541927409261577,
+              "median_same_foot_stride": 0.16679992941527766,
+              "median_cycle_s": 0.5200000000000555
+            },
+            "ankle_right": {
+              "landings": 30,
+              "duty_factor": 0.5456821026282853,
+              "median_same_foot_stride": 0.1690479962282896,
+              "median_cycle_s": 0.5199999999999907
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.846153846153836,
+          "landing_events_per_second": 3.8220551378445253,
+          "individual_foot_landings_per_second": 3.8220551378445253,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        }
+      ],
+      "net_speed_mean": 0.3103034155107484,
+      "step_length_mean": 0.08081794335568533,
+      "valid_gait_windows": 4,
+      "max_negative_speed_fraction": 0.0,
+      "gpu": {
+        "passes": 28,
+        "count": 32,
+        "falls": 0,
+        "long_speed_mean": 0.3748056899309332
+      },
+      "input_parity": {
+        "frames": 26400,
+        "requested_max_abs": 4.996003610813204e-16,
+        "selection_errors": 0,
+        "passed": true
+      }
+    },
+    "off_952411": {
+      "passes": 8,
+      "count": 32,
+      "falls": 0,
+      "errors": 0,
+      "long_speed_mean": 0.314590532200687,
+      "gait": [
+        {
+          "seed": 929100,
+          "net_forward_speed_mps": 0.31034418640494243,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.07940425863221034,
+          "double_contact_fraction": 0.08635794743429287,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.815792961933179,
+          "pitch_std_deg": 2.281538354802908,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.5381727158948686,
+              "median_same_foot_stride": 0.160609959802268,
+              "median_cycle_s": 0.5099999999999998
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5481852315394243,
+              "median_same_foot_stride": 0.1557968981906903,
+              "median_cycle_s": 0.5199999999998504
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461539937,
+          "landing_events_per_second": 3.884711779448534,
+          "individual_foot_landings_per_second": 3.884711779448534,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929101,
+          "net_forward_speed_mps": 0.3028640077336486,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.07657408085836559,
+          "double_contact_fraction": 0.08635794743429287,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.712792862274167,
+          "pitch_std_deg": 2.219793699124909,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.5394242803504381,
+              "median_same_foot_stride": 0.15366687541744917,
+              "median_cycle_s": 0.5199999999999001
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5469336670838548,
+              "median_same_foot_stride": 0.15241859018454484,
+              "median_cycle_s": 0.5199999999998504
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461538494,
+          "landing_events_per_second": 3.884711779448534,
+          "individual_foot_landings_per_second": 3.884711779448534,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929102,
+          "net_forward_speed_mps": 0.3040372054580046,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.07659868307961748,
+          "double_contact_fraction": 0.08760951188986232,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.730273991312951,
+          "pitch_std_deg": 2.2521961900386085,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.541927409261577,
+              "median_same_foot_stride": 0.15493090457332626,
+              "median_cycle_s": 0.5000000000001013
+            },
+            "ankle_right": {
+              "landings": 32,
+              "duty_factor": 0.5456821026282853,
+              "median_same_foot_stride": 0.14935400637742213,
+              "median_cycle_s": 0.5000000000001013
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461538756,
+          "landing_events_per_second": 3.9473684210525426,
+          "individual_foot_landings_per_second": 3.9473684210525426,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929103,
+          "net_forward_speed_mps": 0.3140558410734949,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.07964186684852675,
+          "double_contact_fraction": 0.08760951188986232,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.812952721386107,
+          "pitch_std_deg": 2.310499796705961,
+          "feet": {
+            "ankle_left": {
+              "landings": 31,
+              "duty_factor": 0.5519399249061326,
+              "median_same_foot_stride": 0.15837115309217364,
+              "median_cycle_s": 0.5000000000000906
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5356695869837297,
+              "median_same_foot_stride": 0.16007426484647558,
+              "median_cycle_s": 0.5199999999999001
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461539937,
+          "landing_events_per_second": 3.884711779448534,
+          "individual_foot_landings_per_second": 3.884711779448534,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        }
+      ],
+      "net_speed_mean": 0.3078253101675226,
+      "step_length_mean": 0.07805472235468004,
+      "valid_gait_windows": 4,
+      "max_negative_speed_fraction": 0.0,
+      "gpu": {
+        "passes": 29,
+        "count": 32,
+        "falls": 0,
+        "long_speed_mean": 0.36643532106965326
+      },
+      "input_parity": {
+        "frames": 26400,
+        "requested_max_abs": 4.996003610813204e-16,
+        "selection_errors": 0,
+        "passed": true
+      }
+    },
+    "support_952410": {
+      "passes": 1,
+      "count": 32,
+      "falls": 12,
+      "errors": 0,
+      "long_speed_mean": 0.26630774490726117,
+      "gait": [
+        {
+          "seed": 929100,
+          "net_forward_speed_mps": 0.3395299994729581,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.09185144083164509,
+          "double_contact_fraction": 0.07259073842302878,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.12942583368047,
+          "pitch_std_deg": 2.712050242903494,
+          "feet": {
+            "ankle_left": {
+              "landings": 29,
+              "duty_factor": 0.5081351689612015,
+              "median_same_foot_stride": 0.18278961102827918,
+              "median_cycle_s": 0.5399999999999947
+            },
+            "ankle_right": {
+              "landings": 30,
+              "duty_factor": 0.5644555694618273,
+              "median_same_foot_stride": 0.18370288166329019,
+              "median_cycle_s": 0.5399999999999903
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461523515,
+          "landing_events_per_second": 3.696741854636508,
+          "individual_foot_landings_per_second": 3.696741854636508,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929101,
+          "net_forward_speed_mps": 0.0026596168091852805,
+          "negative_speed_fraction": 0.011264080100125156,
+          "step_length_estimate_m": 0.0034448509771725644,
+          "double_contact_fraction": 0.0,
+          "no_foot_contact_fraction": 0.9311639549436797,
+          "pitch_mean_deg": -61.835967097303296,
+          "pitch_std_deg": 10.28861373448787,
+          "feet": {
+            "ankle_left": {
+              "landings": 4,
+              "duty_factor": 0.04630788485607009,
+              "median_same_foot_stride": 0.010240464290680373,
+              "median_cycle_s": 0.5599999999999898
+            },
+            "ankle_right": {
+              "landings": 2,
+              "duty_factor": 0.02252816020025031,
+              "median_same_foot_stride": -0.018528922501032552,
+              "median_cycle_s": 0.7399999999999904
+            }
+          },
+          "alternating_landing_fraction": 0.8,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 2.1739130434783074,
+          "landing_events_per_second": 0.3759398496240517,
+          "individual_foot_landings_per_second": 0.3759398496240517,
+          "first_fall_s": 4.07999999999994,
+          "valid_steady_window": false
+        },
+        {
+          "seed": 929102,
+          "net_forward_speed_mps": 0.3062783209809488,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08227023171695491,
+          "double_contact_fraction": 0.07634543178973717,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.101149692030723,
+          "pitch_std_deg": 2.692382713809627,
+          "feet": {
+            "ankle_left": {
+              "landings": 30,
+              "duty_factor": 0.509386733416771,
+              "median_same_foot_stride": 0.16512141626082055,
+              "median_cycle_s": 0.5399999999999903
+            },
+            "ankle_right": {
+              "landings": 30,
+              "duty_factor": 0.5669586983729662,
+              "median_same_foot_stride": 0.16350096786137502,
+              "median_cycle_s": 0.5399999999999903
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.846153846153245,
+          "landing_events_per_second": 3.7593984962405167,
+          "individual_foot_landings_per_second": 3.7593984962405167,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929103,
+          "net_forward_speed_mps": 0.3194913792761157,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08592270763375676,
+          "double_contact_fraction": 0.07884856070087609,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.176109624653961,
+          "pitch_std_deg": 2.75115691578053,
+          "feet": {
+            "ankle_left": {
+              "landings": 30,
+              "duty_factor": 0.5131414267834794,
+              "median_same_foot_stride": 0.17235044777105601,
+              "median_cycle_s": 0.5400000000000009
+            },
+            "ankle_right": {
+              "landings": 30,
+              "duty_factor": 0.5657071339173968,
+              "median_same_foot_stride": 0.171340382763971,
+              "median_cycle_s": 0.5399999999999991
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461523777,
+          "landing_events_per_second": 3.7593984962405167,
+          "individual_foot_landings_per_second": 3.7593984962405167,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        }
+      ],
+      "net_speed_mean": 0.24198982913480196,
+      "step_length_mean": null,
+      "valid_gait_windows": 3,
+      "max_negative_speed_fraction": 0.011264080100125156,
+      "gpu": {
+        "passes": 28,
+        "count": 32,
+        "falls": 0,
+        "long_speed_mean": 0.375917105380152
+      },
+      "input_parity": {
+        "frames": 26400,
+        "requested_max_abs": 4.996003610813204e-16,
+        "selection_errors": 0,
+        "passed": true
+      }
+    },
+    "support_952411": {
+      "passes": 0,
+      "count": 32,
+      "falls": 10,
+      "errors": 0,
+      "long_speed_mean": 0.26500303552227367,
+      "gait": [
+        {
+          "seed": 929100,
+          "net_forward_speed_mps": 0.3171203143783757,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08632609168393257,
+          "double_contact_fraction": 0.08385481852315395,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.381995779258727,
+          "pitch_std_deg": 2.7334369352760666,
+          "feet": {
+            "ankle_left": {
+              "landings": 30,
+              "duty_factor": 0.5081351689612015,
+              "median_same_foot_stride": 0.17265218336786514,
+              "median_cycle_s": 0.5200000000001008
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5757196495619524,
+              "median_same_foot_stride": 0.17245502212227093,
+              "median_cycle_s": 0.5299999999999505
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461526668,
+          "landing_events_per_second": 3.8220551378445253,
+          "individual_foot_landings_per_second": 3.8220551378445253,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929101,
+          "net_forward_speed_mps": 0.3077940872202544,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.0826886880127653,
+          "double_contact_fraction": 0.08010012515644556,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.306309833472386,
+          "pitch_std_deg": 2.701066768926754,
+          "feet": {
+            "ankle_left": {
+              "landings": 30,
+              "duty_factor": 0.5043804755944932,
+              "median_same_foot_stride": 0.16456589521005593,
+              "median_cycle_s": 0.5399999999998997
+            },
+            "ankle_right": {
+              "landings": 30,
+              "duty_factor": 0.5757196495619524,
+              "median_same_foot_stride": 0.1657635103673467,
+              "median_cycle_s": 0.5200000000001008
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.846153846153245,
+          "landing_events_per_second": 3.7593984962405167,
+          "individual_foot_landings_per_second": 3.7593984962405167,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        },
+        {
+          "seed": 929102,
+          "net_forward_speed_mps": -0.0003388566637171027,
+          "negative_speed_fraction": 0.010012515644555695,
+          "step_length_estimate_m": 0.002085780559421588,
+          "double_contact_fraction": 0.0,
+          "no_foot_contact_fraction": 0.9549436795994993,
+          "pitch_mean_deg": -63.044327650565464,
+          "pitch_std_deg": 2.379411304426549,
+          "feet": {
+            "ankle_left": {
+              "landings": 2,
+              "duty_factor": 0.04505632040050062,
+              "median_same_foot_stride": 0.004171561118843176,
+              "median_cycle_s": 0.7399999999999798
+            },
+            "ankle_right": {
+              "landings": 0,
+              "duty_factor": 0.0,
+              "median_same_foot_stride": null,
+              "median_cycle_s": null
+            }
+          },
+          "alternating_landing_fraction": 0.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 1.3513513513513882,
+          "landing_events_per_second": 0.12531328320801724,
+          "individual_foot_landings_per_second": 0.12531328320801724,
+          "first_fall_s": 3.79999999999994,
+          "valid_steady_window": false
+        },
+        {
+          "seed": 929103,
+          "net_forward_speed_mps": 0.33392116632527435,
+          "negative_speed_fraction": 0.0,
+          "step_length_estimate_m": 0.08836455621642259,
+          "double_contact_fraction": 0.07759699624530664,
+          "no_foot_contact_fraction": 0.0,
+          "pitch_mean_deg": 4.419175465248992,
+          "pitch_std_deg": 2.736835992956008,
+          "feet": {
+            "ankle_left": {
+              "landings": 30,
+              "duty_factor": 0.5043804755944932,
+              "median_same_foot_stride": 0.17672911243284517,
+              "median_cycle_s": 0.5200000000001008
+            },
+            "ankle_right": {
+              "landings": 31,
+              "duty_factor": 0.5732165206508135,
+              "median_same_foot_stride": 0.17707811213695435,
+              "median_cycle_s": 0.5200000000001008
+            }
+          },
+          "alternating_landing_fraction": 1.0,
+          "simultaneous_landing_events": 0,
+          "median_interval_frequency_hz": 3.8461538461532583,
+          "landing_events_per_second": 3.8220551378445253,
+          "individual_foot_landings_per_second": 3.8220551378445253,
+          "first_fall_s": null,
+          "valid_steady_window": true
+        }
+      ],
+      "net_speed_mean": 0.23962417781504683,
+      "step_length_mean": null,
+      "valid_gait_windows": 3,
+      "max_negative_speed_fraction": 0.010012515644555695,
+      "gpu": {
+        "passes": 26,
+        "count": 32,
+        "falls": 0,
+        "long_speed_mean": 0.37849362119405955
+      },
+      "input_parity": {
+        "frames": 26400,
+        "requested_max_abs": 4.996003610813204e-16,
+        "selection_errors": 0,
+        "passed": true
+      }
+    }
+  },
+  "training": [
+    {
+      "label": "off_952410",
+      "wall_s": 214.1355791260139,
+      "status": "completed",
+      "iterations": 256,
+      "samples": 8388608,
+      "collection_device": "cuda",
+      "learner_device": "cuda",
+      "collection_s": 168.3811013525119,
+      "learning_s": 38.90115339343902,
+      "elapsed_s": 208.2624646690092,
+      "falls": 2,
+      "completed_tasks": 9896,
+      "parity_max_abs": 1.3113021850585938e-06,
+      "final_sha256": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+      "accepted": false,
+      "acceptance": "Requires independent native Jolt evaluation"
+    },
+    {
+      "label": "support_952410",
+      "wall_s": 224.76232437801082,
+      "status": "completed",
+      "iterations": 256,
+      "samples": 8388608,
+      "collection_device": "cuda",
+      "learner_device": "cuda",
+      "collection_s": 178.40178038086742,
+      "learning_s": 39.300294672255404,
+      "elapsed_s": 218.7201383279753,
+      "falls": 4,
+      "completed_tasks": 9915,
+      "parity_max_abs": 1.3113021850585938e-06,
+      "final_sha256": "99e9f13e6a878b077bc439697b1aec78e3eefb17487a469732a5665e591bd71c",
+      "accepted": false,
+      "acceptance": "Requires independent native Jolt evaluation"
+    },
+    {
+      "label": "off_952411",
+      "wall_s": 237.03275704098633,
+      "status": "completed",
+      "iterations": 256,
+      "samples": 8388608,
+      "collection_device": "cuda",
+      "learner_device": "cuda",
+      "collection_s": 187.70816278248094,
+      "learning_s": 42.18162997998297,
+      "elapsed_s": 230.94581781805027,
+      "falls": 0,
+      "completed_tasks": 9922,
+      "parity_max_abs": 1.0728836059570312e-06,
+      "final_sha256": "3513a641eb0784c9d5ef8bbfdd15cf0d3ddd1d5d07100c4b6068fb7b0b123f80",
+      "accepted": false,
+      "acceptance": "Requires independent native Jolt evaluation"
+    },
+    {
+      "label": "support_952411",
+      "wall_s": 235.12094046297716,
+      "status": "completed",
+      "iterations": 256,
+      "samples": 8388608,
+      "collection_device": "cuda",
+      "learner_device": "cuda",
+      "collection_s": 187.70973649225198,
+      "learning_s": 40.307192436244804,
+      "elapsed_s": 228.99895293998998,
+      "falls": 2,
+      "completed_tasks": 9917,
+      "parity_max_abs": 1.0728836059570312e-06,
+      "final_sha256": "73f39e4305bd77c5f8c779b2667c6fc6f27500e46d904ec487899567613e2da0",
+      "accepted": false,
+      "acceptance": "Requires independent native Jolt evaluation"
+    }
+  ],
+  "total_training_transitions": 33554432,
+  "training_iteration_elapsed_s": 886.9273737550247,
+  "training_collection_learning_s": 882.8910514900344,
+  "development_seeds": [
+    929100,
+    929101,
+    929102,
+    929103
+  ],
+  "final_seeds_used": false,
+  "held_out_seeds": [
+    929200,
+    929229
+  ],
+  "real_action_rows": 6144,
+  "input_parity_rows": 132000,
+  "resources": {
+    "unix": 1789322294.3835144,
+    "started": 9,
+    "finished": 9,
+    "missing_terminal": [],
+    "cleanup_remaining": {},
+    "live_owned_pids": [],
+    "live_owned_groups": [],
+    "live_session_marker_processes": [],
+    "all_godot_processes": [
+      {
+        "pid": 4015891,
+        "state": "R",
+        "ppid": 4015771,
+        "pgrp": 4015771,
+        "session": 4015771,
+        "start_ticks": 35023890,
+        "comm": "godot",
+        "args": "/home/ethan/.local/bin/godot --path /home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/terrain-20260914/runtime res://hub/main.tscn --disable-vsync --max-fps 30 --headless --fixed-fps 30 -- --port=56933 "
+      }
+    ],
+    "docker": {
+      "command": [
+        "docker",
+        "ps",
+        "--format",
+        "{{.ID}}\t{{.Names}}\t{{.Image}}"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "gpu": {
+      "command": [
+        "nvidia-smi",
+        "--query-gpu=name,utilization.gpu,memory.used",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "stdout": "NVIDIA GB10, 13 %, [N/A]",
+      "stderr": ""
+    },
+    "gpu_apps": {
+      "command": [
+        "nvidia-smi",
+        "--query-compute-apps=pid,process_name,used_gpu_memory",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 217 MiB",
+      "stderr": ""
+    },
+    "job_results": [
+      {
+        "actor": "smoke_protected:e3b32788ea",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "smoke_swing:604926c351",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "monitor_check:4ad022d7aa",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "monitor_check_v2:eb05c128e6",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "gpu_training_pair:5df406b04a",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "frozen_evaluation:bbd416fc7f",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "postchecks:a57cbd2a60",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "archive_runtime:be8cdf6a55",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "archive_runtime_v2:b82c3ae3c0",
+        "returncode": 0,
+        "reason": "completed"
+      }
+    ],
+    "passed": true,
+    "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+  },
+  "checks": {
+    "passed": true,
+    "unittest": {
+      "patterns": [
+        "test_sprint*.py",
+        "test_walking_retention.py",
+        "test_support_swing.py",
+        "test_gait_landing_summary.py"
+      ],
+      "count": 34,
+      "failed": 0
+    },
+    "py_compile": [
+      "scripts/sprint_gpu_train.py",
+      "scripts/sprint_gpu_world.py",
+      "scripts/evaluate_sprint_gpu.py",
+      "scripts/evaluate_sprint_native.py",
+      "scripts/summarize_forward_gait.py",
+      "scripts/verify_sprint_swing_monitor.py"
+    ],
+    "real_native_action_audit": "outcome_audit.json",
+    "postcheck": "postchecks.json"
+  },
+  "next_direction": "Bounded native Jolt replay + CUDA off-policy adaptation; SAC stack not implemented or validated.",
+  "active_time": {
+    "status": {
+      "limit_seconds": 7200.0,
+      "used_seconds": 3700.954231818032,
+      "remaining_seconds": 3499.045768181968,
+      "actors": [],
+      "unconfirmed_gaps": 0
+    },
+    "unix": 1789322294.4220726,
+    "budget_note": "Self-imposed two-hour bound for this research turn; not a claim that the earlier user eight-hour goal completed.",
+    "accounting_cutoff": "Before final Git commit/push transport; initial 600 seconds is explicitly estimated as noted in ledger."
+  },
+  "runtime_archive": {
+    "removed_directories": 13,
+    "archive_bytes": 467459503,
+    "raw_traces_and_checkpoints_retained": true
+  }
+}

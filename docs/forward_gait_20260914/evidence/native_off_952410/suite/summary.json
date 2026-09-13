@@ -1,0 +1,3358 @@
+{
+  "started_unix": 1789320978.1664712,
+  "elapsed_s": 40.97862529754639,
+  "models": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43"
+  },
+  "runtime_directory": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/runtime",
+  "container_image": null,
+  "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865",
+  "errors": 0,
+  "episodes": [
+    {
+      "case": "sprint_alternate",
+      "skill": "walking",
+      "seed": 929100,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3436137538719204,
+        "sustained_p10_vx": 0.21463553296192237,
+        "max_tilt": 12.204042770738806,
+        "min_z": 0.10934048596957051,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.158439294662402,
+            "lateral_path_m": 0.05161095147348093,
+            "lateral_limit_m": 0.062070790364806644,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 11.590019084253202,
+            "lateral_path_m": 0.10248039199083626,
+            "lateral_limit_m": 0.1659377794708473,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7054704081895455,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.410476343835663,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 1.8000000000000007,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.33588180696475073,
+      "moving_mean_speed": 0.3569181116523422,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_alternate_929100/attempt_01/trace.json",
+      "case_sha256": "1d0e1d086df308f7d9241c1f57e118e33b27cb05b66499d03d506845c384f264",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.68857494200347,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-tt0nw44p",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_alternate_929100.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_alternate_929100/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_alternate_929100.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_alternate",
+      "skill": "walking",
+      "seed": 929101,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3288271696522823,
+        "sustained_p10_vx": 0.20302206607206758,
+        "max_tilt": 12.0995516569117,
+        "min_z": 0.10973799468721021,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 8.681839621875678,
+            "lateral_path_m": 0.031683292366380233,
+            "lateral_limit_m": 0.060720636423437495,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 11.477134417806665,
+            "lateral_path_m": 0.09280566047527838,
+            "lateral_limit_m": 0.16317514897586294,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8000313958260556,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4011905060834783,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 1.0199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.322992595262685,
+      "moving_mean_speed": 0.34611722650285576,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_alternate_929101/attempt_01/trace.json",
+      "case_sha256": "e74df68de8c70ebe1d3273d4199ddc3ece0ffef1bc5ddb9a08d1ae457f319185",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.7043974850093946,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-vwz84m3m",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_alternate_929101.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_alternate_929101/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_alternate_929101.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_alternate",
+      "skill": "walking",
+      "seed": 929102,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3342409955224181,
+        "sustained_p10_vx": 0.20161403866936187,
+        "max_tilt": 12.073717666487587,
+        "min_z": 0.10989908736577139,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.374788798345179,
+            "lateral_path_m": 0.03199868470697165,
+            "lateral_limit_m": 0.06135118511920861,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 9.17927516498056,
+            "lateral_path_m": 0.08747867097633089,
+            "lateral_limit_m": 0.16617509199530828,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7043486344017569,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.32523638485299294,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 1.1600000000000001,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.3285610365870842,
+      "moving_mean_speed": 0.35089066106208516,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_alternate_929102/attempt_01/trace.json",
+      "case_sha256": "f179d5fc05eca2eb581239778048ab830b4a5c5531b26e5fa87080ad3aa998f4",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.6973691830062307,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-19pi612g",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_alternate_929102.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_alternate_929102/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_alternate_929102.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_alternate",
+      "skill": "walking",
+      "seed": 929103,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3299359930579035,
+        "sustained_p10_vx": 0.19063386632696055,
+        "max_tilt": 12.314343850370596,
+        "min_z": 0.10904138748610594,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.922185451527411,
+            "lateral_path_m": 0.057210337124972636,
+            "lateral_limit_m": 0.06226128149459645,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 10.631019840518146,
+            "lateral_path_m": 0.08427237819274432,
+            "lateral_limit_m": 0.1589466847323343,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7709599756093113,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.3745027272744712,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 1.0399999999999991,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.32440314060125736,
+      "moving_mean_speed": 0.3472067676556406,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_alternate_929103/attempt_01/trace.json",
+      "case_sha256": "9ef92c63d11a35844acbbd58e619da1845fd8b19b2747ab226cbd7ef3bf51af4",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.713365245028399,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-pq74cptx",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_alternate_929103.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_alternate_929103/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_alternate_929103.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_left",
+      "skill": "walking",
+      "seed": 929100,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3590089529812722,
+        "sustained_p10_vx": 0.21879981671202953,
+        "max_tilt": 12.204042770738806,
+        "min_z": 0.10923743864498929,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.158439294662402,
+            "lateral_path_m": 0.05161095147348093,
+            "lateral_limit_m": 0.062070790364806644,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 9.517536782258514,
+            "lateral_path_m": 0.08735656079750742,
+            "lateral_limit_m": 0.06194679221169996,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7161356719716072,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.58,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.3389577602792386,
+      "moving_mean_speed": 0.358094111125272,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_left_929100/attempt_01/trace.json",
+      "case_sha256": "a75a6feb97f260d5fa693aaf17e739edec7871c9d98fc3308fd352964aa12d3a",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.3526170480181463,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-8wnqy5n2",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_left_929100.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_left_929100/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_left_929100.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_left",
+      "skill": "walking",
+      "seed": 929101,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3381674127618593,
+        "sustained_p10_vx": 0.20302206607206758,
+        "max_tilt": 12.0995516569117,
+        "min_z": 0.10970217643302398,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 8.681839621875678,
+            "lateral_path_m": 0.031683292366380233,
+            "lateral_limit_m": 0.060720636423437495,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 12.343016286216221,
+            "lateral_path_m": 0.16452109836123743,
+            "lateral_limit_m": 0.06575533390287881,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7709127760786051,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.9800000000000004,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.3270229883320462,
+      "moving_mean_speed": 0.3492025223367339,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_left_929101/attempt_01/trace.json",
+      "case_sha256": "92a9d739bdc3d77327a428dffac9abd7e47861d3dca71a41605624adc2d709b8",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.312068145023659,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-py9dtz43",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_left_929101.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_left_929101/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_left_929101.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_left",
+      "skill": "walking",
+      "seed": 929102,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.35539769132335275,
+        "sustained_p10_vx": 0.21943421721095663,
+        "max_tilt": 12.073717666487587,
+        "min_z": 0.10987410101445184,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.374788798345179,
+            "lateral_path_m": 0.03199868470697165,
+            "lateral_limit_m": 0.06135118511920861,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 15.761677700148658,
+            "lateral_path_m": 0.1400656092431793,
+            "lateral_limit_m": 0.0604621511428613,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7081718176398545,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.9000000000000004,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.3374776302910303,
+      "moving_mean_speed": 0.3562840796354495,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_left_929102/attempt_01/trace.json",
+      "case_sha256": "4fca215f14673643c9e173df53ad8552aab04928b5efd66f649a4ec7eff1bf00",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.361887242994271,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-6ta8kz4o",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_left_929102.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_left_929102/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_left_929102.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_left",
+      "skill": "walking",
+      "seed": 929103,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3672520858864811,
+        "sustained_p10_vx": 0.22336350689708853,
+        "max_tilt": 12.010320569435892,
+        "min_z": 0.10780410463873256,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.922185451527411,
+            "lateral_path_m": 0.057210337124972636,
+            "lateral_limit_m": 0.06226128149459645,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 9.57454979386402,
+            "lateral_path_m": 0.09836352717680585,
+            "lateral_limit_m": 0.07004330573796994,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7469632067096591,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.6400000000000006,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.34892305245719435,
+      "moving_mean_speed": 0.3671866923017471,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_left_929103/attempt_01/trace.json",
+      "case_sha256": "be69ff43e1098af9944fac21d7d637426a57057d6f5face61e01987e6588066d",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.3443420339608565,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-3ebi1y6x",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_left_929103.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_left_929103/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_left_929103.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_long",
+      "skill": "walking",
+      "seed": 929100,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.326305062624318,
+        "sustained_mean_vx": 0.326305062624318,
+        "sustained_p10_vx": 0.20769326973143654,
+        "max_tilt": 12.204042770738806,
+        "min_z": 0.11201361271031332,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 10.348112792793227,
+            "lateral_path_m": 0.07405184020297369,
+            "lateral_limit_m": 0.6426999122657459,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": 1.3399999999999999,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.32308709325730595,
+      "moving_mean_speed": 0.3414732900347207,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_long_929100/attempt_01/trace.json",
+      "case_sha256": "61d8fe1a38f169cc4fe11d80577530c8472eac393b56cff43e0e51fc4de47c68",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 3.4783893509884365,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-p1bf4b88",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_long_929100.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_long_929100/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_long_929100.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_long",
+      "skill": "walking",
+      "seed": 929101,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.30904027707318615,
+        "sustained_p10_vx": 0.18010418009160564,
+        "max_tilt": 12.0995516569117,
+        "min_z": 0.10973799468721021,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 39.66478309505261,
+            "lateral_path_m": 0.5873163793077085,
+            "lateral_limit_m": 0.5815777571536636,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": 1.6999999999999993,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.3065848812264894,
+      "moving_mean_speed": 0.32784782537225265,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_long_929101/attempt_01/trace.json",
+      "case_sha256": "9b37525c65960d934ad87490f250fb4afa08c4ebeac8e46e7087c9876ddcb464",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 3.4541407009819523,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-ij3rhfe2",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_long_929101.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_long_929101/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_long_929101.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_long",
+      "skill": "walking",
+      "seed": 929102,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.3240469054212632,
+        "sustained_mean_vx": 0.3240469054212632,
+        "sustained_p10_vx": 0.1971578258227584,
+        "max_tilt": 12.195955550692888,
+        "min_z": 0.11277895074854269,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 12.128054239698278,
+            "lateral_path_m": 0.08895441382495195,
+            "lateral_limit_m": 0.6367853724365541,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": 1.1000000000000014,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.3206845128847541,
+      "moving_mean_speed": 0.3395062925387122,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_long_929102/attempt_01/trace.json",
+      "case_sha256": "6eedc15ff1efbd61c624b550c04bbcd8ccb3a0d99bf092a3e64a900e0413bf24",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 3.1982033199747093,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-ixq61ldv",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_long_929102.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_long_929102/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_long_929102.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_long",
+      "skill": "walking",
+      "seed": 929103,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.33181928050794496,
+        "sustained_mean_vx": 0.33181928050794496,
+        "sustained_p10_vx": 0.204916230675306,
+        "max_tilt": 12.022655076354496,
+        "min_z": 0.1103713833730236,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 14.40153116120862,
+            "lateral_path_m": 0.1249511177400882,
+            "lateral_limit_m": 0.6492779322728653,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": 1.6400000000000006,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.3281856335592727,
+      "moving_mean_speed": 0.34679042218450445,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_long_929103/attempt_01/trace.json",
+      "case_sha256": "d07f56284982bc0841d70d904eb7722d256ca0a161fcb54ec2676eeafa1e049f",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 3.3172804180067033,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-cj6turg2",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_long_929103.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_long_929103/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_long_929103.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_repeat",
+      "skill": "walking",
+      "seed": 929100,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.33582530270602173,
+        "sustained_p10_vx": 0.20139352906349478,
+        "max_tilt": 12.204042770738806,
+        "min_z": 0.11071768962891688,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.710973143100349,
+            "lateral_path_m": 0.07405184020297369,
+            "lateral_limit_m": 0.09152773646178251,
+            "passed": true
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 15.743691151892502,
+            "lateral_path_m": 0.02642005821954857,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 11.810216692618635,
+            "lateral_path_m": 0.05954111938732712,
+            "lateral_limit_m": 0.09276904067459148,
+            "passed": true
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 5.486207170144248,
+            "lateral_path_m": 0.039949847858543504,
+            "lateral_limit_m": 0.06228445033268937,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 1.4600000000000009,
+            "passed": true
+          },
+          {
+            "at": 14,
+            "onset_s": 1.5600000000000005,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.2873265827634296,
+      "moving_mean_speed": 0.3115502616881823,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_repeat_929100/attempt_01/trace.json",
+      "case_sha256": "ec87a70aa8009161a60f77acff96bf666ead8776caceb6d6909331f965f1a56b",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.4480654019862413,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-ddqeqty1",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_repeat_929100.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_repeat_929100/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_repeat_929100.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_repeat",
+      "skill": "walking",
+      "seed": 929101,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.336739486717292,
+        "sustained_p10_vx": 0.1815916848260758,
+        "max_tilt": 12.0995516569117,
+        "min_z": 0.10973799468721021,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 16.609312957409742,
+            "lateral_path_m": 0.06763853853443946,
+            "lateral_limit_m": 0.08984458355782772,
+            "passed": false
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 25.306403886538327,
+            "lateral_path_m": 0.05093013052026235,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 13.103948058000531,
+            "lateral_path_m": 0.07227911237694556,
+            "lateral_limit_m": 0.08804697202431787,
+            "passed": true
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 4.9159044523057265,
+            "lateral_path_m": 0.040329457585172895,
+            "lateral_limit_m": 0.06278635414174064,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 1.0199999999999996,
+            "passed": true
+          },
+          {
+            "at": 14,
+            "onset_s": 0.9199999999999999,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.27344090504773794,
+      "moving_mean_speed": 0.3013492855269266,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_repeat_929101/attempt_01/trace.json",
+      "case_sha256": "ffe6f8f4dc871663e3ad2bb7fc6ab3aa0d9b8c067f64d266a37870405e345643",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.4203420859994367,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-pgenmeup",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_repeat_929101.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_repeat_929101/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_repeat_929101.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_repeat",
+      "skill": "walking",
+      "seed": 929102,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.33948362812403504,
+        "sustained_mean_vx": 0.33948362812403504,
+        "sustained_p10_vx": 0.18860775349744904,
+        "max_tilt": 12.140984797926695,
+        "min_z": 0.11176352474351249,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 11.433905913662622,
+            "lateral_path_m": 0.05526981618779142,
+            "lateral_limit_m": 0.09074191593869452,
+            "passed": true
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 6.290323547744741,
+            "lateral_path_m": 0.0347801167923201,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 5.315029781128518,
+            "lateral_path_m": 0.04398021504436206,
+            "lateral_limit_m": 0.0917031445176899,
+            "passed": true
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 7.590255399245973,
+            "lateral_path_m": 0.04463519828187193,
+            "lateral_limit_m": 0.06271309002962454,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 1.3000000000000007,
+            "passed": true
+          },
+          {
+            "at": 14,
+            "onset_s": 1.1999999999999993,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.2850299104985252,
+      "moving_mean_speed": 0.3112227981954376,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_repeat_929102/attempt_01/trace.json",
+      "case_sha256": "7e5a9e4d1ae75a827552029c7d9e8ae2fbfafb3e798ea6f5c1b90c74982957ca",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.468800103990361,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-gp9kgbpe",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_repeat_929102.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_repeat_929102/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_repeat_929102.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_repeat",
+      "skill": "walking",
+      "seed": 929103,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.33873412261918623,
+        "sustained_mean_vx": 0.33873412261918623,
+        "sustained_p10_vx": 0.2038991261770341,
+        "max_tilt": 12.010320569435892,
+        "min_z": 0.11036860939894208,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.922185451527411,
+            "lateral_path_m": 0.08257264202114523,
+            "lateral_limit_m": 0.0933430205289311,
+            "passed": true
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 12.652944141394626,
+            "lateral_path_m": 0.031351499233843345,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 10.158459476997574,
+            "lateral_path_m": 0.06961056960804549,
+            "lateral_limit_m": 0.09286943702479533,
+            "passed": true
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 3.9191024728323747,
+            "lateral_path_m": 0.03943655754587169,
+            "lateral_limit_m": 0.060994841800712296,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 1.3000000000000007,
+            "passed": true
+          },
+          {
+            "at": 14,
+            "onset_s": 1.5,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.28840777182345445,
+      "moving_mean_speed": 0.31305765953802794,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_repeat_929103/attempt_01/trace.json",
+      "case_sha256": "e0b26c6b349b5556a8af9353590025de606e95c2de20ca8de37e4bf552dcafb5",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.4296321870060638,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-zo7_c145",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_repeat_929103.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_repeat_929103/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_repeat_929103.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_right",
+      "skill": "walking",
+      "seed": 929100,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.33104935565093707,
+        "sustained_p10_vx": 0.20364585471451663,
+        "max_tilt": 12.204042770738806,
+        "min_z": 0.11149430746506746,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.158439294662402,
+            "lateral_path_m": 0.05161095147348093,
+            "lateral_limit_m": 0.062070790364806644,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 7.287092979469951,
+            "lateral_path_m": 0.06143952950232735,
+            "lateral_limit_m": 0.06414625090489408,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.33356422875772024,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.3399999999999999,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.31959952676283315,
+      "moving_mean_speed": 0.34499605788778076,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_right_929100/attempt_01/trace.json",
+      "case_sha256": "cc7415b109365aaddd08165238b758fbd09e858e6562deb17c726c37e5a37802",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.347394418960903,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-9a17g6z3",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_right_929100.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_right_929100/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_right_929100.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_right",
+      "skill": "walking",
+      "seed": 929101,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3234850678744112,
+        "sustained_p10_vx": 0.19471881577722172,
+        "max_tilt": 12.383945744975028,
+        "min_z": 0.10973799468721021,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 8.681839621875678,
+            "lateral_path_m": 0.031683292366380233,
+            "lateral_limit_m": 0.060720636423437495,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 4.8259188979898155,
+            "lateral_path_m": 0.04282795285153912,
+            "lateral_limit_m": 0.07007798950755402,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.39904603786304577,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.3200000000000003,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.31924837632847886,
+      "moving_mean_speed": 0.34671969976334177,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_right_929101/attempt_01/trace.json",
+      "case_sha256": "faa84796748464b4fa8cc8c049a3bfad772b960b249e677089fe3243c7891a89",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.253710957011208,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-96tgyhd4",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_right_929101.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_right_929101/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_right_929101.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_right",
+      "skill": "walking",
+      "seed": 929102,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.33452637615005526,
+        "sustained_p10_vx": 0.2063545186598927,
+        "max_tilt": 12.073717666487587,
+        "min_z": 0.10888464788896489,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.374788798345179,
+            "lateral_path_m": 0.03199868470697165,
+            "lateral_limit_m": 0.06135118511920861,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 11.002397979375623,
+            "lateral_path_m": 0.10380091532974459,
+            "lateral_limit_m": 0.06146071003072824,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.36167194387557117,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 2.039999999999999,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.3204956027275409,
+      "moving_mean_speed": 0.345578314787989,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_right_929102/attempt_01/trace.json",
+      "case_sha256": "661b399356508f50bcf81669d94b1caeee264a4b84e25ca1323af3f84422dfb4",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.21733014396159,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-hxt8tsqg",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_right_929102.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_right_929102/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_right_929102.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_right",
+      "skill": "walking",
+      "seed": 929103,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3333203351862534,
+        "sustained_p10_vx": 0.20974732765598583,
+        "max_tilt": 12.010320569435892,
+        "min_z": 0.11195849053170742,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.922185451527411,
+            "lateral_path_m": 0.057210337124972636,
+            "lateral_limit_m": 0.06226128149459645,
+            "passed": true
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 3.4789638213379512,
+            "lateral_path_m": 0.05858557989056266,
+            "lateral_limit_m": 0.06748438966090531,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.3620537465317049,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.5,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.32296998186664017,
+      "moving_mean_speed": 0.34843298310845255,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_right_929103/attempt_01/trace.json",
+      "case_sha256": "551ea30257dd35b62a5a948cb7bfeececd1e3b6f0533ac11e207d5b8243d7c23",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.324803306022659,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-5u4zvkms",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_right_929103.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_right_929103/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_right_929103.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_shift_first",
+      "skill": "walking",
+      "seed": 929100,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.3314949514258801,
+        "sustained_mean_vx": 0.3314949514258801,
+        "sustained_p10_vx": 0.20810115390148914,
+        "max_tilt": 12.204042770738806,
+        "min_z": 0.11152341698518292,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 9.44554731740702,
+            "lateral_path_m": 0.07405184020297369,
+            "lateral_limit_m": 0.2567259651138875,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 1.1400000000000006,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.3228012919081546,
+      "moving_mean_speed": 0.34152726215308005,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_shift_first_929100/attempt_01/trace.json",
+      "case_sha256": "a81941ee1e6daee087490990a5862f5911aee9f155e4c5e5ccc0da822ba940eb",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.227402289980091,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-j2ersop5",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_shift_first_929100.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_shift_first_929100/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_shift_first_929100.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_shift_first",
+      "skill": "walking",
+      "seed": 929101,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.29277665748800397,
+        "sustained_p10_vx": 0.15791113485736735,
+        "max_tilt": 12.0995516569117,
+        "min_z": 0.10973799468721021,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 31.862953796187288,
+            "lateral_path_m": 0.5819292392788974,
+            "lateral_limit_m": 0.22002617321048235,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.28867112031941006,
+      "moving_mean_speed": 0.31280351191366174,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_shift_first_929101/attempt_01/trace.json",
+      "case_sha256": "71a5fbf881782d8c67069488f047e590b2da145708be1edfcaab15bb50510b12",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.21026682498632,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-6uc_otsy",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_shift_first_929101.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_shift_first_929101/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_shift_first_929101.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_shift_first",
+      "skill": "walking",
+      "seed": 929102,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.32012091302314755,
+        "sustained_mean_vx": 0.32012091302314755,
+        "sustained_p10_vx": 0.19007305402981306,
+        "max_tilt": 12.073717666487587,
+        "min_z": 0.11263349449112285,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 12.128054239698278,
+            "lateral_path_m": 0.08895441382495195,
+            "lateral_limit_m": 0.246989159745723,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 1.1600000000000001,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.31220568073163935,
+      "moving_mean_speed": 0.3323797325173123,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_shift_first_929102/attempt_01/trace.json",
+      "case_sha256": "b3f1348374a33bde2a0cce72495229e23b71d4d55b4ced7df804b299e46d5cd4",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.165015221980866,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-xclxzgb9",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_shift_first_929102.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_shift_first_929102/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_shift_first_929102.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_shift_first",
+      "skill": "walking",
+      "seed": 929103,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.3330098836103546,
+        "sustained_mean_vx": 0.3330098836103546,
+        "sustained_p10_vx": 0.20661952239440462,
+        "max_tilt": 12.022655076354496,
+        "min_z": 0.11230024763229057,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 9.245562664659156,
+            "lateral_path_m": 0.08257264202114523,
+            "lateral_limit_m": 0.25747746662986265,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 1.9000000000000004,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.32377694085087283,
+      "moving_mean_speed": 0.3430019152678183,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_shift_first_929103/attempt_01/trace.json",
+      "case_sha256": "1a19e9ec91f5213f23d3292b0c3cfe355bbdce9f863e2125242bab6422bf5b1c",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.145823936967645,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-r1_r6owu",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_shift_first_929103.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_shift_first_929103/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_shift_first_929103.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_turn_release",
+      "skill": "walking",
+      "seed": 929100,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3714291416152045,
+        "sustained_p10_vx": 0.2213078791874971,
+        "max_tilt": 12.204042770738806,
+        "min_z": 0.10930665962409088,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 4.158439294662402,
+            "lateral_path_m": 0.05161095147348093,
+            "lateral_limit_m": 0.062070790364806644,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 3.0604137309839743,
+            "lateral_path_m": 0.02495048705260409,
+            "lateral_limit_m": 0.05414285954914742,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7040408495843232,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.3379013644155526,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.7400000000000002,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.272020259011469,
+      "moving_mean_speed": 0.3019150979729747,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_turn_release_929100/attempt_01/trace.json",
+      "case_sha256": "3b5085de90e70493ff86f7de3dae9cd8e60772ddd5a288aba935cb7beadd9ef5",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.5516350570251234,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-z4fyag3v",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_turn_release_929100.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_turn_release_929100/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_turn_release_929100.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_turn_release",
+      "skill": "walking",
+      "seed": 929101,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3410230418538515,
+        "sustained_p10_vx": 0.20981974544582577,
+        "max_tilt": 12.0995516569117,
+        "min_z": 0.10973799468721021,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 8.681839621875678,
+            "lateral_path_m": 0.031683292366380233,
+            "lateral_limit_m": 0.060720636423437495,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 7.32854952172977,
+            "lateral_path_m": 0.0221912270624633,
+            "lateral_limit_m": 0.05281418671315607,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8057160703818993,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.32059730965120364,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.4800000000000004,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.25281761188320895,
+      "moving_mean_speed": 0.28575969402370643,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_turn_release_929101/attempt_01/trace.json",
+      "case_sha256": "97f27294e70c18bd9e3b62432fa3db1d26dc50f122247c8e67a60dfb1649eeda",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.3905476960353553,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-bjczxcej",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_turn_release_929101.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_turn_release_929101/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_turn_release_929101.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_turn_release",
+      "skill": "walking",
+      "seed": 929102,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3640925775103048,
+        "sustained_p10_vx": 0.22126340271123002,
+        "max_tilt": 12.073717666487587,
+        "min_z": 0.1093682969826601,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.374788798345179,
+            "lateral_path_m": 0.03199868470697165,
+            "lateral_limit_m": 0.06135118511920861,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 9.664453714828834,
+            "lateral_path_m": 0.029289611004173974,
+            "lateral_limit_m": 0.05151950967726535,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7016059755959472,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.35622383412151815,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.4800000000000004,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.2700676513469822,
+      "moving_mean_speed": 0.29848819294513995,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_turn_release_929102/attempt_01/trace.json",
+      "case_sha256": "40976e80d57ecd60c2d42ba9e2eec33304dbae596f33d31aa0d8cecb42660214",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.3349241699906997,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-g9t2z6hg",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_turn_release_929102.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_turn_release_929102/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_turn_release_929102.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_turn_release",
+      "skill": "walking",
+      "seed": 929103,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.37076909553885956,
+        "sustained_p10_vx": 0.2242664759186875,
+        "max_tilt": 12.010320569435892,
+        "min_z": 0.10904138748610594,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.922185451527411,
+            "lateral_path_m": 0.057210337124972636,
+            "lateral_limit_m": 0.06226128149459645,
+            "passed": true
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 6.763274293371164,
+            "lateral_path_m": 0.028800719721584662,
+            "lateral_limit_m": 0.0548629196249018,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7643680539441248,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.41825078494085416,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 1.2400000000000002,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.2710846257077147,
+      "moving_mean_speed": 0.3004337490664279,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_turn_release_929103/attempt_01/trace.json",
+      "case_sha256": "c5add88dcb6b6b3984ddacadbdf4002f0085e686bd0e879f145e84b9382d4d0f",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.447216340980958,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-ae77wxn_",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_turn_release_929103.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_turn_release_929103/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_turn_release_929103.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_w_first",
+      "skill": "walking",
+      "seed": 929100,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.3380288187834758,
+        "sustained_mean_vx": 0.3380288187834758,
+        "sustained_p10_vx": 0.220050356372829,
+        "max_tilt": 11.918053985003493,
+        "min_z": 0.11235239347516943,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.4523985560773913,
+            "lateral_path_m": 0.017990307676992057,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 5.670047592481617,
+            "lateral_path_m": 0.062371261789916754,
+            "lateral_limit_m": 0.22979902487729467,
+            "passed": true
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 6.119195341271989,
+            "lateral_path_m": 0.0197341224174998,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.5199999999999996,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.27935635893091176,
+      "moving_mean_speed": 0.3044906813892104,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_w_first_929100/attempt_01/trace.json",
+      "case_sha256": "fbc0fcac594a91e0cea424cd64261439cfb32f4c1e59f03c2e9939e606a31d1a",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.470671040995512,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-zc_tn1d7",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_w_first_929100.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_w_first_929100/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_w_first_929100.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_w_first",
+      "skill": "walking",
+      "seed": 929101,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.33701488591112305,
+        "sustained_mean_vx": 0.33701488591112305,
+        "sustained_p10_vx": 0.21947661386803105,
+        "max_tilt": 12.279467420735063,
+        "min_z": 0.11280445151793252,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.1608314070132124,
+            "lateral_path_m": 0.017309560175314143,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 6.848297196182939,
+            "lateral_path_m": 0.06468237963403223,
+            "lateral_limit_m": 0.2253311797102815,
+            "passed": true
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 6.810963221323478,
+            "lateral_path_m": 0.01777431105865515,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.5399999999999991,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.2780282572198526,
+      "moving_mean_speed": 0.30319842551559306,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_w_first_929101/attempt_01/trace.json",
+      "case_sha256": "965321e035aadbd9d2dec7aed848bbbb6cab8f23c0f94d227e3990c863aea8b6",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.4520452430006117,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-vnkzrvwz",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_w_first_929101.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_w_first_929101/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_w_first_929101.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_w_first",
+      "skill": "walking",
+      "seed": 929102,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3276295841880442,
+        "sustained_p10_vx": 0.20207772424850273,
+        "max_tilt": 12.473572831495051,
+        "min_z": 0.11208203215800153,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.586863996822253,
+            "lateral_path_m": 0.019121424300930143,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 6.696558146505756,
+            "lateral_path_m": 0.11039158633810292,
+            "lateral_limit_m": 0.221760637450115,
+            "passed": true
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 17.443676085868706,
+            "lateral_path_m": 0.05657610778717809,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.7200000000000006,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.27087317158961555,
+      "moving_mean_speed": 0.2968683316213835,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_w_first_929102/attempt_01/trace.json",
+      "case_sha256": "bac09b578e28018d4bfcbe9311cc6f689dd314d00175d276d1677038591a534f",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.633667920017615,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-pw029_jz",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_w_first_929102.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_w_first_929102/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_w_first_929102.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    },
+    {
+      "case": "sprint_w_first",
+      "skill": "walking",
+      "seed": 929103,
+      "randomized_start": true,
+      "protocol": "walking_sprint_v1",
+      "task_protocol": "physical_tasks_v8",
+      "models": {
+        "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+        "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+        "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+        "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+        "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+        "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+        "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+        "sprint": "77aa7cd4bfbc773d316440287c46bedee7ca0b9d39dcc468213e3b758c36bb43",
+        "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+        "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e"
+      },
+      "task_metrics": {
+        "success": true,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.3377697504765951,
+        "sustained_mean_vx": 0.3377697504765951,
+        "sustained_p10_vx": 0.21782944544694965,
+        "max_tilt": 12.137777267776451,
+        "min_z": 0.11245366136001009,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.07099717456731,
+            "lateral_path_m": 0.017750285541165277,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 5.250053263252002,
+            "lateral_path_m": 0.055735432798107123,
+            "lateral_limit_m": 0.2262903731743538,
+            "passed": true
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 6.301545676695341,
+            "lateral_path_m": 0.041798822458923524,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.46000000000000085,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "control_config": {
+        "walk": {
+          "twist_limits": {
+            "sprint_vmax_ang": 0.8,
+            "sprint_vmax_x": 0.45,
+            "sprint_yaw_reversal_s": 0.2,
+            "vmax_ang": 0.8,
+            "vmax_x": 0.25
+          },
+          "walk_heading_gain": 6.0,
+          "walk_heading_limit": 0.6,
+          "walk_heading_scope": "all",
+          "walk_idle_delay_s": 0.5,
+          "walk_path_gain": 4.0,
+          "walk_path_lookahead": 0.2,
+          "walk_reanchor_on_start": true
+        }
+      },
+      "controller_scoring_protocol": "requested_command_v1",
+      "moving_mean_vx": 0.274743312926126,
+      "moving_mean_speed": 0.3010432215545554,
+      "trace": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_w_first_929103/attempt_01/trace.json",
+      "case_sha256": "717bb857fe258b5695c878bd73e56431c0e07ad35e42de4ed8b1c848001483ec",
+      "completed": true,
+      "returncode": 0,
+      "elapsed_s": 2.615262969979085,
+      "command": [
+        "godot",
+        "--headless",
+        "--fixed-fps",
+        "200",
+        "--path",
+        "/tmp/godot-s2s-ov-m3akzwci",
+        "res://standalone/main.tscn",
+        "--",
+        "--replay=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_w_first_929103.json",
+        "--trace=/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/suite/sprint_w_first_929103/attempt_01/trace.json"
+      ],
+      "case_path": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/native_off_952410/cases/sprint_w_first_929103.json",
+      "container_image": null,
+      "runtime_id": "34f27a3f069139baf6e31543f79cd10cdc630aff5c17b9fc28e438b9103cd865"
+    }
+  ]
+}

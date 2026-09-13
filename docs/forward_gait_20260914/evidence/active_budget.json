@@ -1,0 +1,639 @@
+{
+  "schema_version": 1,
+  "limit_seconds": 7200.0,
+  "initial_seconds": 600.0,
+  "credit_note": "First 10 minutes of local audit/research before this ledger, conservative estimate. New bounded research attempt, no claim original 8-hour goal complete.",
+  "created_unix": 1789319193.4661255,
+  "intervals": {
+    "3b388277-2a59-4f02-b6ad-c6507ba4a8e9": [
+      [
+        347140.384421504,
+        350241.338653322
+      ]
+    ]
+  },
+  "actors": {},
+  "gaps": [],
+  "events": [
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789319387.1171668,
+      "supervisor_pid": 3908855,
+      "process_start_ticks": 34733403,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/supervisors/smoke_protected-25ffa9aaca.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/scripts/sprint_gpu_train.py",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/smoke_protected",
+        "--feet",
+        "jolt",
+        "--velocity-observer",
+        "joint_fd",
+        "--cuda-graphs",
+        "--objective",
+        "tracking",
+        "--controller",
+        "split",
+        "--constraints",
+        "cat",
+        "--teacher-replay",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/replay/manifest.json",
+        "--teacher-scope",
+        "protected",
+        "--teacher-weight",
+        ".02",
+        "--initialize-checkpoint",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/train_joint_fd/latest.pt",
+        "--control",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/control.json",
+        "--seed",
+        "952409",
+        "--iterations",
+        "5",
+        "--envs",
+        "64",
+        "--steps",
+        "64",
+        "--gradient-audit"
+      ],
+      "timeout": 150,
+      "reserve": 1200,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789319387.152437,
+      "actor": "smoke_protected:e3b32788ea",
+      "pid": 3908857,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/scripts/sprint_gpu_train.py",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/smoke_protected",
+        "--feet",
+        "jolt",
+        "--velocity-observer",
+        "joint_fd",
+        "--cuda-graphs",
+        "--objective",
+        "tracking",
+        "--controller",
+        "split",
+        "--constraints",
+        "cat",
+        "--teacher-replay",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/replay/manifest.json",
+        "--teacher-scope",
+        "protected",
+        "--teacher-weight",
+        ".02",
+        "--initialize-checkpoint",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/train_joint_fd/latest.pt",
+        "--control",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/control.json",
+        "--seed",
+        "952409",
+        "--iterations",
+        "5",
+        "--envs",
+        "64",
+        "--steps",
+        "64",
+        "--gradient-audit"
+      ],
+      "timeout": 150.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 34733406,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 3908855
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789319397.2927403,
+      "actor": "smoke_protected:e3b32788ea",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789319662.5377004,
+      "supervisor_pid": 3913789,
+      "process_start_ticks": 34760945,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/supervisors/smoke_swing-c6a48afc66.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/scripts/sprint_gpu_train.py",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/smoke_swing",
+        "--feet",
+        "jolt",
+        "--velocity-observer",
+        "joint_fd",
+        "--cuda-graphs",
+        "--objective",
+        "tracking",
+        "--controller",
+        "split",
+        "--constraints",
+        "cat",
+        "--teacher-replay",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/teacher/manifest.json",
+        "--teacher-scope",
+        "all",
+        "--teacher-weight",
+        ".02",
+        "--initialize-checkpoint",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/train_joint_fd/latest.pt",
+        "--control",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/control.json",
+        "--seed",
+        "952409",
+        "--iterations",
+        "5",
+        "--envs",
+        "64",
+        "--steps",
+        "64",
+        "--gradient-audit",
+        "--swing-objective",
+        "support",
+        "--monitor-swing"
+      ],
+      "timeout": 150,
+      "reserve": 1200,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789319662.5557342,
+      "actor": "smoke_swing:604926c351",
+      "pid": 3913790,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/scripts/sprint_gpu_train.py",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/smoke_swing",
+        "--feet",
+        "jolt",
+        "--velocity-observer",
+        "joint_fd",
+        "--cuda-graphs",
+        "--objective",
+        "tracking",
+        "--controller",
+        "split",
+        "--constraints",
+        "cat",
+        "--teacher-replay",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_joint_gpu_20260912/teacher/manifest.json",
+        "--teacher-scope",
+        "all",
+        "--teacher-weight",
+        ".02",
+        "--initialize-checkpoint",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_stop_state_20260912/train_joint_fd/latest.pt",
+        "--control",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/control.json",
+        "--seed",
+        "952409",
+        "--iterations",
+        "5",
+        "--envs",
+        "64",
+        "--steps",
+        "64",
+        "--gradient-audit",
+        "--swing-objective",
+        "support",
+        "--monitor-swing"
+      ],
+      "timeout": 150.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 34760947,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 3913789
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789319672.716912,
+      "actor": "smoke_swing:604926c351",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789319721.0662928,
+      "supervisor_pid": 3914839,
+      "process_start_ticks": 34766798,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/supervisors/monitor_check-a88621f646.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/scripts/verify_sprint_swing_monitor.py",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/monitor_check",
+        "--control",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/control.json",
+        "--actor",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/src/sim2sim/assets/microduck_sprint_v1/Sprint_Godot.onnx"
+      ],
+      "timeout": 120,
+      "reserve": 1200,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789319721.089999,
+      "actor": "monitor_check:4ad022d7aa",
+      "pid": 3914842,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/scripts/verify_sprint_swing_monitor.py",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/monitor_check",
+        "--control",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/control.json",
+        "--actor",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/src/sim2sim/assets/microduck_sprint_v1/Sprint_Godot.onnx"
+      ],
+      "timeout": 120.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 34766800,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 3914839
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789319729.2241955,
+      "actor": "monitor_check:4ad022d7aa",
+      "returncode": 1,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789319823.72307,
+      "supervisor_pid": 3916563,
+      "process_start_ticks": 34777064,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/supervisors/monitor_check_v2-6b2858c37d.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/scripts/verify_sprint_swing_monitor.py",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/monitor_check_v2",
+        "--control",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/control.json",
+        "--actor",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/src/sim2sim/assets/microduck_sprint_v1/Sprint_Godot.onnx"
+      ],
+      "timeout": 120,
+      "reserve": 1200,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789319823.7568388,
+      "actor": "monitor_check_v2:eb05c128e6",
+      "pid": 3916564,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/microduck_rl/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/scripts/verify_sprint_swing_monitor.py",
+        "--output",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/monitor_check_v2",
+        "--control",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/control.json",
+        "--actor",
+        "/home/ethan/Projects/MicroDuck-SpeedControls/src/sim2sim/assets/microduck_sprint_v1/Sprint_Godot.onnx"
+      ],
+      "timeout": 120.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 34777067,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 3916563
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789319831.8628464,
+      "actor": "monitor_check_v2:eb05c128e6",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789319872.2611449,
+      "supervisor_pid": 3917361,
+      "process_start_ticks": 34781917,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/supervisors/gpu_training_pair-8d464d0f8e.log",
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/run_training.py"
+      ],
+      "timeout": 1980,
+      "reserve": 1200,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789319872.2808776,
+      "actor": "gpu_training_pair:5df406b04a",
+      "pid": 3917362,
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/run_training.py"
+      ],
+      "timeout": 1980.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 34781919,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 3917361
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789320783.715954,
+      "actor": "gpu_training_pair:5df406b04a",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789320804.6989663,
+      "supervisor_pid": 3938376,
+      "process_start_ticks": 34875161,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/supervisors/frozen_evaluation-ceb37f9ea1.log",
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/run_evaluation.py"
+      ],
+      "timeout": 2400,
+      "reserve": 1200,
+      "cpus": 2,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789320804.7185457,
+      "actor": "frozen_evaluation:bbd416fc7f",
+      "pid": 3938377,
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/run_evaluation.py"
+      ],
+      "timeout": 2400.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 34875163,
+      "cpus": [
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 3938376
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789321181.226161,
+      "actor": "frozen_evaluation:bbd416fc7f",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789321596.4070265,
+      "supervisor_pid": 3995915,
+      "process_start_ticks": 34954332,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/supervisors/postchecks-69e5061aff.log",
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/run_postchecks.py"
+      ],
+      "timeout": 300,
+      "reserve": 1200,
+      "cpus": 4,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789321596.4274406,
+      "actor": "postchecks:a57cbd2a60",
+      "pid": 3995916,
+      "command": [
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/run_postchecks.py"
+      ],
+      "timeout": 300.0,
+      "reserve": 1200.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 34954334,
+      "cpus": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 3995915
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789321620.6253085,
+      "actor": "postchecks:a57cbd2a60",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789321742.2533774,
+      "supervisor_pid": 4001676,
+      "process_start_ticks": 34968917,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/supervisors/archive_runtime-c890f58c5b.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/archive_runtime.py"
+      ],
+      "timeout": 240,
+      "reserve": 600,
+      "cpus": 2,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789321742.2800586,
+      "actor": "archive_runtime:be8cdf6a55",
+      "pid": 4001677,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/archive_runtime.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 600.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 34968919,
+      "cpus": [
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 4001676
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789321744.3684835,
+      "actor": "archive_runtime:be8cdf6a55",
+      "returncode": 1,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789321882.229323,
+      "supervisor_pid": 4005610,
+      "process_start_ticks": 34982914,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/supervisors/archive_runtime_v2-f91effe5b3.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/archive_runtime_v2.py"
+      ],
+      "timeout": 240,
+      "reserve": 600,
+      "cpus": 2,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789321882.2478354,
+      "actor": "archive_runtime_v2:b82c3ae3c0",
+      "pid": 4005611,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/forward_gait_20260914/archive_runtime_v2.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 600.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 34982916,
+      "cpus": [
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 4005610
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789321899.396491,
+      "actor": "archive_runtime_v2:b82c3ae3c0",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "research_closed",
+      "unix": 1789322294.4187038,
+      "all_four_candidates_rejected": true,
+      "default_changed": false,
+      "final_seeds_used": false,
+      "accounting_cutoff": "Before final Git commit/push transport; confirmed union-time research, validation and documentation through sealing."
+    }
+  ]
+}

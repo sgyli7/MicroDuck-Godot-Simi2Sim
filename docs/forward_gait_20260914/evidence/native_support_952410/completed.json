@@ -1,0 +1,1512 @@
+{
+  "completed": true,
+  "errors": 0,
+  "count": 32,
+  "passes": 1,
+  "falls": 12,
+  "long_speed": [
+    0.34273673208582667,
+    0.031441105808722655,
+    0.34334064444012113,
+    0.3477124972943742
+  ],
+  "models": {
+    "standing": "1569268713e40deea795dd2922dba50d3621e15a872855408b6b1b125b1c094b",
+    "walking": "27ebbf83d63e5e59f125ceb158414cf7d2574990676d73c75b9c9870bcefed6e",
+    "sitstand": "e031f1a4afad2b64a01db37d8e0d3795b66ebe77087241574a6287fc705720f0",
+    "ground_pick": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+    "kick_left": "43c564c9d5d6ab692dfd034cc614420bcb91680e111dd2fa60f9ac0cf3b08ca9",
+    "kick_right": "103c2018cedb778e38801e092061490407835d7efad22660bb9bc2d57f90c8fe",
+    "roulade": "1c897dbb9b2700944adb182950e16e83e122f38d1091107157816689817ceced",
+    "roller": "cf05651d2708a2f9364212e86b866c97a70ace8131c492500105e8f28bf99afd",
+    "roller_crouch": "a1a084be240469c76ac9d3fa44d4792f16d4b1da60398b3ecd3cfc5e2244d990",
+    "sprint": "99e9f13e6a878b077bc439697b1aec78e3eefb17487a469732a5665e591bd71c"
+  },
+  "failed": [
+    {
+      "case": "sprint_alternate",
+      "seed": 929100,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3233365164915195,
+        "sustained_p10_vx": 0.14119057344969288,
+        "max_tilt": 11.8621238050393,
+        "min_z": 0.1079506518726137,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.3858245039214125,
+            "lateral_path_m": 0.09854241792837048,
+            "lateral_limit_m": 0.06152602137617296,
+            "passed": false
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 8.15667150011461,
+            "lateral_path_m": 0.16652025032503787,
+            "lateral_limit_m": 0.16666095617216695,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.6677996567989078,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.3867139629051854,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": 2.3200000000000003,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 929101,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 4.44,
+        "score": 0.0,
+        "sustained_mean_vx": 0.0392609154237975,
+        "sustained_p10_vx": -0.066671268116665,
+        "max_tilt": 92.68630950583865,
+        "min_z": 0.038094742013452955,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 13.998351025441652,
+            "lateral_path_m": 0.07765307858579967,
+            "lateral_limit_m": 0.06496009730292938,
+            "passed": false
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 4.626510549425461,
+            "lateral_path_m": 0.0014554743092587005,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.8427209021952826,
+            "sustained_reverse": true,
+            "passed": false
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 1.3554408155841995,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 929102,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 5.34,
+        "score": 0.0,
+        "sustained_mean_vx": 0.09720270603735848,
+        "sustained_p10_vx": -0.0003126914582207343,
+        "max_tilt": 100.77045230163755,
+        "min_z": 0.04623576305324875,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.568281633113347,
+            "lateral_path_m": 0.06781708083887439,
+            "lateral_limit_m": 0.06417640044813304,
+            "passed": false
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 1.4637333814867848,
+            "lateral_path_m": 0.0011338515227918634,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": -1.1345307238260698,
+            "sustained_reverse": true,
+            "passed": false
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.007757375224019013,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_alternate",
+      "seed": 929103,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 4.9,
+        "score": 0.0,
+        "sustained_mean_vx": 0.07284405039879506,
+        "sustained_p10_vx": -8.02993452039845e-05,
+        "max_tilt": 102.3715408647451,
+        "min_z": 0.04746637044029742,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.597274648704427,
+            "lateral_path_m": 0.07266556870410151,
+            "lateral_limit_m": 0.06602333226268063,
+            "passed": false
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 3.307891457175301,
+            "lateral_path_m": 0.0026933122760975127,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.3819588298866798,
+            "sustained_reverse": true,
+            "passed": false
+          },
+          {
+            "at": 6,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.00019334416275044653,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 14,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_left",
+      "seed": 929100,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.358593039245986,
+        "sustained_p10_vx": 0.2114178464089833,
+        "max_tilt": 11.8621238050393,
+        "min_z": 0.1079506518726137,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.3858245039214125,
+            "lateral_path_m": 0.09854241792837048,
+            "lateral_limit_m": 0.06152602137617296,
+            "passed": false
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 7.633706606290164,
+            "lateral_path_m": 0.11797710425628108,
+            "lateral_limit_m": 0.06750457406982589,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.7087727196224654,
+            "sustained_reverse": false,
+            "passed": true
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.4399999999999995,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_left",
+      "seed": 929101,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 4.44,
+        "score": 0.0,
+        "sustained_mean_vx": 0.04601006799529072,
+        "sustained_p10_vx": -0.13730154435217143,
+        "max_tilt": 97.32150923798221,
+        "min_z": 0.038094742013452955,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 13.998351025441652,
+            "lateral_path_m": 0.07765307858579967,
+            "lateral_limit_m": 0.06496009730292938,
+            "passed": false
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 9.539774320574049,
+            "lateral_path_m": 0.0015994844660096193,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": -0.7255684153789045,
+            "sustained_reverse": true,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_left",
+      "seed": 929102,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 5.34,
+        "score": 0.0,
+        "sustained_mean_vx": 0.14873578738017162,
+        "sustained_p10_vx": -0.021633819568498573,
+        "max_tilt": 100.77045230163755,
+        "min_z": 0.04623576305324875,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.568281633113347,
+            "lateral_path_m": 0.06781708083887439,
+            "lateral_limit_m": 0.06417640044813304,
+            "passed": false
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 6.332851931572725,
+            "lateral_path_m": 0.00047312981094402464,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": -1.2104528617119859,
+            "sustained_reverse": true,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_left",
+      "seed": 929103,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 4.9,
+        "score": 0.0,
+        "sustained_mean_vx": 0.1092464946153504,
+        "sustained_p10_vx": -0.0045937499358409,
+        "max_tilt": 102.3715408647451,
+        "min_z": 0.04746637044029742,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.597274648704427,
+            "lateral_path_m": 0.07266556870410151,
+            "lateral_limit_m": 0.06602333226268063,
+            "passed": false
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 1.5712022378941153,
+            "lateral_path_m": 0.0004698213330740723,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.18889197376645714,
+            "sustained_reverse": true,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_long",
+      "seed": 929100,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.34273673208582667,
+        "sustained_p10_vx": 0.21700072523541333,
+        "max_tilt": 11.8621238050393,
+        "min_z": 0.11044608937561205,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 10.214812423030997,
+            "lateral_path_m": 1.2956066118605798,
+            "lateral_limit_m": 0.6698311484700257,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_long",
+      "seed": 929101,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 4.02,
+        "score": 0.0,
+        "sustained_mean_vx": 0.031441105808722655,
+        "sustained_p10_vx": -0.0015703119640541354,
+        "max_tilt": 104.31033300851395,
+        "min_z": 0.05174136020267729,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 292.7225381716768,
+            "lateral_path_m": 0.2345815225781428,
+            "lateral_limit_m": 0.10369296828830454,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_long",
+      "seed": 929102,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.34334064444012113,
+        "sustained_p10_vx": 0.21602112396095702,
+        "max_tilt": 11.869112452587391,
+        "min_z": 0.10895807156654522,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 25.394982981402286,
+            "lateral_path_m": 1.6092451361488638,
+            "lateral_limit_m": 0.6509467009261212,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_long",
+      "seed": 929103,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3477124972943742,
+        "sustained_p10_vx": 0.21851280631967554,
+        "max_tilt": 12.00284361967897,
+        "min_z": 0.10970943775735979,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 14.790706204406172,
+            "lateral_path_m": 1.0911430702084222,
+            "lateral_limit_m": 0.6779868116146404,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 21,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_repeat",
+      "seed": 929100,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3336904126608324,
+        "sustained_p10_vx": 0.19542226109086677,
+        "max_tilt": 11.8621238050393,
+        "min_z": 0.10832134875925872,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.7520462448421465,
+            "lateral_path_m": 0.16818910277864974,
+            "lateral_limit_m": 0.09236393864107582,
+            "passed": false
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 25.656974997579717,
+            "lateral_path_m": 0.03610363743806008,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 42.51654301492995,
+            "lateral_path_m": 0.3393655469260993,
+            "lateral_limit_m": 0.06910450221732646,
+            "passed": false
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 5.7544855908548564,
+            "lateral_path_m": 0.04204961332809343,
+            "lateral_limit_m": 0.06454735278604154,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 2.0,
+            "passed": true
+          },
+          {
+            "at": 14,
+            "onset_s": 1.0,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_repeat",
+      "seed": 929101,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 4.02,
+        "score": 0.0,
+        "sustained_mean_vx": 0.13150270791328167,
+        "sustained_p10_vx": -0.000435061962967839,
+        "max_tilt": 105.4669386930373,
+        "min_z": 0.05148612792204717,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 27.556807078509713,
+            "lateral_path_m": 0.12832377350309326,
+            "lateral_limit_m": 0.09651951809742698,
+            "passed": false
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 239.59423718514756,
+            "lateral_path_m": 0.10241428409503242,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 33.47527630448361,
+            "lateral_path_m": 0.03212987486659532,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 4.097783082133689,
+            "lateral_path_m": 0.0049507438385024815,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": null,
+            "passed": false
+          },
+          {
+            "at": 14,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_repeat",
+      "seed": 929103,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3573589911040373,
+        "sustained_p10_vx": 0.2215548993182147,
+        "max_tilt": 12.00284361967897,
+        "min_z": 0.10970943775735979,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 14.790706204406172,
+            "lateral_path_m": 0.09753849537436052,
+            "lateral_limit_m": 0.09925132594640128,
+            "passed": true
+          },
+          {
+            "at": 4,
+            "heading_error_deg": 15.767903739527247,
+            "lateral_path_m": 0.032912680227452,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          },
+          {
+            "at": 6,
+            "heading_error_deg": 7.58743391531892,
+            "lateral_path_m": 0.029513213180670093,
+            "lateral_limit_m": 0.0949102407585861,
+            "passed": true
+          },
+          {
+            "at": 12,
+            "heading_error_deg": 5.0468157566043095,
+            "lateral_path_m": 0.06048912368265466,
+            "lateral_limit_m": 0.06110015254234309,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": 1.7400000000000002,
+            "passed": true
+          },
+          {
+            "at": 14,
+            "onset_s": 1.1999999999999993,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_right",
+      "seed": 929100,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.32868451385061814,
+        "sustained_p10_vx": 0.19979662033766632,
+        "max_tilt": 11.8621238050393,
+        "min_z": 0.11054749771418307,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.3858245039214125,
+            "lateral_path_m": 0.09854241792837048,
+            "lateral_limit_m": 0.06152602137617296,
+            "passed": false
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 7.253087560641246,
+            "lateral_path_m": 0.048239884629591494,
+            "lateral_limit_m": 0.0638876230517344,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.36163528561840963,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.4600000000000009,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_right",
+      "seed": 929101,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.2919283747006188,
+        "sustained_p10_vx": 0.059725160527059264,
+        "max_tilt": 11.94257195657217,
+        "min_z": 0.10190811565653322,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 13.998351025441652,
+            "lateral_path_m": 0.07765307858579967,
+            "lateral_limit_m": 0.06496009730292938,
+            "passed": false
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 7.052018714317172,
+            "lateral_path_m": 0.0808908507580138,
+            "lateral_limit_m": 0.06295638305510635,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.36293121062424333,
+            "sustained_reverse": true,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 2.1400000000000006,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_right",
+      "seed": 929102,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3134257462679244,
+        "sustained_p10_vx": 0.1859857828500889,
+        "max_tilt": 11.769906668594217,
+        "min_z": 0.1094169106697056,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.568281633113347,
+            "lateral_path_m": 0.06781708083887439,
+            "lateral_limit_m": 0.06417640044813304,
+            "passed": false
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 8.092929480210977,
+            "lateral_path_m": 0.06690469555568945,
+            "lateral_limit_m": 0.0667632634353883,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.3763761354098493,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.6799999999999997,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_right",
+      "seed": 929103,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.32690162577757514,
+        "sustained_p10_vx": 0.2035289104028782,
+        "max_tilt": 12.00284361967897,
+        "min_z": 0.1080791070578134,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.597274648704427,
+            "lateral_path_m": 0.07266556870410151,
+            "lateral_limit_m": 0.06602333226268063,
+            "passed": false
+          },
+          {
+            "at": 8,
+            "heading_error_deg": 8.05278916445477,
+            "lateral_path_m": 0.09095324555008547,
+            "lateral_limit_m": 0.0646176657599916,
+            "passed": false
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.4111795816121733,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 10,
+            "onset_s": 1.8599999999999994,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_shift_first",
+      "seed": 929100,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.34304984944971073,
+        "sustained_p10_vx": 0.21213155377839973,
+        "max_tilt": 11.8621238050393,
+        "min_z": 0.11076361387122707,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.7520462448421465,
+            "lateral_path_m": 0.47077726871457976,
+            "lateral_limit_m": 0.26432258752136845,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_shift_first",
+      "seed": 929101,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 4.02,
+        "score": 0.0,
+        "sustained_mean_vx": 0.08537419742700057,
+        "sustained_p10_vx": -0.036932013090187246,
+        "max_tilt": 104.31033300851395,
+        "min_z": 0.05174136020267729,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 292.7225381716768,
+            "lateral_path_m": 0.2345815225781428,
+            "lateral_limit_m": 0.10369296828830454,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_shift_first",
+      "seed": 929102,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3468664112116452,
+        "sustained_p10_vx": 0.2159887653503416,
+        "max_tilt": 11.869112452587391,
+        "min_z": 0.11027752158153968,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 14.242074675380112,
+            "lateral_path_m": 0.14478572935513492,
+            "lateral_limit_m": 0.26847844605926835,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_shift_first",
+      "seed": 929103,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3551624979682291,
+        "sustained_p10_vx": 0.22319103113275748,
+        "max_tilt": 12.00284361967897,
+        "min_z": 0.10970943775735979,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 14.790706204406172,
+            "lateral_path_m": 0.14247030813903008,
+            "lateral_limit_m": 0.27474342050475137,
+            "passed": true
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 9,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 929100,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3701924757999131,
+        "sustained_p10_vx": 0.21944007248654224,
+        "max_tilt": 11.8621238050393,
+        "min_z": 0.1079506518726137,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.3858245039214125,
+            "lateral_path_m": 0.09854241792837048,
+            "lateral_limit_m": 0.06152602137617296,
+            "passed": false
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 3.420820651486579,
+            "lateral_path_m": 0.024137588622974507,
+            "lateral_limit_m": 0.05443675138750597,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.707076359913122,
+            "sustained_reverse": false,
+            "passed": true
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.11688710872979789,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 0.6999999999999993,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 929101,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 4.44,
+        "score": 0.0,
+        "sustained_mean_vx": 0.06931750999779508,
+        "sustained_p10_vx": -0.16496790570516576,
+        "max_tilt": 97.32150923798221,
+        "min_z": 0.038094742013452955,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 13.998351025441652,
+            "lateral_path_m": 0.07765307858579967,
+            "lateral_limit_m": 0.06496009730292938,
+            "passed": false
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 0.737030553936921,
+            "lateral_path_m": 0.00024294995643125948,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.02188355936025366,
+            "sustained_reverse": true,
+            "passed": false
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.03597220942907088,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 929102,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 5.34,
+        "score": 0.0,
+        "sustained_mean_vx": 0.2225752583337461,
+        "sustained_p10_vx": -0.03678248516769699,
+        "max_tilt": 100.77045230163755,
+        "min_z": 0.04623576305324875,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 6.568281633113347,
+            "lateral_path_m": 0.06781708083887439,
+            "lateral_limit_m": 0.06417640044813304,
+            "passed": false
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 1.2080260796071791,
+            "lateral_path_m": 0.00020125281026595656,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": -1.5924427385791604,
+            "sustained_reverse": true,
+            "passed": false
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.00034738780774994674,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_turn_release",
+      "seed": 929103,
+      "metrics": {
+        "success": false,
+        "fell": true,
+        "first_fall_s": 4.9,
+        "score": 0.0,
+        "sustained_mean_vx": 0.16386750231817293,
+        "sustained_p10_vx": -0.07562368606467497,
+        "max_tilt": 102.3715408647451,
+        "min_z": 0.04746637044029742,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 7.597274648704427,
+            "lateral_path_m": 0.07266556870410151,
+            "lateral_limit_m": 0.06602333226268063,
+            "passed": false
+          },
+          {
+            "at": 9,
+            "heading_error_deg": 2.7786614279645,
+            "lateral_path_m": 0.0009204207389525169,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          }
+        ],
+        "turns": [
+          {
+            "at": 3,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": 0.25203628435586095,
+            "sustained_reverse": true,
+            "passed": false
+          },
+          {
+            "at": 7,
+            "requested": 0.800000011920929,
+            "signed_yaw_rate": -0.00012746858370550358,
+            "sustained_reverse": false,
+            "passed": false
+          }
+        ],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": null,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 929100,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3404661751987959,
+        "sustained_p10_vx": 0.21272059462382575,
+        "max_tilt": 11.97602984265808,
+        "min_z": 0.11090160149292139,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.4523985560773913,
+            "lateral_path_m": 0.017990307676992057,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 11.588359910273844,
+            "lateral_path_m": 0.5165202680553329,
+            "lateral_limit_m": 0.22745827899351478,
+            "passed": false
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 38.53839107967935,
+            "lateral_path_m": 0.09860064824512552,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 1.58,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 929101,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.34385300905469496,
+        "sustained_p10_vx": 0.21072072405430778,
+        "max_tilt": 11.564819265029364,
+        "min_z": 0.10987769644991852,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.1608314070132124,
+            "lateral_path_m": 0.017309560175314143,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 18.079376256931337,
+            "lateral_path_m": 0.6528399687596974,
+            "lateral_limit_m": 0.2223876323006799,
+            "passed": false
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 25.216518640259558,
+            "lateral_path_m": 0.05793504669104363,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 2.42,
+            "passed": false
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 929102,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3435650032506906,
+        "sustained_p10_vx": 0.21992800137712948,
+        "max_tilt": 12.265147209880155,
+        "min_z": 0.1105151340436613,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.586863996822253,
+            "lateral_path_m": 0.019121424300930143,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 12.631732137135016,
+            "lateral_path_m": 0.4617938723714736,
+            "lateral_limit_m": 0.22811190448322197,
+            "passed": false
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 23.27869418626031,
+            "lateral_path_m": 0.051798162784380195,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 1.9000000000000004,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    },
+    {
+      "case": "sprint_w_first",
+      "seed": 929103,
+      "metrics": {
+        "success": false,
+        "fell": false,
+        "first_fall_s": null,
+        "score": 0.0,
+        "sustained_mean_vx": 0.3448173499742537,
+        "sustained_p10_vx": 0.21947620302430743,
+        "max_tilt": 11.739903989103995,
+        "min_z": 0.10982984939732027,
+        "straight": [
+          {
+            "at": 1,
+            "heading_error_deg": 2.07099717456731,
+            "lateral_path_m": 0.017750285541165277,
+            "lateral_limit_m": 0.05,
+            "passed": true
+          },
+          {
+            "at": 3,
+            "heading_error_deg": 5.541976271322116,
+            "lateral_path_m": 0.3455427410792167,
+            "lateral_limit_m": 0.2297336861388527,
+            "passed": false
+          },
+          {
+            "at": 10,
+            "heading_error_deg": 25.89298946650084,
+            "lateral_path_m": 0.060810794418172553,
+            "lateral_limit_m": 0.05,
+            "passed": false
+          }
+        ],
+        "turns": [],
+        "stops": [
+          {
+            "at": 12,
+            "onset_s": 1.4600000000000009,
+            "passed": true
+          }
+        ],
+        "actor_selection_passed": true,
+        "speed_gain_gate": "requires paired ordinary result"
+      },
+      "error": null
+    }
+  ],
+  "ordinary_pass": 0
+}
