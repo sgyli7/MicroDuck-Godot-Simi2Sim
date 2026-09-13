@@ -1,5 +1,5 @@
 {
-  "unix": 1789318257.7845263,
+  "unix": 1789318464.1512985,
   "started": 9,
   "finished": 9,
   "missing_terminal": [],
@@ -26,7 +26,7 @@
       "--format=csv,noheader"
     ],
     "returncode": 0,
-    "stdout": "NVIDIA GB10, 6 %, [N/A]",
+    "stdout": "NVIDIA GB10, 7 %, [N/A]",
     "stderr": ""
   },
   "gpu_apps": {

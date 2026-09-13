@@ -1,0 +1,142 @@
+{
+  "status": "diagnosis_complete_running_unresolved",
+  "unix": 1789318569.0721974,
+  "budget": {
+    "limit_seconds": 3600.0,
+    "used_seconds": 2147.28831866401,
+    "remaining_seconds": 1452.7116813359899,
+    "actors": [],
+    "unconfirmed_gaps": 0
+  },
+  "initial_estimated_seconds": 240,
+  "code_commit": "0fd4c758b2a7c15bceb86f7debfe99fe74ef8b69",
+  "remote": "https://github.com/sgyli7/Robot_Godot_Sim2Sim.git",
+  "publication_verified": true,
+  "resources": {
+    "unix": 1789318464.1512985,
+    "started": 9,
+    "finished": 9,
+    "missing_terminal": [],
+    "cleanup_remaining": {},
+    "live_owned_pids": [],
+    "live_owned_groups": [],
+    "live_session_marker_processes": [],
+    "all_godot_processes": [],
+    "docker": {
+      "command": [
+        "docker",
+        "ps",
+        "--format",
+        "{{.ID}}\t{{.Names}}\t{{.Image}}"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "gpu": {
+      "command": [
+        "nvidia-smi",
+        "--query-gpu=name,utilization.gpu,memory.used",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "stdout": "NVIDIA GB10, 7 %, [N/A]",
+      "stderr": ""
+    },
+    "gpu_apps": {
+      "command": [
+        "nvidia-smi",
+        "--query-compute-apps=pid,process_name,used_gpu_memory",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 217 MiB",
+      "stderr": ""
+    },
+    "job_results": [
+      {
+        "actor": "desktop_w_shift_s:892793f42f",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "actual_workshop_keyboard:0a3a830e37",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "read_only_gait_diagnostic:b2414a9596",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "fixed_command_ceiling:7d8726af41",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "native_ceiling_gate:2e74c659b0",
+        "returncode": 0,
+        "reason": "completed"
+      },
+      {
+        "actor": "speed_hud_equivalence:862e65968c",
+        "returncode": 2,
+        "reason": "completed"
+      },
+      {
+        "actor": "speed_hud_equivalence_retry:18e2dc833d",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "same_w_hold_shift_transition:8c0b1e87bc",
+        "returncode": 1,
+        "reason": "completed"
+      },
+      {
+        "actor": "continuous_keys_and_reset:c9ceab7f25",
+        "returncode": 0,
+        "reason": "completed"
+      }
+    ],
+    "passed": true,
+    "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+  },
+  "merged_tests": {
+    "patterns": [
+      "test_sprint_input.py",
+      "test_sprint_yaw_reversal.py",
+      "test_default_sprint.py",
+      "test_sprint_score.py",
+      "test_sai_terrain.py"
+    ],
+    "tests": 19,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": true
+  },
+  "temporary_runtimes": {
+    "removed": [
+      {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/runtime",
+        "models_verified": true
+      },
+      {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ui_runtime",
+        "models_verified": true
+      },
+      {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/runtime",
+        "models_verified": true
+      },
+      {
+        "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/runtime",
+        "models_verified": true
+      }
+    ],
+    "raw_trajectories_preserved": true
+  },
+  "accounting_boundary": "Work through verified code push and cleanup. Final commit/push of this sealing record follows this timestamp."
+}

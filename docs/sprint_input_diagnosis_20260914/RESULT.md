@@ -58,3 +58,5 @@
 原始测量和失败保留在 `results/sprint_input_diagnosis_20260914/`。本轮没有进行训练，CPU 工作是有限时长的原生物理诊断。收尾的进程退出、有效工时与文件校验见 `evidence/closeout.json`。下一轮不要重用本轮开发种子做最终验收，也不要把本报告称为已经解决前向跑步质量。
 
 16 项相关输入 / 评分 / 默认模型检查全部通过。四份临时 runtime 的模型校验后已清理，原始轨迹保留。
+
+与最新主线 Sai 更新自动合并后，19 项相关检查全部通过。本轮实际累计约 35.8 分钟（含开账前估计 4 分钟），9/9 监督任务均结束，封存时无残留 Godot/训练进程。代码已推送并核对 GitHub `main`：[`0fd4c75`](https://github.com/sgyli7/Robot_Godot_Sim2Sim/commit/0fd4c758b2a7c15bceb86f7debfe99fe74ef8b69)。
