@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "checks": {
+    "selection": true,
+    "speed_gain": true,
+    "display_matches": true,
+    "reset_zero": true,
+    "no_falls": true
+  },
+  "phases": [
+    {
+      "sprint": false,
+      "speed": 0.19872007166465716,
+      "display": 0.19787980504333974
+    },
+    {
+      "sprint": true,
+      "speed": 0.24889813633305727,
+      "display": 0.24365458257344305
+    },
+    {
+      "sprint": false,
+      "speed": 0.19037961473457687,
+      "display": 0.18816836938566092
+    }
+  ],
+  "input": "Godot InputEventKey in the actual desktop workshop. X11 separate runs passed; an additional continuous X11 attempt was stopped after the owned window lost focus, so it is not counted as passed."
+}

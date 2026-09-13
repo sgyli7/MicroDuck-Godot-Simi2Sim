@@ -1,0 +1,21 @@
+{
+  "removed": [
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/runtime",
+      "models_verified": true
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ui_runtime",
+      "models_verified": true
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/runtime",
+      "models_verified": true
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/runtime",
+      "models_verified": true
+    }
+  ],
+  "raw_trajectories_preserved": true
+}

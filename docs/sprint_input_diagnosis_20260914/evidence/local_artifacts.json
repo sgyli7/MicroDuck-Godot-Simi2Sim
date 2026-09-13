@@ -1,0 +1,486 @@
+{
+  "files": [
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/baseline/backward/native-0.json",
+      "bytes": 1736824,
+      "sha256": "2d6ef168600fba37e25813ec8c8812b6145fb5d1841f2ac07c17944b8bfc1a09"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/baseline/forward/native-0.json",
+      "bytes": 1727285,
+      "sha256": "0ccc0d8ac89553b6977c6297d05ceeaebbb3f446c8900efaeb3520a2c3b8ffee"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/baseline/sprint/native-0.json",
+      "bytes": 1733573,
+      "sha256": "cf038ccc8963f73b8de4dc082aeef332ec50d9c27428d722ff419cca218217ae"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_alternate_929100/attempt_01/trace.json",
+      "bytes": 10146234,
+      "sha256": "0776a7755ecc6c00bb7269de95dcd5114587399e498eef4a15f222f16ff90a82"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_alternate_929101/attempt_01/trace.json",
+      "bytes": 10150382,
+      "sha256": "9b8875778a063c4677ac08619c6ce9b0cc45bab3d6babeab3d59fa24d0c870b9"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_alternate_929102/attempt_01/trace.json",
+      "bytes": 10147199,
+      "sha256": "dc9dc474680138cd8ef30184f1c636b97230cb2826af7e646028d98d7d619719"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_alternate_929103/attempt_01/trace.json",
+      "bytes": 10199799,
+      "sha256": "531018bff71e8b91023d67d31904557788c510e18a16f24058793b78a4ec4b8d"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_left_929100/attempt_01/trace.json",
+      "bytes": 7950607,
+      "sha256": "f132c6a6a32f5152830f7b34382e43f795f14f722bee75d55aa2db043cfb22ae"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_left_929101/attempt_01/trace.json",
+      "bytes": 7965880,
+      "sha256": "61fb242fdaf9302c50bcae2ea6864f783950aba108c4dc5b4cc43339cabe0a26"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_left_929102/attempt_01/trace.json",
+      "bytes": 7939703,
+      "sha256": "6e03cde633a9235013ec63d3dfdc8f022a10afad5e74ecc1e7657b2769306299"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_left_929103/attempt_01/trace.json",
+      "bytes": 8009023,
+      "sha256": "c0a2b75882999d143b2aaa44c7e00036d58723d03dc5fe078fdf572457d29ebe"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_long_929100/attempt_01/trace.json",
+      "bytes": 13947921,
+      "sha256": "92dad71a1f5dda4e8192c67eafcf793509f0b3df3a8716378f5d2d582c0b60da"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_long_929101/attempt_01/trace.json",
+      "bytes": 14019634,
+      "sha256": "edde60d6d2ef8526b92ada54609dec52e3ac4713b2d4fe005bdd4f72c8527b1f"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_long_929102/attempt_01/trace.json",
+      "bytes": 13990216,
+      "sha256": "609d43bd4e6470dc09edf5965a362a621d40e2dcb0c7afb91d5582cd7372a81f"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_long_929103/attempt_01/trace.json",
+      "bytes": 14026104,
+      "sha256": "e60b90bba6ad66ea907e761591c7399f60d7d822fea21968fc04831303949a38"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_repeat_929100/attempt_01/trace.json",
+      "bytes": 9664416,
+      "sha256": "72c584924f3abfc72752fe0dff1e318e50963f4774d2892282363e36e975a4b3"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_repeat_929101/attempt_01/trace.json",
+      "bytes": 9694035,
+      "sha256": "eac3511d7419a76d6446bf8ab214d47324a7ffaa233f6db6220081c3bcf69413"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_repeat_929102/attempt_01/trace.json",
+      "bytes": 9665017,
+      "sha256": "4a88314dc86344f4635692f7fc25c4cb7a65bada830175dccaba8a75bc68a9a4"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_repeat_929103/attempt_01/trace.json",
+      "bytes": 9714584,
+      "sha256": "97f4ac025e8b8eca86ea6bf85454e0ef3877439d99334f8a0643ffb9dfa8a03c"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_right_929100/attempt_01/trace.json",
+      "bytes": 7957458,
+      "sha256": "8c6b542eb869be0f9319836dfb6c30202ce018e06ea08e5e9975edb575bb3603"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_right_929101/attempt_01/trace.json",
+      "bytes": 7982305,
+      "sha256": "3235cd6273aa6f9c9fc5cc711a2c41e21012569ed628a8f6dcf99b4facbf6542"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_right_929102/attempt_01/trace.json",
+      "bytes": 7953536,
+      "sha256": "68519c34157f454817f708919cd616b8d7ee1dea1e8c684c94c1f3535c9c2c6b"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_right_929103/attempt_01/trace.json",
+      "bytes": 7982566,
+      "sha256": "9007c637956c536e3204df22abd57061571e336ea9efca0eddf5bca9b7e4a193"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_shift_first_929100/attempt_01/trace.json",
+      "bytes": 6776171,
+      "sha256": "b779b54de5a46f1f37751cfc40350406c143f71db4c27e2dd84bc0c18bf166fa"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_shift_first_929101/attempt_01/trace.json",
+      "bytes": 6792070,
+      "sha256": "a2e39f79f93289564f2730e1a33a9aee79b5b94948e19145092b9d7ea1ef37b9"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_shift_first_929102/attempt_01/trace.json",
+      "bytes": 6798473,
+      "sha256": "259180aa13e09382f3f066f2fdcd03e189d7dbd2329e86305964a656b2fb2b3b"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_shift_first_929103/attempt_01/trace.json",
+      "bytes": 6841928,
+      "sha256": "947bf5ca8c3bbf3f3103aaef17af9d566d1d5bcca22d296982583e53eb1ee07f"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_turn_release_929100/attempt_01/trace.json",
+      "bytes": 9024738,
+      "sha256": "3bc2da33f6c0b5abf8b0fe3fe6eeb0003e5f15e9242a0ab7d47c527c839c358e"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_turn_release_929101/attempt_01/trace.json",
+      "bytes": 9077594,
+      "sha256": "718c75b66894dd87cb78656e0f6faf2a5600360f1ca0551849bd919294144039"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_turn_release_929102/attempt_01/trace.json",
+      "bytes": 9070581,
+      "sha256": "24c71d8c2f17b78031efbf41ffbb1dcbdcb9a98d9e0d9ab851e831e498bd075b"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_turn_release_929103/attempt_01/trace.json",
+      "bytes": 9032744,
+      "sha256": "bdea3cd5c2d22ebc007685804c9d2abd4e2cf64ad7d6cb50f9964df0af4c2303"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_w_first_929100/attempt_01/trace.json",
+      "bytes": 8999218,
+      "sha256": "814539583161eb2a77dd5e8ce38c9712d10d60ca14a9ce4ad0c7d6f872648be9"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_w_first_929101/attempt_01/trace.json",
+      "bytes": 9081015,
+      "sha256": "e7acac529913154f3e259cdf76cb9e0a9082a76674e67fea920a54117196e3fa"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_w_first_929102/attempt_01/trace.json",
+      "bytes": 9079135,
+      "sha256": "c5b3bdef965858c3413f46f22bf4f39f89481c57b1a3a5463671529cc1c67ff7"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/baseline/suite/sprint_w_first_929103/attempt_01/trace.json",
+      "bytes": 9018779,
+      "sha256": "917d924d7d128a581c11fc026749d777dfa5c4d9563bc37313962f5c888bcb02"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_alternate_929100/attempt_01/trace.json",
+      "bytes": 9985178,
+      "sha256": "307be542d7fa394d924a57eb9aaae3e176318df17fc263fadf21d95e14510a87"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_alternate_929101/attempt_01/trace.json",
+      "bytes": 10121424,
+      "sha256": "5f47c64c8a8ea4a03069891d49431e2e421d8f0515f7df12b459a183998ec14f"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_alternate_929102/attempt_01/trace.json",
+      "bytes": 10027839,
+      "sha256": "fc8958e968f08225d0e076f8cd73ee4a81943dd2be87c75569bdf59a0fc0d86e"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_alternate_929103/attempt_01/trace.json",
+      "bytes": 10020015,
+      "sha256": "c2f945f2d29e7653856d7710cc784bc973b71d59e407352beb10b6b9d9a7065c"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_left_929100/attempt_01/trace.json",
+      "bytes": 7845170,
+      "sha256": "69968851653bd981a05c785c6909cdc0d206fb6c93985d9e380564ab7a3db749"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_left_929101/attempt_01/trace.json",
+      "bytes": 7852836,
+      "sha256": "31c879de49fc7b8ffc468090524f186c5813782fbfe279a72b9bd4d05cdcbe46"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_left_929102/attempt_01/trace.json",
+      "bytes": 7862912,
+      "sha256": "b773072d885c44641e654c867ab14e1f23e8b5b05bb78bddf1605874cb5cd31d"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_left_929103/attempt_01/trace.json",
+      "bytes": 7876054,
+      "sha256": "d9ec42663ba4ab11d716d93a31b76fe1406832ceb012a415b3d2c5f7e84c3522"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_long_929100/attempt_01/trace.json",
+      "bytes": 13797697,
+      "sha256": "f8488d915509a706f7997c5cb2803d622dd822001d08b3cac82444099249301c"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_long_929101/attempt_01/trace.json",
+      "bytes": 13849826,
+      "sha256": "5a3e5deb4c56c4f6be7792d3864d877d2f5359b88aa3a3423f975ae887a5ac90"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_long_929102/attempt_01/trace.json",
+      "bytes": 13916729,
+      "sha256": "b76de8f6316bbcae1254942ab15893963a489e0be42878567f978af9f2ca6756"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_long_929103/attempt_01/trace.json",
+      "bytes": 13880779,
+      "sha256": "a5aa05f6f5c2fb249d70b03efb85e7f823a758a5dd680c22e55737c91a451366"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_repeat_929100/attempt_01/trace.json",
+      "bytes": 9540974,
+      "sha256": "fdef4a295d7930318b5af53af4eb6c67ac7e08030f9e614d1592de2003717c21"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_repeat_929101/attempt_01/trace.json",
+      "bytes": 9568697,
+      "sha256": "2a6e251749d37163afa3e20e518a5f6b46cb20eecc015c6f64a3222e1676477f"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_repeat_929102/attempt_01/trace.json",
+      "bytes": 9475284,
+      "sha256": "f84fb9da943ce962a0cb9a7c0a81ed8ade3fc3df22d4491a91b2c2d24e352f15"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_repeat_929103/attempt_01/trace.json",
+      "bytes": 9553452,
+      "sha256": "145c733b5428c2add4f651947ea6d532df8a2994c364613e305215939834a6a4"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_right_929100/attempt_01/trace.json",
+      "bytes": 7827161,
+      "sha256": "e0270a170ca9ba6dd6288893032743d1c1749ed40143e29160ca11151b57f249"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_right_929101/attempt_01/trace.json",
+      "bytes": 7875166,
+      "sha256": "09bf5735f4216355c170bb9685955a6f6a9bf8a6e8dc871caa5ba326edca36c9"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_right_929102/attempt_01/trace.json",
+      "bytes": 7821644,
+      "sha256": "80e4269bf2645a8ae9442f8b3ad906fb5cac43c7791e7bfdc5919313b65b7196"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_right_929103/attempt_01/trace.json",
+      "bytes": 7856903,
+      "sha256": "2543ad4d8783350366faed0aa5667119821a73fb8aa1dd48a0d4eb804692a3aa"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_shift_first_929100/attempt_01/trace.json",
+      "bytes": 6673335,
+      "sha256": "4a4d16c1a0b326d86d77735c5253d0005137bfe3329b372b94b0237fab865a33"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_shift_first_929101/attempt_01/trace.json",
+      "bytes": 6708703,
+      "sha256": "d9405f4ce8c50abbfcdd998ec77a206bba27eb4ed77621e2555380fd40a9bf27"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_shift_first_929102/attempt_01/trace.json",
+      "bytes": 6729170,
+      "sha256": "e75b0f0129778847c8a15a9eb26549e247b8699a9d347bbc7b8168afb75c7c73"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_shift_first_929103/attempt_01/trace.json",
+      "bytes": 6752956,
+      "sha256": "611181b161f2aac90e9792d7a2c0650e610e9081cb388588df1f79a053ce862f"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_turn_release_929100/attempt_01/trace.json",
+      "bytes": 8945013,
+      "sha256": "c5dcd4aa1ff50f35d54cd1b6d0522aaeda176e224cb99bda65af6420deef77c9"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_turn_release_929101/attempt_01/trace.json",
+      "bytes": 8987501,
+      "sha256": "8f867219b4cf6101fc5c656d62369edab9a9255a373db10b1e9e1b02f890f82b"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_turn_release_929102/attempt_01/trace.json",
+      "bytes": 9022859,
+      "sha256": "627745bca5233757e11b73ed228b7ed062943c48d7b52dc4a26b07ae3a5e08bd"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_turn_release_929103/attempt_01/trace.json",
+      "bytes": 9055823,
+      "sha256": "e1900fbeeb2f3723dd59231c9c2fea053e91b86a5885497ca455e1f9e8d4fcc6"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_w_first_929100/attempt_01/trace.json",
+      "bytes": 8968403,
+      "sha256": "81bf5aee234dcf29fb632b36396494ee9dfd26650ff8fccd153d6f0cc4d1d2ee"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_w_first_929101/attempt_01/trace.json",
+      "bytes": 9046338,
+      "sha256": "78839e74632a4721fea3729a7427109f70f07c452726663fb686bc081fea76cd"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_w_first_929102/attempt_01/trace.json",
+      "bytes": 9068508,
+      "sha256": "696de47cb428ed5c1bf7d6b77735a29942bb807d61324fcb38ca0d6992779b8f"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ceiling_gate/candidate/suite/sprint_w_first_929103/attempt_01/trace.json",
+      "bytes": 9081168,
+      "sha256": "281a08f3f1aeb329e9bf611327496ff3f15695d5b38df255c0a7ba0b6d065c85"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/command_ceiling/backward/native-0.json",
+      "bytes": 2582260,
+      "sha256": "3c9810a4240a58422ae6b44a6d4a614cb61bdbd45f7b167aa9cf1b3a4414649b"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/command_ceiling/forward/native-0.json",
+      "bytes": 2569584,
+      "sha256": "1444eaec1966aa73520c565923e0e30fc00ac40a8ea448d45ab2686e21298c4c"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/command_ceiling/sprint/native-0.json",
+      "bytes": 2575430,
+      "sha256": "e8b9752f7b83b9d2818e5ef50ae9aca9d3905fa968b2bc6d2f9e89c9c02f3b41"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/command_ceiling/sprint_forward_045/native-0.json",
+      "bytes": 2554010,
+      "sha256": "f4a698308c7a6143de1b62d44add1f7358b8e2dd36ee776eff9b5dd61b394240"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/command_ceiling/walk_backward_025/native-0.json",
+      "bytes": 2585648,
+      "sha256": "c60cb90ddc94faf08c23b8e2336ac33bd3163e184c32da9f783680a6d69f6647"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/command_ceiling/walk_forward_030/native-0.json",
+      "bytes": 2575012,
+      "sha256": "c8b6ac6a25d5adeeeff9083fd71bc1fb63c006795ce1ed41620e3c3e19ba13df"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/continuous_keys/native-0.json",
+      "bytes": 2753658,
+      "sha256": "ba86e6ebb1ac58af22121a9d10a6a7d52d43ebe7032c237a33fc0354c46b63ee"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/continuous_keys/native-1.json",
+      "bytes": 360986,
+      "sha256": "6b262c5ed9c3e52a00965e751bea7f3fcb39b7f8235fc6e0f5e5a09594e711b1"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/backward/native-0.json",
+      "bytes": 2582260,
+      "sha256": "3db0789764f8477513250ad6f063455900ca07865363851832b1fff1245cb0c4"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/forward/native-0.json",
+      "bytes": 2569584,
+      "sha256": "4dd2715363259c596f498214dc68cf6ff1c51cad1537ab5aae3a87cee58a4bb9"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/sprint/native-0.json",
+      "bytes": 2575431,
+      "sha256": "5e711b4c5ab4a9bdfd276544dd70b68669642dc5cc054d422ef3566925b704a6"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/walk_backward_025/native-0.json",
+      "bytes": 2585649,
+      "sha256": "e5b2f39079a551173196bdd1191179d40ceac7b1c8165ae10c3fe13b6532f473"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/walk_forward_030/native-0.json",
+      "bytes": 2575011,
+      "sha256": "665ab9480bbddd68210d01a7c680fe64b6aec17264e39594b3b6cb5d985c8f99"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait_comparison.png",
+      "bytes": 482124,
+      "sha256": "0cc2137da2f131e4e92884a11497e318b9dc34194995d78892185acae4d431c7"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_baseline/backward/native-0.json",
+      "bytes": 1520356,
+      "sha256": "468b1c26a63a3a4d870ed276e205c23763cdce970e15789639fee7ee84845a4b"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_baseline/forward/native-0.json",
+      "bytes": 1528871,
+      "sha256": "57d15426e9dbaed8449ab1377ca475334b5dd1692acc3aec10f5f6bf5d588add"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_baseline/sprint/native-0.json",
+      "bytes": 1568674,
+      "sha256": "808afd4659be626124172e161abc638a8e1e9e8f933e1fd640e3648364417782"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_transition/frames/00000.jpg",
+      "bytes": 33269,
+      "sha256": "1335d80c8be7642608d9e760b21c684ab3c63224a5480c464fe6675d85a553ef"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_transition/frames/00001.jpg",
+      "bytes": 460549,
+      "sha256": "b0936b23478fcb92e36ab5aed4450e376d5e1e97c44526d22a0debc0f094db31"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_transition/frames/00002.jpg",
+      "bytes": 462455,
+      "sha256": "2e982434d8461c52189f7bfe46c939f6f29f9b6a753b225637765b2987715e95"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_transition/frames/00003.jpg",
+      "bytes": 466835,
+      "sha256": "3413f208cb726ad584cc0eeebf0010de2b5d10425f53640eeae9ce3936dc9ad5"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_transition/frames/00004.jpg",
+      "bytes": 467186,
+      "sha256": "1e6440e492b1ea018a3eb3ff9ac5123e4e22e4e4deeea1667347a4903c828a90"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_transition/frames/00005.jpg",
+      "bytes": 468629,
+      "sha256": "2870ff55a64cb89a6513a2bf5090796f1eb4ea1a4d7bfcea36d45aaa6b0cb3f9"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_transition/frames/00006.jpg",
+      "bytes": 467208,
+      "sha256": "a78eea4122c867659a307a33d37b293d6f1262e1d9bb03f3f28a8b16a1eead75"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_transition/frames/00007.jpg",
+      "bytes": 482250,
+      "sha256": "aa775f173305a75998ab8b840ab09ae98c1eabfa693a75823baacfea566eadf9"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/host_transition/frames/00008.jpg",
+      "bytes": 511559,
+      "sha256": "526b55b6732c0e917031147797d6a49b7b5a673d50421170c5a25e7c458089eb"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ui_equivalence/backward/native-0.json",
+      "bytes": 1745668,
+      "sha256": "dc724032d1202e3fc8f9ea26e049901ee8075f742004110caa177457b0d5b543"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ui_equivalence/forward/native-0.json",
+      "bytes": 1736130,
+      "sha256": "819a5d7b57f2e44c095cff4145b0f35fc0135337f348729cfa20f14ce1b720ab"
+    },
+    {
+      "path": "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/ui_equivalence/sprint/native-0.json",
+      "bytes": 1742411,
+      "sha256": "93e338ecde69bd82986467a3f29dd8f6af315355ce357b6c510e22c274d48e27"
+    }
+  ],
+  "count": 96,
+  "bytes": 645080961
+}

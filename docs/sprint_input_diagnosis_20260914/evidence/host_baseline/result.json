@@ -1,0 +1,45 @@
+{
+  "cases": {
+    "forward": {
+      "skills": [
+        "walking"
+      ],
+      "held": [
+        "fwd"
+      ],
+      "request_x": 0.25,
+      "velocity_x": 0.18973275789138835,
+      "first_fall": null
+    },
+    "sprint": {
+      "skills": [
+        "sprint"
+      ],
+      "held": [
+        "fwd",
+        "sprint"
+      ],
+      "request_x": 0.300000011920929,
+      "velocity_x": 0.2363831402429182,
+      "first_fall": null
+    },
+    "backward": {
+      "skills": [
+        "walking"
+      ],
+      "held": [
+        "back"
+      ],
+      "request_x": -0.300000011920929,
+      "velocity_x": -0.2890132225044319,
+      "first_fall": null
+    }
+  },
+  "checks": {
+    "sprint_model_selected": true,
+    "sprint_faster": true,
+    "backward_not_faster": false
+  },
+  "passed": false,
+  "input": "Synthetic OS X11 events, actual desktop workshop scene and current model/control files"
+}

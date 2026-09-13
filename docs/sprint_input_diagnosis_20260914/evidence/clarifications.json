@@ -1,0 +1,9 @@
+{
+  "notes": [
+    "The generic scope string in gait/result.json and command_ceiling/result.json said no model/control modifications; production defaults were unchanged, but those diagnostic cases deliberately override only the recorded command cap in an isolated runtime, then restore it. All model weights remain identical.",
+    "The generic probe verdict stays false for ui_equivalence because backward_not_faster is deliberately left unfixed. ui_equivalence/verified.json separately proves the speed HUD changes no controls.",
+    "speed_hud_equivalence-2f35097c34 failed before simulation because --project was not yet installed; the retry completed. A source-edit assertion protected the source before that harness update.",
+    "host_transition stopped on owned-window focus loss. Separate X11 cases and engine continuous-key replay are distinct evidence.",
+    "The first closeout compared Godot-serialized trace metadata directly with full precision Python source JSON, triggering an assertion due only to decimal serialization. The corrected audit compares the original prepared source JSON and exact model/spec hashes. No control/physics gate changed."
+  ]
+}

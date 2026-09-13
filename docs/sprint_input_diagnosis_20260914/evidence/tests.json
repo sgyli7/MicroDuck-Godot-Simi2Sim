@@ -1,0 +1,13 @@
+{
+  "patterns": [
+    "test_sprint_input.py",
+    "test_sprint_yaw_reversal.py",
+    "test_default_sprint.py",
+    "test_sprint_score.py"
+  ],
+  "tests": 16,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": true
+}

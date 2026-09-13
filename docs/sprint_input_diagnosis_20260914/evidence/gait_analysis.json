@@ -1,0 +1,322 @@
+{
+  "robot_mass_kg": 0.73724318,
+  "robot_body_count": 15,
+  "cases": {
+    "forward": {
+      "speed_mps": 0.18923680546340316,
+      "pitch_degrees_mean": 2.1187954700519365,
+      "pitch_degrees_p05_p95": [
+        0.3898338883806315,
+        4.219489645503807
+      ],
+      "tilt_toward_motion_mean": 2.1187954700519365,
+      "com_height_mean": 0.14135238158493155,
+      "com_height_std": 0.0011959552899670864,
+      "com_vs_supporting_ankle_centers_m": 0.002798478091316446,
+      "double_support_fraction": 0.10344827586206896,
+      "no_foot_contact_fraction": 0.0,
+      "observed_footfalls": 12,
+      "footfalls_per_second": 4.166666666666663,
+      "same_foot_stride_median": 0.09475037455558799,
+      "mean_step_length_m": 0.047375187277793995,
+      "landing_speed_change_60ms": -0.1102435607773048,
+      "feet": {
+        "ankle_left": {
+          "duty_factor": 0.5862068965517241,
+          "landing_times": [
+            1.61999999999999,
+            2.09999999999998,
+            2.57999999999997,
+            3.07999999999996,
+            3.57999999999995,
+            4.05999999999994
+          ],
+          "stride_lengths_m": [
+            0.09982714056968703,
+            0.10056993365287797,
+            0.08752208948135398,
+            0.07957953214645297,
+            0.093411445617676
+          ],
+          "height_range_p05_p95_m": 0.0109559353441
+        },
+        "ankle_right": {
+          "duty_factor": 0.5172413793103449,
+          "landing_times": [
+            1.85999999999998,
+            2.33999999999997,
+            2.83999999999996,
+            3.33999999999995,
+            3.83999999999994,
+            4.31999999999993
+          ],
+          "stride_lengths_m": [
+            0.09895145893096902,
+            0.101576209068298,
+            0.09245032072067294,
+            0.07647877931594804,
+            0.09608930349349998
+          ],
+          "height_range_p05_p95_m": 0.012729439325630677
+        }
+      }
+    },
+    "sprint": {
+      "speed_mps": 0.2340499181473105,
+      "pitch_degrees_mean": 3.3514466842276596,
+      "pitch_degrees_p05_p95": [
+        0.8108409489502219,
+        6.0863678455077945
+      ],
+      "tilt_toward_motion_mean": 3.3514466842276596,
+      "com_height_mean": 0.14196170639849373,
+      "com_height_std": 0.001606934481635587,
+      "com_vs_supporting_ankle_centers_m": 0.009072073681467722,
+      "double_support_fraction": 0.12413793103448276,
+      "no_foot_contact_fraction": 0.0,
+      "observed_footfalls": 12,
+      "footfalls_per_second": 4.166666666666832,
+      "same_foot_stride_median": 0.11272107064724005,
+      "mean_step_length_m": 0.05636053532362002,
+      "landing_speed_change_60ms": -0.099634126258425,
+      "feet": {
+        "ankle_left": {
+          "duty_factor": 0.5724137931034483,
+          "landing_times": [
+            1.61999999999999,
+            2.09999999999998,
+            2.59999999999997,
+            3.07999999999996,
+            3.55999999999995,
+            4.03999999999994
+          ],
+          "stride_lengths_m": [
+            0.11769004166126198,
+            0.11321136355400102,
+            0.10588997602462796,
+            0.10791695117950406,
+            0.11827534437179599
+          ],
+          "height_range_p05_p95_m": 0.012965351715683922
+        },
+        "ankle_right": {
+          "duty_factor": 0.5517241379310345,
+          "landing_times": [
+            1.85999999999998,
+            2.33999999999997,
+            2.83999999999996,
+            3.31999999999995,
+            3.79999999999994,
+            4.27999999999993
+          ],
+          "stride_lengths_m": [
+            0.11694079637527405,
+            0.10528364777565002,
+            0.10384690761566195,
+            0.11621510982513394,
+            0.11223077774047907
+          ],
+          "height_range_p05_p95_m": 0.014780574850737974
+        }
+      }
+    },
+    "backward": {
+      "speed_mps": 0.2842715419825424,
+      "pitch_degrees_mean": -3.7407056783734567,
+      "pitch_degrees_p05_p95": [
+        -6.452861299883942,
+        -1.6016445071816672
+      ],
+      "tilt_toward_motion_mean": 3.7407056783734567,
+      "com_height_mean": 0.14224110431630047,
+      "com_height_std": 0.0036763627347885454,
+      "com_vs_supporting_ankle_centers_m": 0.010451721937384735,
+      "double_support_fraction": 0.04827586206896552,
+      "no_foot_contact_fraction": 0.0,
+      "observed_footfalls": 10,
+      "footfalls_per_second": 3.8461538461538427,
+      "same_foot_stride_median": 0.1437501013278965,
+      "mean_step_length_m": 0.07187505066394825,
+      "landing_speed_change_60ms": -0.10713661850931437,
+      "feet": {
+        "ankle_left": {
+          "duty_factor": 0.503448275862069,
+          "landing_times": [
+            1.73999999999998,
+            2.27999999999997,
+            2.81999999999996,
+            3.35999999999995,
+            3.87999999999994
+          ],
+          "stride_lengths_m": [
+            0.142550706863404,
+            0.13883361220359797,
+            0.159579277038574,
+            0.15497493743896507
+          ],
+          "height_range_p05_p95_m": 0.028430984169244736
+        },
+        "ankle_right": {
+          "duty_factor": 0.5448275862068965,
+          "landing_times": [
+            2.01999999999998,
+            2.55999999999997,
+            3.07999999999996,
+            3.61999999999995,
+            4.15999999999993
+          ],
+          "stride_lengths_m": [
+            0.13770994544029197,
+            0.144237279891968,
+            0.16700434684753407,
+            0.14326292276382502
+          ],
+          "height_range_p05_p95_m": 0.03489927258342504
+        }
+      }
+    },
+    "walk_forward_030": {
+      "speed_mps": 0.23072991726943604,
+      "pitch_degrees_mean": 2.2463563475236024,
+      "pitch_degrees_p05_p95": [
+        -0.04271355713749573,
+        4.8654367013031905
+      ],
+      "tilt_toward_motion_mean": 2.2463563475236024,
+      "com_height_mean": 0.14164906221659282,
+      "com_height_std": 0.0015123079139154013,
+      "com_vs_supporting_ankle_centers_m": 0.004818229702770218,
+      "double_support_fraction": 0.1103448275862069,
+      "no_foot_contact_fraction": 0.0,
+      "observed_footfalls": 12,
+      "footfalls_per_second": 4.166666666666663,
+      "same_foot_stride_median": 0.11397722363471946,
+      "mean_step_length_m": 0.05698861181735973,
+      "landing_speed_change_60ms": -0.1344714935117587,
+      "feet": {
+        "ankle_left": {
+          "duty_factor": 0.5862068965517241,
+          "landing_times": [
+            1.61999999999999,
+            2.09999999999998,
+            2.59999999999997,
+            3.09999999999996,
+            3.59999999999995,
+            4.07999999999994
+          ],
+          "stride_lengths_m": [
+            0.12555667757987998,
+            0.113700300455093,
+            0.10280889272689797,
+            0.10006374120712302,
+            0.11931324005126998
+          ],
+          "height_range_p05_p95_m": 0.011746301874518437
+        },
+        "ankle_right": {
+          "duty_factor": 0.5241379310344828,
+          "landing_times": [
+            1.85999999999998,
+            2.35999999999997,
+            2.85999999999996,
+            3.35999999999995,
+            3.83999999999994,
+            4.33999999999993
+          ],
+          "stride_lengths_m": [
+            0.11599406599998502,
+            0.11425414681434592,
+            0.094929158687592,
+            0.11009037494659402,
+            0.12378370761871305
+          ],
+          "height_range_p05_p95_m": 0.014520674385130397
+        }
+      }
+    },
+    "walk_backward_025": {
+      "speed_mps": 0.23578216165521548,
+      "pitch_degrees_mean": -3.1529206149010194,
+      "pitch_degrees_p05_p95": [
+        -5.18398836493941,
+        -1.4377031508465514
+      ],
+      "tilt_toward_motion_mean": 3.1529206149010194,
+      "com_height_mean": 0.1421291586997243,
+      "com_height_std": 0.002770863291299881,
+      "com_vs_supporting_ankle_centers_m": 0.009261195181650368,
+      "double_support_fraction": 0.07586206896551724,
+      "no_foot_contact_fraction": 0.0,
+      "observed_footfalls": 11,
+      "footfalls_per_second": 3.8461538461539218,
+      "same_foot_stride_median": 0.12214830517768893,
+      "mean_step_length_m": 0.061074152588844466,
+      "landing_speed_change_60ms": -0.09572716548802156,
+      "feet": {
+        "ankle_left": {
+          "duty_factor": 0.5172413793103449,
+          "landing_times": [
+            1.73999999999998,
+            2.27999999999997,
+            2.79999999999996,
+            3.31999999999995,
+            3.85999999999994,
+            4.39999999999993
+          ],
+          "stride_lengths_m": [
+            0.118405520915985,
+            0.12431895732879705,
+            0.12518191337585394,
+            0.11392575502395597,
+            0.125183284282685
+          ],
+          "height_range_p05_p95_m": 0.024010154604911797
+        },
+        "ankle_right": {
+          "duty_factor": 0.5586206896551724,
+          "landing_times": [
+            2.01999999999998,
+            2.53999999999997,
+            3.07999999999996,
+            3.59999999999995,
+            4.11999999999993
+          ],
+          "stride_lengths_m": [
+            0.12197080254554704,
+            0.12214830517768893,
+            0.11873197555542003,
+            0.126353740692138
+          ],
+          "height_range_p05_p95_m": 0.02924232687801122
+        }
+      }
+    }
+  },
+  "telemetry_action_equivalence": {
+    "forward": {
+      "obs": 0.0,
+      "action": 0.0,
+      "last_action": 0.0,
+      "ctrl": 0.0,
+      "command": 0.0,
+      "requested_command": 0.0
+    },
+    "sprint": {
+      "obs": 0.0,
+      "action": 0.0,
+      "last_action": 0.0,
+      "ctrl": 0.0,
+      "command": 0.0,
+      "requested_command": 0.0
+    },
+    "backward": {
+      "obs": 0.0,
+      "action": 0.0,
+      "last_action": 0.0,
+      "ctrl": 0.0,
+      "command": 0.0,
+      "requested_command": 0.0
+    }
+  },
+  "definitions": "Steady window 1.5\u20134.4 s. Body origins are forced CUSTOM/zero inertial COM by the existing engine. Whole-body COM excludes the ball. Support offset is relative to supporting ankle centers, NOT contact polygon or center of pressure. Contacts are median-filtered across 3 frames (60 ms). Footfall/stride sample counts are small. Landing velocity change is a kinematic diagnostic, NOT force attribution. No claim that short contact loss establishes a running gait."
+}

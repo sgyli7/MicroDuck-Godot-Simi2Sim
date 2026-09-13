@@ -1,0 +1,110 @@
+{
+  "cases": {
+    "forward": {
+      "skills": [
+        "walking"
+      ],
+      "held": [
+        "fwd"
+      ],
+      "request_x": 0.25,
+      "command_x": 0.25,
+      "velocity_x": 0.18845940990368273,
+      "lateral_velocity": -0.0009823825750711144,
+      "distance_x": 0.542763100522595,
+      "first_fall": null,
+      "other_contacts": [],
+      "wall_seconds": 1.835298068006523
+    },
+    "sprint": {
+      "skills": [
+        "sprint"
+      ],
+      "held": [
+        "fwd",
+        "sprint"
+      ],
+      "request_x": 0.300000011920929,
+      "command_x": 0.300000011920929,
+      "velocity_x": 0.23400905430956384,
+      "lateral_velocity": -0.0012848012290904089,
+      "distance_x": 0.6739460764115299,
+      "first_fall": null,
+      "other_contacts": [],
+      "wall_seconds": 1.8890874750213698
+    },
+    "backward": {
+      "skills": [
+        "walking"
+      ],
+      "held": [
+        "back"
+      ],
+      "request_x": -0.300000011920929,
+      "command_x": -0.300000011920929,
+      "velocity_x": -0.28698567074419934,
+      "lateral_velocity": -0.01951599162732488,
+      "distance_x": -0.826518731743277,
+      "first_fall": null,
+      "other_contacts": [],
+      "wall_seconds": 1.884276729018893
+    },
+    "walk_forward_030": {
+      "skills": [
+        "walking"
+      ],
+      "held": [
+        "fwd"
+      ],
+      "request_x": 0.300000011920929,
+      "command_x": 0.300000011920929,
+      "velocity_x": 0.23010195369300268,
+      "lateral_velocity": -0.005140333388584061,
+      "distance_x": 0.662693626635834,
+      "first_fall": null,
+      "other_contacts": [],
+      "wall_seconds": 1.8872495479881763
+    },
+    "walk_backward_025": {
+      "skills": [
+        "walking"
+      ],
+      "held": [
+        "back"
+      ],
+      "request_x": -0.25,
+      "command_x": -0.25,
+      "velocity_x": -0.23751886568019,
+      "lateral_velocity": -0.00781816529806609,
+      "distance_x": -0.684054333158933,
+      "first_fall": null,
+      "other_contacts": [],
+      "wall_seconds": 1.8343709540204145
+    },
+    "sprint_forward_045": {
+      "skills": [
+        "sprint"
+      ],
+      "held": [
+        "fwd",
+        "sprint"
+      ],
+      "request_x": 0.449999988079071,
+      "command_x": 0.449999988079071,
+      "velocity_x": 0.34144476764646364,
+      "lateral_velocity": 0.04452685748131356,
+      "distance_x": 0.983360930821795,
+      "first_fall": null,
+      "other_contacts": [],
+      "wall_seconds": 1.884412843035534
+    }
+  },
+  "checks": {
+    "sprint_model_selected": true,
+    "sprint_command_faster": true,
+    "sprint_measurably_faster": true,
+    "backward_not_faster": false
+  },
+  "passed": false,
+  "scope": "Current desktop prepared workshop, identical seed/start, native InputEventKey delivery; steady 1.5\u20134.4 seconds. No model/control modifications."
+}

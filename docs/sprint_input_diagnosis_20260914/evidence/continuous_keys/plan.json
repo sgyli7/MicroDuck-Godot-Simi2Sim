@@ -1,0 +1,37 @@
+{
+  "seconds": 8,
+  "events": [
+    {
+      "at": 0.5,
+      "key": "W",
+      "pressed": true
+    },
+    {
+      "at": 2.5,
+      "key": "Shift",
+      "pressed": true,
+      "location": 1
+    },
+    {
+      "at": 4.5,
+      "key": "Shift",
+      "pressed": false,
+      "location": 1
+    },
+    {
+      "at": 6.5,
+      "key": "W",
+      "pressed": false
+    },
+    {
+      "at": 7.2,
+      "key": "0",
+      "pressed": true
+    },
+    {
+      "at": 7.25,
+      "key": "0",
+      "pressed": false
+    }
+  ]
+}

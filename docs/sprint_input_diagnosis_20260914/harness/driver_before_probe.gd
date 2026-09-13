@@ -20,8 +20,6 @@ var brake_task = BrakeTask.new()
 var local_reply: Dictionary = {}
 var home := PackedFloat32Array()
 var last_action := PackedFloat32Array()
-var measured_speed_mps := 0.0
-var _speed_positions: Array[Vector2] = []
 var heading: Array = [1.0,0.0]
 var session: Dictionary
 var ready_to_run := false
@@ -200,8 +198,6 @@ func _load_models() -> bool:
 	return true
 
 func _reset_controller() -> void:
-	measured_speed_mps = 0.0
-	_speed_positions.clear()
 	brain.reset_motion()
 	motion.reset()
 	brake_task.reset()
@@ -282,9 +278,6 @@ func _replay_error(replay: Dictionary) -> String:
 					return "Unknown replay "+key+" input: "+str(value)
 	return ""
 
-func _ground_height_at(_body_pos: Array) -> float:
-	return 0.0
-
 func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 	var raw := local_reply.duplicate(true)
 	var body := Contract.body_state(raw,robot_config)
@@ -305,12 +298,6 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 		session.resets += 1
 		_reset_controller()
 		return false
-	# UI telemetry uses displacement over 0.4 simulated seconds, so individual
-	# foot strikes do not make the speed display jump. Never feed it to control.
-	_speed_positions.append(Vector2(body.base_pos[0],body.base_pos[1]))
-	if _speed_positions.size() > 21: _speed_positions.pop_front()
-	if _speed_positions.size() > 1:
-		measured_speed_mps = _speed_positions[0].distance_to(_speed_positions[-1]) / (CONTROL_DT * (_speed_positions.size()-1))
 	if out.push:
 		var angle := randf()*TAU
 		_handle({"cmd":"nudge","linvel":[cos(angle),sin(angle),0.0]})
@@ -333,9 +320,7 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 	command = motion.command(command,body,skill,CONTROL_DT)
 	var obs := Contract.observation(raw,body,last_action,command,home)
 	if item.get("state_input", "") == "planar_com_velocity_height_v1":
-		var height_body: Dictionary = body.duplicate(true)
-		height_body.base_pos[2]-=_ground_height_at(body.base_pos)
-		obs = Contract.brake_state_observation(obs,height_body)
+		obs = Contract.brake_state_observation(obs,body)
 	if item.get("task_input", "") == "brake_markov_68_v1":
 		obs = brake_task.observe(obs,raw,robot_config.get("support_groups",[]),_t)
 		if obs.size()!=68:
@@ -351,12 +336,11 @@ func _decide(held: Array, taps: Array, order: Array, elapsed: float) -> bool:
 	_record_latency(skill,infer_usec)
 	var ctrl := Contract.control(action,home,float(robot_config.action_scale))
 	var tilt := rad_to_deg(acos(clampf(-obs[5],-1.0,1.0)))
-	var fell: bool = tilt > 70.0 or body.base_pos[2]-_ground_height_at(body.base_pos) < 0.055
+	var fell: bool = tilt > 70.0 or body.base_pos[2] < 0.055
 	if fell and session.first_fall == null: session.first_fall=elapsed
 	if session.trace_path != "":
 		session.rows.append({"t":elapsed,"episode_t":_t,"mode":session.mode,"skill":skill,
 			"wall_usec":Time.get_ticks_usec()-session.started_usec,
-			"measured_speed_mps":measured_speed_mps,
 			"held":held,"taps":taps,"order":order,"command":Array(command),
 			"requested_command":Array(requested_command),
 			"obs":Array(obs),"action":Array(action),"last_action":Array(last_action),

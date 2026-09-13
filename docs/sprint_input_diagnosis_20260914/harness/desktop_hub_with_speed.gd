@@ -1,17 +1,10 @@
 extends Node3D
 ## A persistent world and window. Only the robot and its native physics space change.
-const StationLayout = preload("res://science_station/layout.gd")
-signal scene_chosen
-var checkpoint := "service"
-var checkpoint_visits: Array = []
-var route_result: Dictionary = {}
-var probe_spawn: Variant = null
-
 const TASKS := {
 	"drive":{"label":"自由驾驶","task":"drive","origin":[0.,0.,0.]},
-	"sort":{"label":"场景物件 · 辅助抓取入仓","task":"drive","origin":[-.48,0.,1.28]},
+	"sort":{"label":"场景物件 · 抓取并收纳","task":"drive","origin":[-.48,0.,1.28]},
 	"cargo18":{"label":"取件入仓 · 18 mm 运送","task":"cargo","obstacle":.018,"origin":[-.45,0.,.85]},
-	"cargo25":{"label":"重载工位 · 25 mm 运送","task":"cargo","obstacle":.025,"origin":[-.60,0.,2.10]},
+	"cargo25":{"label":"取件入仓 · 25 mm 运送","task":"cargo","obstacle":.025,"origin":[-.60,0.,2.10]},
 	"up20":{"label":"20 mm 检修台 · 上阶","task":"drive","riser":.02,"origin":[-1.4,0.,3.15]},
 	"down20":{"label":"20 mm 检修台 · 下阶","task":"drive","riser":.02,"descending":true,"origin":[-1.4,0.,3.15]},
 	"up40":{"label":"40 mm 检修台 · 上阶","task":"drive","riser":.04,"origin":[-1.4,0.,4.50]},
@@ -19,6 +12,9 @@ const TASKS := {
 	"up60":{"label":"60 mm 实验台 · 上阶","task":"drive","riser":.06,"skill":"ascent60","origin":[2.7,0.,2.8]},
 	"down60":{"label":"60 mm 实验台 · 下阶","task":"drive","riser":.06,"skill":"descent60","descending":true,"origin":[2.7,0.,2.8]}
 }
+# Terrain sensing sees floors and traversable courses, not furniture tops.
+# This extra query layer does not change either robot's contact masks.
+const TERRAIN_LAYER := 8
 var options: Dictionary
 var profiles: Dictionary
 var atelier: Node3D
@@ -52,7 +48,6 @@ var task_result := {}
 var capture_start := 0
 var next_capture := 0
 var frame_index := 0
-var capture_primed := false
 var frames: Array = []
 var capture_job := -1
 var dropped := 0
@@ -61,6 +56,7 @@ var stopping := false
 var world_id: int
 var samples: Array = []
 var grab_sessions: Array = []
+var collection_box: StaticBody3D
 var next_sample := 0.0
 
 func _ready() -> void:
@@ -75,26 +71,19 @@ func _ready() -> void:
 	get_window().content_scale_size = Vector2i(1280,720)
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	get_viewport().msaa_3d = Viewport.MSAA_4X
-	if options.get("choose_scene",false):
-		_make_scene_picker()
-		await scene_chosen
-	get_window().title = "Robot Sim2Sim · "+scene_title()
-	atelier = load("res://science_station/station.gd" if is_science_station() else "res://atelier/workshop.gd").new()
+	atelier = load("res://atelier/workshop.gd").new()
 	add_child(atelier)
 	atelier.build(self)
+	collection_box = load("res://hub/collection_box.gd").new()
+	atelier.add_child(collection_box)
+	collection_box.build(not _headless)
 	if atelier.hud != null: atelier.hud.queue_free(); atelier.hud = null
 	# One common set of scenery contacts supports both published collision masks.
 	_set_scenery_masks(self)
+	get_node("World/Floor").collision_layer |= TERRAIN_LAYER
 	if not _headless: _make_hud()
 	world_id = atelier.get_instance_id()
 	active_task = options.task
-	if is_science_station():
-		checkpoint=options.plan.get("initial_checkpoint","service")
-		checkpoint_visits.append({"id":checkpoint,"time":0.})
-		if options.plan.has("initial_position"):
-			var p:Array=options.plan.initial_position;probe_spawn=Vector3(p[0],atelier.ground_height(p[0],p[1]),p[1])
-	if options.plan.has("route"):
-		var probe:Node=load("res://hub/route_probe.gd").new();probe.hub=self;probe.points=options.plan.route;add_child(probe)
 	select_robot(options.robot)
 
 func _set_scenery_masks(node: Node) -> void:
@@ -106,58 +95,17 @@ func _set_scenery_masks(node: Node) -> void:
 		node.collision_mask = 3
 	for child in node.get_children(): _set_scenery_masks(child)
 
-func is_science_station() -> bool:
-	return options.get("scene","workshop") == "science_station"
-
-func scene_title() -> String:
-	return StationLayout.TITLE if is_science_station() else "小小维修站"
-
-func spawn_point() -> Vector3:
-	if probe_spawn != null:return probe_spawn
-	return StationLayout.CHECKPOINTS[checkpoint].position if is_science_station() else Vector3.ZERO
+func is_sai(kind: String = "") -> bool:
+	if kind == "": kind = active_robot
+	return kind in ["sai", "sai002"]
 
 func task_settings() -> Dictionary:
-	var spec: Dictionary = TASKS[active_task].duplicate(true)
-	if is_science_station():
-		var p := spawn_point()
-		spec = {"label":"自由探索", "task":"drive", "origin":[p.x,p.y,p.z]}
-	return spec
-
-func _make_scene_picker() -> void:
-	var layer := CanvasLayer.new();add_child(layer)
-	var background := ColorRect.new();background.color=Color("e9e5cf")
-	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);layer.add_child(background)
-	var center := CenterContainer.new();center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);layer.add_child(center)
-	var column := VBoxContainer.new();column.add_theme_constant_override("separation",20);center.add_child(column)
-	var emblem:=TextureRect.new();emblem.texture=load("res://science_station/icon.svg")
-	emblem.custom_minimum_size=Vector2(80,80);emblem.expand_mode=TextureRect.EXPAND_IGNORE_SIZE
-	emblem.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;column.add_child(emblem)
-	var heading := Label.new();heading.text="选择探索地点";heading.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	heading.add_theme_font_override("font",load("res://atelier/ui_font.tres"));heading.add_theme_font_size_override("font_size",34)
-	heading.add_theme_color_override("font_color",Color("343944"));column.add_child(heading)
-	for entry in [["science_station","风口科学站","观测塔 · 样本处理 · 岩丘步道"],["workshop","小小维修站","机械小院 · 检修台 · 运送练习"]]:
-		var button := Button.new();button.text=entry[1]+"\n"+entry[2];button.custom_minimum_size=Vector2(550,110)
-		button.add_theme_font_override("font",load("res://atelier/ui_font.tres"));button.add_theme_font_size_override("font_size",23)
-		for state in ["normal","hover","pressed","focus"]:
-			var style:=StyleBoxFlat.new();style.bg_color=Color("f6f1dc") if state=="normal" else Color("c2d4d6")
-			style.border_color=Color("4d5663");style.set_border_width_all(1 if state=="normal" else 2)
-			style.set_corner_radius_all(8);button.add_theme_stylebox_override(state,style)
-		for state in ["font_color","font_hover_color","font_pressed_color","font_focus_color"]:
-			button.add_theme_color_override(state,Color("343944"))
-		button.pressed.connect(func(): options.scene=entry[0];active_task="drive";options.task="drive";layer.queue_free();scene_chosen.emit())
-		column.add_child(button)
-		if entry[0]=="science_station":button.grab_focus()
-	var note:=Label.new();note.text="MicroDuck  ·  Roller  ·  Sai 001";note.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	note.add_theme_color_override("font_color",Color("73777d"));column.add_child(note)
-
+	var result: Dictionary = TASKS[active_task].duplicate(true)
+	result["robot_id"] = "Sai_Agent_002" if active_robot == "sai002" else "Sai_Agent_001"
+	return result
 
 func select_robot(kind: String) -> void:
-	if switching or kind not in ["microduck","roller","sai"]: return
-	if is_science_station() and _base!=null and probe_spawn==null:
-		var nearest:float=INF
-		for visit in checkpoint_visits:
-			var distance:float=_base.global_position.distance_squared_to(StationLayout.CHECKPOINTS[visit.id].position)
-			if distance<nearest:nearest=distance;checkpoint=visit.id
+	if switching or kind not in ["microduck","roller","sai","sai002"]: return
 	switching = true
 	_change_robot.call_deferred(kind)
 
@@ -169,11 +117,11 @@ func _change_robot(kind: String) -> void:
 	get_tree().paused = true
 	_base = null
 	if actor != null:
-		if active_robot == "sai" and actor.grab != null: actor.grab.perform("cancel")
+		if is_sai() and actor.grab != null: actor.grab.perform("cancel")
 		_save_native_trace()
 		actor.set_process(false)
 		actor.set_physics_process(false)
-		if active_robot == "sai":
+		if is_sai():
 			actor.finished = true
 			if actor.peer.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 				actor.peer.put_data((JSON.stringify({"finish":true})+"\n").to_utf8_buffer())
@@ -181,7 +129,7 @@ func _change_robot(kind: String) -> void:
 		await get_tree().process_frame
 		actor = null
 	if get_tree().has_meta("microduck_session"): get_tree().remove_meta("microduck_session")
-	var profile: Dictionary = profiles.sai if kind == "sai" else profiles.microduck
+	var profile: Dictionary = profiles.sai if is_sai(kind) else profiles.microduck
 	for key in profile:
 		if not str(key).begins_with("physics/3d/") and not str(key).begins_with("physics/jolt_physics_3d/"): continue
 		var value = profile[key]
@@ -191,13 +139,13 @@ func _change_robot(kind: String) -> void:
 	ProjectSettings.settings_changed.emit()
 	var previous_world: World3D = get_world_3d()
 	get_viewport().world_3d = World3D.new()
-	Engine.physics_ticks_per_second = 2000 if kind == "sai" else 200
-	Engine.max_physics_steps_per_frame = 100 if kind == "sai" else 32
-	get_node("World/Floor").physics_material_override.friction = .8 if kind == "sai" else 1.
+	Engine.physics_ticks_per_second = 2000 if is_sai(kind) else 200
+	Engine.max_physics_steps_per_frame = 100 if is_sai(kind) else 32
+	get_node("World/Floor").physics_material_override.friction = .8 if is_sai(kind) else 1.
 	active_robot = kind
 	task_result.clear()
 	_build_task_course()
-	if kind == "sai":
+	if is_sai(kind):
 		actor = load("res://hub/sai.gd").new()
 		actor.hub = self
 		var origin: Array = task_settings().origin
@@ -229,24 +177,25 @@ func _change_robot(kind: String) -> void:
 			atelier.normal_meshes = JSON.parse_string(FileAccess.get_file_as_string("res://atelier/robot_normal_map.json"))[name_key]
 			atelier._paint_robot(actor.get_node("RobotHost"))
 	get_node("World/Camera3D").make_current()
-	_cam_dist = 1.65 if kind == "sai" else 1.10
-	if is_science_station(): _cam_yaw=-.30;_cam_pitch=.10
+	if before.from == "": _cam_dist = 1.65 if is_sai(kind) else 1.10
 	atelier.follow_initialized = false
-	Engine.max_fps = 0 if options.get("fast_check",false) else 30
-	Engine.max_physics_steps_per_frame = 100 if kind == "sai" else 32
-	get_window().title = "Robot Sim2Sim · "+scene_title()+" / "+kind
+	Engine.max_fps = 30
+	Engine.max_physics_steps_per_frame = 100 if is_sai(kind) else 32
+	get_window().title = "Robot Sim2Sim · 小小维修站 / "+kind
 	get_tree().paused = false
 	atelier.loose_props.set_frozen(false)
 	switching = false
 	before["new_space"] = str(get_world_3d().space)
 	before["actor"] = actor.get_instance_id()
-	before["bodies"] = actor.robot.bodies.size() if kind == "sai" else actor._bodies.size()
+	before["bodies"] = actor.robot.bodies.size() if is_sai(kind) else actor._bodies.size()
+	if is_sai(kind):
+		before["robot_id"] = actor.specification.robot_id
+		before["joints"] = actor.robot.drives.size()
+		before["active_clamp"] = actor.specification.cargo.get("active_clamp",true)
 	before["physics_hz"] = Engine.physics_ticks_per_second
 	before["settings"] = {"speculative":ProjectSettings.get_setting("physics/jolt_physics_3d/simulation/speculative_contact_distance"),
 		"velocity_steps":ProjectSettings.get_setting("physics/jolt_physics_3d/simulation/velocity_steps")}
 	before["props_after"] = _prop_snapshot()
-	before["spawn"] = [_base.global_position.x,_base.global_position.y,_base.global_position.z]
-	before["checkpoint"] = checkpoint
 	before["world_preserved"] = world_id == atelier.get_instance_id()
 	events.append(before)
 	print("HUB_ROBOT_READY ",JSON.stringify(before))
@@ -258,10 +207,10 @@ func _change_robot(kind: String) -> void:
 		next_capture = capture_start
 
 func _paint_role_for_node(mesh: MeshInstance3D) -> String:
-	return actor._paint_role_for_node(mesh) if actor != null and active_robot != "sai" else "shell"
+	return actor._paint_role_for_node(mesh) if actor != null and not is_sai() else "shell"
 
 func _mesh_id(mesh: MeshInstance3D) -> int:
-	return actor._mesh_id(mesh) if actor != null and active_robot != "sai" else 0
+	return actor._mesh_id(mesh) if actor != null and not is_sai() else 0
 
 func _orbit_offset(yaw: float,pitch: float,distance: float) -> Vector3:
 	return Vector3(sin(yaw)*cos(pitch),sin(pitch),cos(yaw)*cos(pitch))*distance
@@ -270,7 +219,7 @@ func _task_box(parent: Node3D,name_text: String,p: Vector3,size: Vector3,color: 
 	var body := StaticBody3D.new()
 	body.name = name_text
 	body.position = p
-	body.collision_layer = 3
+	body.collision_layer = 3 | TERRAIN_LAYER
 	body.collision_mask = 5
 	body.physics_material_override = PhysicsMaterial.new()
 	body.physics_material_override.friction = .8
@@ -314,7 +263,6 @@ func _build_task_course() -> void:
 	course_root = Node3D.new()
 	course_root.name = "WorkshopTasks"
 	add_child(course_root)
-	if is_science_station(): return
 	for key in ["cargo18","cargo25","up20","up40","up60"]:
 		var spec: Dictionary = TASKS[key]
 		if active_task == key.replace("up","down"): spec = TASKS[active_task]
@@ -375,9 +323,9 @@ func _make_hud() -> void:
 	panel.add_child(label)
 	var row := HBoxContainer.new()
 	panel.add_child(row)
-	for kind in ["microduck","roller","sai"]:
+	for kind in ["microduck","roller","sai","sai002"]:
 		var button := Button.new()
-		button.text = {"microduck":"F5 · MicroDuck","roller":"F6 · MD 轮滑","sai":"F7 · Sai 001"}[kind]
+		button.text = {"microduck":"F5 · MicroDuck","roller":"F6 · MD 轮滑","sai":"F7 · Sai 001","sai002":"F8 · Sai 002"}[kind]
 		button.focus_mode = Control.FOCUS_NONE
 		button.toggle_mode = true
 		robot_buttons[kind] = button
@@ -388,11 +336,11 @@ func _make_hud() -> void:
 	for key in TASKS: task_menu.add_item(TASKS[key].label)
 	task_menu.item_selected.connect(func(index):
 		active_task = TASKS.keys()[index]
-		select_robot("sai"))
+		select_robot(active_robot if is_sai() else "sai"))
 	panel.add_child(task_menu)
 	grab_row = HBoxContainer.new()
 	panel.add_child(grab_row)
-	for entry in [["B · 选择物件", "cycle"], ["G · 抓取入仓", "pick"], ["X · 取消 / 松开", "cancel"]]:
+	for entry in [["B · 选择物件", "cycle"], ["G · 抓取收纳", "pick"], ["X · 取消 / 松开", "cancel"]]:
 		var button := Button.new()
 		button.text = entry[0]
 		button.focus_mode = Control.FOCUS_NONE
@@ -419,44 +367,37 @@ func _make_hud() -> void:
 
 func _refresh_controls() -> void:
 	if controls_hint == null: return
-	var available: Dictionary = actor.brain.available if actor != null and active_robot != "sai" else {}
-	var finished: bool = actor != null and active_robot == "sai" and actor.finished
-	var grabbing: bool = actor != null and active_robot == "sai" and actor.grab != null and actor.grab.busy
+	var available: Dictionary = actor.brain.available if actor != null and not is_sai() else {}
+	var finished: bool = actor != null and is_sai() and actor.finished
+	var grabbing: bool = actor != null and is_sai() and actor.grab != null and actor.grab.busy
 	controls_hint.text = load("res://hub/controls.gd").describe(active_robot,active_task,finished,available,grabbing)
-	if actor != null and active_robot == "sai" and actor.grab != null:
+	if actor != null and is_sai() and actor.grab != null:
 		controls_hint.text += "\n" + actor.grab.status_text()
 	elif actor != null and active_robot == "microduck":
 		controls_hint.text += "\n踢击目标：" + atelier.loose_props.target_label()
-	grab_row.visible = active_robot == "sai" and active_task in ["drive", "sort"] and not finished
+	grab_row.visible = is_sai() and active_task in ["drive", "sort"] and not finished
 	for i in range(grab_row.get_child_count()):
 		grab_row.get_child(i).disabled = grabbing if i < 2 else not grabbing
 	for kind in robot_buttons:
 		robot_buttons[kind].set_pressed_no_signal(kind == active_robot)
 
 func _grab_action(action: String) -> void:
-	if switching or stopping or active_robot != "sai" or actor == null or actor.grab == null or actor.finished: return
+	if switching or stopping or not is_sai() or actor == null or actor.grab == null or actor.finished: return
 	actor.grab.perform(action)
 
 func _input(event: InputEvent) -> void:
-	if atelier==null:
-		if event is InputEventKey and event.pressed and event.physical_keycode==KEY_ESCAPE:get_tree().quit()
-		return
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.physical_keycode==KEY_TAB:
-			if is_science_station():atelier.cycle_view()
-			else:atelier.set_view("tour" if atelier.view=="follow" else "follow")
+		if event.physical_keycode in [KEY_F5,KEY_F6,KEY_F7,KEY_F8]:
+			select_robot({KEY_F5:"microduck",KEY_F6:"roller",KEY_F7:"sai",KEY_F8:"sai002"}[event.physical_keycode])
 			get_viewport().set_input_as_handled()
-		elif event.physical_keycode in [KEY_F5,KEY_F6,KEY_F7]:
-			select_robot({KEY_F5:"microduck",KEY_F6:"roller",KEY_F7:"sai"}[event.physical_keycode])
-			get_viewport().set_input_as_handled()
-		elif event.physical_keycode == KEY_0 or (event.physical_keycode == KEY_R and active_robot == "sai"):
+		elif event.physical_keycode == KEY_0 or (event.physical_keycode == KEY_R and is_sai()):
 			atelier.loose_props.reset()
 			select_robot(active_robot)
 			get_viewport().set_input_as_handled()
 		elif event.physical_keycode == KEY_ESCAPE:
 			_finish()
 			get_viewport().set_input_as_handled()
-		elif active_robot == "sai" and event.physical_keycode in [KEY_B,KEY_G,KEY_X]:
+		elif is_sai() and event.physical_keycode in [KEY_B,KEY_G,KEY_X]:
 			_grab_action({KEY_B:"cycle",KEY_G:"pick",KEY_X:"cancel"}[event.physical_keycode])
 			get_viewport().set_input_as_handled()
 		elif active_robot == "roller" and event.physical_keycode == KEY_B:
@@ -471,37 +412,29 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	if switching or actor == null or stopping: return
-	if is_science_station():
-		for key in StationLayout.CHECKPOINTS:
-			if key!=checkpoint and _base.global_position.distance_to(StationLayout.CHECKPOINTS[key].position)<.85:
-				checkpoint=key;probe_spawn=null;checkpoint_visits.append({"id":key,"time":elapsed})
 	elapsed += delta
-	_t = actor.robot.tick*.0005 if active_robot == "sai" else actor._t
+	_t = actor.robot.tick*.0005 if is_sai() else actor._t
 	if elapsed >= next_sample:
 		next_sample = elapsed+.1
 		var p := _base.global_position
 		var v := _base.linear_velocity
 		samples.append({"time":elapsed,"robot_time":_t,"robot":active_robot,"task":active_task,
 			"position":[p.x,p.y,p.z],"velocity":[v.x,v.y,v.z],"upright":_base.global_basis.y.y,
-			"wall_usec":Time.get_ticks_usec(),"fps":Engine.get_frames_per_second(),
-			"draw_calls":Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
-			"controller":actor.command.get("stage","") if active_robot=="sai" else actor.brain.policy,
-			"held":actor.movement_command() if active_robot=="sai" else actor._held_now.duplicate()})
-		if is_science_station() and not options.plan.is_empty():
-			var motion:Array=[]
-			for item in atelier.loose_props.items:
-				var b:RigidBody3D=item.body;var q:Vector3=b.global_position;var u:Vector3=b.linear_velocity
-				motion.append({"name":str(b.name),"position":[q.x,q.y,q.z],"velocity":[u.x,u.y,u.z]})
-			samples[-1]["prop_motion"]=motion
+			"controller":actor.command.get("stage","") if is_sai() else actor.brain.policy,
+			"held":actor.movement_command() if is_sai() else actor._held_now.duplicate()})
 	var plan: Dictionary = options.plan
-	if plan.get("finish_on_grab",false) and active_robot == "sai" and actor.grab != null and not actor.grab.deliveries.is_empty():
+	if plan.get("finish_on_grab",false) and is_sai() and actor.grab != null and actor.grab.deliveries.size() >= int(plan.get("grab_count",1)):
 		if _t-actor.grab.deliveries[-1].time > 3.: _finish.call_deferred()
 	var actions: Array = plan.get("events",[])
 	while plan_index < actions.size() and elapsed >= float(actions[plan_index].at):
 		var action: Dictionary = actions[plan_index]
+		if action.has("after_grabs"):
+			if not is_sai() or actor.grab == null: break
+			if actor.grab.deliveries.size() < int(action.after_grabs): break
+			if _t-actor.grab.deliveries[-1].time < float(action.get("delay",4.)): break
 		plan_index += 1
 		if action.has("robot"): select_robot(action.robot)
-		if action.has("task"): active_task=action.task; select_robot("sai")
+		if action.has("task"): active_task=action.task; select_robot(active_robot if is_sai() else "sai")
 		if action.has("key"):
 			var event := InputEventKey.new()
 			event.physical_keycode = OS.find_keycode_from_string(action.key)
@@ -509,12 +442,6 @@ func _physics_process(delta: float) -> void:
 			event.location = int(action.get("location",0))
 			event.pressed = action.get("pressed",true)
 			Input.parse_input_event(event)
-		if action.has("mouse_button"):
-			var event:=InputEventMouseButton.new()
-			event.button_index={"right":MOUSE_BUTTON_RIGHT,"up":MOUSE_BUTTON_WHEEL_UP,"down":MOUSE_BUTTON_WHEEL_DOWN}[action.mouse_button]
-			event.pressed=action.get("pressed",true);Input.parse_input_event(event)
-		if action.has("motion"):
-			var event:=InputEventMouseMotion.new();event.relative=Vector2(action.motion[0],action.motion[1]);Input.parse_input_event(event)
 	if plan.get("seconds",0.) > 0 and elapsed >= float(plan.seconds): _finish.call_deferred()
 
 func _process(delta: float) -> void:
@@ -523,11 +450,10 @@ func _process(delta: float) -> void:
 		atelier.update_camera(delta)
 		_update_recording_camera()
 		atelier.update_printed_labels()
-		label.text = "%s / %s\n%s" % [scene_title(),active_robot.to_upper(),_stage_label(str(actor.command.get("stage","就绪"))) if active_robot=="sai" else actor.SKILL_LABELS.get("sprint" if actor.brain.sprinting else actor.brain.policy,actor.brain.policy)]
+		label.text = "小小维修站 / %s\n%s" % [active_robot.to_upper(),_stage_label(str(actor.command.get("stage","就绪"))) if is_sai() else actor.SKILL_LABELS.get("sprint" if actor.brain.sprinting else actor.brain.policy,actor.brain.policy)]
 		if active_robot == "microduck": label.text += " · 实测 %.2f m/s" % actor.measured_speed_mps
-		if is_science_station():label.text+=" · "+StationLayout.CHECKPOINTS[checkpoint].title
 		_refresh_controls()
-		task_menu.visible = active_robot == "sai" and not is_science_station()
+		task_menu.visible = is_sai()
 		task_menu.select(TASKS.keys().find(active_task))
 		if options.record: _capture()
 
@@ -548,13 +474,9 @@ func _update_recording_camera() -> bool:
 	return true
 
 func _capture() -> void:
-	if not capture_primed:
-		capture_primed=true;return
 	var now := Time.get_ticks_usec()
 	if now < next_capture: return
-	var interval:=int(1000000.*float(options.plan.get("capture_interval",.033333)))
-	# Keep an absolute cadence: frame jitter must not turn 30 Hz into 15 Hz.
-	next_capture=maxi(next_capture+interval,now)
+	next_capture = now+int(1000000.*float(options.plan.get("capture_interval",.033333)))
 	if capture_job >= 0 and not WorkerThreadPool.is_task_completed(capture_job):
 		dropped += 1
 		return
@@ -581,29 +503,23 @@ func on_task_finished(result: Dictionary) -> void:
 	print("HUB_TASK_FINISHED ",result.get("success","pending independent evaluation")," seconds=",_t)
 	if options.plan.get("finish_on_task",false):
 		_finish.call_deferred()
-	else:
-		for body in actor.robot.bodies.values(): body.freeze = true
-		if actor.robot.item != null: actor.robot.item.freeze = true
+	elif result.get("success",true) == false or _base.global_basis.y.y < .6:
+		select_robot(active_robot)
 
 func _finish() -> void:
 	if stopping: return
 	stopping = true
-	if atelier == null:
-		get_tree().quit();return
 	_save_native_trace()
 	if capture_job >= 0: WorkerThreadPool.wait_for_task_completion(capture_job)
 	var result := {"pid":OS.get_process_id(),"hub":get_instance_id(),"atelier":atelier.get_instance_id(),
 		"events":events,"samples":samples,"seconds":elapsed,"frames":frames,"dropped":dropped,"active_robot":active_robot,
 		"task":active_task,"task_success":task_result.get("success",null)}
-	result["route"] = route_result
-	result["scene"] = options.get("scene","workshop")
-	result["checkpoint"] = checkpoint
-	result["checkpoint_visits"] = checkpoint_visits
 	result["grab_sessions"] = grab_sessions
 	result["props"] = atelier.loose_props.telemetry()
 	if _base != null: result["position"] = [_base.global_position.x,_base.global_position.y,_base.global_position.z]
 	var file := FileAccess.open(options.output+"/hub.json",FileAccess.WRITE)
 	file.store_string(JSON.stringify(result,"  "))
+	file.close()
 	get_tree().quit()
 
 func _prop_snapshot() -> Array:
@@ -614,16 +530,16 @@ func _prop_snapshot() -> Array:
 	return result
 
 func _stage_label(stage: String) -> String:
-	return {"rolling":"平地驾驶","crouched":"下蹲驾驶","stairs":"台阶驾驶","ready":"就绪",
+	return {"rolling":"平地驾驶","crouched":"下蹲驾驶","crouch_blocked":"前方台阶 · 松开 Shift 爬阶","stairs":"台阶驾驶","ready":"就绪",
 		"lower_body":"降低车身","approach":"靠近零件","pregrasp":"对准夹爪","grasp":"抓取零件",
 		"close":"夹爪闭合","lift":"抬起零件","raise_body":"升起车身","front_clearance":"避让前沿",
 		"transfer_1":"移向货仓","transfer_2":"移向货仓","transfer_3":"移向货仓","transfer_4":"移向货仓",
 		"place":"放入货仓","release":"松开夹爪","clear_fixed_finger":"退出夹爪","retreat":"收回机械臂",
-		"secure_cargo":"夹紧货物","loaded_settle":"稳定车身","loaded_crawl":"夹紧运输","drive":"驾驶"}.get(stage,stage)
+		"secure_cargo":"夹紧货物","loaded_settle":"稳定车身","settle_cargo":"货物静置","loaded_crawl":"货物运输","drive":"驾驶"}.get(stage,stage)
 
 func _save_native_trace() -> void:
 	if actor == null: return
-	if active_robot == "sai":
+	if is_sai():
 		if actor.grab != null:
 			grab_sessions.append({"history":actor.grab.history.duplicate(true),"deliveries":actor.grab.deliveries.duplicate(true),"retained":actor.grab.retention()})
 		return
