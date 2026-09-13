@@ -1,0 +1,70 @@
+{
+  "seconds": 15.0,
+  "initial_position": [
+    10.0,
+    2.0
+  ],
+  "capture_interval": 0.1,
+  "events": [
+    {
+      "at": 1.0,
+      "key": "W",
+      "pressed": true
+    },
+    {
+      "at": 3.0,
+      "key": "W",
+      "pressed": false
+    },
+    {
+      "at": 4.0,
+      "key": "W",
+      "pressed": true
+    },
+    {
+      "at": 4.0,
+      "key": "Shift",
+      "pressed": true
+    },
+    {
+      "at": 7.0,
+      "key": "W",
+      "pressed": false
+    },
+    {
+      "at": 7.0,
+      "key": "Shift",
+      "pressed": false
+    },
+    {
+      "at": 8.0,
+      "key": "S",
+      "pressed": true
+    },
+    {
+      "at": 8.0,
+      "key": "A",
+      "pressed": true
+    },
+    {
+      "at": 10.0,
+      "key": "S",
+      "pressed": false
+    },
+    {
+      "at": 10.0,
+      "key": "A",
+      "pressed": false
+    },
+    {
+      "at": 11.0,
+      "key": "W",
+      "pressed": true
+    },
+    {
+      "at": 13.0,
+      "key": "W",
+      "pressed": false
+    }
+  ]
+}

@@ -11,6 +11,7 @@ import subprocess
 import threading
 import time
 from sim2sim.paths import sim2sim_root
+from sim2sim.sai_driving import DEFAULT_DRIVE_SPEED, drive_speed
 
 ROOT = sim2sim_root()
 
@@ -94,6 +95,10 @@ def serve(listener, stop, bundle, trace):
                         skill = config.get("skill", "")
                         profile = bundle / "policies/experimental" / f"{skill}.json" if skill else None
                         controller = CargoGodotController() if config["task"] == "cargo" else WorkshopController(bundle, stair_profile=profile)
+                        if config["task"] != "cargo":
+                            print("SAI_DEPLOYMENT " + json.dumps(dict(policy=controller.flat_policy_id,
+                                  sha256=controller.flat_policy_sha256, driving_profile="sai-driving-20260913",
+                                  module=str(Path(__file__).resolve()))), flush=True)
                     response = controller.command(state)
                     client.sendall((json.dumps(response, separators=(",", ":")) + "\n").encode())
                     if trace:
@@ -106,6 +111,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--scene", choices=("workshop", "science_station"), default="workshop")
     parser.add_argument("--choose-scene", action="store_true", help="Show the desktop scene picker")
+    parser.add_argument("--drive-speed", type=drive_speed, default=DEFAULT_DRIVE_SPEED,
+                        help="Sai flat cruise speed, including crouch, in m/s (default: 0.5)")
     parser.add_argument("--robot", choices=("microduck", "roller", "sai"), default="microduck")
     parser.add_argument("--task", default="drive", choices=("drive", "sort", "cargo18", "cargo25", "up20", "down20", "up40", "down40", "up60", "down60"))
     parser.add_argument("--godot-bin", default=os.environ.get("GODOT") or shutil.which("godot"))
@@ -130,7 +137,7 @@ def main(argv=None):
         project = args.runtime_dir / "project.godot"
         project.write_text(project.read_text().replace('config/name="Robot Godot Workshop"',
                                                        'config/name="Robot Godot Worlds"'))
-    options = dict(scene=args.scene, fast_check=args.fast_check, choose_scene=args.choose_scene and not args.headless and not args.plan, robot=args.robot, task=args.task, output=str(args.output), record=args.record,
+    options = dict(scene=args.scene, drive_speed=args.drive_speed, fast_check=args.fast_check, choose_scene=args.choose_scene and not args.headless and not args.plan, robot=args.robot, task=args.task, output=str(args.output), record=args.record,
                    plan=json.loads(args.plan.read_text()) if args.plan else {})
     (args.runtime_dir / "hub/options.json").write_text(json.dumps(options))
     with socket.socket() as listener:

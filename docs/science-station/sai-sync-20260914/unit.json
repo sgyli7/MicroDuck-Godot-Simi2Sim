@@ -1,0 +1,7 @@
+{
+  "command": ".venv-sai/bin/python -m unittest tests.test_sai_terrain tests.test_workshop_grab",
+  "tests": 9,
+  "passed": true,
+  "scope": "terrain selection through actual deployed controller and existing workshop grab regression",
+  "controller_sha256": "a168a69f42901c74d7566c4c96f84799e839edc964b47e9eef96fcecdc9cbb78"
+}

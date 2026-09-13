@@ -1,6 +1,7 @@
 extends Node3D
 ## A persistent world and window. Only the robot and its native physics space change.
 const StationLayout = preload("res://science_station/layout.gd")
+const TERRAIN_LAYER := 8
 signal scene_chosen
 var checkpoint := "service"
 var checkpoint_visits: Array = []
@@ -85,6 +86,7 @@ func _ready() -> void:
 	if atelier.hud != null: atelier.hud.queue_free(); atelier.hud = null
 	# One common set of scenery contacts supports both published collision masks.
 	_set_scenery_masks(self)
+	get_node("World/Floor").collision_layer |= TERRAIN_LAYER
 	if not _headless: _make_hud()
 	world_id = atelier.get_instance_id()
 	active_task = options.task
@@ -100,6 +102,7 @@ func _ready() -> void:
 func _set_scenery_masks(node: Node) -> void:
 	if node is StaticBody3D:
 		node.collision_layer = 3
+		if node.is_in_group("sai_driving_surface"): node.collision_layer |= TERRAIN_LAYER
 		node.collision_mask = 5
 	elif node is RigidBody3D:
 		node.collision_layer = 5
@@ -270,7 +273,7 @@ func _task_box(parent: Node3D,name_text: String,p: Vector3,size: Vector3,color: 
 	var body := StaticBody3D.new()
 	body.name = name_text
 	body.position = p
-	body.collision_layer = 3
+	body.collision_layer = 3 | TERRAIN_LAYER
 	body.collision_mask = 5
 	body.physics_material_override = PhysicsMaterial.new()
 	body.physics_material_override.friction = .8
@@ -613,7 +616,7 @@ func _prop_snapshot() -> Array:
 	return result
 
 func _stage_label(stage: String) -> String:
-	return {"rolling":"平地驾驶","crouched":"下蹲驾驶","stairs":"台阶驾驶","ready":"就绪",
+	return {"rolling":"平地驾驶","crouched":"下蹲驾驶","crouch_blocked":"前方台阶 · 松开 Shift 爬阶","stairs":"台阶驾驶","ready":"就绪",
 		"lower_body":"降低车身","approach":"靠近零件","pregrasp":"对准夹爪","grasp":"抓取零件",
 		"close":"夹爪闭合","lift":"抬起零件","raise_body":"升起车身","front_clearance":"避让前沿",
 		"transfer_1":"移向货仓","transfer_2":"移向货仓","transfer_3":"移向货仓","transfer_4":"移向货仓",

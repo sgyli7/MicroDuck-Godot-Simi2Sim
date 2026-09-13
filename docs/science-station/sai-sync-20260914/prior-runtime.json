@@ -1,0 +1,7 @@
+{
+  "configuration": "pre-sync HEAD 4cb6831 controller and hub scripts, in an isolated runtime",
+  "minimum_fps": 30.0,
+  "median_fps": 30.0,
+  "simulation_to_wall_ratio": 0.9997747990495959,
+  "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/sai-sync-20260914/prior-normal/hub.json"
+}

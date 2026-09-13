@@ -10,6 +10,8 @@
 
 `./run-workshop.sh --scene science_station --robot sai` 进入新场景。48 × 40 米科学站、硬壳实验舱、通信楼、两座观测塔、三处物理互动区和起伏丘陵，保留 20 × 12 米大型设备泊位。桌面入口「风口科学站」提供新旧场景选择。
 
+Sai 001 已同步 2026-09-13 验收的防抖模型与后续驾驶修正：默认 0.5 m/s、同速蹲行、车轮路径地形判断、车辆式倒车转向。[版本与实测](docs/science-station/sai-sync-20260914/RESULT.md)。上方建筑 PV 保留提速前的原速画面。
+
 ![MicroDuck：场景行走、刚体交互、前滚与轮足动作](docs/media/microduck-sim2sim.gif)
 
 **Sai Robot 001 · 小小维修站工作 PV（固定机位重录）**

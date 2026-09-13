@@ -1,0 +1,39 @@
+{
+  "suite": "godot-continuous-stairs-v1",
+  "engine": "4.7.2-stable (official)",
+  "physics_hz": 2000,
+  "controller_hz": 50,
+  "sensor": "Ground-only raycasts, not camera-based VLA",
+  "cases": [
+    {
+      "riser": 0.02,
+      "descending": false,
+      "duration": 13.26,
+      "final_xyz": [
+        1.23984134197235,
+        0.0131180286407471,
+        0.299454599618912
+      ],
+      "min_upright": 0.919367253780365,
+      "stair_profile": "stairs-dev40",
+      "effective_crouch": 0.0,
+      "tread": 0.18,
+      "initial_yaw": 0.0,
+      "maximum_lateral_m": 0.0361690521240234,
+      "checks": {
+        "all_wheels_cleared": true,
+        "three_second_stop": true,
+        "upright_on_final_level": true,
+        "remained_in_lane": true,
+        "height_on_final_level": true,
+        "four_wheels_supported": true,
+        "no_fall": true,
+        "real_forward_key": true,
+        "terrain_triggered_stair_policy": true,
+        "full_articulation": true
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,23 @@
+{
+  "science_station-W": {
+    "checks": {
+      "sustained_input": false,
+      "physical_drive": false,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": false,
+      "terrain_path_connected": false,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": false,
+    "actual_forward_m_s": 0.16216510713100432,
+    "actual_yaw_rad_s": -0.013585046562948264,
+    "leg_velocity_rms_rad_s": 0.027618550339506154,
+    "max_wheel_lift_m": 0.0038712289631366997,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  }
+}

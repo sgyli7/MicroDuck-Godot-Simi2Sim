@@ -1,0 +1,14 @@
+{
+  "samples": 81,
+  "leg_velocity_rms_rad_s": 0.04030648973548401,
+  "leg_position_max_peak_to_peak_rad": 0.03275350279613598,
+  "leg_step_rms_rad": 0.00043573706522881546,
+  "max_wheel_lift_m": 0.0022616316080092957,
+  "mean_wheels_supported": 4.0,
+  "checks": {
+    "leg_velocity_rms_below_0_5": true,
+    "requested_command_held": true,
+    "wheel_lift_below_12mm": true
+  },
+  "passed": true
+}

@@ -4,6 +4,8 @@
 
 当前为[复古科考设施重建版](science-station/retro-v2.md)：更新了建筑轮廓、压力壳、深色仪器窗、反射天线与外露机械设备，首页 PV 和下方截图均已重录。
 
+2026-09-14 已同步 Sai 001 的最新已验收驾驶配置：默认 0.5 m/s、高速蹲行、车轮路径地形判断及车辆式倒车转向。防抖权重一直为同一个 `sai-flat-motion-v1`；本次补齐了另一个开发目录中的驾驶修正。[版本核对与实测](science-station/sai-sync-20260914/RESULT.md)。
+
 ## 启动
 
 本机应用列表已新增 **风口科学站**。打开后选择科学站或小小维修站，回车默认进入科学站。原有维修站桌面入口保持独立。
@@ -14,6 +16,8 @@
 cd /home/ethan/Projects/MicroDuck-ScienceStation
 ./run-workshop.sh --scene science_station
 ./run-workshop.sh --scene science_station --robot sai
+# 需要原来的低速时显式指定；站立和蹲行同时生效
+./run-workshop.sh --scene science_station --robot sai --drive-speed .16
 ./run-workshop.sh --scene workshop
 # 场景选择界面
 ./scripts/run-worlds-desktop.sh
@@ -30,6 +34,7 @@ python3 scripts/install_worlds_desktop.py
 - **Tab**：科学站依次切换六个观景机位，再回到跟随视角。维修站切换观景／跟随。
 - **MicroDuck**：B 选择附近踢击目标，K／L 左右踢；左 Shift + W 加速，可同时 A／D 转向，松开 Shift 恢复普通步行。
 - **Sai**：B 选择附近物件，G 辅助靠近并抓取入仓，X 取消／松开。首次建议抓出生点前方的小收纳盒。
+- **Sai 驾驶**：平地默认请求 0.5 m/s，Shift 蹲行保持同一巡航速度；遇真正台阶会停稳并提示松开 Shift。S+A 让车尾向左、S+D 让车尾向右；前进和原地转向保持原样。
 - **0**：回到最近的已到达安全点，并复位六件物件。自由切换机器人也在最近的已到达安全点生成，但保留物件状态。
 
 服务小院、样本站与设备泊位各有两件轻物件和安全点。科学站只选择 1.6 米内物件；先靠近再交互。Sai 沿用当前维修站的 IK 与物理抓取辅助，成功后物件由货仓接触支撑。它是游戏交互，不代表新增的接触抓取训练策略。
@@ -39,6 +44,8 @@ python3 scripts/install_worlds_desktop.py
 ## 实机画面
 
 **Sai · 风口科学站 PV**：服务小院出发、样本站抓取、双塔支腿间移动、西侧缓坡探索。四个固定远机位，隐藏操作界面；按真实墙钟时间剪辑，没有加速或机器人动画替代。
+
+下方建筑 PV 录于 2026-09-13，使用防抖权重和当时的 0.16 m/s 驾驶配置；2026-09-14 的提速与转向以新版驾驶验证记录为准。
 
 ![Sai 风口科学站 15 秒 PV](science-station/media/sai-windpass-15s.gif)
 

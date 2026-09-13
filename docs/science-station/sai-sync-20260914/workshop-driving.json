@@ -1,0 +1,170 @@
+{
+  "workshop-W": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": 0.4824387896060944,
+    "actual_yaw_rad_s": -0.026864359565079213,
+    "leg_velocity_rms_rad_s": 0.03642643145453373,
+    "max_wheel_lift_m": 0.002046641379594802,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "workshop-W_shift": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": 0.5047976046800613,
+    "actual_yaw_rad_s": -0.00707084009773098,
+    "leg_velocity_rms_rad_s": 0.038596638348679255,
+    "max_wheel_lift_m": 0.0023072701394558012,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "workshop-SA": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": -0.4640907698869705,
+    "actual_yaw_rad_s": -0.4125933337211609,
+    "leg_velocity_rms_rad_s": 0.045199721172598635,
+    "max_wheel_lift_m": 0.0006712455749511986,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "workshop-SD": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": -0.47534921646118167,
+    "actual_yaw_rad_s": 0.3481030637025833,
+    "leg_velocity_rms_rad_s": 0.09336045638501801,
+    "max_wheel_lift_m": 0.008594267487525897,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "workshop-SA_shift": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": -0.45995965242385867,
+    "actual_yaw_rad_s": -0.4289959913492203,
+    "leg_velocity_rms_rad_s": 0.04303595802694958,
+    "max_wheel_lift_m": 0.0013711158633231968,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "workshop-SD_shift": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": -0.43387278378009797,
+    "actual_yaw_rad_s": 0.37944887042045594,
+    "leg_velocity_rms_rad_s": 0.04215555743685174,
+    "max_wheel_lift_m": 0.001985289573669398,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "workshop-WA": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": 0.5260452127456665,
+    "actual_yaw_rad_s": 0.33991794288158417,
+    "leg_velocity_rms_rad_s": 0.07210213900720448,
+    "max_wheel_lift_m": 0.003950801163911798,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "workshop-A": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": 0.033509361743927005,
+    "actual_yaw_rad_s": 0.39109757006168366,
+    "leg_velocity_rms_rad_s": 0.10996682950720912,
+    "max_wheel_lift_m": 0.006531749337911598,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  }
+}

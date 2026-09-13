@@ -1,0 +1,12 @@
+{
+  "minimum_fps": 17.0,
+  "median_fps": 18.0,
+  "simulation_to_wall_ratio": 0.9153412264625326,
+  "recording": false,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "source": "/home/ethan/Projects/MicroDuck-ScienceStation/results/science-station/sai-sync-20260914/normal-retry/hub.json",
+  "earlier_attempt": "Resource monitor stopped the first normal-play measurement when another evaluation started; its partial run was not scored."
+}
