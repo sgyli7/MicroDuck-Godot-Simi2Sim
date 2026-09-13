@@ -41,6 +41,11 @@ func _process(_delta: float) -> void:
 func _unhandled_input(_event: InputEvent) -> void:
 	pass
 
+func movement_command() -> Array:
+	var request: Array = super.movement_command()
+	var speed: float = float(hub.options.get("drive_speed", .5)) if task == "drive" and riser <= 0.0 else .16
+	return preload("res://sai/driving_input.gd").vehicle_command(request, speed)
+
 func height_scan() -> Array:
 	var base: RigidBody3D = robot.bodies.chassis
 	var direction: Vector3 = base.global_basis * Vector3.RIGHT
@@ -50,13 +55,15 @@ func height_scan() -> Array:
 		for y in [-.24,0.,.24]:
 			var sx: float = base.global_position.x + cos(yaw)*x - sin(yaw)*y
 			var sz: float = base.global_position.z - sin(yaw)*x - cos(yaw)*y
-			var query := PhysicsRayQueryParameters3D.create(Vector3(sx,base.global_position.y+1.,sz),Vector3(sx,base.global_position.y-1.,sz),2)
+			var query := PhysicsRayQueryParameters3D.create(Vector3(sx,base.global_position.y+1.,sz),Vector3(sx,base.global_position.y-1.,sz),hub.TERRAIN_LAYER)
 			var hit := get_world_3d().direct_space_state.intersect_ray(query)
 			heights.append(float(hit.position.y)-global_position.y if not hit.is_empty() else -.002)
 	return heights
 
 func exchange(state: Dictionary) -> Dictionary:
 	state["hub_config"] = settings
+	state["stair_course"] = riser > 0.0
+	state["terrain_path_heights"] = preload("res://sai/terrain_scan.gd").wheel_path(self, hub.TERRAIN_LAYER)
 	state["world_origin"] = robot.source(global_position)
 	# Record actual wheel state in the same 50 Hz packet as the policy input.
 	# These diagnostics do not participate in observation construction/control.

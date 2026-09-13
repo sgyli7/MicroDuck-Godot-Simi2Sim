@@ -1,0 +1,439 @@
+{
+  "passed": true,
+  "selected_cases": [
+    "loop-sai",
+    "slope-sai",
+    "tower-sai",
+    "lab-sai",
+    "north-sai",
+    "grab",
+    "cancel",
+    "switches",
+    "workshop"
+  ],
+  "full_twenty_case_suite": false,
+  "cases": [
+    {
+      "case": "loop-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/sai-sync-20260914/scene-checks/loop-sai",
+      "route": {
+        "minimum_upright": 0.999463558197021,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -1.78378939628601,
+              0.218298703432083,
+              3.90401458740234
+            ],
+            "target": [
+              -2.0,
+              3.8
+            ],
+            "time": 23.8894999999897
+          },
+          {
+            "position": [
+              -4.76558017730713,
+              0.221119239926338,
+              1.05140113830566
+            ],
+            "target": [
+              -5.0,
+              1.0
+            ],
+            "time": 42.0095000000186
+          },
+          {
+            "position": [
+              4.77321577072144,
+              0.22078812122345,
+              5.07837200164795
+            ],
+            "target": [
+              5.0,
+              5.0
+            ],
+            "time": 88.7405000002417
+          },
+          {
+            "position": [
+              0.23860938847065,
+              0.218651130795479,
+              7.02460765838623
+            ],
+            "target": [
+              0.0,
+              7.0
+            ],
+            "time": 108.409500000336
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 108.409500000336
+    },
+    {
+      "case": "slope-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/sai-sync-20260914/scene-checks/slope-sai",
+      "route": {
+        "minimum_upright": 0.96122407913208,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -18.2194862365723,
+              0.359986871480942,
+              -2.90307140350342
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 29.6199999999763
+          },
+          {
+            "position": [
+              -14.2037963867188,
+              0.268700182437897,
+              -3.12664246559143
+            ],
+            "target": [
+              -14.0,
+              -3.0
+            ],
+            "time": 59.2005000001006
+          },
+          {
+            "position": [
+              -17.7933483123779,
+              0.358484774827957,
+              -2.8782069683075
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 93.9940000002668
+          },
+          {
+            "position": [
+              -21.7925548553467,
+              0.266546338796616,
+              -3.12057423591614
+            ],
+            "target": [
+              -22.0,
+              -3.0
+            ],
+            "time": 123.448500000407
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 123.448500000407
+    },
+    {
+      "case": "tower-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/sai-sync-20260914/scene-checks/tower-sai",
+      "route": {
+        "minimum_upright": 0.999722540378571,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              6.77816963195801,
+              0.220416724681854,
+              -16.9088020324707
+            ],
+            "target": [
+              7.0,
+              -17.0
+            ],
+            "time": 12.7195000000041
+          },
+          {
+            "position": [
+              9.7815990447998,
+              0.218788504600525,
+              -17.0992755889893
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 20.4554999999977
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 20.4554999999977
+    },
+    {
+      "case": "lab-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/sai-sync-20260914/scene-checks/lab-sai",
+      "route": {
+        "minimum_upright": 0.999488770961761,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -7.39025020599365,
+              0.220581069588661,
+              -0.136730670928955
+            ],
+            "target": [
+              -7.5,
+              -0.35
+            ],
+            "time": 21.2209999999959
+          },
+          {
+            "position": [
+              -7.6052303314209,
+              0.220518350601196,
+              2.88431167602539
+            ],
+            "target": [
+              -7.5,
+              3.1
+            ],
+            "time": 44.5825000000308
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 44.5825000000308
+    },
+    {
+      "case": "north-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/sai-sync-20260914/scene-checks/north-sai",
+      "route": {
+        "minimum_upright": 0.99951845407486,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              0.131041541695595,
+              0.220492228865623,
+              -13.7990846633911
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 27.7239999999807
+          },
+          {
+            "position": [
+              -3.76181197166443,
+              0.220554709434509,
+              -15.6293306350708
+            ],
+            "target": [
+              -4.0,
+              -15.6
+            ],
+            "time": 49.4045000000539
+          },
+          {
+            "position": [
+              -0.237507060170174,
+              0.219741851091385,
+              -13.9655361175537
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 73.1715000001674
+          },
+          {
+            "position": [
+              3.91030168533325,
+              0.221354320645332,
+              -16.7774658203125
+            ],
+            "target": [
+              4.0,
+              -17.0
+            ],
+            "time": 99.3085000002922
+          },
+          {
+            "position": [
+              9.7971134185791,
+              0.219612047076225,
+              -17.1281623840332
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 118.003500000381
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 118.003500000381
+    },
+    {
+      "case": "grab",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/sai-sync-20260914/scene-checks/grab",
+      "grab": [
+        {
+          "deliveries": [
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.145550549030304,
+                  0.258698582649231,
+                  0.00909996032714844
+                ],
+                [
+                  -0.0507854819297791,
+                  0.362372934818268,
+                  0.076807975769043
+                ]
+              ],
+              "event": "complete",
+              "id": 209882977079,
+              "lift_m": 0.315341487526894,
+              "object": "Bin12g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.24
+            }
+          ],
+          "history": [
+            {
+              "event": "start",
+              "id": 209882977079,
+              "object": "Bin12g",
+              "time": 2.0055
+            },
+            {
+              "event": "attach",
+              "object": "Bin12g",
+              "time": 10.36
+            },
+            {
+              "event": "release",
+              "object": "Bin12g",
+              "time": 37.38
+            },
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.145550549030304,
+                  0.258698582649231,
+                  0.00909996032714844
+                ],
+                [
+                  -0.0507854819297791,
+                  0.362372934818268,
+                  0.076807975769043
+                ]
+              ],
+              "event": "complete",
+              "id": 209882977079,
+              "lift_m": 0.315341487526894,
+              "object": "Bin12g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.24
+            }
+          ],
+          "retained": {
+            "Ball10g": false,
+            "Ball15g": false,
+            "Bin10g": false,
+            "Bin12g": true,
+            "Bottle6g": false,
+            "Bottle8g": false
+          }
+        }
+      ],
+      "checks": {
+        "scene": true,
+        "delivered": true
+      },
+      "simulation_seconds": 47.2635000000436
+    },
+    {
+      "case": "cancel",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/sai-sync-20260914/scene-checks/cancel",
+      "checks": {
+        "scene": true,
+        "cancelled": true,
+        "not_delivered": true
+      },
+      "simulation_seconds": 14.0000000000056
+    },
+    {
+      "case": "switches",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/sai-sync-20260914/scene-checks/switches",
+      "checks": {
+        "scene": true,
+        "switch_order": true,
+        "same_scenery": true,
+        "props_preserved": true,
+        "safe_spawn": true,
+        "props_reset": true
+      },
+      "simulation_seconds": 19.0000000000021
+    },
+    {
+      "case": "workshop",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/sai-sync-20260914/scene-checks/workshop",
+      "checks": {
+        "scene": true,
+        "existing_regression": true
+      },
+      "simulation_seconds": 49.0025000000345
+    }
+  ],
+  "scope": "Changed Sai driving/terrain control: five science routes, grab/cancel, cross-robot switching/reset and existing workshop regression."
+}

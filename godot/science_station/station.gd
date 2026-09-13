@@ -69,6 +69,7 @@ func _terrain() -> void:
 					for point in [a,b,c,b,d,c]:st.add_vertex(point)
 			st.generate_normals();st.index();var mesh:=st.commit()
 			var patch:=StaticBody3D.new();patch.name="Terrain_%d_%d"%[ix,iz]
+			patch.add_to_group("sai_driving_surface")
 			patch.collision_layer=3;patch.collision_mask=5
 			patch.physics_material_override=server.get_node("World/Floor").physics_material_override
 			var shape:=ConcavePolygonShape3D.new();shape.set_faces(mesh.get_faces());shape.backface_collision=true

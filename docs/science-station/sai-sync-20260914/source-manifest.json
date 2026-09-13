@@ -1,0 +1,25 @@
+{
+  "source_task": "01a0969b-6d50-7641-88b9-5f605e9e62d3",
+  "weights_identical": true,
+  "source_files": {
+    "src/sim2sim/sai_controller.py": "c9111220eabe8e285638dbfabe6af517cda3354a46649f984554060241387d13",
+    "src/sim2sim/workshop.py": "99a89adc52851fe4ee3fbb76235453ef979099a36b6f5dee216a75e5fd19d3ed",
+    "godot/hub/hub.gd": "bd7b70ca758ef1ff9aef519982a671d86d1501edc6a36da56bdb1a45d815dfdd",
+    "godot/hub/sai.gd": "4cb9d424f44ff2b88ff7d74a7e5ceb18cde2d1a6f8d118af3a3a1ae0822e248d",
+    "godot/sai/driving_input.gd": "9805f7ca19126cc144f7d893f760f9c898edc1f047c086567f60a01589a7b2f9",
+    "godot/sai/terrain_scan.gd": "1345d24de481709983b009bb3ce50b28e0beed83323de78873a1017dcaa17e9e",
+    "src/sim2sim/assets/sai/flat-motion-v1.onnx": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "integrated_files": {
+    "src/sim2sim/sai_controller.py": "a168a69f42901c74d7566c4c96f84799e839edc964b47e9eef96fcecdc9cbb78",
+    "src/sim2sim/workshop.py": "e4950fbc03b37c5e3d0e28a37147aac9d6cc8ace1917199daced8f552dd4d1b5",
+    "godot/hub/hub.gd": "d6d9982140d45c8e00325e320b16821c2b396aaa167e4dfda3e3778cd45679f2",
+    "godot/hub/sai.gd": "f398407dd9de559a2e1f05fe72ba9714655ca56ae664b2e80348d2efcc8dbd95",
+    "godot/sai/driving_input.gd": "9805f7ca19126cc144f7d893f760f9c898edc1f047c086567f60a01589a7b2f9",
+    "godot/sai/terrain_scan.gd": "1345d24de481709983b009bb3ce50b28e0beed83323de78873a1017dcaa17e9e",
+    "src/sim2sim/assets/sai/flat-motion-v1.onnx": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d",
+    "src/sim2sim/sai_driving.py": "917402e8cf180e1c53c21acb0f02bd0f48a448cb11a3b0719ec4c9926b8c4497",
+    "godot/science_station/station.gd": "6c9bc9b609efdab8c141828fce2466678e77968cc7719ad12997b6e542e04bac"
+  },
+  "scope": "Sai 001 flat-driving changes from the accepted motion, speed, crouch and steering work; newer unrelated family/collection changes are not imported."
+}

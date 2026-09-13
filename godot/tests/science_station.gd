@@ -10,11 +10,20 @@ func run() -> void:
 	for child in scene.get_children():child.owner=null;scene.remove_child(child);host.add_child(child)
 	scene.free();root.add_child(host)
 	var station:Node3D=load("res://science_station/station.gd").new();host.add_child(station);station.build(host)
+	var hub:Node3D=load("res://hub/hub.gd").new()
+	hub._set_scenery_masks(host);hub.free()
 	await physics_frame
 	var checks:Dictionary={"terrain_patches":0,"tower_passages":true,"berth_clear":true,"ground":true,"six_props":station.loose_props.items.size()==6}
 	for child in station.get_children():
 		if str(child.name).begins_with("Terrain_"):checks.terrain_patches+=1
 	var space:=host.get_world_3d().direct_space_state
+	checks["sai_terrain_layer"]=true
+	for p in [Vector3(-18.,.3,-3.),Vector3(10.,.3,2.),Vector3(-7.5,8.,-.5)]:
+		var terrain:=space.intersect_ray(PhysicsRayQueryParameters3D.create(p,Vector3(p.x,-.2,p.z),8))
+		if terrain.is_empty() or absf(terrain.position.y-Layout.height_at(p.x,p.z))>.00005:checks.sai_terrain_layer=false
+	# Buildings still collide physically, while their roofs are excluded from driving-height rays.
+	var roof:=space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-7.5,8.,-.5),Vector3(-7.5,-.2,-.5),3))
+	checks["sai_building_stays_solid"]=not roof.is_empty() and roof.position.y > 1.
 	var landscape=load("res://science_station/landscape.gd").new()
 	checks["closed_horizon"]=true
 	for band in range(9):
@@ -46,6 +55,7 @@ func run() -> void:
 	checks["command_hull_solid"]=not space.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(-8.,1.5,-17.),Vector3(-8.,1.5,-21.),3)).is_empty()
 	checks["camera_lab"]=station._unobstructed_position(Vector3(-4.5,2.4,-.5),Vector3(-8.5,2.4,-.5)).x > -5.7
 	var passed:bool=checks.terrain_patches==30 and checks.ground and checks.tower_passages and checks.berth_clear and checks.six_props and checks.camera_crest and checks.camera_rock and checks.closed_horizon and checks.lab_door and checks.service_bay and checks.lab_wall_solid and checks.command_hull_solid and checks.camera_lab and checks.lab_exit_margin
+	passed=passed and checks.sai_terrain_layer and checks.sai_building_stays_solid
 	print("SCIENCE_GEOMETRY ",JSON.stringify({"passed":passed,"checks":checks}))
 	host.queue_free();await process_frame
 	quit(0 if passed else 1)

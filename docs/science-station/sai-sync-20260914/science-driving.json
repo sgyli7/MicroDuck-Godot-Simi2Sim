@@ -1,0 +1,170 @@
+{
+  "science_station-W": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": 0.48194584250450134,
+    "actual_yaw_rad_s": -0.02761629905551672,
+    "leg_velocity_rms_rad_s": 0.03871341099851404,
+    "max_wheel_lift_m": 0.0020510595738887985,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "science_station-W_shift": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": 0.5044371557235717,
+    "actual_yaw_rad_s": -0.006975863649859093,
+    "leg_velocity_rms_rad_s": 0.04323402501084278,
+    "max_wheel_lift_m": 0.002352517515420899,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "science_station-SA": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": -0.4636796182394028,
+    "actual_yaw_rad_s": -0.41126685082912445,
+    "leg_velocity_rms_rad_s": 0.04104701749572264,
+    "max_wheel_lift_m": 0.0006798100173473001,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "science_station-SD": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": -0.4755213218927383,
+    "actual_yaw_rad_s": 0.3525765138864517,
+    "leg_velocity_rms_rad_s": 0.09229620508203906,
+    "max_wheel_lift_m": 0.008587867438793202,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "science_station-SA_shift": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": -0.4608632260560989,
+    "actual_yaw_rad_s": -0.4272504425048828,
+    "leg_velocity_rms_rad_s": 0.04579229334461642,
+    "max_wheel_lift_m": 0.0012695160210133005,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "science_station-SD_shift": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": -0.43456489980220797,
+    "actual_yaw_rad_s": 0.38067069590091707,
+    "leg_velocity_rms_rad_s": 0.06351066018775861,
+    "max_wheel_lift_m": 0.0019322004616261004,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "science_station-WA": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": 0.5257277250289917,
+    "actual_yaw_rad_s": 0.343348388671875,
+    "leg_velocity_rms_rad_s": 0.06688331661176013,
+    "max_wheel_lift_m": 0.0042222369909286,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "science_station-A": {
+    "checks": {
+      "sustained_input": true,
+      "physical_drive": true,
+      "physical_turn": true,
+      "leg_velocity_rms_below_0_5": true,
+      "wheel_lift_below_12mm": true,
+      "upright": true,
+      "released_and_stopped": true,
+      "deployed_policy": true,
+      "terrain_path_connected": true,
+      "flat_actor_selected": true,
+      "scene": true
+    },
+    "passed": true,
+    "actual_forward_m_s": 0.020715252459049226,
+    "actual_yaw_rad_s": 0.4007003080844879,
+    "leg_velocity_rms_rad_s": 0.08409105499562591,
+    "max_wheel_lift_m": 0.006678924381732898,
+    "policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  }
+}
