@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "limit_seconds": 2700.0,
+  "initial_seconds": 180.0,
+  "credit_note": "Estimated first three minutes of this turn: audit, feedback-loop design and protocol preparation.",
+  "created_unix": 1789323787.005799,
+  "intervals": {
+    "3b388277-2a59-4f02-b6ad-c6507ba4a8e9": [
+      [
+        351733.924065654,
+        352736.264058487
+      ]
+    ]
+  },
+  "actors": {},
+  "gaps": [],
+  "events": [
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789323867.329313,
+      "supervisor_pid": 4055041,
+      "process_start_ticks": 35181424,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/supervisors/prepare-4c395987d4.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/bin/python3.12",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/prepare.py"
+      ],
+      "timeout": 240,
+      "reserve": 600,
+      "cpus": 2,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789323867.3478646,
+      "actor": "prepare:0e19700356",
+      "pid": 4055042,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/.local/share/uv/python/cpython-3.12.14-linux-aarch64-gnu/bin/python3.12",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/prepare.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 600.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 35181426,
+      "cpus": [
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 4055041
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789323868.4173317,
+      "actor": "prepare:0e19700356",
+      "returncode": 1,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "preparation_retry",
+      "unix": 1789323894.7487257,
+      "reason": "First launch resolved the .venv interpreter symlink and lost virtualenv packages. It failed before runtime copies. Retry uses literal .venv executable."
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789323894.7521544,
+      "supervisor_pid": 4055558,
+      "process_start_ticks": 35184166,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/supervisors/prepare_venv-bc15f721e7.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/prepare.py"
+      ],
+      "timeout": 240,
+      "reserve": 600,
+      "cpus": 2,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789323894.7706904,
+      "actor": "prepare_venv:d2740b22a2",
+      "pid": 4055559,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/prepare.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 600.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 35184168,
+      "cpus": [
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 4055558
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789323898.8555233,
+      "actor": "prepare_venv:d2740b22a2",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789323980.5235004,
+      "supervisor_pid": 4057246,
+      "process_start_ticks": 35192744,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/supervisors/preflight-8b7b58d2f8.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/preflight.py"
+      ],
+      "timeout": 240,
+      "reserve": 600,
+      "cpus": 2,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789323980.554418,
+      "actor": "preflight:2b87a0d47c",
+      "pid": 4057247,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/preflight.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 600.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 35192747,
+      "cpus": [
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 4057246
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789324004.7306445,
+      "actor": "preflight:2b87a0d47c",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789324048.879437,
+      "supervisor_pid": 4059059,
+      "process_start_ticks": 35199579,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/supervisors/native_evaluation-bf11ec3bae.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/run_evaluation.py"
+      ],
+      "timeout": 900,
+      "reserve": 600,
+      "cpus": 2,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789324048.913898,
+      "actor": "native_evaluation:e8236be7b9",
+      "pid": 4059060,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "SIM2SIM_ROOT=/home/ethan/Projects/MicroDuck/sim2sim",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/run_evaluation.py"
+      ],
+      "timeout": 900.0,
+      "reserve": 600.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 35199583,
+      "cpus": [
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 4059059
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789324357.0746968,
+      "actor": "native_evaluation:e8236be7b9",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789324405.825055,
+      "supervisor_pid": 4071952,
+      "process_start_ticks": 35235274,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/supervisors/reset_check-11f3121030.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/check_reset.py"
+      ],
+      "timeout": 90,
+      "reserve": 600,
+      "cpus": 2,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789324405.8612943,
+      "actor": "reset_check:3e156b041b",
+      "pid": 4071969,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/check_reset.py"
+      ],
+      "timeout": 90.0,
+      "reserve": 600.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 35235277,
+      "cpus": [
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 4071952
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789324407.9369292,
+      "actor": "reset_check:3e156b041b",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "detached_supervisor_started",
+      "unix": 1789324476.3820362,
+      "supervisor_pid": 4073241,
+      "process_start_ticks": 35242329,
+      "log": "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/supervisors/archive_runtime-17327abd4c.log",
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/archive_runtime.py"
+      ],
+      "timeout": 240,
+      "reserve": 600,
+      "cpus": 2,
+      "nice": 10
+    },
+    {
+      "kind": "job_started",
+      "unix": 1789324476.4005768,
+      "actor": "archive_runtime:bf17351dbb",
+      "pid": 4073251,
+      "command": [
+        "env",
+        "PYTHONPATH=/home/ethan/Projects/MicroDuck-SpeedControls/src",
+        "/home/ethan/Projects/MicroDuck/sim2sim/.venv/bin/python",
+        "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/archive_runtime.py"
+      ],
+      "timeout": 240.0,
+      "reserve": 600.0,
+      "boot": "3b388277-2a59-4f02-b6ad-c6507ba4a8e9",
+      "process_start_ticks": 35242331,
+      "cpus": [
+        18,
+        19
+      ],
+      "nice": 10,
+      "supervisor_pid": 4073241
+    },
+    {
+      "kind": "job_finished",
+      "unix": 1789324492.608862,
+      "actor": "archive_runtime:bf17351dbb",
+      "returncode": 0,
+      "reason": "completed",
+      "process_cleanup": {
+        "found": [],
+        "remaining": []
+      }
+    },
+    {
+      "kind": "research_closed",
+      "unix": 1789324789.3441527,
+      "candidates_rejected": true,
+      "default_changed": false,
+      "trained": false,
+      "accounting_cutoff": "Research/evaluation/report through sealing, before final Git commit/push transport."
+    }
+  ]
+}

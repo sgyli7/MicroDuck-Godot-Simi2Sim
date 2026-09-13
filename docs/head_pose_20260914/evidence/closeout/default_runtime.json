@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "changed": {},
+  "checked_inputs": 162,
+  "scope": "Current desktop runtime inputs compared to start-of-round frozen source; import cache excluded."
+}

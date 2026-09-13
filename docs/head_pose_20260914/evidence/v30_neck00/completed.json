@@ -1,0 +1,17 @@
+{
+  "label": "v30_neck00",
+  "speed": 0.3,
+  "neck_degrees": 0,
+  "passes": 32,
+  "count": 32,
+  "falls": 0,
+  "long_speed": [
+    0.23120257379065773,
+    0.2327440349195618,
+    0.23112322984948808,
+    0.2319108918581232
+  ],
+  "runtime_id": "1aad881fdec8f9e321cba84f702b93020b9770cb4c870036ebcedd646cf9be46",
+  "elapsed_s": 47.917705897009,
+  "completed": true
+}

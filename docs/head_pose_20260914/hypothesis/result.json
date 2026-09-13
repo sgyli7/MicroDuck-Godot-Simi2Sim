@@ -1,0 +1,145 @@
+{
+  "total_robot_mass_kg": 0.73724318,
+  "head_neck_mass_kg": 0.2799274,
+  "head_neck_fraction": 0.37969479758361413,
+  "results": {
+    "forward": {
+      "frames": 75,
+      "window_s": [
+        3.01999999999996,
+        4.49999999999993
+      ],
+      "requested_vx": 0.25,
+      "mean": {
+        "forward_velocity_mps": 0.18708632569604358,
+        "head_neck_com_minus_trunk_com_m": 0.04844107182590884,
+        "whole_robot_com_minus_ankle_midpoint_m": 0.006293914601832429,
+        "neck_pitch_deg": 16.467433909476632,
+        "head_pitch_deg": 15.462661919591522
+      },
+      "static_fk_com_x_shift_m": {
+        "neck_pitch_-10": 0.005080900560727431,
+        "neck_pitch_-5": 0.0025481668857796026,
+        "neck_pitch_+5": -0.002544207007985401,
+        "neck_pitch_+10": -0.005065091186611627,
+        "head_pitch_-10": -0.0021512777781379764,
+        "head_pitch_-5": -0.0010649883436512338,
+        "head_pitch_+5": 0.0010355820484629788,
+        "head_pitch_+10": 0.0020338763970473963
+      },
+      "fell": false
+    },
+    "sprint": {
+      "frames": 75,
+      "window_s": [
+        3.01999999999996,
+        4.49999999999993
+      ],
+      "requested_vx": 0.300000011920929,
+      "mean": {
+        "forward_velocity_mps": 0.23693839464002342,
+        "head_neck_com_minus_trunk_com_m": 0.05850150120893999,
+        "whole_robot_com_minus_ankle_midpoint_m": 0.012899376012575616,
+        "neck_pitch_deg": 11.630015999998365,
+        "head_pitch_deg": 17.59959744497819
+      },
+      "static_fk_com_x_shift_m": {
+        "neck_pitch_-10": 0.004972908339563704,
+        "neck_pitch_-5": 0.002507505175718037,
+        "neck_pitch_+5": -0.0025305235591301396,
+        "neck_pitch_+10": -0.005064806689415526,
+        "head_pitch_-10": -0.0020581302775269073,
+        "head_pitch_-5": -0.0010119088929082633,
+        "head_pitch_+5": 0.0009698951635155847,
+        "head_pitch_+10": 0.0018903951098054002
+      },
+      "fell": false
+    },
+    "backward": {
+      "frames": 75,
+      "window_s": [
+        3.01999999999996,
+        4.49999999999993
+      ],
+      "requested_vx": -0.300000011920929,
+      "mean": {
+        "forward_velocity_mps": -0.2823545082518096,
+        "head_neck_com_minus_trunk_com_m": 0.02225521386572183,
+        "whole_robot_com_minus_ankle_midpoint_m": -0.014286726248455098,
+        "neck_pitch_deg": 27.067231035099386,
+        "head_pitch_deg": 13.359586723468071
+      },
+      "static_fk_com_x_shift_m": {
+        "neck_pitch_-10": 0.004982170506294141,
+        "neck_pitch_-5": 0.002465475966430644,
+        "neck_pitch_+5": -0.0023954936321981734,
+        "neck_pitch_+10": -0.0047027737771842435,
+        "head_pitch_-10": -0.00219938919953781,
+        "head_pitch_-5": -0.0011043507916947788,
+        "head_pitch_+5": 0.0011052583991965454,
+        "head_pitch_+10": 0.0022030127221036467
+      },
+      "fell": false
+    },
+    "walk_backward_025": {
+      "frames": 75,
+      "window_s": [
+        3.01999999999996,
+        4.49999999999993
+      ],
+      "requested_vx": -0.25,
+      "mean": {
+        "forward_velocity_mps": -0.22780116795588015,
+        "head_neck_com_minus_trunk_com_m": 0.026933199626497064,
+        "whole_robot_com_minus_ankle_midpoint_m": -0.012305690911714734,
+        "neck_pitch_deg": 25.014302958749557,
+        "head_pitch_deg": 14.53232931354402
+      },
+      "static_fk_com_x_shift_m": {
+        "neck_pitch_-10": 0.005028647910673009,
+        "neck_pitch_-5": 0.0024948901628167137,
+        "neck_pitch_+5": -0.0024370349571822413,
+        "neck_pitch_+10": -0.004797667401183909,
+        "head_pitch_-10": -0.002209737986699431,
+        "head_pitch_-5": -0.00110627869992553,
+        "head_pitch_+5": 0.0011006786641813671,
+        "head_pitch_+10": 0.002187380463376224
+      },
+      "fell": false
+    },
+    "walk_forward_030": {
+      "frames": 75,
+      "window_s": [
+        3.01999999999996,
+        4.49999999999993
+      ],
+      "requested_vx": 0.300000011920929,
+      "mean": {
+        "forward_velocity_mps": 0.23108224987397094,
+        "head_neck_com_minus_trunk_com_m": 0.05260073105164265,
+        "whole_robot_com_minus_ankle_midpoint_m": 0.009208901963820923,
+        "neck_pitch_deg": 13.715422371054123,
+        "head_pitch_deg": 15.357352892837758
+      },
+      "static_fk_com_x_shift_m": {
+        "neck_pitch_-10": 0.005044304597797935,
+        "neck_pitch_-5": 0.0025355587080089417,
+        "neck_pitch_+5": -0.002543074393448748,
+        "neck_pitch_+10": -0.005074310140652836,
+        "head_pitch_-10": -0.0021159390421970586,
+        "head_pitch_-5": -0.001045037311236579,
+        "head_pitch_+5": 0.0010112195265633676,
+        "head_pitch_+10": 0.001980925277265287
+      },
+      "fell": false
+    }
+  },
+  "input_sha256": {
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/forward/native-0.json": "4dd2715363259c596f498214dc68cf6ff1c51cad1537ab5aae3a87cee58a4bb9",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/sprint/native-0.json": "5e711b4c5ab4a9bdfd276544dd70b68669642dc5cc054d422ef3566925b704a6",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/backward/native-0.json": "3db0789764f8477513250ad6f063455900ca07865363851832b1fff1245cb0c4",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/walk_backward_025/native-0.json": "e5b2f39079a551173196bdd1191179d40ceac7b1c8165ae10c3fe13b6532f473",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/sprint_input_diagnosis_20260914/gait/walk_forward_030/native-0.json": "665ab9480bbddd68210d01a7c680fe64b6aec17264e39594b3b6cb5d985c8f99"
+  },
+  "scope": "Read-only prior trajectories. Ball/world excluded. Godot rigid-body origins are custom inertial COM frames; ankle midpoint is NOT center of pressure/support polygon. Static FK sensitivity uses source articulated geometry/masses and fixed other joints/root, not exact Jolt compliance or proof of increased speed. Nominal command \u00b10.25 pair uses frozen ordinary S05; finite one-episode windows, no causal posture intervention or new simulation."
+}

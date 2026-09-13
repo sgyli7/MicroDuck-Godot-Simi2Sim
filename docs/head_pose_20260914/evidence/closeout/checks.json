@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "zero_angle_control_equivalence": "preflight_completed.json",
+  "contract_rows": 6150,
+  "official_cases": 192,
+  "official_execution_errors": 0,
+  "native_self_tests": 4,
+  "reset_check": "reset_completed.json",
+  "com_decomposition_passed": true,
+  "py_compile": [
+    "scripts/native_neck_bias_experiment.py",
+    "scripts/summarize_neck_bias.py"
+  ],
+  "full_suite_not_rerun": "Production runtime unchanged; actual isolated intervention exercised by native replay."
+}

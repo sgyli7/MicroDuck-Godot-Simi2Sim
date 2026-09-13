@@ -1,0 +1,87 @@
+{
+  "unix": 1789324656.332945,
+  "started": 6,
+  "finished": 6,
+  "missing_terminal": [],
+  "cleanup_remaining": {},
+  "live_owned_pids": [],
+  "live_owned_groups": [],
+  "live_session_marker_processes": [],
+  "all_godot_processes": [
+    {
+      "pid": 4060218,
+      "state": "R",
+      "ppid": 4059968,
+      "pgrp": 4059959,
+      "session": 4059959,
+      "start_ticks": 35201941,
+      "comm": "godot",
+      "args": "/home/ethan/.local/bin/godot --path /home/ethan/Projects/MicroDuck-ScienceStation/results/workshop-hub/runtime res://hub/main.tscn --disable-vsync --max-fps 30 -- --port=48075 "
+    }
+  ],
+  "docker": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.ID}}\t{{.Names}}\t{{.Image}}"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "gpu": {
+    "command": [
+      "nvidia-smi",
+      "--query-gpu=name,utilization.gpu,memory.used",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "NVIDIA GB10, 10 %, [N/A]",
+    "stderr": ""
+  },
+  "gpu_apps": {
+    "command": [
+      "nvidia-smi",
+      "--query-compute-apps=pid,process_name,used_gpu_memory",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stdout": "49592, /usr/libexec/gnome-remote-desktop-daemon, 176 MiB\n3178372, /usr/bin/sunshine, 217 MiB\n4060218, /home/ethan/.local/bin/godot, 956 MiB",
+    "stderr": ""
+  },
+  "job_results": [
+    {
+      "actor": "prepare:0e19700356",
+      "returncode": 1,
+      "reason": "completed"
+    },
+    {
+      "actor": "prepare_venv:d2740b22a2",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "preflight:2b87a0d47c",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "native_evaluation:e8236be7b9",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "reset_check:3e156b041b",
+      "returncode": 0,
+      "reason": "completed"
+    },
+    {
+      "actor": "archive_runtime:bf17351dbb",
+      "returncode": 0,
+      "reason": "completed"
+    }
+  ],
+  "passed": true,
+  "scope": "Only this round ownership checked for cleanup. Other applications are inventoried, never killed."
+}

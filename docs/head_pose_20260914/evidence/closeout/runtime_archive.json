@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "unix": 1789324490.068568,
+  "removed": [
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/neck_0",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/neck_5",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/neck_10",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/preflight_base/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/preflight_neck_0/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/preflight_neck_10/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/preflight_neck_5/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/v30_neck00/suite/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/v30_neck05/suite/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/v30_neck10/suite/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/v45_neck00/suite/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/v45_neck05/suite/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/v45_neck10/suite/runtime",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/base"
+  ],
+  "count": 14,
+  "archive": "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/baseline_runtime.tar.gz",
+  "archive_sha256": "26cae2623e1f1ae945af6c744365871616264a0f7c2133d5afa01a2e80b1ed63",
+  "archive_bytes": 467459878,
+  "drivers": [
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/frozen_drivers/neck_0/standalone/driver.gd",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/frozen_drivers/neck_5/standalone/driver.gd",
+    "/home/ethan/Projects/MicroDuck/sim2sim/results/head_pose_20260914/frozen_drivers/neck_10/standalone/driver.gd"
+  ],
+  "scope": "Full base excluding .godot cache plus per-angle driver; exact input fingerprints preserved. Raw traces/metrics/protocols retained. Desktop runtime and other tasks untouched."
+}

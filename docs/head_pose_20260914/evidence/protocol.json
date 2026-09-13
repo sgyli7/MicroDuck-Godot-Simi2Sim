@@ -1,0 +1,45 @@
+{
+  "created_unix": 1789323787.008868,
+  "hypothesis": "A small forward neck target shift improves forward sprint speed or higher-command controllability without new native failures.",
+  "variants_deg": [
+    0,
+    -5,
+    -10
+  ],
+  "physical_joint": "neck_pitch",
+  "action_index": 5,
+  "sign": "Negative MuJoCo neck angle moves head/neck COM forward; verified static sensitivity.",
+  "ramp_seconds": 0.5,
+  "gate": "active skill sprint and requested vx>0; linear move_toward applied once per50Hz decision; ramp to zero on exit; reset immediately to zero on reset",
+  "action_contract": "offset added to inferred action[5] as bias_rad/action_scale before control conversion; record raw policy output and final executed action; next observation uses final executed action",
+  "frozen": [
+    "all ONNX weights",
+    "mass",
+    "inertia",
+    "gravity",
+    "collision",
+    "actuator settings",
+    "200Hz Jolt",
+    "50Hz decisions",
+    "ordinary S05",
+    "existing controller"
+  ],
+  "speeds": [
+    0.3,
+    0.45
+  ],
+  "development_seeds": [
+    929100,
+    929101,
+    929102,
+    929103
+  ],
+  "courses": 8,
+  "variant_selection": "Each fixed variant evaluated once at both speeds; no tuning of angle/ramp after seeing results.",
+  "signal": "At0.30:32/32,no falls,and paired long net forward speed >=baseline*1.05, or at0.45: >=baseline passes+4,no new failed courses,no falls,and no net-speed regression. Required posture/COM change measured; no marginal speed-only promotion.",
+  "acceptance": "Screening only. Before default promotion require paired ordinary control/no regression, final held-out seeds and real host controls; no default installation on a partial screen.",
+  "held_out_used": false,
+  "resource_limit": "two native workers, two CPU affinity cores,nice10; no training or additional GPU simulation; user and other-agent processes never killed",
+  "limit_seconds": 2700,
+  "reserve_seconds": 600
+}

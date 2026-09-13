@@ -1,0 +1,17 @@
+{
+  "label": "v45_neck00",
+  "speed": 0.45,
+  "neck_degrees": 0,
+  "passes": 10,
+  "count": 32,
+  "falls": 0,
+  "long_speed": [
+    0.33315617685321824,
+    0.337165287467134,
+    0.32778532524834897,
+    0.3286503525804276
+  ],
+  "runtime_id": "1aad881fdec8f9e321cba84f702b93020b9770cb4c870036ebcedd646cf9be46",
+  "elapsed_s": 48.70336998300627,
+  "completed": true
+}

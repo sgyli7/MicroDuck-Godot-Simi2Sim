@@ -1,0 +1,104 @@
+[
+  {
+    "label": "v30_neck00",
+    "speed": 0.3,
+    "neck_degrees": 0,
+    "passes": 32,
+    "count": 32,
+    "falls": 0,
+    "long_speed": [
+      0.23120257379065773,
+      0.2327440349195618,
+      0.23112322984948808,
+      0.2319108918581232
+    ],
+    "runtime_id": "1aad881fdec8f9e321cba84f702b93020b9770cb4c870036ebcedd646cf9be46",
+    "elapsed_s": 47.917705897009,
+    "completed": true
+  },
+  {
+    "label": "v30_neck05",
+    "speed": 0.3,
+    "neck_degrees": -5,
+    "passes": 32,
+    "count": 32,
+    "falls": 0,
+    "long_speed": [
+      0.2284439224953606,
+      0.22997201500053663,
+      0.23082301195845203,
+      0.22963197389479018
+    ],
+    "runtime_id": "5fda07a4e4a3270f01683f9fc9f09f5f4b471a50b3e9f20b13fd29841cf41de4",
+    "elapsed_s": 49.27394801203627,
+    "completed": true
+  },
+  {
+    "label": "v30_neck10",
+    "speed": 0.3,
+    "neck_degrees": -10,
+    "passes": 32,
+    "count": 32,
+    "falls": 0,
+    "long_speed": [
+      0.2044761982324518,
+      0.19855175446002946,
+      0.20669037203131976,
+      0.20993088950130534
+    ],
+    "runtime_id": "0c35095d42764e59ad668093745b86a7c0fb66b4164f3bd622132e4ec51a0921",
+    "elapsed_s": 49.68638500198722,
+    "completed": true
+  },
+  {
+    "label": "v45_neck00",
+    "speed": 0.45,
+    "neck_degrees": 0,
+    "passes": 10,
+    "count": 32,
+    "falls": 0,
+    "long_speed": [
+      0.33315617685321824,
+      0.337165287467134,
+      0.32778532524834897,
+      0.3286503525804276
+    ],
+    "runtime_id": "1aad881fdec8f9e321cba84f702b93020b9770cb4c870036ebcedd646cf9be46",
+    "elapsed_s": 48.70336998300627,
+    "completed": true
+  },
+  {
+    "label": "v45_neck05",
+    "speed": 0.45,
+    "neck_degrees": -5,
+    "passes": 0,
+    "count": 32,
+    "falls": 21,
+    "long_speed": [
+      0.36038057783742933,
+      0.36035447799970444,
+      0.02827782853081695,
+      0.03647772144245926
+    ],
+    "runtime_id": "5fda07a4e4a3270f01683f9fc9f09f5f4b471a50b3e9f20b13fd29841cf41de4",
+    "elapsed_s": 46.60328890295932,
+    "completed": true
+  },
+  {
+    "label": "v45_neck10",
+    "speed": 0.45,
+    "neck_degrees": -10,
+    "passes": 0,
+    "count": 32,
+    "falls": 32,
+    "long_speed": [
+      0.021385883757648445,
+      0.020083630840578976,
+      0.029229523060535383,
+      0.013575143854073667
+    ],
+    "runtime_id": "0c35095d42764e59ad668093745b86a7c0fb66b4164f3bd622132e4ec51a0921",
+    "elapsed_s": 47.577943442971446,
+    "completed": true
+  }
+]

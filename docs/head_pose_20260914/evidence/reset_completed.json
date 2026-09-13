@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "resets": 1,
+  "reset_rows": [
+    0,
+    150
+  ],
+  "exit_bias_zero_after_half_second": true,
+  "scope": "Diagnostic only; not a scored task, one deliberate reset. No automatic resets used in acceptance suites."
+}

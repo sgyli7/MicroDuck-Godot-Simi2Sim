@@ -1,0 +1,11 @@
+{
+  "status": {
+    "limit_seconds": 2700.0,
+    "used_seconds": 1182.3399928330327,
+    "remaining_seconds": 1517.6600071669673,
+    "actors": [],
+    "unconfirmed_gaps": 0
+  },
+  "sealed_unix": 1789324789.3472435,
+  "note": "Self-imposed45min cap for this bounded experiment. Initial180s is documented preparation estimate. Accounting through sealing, before final Git transport; not a claim of completing the earlier8h overall target."
+}

@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "zero_intervention_equivalence": {
+    "sprint_long": {
+      "action": 0.0,
+      "last_action": 0.0,
+      "obs": 0.0,
+      "ctrl": 0.0,
+      "requested_command": 0.0
+    },
+    "sprint_turn_release": {
+      "action": 0.0,
+      "last_action": 0.0,
+      "obs": 0.0,
+      "ctrl": 0.0,
+      "requested_command": 0.0
+    }
+  },
+  "control_contracts": {
+    "neck_0": {
+      "errors": {
+        "bias": 0.0,
+        "action": 0.0,
+        "previous": 5.551115123125783e-16,
+        "observation_previous": 5.551115123125783e-16,
+        "control": 4.884981308350689e-15
+      },
+      "frames": 2050
+    },
+    "neck_5": {
+      "errors": {
+        "bias": 4.85722573273506e-17,
+        "action": 0.0,
+        "previous": 5.551115123125783e-16,
+        "observation_previous": 5.551115123125783e-16,
+        "control": 4.6629367034256575e-15
+      },
+      "frames": 2050
+    },
+    "neck_10": {
+      "errors": {
+        "bias": 3.885780586188048e-16,
+        "action": 0.0,
+        "previous": 5.551115123125783e-16,
+        "observation_previous": 5.551115123125783e-16,
+        "control": 4.440892098500626e-15
+      },
+      "frames": 2050
+    }
+  }
+}
