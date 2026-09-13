@@ -59,6 +59,7 @@ class WorkshopController(MotionController):
                 self.anchor_rotation = rotation
                 self.anchor_translation = np.asarray(state["base_position"]) - rotation @ np.asarray(self.spec["bodies"]["chassis"]["origin_m"])
                 self.pick_delta = rotation.T @ (np.asarray(request["target_m"]) - self.anchor_translation) - np.array([.24, 0., .020373])
+                self.pick_height = float(request["target_m"][2])
                 # Wheel joint positions are unbounded after driving. Retain
                 # their present turns when switching from speed to pose control.
                 self.wheel_origin = np.asarray(state["q"][:16])[3::4].copy()
@@ -123,6 +124,11 @@ class WorkshopController(MotionController):
         chassis_origin = np.asarray(self.spec["bodies"]["chassis"]["origin_m"])
         current_translation = np.asarray(state["base_position"]) - rotation @ chassis_origin
         pickup_point = self.anchor_rotation @ (point + self.pick_delta) + self.anchor_translation
+        if request["held"]:
+            # Contact can capture a tall item before the tool reaches its centre.
+            # Preserve that offset during the remaining approach, so the arm
+            # cannot drive the constrained object through a thin terrain surface.
+            pickup_point[2] = max(pickup_point[2], self.pick_height - request["held_offset_m"][2])
         cargo_point = rotation @ (point + destination_delta) + current_translation
         # The floor object is world-fixed; the receiving bin moves with the
         # chassis, including the small displacement caused by arm reactions.

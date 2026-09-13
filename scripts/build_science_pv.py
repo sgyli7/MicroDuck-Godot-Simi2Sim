@@ -37,6 +37,10 @@ def load_cut(root, cut):
                     wall_seconds=(b['milliseconds']-a['milliseconds'])/1000,
                     chassis_distance_m=distance,
                     source_frame_sha256=[digest(f['file']) for f in selected])
+    if cut.get('require_delivery', False):
+        deliveries = [d for s in source['grab_sessions'] for d in s['deliveries']]
+        assert deliveries and all(d['success'] and d['captured'] and d['released'] and d['supported'] for d in deliveries)
+        evidence['deliveries'] = deliveries
     return frames, times, evidence
 
 
@@ -95,6 +99,7 @@ def main():
     world_source = json.loads(manifest_path.read_text()) if manifest_path.exists() else None
     report = dict(method='Native Godot/Jolt fixed-camera frames. Cuts at original wall time; no pose animation, speed-up, camera motion, overlays or interpolation. Nearest recorded frames resampled to 30 fps MP4 and 12 fps GIF.',
                   world_source=world_source,
+                  interaction_source={p: digest(root / p) for p in ['src/sim2sim/workshop_grab.py', 'godot/hub/scene_grab.gd']},
                   duration_seconds=duration/1000, gif_bytes=gif.stat().st_size,
                   gif_sha256=digest(gif), mp4_sha256=digest(movie), cuts=evidence)
     (args.output / 'pv-validation.json').write_text(json.dumps(report, indent=2)+'\n')

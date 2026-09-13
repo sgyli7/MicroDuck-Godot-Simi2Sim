@@ -2,10 +2,12 @@ extends RefCounted
 ## A remote weather observatory, designed in the round for the western skyline.
 ## Large shaded crown, asymmetric service wing, and a legible structural spine.
 func build(w:Node3D,p:Vector3) -> void:
-	w._box(p+Vector3(0,.12,0),Vector3(6.4,.24,4.1),"metal",.06)
-	for x in [-2.5,1.9]:
-		for z in [-1.4,1.4]:
-			w._beam(p+Vector3(x*.72,-2.2,z*.72),p+Vector3(x,.02,z),.28,.34,"graphite")
+	# A ground-level foundation on the graded site; the building has no rock pedestal.
+	w._box(p+Vector3(0,.08,0),Vector3(6.6,.32,4.3),"paper",.04)
+	w._box(p+Vector3(0,.235,0),Vector3(6.4,.035,4.1),"metal",.01)
+	for i in range(3):
+		var h:float=.08*(3-i)
+		w._box(p+Vector3(-.5,h*.5,2.22+i*.25),Vector3(1.25,h,.30),"paper",.012)
 	# The lower skirt settles into a narrow insulated trunk.
 	w._frustum(p+Vector3(-.5,.77,0),1.78,1.39,1.3,"paper")
 	w._frustum(p+Vector3(-.5,2.56,0),1.39,1.13,2.27,"paper")
@@ -53,10 +55,17 @@ func build(w:Node3D,p:Vector3) -> void:
 	w._cylinder(p+Vector3(2.24,1.96,-.74),.29,.55,"metal")
 	w._dome(p+Vector3(2.24,2.23,-.74),.38,.18,"paper")
 	for z in [-1.78,1.78]:
-		for x in [-3.,-1.5,0.,1.5,3.]:w._line(p+Vector3(x,.24,z),p+Vector3(x,.97,z),.021,"graphite")
-		w._line(p+Vector3(-3.,.98,z),p+Vector3(3.,.98,z),.024,"metal")
+		for x in [-3.,-1.5,1.5,3.]:w._line(p+Vector3(x,.24,z),p+Vector3(x,.97,z),.021,"graphite")
+		if z<0.:w._line(p+Vector3(-3.,.98,z),p+Vector3(3.,.98,z),.024,"metal")
+		else:
+			w._line(p+Vector3(-3.,.98,z),p+Vector3(-1.5,.98,z),.024,"metal")
+			w._line(p+Vector3(1.5,.98,z),p+Vector3(3.,.98,z),.024,"metal")
 	for x in [-2.4,-1.78]:
 		w._cylinder(p+Vector3(x,1.,-1.45),.24,1.54,"paper")
 		for y in [.50,1.46]:w._ring(p+Vector3(x,y,-1.45),.26,.020,"blue")
-		w._line(p+Vector3(x,.28,-1.45),p+Vector3(x,-.65,-2.1),.048,"graphite")
+		var bend:=p+Vector3(x,-.18,-2.1)
+		var socket:=Vector3(bend.x,p.y+.02,bend.z)
+		w._line(p+Vector3(x,.28,-1.45),bend,.048,"graphite")
+		w._line(bend,socket,.048,"graphite")
+		w._cylinder(socket,.085,.12,"blue")
 	w._label("WIND / 09",p+Vector3(-.5,.83,1.63),64,.0045,"blue")

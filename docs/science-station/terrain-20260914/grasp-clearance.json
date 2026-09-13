@@ -1,0 +1,76 @@
+{
+  "symptom": "At the sample station, contact captures the ball while the tool is still above its centre. The subsequent approach drives the constrained ball through the thin terrain mesh, trapping it on the underside.",
+  "change": "While held, bound the pickup tool height using the original object centre height and current contact offset. Jolt still integrates all bodies; no object pose assignment, terrain collision suppression, force scaling, policy replacement or timestep change.",
+  "records": {
+    "before": {
+      "source": "results/science-station/terrain-20260914/ball-grab-before.json",
+      "sha256": "417a9b10b24e646c8d32f6acd9b1adcb4103d5a1027c1c1bf73e48be22a884d5",
+      "deliveries": [
+        {
+          "captured": true,
+          "cargo_bounds": [
+            [
+              0.197486877441406,
+              -0.031726211309433,
+              0.0107401609420776
+            ],
+            [
+              0.266801357269287,
+              0.0378409922122955,
+              0.0803506374359131
+            ]
+          ],
+          "event": "complete",
+          "id": 240400734206,
+          "lift_m": 0.000186767429113388,
+          "object": "Ball10g",
+          "released": false,
+          "success": false,
+          "supported": false,
+          "time": 44.32
+        }
+      ],
+      "minimum_ball_center_height_m": -38.2542152404785
+    },
+    "after": {
+      "source": "results/science-station/terrain-20260914/ball-grab-clearance/hub.json",
+      "sha256": "77935765cfe9cb7415ef4d620402555108e36092628a4cde6449761eb88b5cf4",
+      "deliveries": [
+        {
+          "captured": true,
+          "cargo_bounds": [
+            [
+              -0.13124418258667,
+              0.259755909442902,
+              0.00492751598358154
+            ],
+            [
+              -0.0615854263305664,
+              0.329193651676178,
+              0.0740094184875488
+            ]
+          ],
+          "event": "complete",
+          "id": 228287584013,
+          "lift_m": 0.315537996590137,
+          "object": "Ball10g",
+          "released": true,
+          "success": true,
+          "supported": true,
+          "time": 44.32
+        }
+      ],
+      "minimum_ball_center_height_m": 0.0344887711107731
+    }
+  },
+  "accepted_objects": [
+    "Ball10g",
+    "Ball15g",
+    "Bin10g",
+    "Bin12g",
+    "Bottle6g",
+    "Bottle8g"
+  ],
+  "acceptance": "acceptance.json",
+  "controller_sha256": "aa37ad33773c3f001618c3cc9e074aae9753168d0fba077f3bffca7fbac60c38"
+}

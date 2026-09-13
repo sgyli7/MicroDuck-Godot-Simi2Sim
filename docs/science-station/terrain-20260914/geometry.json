@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "berth_clear": true,
+    "camera_crest": true,
+    "camera_lab": true,
+    "camera_near_relief": true,
+    "closed_horizon": true,
+    "command_hull_solid": true,
+    "ground": true,
+    "lab_door": true,
+    "lab_exit_margin": true,
+    "lab_wall_solid": true,
+    "near_relief": true,
+    "observatory_foundation_solid": true,
+    "observatory_prepared_ground": true,
+    "outer_ground_join": true,
+    "outer_outcrop_solid": true,
+    "patch_seams": true,
+    "prepared_berth_level": true,
+    "sai_building_stays_solid": true,
+    "sai_terrain_layer": true,
+    "service_bay": true,
+    "six_props": true,
+    "terrain_patches": 30,
+    "tower_passages": true
+  },
+  "passed": true
+}

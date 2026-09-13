@@ -1,16 +1,18 @@
 extends "res://atelier/workshop.gd"
 const Layout=preload("res://science_station/layout.gd")
 var towers: Array[Dictionary]=[]
+var landscape_builder:RefCounted
 
 func _init() -> void:
 	label_font=load("res://atelier/ui_font.tres")
-	palette.merge({"blue":Color("6796ae"),"sand":Color("cbb995"),"rock":Color("c8c5ad"),"distant":Color("a8b7be"),
+	palette.merge({"blue":Color("6796ae"),"sand":Color("ffb46b"),"rock":Color("a6b1c2"),"distant":Color("8faec6"),
 		"paper":Color("d7d8ce"),"porcelain":Color("e9e8da"),"graphite":Color("464e58"),
 		"metal":Color("889999"),"glass":Color("263f51"),"signal":Color("c57d52"),
-		"silt":Color("b7a78f"),"chalk":Color("dfd9bc"),"ochre":Color("c6a57c"),"far_rock":Color("a7aea7"),"strata":Color("77756e")})
+		"silt":Color("7f899f"),"chalk":Color("c8cad4"),"ochre":Color("ed9c62"),"far_rock":Color("a0a9c2"),"strata":Color("576477")})
 
 func ground_height(x:float,z:float) -> float:
-	return Layout.height_at(x,z)
+	if absf(x)<=24. and z>=-26. and z<=14.:return Layout.height_at(x,z)
+	return landscape_builder.ground(x,z) if landscape_builder!=null else 0.
 
 func _build_details() -> void:
 	for key in materials:
@@ -48,9 +50,9 @@ func _build_solids() -> void:
 	solid_scope=true
 	_service();_samples();_tower(Vector3(7,0,-17),7.,1.32,"01");_tower(Vector3(16,0,-21),10.,1.7,"02")
 	load("res://science_station/command_station.gd").new().build(self)
-	_field_details();_perimeter()
+	_field_details()
 	solid_scope=false
-	if visuals_enabled:_landscape()
+	_landscape()
 	loose_props=load("res://atelier/loose_props.gd").new();loose_props.name="LooseProps";add_child(loose_props)
 	loose_props.build(self,visuals_enabled,.015,Layout.PROPS)
 
@@ -61,13 +63,15 @@ func _terrain() -> void:
 	for ix in range(6):
 		for iz in range(5):
 			var st:=SurfaceTool.new();st.begin(Mesh.PRIMITIVE_TRIANGLES)
-			for i in range(16):
-				for j in range(16):
-					var x:float=-24.+ix*8.+i*.5;var z:float=-26.+iz*8.+j*.5
-					var a:=Vector3(x,ground_height(x,z),z);var b:=Vector3(x+.5,ground_height(x+.5,z),z)
-					var c:=Vector3(x,ground_height(x,z+.5),z+.5);var d:=Vector3(x+.5,ground_height(x+.5,z+.5),z+.5)
-					for point in [a,b,c,b,d,c]:st.add_vertex(point)
-			st.generate_normals();st.index();var mesh:=st.commit()
+			for i in range(32):
+				for j in range(32):
+					var x:float=-24.+ix*8.+i*.25;var z:float=-26.+iz*8.+j*.25
+					var a:=Vector3(x,ground_height(x,z),z);var b:=Vector3(x+.25,ground_height(x+.25,z),z)
+					var c:=Vector3(x,ground_height(x,z+.25),z+.25);var d:=Vector3(x+.25,ground_height(x+.25,z+.25),z+.25)
+					for point in [a,b,c,b,d,c]:
+						if visuals_enabled:st.set_normal(Layout.surface_normal(point.x,point.z))
+						st.add_vertex(point)
+			st.index();var mesh:=st.commit()
 			var patch:=StaticBody3D.new();patch.name="Terrain_%d_%d"%[ix,iz]
 			patch.add_to_group("sai_driving_surface")
 			patch.collision_layer=3;patch.collision_mask=5
@@ -158,25 +162,13 @@ func _field_details() -> void:
 	_label("02",Vector3(17,.015,-1.8),120,.023,"blue",Vector3(-90,0,0))
 	_cabinet(Vector3(23.55,0,-6),"blue","SUPPLY")
 	for p in [Vector3(-12.5,0,5),Vector3(-16,0,-16),Vector3(2,0,-22)]:
+		p.y=ground_height(p.x,p.z)
 		_box(p+Vector3(0,.26,0),Vector3(.9,.06,.35),"paper",.012)
 		for x in [-.35,.35]:_box(p+Vector3(x,.12,0),Vector3(.065,.24,.28),"graphite",.008)
 
-func _perimeter() -> void:
-	# Low fractured rock closes the boundary with the same visible collision hull.
-	for i in range(12):
-		var x:float=-22.+i*4.
-		for z in [-26.,14.]:_rock(Vector3(x,-.08,z),Vector3(2.23,.47,.38))
-	for i in range(10):
-		var z:float=-24.+i*4.
-		for x in [-24.,24.]:_rock(Vector3(x,-.08,z),Vector3(.38,.47,2.23))
-	for p in [Vector3(-20,0,9),Vector3(-21,0,-12),Vector3(-15,0,-23),Vector3(22,0,-13)]:
-		_rock(p,Vector3(1.3,.9,.8))
-
 func _landscape() -> void:
-	load("res://science_station/landscape.gd").new().build(self)
-
-func _rock(p:Vector3,size:Vector3) -> void:
-	load("res://science_station/landscape.gd").outcrop(self,p,size,p.x*.13+p.z*.31)
+	landscape_builder=load("res://science_station/landscape.gd").new()
+	landscape_builder.build(self)
 
 func _cabinet(p:Vector3,color:String,label_text:String) -> void:
 	_box(p+Vector3(0,.34,0),Vector3(.45,.68,.32),"graphite",.02)

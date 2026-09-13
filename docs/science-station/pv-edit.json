@@ -1,54 +1,56 @@
 {
   "pv": [
     {
-      "source": "results/science-station/retro-v2/publication/service",
+      "source": "results/science-station/terrain-20260914/service",
       "area": "service",
-      "start": 3.945096,
+      "start": 2.8871620000000005,
       "duration": 4
     },
     {
-      "source": "results/science-station/retro-v2/publication/samples",
+      "source": "results/science-station/terrain-20260914/samples",
       "area": "samples",
-      "start": 20.090502,
-      "duration": 4
+      "start": 15.959505000000002,
+      "duration": 4,
+      "require_delivery": true
     },
     {
-      "source": "results/science-station/retro-v2/publication/towers",
+      "source": "results/science-station/terrain-20260914/towers",
       "area": "towers",
-      "start": 17.935377,
+      "start": 4.956466000000001,
       "duration": 4
     },
     {
-      "source": "results/science-station/retro-v2/publication/hills",
+      "source": "results/science-station/terrain-20260914/hills",
       "area": "hills",
-      "start": 5.944096,
+      "start": 3.953618,
       "duration": 3
     }
   ],
   "film": [
     {
-      "source": "results/science-station/retro-v2/publication/service",
+      "source": "results/science-station/terrain-20260914/service",
       "area": "service",
-      "start": 2.942922,
-      "duration": 10
+      "start": 1.8867310000000002,
+      "duration": 13
     },
     {
-      "source": "results/science-station/retro-v2/publication/samples",
+      "source": "results/science-station/terrain-20260914/samples",
       "area": "samples",
-      "start": 6.013763,
-      "duration": 41.291
+      "start": 2.9609449999999997,
+      "duration": 43,
+      "require_delivery": true
     },
     {
-      "source": "results/science-station/retro-v2/publication/towers",
+      "source": "results/science-station/terrain-20260914/towers",
       "area": "towers",
-      "start": 9.939192,
-      "duration": 16
+      "start": 1.954482,
+      "duration": 14
     },
     {
-      "source": "results/science-station/retro-v2/publication/hills",
+      "source": "results/science-station/terrain-20260914/hills",
       "area": "hills",
-      "start": 2.943265,
-      "duration": 10
+      "start": 1.953638,
+      "duration": 14
     }
   ]
 }

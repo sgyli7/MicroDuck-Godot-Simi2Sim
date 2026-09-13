@@ -1,0 +1,25 @@
+{
+  "seconds": 85,
+  "finish_on_grab": true,
+  "events": [
+    {
+      "at": 1,
+      "key": "B"
+    },
+    {
+      "at": 1.1,
+      "key": "B",
+      "pressed": false
+    },
+    {
+      "at": 2,
+      "key": "G"
+    },
+    {
+      "at": 2.1,
+      "key": "G",
+      "pressed": false
+    }
+  ],
+  "initial_checkpoint": "service"
+}

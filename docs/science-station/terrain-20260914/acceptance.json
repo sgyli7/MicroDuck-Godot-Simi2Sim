@@ -1,0 +1,1474 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "loop-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/loop-microduck",
+      "route": {
+        "minimum_upright": 0.991506294673553,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -1.82923030853271,
+              0.123289756476879,
+              3.96658992767334
+            ],
+            "target": [
+              -2.0,
+              3.8
+            ],
+            "time": 24.9049999999993
+          },
+          {
+            "position": [
+              -4.79312801361084,
+              0.121636688709259,
+              1.11974012851715
+            ],
+            "target": [
+              -5.0,
+              1.0
+            ],
+            "time": 49.2750000000068
+          },
+          {
+            "position": [
+              4.76098775863647,
+              0.121579922735691,
+              5.01247596740723
+            ],
+            "target": [
+              5.0,
+              5.0
+            ],
+            "time": 110.004999999972
+          },
+          {
+            "position": [
+              0.178769409656525,
+              0.125214114785194,
+              6.84112930297852
+            ],
+            "target": [
+              0.0,
+              7.0
+            ],
+            "time": 144.844999999941
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 144.844999999941
+    },
+    {
+      "case": "loop-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/loop-roller",
+      "route": {
+        "minimum_upright": 0.866200325757116,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -1.79448628425598,
+              0.115172833204269,
+              3.92390775680542
+            ],
+            "target": [
+              -2.0,
+              3.8
+            ],
+            "time": 8.80999999999998
+          },
+          {
+            "position": [
+              -4.7676305770874,
+              0.124941103160381,
+              1.05079102516174
+            ],
+            "target": [
+              -5.0,
+              1.0
+            ],
+            "time": 15.260000000001
+          },
+          {
+            "position": [
+              4.76470756530762,
+              0.117112778127193,
+              5.03623533248901
+            ],
+            "target": [
+              5.0,
+              5.0
+            ],
+            "time": 33.4049999999986
+          },
+          {
+            "position": [
+              0.158597156405449,
+              0.115487232804298,
+              6.82318878173828
+            ],
+            "target": [
+              0.0,
+              7.0
+            ],
+            "time": 42.8750000000035
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 42.8750000000035
+    },
+    {
+      "case": "loop-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/loop-sai",
+      "route": {
+        "minimum_upright": 0.999535799026489,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -1.79115879535675,
+              0.220205709338188,
+              3.91801381111145
+            ],
+            "target": [
+              -2.0,
+              3.8
+            ],
+            "time": 24.7719999999876
+          },
+          {
+            "position": [
+              -4.79372262954712,
+              0.21782848238945,
+              1.12248611450195
+            ],
+            "target": [
+              -5.0,
+              1.0
+            ],
+            "time": 33.4964999999779
+          },
+          {
+            "position": [
+              4.87381935119629,
+              0.219738677144051,
+              4.79593801498413
+            ],
+            "target": [
+              5.0,
+              5.0
+            ],
+            "time": 65.9555000001329
+          },
+          {
+            "position": [
+              0.238896697759628,
+              0.218301191926003,
+              7.02214002609253
+            ],
+            "target": [
+              0.0,
+              7.0
+            ],
+            "time": 83.6990000002176
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 83.6990000002176
+    },
+    {
+      "case": "slope-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/slope-microduck",
+      "route": {
+        "minimum_upright": 0.99268166201068,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -18.2388801574707,
+              0.259561687707901,
+              -2.99362063407898
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 27.7099999999988
+          },
+          {
+            "position": [
+              -14.23890209198,
+              0.172607600688934,
+              -3.01243090629578
+            ],
+            "target": [
+              -14.0,
+              -3.0
+            ],
+            "time": 45.3950000000048
+          },
+          {
+            "position": [
+              -17.7703323364258,
+              0.262046426534653,
+              -2.93267369270325
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 76.0850000000033
+          },
+          {
+            "position": [
+              -21.7605266571045,
+              0.169293195009232,
+              -2.99511003494263
+            ],
+            "target": [
+              -22.0,
+              -3.0
+            ],
+            "time": 95.084999999986
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 95.084999999986
+    },
+    {
+      "case": "slope-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/slope-roller",
+      "route": {
+        "minimum_upright": 0.958419948794991,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -18.1876201629639,
+              0.264160096645355,
+              -2.85492372512817
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 8.2849999999999
+          },
+          {
+            "position": [
+              -14.2145948410034,
+              0.178088188171387,
+              -2.89254474639893
+            ],
+            "target": [
+              -14.0,
+              -3.0
+            ],
+            "time": 14.4000000000009
+          },
+          {
+            "position": [
+              -17.7764415740967,
+              0.257511109113693,
+              -3.08648920059204
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 22.0149999999999
+          },
+          {
+            "position": [
+              -21.7862415313721,
+              0.173022791743279,
+              -3.10741972923279
+            ],
+            "target": [
+              -22.0,
+              -3.0
+            ],
+            "time": 28.1949999999987
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 28.1949999999987
+    },
+    {
+      "case": "slope-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/slope-sai",
+      "route": {
+        "minimum_upright": 0.961557984352112,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -18.23828125,
+              0.360358327627182,
+              -3.02714037895203
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 26.4439999999837
+          },
+          {
+            "position": [
+              -14.2171764373779,
+              0.269566833972931,
+              -3.10205960273743
+            ],
+            "target": [
+              -14.0,
+              -3.0
+            ],
+            "time": 53.400500000073
+          },
+          {
+            "position": [
+              -17.792839050293,
+              0.358463793992996,
+              -2.87925386428833
+            ],
+            "target": [
+              -18.0,
+              -3.0
+            ],
+            "time": 89.1265000002435
+          },
+          {
+            "position": [
+              -21.8094997406006,
+              0.271659284830093,
+              -3.14594268798828
+            ],
+            "target": [
+              -22.0,
+              -3.0
+            ],
+            "time": 119.268500000387
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 119.268500000387
+    },
+    {
+      "case": "tower-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/tower-microduck",
+      "route": {
+        "minimum_upright": 0.994347892980502,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              6.76034021377563,
+              0.12310404330492,
+              -17.0031242370605
+            ],
+            "target": [
+              7.0,
+              -17.0
+            ],
+            "time": 17.0300000000009
+          },
+          {
+            "position": [
+              9.76194763183594,
+              0.121699951589108,
+              -16.9835186004639
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 32.3249999999981
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 32.3249999999981
+    },
+    {
+      "case": "tower-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/tower-roller",
+      "route": {
+        "minimum_upright": 0.965866318722842,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              6.782799243927,
+              0.118891648948193,
+              -16.9018726348877
+            ],
+            "target": [
+              7.0,
+              -17.0
+            ],
+            "time": 6.04999999999989
+          },
+          {
+            "position": [
+              9.77484226226807,
+              0.124839179217815,
+              -16.92356300354
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 10.7050000000003
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 10.7050000000003
+    },
+    {
+      "case": "tower-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/tower-sai",
+      "route": {
+        "minimum_upright": 0.999669432640076,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              6.77815341949463,
+              0.220301419496536,
+              -16.9088935852051
+            ],
+            "target": [
+              7.0,
+              -17.0
+            ],
+            "time": 12.8030000000042
+          },
+          {
+            "position": [
+              9.79172325134277,
+              0.219657734036446,
+              -17.1188735961914
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 21.9894999999941
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 21.9894999999941
+    },
+    {
+      "case": "lab-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/lab-microduck",
+      "route": {
+        "minimum_upright": 0.993614336816988,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -7.44110822677612,
+              0.122876860201359,
+              -0.117766596376896
+            ],
+            "target": [
+              -7.5,
+              -0.35
+            ],
+            "time": 22.7799999999998
+          },
+          {
+            "position": [
+              -7.55828189849854,
+              0.122225843369961,
+              2.86751127243042
+            ],
+            "target": [
+              -7.5,
+              3.1
+            ],
+            "time": 45.4150000000048
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 45.4150000000048
+    },
+    {
+      "case": "lab-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/lab-roller",
+      "route": {
+        "minimum_upright": 0.950658442624606,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -7.35195159912109,
+              0.118317544460297,
+              -0.161562591791153
+            ],
+            "target": [
+              -7.5,
+              -0.35
+            ],
+            "time": 7.70999999999986
+          },
+          {
+            "position": [
+              -7.60505771636963,
+              0.126566797494888,
+              2.88755917549133
+            ],
+            "target": [
+              -7.5,
+              3.1
+            ],
+            "time": 13.6250000000007
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 13.6250000000007
+    },
+    {
+      "case": "lab-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/lab-sai",
+      "route": {
+        "minimum_upright": 0.99966436624527,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              -7.38703870773315,
+              0.220771998167038,
+              -0.138439416885376
+            ],
+            "target": [
+              -7.5,
+              -0.35
+            ],
+            "time": 21.3284999999956
+          },
+          {
+            "position": [
+              -7.60967397689819,
+              0.219670087099075,
+              2.88652968406677
+            ],
+            "target": [
+              -7.5,
+              3.1
+            ],
+            "time": 42.0740000000189
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 42.0740000000189
+    },
+    {
+      "case": "north-microduck",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/north-microduck",
+      "route": {
+        "minimum_upright": 0.992538170342935,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              0.0259868465363979,
+              0.123361699283123,
+              -13.7617111206055
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 31.0999999999981
+          },
+          {
+            "position": [
+              -3.76671099662781,
+              0.120343446731567,
+              -15.5468158721924
+            ],
+            "target": [
+              -4.0,
+              -15.6
+            ],
+            "time": 56.3700000000104
+          },
+          {
+            "position": [
+              -0.239216133952141,
+              0.122832879424095,
+              -14.0167026519775
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 82.9149999999971
+          },
+          {
+            "position": [
+              3.85661196708679,
+              0.123576238751411,
+              -16.8086261749268
+            ],
+            "target": [
+              4.0,
+              -17.0
+            ],
+            "time": 112.004999999971
+          },
+          {
+            "position": [
+              9.77560806274414,
+              0.118942782282829,
+              -17.0845508575439
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 146.954999999939
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 146.954999999939
+    },
+    {
+      "case": "north-roller",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/north-roller",
+      "route": {
+        "minimum_upright": 0.953282148636929,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              0.131357878446579,
+              0.118079848587513,
+              -13.8001670837402
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 10.1900000000002
+          },
+          {
+            "position": [
+              -3.76354765892029,
+              0.12573778629303,
+              -15.6110057830811
+            ],
+            "target": [
+              -4.0,
+              -15.6
+            ],
+            "time": 17.0050000000009
+          },
+          {
+            "position": [
+              -0.236992299556732,
+              0.117516361176968,
+              -13.9728126525879
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 24.8699999999993
+          },
+          {
+            "position": [
+              3.90738773345947,
+              0.125309735536575,
+              -16.7797336578369
+            ],
+            "target": [
+              4.0,
+              -17.0
+            ],
+            "time": 32.7299999999983
+          },
+          {
+            "position": [
+              9.79422760009766,
+              0.121694311499596,
+              -16.8785934448242
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 42.0350000000031
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 42.0350000000031
+    },
+    {
+      "case": "north-sai",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/north-sai",
+      "route": {
+        "minimum_upright": 0.999514937400818,
+        "passed": true,
+        "reached": [
+          {
+            "position": [
+              0.135687425732613,
+              0.220038756728172,
+              -13.8021183013916
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 26.5729999999834
+          },
+          {
+            "position": [
+              -3.76308655738831,
+              0.219443336129189,
+              -15.6383047103882
+            ],
+            "target": [
+              -4.0,
+              -15.6
+            ],
+            "time": 47.2195000000434
+          },
+          {
+            "position": [
+              -0.238227412104607,
+              0.220294803380966,
+              -13.9723482131958
+            ],
+            "target": [
+              0.0,
+              -14.0
+            ],
+            "time": 72.5460000001644
+          },
+          {
+            "position": [
+              3.90940403938293,
+              0.219677597284317,
+              -16.7777767181396
+            ],
+            "target": [
+              4.0,
+              -17.0
+            ],
+            "time": 96.7970000002802
+          },
+          {
+            "position": [
+              9.78555488586426,
+              0.218438893556595,
+              -17.1076164245605
+            ],
+            "target": [
+              10.0,
+              -17.0
+            ],
+            "time": 113.622500000361
+          }
+        ]
+      },
+      "checks": {
+        "scene": true,
+        "route": true,
+        "no_native_fall": true
+      },
+      "simulation_seconds": 113.622500000361
+    },
+    {
+      "case": "switches",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/switches",
+      "checks": {
+        "scene": true,
+        "switch_order": true,
+        "same_scenery": true,
+        "props_preserved": true,
+        "safe_spawn": true,
+        "props_reset": true
+      },
+      "simulation_seconds": 19.0000000000021
+    },
+    {
+      "case": "grab",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/grab",
+      "grab": [
+        {
+          "deliveries": [
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.145347535610199,
+                  0.258760571479797,
+                  0.00864267349243164
+                ],
+                [
+                  -0.0514542013406754,
+                  0.362371146678925,
+                  0.075899600982666
+                ]
+              ],
+              "event": "complete",
+              "id": 227683603254,
+              "lift_m": 0.315550815314054,
+              "object": "Bin12g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.24
+            }
+          ],
+          "history": [
+            {
+              "event": "start",
+              "id": 227683603254,
+              "object": "Bin12g",
+              "time": 2.0055
+            },
+            {
+              "event": "attach",
+              "object": "Bin12g",
+              "time": 10.38
+            },
+            {
+              "event": "release",
+              "object": "Bin12g",
+              "time": 37.4
+            },
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.145347535610199,
+                  0.258760571479797,
+                  0.00864267349243164
+                ],
+                [
+                  -0.0514542013406754,
+                  0.362371146678925,
+                  0.075899600982666
+                ]
+              ],
+              "event": "complete",
+              "id": 227683603254,
+              "lift_m": 0.315550815314054,
+              "object": "Bin12g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.24
+            }
+          ],
+          "retained": {
+            "Ball10g": false,
+            "Ball15g": false,
+            "Bin10g": false,
+            "Bin12g": true,
+            "Bottle6g": false,
+            "Bottle8g": false
+          }
+        }
+      ],
+      "checks": {
+        "scene": true,
+        "delivered": true
+      },
+      "simulation_seconds": 47.2635000000436
+    },
+    {
+      "case": "cancel",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/cancel",
+      "checks": {
+        "scene": true,
+        "cancelled": true,
+        "not_delivered": true
+      },
+      "simulation_seconds": 14.0000000000056
+    },
+    {
+      "case": "play",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/play",
+      "kicked_bin_peak_speed_m_s": 0.8311014777919749,
+      "checks": {
+        "scene": true,
+        "kick_command": true,
+        "physical_prop_motion": true,
+        "walked": true
+      },
+      "simulation_seconds": 23.0049999999997
+    },
+    {
+      "case": "workshop",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/workshop",
+      "checks": {
+        "scene": true,
+        "existing_regression": true
+      },
+      "simulation_seconds": 49.0025000000345
+    },
+    {
+      "case": "grab-service-bottle",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/grab-service-bottle",
+      "grab": [
+        {
+          "deliveries": [
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.112983703613281,
+                  0.259347677230835,
+                  0.0224814414978027
+                ],
+                [
+                  -0.0769836902618408,
+                  0.338255226612091,
+                  0.0589962005615234
+                ]
+              ],
+              "event": "complete",
+              "id": 228052702986,
+              "lift_m": 0.314922615885735,
+              "object": "Bottle6g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 50.5
+            }
+          ],
+          "history": [
+            {
+              "event": "start",
+              "id": 228052702986,
+              "object": "Bottle6g",
+              "time": 2.0055
+            },
+            {
+              "event": "attach",
+              "object": "Bottle6g",
+              "time": 16.62
+            },
+            {
+              "event": "release",
+              "object": "Bottle6g",
+              "time": 43.64
+            },
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.112983703613281,
+                  0.259347677230835,
+                  0.0224814414978027
+                ],
+                [
+                  -0.0769836902618408,
+                  0.338255226612091,
+                  0.0589962005615234
+                ]
+              ],
+              "event": "complete",
+              "id": 228052702986,
+              "lift_m": 0.314922615885735,
+              "object": "Bottle6g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 50.5
+            }
+          ],
+          "retained": {
+            "Ball10g": false,
+            "Ball15g": false,
+            "Bin10g": false,
+            "Bin12g": false,
+            "Bottle6g": true,
+            "Bottle8g": false
+          }
+        }
+      ],
+      "checks": {
+        "scene": true,
+        "delivered": true
+      },
+      "simulation_seconds": 53.5235000000735
+    },
+    {
+      "case": "grab-samples",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/grab-samples",
+      "grab": [
+        {
+          "deliveries": [
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.13124418258667,
+                  0.259755909442902,
+                  0.00492751598358154
+                ],
+                [
+                  -0.0615854263305664,
+                  0.329193651676178,
+                  0.0740094184875488
+                ]
+              ],
+              "event": "complete",
+              "id": 228287584013,
+              "lift_m": 0.315537996590137,
+              "object": "Ball10g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.32
+            }
+          ],
+          "history": [
+            {
+              "event": "start",
+              "id": 228287584013,
+              "object": "Ball10g",
+              "time": 2.0055
+            },
+            {
+              "event": "attach",
+              "object": "Ball10g",
+              "time": 10.12
+            },
+            {
+              "event": "release",
+              "object": "Ball10g",
+              "time": 37.46
+            },
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.13124418258667,
+                  0.259755909442902,
+                  0.00492751598358154
+                ],
+                [
+                  -0.0615854263305664,
+                  0.329193651676178,
+                  0.0740094184875488
+                ]
+              ],
+              "event": "complete",
+              "id": 228287584013,
+              "lift_m": 0.315537996590137,
+              "object": "Ball10g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.32
+            }
+          ],
+          "retained": {
+            "Ball10g": true,
+            "Ball15g": false,
+            "Bin10g": false,
+            "Bin12g": false,
+            "Bottle6g": false,
+            "Bottle8g": false
+          }
+        }
+      ],
+      "checks": {
+        "scene": true,
+        "delivered": true
+      },
+      "simulation_seconds": 47.343500000044
+    },
+    {
+      "case": "grab-samples-bottle",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/grab-samples-bottle",
+      "grab": [
+        {
+          "deliveries": [
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.113462924957275,
+                  0.259341061115265,
+                  0.022337794303894
+                ],
+                [
+                  -0.0774631500244141,
+                  0.338248670101166,
+                  0.0588529109954834
+                ]
+              ],
+              "event": "complete",
+              "id": 228405024536,
+              "lift_m": 0.314965568482876,
+              "object": "Bottle8g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 50.5
+            }
+          ],
+          "history": [
+            {
+              "event": "start",
+              "id": 228405024536,
+              "object": "Bottle8g",
+              "time": 2.0055
+            },
+            {
+              "event": "attach",
+              "object": "Bottle8g",
+              "time": 16.64
+            },
+            {
+              "event": "release",
+              "object": "Bottle8g",
+              "time": 43.66
+            },
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.113462924957275,
+                  0.259341061115265,
+                  0.022337794303894
+                ],
+                [
+                  -0.0774631500244141,
+                  0.338248670101166,
+                  0.0588529109954834
+                ]
+              ],
+              "event": "complete",
+              "id": 228405024536,
+              "lift_m": 0.314965568482876,
+              "object": "Bottle8g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 50.5
+            }
+          ],
+          "retained": {
+            "Ball10g": false,
+            "Ball15g": false,
+            "Bin10g": false,
+            "Bin12g": false,
+            "Bottle6g": false,
+            "Bottle8g": true
+          }
+        }
+      ],
+      "checks": {
+        "scene": true,
+        "delivered": true
+      },
+      "simulation_seconds": 53.5235000000735
+    },
+    {
+      "case": "grab-berth",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/grab-berth",
+      "grab": [
+        {
+          "deliveries": [
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.128530502319336,
+                  0.25898876786232,
+                  -0.0323481559753418
+                ],
+                [
+                  -0.0591421127319336,
+                  0.327489197254181,
+                  0.0376176834106445
+                ]
+              ],
+              "event": "complete",
+              "id": 228639905559,
+              "lift_m": 0.315571159124374,
+              "object": "Ball15g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.28
+            }
+          ],
+          "history": [
+            {
+              "event": "start",
+              "id": 228639905559,
+              "object": "Ball15g",
+              "time": 2.0055
+            },
+            {
+              "event": "attach",
+              "object": "Ball15g",
+              "time": 10.08
+            },
+            {
+              "event": "release",
+              "object": "Ball15g",
+              "time": 37.42
+            },
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.128530502319336,
+                  0.25898876786232,
+                  -0.0323481559753418
+                ],
+                [
+                  -0.0591421127319336,
+                  0.327489197254181,
+                  0.0376176834106445
+                ]
+              ],
+              "event": "complete",
+              "id": 228639905559,
+              "lift_m": 0.315571159124374,
+              "object": "Ball15g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 44.28
+            }
+          ],
+          "retained": {
+            "Ball10g": false,
+            "Ball15g": true,
+            "Bin10g": false,
+            "Bin12g": false,
+            "Bottle6g": false,
+            "Bottle8g": false
+          }
+        }
+      ],
+      "checks": {
+        "scene": true,
+        "delivered": true
+      },
+      "simulation_seconds": 47.3035000000438
+    },
+    {
+      "case": "grab-berth-bin",
+      "exit": 0,
+      "passed": true,
+      "source": "results/science-station/terrain-20260914/acceptance-release/grab-berth-bin",
+      "grab": [
+        {
+          "deliveries": [
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.147714614868164,
+                  0.258664965629578,
+                  0.00626134872436523
+                ],
+                [
+                  -0.0518312454223633,
+                  0.362476706504822,
+                  0.073875904083252
+                ]
+              ],
+              "event": "complete",
+              "id": 228757346086,
+              "lift_m": 0.315358228981495,
+              "object": "Bin10g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 50.5
+            }
+          ],
+          "history": [
+            {
+              "event": "start",
+              "id": 228757346086,
+              "object": "Bin10g",
+              "time": 2.0055
+            },
+            {
+              "event": "attach",
+              "object": "Bin10g",
+              "time": 16.62
+            },
+            {
+              "event": "release",
+              "object": "Bin10g",
+              "time": 43.64
+            },
+            {
+              "captured": true,
+              "cargo_bounds": [
+                [
+                  -0.147714614868164,
+                  0.258664965629578,
+                  0.00626134872436523
+                ],
+                [
+                  -0.0518312454223633,
+                  0.362476706504822,
+                  0.073875904083252
+                ]
+              ],
+              "event": "complete",
+              "id": 228757346086,
+              "lift_m": 0.315358228981495,
+              "object": "Bin10g",
+              "released": true,
+              "success": true,
+              "supported": true,
+              "time": 50.5
+            }
+          ],
+          "retained": {
+            "Ball10g": false,
+            "Ball15g": false,
+            "Bin10g": true,
+            "Bin12g": false,
+            "Bottle6g": false,
+            "Bottle8g": false
+          }
+        }
+      ],
+      "checks": {
+        "scene": true,
+        "delivered": true
+      },
+      "simulation_seconds": 53.5235000000735
+    }
+  ],
+  "method": "Native Godot/Jolt, normal input events, unpaced headless rendering; original physics timestep and policies"
+}

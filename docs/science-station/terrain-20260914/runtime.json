@@ -1,0 +1,35 @@
+{
+  "method": "Native Godot 4.7.2 Forward+, 1920 x 1080, 30 FPS cap; two pinned CPU cores, nice 10; normal wall-paced runs without frame recording. Samples after 3 seconds.",
+  "robots": {
+    "microduck": {
+      "fps_min": 30.0,
+      "fps_median": 30.0,
+      "simulation_wall_ratio": 1.0015179455576013,
+      "distance_m": 2.178751685157307,
+      "source": "results/science-station/terrain-20260914/performance-microduck/hub.json",
+      "source_sha256": "0736434bbeb20615d747a9cc0c6e4e01c4c7847cb604a685c32cd0494e111e4e"
+    },
+    "roller": {
+      "fps_min": 30.0,
+      "fps_median": 30.0,
+      "simulation_wall_ratio": 1.00138610623581,
+      "distance_m": 7.87747491562836,
+      "source": "results/science-station/terrain-20260914/performance-roller/hub.json",
+      "source_sha256": "6afb8f18e1d3bae521542e4c95007eafebb4d8c80f3a3cbffe90e4b054dcd10d"
+    },
+    "sai": {
+      "fps_min": 30.0,
+      "fps_median": 30.0,
+      "simulation_wall_ratio": 0.99991976262619,
+      "distance_m": 3.950621604298835,
+      "source": "results/science-station/terrain-20260914/performance-sai/hub.json",
+      "source_sha256": "3327933103802ec26d7173bbfbdb75a83472ac9b7a15e10c7b6fc8aed17b0f36"
+    }
+  },
+  "camera": {
+    "frames": 69,
+    "distinct_camera_positions": 58,
+    "source": "results/science-station/terrain-20260914/camera-final/hub.json",
+    "plan": "docs/science-station/plans/camera.json"
+  }
+}

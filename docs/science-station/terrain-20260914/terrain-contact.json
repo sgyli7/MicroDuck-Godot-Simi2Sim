@@ -1,0 +1,89 @@
+{
+  "trigger": "Quarter-metre resampling changed the previously accepted half-metre driving surface; the same native roller reversal failed identically twice.",
+  "fix": "Subdivide the existing slope triangles without resampling the analytic profile. Keep all policy, physics and navigator parameters.",
+  "before": {
+    "minimum_upright": 0.477362123181609,
+    "passed": false,
+    "reached": [
+      {
+        "position": [
+          -18.2036895751953,
+          0.26461723446846,
+          -2.87395739555359
+        ],
+        "target": [
+          -18.0,
+          -3.0
+        ],
+        "time": 8.24999999999989
+      },
+      {
+        "position": [
+          -14.2084741592407,
+          0.166494444012642,
+          -2.8862202167511
+        ],
+        "target": [
+          -14.0,
+          -3.0
+        ],
+        "time": 14.3750000000008
+      }
+    ],
+    "reason": "robot fell"
+  },
+  "after": {
+    "minimum_upright": 0.958419948794991,
+    "passed": true,
+    "reached": [
+      {
+        "position": [
+          -18.1876201629639,
+          0.264160096645355,
+          -2.85492372512817
+        ],
+        "target": [
+          -18.0,
+          -3.0
+        ],
+        "time": 8.2849999999999
+      },
+      {
+        "position": [
+          -14.2145948410034,
+          0.178088188171387,
+          -2.89254474639893
+        ],
+        "target": [
+          -14.0,
+          -3.0
+        ],
+        "time": 14.4000000000009
+      },
+      {
+        "position": [
+          -17.7764415740967,
+          0.257511109113693,
+          -3.08648920059204
+        ],
+        "target": [
+          -18.0,
+          -3.0
+        ],
+        "time": 22.0149999999999
+      },
+      {
+        "position": [
+          -21.7862415313721,
+          0.173022791743279,
+          -3.10741972923279
+        ],
+        "target": [
+          -22.0,
+          -3.0
+        ],
+        "time": 28.1949999999987
+      }
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "seconds": 6,
+  "capture_interval": 0.5,
+  "cinematic": true,
+  "events": [],
+  "fixed_shots": [
+    {
+      "id": "outpost_front",
+      "at": 0,
+      "position": [
+        -27,
+        2.2,
+        -12
+      ],
+      "target": [
+        -35,
+        3.5,
+        -20.4
+      ],
+      "fov": 58
+    },
+    {
+      "id": "outpost_side",
+      "at": 2,
+      "position": [
+        -43,
+        3.8,
+        -15.5
+      ],
+      "target": [
+        -35,
+        3.7,
+        -20.4
+      ],
+      "fov": 58
+    },
+    {
+      "id": "outpost_back",
+      "at": 4,
+      "position": [
+        -39,
+        2.7,
+        -30
+      ],
+      "target": [
+        -35,
+        3.5,
+        -20.4
+      ],
+      "fov": 58
+    }
+  ]
+}

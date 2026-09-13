@@ -18,18 +18,79 @@ const VIEWS := {
 }
 
 static func height_at(x: float,z: float) -> float:
-	# Barycentric interpolation of the exact half-metre physics triangles.
-	var x0:float=floorf(x*2.)*.5;var z0:float=floorf(z*2.)*.5
-	var u:float=(x-x0)*2.;var v:float=(z-z0)*2.
-	var b:float=_vertex_height(x0+.5,z0);var c:float=_vertex_height(x0,z0+.5)
+	# Barycentric interpolation of the exact quarter-metre physics triangles.
+	var x0:float=floorf(x*4.)*.25;var z0:float=floorf(z*4.)*.25
+	var u:float=(x-x0)*4.;var v:float=(z-z0)*4.
+	var b:float=_vertex_height(x0+.25,z0);var c:float=_vertex_height(x0,z0+.25)
 	if u+v<=1.:return _vertex_height(x0,z0)*(1.-u-v)+b*u+c*v
-	return b*(1.-v)+c*(1.-u)+_vertex_height(x0+.5,z0+.5)*(u+v-1.)
+	return b*(1.-v)+c*(1.-u)+_vertex_height(x0+.25,z0+.25)*(u+v-1.)
+
+static func _bump(t:float) -> float:
+	return pow(maxf(0.,1.-t*t),2.)
+
+static func _rect_distance(p:Vector2,c:Vector2,h:Vector2) -> float:
+	var q:Vector2=(p-c).abs()-h
+	return q.max(Vector2.ZERO).length()+minf(maxf(q.x,q.y),0.)
+
+static func _prepared_distance(x:float,z:float) -> float:
+	var p:=Vector2(x,z)
+	var d:float=_rect_distance(p,Vector2(0,10),Vector2(4.5,3.8))
+	d=minf(d,(p-Vector2(-7.5,-.5)).length()-5.1)
+	d=minf(d,_rect_distance(p,Vector2(-3.5,-17.8),Vector2(10.3,7.7)))
+	d=minf(d,_rect_distance(p,Vector2(13,-2),Vector2(10.,6.)))
+	d=minf(d,(p-Vector2(7,-17)).length()-3.5)
+	d=minf(d,(p-Vector2(16,-21)).length()-4.)
+	# Interaction/reset pads and the accepted loop retain a level wheel envelope.
+	for c in [Vector2(0,7),Vector2(-5,1),Vector2(5,5)]:d=minf(d,(p-c).length()-1.2)
+	for edge in [Vector4(0,7,-2,3.8),Vector4(-2,3.8,-5,1),Vector4(-5,1,5,5),Vector4(5,5,0,7)]:
+		var a:=Vector2(edge.x,edge.y);var b:=Vector2(edge.z,edge.w);var v:=b-a
+		d=minf(d,(p-a-v*clampf((p-a).dot(v)/v.length_squared(),0.,1.)).length()-.85)
+	# The circulation spine is a graded saddle through the basin.
+	d=minf(d,_rect_distance(p,Vector2(0,-4),Vector2(2.8,18.)))
+	return d
+
+static var _vertices:Dictionary={}
 
 static func _vertex_height(x:float,z:float) -> float:
-	# A 12 m wide rise keeps the accepted walking actor within its downhill
-	# balance margin (about 2 degrees maximum grade), retaining the 14 cm crest.
-	# All three interaction pads stay level.
-	var dx: float = (x+18.)/6.
-	var dz: float = (z+3.)/7.
-	if absf(dx)>=1. or absf(dz)>=1.: return 0.
-	return .14*pow(1.-dx*dx,2.)*pow(1.-dz*dz,2.)
+	var key:=Vector2(x,z)
+	if not _vertices.has(key):_vertices[key]=_sculpt_height(x,z)
+	return _vertices[key]
+
+static func _traverse_vertex(x:float,z:float) -> float:
+	return .14*_bump((x+18.)/6.)*_bump((z+3.)/7.)
+
+static func _traverse_height(x:float,z:float) -> float:
+	# Preserve the established driving surface when subdividing its triangles.
+	# Resampling the analytic hill on a finer grid subtly changes wheel contacts.
+	var x0:float=floorf(x*2.)*.5;var z0:float=floorf(z*2.)*.5
+	var u:float=(x-x0)*2.;var v:float=(z-z0)*2.
+	var b:float=_traverse_vertex(x0+.5,z0);var c:float=_traverse_vertex(x0,z0+.5)
+	if u+v<=1.:return _traverse_vertex(x0,z0)*(1.-u-v)+b*u+c*v
+	return b*(1.-v)+c*(1.-u)+_traverse_vertex(x0+.5,z0+.5)*(u+v-1.)
+
+static func _sculpt_height(x:float,z:float) -> float:
+	# Small relief belongs to the middle/foreground. The accepted distant hills
+	# stay in landscape.gd; no surrounding ridge is raised to hide missing detail.
+	var base:float=_traverse_height(x,z)
+	var grading:float=smoothstep(.10,1.8,_prepared_distance(x,z))
+	var west_axis:float=-18.8+1.3*sin(z*.21)
+	var west:float=.76*_bump((x-west_axis)/5.3)*_bump((z-5.)/9.)
+	var south:float=.53*_bump((z-11.6-1.4*sin(x*.25))/3.8)*_bump((x+10.)/7.5)
+	var east:float=.60*_bump((x-20.)/4.2)*_bump((z-10.-.3*(x-20.))/4.3)
+	var relief:float=maxf(west,maxf(south,east))
+	# Low oblique sediment shelves are carved into the same heightfield.
+	# Varying gaps and burial make their edges intermittent, never circular pads.
+	var phase:float=x*.78+z*.42+1.35*sin(z*.29)+.62*sin(x*.52-z*.31)+.75*sin(x*.28)*sin(z*.23)
+	var beds:float=smoothstep(.08,.48,sin(phase))
+	var folds:float=.055*sin(x*.42+z*.27)+.025*sin(x*1.1-z*.51)
+	relief=(relief*(.69+.31*beds)+.09*beds+folds)*grading
+	# Feather to the unchanged distant terrain at the rectangular mesh boundary.
+	var rim:float=smoothstep(0.,2.2,minf(24.-absf(x),minf(z+26.,14.-z)))
+	# The west walking traverse keeps its existing gentle grade and clear width.
+	var traverse:float=(1.-smoothstep(.60,2.3,absf(z+3.)))*(1.-smoothstep(5.,7.,absf(x+18.)))
+	return base+maxf(-.035,relief)*rim*(1.-traverse)
+
+static func surface_normal(x:float,z:float) -> Vector3:
+	# Consistent normals at patch borders; positions and Jolt faces stay exact.
+	return Vector3(_vertex_height(x-.25,z)-_vertex_height(x+.25,z),.5,
+		_vertex_height(x,z-.25)-_vertex_height(x,z+.25)).normalized()

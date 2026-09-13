@@ -1,0 +1,159 @@
+{
+  "baseline": "acceptance/loop-roller",
+  "changed_scene": "acceptance-final/loop-roller",
+  "first_observation_difference_seconds": 0.6,
+  "before": {
+    "minimum_upright": 0.866200325757116,
+    "passed": true,
+    "reached": [
+      {
+        "position": [
+          -1.79448628425598,
+          0.115172833204269,
+          3.92390775680542
+        ],
+        "target": [
+          -2.0,
+          3.8
+        ],
+        "time": 8.80999999999998
+      },
+      {
+        "position": [
+          -4.7676305770874,
+          0.124941103160381,
+          1.05079102516174
+        ],
+        "target": [
+          -5.0,
+          1.0
+        ],
+        "time": 15.260000000001
+      },
+      {
+        "position": [
+          4.76470756530762,
+          0.117112778127193,
+          5.03623533248901
+        ],
+        "target": [
+          5.0,
+          5.0
+        ],
+        "time": 33.4049999999986
+      },
+      {
+        "position": [
+          0.158597156405449,
+          0.115487232804298,
+          6.82318878173828
+        ],
+        "target": [
+          0.0,
+          7.0
+        ],
+        "time": 42.8750000000035
+      }
+    ]
+  },
+  "after": {
+    "minimum_upright": 0.42225160132097,
+    "passed": false,
+    "reached": [
+      {
+        "position": [
+          -1.78044152259827,
+          0.118175745010376,
+          3.89659643173218
+        ],
+        "target": [
+          -2.0,
+          3.8
+        ],
+        "time": 9.12500000000003
+      },
+      {
+        "position": [
+          -4.79562902450562,
+          0.127452671527863,
+          1.11899745464325
+        ],
+        "target": [
+          -5.0,
+          1.0
+        ],
+        "time": 15.535000000001
+      },
+      {
+        "position": [
+          4.76956605911255,
+          0.11891683191061,
+          5.06569242477417
+        ],
+        "target": [
+          5.0,
+          5.0
+        ],
+        "time": 33.4699999999987
+      }
+    ],
+    "reason": "robot fell"
+  },
+  "fix": "Attach the displayed outcrop triangle shapes to the existing static scenery compound instead of allocating a new StaticBody3D per rock. Robot and prop body allocation stays unchanged.",
+  "restored": {
+    "minimum_upright": 0.866200325757116,
+    "passed": true,
+    "reached": [
+      {
+        "position": [
+          -1.79448628425598,
+          0.115172833204269,
+          3.92390775680542
+        ],
+        "target": [
+          -2.0,
+          3.8
+        ],
+        "time": 8.80999999999998
+      },
+      {
+        "position": [
+          -4.7676305770874,
+          0.124941103160381,
+          1.05079102516174
+        ],
+        "target": [
+          -5.0,
+          1.0
+        ],
+        "time": 15.260000000001
+      },
+      {
+        "position": [
+          4.76470756530762,
+          0.117112778127193,
+          5.03623533248901
+        ],
+        "target": [
+          5.0,
+          5.0
+        ],
+        "time": 33.4049999999986
+      },
+      {
+        "position": [
+          0.158597156405449,
+          0.115487232804298,
+          6.82318878173828
+        ],
+        "target": [
+          0.0,
+          7.0
+        ],
+        "time": 42.8750000000035
+      }
+    ]
+  },
+  "all_baseline_observations_identical": true,
+  "compared_control_frames": 2144
+}
