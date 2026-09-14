@@ -1,0 +1,130 @@
+{
+  "passed": true,
+  "checks": {
+    "cpu_18_completed": true,
+    "cpu_211_rolling_speed": true,
+    "cpu_211_upright": true,
+    "cpu_211_suspension_benefit": true,
+    "cpu_307_rolling_speed": true,
+    "cpu_307_upright": true,
+    "cpu_307_suspension_benefit": true,
+    "cpu_401_rolling_speed": true,
+    "cpu_401_upright": true,
+    "cpu_401_suspension_benefit": true,
+    "cpu_503_rolling_speed": true,
+    "cpu_503_upright": true,
+    "cpu_607_rolling_speed": true,
+    "cpu_607_upright": true,
+    "cpu_709_rolling_speed": true,
+    "cpu_709_upright": true,
+    "cpu_flat_unchanged": true,
+    "native_18_completed": true,
+    "native_211_rolling_speed": true,
+    "native_211_upright": true,
+    "native_211_suspension_benefit": true,
+    "native_307_rolling_speed": true,
+    "native_307_upright": true,
+    "native_307_suspension_benefit": true,
+    "native_401_rolling_speed": true,
+    "native_401_upright": true,
+    "native_401_suspension_benefit": true,
+    "native_503_rolling_speed": true,
+    "native_503_upright": true,
+    "native_607_rolling_speed": true,
+    "native_607_upright": true,
+    "native_709_rolling_speed": true,
+    "native_709_upright": true,
+    "native_flat_unchanged": true,
+    "original_stairs_acceptance": true,
+    "six_maneuvers_completed": true,
+    "yaw_left_continuous_and_upright": true,
+    "yaw_left_stopped": true,
+    "yaw_right_continuous_and_upright": true,
+    "yaw_right_stopped": true,
+    "reverse_continuous_and_upright": true,
+    "reverse_stopped": true,
+    "crouch_continuous_and_upright": true,
+    "crouch_stopped": true,
+    "turn_continuous_and_upright": true,
+    "turn_stopped": true,
+    "requested_turn_delivered": true,
+    "crouch_cycle_continuous_and_upright": true,
+    "crouch_cycle_stopped": true,
+    "crouch_then_recovered": true,
+    "science_station_original_scene": true
+  },
+  "rough_averages": {
+    "cpu": {
+      "original": {
+        "speed": 0.1391403858758661,
+        "angular_rms": 0.28967426104057203,
+        "vertical_accel_rms": 3.2990965018455185,
+        "gap_rms": 0.02645988536087432,
+        "four_contact_fraction": 0.006666666666666667,
+        "mean_contacts": 2.4583333333333335
+      },
+      "gate": {
+        "speed": 0.4826849650219221,
+        "angular_rms": 0.19561115307523894,
+        "vertical_accel_rms": 0.3413010750846512,
+        "gap_rms": 0.0034099702106718394,
+        "four_contact_fraction": 0.06833333333333333,
+        "mean_contacts": 2.775
+      },
+      "suspension": {
+        "speed": 0.47919088233466667,
+        "angular_rms": 0.12944224443510954,
+        "vertical_accel_rms": 0.3109659257516412,
+        "gap_rms": 0.0010223617334171383,
+        "four_contact_fraction": 0.34833333333333333,
+        "mean_contacts": 3.08
+      }
+    },
+    "native": {
+      "original": {
+        "speed": 0.14599292786466767,
+        "angular_rms": 0.30350882798102813,
+        "vertical_accel_rms": 3.7787742760882814,
+        "gap_rms": 0.02619399296283131,
+        "four_contact_fraction": 0.01,
+        "mean_contacts": 2.6383333333333336
+      },
+      "gate": {
+        "speed": 0.48529142152355376,
+        "angular_rms": 0.19558538659696248,
+        "vertical_accel_rms": 0.20953923315914827,
+        "gap_rms": 0.0032575215744167323,
+        "four_contact_fraction": 0.19499999999999998,
+        "mean_contacts": 3.1383333333333336
+      },
+      "suspension": {
+        "speed": 0.48502977826729804,
+        "angular_rms": 0.12849685131173944,
+        "vertical_accel_rms": 0.15547215334493927,
+        "gap_rms": 0.0007814704136101156,
+        "four_contact_fraction": 0.5266666666666667,
+        "mean_contacts": 3.48
+      }
+    }
+  },
+  "science_station": {
+    "original": {
+      "speed": 0.13733714133501052,
+      "stair_fraction": 1.0,
+      "angular_rms": 0.28595595588936085,
+      "gap_rms": 0.0250664488146407,
+      "mean_contacts": 2.62,
+      "min_upright": 0.96316784620285,
+      "samples": 449
+    },
+    "candidate": {
+      "speed": 0.5035052366554738,
+      "stair_fraction": 0.0,
+      "angular_rms": 0.013311325226766216,
+      "gap_rms": 0.0,
+      "mean_contacts": 4.0,
+      "min_upright": 0.999530076980591,
+      "samples": 449
+    }
+  }
+}

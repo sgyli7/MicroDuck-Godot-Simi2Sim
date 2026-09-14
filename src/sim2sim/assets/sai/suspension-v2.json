@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "id": "sai-loaded-suspension-v2",
+  "status": "accepted",
+  "flat_policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d",
+  "parameters": [
+    45.05744684106064,
+    1.1532485502878331,
+    0.9497251199685409,
+    473.84859697921144,
+    49.991230469877635,
+    0.15023543636516334
+  ],
+  "geometry_parameters": [
+    1.077687564550128,
+    0.4125468028688285,
+    0.0841540838419023
+  ],
+  "descent_control": "contact_following",
+  "turn_support_blend": 0.25,
+  "training": {
+    "method": "MuJoCo bounded CEM, frozen neural actors; population screened on expanded terrain, descent ablation and turning support probe",
+    "cem_candidates": 60,
+    "episodes_per_candidate": 12,
+    "selected_trial": 36
+  },
+  "validation": {
+    "mujoco_terrain_episodes": 90,
+    "mujoco_driving_episodes": 20,
+    "jolt_terrain_episodes": 32,
+    "jolt_turning_episodes": 8,
+    "cargo_mass_kg": [
+      0.05,
+      0.1,
+      0.25
+    ],
+    "stair_risers_m": [
+      0.02,
+      0.04
+    ],
+    "continuous_command_mps": 0.5,
+    "report": "docs/sai-suspension-20260915/RESULT.md"
+  }
+}

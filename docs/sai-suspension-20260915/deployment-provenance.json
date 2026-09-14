@@ -1,0 +1,17 @@
+{
+  "default_profile": "sai-loaded-suspension-v2",
+  "straight_command_equivalence": "20 golden commands identical after helper extraction and turning support; turn state stays zero for zero yaw commands",
+  "source_sha256": {
+    "src/sim2sim/sai_suspension.py": "560da2414a17aa898d78e0162ce40f4b201cbee98a7918a6ff9837819cfe0f0e",
+    "src/sim2sim/sai_driving.py": "917402e8cf180e1c53c21acb0f02bd0f48a448cb11a3b0719ec4c9926b8c4497",
+    "src/sim2sim/sai_controller.py": "51894d76f8ed5f378a98b62fbf215b5c042d6d1b188e50fbeb0ed10fba214ce8",
+    "src/sim2sim/sai_compliance.py": "1b6f0b6454cc060debc3c85ea7344df52c6a8305598d10b7266b46defc8a858a",
+    "src/sim2sim/sai_terrain.py": "2b28fc4bf83da8cc59526cec9f06af265177d9132cb884a76ad2b156f2646c61",
+    "godot/sai/impedance.gd": "1774e916fee30fca724ae2e78a654ab36de8ebac1282348cdbedc18583915471",
+    "godot/sai/compliant_robot.gd": "5dc9e8dd966b881e55a7132a1c5ad5707c7ae4a820768d574a7683cbe26a9055",
+    "godot/sai/driving_input.gd": "9805f7ca19126cc144f7d893f760f9c898edc1f047c086567f60a01589a7b2f9",
+    "godot/sai/terrain_scan.gd": "b0d949b77291cb25a0d38b4fdd6c1aa7f2486998ee6e7ca0ab58b680624f4878",
+    "godot/hub/sai.gd": "4ad247ff1994c469e5626b4eb1afb4c859691caa9bc5fcad39c990e018e95068",
+    "src/sim2sim/assets/sai/suspension-v2.json": "b1f56f1fe41f492d6f34f3d1f98467944782c331efa890d6daa05804a72873ce"
+  }
+}

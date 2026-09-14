@@ -1,0 +1,42 @@
+{
+  "accept-mujoco": {
+    "passed": true,
+    "pairs": 45,
+    "groups": {
+      "continuous": {
+        "cargo_accel_rms": 0.865588246555662,
+        "cargo_accel_p95": 0.8565625934314288,
+        "cargo_accel_peak": 0.8145707420774096,
+        "cargo_jerk_rms": 0.7687393068410016,
+        "deck_accel_rms": 0.7804386889494832
+      },
+      "stairs": {
+        "cargo_accel_rms": 0.7507525006436101,
+        "cargo_accel_p95": 0.7757836959628712,
+        "cargo_accel_peak": 0.8649024393977057,
+        "cargo_jerk_rms": 0.6185533891187964,
+        "deck_accel_rms": 0.6338495167208141
+      }
+    }
+  },
+  "accept-jolt": {
+    "passed": true,
+    "pairs": 16,
+    "groups": {
+      "continuous": {
+        "cargo_accel_rms": 0.9618338712453851,
+        "cargo_accel_p95": 0.9496109630228348,
+        "cargo_accel_peak": 0.9108347220681227,
+        "cargo_jerk_rms": 0.8690640170940925,
+        "deck_accel_rms": 0.8806950446644781
+      },
+      "stairs": {
+        "cargo_accel_rms": 0.7576669941047371,
+        "cargo_accel_p95": 0.7531064656012016,
+        "cargo_accel_peak": 0.9172995079048295,
+        "cargo_jerk_rms": 0.6337382881194251,
+        "deck_accel_rms": 0.6574536599825636
+      }
+    }
+  }
+}

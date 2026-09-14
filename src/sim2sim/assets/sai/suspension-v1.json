@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "sai-suspension-20260915",
+  "parameters": [
+    1.077687564550128,
+    0.4125468028688285,
+    0.0841540838419023
+  ],
+  "training_loss": 1.4844809839614956,
+  "method": "bounded cross-entropy parameter optimization in full CPU MuJoCo; frozen ONNX actors",
+  "training_seeds": [
+    47,
+    71,
+    109
+  ],
+  "trials": 15,
+  "elapsed_seconds": 30.6218656799756,
+  "status": "accepted_cpu_and_native_jolt",
+  "source_sha256": "285916fc5ab9a28b9647025157cc5719425bf8e3b3ed98e9adfefc95d0cd35ee",
+  "flat_policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d",
+  "acceptance": "docs/sai-suspension-20260915/acceptance.json",
+  "contract": "terrain-relative-bounded-leg-ik-v1"
+}

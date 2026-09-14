@@ -1,0 +1,107 @@
+{
+  "cases": [
+    [
+      "flat",
+      47,
+      0.1
+    ],
+    [
+      "rough",
+      47,
+      0.1
+    ],
+    [
+      "washboard",
+      71,
+      0.1
+    ],
+    [
+      "potholes",
+      71,
+      0.05
+    ],
+    [
+      "bumps",
+      109,
+      0.25
+    ],
+    [
+      "cross",
+      109,
+      0.1
+    ],
+    [
+      "slope",
+      47,
+      0.1
+    ],
+    [
+      "up20",
+      47,
+      0.1
+    ],
+    [
+      "down20",
+      71,
+      0.1
+    ],
+    [
+      "up40",
+      109,
+      0.1
+    ],
+    [
+      "down40",
+      47,
+      0.1
+    ],
+    [
+      "mixed20",
+      109,
+      0.1
+    ]
+  ],
+  "low": [
+    12.0,
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.03
+  ],
+  "high": [
+    65.0,
+    3.5,
+    1.15,
+    1800.0,
+    180.0,
+    0.5
+  ],
+  "keys": [
+    "cargo_accel_rms",
+    "cargo_accel_p95",
+    "cargo_jerk_rms",
+    "deck_accel_rms",
+    "cargo_accel_peak"
+  ],
+  "weights": [
+    0.35,
+    0.25,
+    0.15,
+    0.15,
+    0.1
+  ],
+  "generations": 6,
+  "population": 10,
+  "final_heldout_seeds": [
+    1201,
+    1301,
+    1409
+  ],
+  "method": "bounded cross-entropy optimization of stance impedance in full MuJoCo with free cargo; neural actors frozen",
+  "source_sha256": {
+    "train_sai_loaded_suspension.py": "3b32d3e36eca57910c984fc14f343fb9440821a1a715a6d42f331eb977f6203d",
+    "sai_loaded_mujoco.py": "0c04a786d4261aae916c5f90b09a867363d0e16e4308f6a2eff92ea515082b26",
+    "sai_compliance.py": "710fbc1bbc54ad3040d1fbd9374b9c06ed3c18e7c70da167415c27ff30ceef9c"
+  }
+}

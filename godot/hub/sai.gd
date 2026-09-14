@@ -28,8 +28,8 @@ func _ready() -> void:
 	if test_case != "": add_child(load("res://hub/replay_input.gd").new())
 
 func build_ground() -> void:
-	# The persistent workshop owns all floor and task colliders.
-	pass
+	# The persistent workshop owns the terrain; the adapter changes only leg torque.
+	robot.set_script(preload("res://sai/compliant_robot.gd"))
 
 func build_view() -> void:
 	# The hub owns the camera, interface and movie capture throughout switches.
@@ -64,6 +64,8 @@ func exchange(state: Dictionary) -> Dictionary:
 	state["hub_config"] = settings
 	state["stair_course"] = riser > 0.0
 	state["terrain_path_heights"] = preload("res://sai/terrain_scan.gd").wheel_path(self, hub.TERRAIN_LAYER)
+	state["terrain_edge_heights"] = preload("res://sai/terrain_scan.gd").edge_profile(self, hub.TERRAIN_LAYER)
+	state["wheel_ground_heights"] = preload("res://sai/terrain_scan.gd").wheel_ground(self, hub.TERRAIN_LAYER)
 	state["world_origin"] = robot.source(global_position)
 	# Record actual wheel state in the same 50 Hz packet as the policy input.
 	# These diagnostics do not participate in observation construction/control.

@@ -1,0 +1,32 @@
+{
+  "source_sha256": {
+    "src/sim2sim/sai_suspension.py": "560da2414a17aa898d78e0162ce40f4b201cbee98a7918a6ff9837819cfe0f0e",
+    "src/sim2sim/sai_terrain.py": "13b3db1c7d93cae5ef33742a39e13eb32b970e300875ac11af17520b5f60d7c5",
+    "src/sim2sim/sai_controller.py": "49c34eaeccf9fcbcd6656224e12fda4c14f3c9ec56138952d50fcf1459be494b",
+    "src/sim2sim/assets/sai/flat-motion-v1.onnx": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d",
+    "src/sim2sim/assets/sai/suspension-v1.json": "0d4721f4cc63d35be39049008f9bb98c55b5c0a3834ac1f51689fe870ba016f7",
+    "scripts/sai_suspension_experiment.py": "285916fc5ab9a28b9647025157cc5719425bf8e3b3ed98e9adfefc95d0cd35ee",
+    "scripts/sai_suspension_native.py": "00452d411b392164a4eb265c682fe0e7df972099ffe23b099feb96bfc0daa8c6",
+    "scripts/sai_suspension_probe.gd": "0eb0b4c00ec5542f669b3a4fbb759261e730215f913a3ffca4769286b8128a59",
+    "godot/sai/terrain_scan.gd": "b0d949b77291cb25a0d38b4fdd6c1aa7f2486998ee6e7ca0ab58b680624f4878",
+    "godot/hub/sai.gd": "d4f327c5e00e6eec89ab3bcd161fbad481ba29f496e3268b5ff675b41d966599"
+  },
+  "training_seeds": [
+    47,
+    71,
+    109
+  ],
+  "heldout_seeds": [
+    211,
+    307,
+    401,
+    503,
+    607,
+    709
+  ],
+  "maneuver_seed": 811,
+  "model_note": "CPU MuJoCo full articulated released model, inherited contact friction and solver. Jolt release physics unchanged, 2000 Hz.",
+  "terrain_height_query_max_error_m": 7.33523900247968e-05,
+  "base_commit": "9db633f",
+  "training_method": "15 fixed-budget bounded parameter trials; no neural policy weight updates"
+}

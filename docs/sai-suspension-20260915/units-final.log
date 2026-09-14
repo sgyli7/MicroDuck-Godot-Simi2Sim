@@ -1,0 +1,6 @@
+[0;93m2026-09-15 02:47:34.083339323 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+.................
+----------------------------------------------------------------------
+Ran 17 tests in 1.215s
+
+OK
