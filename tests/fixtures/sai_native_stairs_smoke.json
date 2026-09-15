@@ -1,0 +1,7 @@
+{
+  "seconds": 4.0,
+  "events": [
+    {"at": 0.25, "key": "W", "pressed": true},
+    {"at": 3.75, "key": "W", "pressed": false}
+  ]
+}

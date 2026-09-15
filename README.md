@@ -14,7 +14,7 @@
 
 [15 秒 PV](docs/media/sai-workshop-15s.mp4) · [运行说明](docs/workshop-hub.md)
 
-准备好模型和原生库后，运行 `./run-workshop.sh` 一键进入维修站。**F5 / F6 / F7** 切换机器人；Sai 任务菜单提供入仓运输和 20/40/60mm 上下阶。完整准备与按键见 [维修站运行说明](docs/workshop-hub.md)。
+准备好模型和原生库后，先执行一次 `./run-workshop.sh --prepare-only`，以后用 `./run-native.sh --choose-scene` 直接进入游戏。**F5 / F6 / F7** 切换机器人；Sai 驾驶、下蹲、上下阶、场景物体抓取入仓和 cargo18/cargo25 均在 Godot 进程内运行，不需要 Python/TCP 服务。Python/MuJoCo 只保留为显式参考 oracle。完整说明见 [Sai 本地控制](docs/sai-native-control.md) 与 [维修站运行说明](docs/workshop-hub.md)。
 
 ## 功能
 
@@ -70,6 +70,7 @@ uv run --no-sync sim2sim-play
 - [环境配置、模型加载与复现](REPRODUCING.md)
 - [实验结果](RESEARCH_RESULT_20260910.md)
 - [Godot 交互场景](docs/showcase.md)
+- [Sai 001 本地 ONNX 控制、模型哈希与验收](docs/sai-native-control.md)
 
 ## 许可
 

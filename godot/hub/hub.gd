@@ -67,7 +67,32 @@ var next_sample := 0.0
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_headless = DisplayServer.get_name() == "headless"
-	options = JSON.parse_string(FileAccess.get_file_as_string("res://hub/options.json"))
+	options = {"scene":"workshop","drive_speed":.5,"fast_check":false,"choose_scene":false,
+		"robot":"microduck","task":"drive","output":"user://run","record":false,
+		"sai_controller":"native","plan":{}}
+	if FileAccess.file_exists("res://hub/options.json"):
+		var saved=JSON.parse_string(FileAccess.get_file_as_string("res://hub/options.json"))
+		if saved is Dictionary:options.merge(saved,true)
+	for arg in OS.get_cmdline_user_args():
+		if arg=="--choose-scene":options.choose_scene=true
+		elif arg=="--fast-check":options.fast_check=true
+		elif arg=="--record":options.record=true
+		elif arg.begins_with("--scene="):options.scene=arg.trim_prefix("--scene=")
+		elif arg.begins_with("--robot="):options.robot=arg.trim_prefix("--robot=")
+		elif arg.begins_with("--task="):options.task=arg.trim_prefix("--task=")
+		elif arg.begins_with("--output="):options.output=arg.trim_prefix("--output=")
+		elif arg.begins_with("--sai-controller="):options.sai_controller=arg.trim_prefix("--sai-controller=")
+		elif arg.begins_with("--drive-speed="):options.drive_speed=float(arg.trim_prefix("--drive-speed="))
+		elif arg.begins_with("--plan="):
+			var plan_path:=arg.trim_prefix("--plan=")
+			var loaded_plan=JSON.parse_string(FileAccess.get_file_as_string(plan_path)) if FileAccess.file_exists(plan_path) else null
+			if loaded_plan is Dictionary:
+				options.plan=loaded_plan
+			else:
+				push_error("Cannot load native test plan: "+plan_path)
+				get_tree().quit(2)
+				return
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(str(options.output)))
 	profiles = JSON.parse_string(FileAccess.get_file_as_string("res://hub/physics_profiles.json"))
 	get_tree().auto_accept_quit = false
 	get_window().close_requested.connect(_finish)
@@ -178,7 +203,7 @@ func _change_robot(kind: String) -> void:
 		actor.set_physics_process(false)
 		if active_robot == "sai":
 			actor.finished = true
-			if actor.peer.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+			if not actor.native_mode and actor.peer.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 				actor.peer.put_data((JSON.stringify({"finish":true})+"\n").to_utf8_buffer())
 		actor.queue_free()
 		await get_tree().process_frame
@@ -629,6 +654,9 @@ func _save_native_trace() -> void:
 	if active_robot == "sai":
 		if actor.grab != null:
 			grab_sessions.append({"history":actor.grab.history.duplicate(true),"deliveries":actor.grab.deliveries.duplicate(true),"retained":actor.grab.retention()})
+		if not options.plan.is_empty() and not actor.records.is_empty():
+			var file := FileAccess.open(options.output+"/sai-native-trace.json",FileAccess.WRITE)
+			file.store_string(JSON.stringify({"rows":actor.records,"grab_sessions":grab_sessions}))
 		return
 	if actor.session.trace_path == "": return
 	var file := FileAccess.open(actor.session.trace_path,FileAccess.WRITE)

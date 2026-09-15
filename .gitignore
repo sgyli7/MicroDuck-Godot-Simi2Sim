@@ -70,3 +70,7 @@ godot/atelier/robot_normals_soft
 # Accepted default walking/sprint assets are shipped with the Python package.
 !src/sim2sim/assets/microduck_sprint_v1/Walk_Godot.onnx
 !src/sim2sim/assets/microduck_sprint_v1/Sprint_Godot.onnx
+!src/sim2sim/assets/sai/upstream/flat-v1.onnx
+!src/sim2sim/assets/sai/upstream/stairs-dev40.onnx
+!src/sim2sim/assets/sai/upstream/experimental/ascent60.onnx
+!src/sim2sim/assets/sai/upstream/experimental/descent60.onnx

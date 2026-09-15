@@ -26,6 +26,7 @@ class MicroDuckPolicy : public RefCounted {
     String last_error;
     int64_t last_infer_usec = 0;
     int64_t observation_dim = 61;
+    int64_t action_dim = 14;
 
     static Ort::Env &environment() {
         static Ort::Env env(ORT_LOGGING_LEVEL_WARNING, "microduck");
@@ -66,11 +67,15 @@ public:
                 auto tensor = info.GetTensorTypeAndShapeInfo();
                 auto shape = tensor.GetShape();
                 if (tensor.GetElementType() != ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT ||
-                    shape.size() != 2 || shape[0] != 1 ||
-                    (input ? (shape[1] != 61 && shape[1] != 68) : shape[1] != 14))
-                    throw std::runtime_error("Expected float32 [1,61|68] -> [1,14] policy");
+                    shape.size() != 2 || (shape[0] != 1 && shape[0] != -1) ||
+                    (input ? (shape[1] != 61 && shape[1] != 68 && shape[1] != 82)
+                           : (shape[1] != 14 && shape[1] != 16)))
+                    throw std::runtime_error("Expected float32 [1,61|68] -> [1,14] or [1,82] -> [1,16] policy");
                 if (input) observation_dim = shape[1];
+                else action_dim = shape[1];
             }
+            if ((observation_dim == 82) != (action_dim == 16))
+                throw std::runtime_error("Sai observation/action dimensions must be [1,82] -> [1,16]");
             Ort::AllocatorWithDefaultOptions allocator;
             input_name = session->GetInputNameAllocated(0, allocator).get();
             output_name = session->GetOutputNameAllocated(0, allocator).get();
@@ -107,11 +112,11 @@ public:
             const char *inputs[] = {input_name.c_str()};
             const char *outputs[] = {output_name.c_str()};
             auto values = session->Run(Ort::RunOptions{nullptr}, inputs, &input, 1, outputs, 1);
-            if (!values[0].IsTensor() || values[0].GetTensorTypeAndShapeInfo().GetElementCount() != 14)
+            if (!values[0].IsTensor() || values[0].GetTensorTypeAndShapeInfo().GetElementCount() != action_dim)
                 throw std::runtime_error("Invalid policy output");
             const float *data = values[0].GetTensorData<float>();
-            result.resize(14);
-            for (int i = 0; i < 14; ++i) {
+            result.resize(action_dim);
+            for (int i = 0; i < action_dim; ++i) {
                 if (!std::isfinite(data[i])) throw std::runtime_error("Non-finite action");
                 result.set(i, data[i]);
             }
@@ -132,6 +137,7 @@ public:
         output_name.clear();
         last_infer_usec = 0;
         observation_dim = 61;
+        action_dim = 14;
     }
     Dictionary get_metadata() const { return model_metadata.duplicate(); }
     String get_last_error() const { return last_error; }

@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "id": "experimental-ascent60",
+  "experimental": true,
+  "actor": "ascent60.onnx",
+  "onnx_sha256": "501ad1f8e9b6131bc83b9e35012e6f1ad7bcaf7e5869352eefb636440f1e44f4",
+  "control": {
+    "speed": 0.08,
+    "lift_height": 0.07,
+    "leg_scale": 0.45,
+    "min_crouch": 0.0,
+    "route_center_y": null,
+    "motion_phase_start_seconds": 0.5
+  },
+  "scope": "Known four-riser 60 mm course; diagnostic only, no default policy promotion",
+  "training": {
+    "schema_version": 1,
+    "cfg": {
+      "num_steps_per_env": 32,
+      "obs_groups": {
+        "actor": [
+          "policy"
+        ],
+        "critic": [
+          "policy"
+        ]
+      },
+      "multi_gpu": null,
+      "actor": {
+        "class_name": "MLPModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": true,
+        "distribution_cfg": {
+          "class_name": "GaussianDistribution",
+          "init_std": 0.25,
+          "std_type": "log"
+        }
+      },
+      "critic": {
+        "class_name": "MLPModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": true
+      },
+      "algorithm": {
+        "class_name": "PPO",
+        "num_learning_epochs": 4,
+        "num_mini_batches": 4,
+        "clip_param": 0.2,
+        "gamma": 0.99,
+        "lam": 0.95,
+        "value_loss_coef": 1.0,
+        "entropy_coef": 0.002,
+        "learning_rate": 0.0003,
+        "max_grad_norm": 1.0,
+        "use_clipped_value_loss": true,
+        "schedule": "fixed",
+        "desired_kl": null,
+        "normalize_advantage_per_mini_batch": false
+      }
+    },
+    "seed": 47,
+    "steps": 5365760,
+    "stage": "stairs",
+    "max_riser": 0.06,
+    "lift_height": 0.07,
+    "heading_control": true,
+    "ascent_only": true,
+    "min_riser": 0.04,
+    "speed": 0.08,
+    "leg_scale": 0.45,
+    "reset_std": 0.15,
+    "status": "training-complete-unvalidated",
+    "iterations": 655,
+    "device": "NVIDIA GB10",
+    "cpu_threads": 2,
+    "training_wall_seconds": 300.34430955100106,
+    "process_cpu_seconds": 299.49307316799997,
+    "model_sha256": "af174c649acca3dfec7e60c896c4a9603d3ed2864862534c81053517e6500f7f",
+    "training_scene_sha256": "074db2c997b0c4128ec31212c8476d1cda7b4f3a3cc0f0b4b0ddac472149cd3e",
+    "observation_size": 82,
+    "action_size": 16,
+    "control_hz": 50,
+    "source_sha256": {
+      "src/sai_agent/stair_env.py": "36a9ada89a7976c0dbb3010801e1fa00f139ce56af3a3b70d7721940f38aaf6e",
+      "src/sai_agent/gpu_backend.py": "09f6e3751f3ad1932f6885877f459f4dadecb8dadcbd549dc3c7576b8c70d2d8",
+      "src/sai_agent/env.py": "678aa55f99d0718752bf5cdaa2c458c2ee4bbdf3ebc5f71d07dfa28d60b79ba5",
+      "src/sai_agent/cli.py": "0ad7cbf48aff217f1c4ae2ae8b45f9fe08b3dba691acfe5aed2fa8bebce635f2",
+      "src/sai_agent/__init__.py": "966bd47e37aa6e36ec9c3d8f2e552365ba84199aeaeb2503eadd8b66c33ad5a9",
+      "src/sai_agent/runtime.py": "9616f1c499faf0ec826b7ce7c635926fcd7abc7324ece3145c9269187cd309a5",
+      "src/sai_agent/so101_fk.py": "5332786463f4d1ff48356a1d6fdf14a2ff4c221a50aa1fcddd2fbffc471e96ba",
+      "src/sai_agent/cargo_task.py": "6c843f235ddf907c90f24924d69b6db31f2e99a645b39fea24ac70e5a42d06a8",
+      "src/sai_agent/cargo_godot.py": "54c32a0bded7ae258e6ef85dd3bc9bf0d6cdc1de3e96f9e8afed28d47c132645",
+      "src/sai_agent/legacy_crawl.py": "81f63a06c1d4542d9e587109abf3393a86f0b34e67b1da02815b3dd3045e8961",
+      "src/sai_agent/godot_controller.py": "304b95fe4949b9df548cefdef1289f1e1592bc530da4b8744b75292d062336a8",
+      "src/sai_agent/paths.py": "8064c40303dad119f8fdb84cbbbfed4a2bb7e78ecf7b5b80d3548864d06e9102",
+      "src/sai_agent/manipulation.py": "ca2d08f981ab12cd594abe11d42441e21bb4bba88c70e9cb951678894ff82e3e",
+      "src/sai_agent/terrain.py": "da22fef563212a30f865e6db92423f163abdc8a0b177fb400f3aac50e75b465c",
+      "src/sai_agent/control.py": "0430c8f32cd66ad69657e7eb911c4c216043886d932b3df0bdccd37fe55004fb",
+      "scripts/train.py": "88e8708dfc8ba73c6285b8f1d03083b3eed7a8e6594eecb72b2666be076556da"
+    },
+    "resume": "artifacts/stairs-007-ascent/policy.pt"
+  }
+}

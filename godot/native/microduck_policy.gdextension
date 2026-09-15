@@ -6,6 +6,8 @@ reloadable = false
 [libraries]
 linux.debug.arm64 = "res://native/bin/libmicroduck_policy.linux.debug.arm64.so"
 linux.release.arm64 = "res://native/bin/libmicroduck_policy.linux.release.arm64.so"
+linux.double.debug.arm64 = "res://native/bin/libmicroduck_policy.linux.double.debug.arm64.so"
+linux.double.release.arm64 = "res://native/bin/libmicroduck_policy.linux.double.release.arm64.so"
 
 [dependencies]
 linux.arm64 = {

@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "id": "experimental-descent60-trial011",
+  "experimental": true,
+  "actor": "descent60.onnx",
+  "onnx_sha256": "821b2cededa8e204a850384b990828d8ac749a07580b6e4ddc563fd437089d57",
+  "control": {
+    "speed": 0.08,
+    "lift_height": 0.055,
+    "leg_scale": 0.18,
+    "min_crouch": 0.5,
+    "route_center_y": 0.0,
+    "motion_phase_start_seconds": 0.5,
+    "yaw_correction_limit": 0.6
+  },
+  "scope": "No payload; four 20/40/60 mm risers; 180 mm tread/yaw 0 and 160/200 mm treads with yaw +/-0.08 rad. All 15 cases pass in full MuJoCo and Godot. This is a development regression matrix, not untouched terrain or a VLA claim.",
+  "training": {
+    "schema_version": 1,
+    "cfg": {
+      "num_steps_per_env": 32,
+      "obs_groups": {
+        "actor": [
+          "policy"
+        ],
+        "critic": [
+          "policy"
+        ]
+      },
+      "multi_gpu": null,
+      "actor": {
+        "class_name": "MLPModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": true,
+        "distribution_cfg": {
+          "class_name": "GaussianDistribution",
+          "init_std": 0.25,
+          "std_type": "log"
+        }
+      },
+      "critic": {
+        "class_name": "MLPModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": true
+      },
+      "algorithm": {
+        "class_name": "PPO",
+        "num_learning_epochs": 4,
+        "num_mini_batches": 4,
+        "clip_param": 0.2,
+        "gamma": 0.99,
+        "lam": 0.95,
+        "value_loss_coef": 1.0,
+        "entropy_coef": 0.002,
+        "learning_rate": 0.0003,
+        "max_grad_norm": 1.0,
+        "use_clipped_value_loss": true,
+        "schedule": "fixed",
+        "desired_kl": null,
+        "normalize_advantage_per_mini_batch": false
+      }
+    },
+    "seed": 47,
+    "steps": 5816320,
+    "stage": "stairs",
+    "max_riser": 0.06,
+    "lift_height": 0.055,
+    "heading_control": true,
+    "ascent_only": false,
+    "min_riser": 0.04,
+    "speed": 0.08,
+    "leg_scale": 0.18,
+    "descent_only": true,
+    "crouch": 0.5,
+    "yaw_correction_limit": 0.6,
+    "lane_control": true,
+    "tread": 0.16,
+    "initial_yaw_range": 0.12,
+    "start_x_range": 0.08,
+    "reset_std": 0.08,
+    "status": "training-complete-unvalidated",
+    "iterations": 710,
+    "device": "NVIDIA GB10",
+    "cpu_threads": 2,
+    "training_wall_seconds": 300.3936846390134,
+    "process_cpu_seconds": 299.62127044799996,
+    "model_sha256": "af174c649acca3dfec7e60c896c4a9603d3ed2864862534c81053517e6500f7f",
+    "training_scene_sha256": "e4bc7dd176f6f440b284bad9ffea1db985f4ce98378d38933aef594d7fff5115",
+    "observation_size": 82,
+    "action_size": 16,
+    "control_hz": 50,
+    "source_sha256": {
+      "src/sai_agent/stair_env.py": "c3d5d653927968d6ef48f46e8e5525b36b899a02926f279f91dbd1a2df51f9f3",
+      "src/sai_agent/gpu_backend.py": "09f6e3751f3ad1932f6885877f459f4dadecb8dadcbd549dc3c7576b8c70d2d8",
+      "src/sai_agent/env.py": "678aa55f99d0718752bf5cdaa2c458c2ee4bbdf3ebc5f71d07dfa28d60b79ba5",
+      "src/sai_agent/cli.py": "fc0b191129577b76614b93cd9b5b6ccdc9f46c2c92f668edbbad7c3898ee490a",
+      "src/sai_agent/__init__.py": "37879f234fb4f22281cb5c4eac272cf6a21865ee8f5009ada64f981dbe0d2609",
+      "src/sai_agent/runtime.py": "9616f1c499faf0ec826b7ce7c635926fcd7abc7324ece3145c9269187cd309a5",
+      "src/sai_agent/so101_fk.py": "dc5e0375cad59201aa9740de8866ae2f52d0e4328a596a8a72686eaff52ed8ba",
+      "src/sai_agent/cargo_task.py": "b605a14883ef2b028359f478c1799d3ca8f76f7a173fd2a11c045ca1df52ddea",
+      "src/sai_agent/cargo_godot.py": "976925a49404dd060527ead8f08229da1707d90f3d5eda5e76749c3789689d96",
+      "src/sai_agent/legacy_crawl.py": "84c9420a702815a5685acee98d15ac35d88c9f9d103be9f5842697486b07509e",
+      "src/sai_agent/godot_controller.py": "7a1da68409a8b646d281957a82e8bc9c25b54385b2aa147d4fb4a0c011518c23",
+      "src/sai_agent/paths.py": "8064c40303dad119f8fdb84cbbbfed4a2bb7e78ecf7b5b80d3548864d06e9102",
+      "src/sai_agent/manipulation.py": "a8ad83ec5da93ab789da8c3704861b03b4999231dbf800048dc799ab322497ae",
+      "src/sai_agent/terrain.py": "da22fef563212a30f865e6db92423f163abdc8a0b177fb400f3aac50e75b465c",
+      "src/sai_agent/control.py": "b04660ca95af32b560c4384ab57f8692a34ac08b5fd502050a32dee0c6bb4660",
+      "scripts/train.py": "2e154f2bb366be9426c01916fa2646daeaf957d1043600a843ae4761e99a1420"
+    },
+    "resume": "artifacts/stairs-010-crouched-descent/policy.pt"
+  },
+  "evidence": "evidence/stairs-011-descent-placement.json"
+}

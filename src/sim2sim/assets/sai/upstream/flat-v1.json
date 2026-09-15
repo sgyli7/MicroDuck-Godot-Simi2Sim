@@ -1,0 +1,96 @@
+{
+  "checkpoint_sha256": "0cd649cd10e0e4af3c921a51060422d2323ada7ee036aaf16615110140162ebe",
+  "onnx_sha256": "1f9df39d6a034de77764df065cb7208e29143f569c882e84d7bded3caf5656f0",
+  "onnx_opset": 17,
+  "normalization_included": true,
+  "batch_sizes": [
+    1,
+    17,
+    256
+  ],
+  "max_absolute_errors": [
+    4.76837158203125e-07,
+    1.430511474609375e-06,
+    2.86102294921875e-06
+  ],
+  "passed": true,
+  "training": {
+    "schema_version": 1,
+    "cfg": {
+      "num_steps_per_env": 32,
+      "obs_groups": {
+        "actor": [
+          "policy"
+        ],
+        "critic": [
+          "policy"
+        ]
+      },
+      "multi_gpu": null,
+      "actor": {
+        "class_name": "MLPModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": true,
+        "distribution_cfg": {
+          "init_std": 0.25,
+          "std_type": "log"
+        }
+      },
+      "critic": {
+        "class_name": "MLPModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": true
+      },
+      "algorithm": {
+        "class_name": "PPO",
+        "num_learning_epochs": 4,
+        "num_mini_batches": 4,
+        "clip_param": 0.2,
+        "gamma": 0.99,
+        "lam": 0.95,
+        "value_loss_coef": 1.0,
+        "entropy_coef": 0.002,
+        "learning_rate": 0.0003,
+        "max_grad_norm": 1.0,
+        "use_clipped_value_loss": true,
+        "schedule": "fixed",
+        "desired_kl": null,
+        "normalize_advantage_per_mini_batch": false
+      }
+    },
+    "seed": 47,
+    "steps": 5414912,
+    "stage": "flat",
+    "max_riser": null,
+    "iterations": 661,
+    "device": "NVIDIA GB10",
+    "cpu_threads": 2,
+    "training_wall_seconds": 300.28684297198197,
+    "process_cpu_seconds": 299.4383976,
+    "model_sha256": "af174c649acca3dfec7e60c896c4a9603d3ed2864862534c81053517e6500f7f",
+    "observation_size": 82,
+    "action_size": 16,
+    "control_hz": 50,
+    "source_sha256": {
+      "src/sai_agent/stair_env.py": "fab243d3cd2a0634957fcd8fd426c9c99681138165c158314b0e3cc0a9f18453",
+      "src/sai_agent/gpu_backend.py": "7e143609a13ecb65241820fa5e9246345488e10e4672b7812d216fcc898250e3",
+      "src/sai_agent/env.py": "9e8c044db0672c675417e216046aa13cd26e2b6a5e21f8da98327134fbf63f83",
+      "src/sai_agent/__init__.py": "966bd47e37aa6e36ec9c3d8f2e552365ba84199aeaeb2503eadd8b66c33ad5a9",
+      "src/sai_agent/terrain.py": "da22fef563212a30f865e6db92423f163abdc8a0b177fb400f3aac50e75b465c",
+      "src/sai_agent/control.py": "295877e7bdc203cd39d2ad605c37ed640c3b22df5c6970a29d7094dd7e874c1e",
+      "scripts/train.py": "388234d7017412097c32c55613a04556e8915ac9088958d7c745576bdf1db78d"
+    },
+    "resume": "artifacts/flat-002/policy.pt"
+  },
+  "contract_id": "sai-flat-v1",
+  "reference": "flat-height-ik-with-zero-input-parking",
+  "status": "CPU MuJoCo reduced/articulated and Godot/Jolt flat acceptance passed; Godot uses heading-v1; Unity execution pending"
+}

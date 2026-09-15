@@ -1,0 +1,130 @@
+{
+  "schema_version": 2,
+  "platform": "Ubuntu 24.04 Linux ARM64",
+  "godot": "4.7.2.stable",
+  "onnxruntime": "1.29.0",
+  "training_performed": false,
+  "resource_limits": {
+    "validation_cpu_cores": [18, 19],
+    "onnx_intra_op_threads": 1,
+    "onnx_inter_op_threads": 1
+  },
+  "root_cause": {
+    "wrong_native_policy_sha256": "1f9df39d6a034de77764df065cb7208e29143f569c882e84d7bded3caf5656f0",
+    "accepted_flat_motion_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d",
+    "additional_fault": "stance support used a scene-global center of mass with actor-local wheel coordinates",
+    "restored_components": [
+      "flat-motion-v1",
+      "suspension-v2",
+      "Jolt-native stance impedance",
+      "contact-following descent",
+      "scene pick/place and cancellation",
+      "cargo fixed path, clamp, and legacy-crawl57"
+    ]
+  },
+  "numerical_contract": {
+    "passed": true,
+    "cases": [
+      "flat_heading",
+      "flat_crouch",
+      "park_filter",
+      "terrain_suspension",
+      "stairs_default",
+      "stairs_ascent60",
+      "stairs_descent60"
+    ],
+    "max_abs_error": {
+      "observation": 1.1102230246251565e-16,
+      "action": 1.1102230246251565e-16,
+      "target_leg_and_wheel_speed": 3.925984e-7
+    }
+  },
+  "interactive_fidelity": {
+    "passed": true,
+    "evidence": "results/user-final-interactive-20260916/acceptance.json",
+    "idle": {
+      "leg_velocity_rms_rad_s": 0.003990780308858442,
+      "leg_velocity_p95_rad_s": 0.008464512415230274
+    },
+    "forward": {
+      "yaw_delta_rad": -0.03826538346144199,
+      "lateral_delta_m": -0.02912163734436038,
+      "wheel_side_bias_m_s": 0.0021053464039262624
+    },
+    "left": {
+      "yaw_delta_rad": 0.5985802303895669
+    },
+    "forward_left": {
+      "yaw_delta_rad": 0.5587933195779848
+    },
+    "forward_crouch": {
+      "yaw_delta_rad": -0.03455053857689687,
+      "lateral_delta_m": -0.03298115730285648,
+      "wheel_side_bias_m_s": 0.006178235249346983
+    }
+  },
+  "native_pick": {
+    "passed": true,
+    "evidence": "results/user-final-interactive-20260916/pick_complete/sai-native-trace.json",
+    "events": ["start", "attach", "release", "complete"],
+    "captured": true,
+    "released": true,
+    "supported": true,
+    "delivered_to_cargo": true,
+    "lift_m": 0.315547160804272,
+    "completion_time_s": 42.38,
+    "cancel_passed": true,
+    "cancel_evidence": "results/user-final-cancel-20260916/acceptance.json"
+  },
+  "native_cargo": {
+    "cargo18": {
+      "passed": true,
+      "evidence": "results/user-native-cargo18-20260916b/task.json",
+      "max_object_height_m": 0.331093668937683,
+      "two_finger_contact_samples": 1164,
+      "transport_distance_m": 2.68846490979195,
+      "actual_wheel_course_contacts": ["course_0", "course_1", "course_2"],
+      "outside_cargo_steps": 0,
+      "unclamped_steps": 0,
+      "max_transport_lateral_m": 0.0467934608459473
+    },
+    "cargo25": {
+      "passed": true,
+      "evidence": "results/user-native-cargo25-20260916/task.json",
+      "max_object_height_m": 0.329838693141937,
+      "two_finger_contact_samples": 1162,
+      "transport_distance_m": 2.60272234678268,
+      "actual_wheel_course_contacts": ["course_0", "course_1", "course_2"],
+      "outside_cargo_steps": 0,
+      "unclamped_steps": 0,
+      "max_transport_lateral_m": 0.0408492088317871
+    }
+  },
+  "stairs_acceptance": {
+    "up20": {"passed": true, "cleared_at_s": 10.46, "upright_min": 0.91953444480896},
+    "down20": {"passed": true, "cleared_at_s": 7.98, "upright_min": 0.999140501022339, "entered_contact_following_descent": true},
+    "up40": {"passed": true, "cleared_at_s": 13.16, "upright_min": 0.894453406333923},
+    "down40": {"passed": true, "cleared_at_s": 6.44, "upright_min": 0.98008269071579, "entered_contact_following_descent": true}
+  },
+  "runtime_boundary": {
+    "launcher": "run-native.sh",
+    "controller_backend": "godot-native-onnxruntime",
+    "python_controller_process_found": false,
+    "tcp_controller_listener_found": false
+  },
+  "release_export": {
+    "passed": true,
+    "artifact": "dist/Robot_Godot_Sim2Sim.arm64",
+    "architecture": "aarch64",
+    "native_export_smoke_passed": true,
+    "flat_policy_sha256": "094adb4484b3d812dfb8a056491beda34a23fd0fa6f463b7784854ebc354d53d"
+  },
+  "tests": {
+    "delivery_scope": "4 relevant unit tests passed; interactive, cargo, stairs, contract, and export gates passed",
+    "python_compile": "passed",
+    "shell_syntax": "passed",
+    "git_diff_check": "passed",
+    "repository_wide_collection": "not applicable: docs contain archived duplicate test modules and optional training dependencies are intentionally not installed"
+  },
+  "caveat": "60 mm stairs remain experimental profiles; no unknown-terrain generalization claim is made."
+}

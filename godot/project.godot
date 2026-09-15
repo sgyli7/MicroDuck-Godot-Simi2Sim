@@ -8,6 +8,7 @@ config_version=5
 config/name="Microduck Sim2Sim"
 run/main_scene="res://main.tscn"
 run/main_scene.standalone="res://standalone/main.tscn"
+run/main_scene.worlds="res://hub/main.tscn"
 run/flush_stdout_on_print.standalone=true
 config/features=PackedStringArray("4.7", "Forward Plus")
 

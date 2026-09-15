@@ -1,6 +1,6 @@
 # 小小维修站：三种机器人，共用一个游戏窗口
 
-`./run-workshop.sh` 启动维修站。F5 / F6 / F7（或左上按钮）在 MicroDuck、MD 轮滑版和 Sai 001 之间切换；窗口和维修站保留，六件可移动场景物件的实例与位置也保留。切换约有短暂加载停顿。机器人位置按相应任务复位，不是在场上同时控制三台机器人。
+首次执行 `./run-workshop.sh --prepare-only` 准备资源，之后用 `./run-native.sh` 启动维修站。F5 / F6 / F7（或左上按钮）在 MicroDuck、MD 轮滑版和 Sai 001 之间切换；窗口和维修站保留，六件可移动场景物件的实例与位置也保留。切换约有短暂加载停顿。机器人位置按相应任务复位，不是在场上同时控制三台机器人。
 
 Sai 沿用 [PR #4](https://github.com/sgyli7/Robot_Godot_Sim2Sim/pull/4) 的 v0.1.0-alpha.3 固定提交 `5d2ab070dcdbae61a8d750a3f812e77ad2568f26`。SO101、四组轮腿、蓝色货仓、碰撞、质量、关节和 ONNX 保持发布版定义。新增的是维修站材质、任务位置和会话管理。
 
@@ -29,17 +29,18 @@ python3 scripts/install_workshop_desktop.py
 | R | Sai 复位；MicroDuck 保留前滚技能 |
 | 0 | 当前机器人与松散场景物件复位 |
 | Y / G / K / L | MicroDuck 坐起 / 捡地 / 左踢 / 右踢；轮滑 Y 为蹲起 |
-| B | MicroDuck 切换踢击目标 |
+| B / G / X（Sai） | 选择物件 / 抓取入仓 / 取消并松开 |
+| B（MicroDuck） | 切换踢击目标 |
 | 右键拖动 / 滚轮 | 旋转跟随视角 / 缩放 |
 | Tab | 跟随 / 维修站观景 |
 | Escape | 退出 |
 
-选中 Sai 后，任务菜单加载取件入仓、18/25mm 夹紧运输、20/40mm 上下阶和 60mm 实验上下阶。台阶任务需按 W 驾驶，货物任务自动完成取件与运输。结束后保留画面，可选任务或按 R 重新运行。
+选中 Sai 后，本地模式提供自由驾驶、场景物件选择与抓取入仓、18/25mm 夹紧运输、20/40mm 上下阶和 60mm 实验上下阶；台阶任务需按 W 驾驶。上述控制均在 Godot 进程内运行，结束后保留画面，可选任务或按 R 重新运行。
 
 ```bash
-./run-workshop.sh
-./run-workshop.sh --robot sai --task cargo18
-./run-workshop.sh --robot sai --task up60
+./run-native.sh
+./run-native.sh --robot sai --task up60
+./run-native.sh --robot sai --task cargo18
 ```
 
 运送区放在主通道侧面；20/40mm 检修台在院场外侧，60mm 实验台在右侧。阶高、180mm 踏面、四级台阶以及货物障碍尺寸沿用发布测试，不缩放机器人或任务几何。
@@ -62,7 +63,7 @@ uv run --no-sync python scripts/refine_robot_normals.py
 
 MD 默认安装随源码固定的 S05 普通行走 + a402 加速模型对，自动校验机器人资产、模型和控制配置；不替换其他八技能或 Sai。平地最终加速 400/400、普通 400/400、零跌倒，长直行快 20.4%；接入前后九技能配对 30/69→42/69，无旧成功丢失。柜体碰撞与台阶仍可能跌倒，旧轮滑限制保留；完整证据见 [加速报告](sprint_joint_identification_20260913/RESULT.md)。
 
-启动器用独立 `.venv-sai` 安装锁定的 Sai 包。已有训练环境不会被启动器重新同步。原生 MicroDuck 的九个模型在 Godot 进程中由 ONNX Runtime 1.29.0 推理；Sai 使用发布版 Python 控制器计算目标。Python 中的 MuJoCo 仅用于模型状态 / 机械臂 FK、IK 等计算，Godot/Jolt 负责游戏中的刚体、接触和电机受力积分。
+准备器用独立 `.venv-sai` 安装锁定的 Sai 包并生成场景；已有训练环境不会被同步或启动。正常游戏由 `run-native.sh` 直接启动 Godot：MicroDuck 与 Sai 模型均在 Godot 进程中由 ONNX Runtime 1.29.0 推理，Jolt 负责刚体、接触和电机受力积分；Sai 的抓取路径、IK、夹紧与 cargo crawl 同样在进程内执行。Python/MuJoCo 仅保留为数值 oracle。Sai 的 82D/16D 契约、模型哈希和测试结果见 [本地控制说明](sai-native-control.md)。
 
 ## 物理与验收
 

@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import signal
 import socket
 import subprocess
 import threading
@@ -14,6 +15,16 @@ from sim2sim.paths import sim2sim_root
 from sim2sim.sai_driving import DEFAULT_DRIVE_SPEED, drive_speed
 
 ROOT = sim2sim_root()
+
+
+def import_runtime_assets(godot: str, runtime: Path) -> None:
+    command = [godot, "--headless", "--editor", "--path", str(runtime), "--import", "--quit"]
+    for attempt in range(2):
+        result = subprocess.run(command)
+        if result.returncode == 0:
+            return
+        if result.returncode != -signal.SIGABRT or attempt == 1:
+            result.check_returncode()
 
 
 def prepare(runtime: Path, godot: str) -> Path:
@@ -42,6 +53,16 @@ def prepare(runtime: Path, godot: str) -> Path:
     for name in ("robot.gd", "item_observation.gd"):
         shutil.copy2(core / name, runtime / name)
     shutil.copytree(core / "sai_agent", runtime / "sai_agent", dirs_exist_ok=True)
+    # Frozen in-process Sai locomotion bundle.  Runtime reads these resources
+    # directly from Godot; the upstream package remains only a preparation-time
+    # source for robot meshes/specification and the explicit Python oracle.
+    shutil.copytree(ROOT / "src/sim2sim/assets/sai/upstream", runtime / "sai_policy", dirs_exist_ok=True)
+    shutil.copy2(ROOT / "src/sim2sim/assets/sai/flat-motion-v1.onnx", runtime / "sai_policy/flat-motion-v1.onnx")
+    shutil.copy2(ROOT / "src/sim2sim/assets/sai/flat-motion-v1.json", runtime / "sai_policy/flat-motion-v1.json")
+    shutil.copy2(ROOT / "src/sim2sim/assets/sai/suspension-v2.json", runtime / "sai_policy/suspension-v2.json")
+    shutil.copy2(bundle / "models/tasks/pick-place.json", runtime / "sai_policy/pick-place.json")
+    shutil.copy2(bundle / "models/tasks/so101-axes.json", runtime / "sai_policy/so101-axes.json")
+    shutil.copy2(bundle / "policies/legacy-crawl57.json", runtime / "sai_policy/legacy-crawl57.json")
     # Capture engine-resolved defaults, not guessed Jolt equivalents.
     profiles = {}
     for name, project in (("microduck", runtime), ("sai", core)):
@@ -55,7 +76,7 @@ def prepare(runtime: Path, godot: str) -> Path:
         raise SystemExit("Prepare MicroDuck's native model bundle first; see docs/workshop-hub.md.")
     from sim2sim.default_sprint import apply_default_sprint
     apply_default_sprint(runtime)
-    subprocess.run([godot, "--headless", "--editor", "--path", str(runtime), "--import", "--quit"], check=True)
+    import_runtime_assets(godot, runtime)
     return bundle
 
 
@@ -122,6 +143,9 @@ def main(argv=None):
     parser.add_argument("--plan", type=Path, help="Timed integration test / capture plan")
     parser.add_argument("--output", type=Path, default=ROOT / "results/workshop-hub/play")
     parser.add_argument("--record", action="store_true", help="Timestamped native game frames and policy trace")
+    parser.add_argument("--sai-controller", choices=("native", "python"), default="native",
+                        help="Native in-process locomotion (default), or explicit Python/TCP oracle for manipulation")
+    parser.add_argument("--prepare-only", action="store_true", help="Prepare the self-contained Godot runtime and exit")
     args = parser.parse_args(argv)
     if args.fast_check and not (args.headless and args.plan):
         parser.error("--fast-check requires --headless and --plan")
@@ -137,9 +161,17 @@ def main(argv=None):
         project = args.runtime_dir / "project.godot"
         project.write_text(project.read_text().replace('config/name="Robot Godot Workshop"',
                                                        'config/name="Robot Godot Worlds"'))
-    options = dict(scene=args.scene, drive_speed=args.drive_speed, fast_check=args.fast_check, choose_scene=args.choose_scene and not args.headless and not args.plan, robot=args.robot, task=args.task, output=str(args.output), record=args.record,
+    options = dict(scene=args.scene, drive_speed=args.drive_speed, fast_check=args.fast_check, choose_scene=args.choose_scene and not args.headless and not args.plan, robot=args.robot, task=args.task, output=str(args.output), record=args.record, sai_controller=args.sai_controller,
                    plan=json.loads(args.plan.read_text()) if args.plan else {})
     (args.runtime_dir / "hub/options.json").write_text(json.dumps(options))
+    if args.prepare_only:
+        print(args.runtime_dir.resolve())
+        return 0
+    if args.sai_controller == "native":
+        command = [args.godot_bin, "--path", str(args.runtime_dir.resolve()), "res://hub/main.tscn", "--disable-vsync", "--max-fps", "30"]
+        if args.headless: command += ["--headless"]
+        if args.fast_check: command += ["--fixed-fps", "30"]
+        return subprocess.call(command)
     with socket.socket() as listener:
         listener.bind(("127.0.0.1", 0))
         listener.listen(4)

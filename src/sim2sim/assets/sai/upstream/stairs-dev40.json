@@ -1,0 +1,103 @@
+{
+  "checkpoint_sha256": "1c40c4587cdbbc4f1d0b7d1206d3ecdbcc258b46ddc00d1a5dfe4d85a27abd49",
+  "onnx_sha256": "0eca6930e7ccd3201023ce9dd0ce4b9cb0476a9490020da89802cac598b2e38d",
+  "onnx_opset": 17,
+  "normalization_included": true,
+  "batch_sizes": [
+    1,
+    17,
+    256
+  ],
+  "max_absolute_errors": [
+    9.5367431640625e-07,
+    1.430511474609375e-06,
+    2.384185791015625e-06
+  ],
+  "passed": true,
+  "training": {
+    "schema_version": 1,
+    "cfg": {
+      "num_steps_per_env": 32,
+      "obs_groups": {
+        "actor": [
+          "policy"
+        ],
+        "critic": [
+          "policy"
+        ]
+      },
+      "multi_gpu": null,
+      "actor": {
+        "class_name": "MLPModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": true,
+        "distribution_cfg": {
+          "init_std": 0.25,
+          "std_type": "log"
+        }
+      },
+      "critic": {
+        "class_name": "MLPModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": true
+      },
+      "algorithm": {
+        "class_name": "PPO",
+        "num_learning_epochs": 4,
+        "num_mini_batches": 4,
+        "clip_param": 0.2,
+        "gamma": 0.99,
+        "lam": 0.95,
+        "value_loss_coef": 1.0,
+        "entropy_coef": 0.002,
+        "learning_rate": 0.0003,
+        "max_grad_norm": 1.0,
+        "use_clipped_value_loss": true,
+        "schedule": "fixed",
+        "desired_kl": null,
+        "normalize_advantage_per_mini_batch": false
+      }
+    },
+    "seed": 47,
+    "steps": 5767168,
+    "stage": "stairs",
+    "max_riser": 0.04,
+    "reset_std": 0.2,
+    "status": "training-complete-unvalidated",
+    "iterations": 704,
+    "device": "NVIDIA GB10",
+    "cpu_threads": 2,
+    "training_wall_seconds": 300.02861627499806,
+    "process_cpu_seconds": 299.812118896,
+    "model_sha256": "af174c649acca3dfec7e60c896c4a9603d3ed2864862534c81053517e6500f7f",
+    "training_scene_sha256": "0443cfa9fc8213d8625af0648711917a472b9a1051fc6bbf0aee8c86ce4e0a65",
+    "observation_size": 82,
+    "action_size": 16,
+    "control_hz": 50,
+    "source_sha256": {
+      "src/sai_agent/stair_env.py": "979d8652bbe43007da828abd99012828bac13b8c68ada2340f315984fe0f1544",
+      "src/sai_agent/gpu_backend.py": "7e143609a13ecb65241820fa5e9246345488e10e4672b7812d216fcc898250e3",
+      "src/sai_agent/env.py": "678aa55f99d0718752bf5cdaa2c458c2ee4bbdf3ebc5f71d07dfa28d60b79ba5",
+      "src/sai_agent/cli.py": "1a5612d2897da69d75fb800c4bd82d2929779769a12e7bbe2c5798c45fcdbd54",
+      "src/sai_agent/__init__.py": "966bd47e37aa6e36ec9c3d8f2e552365ba84199aeaeb2503eadd8b66c33ad5a9",
+      "src/sai_agent/runtime.py": "9616f1c499faf0ec826b7ce7c635926fcd7abc7324ece3145c9269187cd309a5",
+      "src/sai_agent/godot_controller.py": "58bb194c4b7e3388fd4d05798aae9796ac60331c894bb73019b5d73401beb87b",
+      "src/sai_agent/paths.py": "8064c40303dad119f8fdb84cbbbfed4a2bb7e78ecf7b5b80d3548864d06e9102",
+      "src/sai_agent/terrain.py": "da22fef563212a30f865e6db92423f163abdc8a0b177fb400f3aac50e75b465c",
+      "src/sai_agent/control.py": "8e6f34c887089c5063acab66427f0bd9baea0edb02f69b06510fd209df2a91c9",
+      "scripts/train.py": "af90b124c4602b4c945a7a4a8f0918f9ba24e6ff92450d6ce981a8f0754b29d7"
+    },
+    "resume": "artifacts/stairs-002-repro/policy.pt"
+  },
+  "contract_id": "sai-stairs-v1",
+  "status": "Four-riser 20/40 mm up/down development cases passed in reduced/full CPU MuJoCo and Godot/Jolt; 60 mm and holdouts unverified",
+  "reference": "stair-height-scan-3.2-second-lift-reference"
+}

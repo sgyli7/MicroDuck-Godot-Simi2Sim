@@ -1,0 +1,8 @@
+{
+  "seconds": 3.2,
+  "events": [
+    {"at": 0.8, "robot": "microduck"},
+    {"at": 1.6, "robot": "roller"},
+    {"at": 2.4, "robot": "sai"}
+  ]
+}
